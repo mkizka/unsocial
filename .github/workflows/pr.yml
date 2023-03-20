@@ -7,12 +7,19 @@ jobs:
   test-pr:
     uses: ./.github/workflows/_test.yml
   mutation-test-pr:
+    permissions:
+      contents: read
+      pull-requests: write
     uses: ./.github/workflows/_mutation-test.yml
     with:
       s3-basedir: soshal-mutation-test/pr${{ github.event.pull_request.number }}
     secrets: inherit
   deploy-pr:
     uses: ./.github/workflows/_deploy.yml
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: write
     needs: test-pr
     with:
       app-name: pr${{ github.event.pull_request.number }}-soshal
