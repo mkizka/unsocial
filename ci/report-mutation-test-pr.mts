@@ -43,19 +43,15 @@ const table = () => {
     "| --- | --- | --- | --- |",
   ];
   for (const filename of filenames) {
-    const prScore = prScores[filename] ?? 0;
-    const mainScore = mainScores[filename] ?? 0;
-    const prText = prScores[filename] ?? "なし";
-    const mainText = mainScores[filename] ?? "なし";
+    const prText = `${prScores[filename] ?? "なし"}`;
+    const mainText = `${mainScores[filename] ?? "なし"}`;
     if (prText == mainText) {
       continue;
     }
     const diffText =
-      prScore > mainScore
+      (prScores[filename] ?? 0) > (mainScores[filename] ?? 0)
         ? ":green_circle:"
-        : prScore < mainScore
-        ? ":warning:"
-        : ":white_circle:";
+        : ":warning:";
     comment.push(`| ${filename} | ${prText} | ${mainText} | ${diffText}`);
   }
   return comment.length > 2
