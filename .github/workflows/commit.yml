@@ -15,6 +15,9 @@ jobs:
     secrets: inherit
   deploy-prod:
     uses: ./.github/workflows/_deploy.yml
+    permissions:
+      contents: read
+      packages: write
     needs: test-prod
     with:
       app-name: soshal
