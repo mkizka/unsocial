@@ -1,0 +1,58 @@
+version: "3"
+
+volumes:
+  db_data:
+  redis_data:
+  mail_data:
+  next:
+  node_modules:
+
+services:
+  web:
+    build:
+      dockerfile: ./Dockerfile.local
+    volumes:
+      - .:/app
+      - ./docker/mkcert:/mkcert
+      - next:/app/.next
+      - node_modules:/app/node_modules
+    environment:
+      - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem
+  misskey:
+    image: misskey/misskey:13.9
+    volumes:
+      - ./docker/misskey/files:/misskey/files
+      - ./docker/misskey/.config:/misskey/.config:ro
+      - ./docker/mkcert:/mkcert
+    environment:
+      - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem
+  nginx:
+    image: nginx
+    volumes:
+      - ./docker/nginx:/etc/nginx/conf.d
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      default:
+        aliases:
+          - soshal.localhost
+          - misskey.localhost
+  db:
+    image: postgres:15-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./docker/db:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_PASSWORD=password
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+  mail:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025

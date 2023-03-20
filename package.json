@@ -1,0 +1,65 @@
+{
+  "name": "soshal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "docker compose up -d db mail && next dev",
+    "test": "jest",
+    "e2e": "playwright test e2e",
+    "postinstall": "prisma generate",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@next-auth/prisma-adapter": "^1.0.5",
+    "@prisma/client": "^4.11.0",
+    "@tanstack/react-query": "^4.20.0",
+    "@trpc/client": "^10.7.0",
+    "@trpc/next": "^10.7.0",
+    "@trpc/react-query": "^10.7.0",
+    "@trpc/server": "^10.7.0",
+    "got": "11.8.6",
+    "next": "13.1.1",
+    "next-auth": "^4.19.2",
+    "next-runtime": "^2.4.1",
+    "nodemailer": "^6.8.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "superjson": "1.9.1",
+    "winston": "^3.8.2",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.31.1",
+    "@stryker-mutator/api": "^6.4.1",
+    "@stryker-mutator/core": "^6.4.1",
+    "@stryker-mutator/jest-runner": "^6.4.1",
+    "@types/jest": "^29.2.6",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
+    "activitypub-core-types": "^0.1.1",
+    "better-typescript-lib": "^2.2.1",
+    "eslint": "^8.30.0",
+    "eslint-config-next": "13.1.1",
+    "jest": "^29.3.1",
+    "jest-mock-extended": "^3.0.1",
+    "nock": "^13.3.0",
+    "prisma": "^4.11.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
+    "zx": "^7.2.0"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.0.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "next-runtime@2.4.1": "patches/next-runtime@2.4.1.patch",
+      "next-auth@4.19.2": "patches/next-auth@4.19.2.patch"
+    }
+  }
+}

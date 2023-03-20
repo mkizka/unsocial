@@ -1,0 +1,22 @@
+# node
+node_modules/
+coverage/
+*.tsbuildinfo
+
+# next
+.next/
+next-env.d.ts
+.env
+
+# stryker
+.stryker-tmp
+reports
+
+# mkcert
+*.pem
+*.crt
+*.key
+
+# others
+.DS_Store
+*.log
