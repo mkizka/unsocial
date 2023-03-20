@@ -49,7 +49,7 @@ const table = () => {
       continue;
     }
     const diffText =
-      (prScores[filename] ?? 0) > (mainScores[filename] ?? 0)
+      (prScores[filename] || 0) > (mainScores[filename] || 0)
         ? ":green_circle:"
         : ":warning:";
     comment.push(`| ${filename} | ${prText} | ${mainText} | ${diffText}`);
