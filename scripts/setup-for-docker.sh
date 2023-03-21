@@ -27,7 +27,7 @@ if has wslpath; then
   function pwsh() {
     /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -c "$@"
   }
-  if ! pwsh mkcert -help > dev/null 2>&1; then
+  if ! pwsh mkcert -help > /dev/null 2>&1; then
     echo "ERROR: You have to install mkcert on Windows (https://github.com/FiloSottile/mkcert#windows)"
     exit 1;
   fi
