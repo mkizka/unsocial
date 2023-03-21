@@ -99,6 +99,7 @@ const Followers = () => {
 
 const Timeline = () => {
   const { data: notes } = api.note.find.useQuery();
+  const mutation = api.like.create.useMutation();
   return (
     <div>
       <h3>タイムライン</h3>
@@ -108,6 +109,7 @@ const Timeline = () => {
             <a href={`/notes/${note.id}`}>
               {note.user.preferredUsername}@{note.user.host}: {note.content}
             </a>
+            <button onClick={() => mutation.mutate(note.id)}>Like</button>
           </p>
         ))}
     </div>

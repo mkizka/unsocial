@@ -59,7 +59,10 @@ test("follow", async () => {
     runner: "relayActivity",
     params: {
       activity: {
-        "@context": new URL("https://www.w3.org/ns/activitystreams"),
+        "@context": [
+          new URL("https://www.w3.org/ns/activitystreams"),
+          new URL("https://w3id.org/security/v1"),
+        ],
         actor: new URL("https://myhost.example.com/users/dummy_local"),
         id: new URL("https://myhost.example.com/follows/followId"),
         object: new URL("https://remote.example.com/users/dummy_remote"),
