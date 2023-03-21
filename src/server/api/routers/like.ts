@@ -15,19 +15,19 @@ export const likeRouter = createTRPCRouter({
           noteId,
         },
         include: {
-          user: {
-            select: {
-              host: true,
-            },
-          },
           note: {
             select: {
+              user: {
+                select: {
+                  host: true,
+                },
+              },
               url: true,
             },
           },
         },
       });
-      if (like.user.host != env.HOST) {
+      if (like.note.user.host != env.HOST) {
         if (!like.note.url) {
           throw new Error("ノートのURLがありません");
         }
