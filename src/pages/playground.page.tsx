@@ -105,7 +105,9 @@ const Timeline = () => {
       {notes &&
         notes.map((note) => (
           <p key={note.id}>
-            {note.user.preferredUsername}@{note.user.host}: {note.content}
+            <a href={`/notes/${note.id}`}>
+              {note.user.preferredUsername}@{note.user.host}: {note.content}
+            </a>
           </p>
         ))}
     </div>
