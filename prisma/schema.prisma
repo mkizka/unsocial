@@ -85,6 +85,7 @@ model Follow {
 
 model Like {
   id        String   @id @default(nanoid(8))
+  content   String
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   noteId    String

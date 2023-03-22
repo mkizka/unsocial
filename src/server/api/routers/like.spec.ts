@@ -49,12 +49,16 @@ describe("like", () => {
     });
     // act
     const caller = appRouter.createCaller(ctx);
-    await caller.like.create("noteId");
+    await caller.like.create({
+      noteId: "noteId",
+      content: "👍",
+    });
     // assert
     expect(prismaMock.like.create).toHaveBeenCalledWith({
       data: {
         noteId: "noteId",
         userId: "dummy_local",
+        content: "👍",
       },
       include: {
         note: {
@@ -91,12 +95,16 @@ describe("like", () => {
     });
     // act
     const caller = appRouter.createCaller(ctx);
-    await caller.like.create("noteId");
+    await caller.like.create({
+      noteId: "noteId",
+      content: "👍",
+    });
     // assert
     expect(prismaMock.like.create).toHaveBeenCalledWith({
       data: {
         noteId: "noteId",
         userId: "dummy_local",
+        content: "👍",
       },
       include: {
         note: {

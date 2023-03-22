@@ -7,12 +7,17 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const likeRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(z.string())
-    .mutation(async ({ input: noteId, ctx }) => {
+    .input(
+      z.object({
+        noteId: z.string(),
+        content: z.enum(["👍"]),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
       const like = await prisma.like.create({
         data: {
           userId: ctx.session.user.id,
-          noteId,
+          ...input,
         },
         include: {
           note: {
