@@ -15,6 +15,8 @@ const config = {
     "!src/**/fixtures/**/*.ts",
     "!src/**/__mocks__/**/*.ts",
   ],
+  // 権限エラーになることがあるため
+  ignorePatterns: ["docker"],
   plugins: ["@stryker-mutator/jest-runner"],
 };
 export default config;
