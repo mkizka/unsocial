@@ -17,6 +17,16 @@ export const noteRouter = createTRPCRouter({
             host: true,
           },
         },
+        likes: {
+          include: {
+            user: {
+              select: {
+                preferredUsername: true,
+                host: true,
+              },
+            },
+          },
+        },
       },
     });
   }),
