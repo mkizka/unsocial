@@ -106,6 +106,18 @@ const convertLike = (like: Like, noteUrl: string): AP.Like => {
   };
 };
 
+const convertUndo = (like: AP.Like): AP.Undo => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { "@context": _, ...object } = like;
+  return {
+    ...contexts,
+    type: "Undo",
+    id: new URL("?undo=true", like.id!),
+    actor: like.actor,
+    object,
+  };
+};
+
 export const activityStreams = {
   user: convertUser,
   note: convertNote,
@@ -113,4 +125,5 @@ export const activityStreams = {
   delete: convertDelete,
   follow: convertFollow,
   like: convertLike,
+  undo: convertUndo,
 };

@@ -14,6 +14,47 @@ export const likeRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      const existingLike = await prisma.like.findFirst({
+        where: {
+          userId: ctx.session.user.id,
+          noteId: input.noteId,
+        },
+        include: {
+          note: {
+            select: {
+              user: {
+                select: {
+                  host: true,
+                },
+              },
+              url: true,
+            },
+          },
+        },
+      });
+      if (existingLike) {
+        await prisma.like.delete({
+          where: {
+            id: existingLike.id,
+          },
+        });
+        if (existingLike.note.user.host != env.HOST) {
+          if (!existingLike.note.url) {
+            throw new Error("ノートのURLがありません");
+          }
+          queue.push({
+            runner: "relayActivity",
+            params: {
+              activity: activityStreams.undo(
+                activityStreams.like(existingLike, existingLike.note.url)
+              ),
+              privateKey: ctx.session.user.privateKey,
+              publicKeyId: `https://${env.HOST}/users/${ctx.session.user.id}#main-key`,
+            },
+          });
+        }
+        return;
+      }
       const like = await prisma.like.create({
         data: {
           userId: ctx.session.user.id,
