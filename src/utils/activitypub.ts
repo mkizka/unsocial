@@ -1,10 +1,17 @@
-import type { User, Note, Follow } from "@prisma/client";
+import type { User, Note, Follow, Like } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 import { env } from "./env";
 
 const required = <T>(value: T | null | undefined) => {
   if (value === null || value === undefined) throw new Error("値が必要です");
   return value;
+};
+
+const contexts = {
+  "@context": [
+    new URL("https://www.w3.org/ns/activitystreams"),
+    new URL("https://w3id.org/security/v1"),
+  ],
 };
 
 const convertUser = (
@@ -14,10 +21,7 @@ const convertUser = (
 } => {
   const userAddress = `https://${env.HOST}/users/${user.id}`;
   return {
-    "@context": [
-      new URL("https://www.w3.org/ns/activitystreams"),
-      new URL("https://w3id.org/security/v1"),
-    ],
+    ...contexts,
     id: new URL(userAddress),
     type: "Person",
     inbox: new URL(`${userAddress}/inbox`),
@@ -44,7 +48,7 @@ const convertUser = (
 const convertNote = (note: Note): AP.Note => {
   const userAddress = `https://${env.HOST}/users/${note.userId}`;
   return {
-    "@context": new URL("https://www.w3.org/ns/activitystreams"),
+    ...contexts,
     id: new URL(`https://${env.HOST}/notes/${note.id}`),
     type: "Note",
     content: note.content,
@@ -58,7 +62,7 @@ const convertNote = (note: Note): AP.Note => {
 const convertCreate = (note: Note): AP.Create => {
   const object = convertNote(note);
   return {
-    "@context": "https://www.w3.org/ns/activitystreams",
+    ...contexts,
     // TODO: エンドポイントつくる
     id: new URL(`https://${env.HOST}/notes/${note.id}/activity`),
     type: "Create",
@@ -72,7 +76,7 @@ const convertCreate = (note: Note): AP.Create => {
 
 const convertDelete = (note: Pick<Note, "id" | "userId">): AP.Delete => {
   return {
-    "@context": new URL("https://www.w3.org/ns/activitystreams"),
+    ...contexts,
     type: "Delete",
     actor: new URL(`https://${env.HOST}/users/${note.userId}`),
     object: new URL(`https://${env.HOST}/notes/${note.id}`),
@@ -81,12 +85,36 @@ const convertDelete = (note: Pick<Note, "id" | "userId">): AP.Delete => {
 
 const convertFollow = (follow: Follow, followeeUrl: string): AP.Follow => {
   return {
-    "@context": new URL("https://www.w3.org/ns/activitystreams"),
+    ...contexts,
     // TODO: エンドポイントつくる
     id: new URL(`https://${env.HOST}/follows/${follow.id}`),
     type: "Follow",
     actor: new URL(`https://${env.HOST}/users/${follow.followerId}`),
     object: new URL(followeeUrl),
+  };
+};
+
+const convertLike = (like: Like, noteUrl: string): AP.Like => {
+  return {
+    ...contexts,
+    type: "Like",
+    // TODO: エンドポイントつくる
+    id: new URL(`https://${env.HOST}/likes/${like.id}`),
+    actor: new URL(`https://${env.HOST}/users/${like.userId}`),
+    object: new URL(noteUrl),
+    content: "👍",
+  };
+};
+
+const convertUndo = (like: AP.Like): AP.Undo => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { "@context": _, ...object } = like;
+  return {
+    ...contexts,
+    type: "Undo",
+    id: new URL("?undo=true", like.id!),
+    actor: like.actor,
+    object,
   };
 };
 
@@ -96,4 +124,6 @@ export const activityStreams = {
   create: convertCreate,
   delete: convertDelete,
   follow: convertFollow,
+  like: convertLike,
+  undo: convertUndo,
 };

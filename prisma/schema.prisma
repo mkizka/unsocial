@@ -41,6 +41,7 @@ model User {
   notes             Note[]
   followee          Follow[]  @relation("followee")
   follower          Follow[]  @relation("follower")
+  likes             Like[]
 
   @@unique([preferredUsername, host])
 }
@@ -61,6 +62,7 @@ model Note {
   content   String
   published DateTime
   createdAt DateTime @default(now())
+  likes     Like[]
 }
 
 enum FollowStatus {
@@ -79,4 +81,16 @@ model Follow {
   createdAt  DateTime     @default(now())
 
   @@unique([followeeId, followerId])
+}
+
+model Like {
+  id        String   @id @default(nanoid(8))
+  content   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  noteId    String
+  note      Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, noteId])
 }
