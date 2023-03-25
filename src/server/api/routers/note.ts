@@ -1,11 +1,9 @@
 import { z } from "zod";
 
 import { activityStreams } from "../../../utils/activitypub";
-import { logger } from "../../../utils/logger";
 import { prisma } from "../../db";
 import { queue } from "../../background/queue";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { env } from "../../../utils/env";
 
 export const noteRouter = createTRPCRouter({
   find: publicProcedure.query(({ ctx }) => {

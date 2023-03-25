@@ -42,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     res.write(JSON.stringify(activityStreams.user(user)));
     res.end();
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { email, emailVerified, privateKey, ...publicUser } = user;
   return {
     props: {
