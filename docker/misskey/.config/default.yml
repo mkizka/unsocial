@@ -69,8 +69,8 @@ redis:
 #  host: localhost
 #  port: 9200
 #  ssl: false
-#  user: 
-#  pass: 
+#  user:
+#  pass:
 
 #   ┌───────────────┐
 #───┘ ID generation └───────────────────────────────────────────
@@ -88,7 +88,7 @@ redis:
 # ONCE YOU HAVE STARTED THE INSTANCE, DO NOT CHANGE THE
 # ID SETTINGS AFTER THAT!
 
-id: 'aid'
+id: "aid"
 
 #   ┌─────────────────────┐
 #───┘ Other configuration └─────────────────────────────────────
@@ -147,7 +147,6 @@ proxyBypassHosts:
 
 # Sign to ActivityPub GET request (default: true)
 signToActivityPubGet: true
-
 #allowedPrivateNetworks: [
 #  '127.0.0.1/32'
 #]

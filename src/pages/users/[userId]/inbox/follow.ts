@@ -37,9 +37,7 @@ const resolveUserId = (actorId: URL) => {
 export const follow: InboxFunction = async (activity, actorUser, options) => {
   const parsedFollow = followActivitySchema.safeParse(activity);
   if (!parsedFollow.success) {
-    logger.info( 
-      "検証失敗: " + formatZodError(parsedFollow.error)
-    );
+    logger.info("検証失敗: " + formatZodError(parsedFollow.error));
     return json({}, 400);
   }
   const followeeId = resolveUserId(new URL(parsedFollow.data.object));

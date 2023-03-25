@@ -9,6 +9,7 @@
     "e2e": "playwright test e2e",
     "postinstall": "prisma generate",
     "lint": "next lint",
+    "format": "prettier . -w",
     "mutation-test-local": "./scripts/mutation-test-local.sh",
     "prepare": "husky install"
   },

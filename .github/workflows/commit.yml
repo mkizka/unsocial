@@ -1,6 +1,6 @@
 name: commit
 
-on: 
+on:
   push:
     branches:
       - main
