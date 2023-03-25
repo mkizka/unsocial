@@ -31,6 +31,7 @@ specifiers:
   eslint: ^8.30.0
   eslint-config-next: 13.1.1
   eslint-plugin-simple-import-sort: ^10.0.0
+  eslint-plugin-unused-imports: ^2.0.0
   got: 11.8.6
   husky: ^8.0.3
   jest: ^29.3.1
@@ -86,6 +87,7 @@ devDependencies:
   eslint: 8.31.0
   eslint-config-next: 13.1.1_iukboom6ndih5an6iafl45j2fe
   eslint-plugin-simple-import-sort: 10.0.0_eslint@8.31.0
+  eslint-plugin-unused-imports: 2.0.0_zgazubnvp3urkgs5b7mw2pde3m
   husky: 8.0.3
   jest: 29.3.1_zfha7dvnw4nti6zkbsmhmn6xo4
   jest-mock-extended: 3.0.1_p6ekqnroyms5nhqbfxosryz7rm
@@ -3039,6 +3041,26 @@ packages:
       eslint: '>=5.0.0'
     dependencies:
       eslint: 8.31.0
+    dev: true
+
+  /eslint-plugin-unused-imports/2.0.0_zgazubnvp3urkgs5b7mw2pde3m:
+    resolution: {integrity: sha512-3APeS/tQlTrFa167ThtP0Zm0vctjr4M44HMpeg1P4bK6wItarumq0Ma82xorMKdFsWpphQBlRPzw/pxiVELX1A==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': ^5.0.0
+      eslint: ^8.0.0
+    peerDependenciesMeta:
+      '@typescript-eslint/eslint-plugin':
+        optional: true
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 5.48.0_k73wpmdolxikpyqun3p36akaaq
+      eslint: 8.31.0
+      eslint-rule-composer: 0.3.0
+    dev: true
+
+  /eslint-rule-composer/0.3.0:
+    resolution: {integrity: sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==}
+    engines: {node: '>=4.0.0'}
     dev: true
 
   /eslint-scope/5.1.1:
