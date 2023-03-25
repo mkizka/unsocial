@@ -1,6 +1,7 @@
 import type { AP } from "activitypub-core-types";
-import type { Session } from "next-auth";
 import got from "got";
+import type { Session } from "next-auth";
+
 import { signActivity } from "../../../utils/httpSignature/sign";
 import { logger } from "../../../utils/logger";
 

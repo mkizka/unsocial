@@ -1,6 +1,7 @@
 import type { User } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 import nock from "nock";
+
 import { prismaMock } from "../__mocks__/db";
 import { findOrFetchUserByWebfinger } from "./findOrFetchUser";
 import { logger } from "./logger";

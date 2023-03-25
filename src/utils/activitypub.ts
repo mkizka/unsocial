@@ -1,5 +1,6 @@
-import type { User, Note, Follow, Like } from "@prisma/client";
+import type { Follow, Like, Note, User } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
+
 import { env } from "./env";
 
 const required = <T>(value: T | null | undefined) => {

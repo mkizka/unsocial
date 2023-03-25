@@ -1,11 +1,12 @@
 import type { User } from "@prisma/client";
 import { json } from "next-runtime";
+
 import { findOrFetchUserByActorId } from "../../../../utils/findOrFetchUser";
 import { verifyActivity } from "../../../../utils/httpSignature/verify";
+import { logger } from "../../../../utils/logger";
 import { createMockedContext } from "../../../__mocks__/context";
 import { follow } from "./follow";
 import { getServerSideProps } from "./index.page";
-import { logger } from "../../../../utils/logger";
 import { note } from "./note";
 
 jest.mock("./follow");

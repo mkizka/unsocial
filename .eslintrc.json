@@ -3,11 +3,13 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "simple-import-sort"],
   "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "warn",
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-non-null-assertion": "off"
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
   }
 }

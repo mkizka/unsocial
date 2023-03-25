@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from "next";
-import { prisma } from "../../server/db";
+
 import pkg from "../../../package.json";
+import { prisma } from "../../server/db";
 
 const Noop = () => undefined;
 export default Noop;

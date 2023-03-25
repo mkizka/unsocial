@@ -1,4 +1,5 @@
 import { json } from "next-runtime";
+
 import { logger } from "../../../../utils/logger";
 import type { InboxFunction } from "./types";
 

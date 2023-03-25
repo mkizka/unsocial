@@ -1,5 +1,6 @@
-import got from "got";
 import type { Options } from "got";
+import got from "got";
+
 import { logger } from "./logger";
 
 export const fetchJson = async <T extends object>(

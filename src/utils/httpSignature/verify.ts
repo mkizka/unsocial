@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import type { IncomingHttpHeaders } from "http";
 import { z } from "zod";
+
 import { textOf } from "./utils";
 
 const signatureSchema = z.object({

@@ -1,6 +1,7 @@
 import type { User } from "@prisma/client";
-import { logger } from "../../../../utils/logger";
+
 import { prismaMock } from "../../../../__mocks__/db";
+import { logger } from "../../../../utils/logger";
 import { note } from "./note";
 
 jest.mock("../../../../utils/logger");

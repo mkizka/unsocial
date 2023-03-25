@@ -1,5 +1,3 @@
-import { verifyActivity } from "./verify";
-import { mockedKeys } from "./fixtures/keys";
 import {
   expectedHeader,
   invalidDateHeader,
@@ -12,6 +10,8 @@ import {
   noSignatureHeader,
   unSupportedAlgorithmHeader,
 } from "./fixtures/headers";
+import { mockedKeys } from "./fixtures/keys";
+import { verifyActivity } from "./verify";
 
 describe("verifyActivity", () => {
   test.each`

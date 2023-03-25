@@ -1,8 +1,9 @@
-import { Matcher } from "jest-mock-extended";
 import type { User } from "@prisma/client";
-import { logger } from "../../../../utils/logger";
+import { Matcher } from "jest-mock-extended";
+
 import { prismaMock } from "../../../../__mocks__/db";
 import { queue } from "../../../../server/background/queue";
+import { logger } from "../../../../utils/logger";
 import { follow } from "./follow";
 
 jest.mock("../../../../utils/logger");

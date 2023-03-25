@@ -1,9 +1,8 @@
-import crypto from "crypto";
-
-import NextAuth, { type NextAuthOptions } from "next-auth";
-import EmailProvider from "next-auth/providers/email";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import crypto from "crypto";
+import NextAuth, { type NextAuthOptions } from "next-auth";
+import EmailProvider from "next-auth/providers/email";
 
 import { prisma } from "../../../server/db";
 import { env } from "../../../utils/env";

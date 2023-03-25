@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 import { activityStreams } from "../../../utils/activitypub";
-import { prisma } from "../../db";
 import { queue } from "../../background/queue";
+import { prisma } from "../../db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const noteRouter = createTRPCRouter({

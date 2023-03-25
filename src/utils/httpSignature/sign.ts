@@ -1,6 +1,7 @@
 import type { AP } from "activitypub-core-types";
-import type { Session } from "next-auth";
 import crypto from "crypto";
+import type { Session } from "next-auth";
+
 import { env } from "../env";
 import { textOf } from "./utils";
 

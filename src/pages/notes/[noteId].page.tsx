@@ -1,4 +1,5 @@
 import type { GetServerSideProps } from "next";
+
 import { prisma } from "../../server/db";
 import { activityStreams } from "../../utils/activitypub";
 

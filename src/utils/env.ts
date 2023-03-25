@@ -1,5 +1,6 @@
 // Stryker disable all
 import { z } from "zod";
+
 import { formatZodError } from "./formatZodError";
 
 const serverEnvSchema = z.object({

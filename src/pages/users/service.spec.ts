@@ -1,6 +1,7 @@
 import type { User } from "@prisma/client";
-import { findOrFetchUserByWebfinger } from "../../utils/findOrFetchUser";
+
 import { prismaMock } from "../../__mocks__/db";
+import { findOrFetchUserByWebfinger } from "../../utils/findOrFetchUser";
 import { findOrFetchUserById } from "./service";
 
 const dummyUser: User = {

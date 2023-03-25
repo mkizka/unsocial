@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { env } from "../utils/env";
+
 import { prisma } from "../server/db";
+import { env } from "../utils/env";
 import { fetchJson } from "./fetchJson";
-import { logger } from "./logger";
 import { formatZodError } from "./formatZodError";
+import { logger } from "./logger";
 
 const webfingerSchema = z.object({
   links: z.array(

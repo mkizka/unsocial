@@ -1,5 +1,6 @@
 import type { User } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
+
 import { activityStreams } from "../../utils/activitypub";
 import { api } from "../../utils/api";
 import { findOrFetchUserById } from "./service";

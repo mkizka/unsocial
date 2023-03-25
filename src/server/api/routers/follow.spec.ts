@@ -1,5 +1,6 @@
 import type { User } from "@prisma/client";
 import { mockDeep } from "jest-mock-extended";
+
 import { prismaMock } from "../../../__mocks__/db";
 import { queue } from "../../background/queue";
 import { appRouter } from "../root";
