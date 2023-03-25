@@ -47,46 +47,27 @@ export const noteRouter = createTRPCRouter({
           published: new Date(),
         },
       });
-      const user = await prisma.user.findFirst({
-        select: { id: true, privateKey: true },
-        where: { id: ctx.session.user.id },
-      });
-      if (!user || !user.privateKey) {
-        logger.error(
-          `ノートを作成したユーザー(id:${ctx.session.user.id}の秘密鍵が見つかりませんでした`
-        );
-        return;
-      }
       queue.push({
         runner: "relayActivity",
         params: {
+          sender: ctx.session.user,
           activity: activityStreams.create(note),
-          publicKeyId: `https://${env.HOST}/users/${user.id}#main-key`,
-          privateKey: user.privateKey,
         },
       });
     }),
   delete: protectedProcedure
     .input(z.string())
     .mutation(async ({ input: noteId, ctx }) => {
-      await prisma.note.delete({ where: { id: noteId } });
-      const user = await prisma.user.findFirst({
-        select: { id: true, privateKey: true },
-        where: { id: ctx.session.user.id },
-      });
-      if (!user || !user.privateKey) {
-        logger.error(
-          `ノートを削除するユーザー(id:${ctx.session.user.id}の秘密鍵が見つかりませんでした`
-        );
-        return;
-      }
       // TODO: 自分のじゃなかったらエラー吐く
+      await prisma.note.delete({ where: { id: noteId } });
       queue.push({
         runner: "relayActivity",
         params: {
-          activity: activityStreams.delete({ id: noteId, userId: user.id }),
-          publicKeyId: `https://${env.HOST}/users/${user.id}#main-key`,
-          privateKey: user.privateKey,
+          sender: ctx.session.user,
+          activity: activityStreams.delete({
+            id: noteId,
+            userId: ctx.session.user.id,
+          }),
         },
       });
     }),

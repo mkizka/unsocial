@@ -46,9 +46,8 @@ const like = async (user: User, input: InputType) => {
     queue.push({
       runner: "relayActivity",
       params: {
+        sender: user,
         activity: activityStreams.like(like, like.note.url),
-        privateKey: user.privateKey,
-        publicKeyId: `https://${env.HOST}/users/${user.id}#main-key`,
       },
     });
   }
@@ -76,11 +75,10 @@ const unlike = async (user: User, like: LikeWithNote) => {
     queue.push({
       runner: "relayActivity",
       params: {
+        sender: user,
         activity: activityStreams.undo(
           activityStreams.like(like, like.note.url)
         ),
-        privateKey: user.privateKey,
-        publicKeyId: `https://${env.HOST}/users/${user.id}#main-key`,
       },
     });
   }

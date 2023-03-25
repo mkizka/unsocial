@@ -58,6 +58,7 @@ test("follow", async () => {
   expect(mockedQueue.push).toHaveBeenCalledWith({
     runner: "relayActivity",
     params: {
+      sender: dummyLocalUser,
       activity: {
         "@context": [
           new URL("https://www.w3.org/ns/activitystreams"),
@@ -68,8 +69,6 @@ test("follow", async () => {
         object: new URL("https://remote.example.com/users/dummy_remote"),
         type: "Follow",
       },
-      privateKey: "privateKey",
-      publicKeyId: "https://myhost.example.com/users/dummy_local#main-key",
     },
   });
 });

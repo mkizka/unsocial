@@ -30,10 +30,8 @@ export const followRouter = createTRPCRouter({
         queue.push({
           runner: "relayActivity",
           params: {
+            sender: ctx.session.user,
             activity: activityStreams.follow(follow, followee.actorUrl),
-            privateKey: ctx.session.user.privateKey,
-            // TODO: idだけ渡せばいいようにしたい
-            publicKeyId: `https://${env.HOST}/users/${ctx.session.user.id}#main-key`,
           },
         });
       }

@@ -104,6 +104,7 @@ describe("like", () => {
     });
     expect(mockedQueue.push).toHaveBeenCalledWith({
       params: {
+        sender: dummyLocalUser,
         activity: {
           "@context": [
             new URL("https://www.w3.org/ns/activitystreams"),
@@ -115,8 +116,6 @@ describe("like", () => {
           object: new URL("https://remote.example.com/n/note_remote"),
           type: "Like",
         },
-        privateKey: "privateKey",
-        publicKeyId: "https://myhost.example.com/users/dummy_local#main-key",
       },
       runner: "relayActivity",
     });
@@ -192,6 +191,7 @@ describe("Undo like", () => {
     });
     expect(mockedQueue.push).toHaveBeenCalledWith({
       params: {
+        sender: dummyLocalUser,
         activity: {
           "@context": [
             new URL("https://www.w3.org/ns/activitystreams"),
@@ -209,8 +209,6 @@ describe("Undo like", () => {
             type: "Like",
           },
         },
-        privateKey: "privateKey",
-        publicKeyId: "https://myhost.example.com/users/dummy_local#main-key",
       },
       runner: "relayActivity",
     });
