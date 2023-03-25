@@ -9,7 +9,8 @@
     "e2e": "playwright test e2e",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "mutation-test-local": "./scripts/mutation-test-local.sh"
+    "mutation-test-local": "./scripts/mutation-test-local.sh",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
@@ -45,8 +46,10 @@
     "better-typescript-lib": "^2.2.1",
     "eslint": "^8.30.0",
     "eslint-config-next": "13.1.1",
+    "husky": "^8.0.3",
     "jest": "^29.3.1",
     "jest-mock-extended": "^3.0.1",
+    "lint-staged": "^13.2.0",
     "nock": "^13.3.0",
     "prisma": "^4.11.0",
     "ts-node": "^10.9.1",
