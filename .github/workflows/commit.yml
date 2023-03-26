@@ -21,8 +21,8 @@ jobs:
       contents: read
       packages: write
     needs:
-      - test-prod
-      - e2e-prod
+      - unit-test-prod
+      - e2e-test-prod
     with:
       app-name: soshal
       docker-name: soshal:latest
