@@ -82,6 +82,10 @@ describe("フォロー", () => {
     expect(mockedQueue.push).toHaveBeenCalledWith({
       runner: "relayActivity",
       params: {
+        sender: {
+          id: dummyLocalUser.id,
+          privateKey: dummyLocalUser.privateKey,
+        },
         activity: {
           type: "Accept",
           actor: new URL(activity.object),
@@ -91,8 +95,6 @@ describe("フォロー", () => {
             object: new URL(activity.object),
           },
         },
-        privateKey: "privateKey",
-        publicKeyId: "https://myhost.example.com/users/dummyidlocal#main-key",
       },
     });
     expect(response.status).toBe(200);
@@ -125,6 +127,10 @@ describe("アンフォロー", () => {
     expect(mockedQueue.push).toHaveBeenCalledWith({
       runner: "relayActivity",
       params: {
+        sender: {
+          id: dummyLocalUser.id,
+          privateKey: dummyLocalUser.privateKey,
+        },
         activity: {
           type: "Accept",
           actor: new URL(activity.object),
@@ -134,8 +140,6 @@ describe("アンフォロー", () => {
             object: new URL(activity.object),
           },
         },
-        privateKey: "privateKey",
-        publicKeyId: "https://myhost.example.com/users/dummyidlocal#main-key",
       },
     });
     expect(response.status).toBe(200);

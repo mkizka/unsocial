@@ -90,6 +90,10 @@ export const follow: InboxFunction = async (activity, actorUser, options) => {
   queue.push({
     runner: "relayActivity",
     params: {
+      sender: {
+        id: followee.id,
+        privateKey: followee.privateKey,
+      },
       activity: {
         type: "Accept",
         actor: new URL(`https://${env.HOST}/users/${followee.id}`),
@@ -99,8 +103,6 @@ export const follow: InboxFunction = async (activity, actorUser, options) => {
           object: new URL(parsedFollow.data.object),
         },
       },
-      publicKeyId: `https://${env.HOST}/users/${followee.id}#main-key`,
-      privateKey: followee.privateKey,
     },
   });
   return json({}, 200);
