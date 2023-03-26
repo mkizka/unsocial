@@ -6,7 +6,7 @@
     "build": "next build",
     "dev": "docker compose up -d db mail && next dev",
     "test": "jest",
-    "e2e": "playwright test e2e",
+    "e2e": "playwright test",
     "postinstall": "prisma generate",
     "lint": "next lint",
     "format": "prettier . -w",

@@ -16,15 +16,7 @@ jobs:
           node-version: 18
           cache: pnpm
       - run: pnpm i
-      - run: pnpm playwright install --with-deps
-      - run: sudo update-ca-certificates
-      # https://github.com/FiloSottile/mkcert#linux
-      - name: install-mkcert
-        run: |
-          sudo apt install -y libnss3-tools
-          curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
-          chmod +x mkcert-v*-linux-amd64
-          sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+      - run: pnpm playwright install --with-deps chromium
       - run: ./scripts/setup-for-docker.sh
       - run: cp -f .env.docker .env && docker compose up -d --build
       - run: pnpm e2e
