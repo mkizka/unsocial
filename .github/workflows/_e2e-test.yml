@@ -1,0 +1,29 @@
+name: _e2e-test
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # https://github.com/FiloSottile/mkcert#linux
+      - name: install-mkcert
+        run: |
+          sudo apt install -y libnss3-tools
+          curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+          chmod +x mkcert-v*-linux-amd64
+          sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+      - run: ./scripts/setup-for-docker.sh
+      - run: cp -f .env.docker .env
+      - uses: yu-ichiro/spin-up-docker-compose-action@v1
+        with:
+          file: compose.yaml
+      - run: docker compose exec web pnpm playwright install --with-deps chromium
+      - run: docker compose exec web pnpm e2e
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          path: test-results/
+          retention-days: 1

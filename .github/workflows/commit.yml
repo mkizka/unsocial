@@ -6,8 +6,10 @@ on:
       - main
 
 jobs:
-  test-prod:
-    uses: ./.github/workflows/_test.yml
+  unit-test-prod:
+    uses: ./.github/workflows/_unit-test.yml
+  e2e-test-prod:
+    uses: ./.github/workflows/_e2e-test.yml
   mutation-test-prod:
     uses: ./.github/workflows/_mutation-test.yml
     with:
@@ -18,7 +20,9 @@ jobs:
     permissions:
       contents: read
       packages: write
-    needs: test-prod
+    needs:
+      - test-prod
+      - e2e-prod
     with:
       app-name: soshal
       docker-name: soshal:latest
