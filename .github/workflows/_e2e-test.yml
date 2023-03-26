@@ -17,6 +17,7 @@ jobs:
           cache: pnpm
       - run: pnpm i
       - run: pnpm playwright install --with-deps
+      - uses: browser-actions/setup-chrome@v1
       # https://github.com/FiloSottile/mkcert#linux
       - name: install-mkcert
         run: |
