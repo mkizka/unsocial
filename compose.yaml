@@ -16,6 +16,8 @@ services:
       - ./docker/mkcert:/mkcert
       - next:/app/.next
       - node_modules:/app/node_modules
+    ports:
+      - 3000:3000
     environment:
       - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem
     healthcheck:
@@ -32,6 +34,8 @@ services:
       - ./docker/misskey/files:/misskey/files
       - ./docker/misskey/.config:/misskey/.config:ro
       - ./docker/mkcert:/mkcert
+    ports:
+      - 3001:3001
     environment:
       - NODE_ENV=development
       - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem
