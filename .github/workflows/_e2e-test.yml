@@ -17,7 +17,7 @@ jobs:
           cache: pnpm
       - run: pnpm i
       - run: pnpm playwright install --with-deps
-      - run: mkdir -p $HOME/.pki/nssdb
+      - run: sudo update-ca-certificates
       # https://github.com/FiloSottile/mkcert#linux
       - name: install-mkcert
         run: |
