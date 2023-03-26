@@ -27,6 +27,7 @@ services:
       - ./docker/misskey/.config:/misskey/.config:ro
       - ./docker/mkcert:/mkcert
     environment:
+      - NODE_ENV=development
       - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem
     depends_on:
       - db

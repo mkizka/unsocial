@@ -4,8 +4,10 @@ on:
   pull_request:
 
 jobs:
-  test-pr:
-    uses: ./.github/workflows/_test.yml
+  unit-test-pr:
+    uses: ./.github/workflows/_unit-test.yml
+  e2e-test-pr:
+    uses: ./.github/workflows/_e2e-test.yml
   mutation-test-pr:
     permissions:
       contents: read
