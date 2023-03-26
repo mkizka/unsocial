@@ -17,7 +17,7 @@ jobs:
           cache: pnpm
       - run: pnpm i
       - run: pnpm playwright install --with-deps
-      - run: mkdir -p .pki/nssdb
+      - run: mkdir -p $HOME/.pki/nssdb
       # https://github.com/FiloSottile/mkcert#linux
       - name: install-mkcert
         run: |
