@@ -13,6 +13,9 @@ next-env.d.ts
 reports
 reports-main
 
+# playwright
+test-results/
+
 # mkcert
 *.pem
 *.crt

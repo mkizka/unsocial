@@ -27,3 +27,8 @@ jobs:
       - run: ./scripts/setup-for-docker.sh
       - run: cp -f .env.docker .env && docker compose up -d --build
       - run: pnpm e2e
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          path: test-results/
+          retention-days: 1
