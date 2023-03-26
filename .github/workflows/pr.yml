@@ -22,7 +22,7 @@ jobs:
       contents: read
       packages: write
       pull-requests: write
-    needs: test-pr
+    needs: unit-test-pr
     with:
       app-name: pr${{ github.event.pull_request.number }}-soshal
       docker-name: soshal:pr${{ github.event.pull_request.number }}
