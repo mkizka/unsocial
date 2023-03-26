@@ -17,6 +17,13 @@ jobs:
           cache: pnpm
       - run: pnpm i
       - run: pnpm playwright install --with-deps chromium
+      # https://github.com/FiloSottile/mkcert#linux
+      - name: install-mkcert
+        run: |
+          sudo apt install -y libnss3-tools
+          curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+          chmod +x mkcert-v*-linux-amd64
+          sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
       - run: ./scripts/setup-for-docker.sh
       - run: cp -f .env.docker .env && docker compose up -d --build
       - run: pnpm e2e
