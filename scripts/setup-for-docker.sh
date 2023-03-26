@@ -11,15 +11,15 @@ if ! has mkcert; then
 fi
 
 echo "Install local CA and copy to ./docker/mkcert"
-mkcert -install 
-mkdir -p docker/mkcert 
+mkcert -install 2>/dev/null
+mkdir -p docker/mkcert 2>/dev/null
 cp "$(mkcert -CAROOT)"/rootCA.pem ./docker/mkcert/
 echo "Done"
 
 echo "Generte cert files to ./docker/nginx/certs"
 mkdir -p docker/nginx/certs
-mkcert -cert-file docker/nginx/certs/misskey.crt -key-file docker/nginx/certs/misskey.key misskey.localhost 
-mkcert -cert-file docker/nginx/certs/soshal.crt -key-file docker/nginx/certs/soshal.key soshal.localhost 
+mkcert -cert-file docker/nginx/certs/misskey.crt -key-file docker/nginx/certs/misskey.key misskey.localhost 2>/dev/null
+mkcert -cert-file docker/nginx/certs/soshal.crt -key-file docker/nginx/certs/soshal.key soshal.localhost 2>/dev/null
 echo "Done"
 
 if has wslpath; then
@@ -36,7 +36,7 @@ if has wslpath; then
   WIN_CAROOT="$(wslpath "$(pwsh mkcert -CAROOT)")"
   mkdir -p "$WIN_CAROOT"
   cp -f "$(mkcert -CAROOT)"/rootCA.pem "$WIN_CAROOT"/
-  pwsh mkcert -install 
+  pwsh mkcert -install 2>/dev/null
   echo "Done"
 fi
 
