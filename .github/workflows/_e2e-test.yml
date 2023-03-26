@@ -18,6 +18,8 @@ jobs:
       - run: ./scripts/setup-for-docker.sh
       - run: cp -f .env.docker .env
       - uses: yu-ichiro/spin-up-docker-compose-action@v1
+        with:
+          file: compose.yaml
       - run: docker compose exec web pnpm playwright install --with-deps chromium
       - run: docker compose exec web pnpm e2e
       - uses: actions/upload-artifact@v3
