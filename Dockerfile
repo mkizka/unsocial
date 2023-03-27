@@ -4,14 +4,14 @@ WORKDIR /app
 COPY prisma ./prisma
 COPY patches ./patches
 COPY package.json pnpm-lock.yaml ./
-RUN yarn global add pnpm && pnpm i
+RUN corepack enable pnpm && pnpm i
 
 # builder
 FROM node:18-slim AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN yarn global add pnpm && SKIP_ENV_VALIDATION=1 pnpm build
+RUN corepack enable pnpm && SKIP_ENV_VALIDATION=1 pnpm build
 
 # runner
 FROM node:18-slim AS runner

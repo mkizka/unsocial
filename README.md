@@ -4,14 +4,19 @@
 
 ## 開発手順
 
+pnpm が必要
+
 ```
 cp -f .env.example .env
+pnpm i
 pnpm dev
 ```
 
 http://localhost:3000 を開く
 
 ### 連合の動作確認が必要な場合
+
+mkcert と docker が必要
 
 ```
 cp -f .env.docker .env

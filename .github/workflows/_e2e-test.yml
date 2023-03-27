@@ -16,10 +16,7 @@ jobs:
           chmod +x mkcert-v*-linux-amd64
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
       - run: ./scripts/setup-for-docker.sh
-      - run: cp -f .env.docker .env
-      - uses: yu-ichiro/spin-up-docker-compose-action@v1
-        with:
-          file: compose.yaml
+      - run: cp -f .env.docker .env && docker compose up -d --build
       - run: docker compose exec web pnpm playwright install --with-deps chromium
       - run: docker compose exec web pnpm e2e
       - uses: actions/upload-artifact@v3
