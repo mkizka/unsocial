@@ -16,7 +16,7 @@ export const fetchJson = async <T extends object>(
       responseType: "json",
     });
   } catch (e) {
-    if (e instanceof got.HTTPError) {
+    if (e instanceof got.HTTPError || e instanceof got.RequestError) {
       logger.warn(`${e.code}: ${url}`);
       return null;
     }
