@@ -1,7 +1,7 @@
 #!/usr/bin/env -S npx tsx
+import fs from "fs/promises";
 import os from "os";
 import path from "path";
-import fs from "fs/promises";
 import { $ } from "zx";
 
 const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "zx-"));
