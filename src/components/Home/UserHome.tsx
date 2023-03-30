@@ -9,7 +9,7 @@ type Props = {
 export const UserHome: FC<Props> = ({ user }) => {
   return (
     <main>
-      <p>{user.name}でログイン中</p>
+      <p data-test-id="is-logged-in">{user.name}でログイン中</p>
       <button data-test-id="login-button" onClick={() => signOut()}>
         ログアウト
       </button>
