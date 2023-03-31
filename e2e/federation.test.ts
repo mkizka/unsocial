@@ -21,10 +21,11 @@ test("存在しないサーバーのアカウントには404を返す", async ({
 const login = async (page: Page) => {
   await page.goto("/");
   await page.click("[data-test-id=login-button]");
+  await page.waitForURL((url) => url.pathname == "/api/auth/verify-request");
   await page.goto("http://localhost:8025");
   await page.click(".msglist-message");
   await page
-    .frameLocator("iFrame")
+    .frameLocator("iframe")
     .getByRole("link", { name: "Sign in" })
     .click();
   expect(page.locator("[data-test-id=is-logged-in]")).toBeTruthy();
