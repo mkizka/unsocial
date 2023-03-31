@@ -37,10 +37,10 @@ dependencies:
     specifier: 13.1.1
     version: 13.1.1(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)
   next-auth:
-    specifier: ^4.19.2
+    specifier: 4.19.2
     version: 4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.1.1)(nodemailer@6.8.0)(react-dom@18.2.0)(react@18.2.0)
   next-runtime:
-    specifier: ^2.4.1
+    specifier: 2.4.1
     version: 2.4.1(patch_hash=fgcw6gwfu4cuywtdzvfi3ecbpa)(next@13.1.1)(react-dom@18.2.0)(react@18.2.0)
   nodemailer:
     specifier: ^6.8.0
@@ -1604,7 +1604,7 @@ packages:
   /@types/accepts@1.3.5:
     resolution: {integrity: sha512-jOdnI/3qTpHABjM5cx1Hc0sKsPoYCp+DP/GJRGtDlPd7fiV9oXGGIcjW/ZOxLIvjGz8MA+uMZI9metHlgqbgwQ==}
     dependencies:
-      '@types/node': 18.11.18
+      '@types/node': 18.15.3
     dev: false
 
   /@types/babel__core@7.20.0:
@@ -1640,13 +1640,13 @@ packages:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 18.11.18
+      '@types/node': 18.15.3
     dev: false
 
   /@types/busboy@0.2.4:
     resolution: {integrity: sha512-f+ZCVjlcN8JW/zf3iR0GqO4gjOUlltMTtZjn+YR1mlK+MVu6esTiIecO0/GQlmYQPQLdBnc7+5vG3Xb+SkvFLw==}
     dependencies:
-      '@types/node': 18.11.18
+      '@types/node': 18.15.3
     dev: false
 
   /@types/bytes@3.1.1:
@@ -1665,7 +1665,7 @@ packages:
   /@types/connect@3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
-      '@types/node': 18.11.18
+      '@types/node': 18.15.3
     dev: false
 
   /@types/cookies@0.7.7:
@@ -1674,7 +1674,7 @@ packages:
       '@types/connect': 3.4.35
       '@types/express': 4.17.17
       '@types/keygrip': 1.0.2
-      '@types/node': 18.11.18
+      '@types/node': 18.15.3
     dev: false
 
   /@types/debug@4.1.7:
@@ -1779,7 +1779,7 @@ packages:
   /@types/node-fetch@2.6.2:
     resolution: {integrity: sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==}
     dependencies:
-      '@types/node': 18.11.18
+      '@types/node': 18.15.3
       form-data: 3.0.1
     dev: false
 
