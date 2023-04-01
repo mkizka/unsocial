@@ -19,7 +19,7 @@ export const NoteCard: FC<Props> = ({ note }) => {
   const isMine = userId === note.userId;
   const isLiked = note.likes.some((like) => like.userId === userId);
   return (
-    <Link data-testid="NoteCard" href={`/notes/${note.id}`}>
+    <Link data-testid="note-card" href={`/notes/${note.id}`}>
       <div>
         <p>
           {note.user.name}

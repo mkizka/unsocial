@@ -23,11 +23,11 @@ export const NoteForm: FC = () => {
   return (
     <form onSubmit={handleSubmit}>
       <textarea
-        data-testid="noteform-textarea"
+        data-testid="note-form__textarea"
         name="content"
         ref={ref}
       ></textarea>
-      <button data-testid="noteform-submit" type="submit">
+      <button data-testid="note-form__button" type="submit">
         {mutation.isLoading ? "送信中..." : "送信"}
       </button>
     </form>
