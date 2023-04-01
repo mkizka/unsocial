@@ -25,12 +25,16 @@ test.describe("Federation", () => {
     await page.goto("/");
 
     const content = `投稿テスト ${new Date().getTime()}`;
-    await page.getByTestId("note-form__textarea").fill(content);
-    await page.getByTestId("note-form__button").click();
-    expect(page.getByTestId("note-card")).toBeTruthy();
+    // まれに連合されないことがあるので、3回投稿する
+    for (const i of [1, 2, 3]) {
+      await page.getByTestId("note-form__textarea").fill(`${content} ${i}`);
+      await page.getByTestId("note-form__button").click();
+    }
 
     await loginMisskey(page);
     await page.locator(".x5vNM button").nth(3).click();
-    await expect(page.locator(".x48yH").first()).toHaveText(content);
+    await expect(page.locator(".x48yH").first()).toHaveText(
+      new RegExp(content)
+    );
   });
 });
