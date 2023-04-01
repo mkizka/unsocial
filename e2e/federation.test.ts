@@ -1,37 +1,35 @@
-import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
+
+import { login, loginMisskey } from "./utils";
 
 test.describe.configure({ mode: "parallel" });
 
-test("他サーバーのアカウントを表示できる", async ({ page }) => {
-  const response = await page.goto("/@e2e@misskey.localhost");
-  expect(response?.status()).toBe(200);
-});
+test.describe("Federation", () => {
+  test("他サーバーのアカウントを表示できる", async ({ page }) => {
+    const response = await page.goto("/@e2e@misskey.localhost");
+    expect(response?.status()).toBe(200);
+  });
 
-test("他サーバーの存在しないアカウントには404を返す", async ({ page }) => {
-  const response = await page.goto("/@notfound@misskey.localhost");
-  expect(response?.status()).toBe(404);
-});
+  test("他サーバーの存在しないアカウントには404を返す", async ({ page }) => {
+    const response = await page.goto("/@notfound@misskey.localhost");
+    expect(response?.status()).toBe(404);
+  });
 
-test("存在しないサーバーのアカウントには404を返す", async ({ page }) => {
-  const response = await page.goto("/@e2e@notfound.localhost");
-  expect(response?.status()).toBe(404);
-});
+  test("存在しないサーバーのアカウントには404を返す", async ({ page }) => {
+    const response = await page.goto("/@e2e@notfound.localhost");
+    expect(response?.status()).toBe(404);
+  });
 
-const login = async (page: Page) => {
-  await page.goto("/");
-  await page.click("[data-testid=login-button]");
-  await page.waitForURL((url) => url.pathname == "/api/auth/verify-request");
-  await page.goto("http://localhost:8025");
-  await page.click(".msglist-message");
-  await page
-    .frameLocator("iframe")
-    .getByRole("link", { name: "Sign in" })
-    .click();
-  expect(page.locator("[data-testid=is-logged-in]")).toBeTruthy();
-};
+  test("作成したノートが他サーバーに連合される", async ({ page }) => {
+    await login(page);
+    await page.goto("/");
 
-test("作成したノートが他サーバーに連合される", async ({ page, context }) => {
-  await login(page);
-  // TODO: 実装
+    const content = `投稿テスト ${new Date().getTime()}`;
+    await page.getByTestId("noteform-textarea").fill(content);
+    await page.getByTestId("noteform-submit").click();
+
+    await loginMisskey(page);
+    await page.locator(".x5vNM button").nth(3).click();
+    await expect(page.locator(".x48yH").first()).toHaveText(content);
+  });
 });
