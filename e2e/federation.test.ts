@@ -29,12 +29,14 @@ test.describe("Federation", () => {
     for (const i of [1, 2, 3]) {
       await page.getByTestId("note-form__textarea").fill(`${content} ${i}`);
       await page.getByTestId("note-form__button").click();
+      await page.waitForTimeout(1000);
     }
 
     await loginMisskey(page);
     await page.locator(".x5vNM button").nth(3).click();
+    await page.waitForTimeout(500);
     await expect(page.locator(".x48yH").first()).toHaveText(
-      new RegExp(content)
+      new RegExp(`^${content} \d$`)
     );
   });
 });
