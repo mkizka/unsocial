@@ -98,43 +98,6 @@ const Followers = () => {
   );
 };
 
-const Timeline = () => {
-  const { data: notes } = api.note.find.useQuery();
-  const mutation = api.like.create.useMutation();
-  return (
-    <div>
-      <h3>タイムライン</h3>
-      {notes &&
-        notes.map((note) => (
-          <p key={note.id}>
-            <a href={`/notes/${note.id}`}>
-              {note.user.preferredUsername}@{note.user.host}: {note.content}
-            </a>
-            <button
-              onClick={() =>
-                mutation.mutate({
-                  noteId: note.id,
-                  content: "👍",
-                })
-              }
-            >
-              Like
-            </button>
-            {note.likes.map((like) => (
-              <a
-                key={like.id}
-                href={`/@${like.user.preferredUsername}@${like.user.host}`}
-              >
-                {like.content} from @{like.user.preferredUsername}@
-                {like.user.host}
-              </a>
-            ))}
-          </p>
-        ))}
-    </div>
-  );
-};
-
 const PlayGround = () => {
   return (
     <div>
@@ -142,7 +105,6 @@ const PlayGround = () => {
       <ResetMe />
       <AddNote />
       <Followers />
-      <Timeline />
     </div>
   );
 };
