@@ -14,7 +14,13 @@ export const DeleteButton: FC<Props> = ({ noteId }) => {
     },
   });
   return (
-    <button data-testid="delete-button" onClick={() => mutation.mutate(noteId)}>
+    <button
+      data-testid="delete-button"
+      onClick={(e) => {
+        e.preventDefault();
+        mutation.mutate(noteId);
+      }}
+    >
       削除
     </button>
   );
