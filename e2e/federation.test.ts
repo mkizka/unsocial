@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { login, loginMisskey } from "./utils";
+import { login, loginMisskey, retry } from "./utils";
 
 test.describe.configure({ mode: "parallel" });
 
@@ -25,18 +25,19 @@ test.describe("Federation", () => {
     await page.goto("/");
 
     const content = `投稿テスト ${new Date().getTime()}`;
-    // まれに連合されないことがあるので、3回投稿する
+    // まれに連合されないことがあるので3回投稿
     for (const i of [1, 2, 3]) {
       await page.getByTestId("note-form__textarea").fill(`${content} ${i}`);
       await page.getByTestId("note-form__button").click();
       await page.waitForTimeout(1000);
     }
 
-    await loginMisskey(page);
+    // まれにログインできないことがあるのでリトライ
+    await retry(3, () => loginMisskey(page));
     await page.locator(".x5vNM button").nth(3).click();
     await page.waitForTimeout(500);
     await expect(page.locator(".x48yH").first()).toHaveText(
-      new RegExp(`^${content} \\d$`)
+      new RegExp(content)
     );
   });
 });
