@@ -5,7 +5,7 @@ export const GuestHome: FC = () => {
   return (
     <main>
       <button
-        data-test-id="login-button"
+        data-testid="login-button"
         onClick={() => {
           signIn(
             "email",

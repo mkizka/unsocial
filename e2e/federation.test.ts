@@ -20,7 +20,7 @@ test("存在しないサーバーのアカウントには404を返す", async ({
 
 const login = async (page: Page) => {
   await page.goto("/");
-  await page.click("[data-test-id=login-button]");
+  await page.click("[data-testid=login-button]");
   await page.waitForURL((url) => url.pathname == "/api/auth/verify-request");
   await page.goto("http://localhost:8025");
   await page.click(".msglist-message");
@@ -28,7 +28,7 @@ const login = async (page: Page) => {
     .frameLocator("iframe")
     .getByRole("link", { name: "Sign in" })
     .click();
-  expect(page.locator("[data-test-id=is-logged-in]")).toBeTruthy();
+  expect(page.locator("[data-testid=is-logged-in]")).toBeTruthy();
 };
 
 test("作成したノートが他サーバーに連合される", async ({ page, context }) => {
