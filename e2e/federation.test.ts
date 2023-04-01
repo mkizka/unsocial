@@ -27,6 +27,7 @@ test.describe("Federation", () => {
     const content = `投稿テスト ${new Date().getTime()}`;
     await page.getByTestId("noteform-textarea").fill(content);
     await page.getByTestId("noteform-submit").click();
+    expect(page.getByTestId("NoteCard")).toBeTruthy();
 
     await loginMisskey(page);
     await page.locator(".x5vNM button").nth(3).click();
