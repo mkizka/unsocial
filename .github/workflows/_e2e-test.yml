@@ -31,3 +31,4 @@ jobs:
         with:
           path: test-results/
           retention-days: 1
+          if-no-files-found: ignore

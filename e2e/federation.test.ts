@@ -36,7 +36,7 @@ test.describe("Federation", () => {
     await page.locator(".x5vNM button").nth(3).click();
     await page.waitForTimeout(500);
     await expect(page.locator(".x48yH").first()).toHaveText(
-      new RegExp(`^${content} \d$`)
+      new RegExp(`^${content} \\d$`)
     );
   });
 });
