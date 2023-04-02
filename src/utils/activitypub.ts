@@ -107,8 +107,7 @@ const convertLike = (like: Like, noteUrl: string): AP.Like => {
   };
 };
 
-const convertUndo = (like: AP.Like): AP.Undo => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const convertUndo = (like: AP.Like | AP.Follow): AP.Undo => {
   const { "@context": _, ...object } = like;
   return {
     ...contexts,

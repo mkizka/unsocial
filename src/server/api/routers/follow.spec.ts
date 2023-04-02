@@ -37,23 +37,34 @@ test("follow", async () => {
     user: dummyLocalUser,
     expires: "",
   };
-  prismaMock.user.findFirst.mockResolvedValue(dummyRemoteUser);
   prismaMock.follow.create.mockResolvedValue({
     id: "followId",
     followeeId: dummyRemoteUser.id,
+    followee: {
+      host: dummyRemoteUser.host,
+      actorUrl: dummyRemoteUser.actorUrl,
+    },
     followerId: dummyLocalUser.id,
     status: "SENT",
     createdAt: new Date(),
-  });
+  } as never);
   // act
   const caller = appRouter.createCaller(ctx);
-  await caller.follow.create("userId");
+  await caller.follow.create(dummyRemoteUser.id);
   // assert
   expect(prismaMock.follow.create).toHaveBeenCalledWith({
     data: {
       followeeId: dummyRemoteUser.id,
       followerId: dummyLocalUser.id,
       status: "SENT",
+    },
+    include: {
+      followee: {
+        select: {
+          actorUrl: true,
+          host: true,
+        },
+      },
     },
   });
   expect(mockedQueue.push).toHaveBeenCalledWith({
