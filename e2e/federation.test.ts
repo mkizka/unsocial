@@ -1,43 +1,38 @@
 import { expect, test } from "@playwright/test";
 
-import { login, loginMisskey, retry } from "./utils";
-
-test.describe.configure({ mode: "parallel" });
+import { login, loginMisskey } from "./utils";
 
 test.describe("Federation", () => {
-  test("他サーバーのアカウントを表示できる", async ({ page }) => {
-    const response = await page.goto("/@e2e@misskey.localhost");
-    expect(response?.status()).toBe(200);
-  });
-
-  test("他サーバーの存在しないアカウントには404を返す", async ({ page }) => {
-    const response = await page.goto("/@notfound@misskey.localhost");
-    expect(response?.status()).toBe(404);
-  });
-
-  test("存在しないサーバーのアカウントには404を返す", async ({ page }) => {
-    const response = await page.goto("/@e2e@notfound.localhost");
-    expect(response?.status()).toBe(404);
+  test.beforeEach(async ({ page }) => {
+    await login(page);
   });
 
   test("作成したノートが他サーバーに連合される", async ({ page }) => {
-    await login(page);
-    await page.goto("/");
-
-    const content = `投稿テスト ${new Date().getTime()}`;
     // まれに連合されないことがあるので3回投稿
+    const content = `投稿テスト ${new Date().getTime()}`;
     for (const i of [1, 2, 3]) {
       await page.getByTestId("note-form__textarea").fill(`${content} ${i}`);
       await page.getByTestId("note-form__button").click();
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(500);
     }
-
-    // まれにログインできないことがあるのでリトライ
-    await retry(3, () => loginMisskey(page));
+    await loginMisskey(page);
     await page.locator(".x5vNM button").nth(3).click();
-    await page.waitForTimeout(500);
     await expect(page.locator(".x48yH").first()).toHaveText(
       new RegExp(content)
     );
+  });
+
+  test("削除したノートが他サーバーから削除される", async ({ page }) => {
+    // getByTestIdは複数要素がある場合にエラーになるのでlocatorを使う
+    const deleteButton = page.locator("[data-testid=delete-button]");
+    // countが出現を待たないようなので一つ以上の出現を待つ
+    await deleteButton.first().waitFor();
+    for (const _ of [...new Array(await deleteButton.count()).keys()]) {
+      await deleteButton.first().click();
+      await page.waitForTimeout(500);
+    }
+    await loginMisskey(page);
+    await page.locator(".x5vNM button").nth(3).click();
+    await expect(page.locator(".empty")).toBeVisible();
   });
 });

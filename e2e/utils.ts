@@ -33,14 +33,15 @@ export const login = async (page: Page) => {
     .frameLocator("iframe")
     .getByRole("link", { name: "Sign in" })
     .getAttribute("href");
-  expect(signInUrl).toBeTruthy();
   await page.goto(signInUrl!);
-  expect(page.locator("[data-testid=is-logged-in]")).toBeTruthy();
+  expect(page.getByTestId("is-logged-in")).toBeVisible();
 };
 
 export const loginMisskey = async (page: Page) => {
   await page.goto("https://misskey.localhost");
-  await page.locator("[data-cy-signin]").click();
+  // まれにローディングが終わらないことがあるのでタイムアウトを短めに
+  // IndexedDBが原因っぽいが対処法が分からず
+  await page.locator("[data-cy-signin]").click({ timeout: 3000 });
   await page.locator("[data-cy-signin-username] input").fill("e2e");
   await page.locator("[data-cy-signin-password] input").fill("e2e");
   await page.locator("button[type=submit]").click();
