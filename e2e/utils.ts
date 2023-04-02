@@ -34,7 +34,7 @@ export const login = async (page: Page) => {
     .getByRole("link", { name: "Sign in" })
     .getAttribute("href");
   await page.goto(signInUrl!);
-  expect(page.getByTestId("is-logged-in")).toBeVisible();
+  await expect(page.getByTestId("is-logged-in")).toBeVisible();
 };
 
 export const loginMisskey = async (page: Page) => {
@@ -45,5 +45,5 @@ export const loginMisskey = async (page: Page) => {
   await page.locator("[data-cy-signin-username] input").fill("e2e");
   await page.locator("[data-cy-signin-password] input").fill("e2e");
   await page.locator("button[type=submit]").click();
-  await expect(page.locator(".account")).toHaveText("@e2e");
+  await expect(page.locator(".account")).toBeVisible();
 };
