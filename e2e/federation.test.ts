@@ -5,9 +5,7 @@ import crypto from "crypto";
 const postNote = async (page: Page, content: string) => {
   await page.getByTestId("note-form__textarea").fill(content);
   await page.getByTestId("note-form__button").click();
-  const note = page.locator("[data-testid=note-card]", {
-    has: page.locator(`text=${content}`),
-  });
+  const note = page.locator("[data-testid=note-card]", { hasText: content });
   await expect(note).toBeVisible();
   return note;
 };
@@ -23,7 +21,7 @@ test.describe("Federation", () => {
     await postNote(page, content);
 
     page.goto("https://misskey.localhost");
-    await page.locator(".x5vNM button").nth(3).click();
+    await page.locator("button", { hasText: "Global" }).click();
     await expect(page.locator(`text=${content}`)).toBeVisible();
   });
 
@@ -36,7 +34,7 @@ test.describe("Federation", () => {
     await note.getByTestId("delete-button").click();
 
     page.goto("https://misskey.localhost");
-    await page.locator(".x5vNM button").nth(3).click();
+    await page.locator("button", { hasText: "Global" }).click();
     await expect(page.locator(`text=${content}`)).not.toBeVisible();
   });
 });
