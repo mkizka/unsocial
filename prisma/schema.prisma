@@ -67,7 +67,7 @@ model Note {
 
 enum FollowStatus {
   SENT
-  RECEIVED
+  FAILED
   ACCEPTED
 }
 

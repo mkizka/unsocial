@@ -1,8 +1,9 @@
 import type { User } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
+import Head from "next/head";
 
+import { UserCard } from "../../components/UserCard";
 import { activityStreams } from "../../utils/activitypub";
-import { api } from "../../utils/api";
 import { findOrFetchUserById } from "./service";
 
 type Props = {
@@ -10,16 +11,14 @@ type Props = {
 };
 
 const UserPage: NextPage<Props> = ({ user }) => {
-  const mutation = api.follow.create.useMutation();
+  const title = `${user.name ?? ""}@${user.preferredUsername}@${user.host}`;
   return (
-    <div>
-      <p>{user.name}</p>
-      <p>
-        @{user.preferredUsername}
-        {user.host && `@${user.host}`}
-      </p>
-      <button onClick={() => mutation.mutate(user.id)}>フォロー</button>
-    </div>
+    <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <UserCard user={user} />
+    </>
   );
 };
 
