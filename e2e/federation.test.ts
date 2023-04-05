@@ -1,14 +1,7 @@
-import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
 import crypto from "crypto";
 
-const postNote = async (page: Page, content: string) => {
-  await page.getByTestId("note-form__textarea").fill(content);
-  await page.getByTestId("note-form__button").click();
-  const note = page.locator("[data-testid=note-card]", { hasText: content });
-  await expect(note).toBeVisible();
-  return note;
-};
+import { soshal } from "./utils";
 
 test.describe.configure({ mode: "parallel" });
 
@@ -20,7 +13,7 @@ test.describe("Federation", () => {
       // 投稿
       await page.goto("/");
       const content = `投稿テスト${crypto.randomUUID()}`;
-      const note = await postNote(page, content);
+      const note = await soshal.postNote(page, content);
 
       // Misskey側で確認
       await page.goto("https://misskey.localhost");

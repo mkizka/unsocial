@@ -1,7 +1,7 @@
 import test from "@playwright/test";
 import fs from "fs";
 
-import { login, loginMisskey } from "./utils";
+import { misskey, soshal } from "./utils";
 
 // 並列実行させるにあたってログイン時のメールを識別できないため、
 // setupでログインして使いまわす
@@ -10,7 +10,7 @@ test("setup", async ({ page }) => {
   if (fs.existsSync(`e2e/state.json`)) {
     return;
   }
-  await login(page);
-  await loginMisskey(page);
+  await soshal.login(page);
+  await misskey.login(page);
   await page.context().storageState({ path: `e2e/state.json` });
 });
