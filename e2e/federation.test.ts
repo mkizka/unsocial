@@ -60,7 +60,7 @@ test.describe("Federation", () => {
     await remoteNote
       .locator("button", { has: page.locator(".ti-dots") })
       .click();
-    await page.locator("button", { hasText: "Delete" }).last().click();
+    await page.locator("button", { hasText: "削除" }).last().click();
     await page.locator("button", { hasText: "OK" }).click();
 
     // TODO: 自サーバーで同期を確認

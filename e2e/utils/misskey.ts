@@ -20,5 +20,5 @@ export const postNote = async (page: Page, content: string) => {
 
 export const showGTL = async (page: Page) => {
   await page.goto("https://misskey.localhost");
-  await page.locator("button", { hasText: "Global" }).click();
+  await page.locator("button", { hasText: "グローバル" }).click();
 };
