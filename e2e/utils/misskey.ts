@@ -17,3 +17,8 @@ export const postNote = async (page: Page, content: string) => {
   await page.locator("[data-cy-post-form-text]").fill(content);
   await page.locator("[data-cy-open-post-form-submit]").click();
 };
+
+export const showGTL = async (page: Page) => {
+  await page.goto("https://misskey.localhost");
+  await page.locator("button", { hasText: "Global" }).click();
+};

@@ -26,7 +26,7 @@ export const NoteCard: FC<Props> = ({ note }) => {
           <span>@{note.user.preferredUsername}</span>
           <span>@{note.user.host}</span>
         </p>
-        <p>{note.content}</p>
+        <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
         <LikeButton noteId={note.id} isLiked={isLiked} />
         {isMine && <DeleteButton noteId={note.id} />}
       </div>
