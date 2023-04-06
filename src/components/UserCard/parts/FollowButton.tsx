@@ -17,14 +17,17 @@ const FOLLOW_TEXT = {
 
 export const FollowButton: FC<Props> = ({ userId }) => {
   const context = api.useContext();
-  const { data: follow } = api.follow.get.useQuery(userId);
+  const { data: follow, isLoading } = api.follow.get.useQuery(userId);
   const mutation = api.follow.create.useMutation({
     onSuccess() {
       context.follow.invalidate();
     },
   });
   return (
-    <button data-testid="follow-button" onClick={() => mutation.mutate(userId)}>
+    <button
+      data-testid={isLoading ? "follow-button-loading" : "follow-button"}
+      onClick={() => mutation.mutate(userId)}
+    >
       {follow ? FOLLOW_TEXT[follow.status] : "フォロー"}
     </button>
   );
