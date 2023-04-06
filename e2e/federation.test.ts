@@ -31,6 +31,8 @@ test.describe("Federation", () => {
     // 他サーバーのユーザーをフォロー
     await page.goto("/@e2e@misskey.localhost");
     await page.getByTestId("follow-button").click();
+    await page.reload();
+    await expect(page.getByTestId("follow-button")).toHaveText("フォロー中");
 
     // 他サーバーで同期を確認
     await page.goto("https://misskey.localhost/@e2e/followers");
