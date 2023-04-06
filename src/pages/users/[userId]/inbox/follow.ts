@@ -4,6 +4,7 @@ import { z } from "zod";
 import { queue } from "../../../../server/background/queue";
 import { prisma } from "../../../../server/db";
 import { env } from "../../../../utils/env";
+import { findUserByActorId } from "../../../../utils/findUserByActorId";
 import { formatZodError } from "../../../../utils/formatZodError";
 import { logger } from "../../../../utils/logger";
 import type { InboxFunction } from "./types";
@@ -28,30 +29,13 @@ const followActivitySchema = z
   })
   .passthrough();
 
-const resolveUserId = (actorId: URL) => {
-  if (!actorId.pathname.startsWith("/users/")) {
-    return null;
-  }
-  return actorId.pathname.split("/")[2];
-};
-
 export const follow: InboxFunction = async (activity, actorUser, options) => {
   const parsedFollow = followActivitySchema.safeParse(activity);
   if (!parsedFollow.success) {
     logger.info("検証失敗: " + formatZodError(parsedFollow.error));
     return json({}, 400);
   }
-  const followeeId = resolveUserId(new URL(parsedFollow.data.object));
-  if (!followeeId) {
-    logger.info(
-      "フォローリクエストで指定されたフォロイーURLが不正でした: " +
-        parsedFollow.data.object
-    );
-    return json({}, 400);
-  }
-  const followee = await prisma.user.findFirst({
-    where: { id: followeeId },
-  });
+  const followee = await findUserByActorId(new URL(parsedFollow.data.object));
   if (!followee) {
     logger.info("フォローリクエストで指定されたフォロイーが存在しませんでした");
     return json({}, 400);
