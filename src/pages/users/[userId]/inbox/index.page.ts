@@ -5,6 +5,7 @@ import { findOrFetchUserByActorId } from "../../../../utils/findOrFetchUser";
 import { verifyActivity } from "../../../../utils/httpSignature/verify";
 import { logger } from "../../../../utils/logger";
 import { accept } from "./accept";
+import { delete_ } from "./delete";
 import { follow } from "./follow";
 import { note } from "./note";
 
@@ -14,12 +15,15 @@ export default Noop;
 const inbox = {
   Follow: follow,
   Accept: accept,
+  Delete: delete_,
 } as const;
 
+// TODO: 上のinboxにまとめる
 const undoInbox = {
   Follow: follow,
 };
 
+// TODO: 上のinboxにまとめる
 const createInbox = {
   Note: note,
 };
