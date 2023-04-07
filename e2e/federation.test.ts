@@ -65,7 +65,9 @@ test.describe("Federation", () => {
     await page.locator("button", { hasText: "削除" }).last().click();
     await page.locator("button", { hasText: "OK" }).click();
 
-    // TODO: 自サーバーで同期を確認
+    // 自サーバーで同期を確認
+    await page.goto("/");
+    await expect(myhostNote).not.toBeVisible();
 
     // 他サーバーのユーザーをアンフォロー
     await page.goto("/@e2e@misskey.localhost");
