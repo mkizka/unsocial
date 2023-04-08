@@ -12,7 +12,7 @@
     "format": "prettier . -w",
     "mutation-test": "run-s mutation-test:*",
     "mutation-test:run-only": "./scripts/mutation-test.sh",
-    "mutation-test:report": "./scripts/mutation-report.mts",
+    "mutation-test:report": "./scripts/mutation-report.mts | md",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -47,6 +47,7 @@
     "@typescript-eslint/parser": "^5.57.0",
     "activitypub-core-types": "^0.1.17",
     "better-typescript-lib": "^2.2.1",
+    "cli-markdown": "^3.0.3",
     "eslint": "^8.37.0",
     "eslint-config-next": "13.1.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",

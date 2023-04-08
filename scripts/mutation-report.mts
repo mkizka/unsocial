@@ -84,8 +84,8 @@ const table = async () => {
     : "ミューテーションテスト結果に変化がありませんでした";
 };
 
-const baseUrl = process.env.MUTATION_TEST_S3_BASEURL ?? "";
-
+const branchName = (await $`git branch --show-current`).stdout.trim();
+const baseUrl = process.env.MUTATION_TEST_S3_BASEURL + "/" + branchName;
 const text = `${await table()}
 
 :gun: [mutation.html](${baseUrl}/mutation/mutation.html)
