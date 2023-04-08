@@ -1,5 +1,8 @@
 #!/usr/bin/env -S npx tsx
 import fs from "fs";
+import { $, fetch } from "zx";
+
+$.verbose = false;
 
 type Result = {
   files: {
@@ -15,9 +18,27 @@ type Score = {
   [key: string]: number;
 };
 
+const readJson = (resultPath: string) => {
+  try {
+    return JSON.parse(fs.readFileSync(resultPath, "utf-8")) as Result;
+  } catch (e) {
+    console.error(`${e}`);
+    process.exit(1);
+  }
+};
+
+const fetchJson = async (url: string) => {
+  try {
+    const response = await fetch(url);
+    return response.json() as Promise<Result>;
+  } catch (e) {
+    console.error(`${e}`);
+    process.exit(1);
+  }
+};
+
 // https://stryker-mutator.io/docs/mutation-testing-elements/mutant-states-and-metrics/#metrics
-const getScorePerFile = (resultPath: string) => {
-  const result = JSON.parse(fs.readFileSync(resultPath, "utf-8")) as Result;
+const getScorePerFile = (result: Result) => {
   const score: Score = {};
   for (const [filename, { mutants }] of Object.entries(result.files)) {
     const detected = mutants.filter((mutant) =>
@@ -32,9 +53,13 @@ const getScorePerFile = (resultPath: string) => {
   return score;
 };
 
-const table = () => {
-  const prScores = getScorePerFile("reports/mutation/mutation.json");
-  const mainScores = getScorePerFile("reports-main/mutation/mutation.json");
+const table = async () => {
+  const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
+  const mainScores = getScorePerFile(
+    await fetchJson(
+      "https://minio-s3.paas.mkizka.dev/soshal-mutation-test/main/mutation/mutation.json"
+    )
+  );
   const filenames = [
     ...new Set([...Object.keys(prScores), ...Object.keys(mainScores)]),
   ].sort();
@@ -61,7 +86,7 @@ const table = () => {
 
 const baseUrl = process.env.MUTATION_TEST_S3_BASEURL ?? "";
 
-const text = `${table()}
+const text = `${await table()}
 
 :gun: [mutation.html](${baseUrl}/mutation/mutation.html)
 :page_facing_up: [stryker.log](${baseUrl}/stryker.log)`;

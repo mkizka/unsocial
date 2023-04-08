@@ -2,15 +2,13 @@ name: _mutation-test
 
 on:
   workflow_call:
-    inputs:
-      s3-basedir:
-        type: string
-        required: true
 
 env:
+  ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
+  BUCKET_NAME: soshal-mutation-test
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+  AWS_DEFAULT_REGION: ap-northeast-1
 
 jobs:
   test:
@@ -25,29 +23,19 @@ jobs:
           node-version: 18
           cache: pnpm
       - run: pnpm i
-      - name: download-reports
-        run: |
-          aws --endpoint-url https://minio-s3.paas.mkizka.dev s3 sync s3://${{ inputs.s3-basedir }} reports
-          if [ ! -e reports/stryker-incremental.json ]; then
-            aws --endpoint-url https://minio-s3.paas.mkizka.dev s3 sync s3://soshal-mutation-test/main reports
-          fi
-      - run: pnpm stryker run --fileLogLevel trace
+      - run: pnpm mutation-test:run-only --fileLogLevel trace
       - name: upload-reports
         run: |
           mv stryker.log reports/
-          aws --endpoint-url https://minio-s3.paas.mkizka.dev s3 sync reports s3://${{ inputs.s3-basedir }}
-      - name: download-reports-main
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          aws --endpoint-url https://minio-s3.paas.mkizka.dev s3 sync s3://soshal-mutation-test/main reports-main
+          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.BUCKET_NAME }}/${{ github.head_ref }}" --recursive
       - name: show-diff-result
         uses: gh640/command-result-action@v1
         if: ${{ github.event_name == 'pull_request' }}
         id: diff-result
         env:
-          MUTATION_TEST_S3_BASEURL: https://minio-s3.paas.mkizka.dev/${{ inputs.s3-basedir }}
+          MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.BUCKET_NAME }}/${{ github.head_ref }}
         with:
-          command: ./ci/report-mutation-test-pr.mts
+          command: ./scripts/mutation-report.mts
       - uses: thollander/actions-comment-pull-request@v2
         if: ${{ github.event_name == 'pull_request' }}
         with:
