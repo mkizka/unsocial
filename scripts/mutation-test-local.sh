@@ -4,7 +4,7 @@ set -eu
 rm -rf reports
 mkdir -p reports
 curl -s -o reports/stryker-incremental.json https://minio-s3.paas.mkizka.dev/soshal-mutation-test/main/stryker-incremental.json
-pnpm stryker run
+pnpm stryker run "$@"
 
 rm -rf reports-main
 mkdir -p reports-main/mutation
