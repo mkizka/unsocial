@@ -27,14 +27,13 @@ jobs:
       - name: upload-reports
         run: |
           mv stryker.log reports/
-          BRANCH_NAME=$(git branch --show-current)
-          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.BUCKET_NAME }}/$BRANCH_NAME" --recursive
+          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.BUCKET_NAME }}/${{ github.ref_name }}" --recursive
       - name: show-diff-result
         uses: gh640/command-result-action@v1
         if: ${{ github.event_name == 'pull_request' }}
         id: diff-result
         env:
-          MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.BUCKET_NAME }}
+          MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.BUCKET_NAME }}/${{ github.ref_name }}
         with:
           command: ./scripts/mutation-report.mts
       - uses: thollander/actions-comment-pull-request@v2
