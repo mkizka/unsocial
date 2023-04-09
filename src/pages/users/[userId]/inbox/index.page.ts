@@ -4,63 +4,16 @@ import { z } from "zod";
 import { findOrFetchUserByActorId } from "../../../../utils/findOrFetchUser";
 import { verifyActivity } from "../../../../utils/httpSignature/verify";
 import { logger } from "../../../../utils/logger";
-import { accept } from "./accept";
-import { delete_ } from "./delete";
-import { follow } from "./follow";
-import { note } from "./note";
+import { inbox } from "./inbox";
 
 const Noop = () => undefined;
 export default Noop;
 
-const inbox = {
-  Follow: follow,
-  Accept: accept,
-  Delete: delete_,
-} as const;
-
-// TODO: 上のinboxにまとめる
-const undoInbox = {
-  Follow: follow,
-};
-
-// TODO: 上のinboxにまとめる
-const createInbox = {
-  Note: note,
-};
-
-const keysOf = <T extends object>(obj: T) =>
-  Object.keys(obj) as [keyof T, ...(keyof T)[]];
-
-const anyActivitySchema = z.union([
-  z
-    .object({
-      type: z.enum(keysOf(inbox)),
-      actor: z.string().url(),
-    })
-    .passthrough(),
-  z
-    .object({
-      type: z.literal("Undo"),
-      actor: z.string().url(),
-      object: z
-        .object({
-          type: z.enum(keysOf(undoInbox)),
-        })
-        .passthrough(),
-    })
-    .passthrough(),
-  z
-    .object({
-      type: z.literal("Create"),
-      actor: z.string().url(),
-      object: z
-        .object({
-          type: z.enum(keysOf(createInbox)),
-        })
-        .passthrough(),
-    })
-    .passthrough(),
-]);
+const anyActivitySchema = z
+  .object({
+    actor: z.string().url(),
+  })
+  .passthrough();
 
 export const getServerSideProps = handle({
   async post({ req, resolvedUrl }) {
@@ -86,19 +39,6 @@ export const getServerSideProps = handle({
       logger.info("リクエストヘッダの署名が不正でした: " + result.reason);
       return json({}, 400);
     }
-    if (activity.data.type == "Undo") {
-      return undoInbox[activity.data.object.type](
-        activity.data.object,
-        actorUser,
-        { undo: true }
-      );
-    }
-    if (activity.data.type == "Create") {
-      return createInbox[activity.data.object.type](
-        activity.data.object,
-        actorUser
-      );
-    }
-    return inbox[activity.data.type](activity.data, actorUser);
+    return inbox(activity.data, actorUser);
   },
 });
