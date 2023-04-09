@@ -12,15 +12,22 @@ test.describe("Federation", () => {
     // 自サーバーで投稿
     await page.goto("/");
     const content = crypto.randomUUID();
-    const note = await soshal.postNote(page, content);
+    const myhostNote = await soshal.postNote(page, content);
 
     // 他サーバーで確認
     await misskey.showGTL(page);
-    await expect(page.locator(`text=${content}`)).toBeVisible();
+    const remoteNote = page.locator("article", { hasText: content });
+    await expect(remoteNote).toBeVisible();
+
+    // 他サーバーでいいね
+    await remoteNote
+      .locator("button", { has: page.locator(".ti-plus") })
+      .click();
+    await page.locator(".emojis button").first().click();
 
     // 自サーバーで削除
     await page.goto("/");
-    await note.getByTestId("delete-button").click();
+    await myhostNote.getByTestId("delete-button").click();
 
     // 他サーバーで確認
     await misskey.showGTL(page);
