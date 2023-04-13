@@ -7,13 +7,17 @@ import { logger } from "../../../../utils/logger";
 import type { InboxFunction } from "./types";
 
 const noteSchema = z.object({
-  type: z.literal("Note"),
-  id: z.string().url(),
-  content: z.string(),
-  published: z.string().datetime(),
+  type: z.literal("Create"),
+  actor: z.string().url(),
+  object: z.object({
+    type: z.literal("Note"),
+    id: z.string().url(),
+    content: z.string(),
+    published: z.string().datetime(),
+  }),
 });
 
-export const note: InboxFunction = async (activity, actorUser) => {
+export const create: InboxFunction = async (activity, actorUser) => {
   const parsedNote = noteSchema.safeParse(activity);
   if (!parsedNote.success) {
     logger.info("検証失敗: " + formatZodError(parsedNote.error));
@@ -21,10 +25,10 @@ export const note: InboxFunction = async (activity, actorUser) => {
   }
   await prisma.note.create({
     data: {
-      url: parsedNote.data.id,
+      url: parsedNote.data.object.id,
       userId: actorUser.id,
-      content: parsedNote.data.content,
-      published: parsedNote.data.published,
+      content: parsedNote.data.object.content,
+      published: parsedNote.data.object.published,
     },
   });
   logger.info("完了: ノート");
