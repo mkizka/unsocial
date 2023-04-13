@@ -27,7 +27,7 @@ jobs:
       - name: upload-reports
         run: |
           mv stryker.log reports/
-          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.BUCKET_NAME }}/${{ github.head_ref }}" --recursive
+          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.BUCKET_NAME }}/${{ github.head_ref || 'main' }}" --recursive
       - name: show-diff-result
         uses: gh640/command-result-action@v1
         if: ${{ github.event_name == 'pull_request' }}
