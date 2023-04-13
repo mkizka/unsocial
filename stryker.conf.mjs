@@ -10,7 +10,6 @@ const config = {
   mutate: [
     "src/**/*.ts",
     "!src/**/*.d.ts",
-    "!src/**/*.page.ts",
     "!src/**/*.spec.ts",
     "!src/**/fixtures/**/*.ts",
     "!src/**/__mocks__/**/*.ts",

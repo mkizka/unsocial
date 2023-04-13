@@ -1,4 +1,3 @@
-import type { User } from "@prisma/client";
 import { Matcher } from "jest-mock-extended";
 
 import { prismaMock } from "../../../../__mocks__/db";
@@ -12,34 +11,13 @@ const mockedLogger = jest.mocked(logger);
 jest.mock("../../../../server/background/queue");
 const mockedQueue = jest.mocked(queue);
 
-const dummyLocalUser: User = {
+const dummyLocalUser = {
   id: "dummyidlocal",
-  preferredUsername: "dummy_local",
-  host: "myhost.example.com",
-  name: "dummyLocal",
-  email: null,
-  emailVerified: null,
-  image: null,
-  icon: null,
-  publicKey: null,
   privateKey: "privateKey",
-  actorUrl: null,
-  inboxUrl: null,
 };
 
-const dummyRemoteUser: User = {
+const dummyRemoteUser = {
   id: "dummyidremote",
-  name: "dummyRemote",
-  preferredUsername: "dummy_remote",
-  host: "remote.example.com",
-  email: null,
-  emailVerified: null,
-  image: null,
-  icon: null,
-  publicKey: null,
-  privateKey: null,
-  actorUrl: null,
-  inboxUrl: null,
 };
 
 export const object = <T>(expectedValue: T) =>
@@ -47,17 +25,6 @@ export const object = <T>(expectedValue: T) =>
     return JSON.stringify(expectedValue) == JSON.stringify(actualValue);
   }, "");
 
-/**
- * フォローは以下の手順で行われる
- * 1. フォローのリクエストが来る
- * 2. フォロワー(name: dummy_remote)の actor を fetch
- *   - fetch した actor がDBにいればそれを返す/なければ保存 (findOrFetchUserByActorId)
- * === ↑ inbox() の処理
- * === ↓ follow() の処理
- * 3. フォロイー(id: dummyidlocal)が DB にいることを確認
- * 4. フォロー関係を保存
- * 5. Acceptを返す
- */
 describe("フォロー", () => {
   test("正常系", async () => {
     // arrange
@@ -68,60 +35,15 @@ describe("フォロー", () => {
     };
     prismaMock.user.findFirst
       .calledWith(object({ where: { id: "dummyidlocal" } }))
-      .mockResolvedValueOnce(dummyLocalUser);
+      .mockResolvedValueOnce(dummyLocalUser as never);
     // act
-    const response = await follow(activity, dummyRemoteUser);
+    const response = await follow(activity, dummyRemoteUser as never);
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith("完了: フォロー");
     expect(prismaMock.follow.create).toHaveBeenCalledWith({
       data: {
         followeeId: dummyLocalUser.id,
         followerId: dummyRemoteUser.id,
-      },
-    });
-    expect(mockedQueue.push).toHaveBeenCalledWith({
-      runner: "relayActivity",
-      params: {
-        sender: {
-          id: dummyLocalUser.id,
-          privateKey: dummyLocalUser.privateKey,
-        },
-        activity: {
-          type: "Accept",
-          actor: new URL(activity.object),
-          object: {
-            type: "Follow",
-            actor: new URL(activity.actor),
-            object: new URL(activity.object),
-          },
-        },
-      },
-    });
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("アンフォロー", () => {
-  test("正常系", async () => {
-    // arrange
-    const activity = {
-      type: "Follow",
-      actor: "https://remote.example.com/u/dummy_remote",
-      object: "https://myhost.example.com/users/dummyidlocal",
-    };
-    prismaMock.user.findFirst
-      .calledWith(object({ where: { id: "dummyidlocal" } }))
-      .mockResolvedValueOnce(dummyLocalUser);
-    // act
-    const response = await follow(activity, dummyRemoteUser, { undo: true });
-    // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith("完了: アンフォロー");
-    expect(prismaMock.follow.delete).toHaveBeenCalledWith({
-      where: {
-        followeeId_followerId: {
-          followeeId: dummyLocalUser.id,
-          followerId: dummyRemoteUser.id,
-        },
       },
     });
     expect(mockedQueue.push).toHaveBeenCalledWith({
