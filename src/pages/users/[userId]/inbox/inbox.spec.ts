@@ -1,15 +1,27 @@
 import { json } from "next-runtime";
 
 import { logger } from "../../../../utils/logger";
+import { accept } from "./accept";
+import { create } from "./create";
+import { delete_ } from "./delete";
 import { follow } from "./follow";
 import { inbox } from "./inbox";
-import { note } from "./note";
+import { undo } from "./undo";
 
 jest.mock("./follow");
 const mockedFollow = jest.mocked(follow).mockResolvedValue(json({}, 200));
 
-jest.mock("./note");
-const mockedNote = jest.mocked(note).mockResolvedValue(json({}, 200));
+jest.mock("./accept");
+const mockedAccept = jest.mocked(accept).mockResolvedValue(json({}, 200));
+
+jest.mock("./delete");
+const mockedDelete = jest.mocked(delete_).mockResolvedValue(json({}, 200));
+
+jest.mock("./undo");
+const mockedUndo = jest.mocked(undo).mockResolvedValue(json({}, 200));
+
+jest.mock("./create");
+const mockedCreate = jest.mocked(create).mockResolvedValue(json({}, 200));
 
 jest.mock("../../../../utils/logger");
 const mockedLogger = jest.mocked(logger);
@@ -20,6 +32,10 @@ describe("ユーザーinbox", () => {
   test.each`
     type        | fn
     ${"Follow"} | ${mockedFollow}
+    ${"Accept"} | ${mockedAccept}
+    ${"Delete"} | ${mockedDelete}
+    ${"Undo"}   | ${mockedUndo}
+    ${"Create"} | ${mockedCreate}
   `("$typeを実装した関数が呼ばれる", async ({ type, fn }) => {
     // arrange
     const activity = {
@@ -30,21 +46,6 @@ describe("ユーザーinbox", () => {
     await inbox(activity, dummyRemoteUser);
     // assert
     expect(fn).toBeCalledWith(activity, dummyRemoteUser);
-  });
-  test.each`
-    type      | fn
-    ${"Note"} | ${mockedNote}
-  `("Createで$typeを実装した関数が呼ばれる", async ({ type, fn }) => {
-    // arrange
-    const activity = {
-      type: "Create",
-      actor: "https://remote.example.com/u/dummy_remote",
-      object: { type },
-    };
-    // act
-    await inbox(activity, dummyRemoteUser);
-    // assert
-    expect(fn).toBeCalledWith(activity.object, dummyRemoteUser);
   });
   test("未実装のtypeの場合は400を返す", async () => {
     // arrange
@@ -57,23 +58,6 @@ describe("ユーザーinbox", () => {
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith(
       expect.stringContaining("検証エラー")
-    );
-    expect(response.status).toBe(400);
-  });
-  test("未実装のtypeのUndoには400を返す", async () => {
-    // arrange
-    const activity = {
-      type: "Undo",
-      actor: "https://remote.example.com/u/dummy_remote",
-      object: {
-        type: "Accept",
-      },
-    };
-    // act
-    const response = await inbox(activity, dummyRemoteUser);
-    // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("検証失敗")
     );
     expect(response.status).toBe(400);
   });
