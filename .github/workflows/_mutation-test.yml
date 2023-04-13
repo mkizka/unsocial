@@ -4,6 +4,7 @@ on:
   workflow_call:
 
 env:
+  BRANCH_NAME: ${{ github.head_ref || 'main' }}
   ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
   BUCKET_NAME: soshal-mutation-test
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -23,17 +24,17 @@ jobs:
           node-version: 18
           cache: pnpm
       - run: pnpm i
-      - run: BRANCH_NAME=${{ github.head_ref }} pnpm mutation-test:run-only --fileLogLevel trace
+      - run: pnpm mutation-test:run-only --fileLogLevel trace
       - name: upload-reports
         run: |
           mv stryker.log reports/
-          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.BUCKET_NAME }}/${{ github.head_ref || 'main' }}" --recursive
+          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.BUCKET_NAME }}/${{ env.BRANCH_NAME }}" --recursive
       - name: show-diff-result
         uses: gh640/command-result-action@v1
         if: ${{ github.event_name == 'pull_request' }}
         id: diff-result
         env:
-          MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.BUCKET_NAME }}/${{ github.head_ref }}
+          MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.BUCKET_NAME }}/${{ env.BRANCH_NAME }}
         with:
           command: ./scripts/mutation-report.mts
       - uses: thollander/actions-comment-pull-request@v2
