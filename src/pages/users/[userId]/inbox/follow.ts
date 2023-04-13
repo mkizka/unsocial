@@ -29,7 +29,7 @@ const followActivitySchema = z
   })
   .passthrough();
 
-export const follow: InboxFunction = async (activity, actorUser, options) => {
+export const follow: InboxFunction = async (activity, actorUser) => {
   const parsedFollow = followActivitySchema.safeParse(activity);
   if (!parsedFollow.success) {
     logger.info("検証失敗: " + formatZodError(parsedFollow.error));
@@ -47,30 +47,13 @@ export const follow: InboxFunction = async (activity, actorUser, options) => {
     // 自ホストのユーザーなら秘密鍵を持っているはずなので、異常な動作
     return json({}, 503);
   }
-  try {
-    if (options?.undo) {
-      await prisma.follow.delete({
-        where: {
-          followeeId_followerId: {
-            followeeId: followee.id,
-            followerId: actorUser.id,
-          },
-        },
-      });
-      logger.info("完了: アンフォロー");
-    } else {
-      await prisma.follow.create({
-        data: {
-          followeeId: followee.id,
-          followerId: actorUser.id,
-        },
-      });
-      logger.info("完了: フォロー");
-    }
-  } catch (e) {
-    logger.warn(`フォロー/アンフォローに失敗しました: ${e}`);
-    return json({}, 400);
-  }
+  await prisma.follow.create({
+    data: {
+      followeeId: followee.id,
+      followerId: actorUser.id,
+    },
+  });
+  logger.info("完了: フォロー");
   queue.push({
     runner: "relayActivity",
     params: {

@@ -3,8 +3,5 @@ import type { TypedResponse } from "next-runtime";
 
 export type InboxFunction = (
   activity: unknown,
-  actorUser: User,
-  options?: {
-    undo: boolean;
-  }
+  actorUser: User
 ) => Promise<TypedResponse<object>>;

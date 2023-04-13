@@ -32,26 +32,6 @@ describe("ユーザーinbox", () => {
     expect(fn).toBeCalledWith(activity, dummyRemoteUser);
   });
   test.each`
-    type        | fn
-    ${"Follow"} | ${mockedFollow}
-  `(
-    "Undoで$typeを実装した関数がundoオプションをつけて呼ばれる",
-    async ({ type, fn }) => {
-      // arrange
-      const activity = {
-        type: "Undo",
-        actor: "https://remote.example.com/u/dummy_remote",
-        object: { type },
-      };
-      // act
-      await inbox(activity, dummyRemoteUser);
-      // assert
-      expect(fn).toBeCalledWith(activity.object, dummyRemoteUser, {
-        undo: true,
-      });
-    }
-  );
-  test.each`
     type      | fn
     ${"Note"} | ${mockedNote}
   `("Createで$typeを実装した関数が呼ばれる", async ({ type, fn }) => {
@@ -93,7 +73,7 @@ describe("ユーザーinbox", () => {
     const response = await inbox(activity, dummyRemoteUser);
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("検証エラー")
+      expect.stringContaining("検証失敗")
     );
     expect(response.status).toBe(400);
   });
