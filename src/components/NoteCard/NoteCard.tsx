@@ -9,7 +9,7 @@ import { LikeButton } from "./parts/LikeButton";
 type Props = {
   note: Note & {
     user: Pick<User, "name" | "preferredUsername" | "host">;
-    likes: Like[];
+    likes: Pick<Like, "userId">[];
   };
 };
 
