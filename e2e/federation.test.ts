@@ -12,15 +12,29 @@ test.describe("Federation", () => {
     // 自サーバーで投稿
     await page.goto("/");
     const content = crypto.randomUUID();
-    const note = await soshal.postNote(page, content);
+    const myhostNote = await soshal.postNote(page, content);
 
     // 他サーバーで確認
     await misskey.showGTL(page);
-    await expect(page.locator(`text=${content}`)).toBeVisible();
+    const remoteNote = page.locator("article", { hasText: content });
+    await expect(remoteNote).toBeVisible();
+
+    // 他サーバーでいいね
+    await remoteNote
+      .locator("button", { has: page.locator(".ti-plus") })
+      .click();
+    await page.locator(".emojis button").first().click();
+
+    // 自サーバーで同期を確認
+    await page.goto("/");
+    await myhostNote.getByTestId("note-card-link").click();
+    await page.waitForURL((url) => url.pathname.startsWith("/notes/"));
+    await myhostNote.getByTestId("like-details-opener").click();
+    await expect(page.locator("text=@e2e@misskey.localhost")).toBeVisible();
 
     // 自サーバーで削除
     await page.goto("/");
-    await note.getByTestId("delete-button").click();
+    await myhostNote.getByTestId("delete-button").click();
 
     // 他サーバーで確認
     await misskey.showGTL(page);

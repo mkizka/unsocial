@@ -5,7 +5,7 @@ import type { FC } from "react";
 import { FollowButton } from "./parts/FollowButton";
 
 type Props = {
-  user: User;
+  user: Pick<User, "id" | "name" | "preferredUsername" | "host">;
 };
 
 export const UserCard: FC<Props> = ({ user }) => {

@@ -46,7 +46,9 @@ const convertUser = (
   };
 };
 
-const convertNote = (note: Note): AP.Note => {
+const convertNote = (
+  note: Pick<Note, "id" | "userId" | "content" | "createdAt">
+): AP.Note => {
   const userAddress = `https://${env.HOST}/users/${note.userId}`;
   return {
     ...contexts,

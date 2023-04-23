@@ -1,39 +1,80 @@
-import type { GetServerSideProps } from "next";
+import type { NextPage } from "next";
+import type { TypedResponse } from "next-runtime";
+import { handle, json, notFound } from "next-runtime";
 
+import { NoteCard } from "../../components/NoteCard";
 import { prisma } from "../../server/db";
 import { activityStreams } from "../../utils/activitypub";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Note = (props: any) => {
-  return (
-    <pre>
-      <code>{props.note}</code>
-    </pre>
-  );
+type Props = Awaited<ReturnType<typeof handleProps>> extends TypedResponse<
+  infer U
+>
+  ? U
+  : never;
+
+const NotePage: NextPage<Props> = ({ note }) => {
+  return <NoteCard note={note} />;
 };
 
-export default Note;
+export default NotePage;
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  res,
-  params,
-}) => {
-  if (typeof params?.noteId != "string") {
-    return { notFound: true };
-  }
-  const note = await prisma.note.findFirst({ where: { id: params.noteId } });
-  if (note == null) {
-    return { notFound: true };
-  }
-  if (req.headers.accept?.includes("application/activity+json")) {
-    res.setHeader("Content-Type", "application/activity+json");
-    res.write(JSON.stringify(activityStreams.note(note)));
-    res.end();
-  }
-  return {
-    props: {
-      note: JSON.stringify(note, null, 2),
+const handleProps = async (noteId: string) => {
+  const note = await prisma.note.findFirst({
+    include: {
+      user: {
+        select: {
+          name: true,
+          preferredUsername: true,
+          host: true,
+        },
+      },
+      likes: {
+        select: {
+          userId: true,
+        },
+      },
     },
-  };
+    where: {
+      id: noteId,
+    },
+  });
+  if (!note) {
+    return notFound();
+  }
+  // TODO: publishedとcreatedAtどっちかにまとめる
+  // @ts-ignore
+  note.published = note.published.toISOString();
+  // @ts-ignore
+  note.createdAt = note.createdAt.toISOString();
+  return json({ note }, 200);
 };
+
+const handleAp = async (noteId: string) => {
+  const note = await prisma.note.findFirst({
+    select: {
+      id: true,
+      userId: true,
+      content: true,
+      createdAt: true,
+    },
+    where: { id: noteId },
+  });
+  if (!note) {
+    return notFound();
+  }
+  const activity = activityStreams.note(note);
+  // @ts-ignore
+  return json(activity, 200);
+};
+
+export const getServerSideProps = handle({
+  get({ req, params }) {
+    if (typeof params?.noteId != "string") {
+      return notFound();
+    }
+    if (req.headers.accept?.includes("application/activity+json")) {
+      return handleAp(params.noteId);
+    }
+    return handleProps(params.noteId);
+  },
+});
