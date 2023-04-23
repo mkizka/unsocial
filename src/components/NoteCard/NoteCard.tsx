@@ -5,6 +5,7 @@ import type { FC } from "react";
 
 import { DeleteButton } from "./parts/DeleteButton";
 import { LikeButton } from "./parts/LikeButton";
+import { LikeDetail } from "./parts/LikeDetails";
 
 type Props = {
   note: Note & {
@@ -19,17 +20,19 @@ export const NoteCard: FC<Props> = ({ note }) => {
   const isMine = userId === note.userId;
   const isLiked = note.likes.some((like) => like.userId === userId);
   return (
-    <Link data-testid="note-card" href={`/notes/${note.id}`}>
-      <div>
-        <p>
-          {note.user.name}
-          <span>@{note.user.preferredUsername}</span>
-          <span>@{note.user.host}</span>
-        </p>
-        <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
-        <LikeButton noteId={note.id} isLiked={isLiked} />
-        {isMine && <DeleteButton noteId={note.id} />}
-      </div>
-    </Link>
+    <article data-testid="note-card">
+      <p>
+        {note.user.name}
+        <span>@{note.user.preferredUsername}</span>
+        <span>@{note.user.host}</span>
+      </p>
+      <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
+      <LikeButton noteId={note.id} isLiked={isLiked} />
+      {isMine && <DeleteButton noteId={note.id} />}
+      <LikeDetail noteId={note.id} />
+      <Link data-testid="note-card-link" href={`/notes/${note.id}`}>
+        {note.createdAt.toString()}
+      </Link>
+    </article>
   );
 };
