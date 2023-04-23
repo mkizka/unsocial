@@ -25,6 +25,13 @@ test.describe("Federation", () => {
       .click();
     await page.locator(".emojis button").first().click();
 
+    // 自サーバーで同期を確認
+    await page.goto("/");
+    await myhostNote.getByTestId("note-card-link").click();
+    await page.waitForURL((url) => url.pathname.startsWith("/notes/"));
+    await myhostNote.getByTestId("like-details-opener").click();
+    await expect(page.locator("text=@e2e@misskey.localhost")).toBeVisible();
+
     // 自サーバーで削除
     await page.goto("/");
     await myhostNote.getByTestId("delete-button").click();
