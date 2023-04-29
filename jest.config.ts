@@ -10,9 +10,9 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig: Config = {
+  roots: ["<rootDir>/src"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   clearMocks: true,
-  testPathIgnorePatterns: ["<rootDir>/e2e"],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
