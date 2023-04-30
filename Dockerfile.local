@@ -3,5 +3,7 @@ WORKDIR /app
 COPY prisma ./prisma
 COPY patches ./patches
 COPY package.json pnpm-lock.yaml ./
-RUN corepack enable pnpm && pnpm i
+RUN corepack enable pnpm &&\
+  pnpm config set store-dir /root/.pnpm-store &&\
+  pnpm i
 CMD pnpm prisma migrate deploy && pnpm next dev
