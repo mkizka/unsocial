@@ -6,7 +6,6 @@ import { UserHome } from "./UserHome";
 
 export const Home: FC = () => {
   const { data: sessionData } = useSession();
-
-  if (sessionData?.user) return <UserHome user={sessionData.user} />;
+  if (sessionData?.user) return <UserHome />;
   return <GuestHome />;
 };
