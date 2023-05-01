@@ -1,4 +1,4 @@
-import { Button, Textarea } from "@mantine/core";
+import { Avatar, Box, Button, Flex, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconFeather } from "@tabler/icons-react";
 import type { FC } from "react";
@@ -21,20 +21,29 @@ export const NoteForm: FC = () => {
     mutation.mutate({ text });
   });
   return (
-    <form onSubmit={handleSubmit}>
-      <Textarea
-        data-testid="note-form__textarea"
-        name="text"
-        {...form.getInputProps("text")}
-      ></Textarea>
-      <Button
-        data-testid="note-form__button"
-        type="submit"
-        leftIcon={<IconFeather size="1rem" />}
-        loading={mutation.isLoading}
-      >
-        送信
-      </Button>
-    </form>
+    <Flex>
+      <Avatar
+        src="https://api.dicebear.com/6.x/thumbs/svg?seed=Abby"
+        size="lg"
+        mr="sm"
+      />
+      <Box component="form" onSubmit={handleSubmit} sx={{ flex: 1 }}>
+        <Textarea
+          data-testid="note-form__textarea"
+          name="text"
+          {...form.getInputProps("text")}
+        ></Textarea>
+        <Flex justify="flex-end">
+          <Button
+            data-testid="note-form__button"
+            type="submit"
+            leftIcon={<IconFeather size="1rem" />}
+            loading={mutation.isLoading}
+          >
+            送信
+          </Button>
+        </Flex>
+      </Box>
+    </Flex>
   );
 };
