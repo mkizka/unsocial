@@ -15,7 +15,9 @@ export const LeftSidebar: FC<Props> = ({ hidden }) => {
       hidden={hidden}
       width={{ sm: 200, lg: 300 }}
     >
-      <Text>{sessionData?.user?.name}でログイン中</Text>
+      <Text data-testid="is-logged-in">
+        {sessionData?.user?.name}でログイン中
+      </Text>
       <Button data-testid="logout-button" onClick={() => signOut()}>
         ログアウト
       </Button>
