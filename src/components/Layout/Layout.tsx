@@ -2,9 +2,9 @@ import { AppShell } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import type { FC, ReactNode } from "react";
 
-import { Aside } from "./parts/Aside";
 import { Header } from "./parts/Header";
-import { Navbar } from "./parts/Navbar";
+import { LeftSidebar } from "./parts/LeftSidebar";
+import { RightSidebar } from "./parts/RightSidebar";
 
 type Props = {
   children: ReactNode;
@@ -15,8 +15,8 @@ export const Layout: FC<Props> = ({ children }) => {
   return (
     <AppShell
       padding="0rem"
-      navbar={<Navbar hidden={!opened} />}
-      aside={<Aside />}
+      navbar={<LeftSidebar hidden={!opened} />}
+      aside={<RightSidebar />}
       header={<Header opened={opened} onClick={toggle} />}
     >
       {children}

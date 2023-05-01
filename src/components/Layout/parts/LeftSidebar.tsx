@@ -1,4 +1,4 @@
-import { Button, Navbar as _Navbar, Text } from "@mantine/core";
+import { Button, Navbar, Text } from "@mantine/core";
 import { signOut, useSession } from "next-auth/react";
 import type { FC } from "react";
 
@@ -6,10 +6,10 @@ type Props = {
   hidden: boolean;
 };
 
-export const Navbar: FC<Props> = ({ hidden }) => {
+export const LeftSidebar: FC<Props> = ({ hidden }) => {
   const { data: sessionData } = useSession();
   return (
-    <_Navbar
+    <Navbar
       p="md"
       hiddenBreakpoint="sm"
       hidden={hidden}
@@ -19,6 +19,6 @@ export const Navbar: FC<Props> = ({ hidden }) => {
       <Button data-testid="logout-button" onClick={() => signOut()}>
         ログアウト
       </Button>
-    </_Navbar>
+    </Navbar>
   );
 };
