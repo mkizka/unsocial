@@ -11,20 +11,20 @@ const serverEnvSchema = z.object({
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
       : z.string().min(1).optional(),
-  NEXTAUTH_URL: z.preprocess(
-    // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
-    // Since NextAuth.js automatically uses the VERCEL_URL if present.
-    (str) => process.env.VERCEL_URL ?? str,
-    // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-    process.env.VERCEL ? z.string().min(1) : z.string().url()
+  NEXTAUTH_URL:
+    // next-authはVERCEL_URLがあればそれを使うので検証しない
+    // https://next-auth.js.org/configuration/options#nextauth_url
+    process.env.VERCEL_URL ? z.any() : z.string().url(),
+  HOST: z.preprocess(
+    (str) =>
+      process.env.VERCEL_URL ??
+      (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).host : str),
+    z.string().min(1)
   ),
-  HOST: z
-    .string()
-    .default(new URL(process.env.NEXTAUTH_URL || "http://localhost:3000").host),
   EMAIL_SERVER_USER: z.string().default("user"),
   EMAIL_SERVER_PASS: z.string().default("password"),
   EMAIL_SERVER_HOST: z.string(),
-  EMAIL_SERVER_PORT: z.coerce.number(),
+  EMAIL_SERVER_PORT: z.coerce.number().default(1025),
   EMAIL_FROM: z.string().email().default("from@example.com"),
 });
 
