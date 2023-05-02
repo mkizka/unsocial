@@ -14,14 +14,3 @@ jobs:
       pull-requests: write
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
-  deploy-pr:
-    uses: ./.github/workflows/_deploy.yml
-    permissions:
-      contents: read
-      packages: write
-      pull-requests: write
-    needs: unit-test-pr
-    with:
-      app-name: pr${{ github.event.pull_request.number }}-soshal
-      docker-name: soshal:pr${{ github.event.pull_request.number }}
-    secrets: inherit

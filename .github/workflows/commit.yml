@@ -13,35 +13,3 @@ jobs:
   mutation-test-prod:
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
-  deploy-prod:
-    uses: ./.github/workflows/_deploy.yml
-    permissions:
-      contents: read
-      packages: write
-    needs:
-      - unit-test-prod
-      - e2e-test-prod
-    with:
-      app-name: soshal
-      docker-name: soshal:latest
-    secrets: inherit
-  cleanup-resources:
-    runs-on: ubuntu-latest
-    env:
-      CAPROVER_URL: paas.mkizka.dev
-      CAPROVER_PASSWORD: ${{ secrets.CAPROVER_PASSWORD }}
-      GH_TOKEN: ${{ github.token }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_DEFAULT_REGION: ap-northeast-1
-    steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: pnpm
-      - run: pnpm i
-      - run: ./scripts/cleanup-resources.mts
