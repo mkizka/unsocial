@@ -11,7 +11,7 @@ FROM node:18-slim AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN corepack enable pnpm && SKIP_ENV_VALIDATION=1 pnpm build
+RUN corepack enable pnpm && pnpm build
 
 # runner
 FROM node:18-slim AS runner
