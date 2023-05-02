@@ -3,14 +3,9 @@ import { z } from "zod";
 
 import { formatZodError } from "./formatZodError";
 
-// Vercelでの実行時にPOSTGRES_PRISMA_URLは存在しない
-const dbUrlSchema = process.env.VERCEL
-  ? z.string().url().optional()
-  : z.string().url();
-
 const serverEnvSchema = z.object({
-  POSTGRES_PRISMA_URL: dbUrlSchema,
-  POSTGRES_URL_NON_POOLING: dbUrlSchema,
+  POSTGRES_PRISMA_URL: z.string().url(),
+  POSTGRES_URL_NON_POOLING: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === "production"
