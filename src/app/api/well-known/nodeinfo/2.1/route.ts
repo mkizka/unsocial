@@ -1,18 +1,14 @@
-import type { GetServerSideProps } from "next";
+import { NextResponse } from "next/server";
 
-import pkg from "../../../package.json";
-import { prisma } from "../../server/db";
+import pkg from "@/../package.json";
+import { prisma } from "@/server/prisma";
 
-const Noop = () => undefined;
-export default Noop;
-
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export async function GET() {
   const userCount = await prisma.user.count();
   // TODO: ローカルだけを対象に集計する
   const noteCount = await prisma.note.count();
-  res.setHeader("Content-Type", "application/jrd+json");
-  res.write(
-    JSON.stringify({
+  return NextResponse.json(
+    {
       // https://nodeinfo.diaspora.software/protocol.html
       version: "2.1",
       software: {
@@ -37,8 +33,11 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
         localComments: 0,
       },
       metadata: {},
-    })
+    },
+    {
+      headers: {
+        "Content-Type": "application/jrd+json",
+      },
+    }
   );
-  res.end();
-  return { props: {} };
-};
+}
