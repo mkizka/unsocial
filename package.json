@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "SKIP_ENV_VALIDATION=1 next build",
+    "build": "next build",
     "dev": "docker compose up -d db mail && next dev",
     "test": "jest",
     "e2e": "playwright test",
