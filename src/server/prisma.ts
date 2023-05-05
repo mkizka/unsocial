@@ -1,7 +1,8 @@
+// Stryker disable all
 import { PrismaClient } from "@prisma/client";
 
-import { env } from "../utils/env";
-import { globalize } from "../utils/globalize";
+import { env } from "@/utils/env";
+import { globalize } from "@/utils/globalize";
 
 export const prisma = globalize(
   "prisma",
