@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { env } from "@/utils/env";
 
 export async function GET() {
+  console.log(process.env.VERCEL_URL);
   return NextResponse.json(
     {
       links: [
