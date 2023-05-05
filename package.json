@@ -23,7 +23,7 @@
     "@trpc/react-query": "^10.23.0",
     "@trpc/server": "^10.23.0",
     "got": "11.8.6",
-    "next": "^13.3.2",
+    "next": "^13.4.0",
     "next-auth": "4.19.2",
     "next-runtime": "2.4.1",
     "nodemailer": "^6.9.1",

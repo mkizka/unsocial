@@ -3,7 +3,7 @@
 const config = {
   reactStrictMode: true,
   experimental: {
-    appDir: true,
+    serverActions: true,
   },
   async rewrites() {
     return [
