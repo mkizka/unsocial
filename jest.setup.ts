@@ -6,7 +6,7 @@ beforeEach(() => {
   nock.cleanAll();
 });
 
-jest.mock("./src/utils/env", () => ({
+jest.mock("@/utils/env", () => ({
   env: {
     ...process.env,
     HOST: "myhost.example.com",
