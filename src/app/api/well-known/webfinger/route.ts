@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -13,7 +14,7 @@ export async function GET({ nextUrl }: NextRequest) {
       resource.endsWith(`@${env.HOST}`)
     )
   ) {
-    return NextResponse.json({}, { status: 404 });
+    return notFound();
   }
   const preferredUsername = resource
     .replace("acct:", "") // startsWithされてるので必ず先頭にある
@@ -23,7 +24,7 @@ export async function GET({ nextUrl }: NextRequest) {
     where: { preferredUsername },
   });
   if (!user) {
-    return NextResponse.json({}, { status: 404 });
+    return notFound();
   }
   return NextResponse.json(
     {
