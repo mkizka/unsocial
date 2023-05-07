@@ -27,24 +27,6 @@ export const noteRouter = createTRPCRouter({
       },
     });
   }),
-  create: protectedProcedure
-    .input(z.object({ text: z.string() }))
-    .mutation(async ({ input, ctx }) => {
-      const note = await prisma.note.create({
-        data: {
-          userId: ctx.session.user.id,
-          content: input.text,
-          published: new Date(),
-        },
-      });
-      queue.push({
-        runner: "relayActivity",
-        params: {
-          sender: ctx.session.user,
-          activity: activityStreams.create(note),
-        },
-      });
-    }),
   delete: protectedProcedure
     .input(z.string())
     .mutation(async ({ input: noteId, ctx }) => {
