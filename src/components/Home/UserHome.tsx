@@ -1,9 +1,7 @@
+"use client";
 import type { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import type { FC } from "react";
-
-import { NoteForm } from "../NoteForm";
-import { Timeline } from "../Timeline";
 
 type Props = {
   user: NonNullable<Session["user"]>;
@@ -16,8 +14,6 @@ export const UserHome: FC<Props> = ({ user }) => {
       <button data-testid="login-button" onClick={() => signOut()}>
         ログアウト
       </button>
-      <NoteForm />
-      <Timeline />
     </main>
   );
 };

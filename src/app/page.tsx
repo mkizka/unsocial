@@ -1,3 +1,6 @@
+import { Home } from "@/components/Home";
+
 export default async function HomePage() {
-  return <p>foo</p>;
+  // @ts-expect-error
+  return <Home />;
 }

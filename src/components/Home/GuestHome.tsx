@@ -1,3 +1,4 @@
+"use client";
 import { signIn } from "next-auth/react";
 import type { FC } from "react";
 
