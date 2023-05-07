@@ -28,16 +28,15 @@ const serverEnvSchema = z.object({
   EMAIL_FROM: z.string().email().default("from@example.com"),
 });
 
-let env = process.env as unknown as z.infer<typeof serverEnvSchema>;
-
-if (!process.env.SKIP_ENV_VALIDATION) {
-  const parsed = serverEnvSchema.safeParse(process.env);
-  if (parsed.success === false) {
-    throw new Error(
-      `❌ Invalid environment variables: ${formatZodError(parsed.error)}`
-    );
+export const env = (() => {
+  if (!process.env.SKIP_ENV_VALIDATION) {
+    const parsed = serverEnvSchema.safeParse(process.env);
+    if (!parsed.success) {
+      throw new Error(
+        `❌ Invalid environment variables: ${formatZodError(parsed.error)}`
+      );
+    }
+    return parsed.data;
   }
-  env = parsed.data;
-}
-
-export { env };
+  return process.env as unknown as z.infer<typeof serverEnvSchema>;
+})();
