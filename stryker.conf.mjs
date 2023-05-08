@@ -12,6 +12,7 @@ const config = {
     "src/app/.well-known/**/*.ts",
     "!src/**/*.d.ts",
     "!src/**/*.spec.ts",
+    "!src/app/.well-known/**/*.spec.ts",
     "!src/**/__fixtures__/**/*.ts",
   ],
   // 権限エラーになることがあるため
