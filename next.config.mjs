@@ -11,10 +11,6 @@ const config = {
         source: "/@:username",
         destination: "/users/@:username",
       },
-      {
-        source: "/.well-known/:path*",
-        destination: "/api/well-known/:path*",
-      },
     ];
   },
 };
