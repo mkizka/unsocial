@@ -49,10 +49,10 @@ const convertUser = (
 const convertNote = (
   note: Pick<Note, "id" | "userId" | "content" | "createdAt">
 ): AP.Note => {
-  const userAddress = `https://${env.HOST}/api/users/${note.userId}`;
+  const userAddress = `https://${env.HOST}/users/${note.userId}/activity`;
   return {
     ...contexts,
-    id: new URL(`https://${env.HOST}/api/notes/${note.id}`),
+    id: new URL(`https://${env.HOST}/notes/${note.id}/activity`),
     type: "Note",
     content: note.content,
     attributedTo: new URL(userAddress),
