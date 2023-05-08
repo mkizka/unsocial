@@ -9,8 +9,8 @@ import {
   noKeyIdHeader,
   noSignatureHeader,
   unSupportedAlgorithmHeader,
-} from "./fixtures/headers";
-import { mockedKeys } from "./fixtures/keys";
+} from "./__fixtures__/headers";
+import { mockedKeys } from "./__fixtures__/keys";
 import { verifyActivity } from "./verify";
 
 describe("verifyActivity", () => {
