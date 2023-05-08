@@ -27,7 +27,11 @@ class Queue {
 
   public push<T extends keyof Runner>(item: QueueItem<T>) {
     if (env.HOST.startsWith("localhost")) {
-      logger.info(`ローカル環境のためpushをスキップ: ${JSON.stringify(item)}`);
+      logger.info(
+        `ローカル実行のためpushをスキップ(%s): %s`,
+        item.runner,
+        JSON.stringify(item.params.activity)
+      );
       return;
     }
     this.queue.push(item);
