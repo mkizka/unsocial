@@ -20,5 +20,9 @@ export async function GET(
   if (!note) {
     notFound();
   }
-  return NextResponse.json(activityStreams.note(note));
+  return NextResponse.json(activityStreams.note(note), {
+    headers: {
+      "Content-Type": "application/activity+json",
+    },
+  });
 }
