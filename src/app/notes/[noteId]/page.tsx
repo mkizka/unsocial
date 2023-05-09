@@ -1,4 +1,4 @@
-import { notFound } from "next-runtime";
+import { notFound } from "next/navigation";
 
 import { NoteCard } from "@/components/NoteCard";
 import { prisma } from "@/server/prisma";
