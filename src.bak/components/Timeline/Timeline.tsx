@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
+import { NoteCard } from "../../../src/components/NoteCard";
 import { api } from "../../utils/api";
-import { NoteCard } from "../NoteCard";
 
 export const Timeline: FC = () => {
   const { data: notes } = api.note.find.useQuery();
