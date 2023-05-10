@@ -1,5 +1,6 @@
 import type { Like, Note, User } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getServerSession } from "@/utils/getServerSession";
@@ -42,10 +43,9 @@ export async function NoteCard({ note }: Props) {
       <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
       <LikeButton isLiked={isLiked} onClick={handleLikeClick} />
       {isMine && <DeleteButton onClick={handleDeleteClick} />}
-      {/*<LikeDetail noteId={note.id} />
       <Link data-testid="note-card-link" href={`/notes/${note.id}`}>
         {note.createdAt.toString()}
-      </Link> */}
+      </Link>
     </article>
   );
 }
