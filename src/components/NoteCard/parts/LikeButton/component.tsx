@@ -1,4 +1,5 @@
 "use client";
+import { useTransition } from "react";
 
 type Props = {
   isLiked: boolean;
@@ -6,9 +7,13 @@ type Props = {
 };
 
 export function LikeButton({ isLiked, onClick }: Props) {
+  const [isPending, startTransition] = useTransition();
   return (
-    <button data-testid="like-button" onClick={() => onClick()}>
-      {isLiked ? "👍" : "-"}
+    <button
+      data-testid="like-button"
+      onClick={() => startTransition(() => onClick())}
+    >
+      {isPending ? "..." : isLiked ? "👍" : "-"}
     </button>
   );
 }

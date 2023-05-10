@@ -1,4 +1,6 @@
 import type { Like, Note, User } from "@prisma/client";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { getServerSession } from "@/utils/getServerSession";
 
@@ -21,11 +23,13 @@ export async function NoteCard({ note }: Props) {
   async function handleLikeClick() {
     "use server";
     await likeAction({ noteId: note.id, content: "👍" });
+    revalidatePath(`/notes/${note.id}`);
   }
 
   async function handleDeleteClick() {
     "use server";
     await deleteAction({ noteId: note.id });
+    redirect("/");
   }
 
   return (

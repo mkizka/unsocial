@@ -5,6 +5,7 @@ import { prisma } from "@/server/prisma";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
+import { logger } from "@/utils/logger";
 
 type User = {
   id: string;
@@ -35,7 +36,8 @@ const like = async (user: User, input: unknown) => {
   });
   if (like.note.user.host != env.HOST) {
     if (!like.note.url) {
-      throw new Error("ノートのURLがありません");
+      logger.error("ノートのURLがありません");
+      return;
     }
     queue.push({
       runner: "relayActivity",
@@ -64,7 +66,8 @@ const unlike = async (user: User, like: LikeWithNote) => {
   });
   if (like.note.user.host != env.HOST) {
     if (!like.note.url) {
-      throw new Error("ノートのURLがありません");
+      logger.error("ノートのURLがありません");
+      return;
     }
     queue.push({
       runner: "relayActivity",
