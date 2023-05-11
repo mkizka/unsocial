@@ -1,5 +1,6 @@
 import type { User } from "@prisma/client";
-import { getServerSession } from "next-auth";
+
+import { getServerSession } from "@/utils/getServerSession";
 
 import { FollowButton } from "./parts/FollowButton";
 
@@ -20,7 +21,7 @@ export async function UserCard({ user }: Props) {
       </p>
       {canFollow && (
         // @ts-expect-error
-        <FollowButton userId={user.id} />
+        <FollowButton followeeId={user.id} />
       )}
     </div>
   );
