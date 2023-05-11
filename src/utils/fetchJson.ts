@@ -1,0 +1,26 @@
+import type { Options } from "got";
+import got from "got";
+
+import { logger } from "./logger";
+
+export const fetchJson = async <T extends object>(
+  url: string | URL,
+  options?: Options
+) => {
+  try {
+    return await got<T>(url, {
+      ...options,
+      // Stryker disable next-line BooleanLiteral
+      isStream: false,
+      resolveBodyOnly: false,
+      responseType: "json",
+    });
+  } catch (e) {
+    if (e instanceof got.HTTPError || e instanceof got.RequestError) {
+      logger.warn(`${e.code}: ${url}`);
+      return null;
+    }
+    // nockのエラーを想定
+    throw e;
+  }
+};
