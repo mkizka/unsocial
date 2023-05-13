@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { prisma } from "@/server/prisma";
 
+import { env } from "./env";
 import { fetchJson } from "./fetchJson";
 import { formatZodError } from "./formatZodError";
 import { logger } from "./logger";
@@ -132,4 +133,16 @@ export const findOrFetchUserByWebfinger = async (
     return null;
   }
   return fetchUserByActorId(actorId);
+};
+
+export const findOrFetchUserByParams = async (params: { userId: string }) => {
+  const userId = decodeURIComponent(params.userId);
+  if (userId.startsWith("@")) {
+    const [preferredUsername, host] = userId.split("@").slice(1);
+    if (!preferredUsername) {
+      return null;
+    }
+    return findOrFetchUserByWebfinger(preferredUsername, host ?? env.HOST);
+  }
+  return prisma.user.findFirst({ where: { id: userId } });
 };

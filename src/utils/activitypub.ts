@@ -23,7 +23,7 @@ const convertUser = (
   const userAddress = `https://${env.HOST}/users/${user.id}`;
   return {
     ...contexts,
-    id: new URL(userAddress),
+    id: new URL(`${userAddress}/activity`),
     type: "Person",
     inbox: new URL(`${userAddress}/inbox`),
     outbox: new URL(`${userAddress}/outbox`),

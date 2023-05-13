@@ -8,8 +8,9 @@ const config = {
   async rewrites() {
     return [
       {
-        source: "/@:username",
-        destination: "/users/@:username",
+        // https://github.com/vercel/next.js/issues/24288
+        source: "/:username(@.*)",
+        destination: "/users/:username",
       },
     ];
   },
