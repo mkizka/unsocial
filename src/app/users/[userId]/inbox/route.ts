@@ -9,9 +9,6 @@ import { logger } from "@/utils/logger";
 
 import { inbox } from "./inbox";
 
-const Noop = () => undefined;
-export default Noop;
-
 const anyActivitySchema = z
   .object({
     actor: z.string().url(),
