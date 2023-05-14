@@ -7,6 +7,7 @@ const config = {
   coverageAnalysis: "perTest",
   incremental: true,
   timeoutMS: 30000,
+  maxTestRunnerReuse: 20,
   mutate: [
     "src/**/*.ts",
     "src/app/.well-known/**/*.ts",
