@@ -13,6 +13,10 @@ const customJestConfig: Config = {
   roots: ["<rootDir>/src"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   clearMocks: true,
+  moduleNameMapper: {
+    // tsconfig.json の paths と同じように書くため
+    "^@/(.*)$": "<rootDir>/src/$1",
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

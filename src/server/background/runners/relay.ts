@@ -2,8 +2,8 @@ import type { AP } from "activitypub-core-types";
 import got from "got";
 import type { Session } from "next-auth";
 
-import { signActivity } from "../../../utils/httpSignature/sign";
-import { logger } from "../../../utils/logger";
+import { signActivity } from "@/utils/httpSignature/sign";
+import { logger } from "@/utils/logger";
 
 export const relayActivity = async (params: {
   sender: NonNullable<Session["user"]>;

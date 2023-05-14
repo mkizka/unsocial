@@ -2,7 +2,9 @@ import type { User } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 import nock from "nock";
 
-import { prismaMock } from "../__mocks__/db";
+// なぜか"./mock"だとモック出来ない
+import { mockedPrisma } from "@/utils/mock";
+
 import { findOrFetchUserByWebfinger } from "./findOrFetchUser";
 import { logger } from "./logger";
 
@@ -42,21 +44,21 @@ describe("findOrFetchUser", () => {
   describe("正常系", () => {
     test("DBにあればそれを返す", async () => {
       // arrange
-      prismaMock.user.findFirst.mockResolvedValue(dummyUser);
+      mockedPrisma.user.findFirst.mockResolvedValue(dummyUser);
       // act
       const user = await findOrFetchUserByWebfinger(
         "dummy",
         "remote.example.com"
       );
       // assert
-      expect(prismaMock.user.findFirst).toHaveBeenCalledWith({
+      expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
         where: { preferredUsername: "dummy", host: "remote.example.com" },
       });
       expect(user).toEqual(dummyUser);
     });
     test("DBになければWebFingerを叩いて新規ユーザーとして保存する", async () => {
       // arrange
-      prismaMock.user.findFirst.mockResolvedValue(null);
+      mockedPrisma.user.findFirst.mockResolvedValue(null);
       const webFingerScope = nock("https://remote.example.com")
         .get("/.well-known/webfinger")
         .query({
@@ -71,14 +73,14 @@ describe("findOrFetchUser", () => {
       const remoteUserScope = nock("https://remote.example.com")
         .get("/users/dummyId")
         .reply(200, dummyPerson);
-      prismaMock.user.create.mockResolvedValue(dummyUser);
+      mockedPrisma.user.create.mockResolvedValue(dummyUser);
       // act
       const user = await findOrFetchUserByWebfinger(
         "dummy",
         "remote.example.com"
       );
       // assert
-      expect(prismaMock.user.create).toHaveBeenCalledWith({
+      expect(mockedPrisma.user.create).toHaveBeenCalledWith({
         data: {
           name: "Dummy",
           host: "remote.example.com",

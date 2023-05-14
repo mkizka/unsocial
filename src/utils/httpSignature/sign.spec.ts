@@ -1,4 +1,4 @@
-import { mockedKeys } from "./fixtures/keys";
+import { mockedKeys } from "./__fixtures__/keys";
 import { signActivity } from "./sign";
 
 afterAll(() => {

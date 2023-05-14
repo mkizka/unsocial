@@ -1,0 +1,24 @@
+import { queue } from "@/server/background/queue";
+import { prisma } from "@/server/prisma";
+import { activityStreams } from "@/utils/activitypub";
+import { getServerSession } from "@/utils/getServerSession";
+
+export async function action({ noteId }: { noteId: string }) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    // TODO: エラーを返す方法が実装されたら修正
+    return { error: "ログインが必要です" };
+  }
+  // TODO: 自分のじゃなかったらエラー吐く
+  await prisma.note.delete({ where: { id: noteId } });
+  queue.push({
+    runner: "relayActivity",
+    params: {
+      sender: session.user,
+      activity: activityStreams.delete({
+        id: noteId,
+        userId: session.user.id,
+      }),
+    },
+  });
+}

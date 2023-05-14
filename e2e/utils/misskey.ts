@@ -16,6 +16,7 @@ export const postNote = async (page: Page, content: string) => {
   await page.locator("[data-cy-open-post-form]").click();
   await page.locator("[data-cy-post-form-text]").fill(content);
   await page.locator("[data-cy-open-post-form-submit]").click();
+  await expect(page.locator(`text=${content}`)).toBeVisible();
 };
 
 export const showGTL = async (page: Page) => {

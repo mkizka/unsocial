@@ -2,18 +2,15 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  swcMinify: true,
-  output: "standalone",
-  pageExtensions: ["page.ts", "page.tsx"],
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+  experimental: {
+    serverActions: true,
   },
   async rewrites() {
     return [
       {
-        source: "/@:username",
-        destination: "/users/@:username",
+        // https://github.com/vercel/next.js/issues/24288
+        source: "/:username(@.*)",
+        destination: "/users/:username",
       },
     ];
   },

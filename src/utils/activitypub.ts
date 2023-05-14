@@ -23,7 +23,7 @@ const convertUser = (
   const userAddress = `https://${env.HOST}/users/${user.id}`;
   return {
     ...contexts,
-    id: new URL(userAddress),
+    id: new URL(`${userAddress}/activity`),
     type: "Person",
     inbox: new URL(`${userAddress}/inbox`),
     outbox: new URL(`${userAddress}/outbox`),
@@ -52,10 +52,10 @@ const convertNote = (
   const userAddress = `https://${env.HOST}/users/${note.userId}`;
   return {
     ...contexts,
-    id: new URL(`https://${env.HOST}/notes/${note.id}`),
+    id: new URL(`https://${env.HOST}/notes/${note.id}/activity`),
     type: "Note",
     content: note.content,
-    attributedTo: new URL(userAddress),
+    attributedTo: new URL(`${userAddress}/activity`),
     published: note.createdAt,
     to: [new URL("https://www.w3.org/ns/activitystreams#Public")],
     cc: [new URL(`${userAddress}/followers`)],
@@ -69,7 +69,7 @@ const convertCreate = (note: Note): AP.Create => {
     // TODO: エンドポイントつくる
     id: new URL(`https://${env.HOST}/notes/${note.id}/activity`),
     type: "Create",
-    actor: new URL(`https://${env.HOST}/users/${note.userId}`),
+    actor: new URL(`https://${env.HOST}/users/${note.userId}/activity`),
     published: object.published,
     to: object.to,
     cc: object.cc,
@@ -81,8 +81,8 @@ const convertDelete = (note: Pick<Note, "id" | "userId">): AP.Delete => {
   return {
     ...contexts,
     type: "Delete",
-    actor: new URL(`https://${env.HOST}/users/${note.userId}`),
-    object: new URL(`https://${env.HOST}/notes/${note.id}`),
+    actor: new URL(`https://${env.HOST}/users/${note.userId}/activity`),
+    object: new URL(`https://${env.HOST}/notes/${note.id}/activity`),
   };
 };
 
@@ -92,7 +92,7 @@ const convertFollow = (follow: Follow, followeeUrl: string): AP.Follow => {
     // TODO: エンドポイントつくる
     id: new URL(`https://${env.HOST}/follows/${follow.id}`),
     type: "Follow",
-    actor: new URL(`https://${env.HOST}/users/${follow.followerId}`),
+    actor: new URL(`https://${env.HOST}/users/${follow.followerId}/activity`),
     object: new URL(followeeUrl),
   };
 };
@@ -103,7 +103,7 @@ const convertLike = (like: Like, noteUrl: string): AP.Like => {
     type: "Like",
     // TODO: エンドポイントつくる
     id: new URL(`https://${env.HOST}/likes/${like.id}`),
-    actor: new URL(`https://${env.HOST}/users/${like.userId}`),
+    actor: new URL(`https://${env.HOST}/users/${like.userId}/activity`),
     object: new URL(noteUrl),
     content: "👍",
   };

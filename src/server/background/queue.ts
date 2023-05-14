@@ -20,7 +20,6 @@ class Queue {
   private queue: QueueItem[] = [];
 
   constructor() {
-    logger.info("Queueが初期化されました");
     this.startBackground();
   }
 
@@ -38,6 +37,7 @@ class Queue {
       throw new Error();
     }
     this.isStarted = true;
+    logger.info("Queueを開始します");
     this.runBackground();
   }
 

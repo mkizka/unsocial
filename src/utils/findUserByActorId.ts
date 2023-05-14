@@ -1,4 +1,4 @@
-import { prisma } from "../server/db";
+import { prisma } from "@/server/prisma";
 
 const resolveUserId = (actorId: URL) => {
   if (!actorId.pathname.startsWith("/users/")) {

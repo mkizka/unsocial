@@ -9,10 +9,11 @@ const config = {
   timeoutMS: 30000,
   mutate: [
     "src/**/*.ts",
+    "src/app/.well-known/**/*.ts",
     "!src/**/*.d.ts",
     "!src/**/*.spec.ts",
-    "!src/**/fixtures/**/*.ts",
-    "!src/**/__mocks__/**/*.ts",
+    "!src/app/.well-known/**/*.spec.ts",
+    "!src/**/__fixtures__/**/*.ts",
   ],
   // 権限エラーになることがあるため
   ignorePatterns: ["docker"],

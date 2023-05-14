@@ -1,4 +1,5 @@
-import { prismaMock } from "../__mocks__/db";
+import { mockedPrisma } from "@/utils/mock";
+
 import { findUserByActorId } from "./findUserByActorId";
 
 describe("findUserByActorId", () => {
@@ -13,7 +14,7 @@ describe("findUserByActorId", () => {
         // act
         await findUserByActorId(new URL(actorUrl));
         // assert
-        expect(prismaMock.user.findFirst).toBeCalledWith({
+        expect(mockedPrisma.user.findFirst).toBeCalledWith({
           where: { id: userId },
         });
       }
@@ -29,7 +30,7 @@ describe("findUserByActorId", () => {
       const user = await findUserByActorId(new URL(actorUrl));
       // assert
       expect(user).toBeNull();
-      expect(prismaMock.user.findFirst).not.toHaveBeenCalled();
+      expect(mockedPrisma.user.findFirst).not.toHaveBeenCalled();
     });
   });
 });

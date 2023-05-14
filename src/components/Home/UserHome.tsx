@@ -1,23 +1,38 @@
 import type { Session } from "next-auth";
-import { signOut } from "next-auth/react";
-import type { FC } from "react";
+
+import { prisma } from "@/server/prisma";
 
 import { NoteForm } from "../NoteForm";
 import { Timeline } from "../Timeline";
+import { SignInOrOutButton } from "./parts/LoginButton";
 
 type Props = {
   user: NonNullable<Session["user"]>;
 };
 
-export const UserHome: FC<Props> = ({ user }) => {
+export async function UserHome({ user }: Props) {
+  const notes = await prisma.note.findMany({
+    include: {
+      user: {
+        select: {
+          name: true,
+          preferredUsername: true,
+          host: true,
+        },
+      },
+      likes: {
+        select: {
+          userId: true,
+        },
+      },
+    },
+  });
   return (
     <main>
       <p data-testid="is-logged-in">{user.name}でログイン中</p>
-      <button data-testid="login-button" onClick={() => signOut()}>
-        ログアウト
-      </button>
+      <SignInOrOutButton isAuthenticated />
       <NoteForm />
-      <Timeline />
+      <Timeline notes={notes} />
     </main>
   );
-};
+}

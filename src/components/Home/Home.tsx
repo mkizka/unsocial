@@ -1,12 +1,14 @@
-import { useSession } from "next-auth/react";
-import type { FC } from "react";
+import { getServerSession } from "@/utils/getServerSession";
 
 import { GuestHome } from "./GuestHome";
 import { UserHome } from "./UserHome";
 
-export const Home: FC = () => {
-  const { data: sessionData } = useSession();
+export async function Home() {
+  const session = await getServerSession();
 
-  if (sessionData?.user) return <UserHome user={sessionData.user} />;
+  if (session?.user) {
+    // @ts-expect-error
+    return <UserHome user={session.user} />;
+  }
   return <GuestHome />;
-};
+}
