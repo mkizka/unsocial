@@ -25,7 +25,7 @@ const dummyRemoteUser = {
   publicKey: "publicKey",
 } as never;
 
-const createMockedRequest = (body: unknown) => {
+const createMockedRequest = (body: Record<string, string>) => {
   const mockedRequest = mockDeep<NextRequest>();
   mockedRequest.nextUrl.pathname = "/users/foo/inbox";
   mockedRequest.json.mockResolvedValueOnce(body);
