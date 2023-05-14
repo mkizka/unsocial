@@ -8,7 +8,7 @@ import { getServerSession } from "@/utils/getServerSession";
 import { action as deleteAction, DeleteButton } from "./parts/DeleteButton";
 import { action as likeAction, LikeButton } from "./parts/LikeButton";
 
-type Props = {
+export type Props = {
   note: Note & {
     user: Pick<User, "name" | "preferredUsername" | "host">;
     likes: Pick<Like, "userId">[];
@@ -43,7 +43,7 @@ export async function NoteCard({ note }: Props) {
       <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
       <LikeButton isLiked={isLiked} onClick={handleLikeClick} />
       {isMine && <DeleteButton onClick={handleDeleteClick} />}
-      <Link data-testid="note-card-link" href={`/notes/${note.id}`}>
+      <Link data-testid="note-card__link" href={`/notes/${note.id}`}>
         {note.createdAt.toString()}
       </Link>
     </article>

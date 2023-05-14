@@ -6,6 +6,9 @@ import { UserHome } from "./UserHome";
 export async function Home() {
   const session = await getServerSession();
 
-  if (session?.user) return <UserHome user={session.user} />;
+  if (session?.user) {
+    // @ts-expect-error
+    return <UserHome user={session.user} />;
+  }
   return <GuestHome />;
 }

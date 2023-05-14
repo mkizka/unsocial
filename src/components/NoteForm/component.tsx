@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
 import { action as _action } from "./action";
 
 // "use server"を書いたファイルをテストすると
@@ -6,6 +8,7 @@ import { action as _action } from "./action";
 export async function action(formData: FormData) {
   "use server";
   await _action(formData);
+  revalidatePath("/");
 }
 
 export function NoteForm() {
