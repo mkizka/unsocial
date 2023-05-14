@@ -1,8 +1,8 @@
+import { inbox } from ".";
 import { accept } from "./accept";
 import { create } from "./create";
 import { delete_ } from "./delete";
 import { follow } from "./follow";
-import { inbox } from "./inbox";
 import { undo } from "./undo";
 
 jest.mock("./follow");

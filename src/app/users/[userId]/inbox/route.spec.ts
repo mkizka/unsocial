@@ -5,7 +5,7 @@ import { findOrFetchUserByActorId } from "@/utils/findOrFetchUser";
 import { verifyActivity } from "@/utils/httpSignature/verify";
 import { logger } from "@/utils/logger";
 
-import { inbox } from "./inbox";
+import { inbox } from "./_handlers";
 import { POST } from "./route";
 
 jest.mock("@/utils/findOrFetchUser");
@@ -17,7 +17,7 @@ const mockedVerifyActivity = jest.mocked(verifyActivity);
 jest.mock("@/utils/logger");
 const mockedLogger = jest.mocked(logger);
 
-jest.mock("./inbox");
+jest.mock("./_handlers");
 const mockedInbox = jest.mocked(inbox);
 
 const dummyRemoteUser = {

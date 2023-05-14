@@ -7,7 +7,7 @@ import { formatZodError } from "@/utils/formatZodError";
 import { verifyActivity } from "@/utils/httpSignature/verify";
 import { logger } from "@/utils/logger";
 
-import { inbox } from "./inbox";
+import { inbox } from "./_handlers";
 
 const anyActivitySchema = z
   .object({
