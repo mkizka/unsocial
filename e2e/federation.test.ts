@@ -80,6 +80,7 @@ test.describe("Federation", () => {
       .click();
     await page.locator("button", { hasText: "削除" }).last().click();
     await page.locator("button", { hasText: "OK" }).click();
+    await expect(remoteNote).not.toBeVisible();
 
     // 自サーバーで同期を確認
     await page.goto("/");
