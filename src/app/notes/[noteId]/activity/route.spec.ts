@@ -42,7 +42,7 @@ describe("/notes/[noteId]/activity", () => {
         ],
         "attributedTo": "https://myhost.example.com/users/userId/activity",
         "cc": [
-          "https://myhost.example.com/users/userId/activity/followers",
+          "https://myhost.example.com/users/userId/followers",
         ],
         "content": "content",
         "id": "https://myhost.example.com/notes/noteId/activity",
