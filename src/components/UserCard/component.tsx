@@ -4,7 +4,7 @@ import { getServerSession } from "@/utils/getServerSession";
 
 import { FollowButton } from "./parts/FollowButton";
 
-type Props = {
+export type Props = {
   user: Pick<User, "id" | "name" | "preferredUsername" | "host">;
 };
 

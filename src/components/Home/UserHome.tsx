@@ -12,9 +12,6 @@ type Props = {
 
 export async function UserHome({ user }: Props) {
   const notes = await prisma.note.findMany({
-    where: {
-      userId: user.id,
-    },
     include: {
       user: {
         select: {

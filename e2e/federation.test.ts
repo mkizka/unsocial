@@ -27,9 +27,8 @@ test.describe("Federation", () => {
 
     // 自サーバーで同期を確認
     await page.goto("/");
-    await myhostNote.getByTestId("note-card-link").click();
+    await myhostNote.getByTestId("note-card__link").click();
     await page.waitForURL((url) => url.pathname.startsWith("/notes/"));
-    await myhostNote.getByTestId("like-details-opener").click();
     await expect(page.locator("text=@e2e@misskey.localhost")).toBeVisible();
 
     // 自サーバーで削除

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { NoteCard } from "@/components/NoteCard";
+import { UserList } from "@/components/UserList";
 import { prisma } from "@/server/prisma";
 
 export default async function NotePage({
@@ -11,16 +12,10 @@ export default async function NotePage({
   const note = await prisma.note.findUnique({
     where: { id: params.noteId },
     include: {
-      user: {
-        select: {
-          name: true,
-          preferredUsername: true,
-          host: true,
-        },
-      },
+      user: true,
       likes: {
-        select: {
-          userId: true,
+        include: {
+          user: true,
         },
       },
     },
@@ -28,6 +23,11 @@ export default async function NotePage({
   if (!note) {
     return notFound();
   }
-  // @ts-expect-error
-  return <NoteCard note={note} />;
+  return (
+    <>
+      {/* @ts-expect-error */}
+      <NoteCard note={note} />
+      <UserList users={note.likes.map((like) => like.user)} />
+    </>
+  );
 }

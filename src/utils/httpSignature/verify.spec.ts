@@ -28,7 +28,11 @@ describe("verifyActivity", () => {
     ${unSupportedAlgorithmHeader} | ${false}        | ${'Invalid literal value, expected "rsa-sha256"'} | ${"アルゴリズムがrsa-sha256でない"}
   `("$description", ({ header, expectedIsValid, expectedReason }) => {
     // act
-    const actual = verifyActivity("/inbox", header, mockedKeys.publickKey);
+    const actual = verifyActivity(
+      "/inbox",
+      new Headers(header),
+      mockedKeys.publickKey
+    );
     // assert
     expect(actual).toEqual({
       isValid: expectedIsValid,
