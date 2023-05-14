@@ -10,12 +10,12 @@ export async function GET({ nextUrl }: NextRequest) {
   const resource = nextUrl.searchParams.get("resource");
   if (
     !(
-      typeof resource == "string" &&
+      resource &&
       resource.startsWith("acct:") &&
       resource.endsWith(`@${env.HOST}`)
     )
   ) {
-    return notFound();
+    notFound();
   }
   const preferredUsername = resource
     .replace("acct:", "") // startsWithされてるので必ず先頭にある
@@ -25,7 +25,7 @@ export async function GET({ nextUrl }: NextRequest) {
     where: { preferredUsername },
   });
   if (!user) {
-    return notFound();
+    notFound();
   }
   return NextResponse.json(
     {

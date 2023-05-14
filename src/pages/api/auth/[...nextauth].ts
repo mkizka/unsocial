@@ -1,4 +1,4 @@
-// Prisma adapter for NextAuth, optional and can be removed
+// Stryker disable all
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import crypto from "crypto";
 import NextAuth, { type NextAuthOptions } from "next-auth";
