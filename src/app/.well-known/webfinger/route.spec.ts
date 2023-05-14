@@ -26,7 +26,7 @@ describe("/.well-known/webfinger", () => {
       {
         "links": [
           {
-            "href": "https://myhost.example.com/users/foo",
+            "href": "https://myhost.example.com/users/foo/activity",
             "rel": "self",
             "type": "application/activity+json",
           },

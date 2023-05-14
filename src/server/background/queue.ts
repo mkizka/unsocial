@@ -1,7 +1,6 @@
-import { env } from "@/utils/env";
-import { globalize } from "@/utils/globalize";
-import { logger } from "@/utils/logger";
-
+import { env } from "../../utils/env";
+import { globalize } from "../../utils/globalize";
+import { logger } from "../../utils/logger";
 import { relayActivity } from "./runners/relay";
 
 const runners = {
@@ -21,19 +20,10 @@ class Queue {
   private queue: QueueItem[] = [];
 
   constructor() {
-    logger.info("Queueが初期化されました");
     this.startBackground();
   }
 
   public push<T extends keyof Runner>(item: QueueItem<T>) {
-    if (env.HOST.startsWith("localhost")) {
-      logger.info(
-        `ローカル実行のためpushをスキップ(%s): %s`,
-        item.runner,
-        JSON.stringify(item.params.activity)
-      );
-      return;
-    }
     this.queue.push(item);
   }
 
@@ -47,6 +37,7 @@ class Queue {
       throw new Error();
     }
     this.isStarted = true;
+    logger.info("Queueを開始します");
     this.runBackground();
   }
 

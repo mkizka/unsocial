@@ -1,5 +1,5 @@
-import { prismaMock } from "../../../../__mocks__/db";
-import { logger } from "../../../../utils/logger";
+import { mockedPrisma } from "@/utils/mock";
+
 import { accept } from "./accept";
 
 const dummyRemoteUser = {
@@ -9,9 +9,6 @@ const dummyRemoteUser = {
 const dummyLocalUser = {
   id: "dummy_local",
 } as never;
-
-jest.mock("../../../../utils/logger");
-const mockedLogger = jest.mocked(logger);
 
 describe("フォロー承認", () => {
   test("正常系", async () => {
@@ -25,12 +22,11 @@ describe("フォロー承認", () => {
         object: "https://remote.example.com/u/dummy_remote",
       },
     };
-    prismaMock.user.findFirst.mockResolvedValue(dummyLocalUser);
+    mockedPrisma.user.findFirst.mockResolvedValue(dummyLocalUser);
     // act
     const response = await accept(activity, dummyRemoteUser);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith("完了: フォロー承認");
-    expect(prismaMock.follow.update).toHaveBeenCalledWith({
+    expect(mockedPrisma.follow.update).toHaveBeenCalledWith({
       where: {
         followeeId_followerId: {
           followeeId: "dummy_remote",
@@ -41,6 +37,9 @@ describe("フォロー承認", () => {
         status: "ACCEPTED",
       },
     });
-    expect(response.status).toBe(200);
+    expect(response).toEqual({
+      status: 200,
+      message: "完了: フォロー承認",
+    });
   });
 });

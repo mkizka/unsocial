@@ -1,9 +1,8 @@
-import { json } from "next-runtime";
 import { z } from "zod";
 
-import { prisma } from "../../../../server/db";
-import { formatZodError } from "../../../../utils/formatZodError";
-import { logger } from "../../../../utils/logger";
+import { prisma } from "@/server/prisma";
+import { formatZodError } from "@/utils/formatZodError";
+
 import type { InboxFunction } from "./types";
 
 const noteSchema = z.object({
@@ -20,8 +19,10 @@ const noteSchema = z.object({
 export const create: InboxFunction = async (activity, actorUser) => {
   const parsedNote = noteSchema.safeParse(activity);
   if (!parsedNote.success) {
-    logger.info("検証失敗: " + formatZodError(parsedNote.error));
-    return json({}, 400);
+    return {
+      status: 400,
+      message: "検証失敗: " + formatZodError(parsedNote.error),
+    };
   }
   await prisma.note.create({
     data: {
@@ -31,6 +32,5 @@ export const create: InboxFunction = async (activity, actorUser) => {
       published: parsedNote.data.object.published,
     },
   });
-  logger.info("完了: ノート");
-  return json({}, 200);
+  return { status: 200, message: "完了: ノート作成" };
 };

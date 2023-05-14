@@ -1,9 +1,6 @@
-import { prismaMock } from "../../../../__mocks__/db";
-import { logger } from "../../../../utils/logger";
-import { create } from "./create";
+import { mockedPrisma } from "@/utils/mock";
 
-jest.mock("../../../../utils/logger");
-const mockedLogger = jest.mocked(logger);
+import { create } from "./create";
 
 const dummyRemoteUser = {
   id: "dummyidremote",
@@ -28,8 +25,7 @@ describe("ノート", () => {
     // act
     const response = await create(activity, dummyRemoteUser as never);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith("完了: ノート");
-    expect(prismaMock.note.create).toHaveBeenCalledWith({
+    expect(mockedPrisma.note.create).toHaveBeenCalledWith({
       data: {
         url: activity.object.id,
         userId: dummyRemoteUser.id,
@@ -37,6 +33,6 @@ describe("ノート", () => {
         published: activity.object.published,
       },
     });
-    expect(response.status).toBe(200);
+    expect(response).toEqual({ status: 200, message: "完了: ノート作成" });
   });
 });

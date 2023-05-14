@@ -1,14 +1,15 @@
 import { Matcher } from "jest-mock-extended";
 
-import { prismaMock } from "../../../../__mocks__/db";
-import { queue } from "../../../../server/background/queue";
-import { logger } from "../../../../utils/logger";
+import { queue } from "@/server/background/queue";
+import { logger } from "@/utils/logger";
+import { mockedPrisma } from "@/utils/mock";
+
 import { follow } from "./follow";
 
-jest.mock("../../../../utils/logger");
+jest.mock("@/utils/logger");
 const mockedLogger = jest.mocked(logger);
 
-jest.mock("../../../../server/background/queue");
+jest.mock("@/server/background/queue");
 const mockedQueue = jest.mocked(queue);
 
 const dummyLocalUser = {
@@ -33,14 +34,13 @@ describe("フォロー", () => {
       actor: "https://remote.example.com/u/dummy_remote",
       object: "https://myhost.example.com/users/dummyidlocal",
     };
-    prismaMock.user.findFirst
+    mockedPrisma.user.findFirst
       .calledWith(object({ where: { id: "dummyidlocal" } }))
       .mockResolvedValueOnce(dummyLocalUser as never);
     // act
     const response = await follow(activity, dummyRemoteUser as never);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith("完了: フォロー");
-    expect(prismaMock.follow.create).toHaveBeenCalledWith({
+    expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
       data: {
         followeeId: dummyLocalUser.id,
         followerId: dummyRemoteUser.id,
@@ -64,6 +64,9 @@ describe("フォロー", () => {
         },
       },
     });
-    expect(response.status).toBe(200);
+    expect(response).toEqual({
+      status: 200,
+      message: "完了: フォロー",
+    });
   });
 });

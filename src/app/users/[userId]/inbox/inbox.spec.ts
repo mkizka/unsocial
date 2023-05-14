@@ -1,6 +1,3 @@
-import { json } from "next-runtime";
-
-import { logger } from "../../../../utils/logger";
 import { accept } from "./accept";
 import { create } from "./create";
 import { delete_ } from "./delete";
@@ -9,22 +6,29 @@ import { inbox } from "./inbox";
 import { undo } from "./undo";
 
 jest.mock("./follow");
-const mockedFollow = jest.mocked(follow).mockResolvedValue(json({}, 200));
+const mockedFollow = jest
+  .mocked(follow)
+  .mockResolvedValue({ status: 200, message: "メッセージ" });
 
 jest.mock("./accept");
-const mockedAccept = jest.mocked(accept).mockResolvedValue(json({}, 200));
+const mockedAccept = jest
+  .mocked(accept)
+  .mockResolvedValue({ status: 200, message: "メッセージ" });
 
 jest.mock("./delete");
-const mockedDelete = jest.mocked(delete_).mockResolvedValue(json({}, 200));
+const mockedDelete = jest
+  .mocked(delete_)
+  .mockResolvedValue({ status: 200, message: "メッセージ" });
 
 jest.mock("./undo");
-const mockedUndo = jest.mocked(undo).mockResolvedValue(json({}, 200));
+const mockedUndo = jest
+  .mocked(undo)
+  .mockResolvedValue({ status: 200, message: "メッセージ" });
 
 jest.mock("./create");
-const mockedCreate = jest.mocked(create).mockResolvedValue(json({}, 200));
-
-jest.mock("../../../../utils/logger");
-const mockedLogger = jest.mocked(logger);
+const mockedCreate = jest
+  .mocked(create)
+  .mockResolvedValue({ status: 200, message: "メッセージ" });
 
 const dummyRemoteUser = {} as never;
 
@@ -56,9 +60,6 @@ describe("ユーザーinbox", () => {
     // act
     const response = await inbox(activity, dummyRemoteUser);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("検証エラー")
-    );
     expect(response.status).toBe(400);
   });
   test("typeを持たないリクエストの場合は400を返す", async () => {
@@ -70,9 +71,6 @@ describe("ユーザーinbox", () => {
     // act
     const response = await inbox(activity, dummyRemoteUser);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("検証エラー")
-    );
     expect(response.status).toBe(400);
   });
 });

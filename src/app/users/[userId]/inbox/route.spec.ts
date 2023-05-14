@@ -1,19 +1,20 @@
-import { json } from "next-runtime";
+import { mockDeep } from "jest-mock-extended";
+import type { NextRequest } from "next/server";
 
-import { findOrFetchUserByActorId } from "../../../../utils/findOrFetchUser";
-import { verifyActivity } from "../../../../utils/httpSignature/verify";
-import { logger } from "../../../../utils/logger";
-import { createMockedContext } from "../../../__mocks__/context";
+import { findOrFetchUserByActorId } from "@/utils/findOrFetchUser";
+import { verifyActivity } from "@/utils/httpSignature/verify";
+import { logger } from "@/utils/logger";
+
 import { inbox } from "./inbox";
-import { getServerSideProps } from "./index.page";
+import { POST } from "./route";
 
-jest.mock("../../../../utils/findOrFetchUser");
+jest.mock("@/utils/findOrFetchUser");
 const mockedFindOrFetchUserByActorId = jest.mocked(findOrFetchUserByActorId);
 
-jest.mock("../../../../utils/httpSignature/verify");
+jest.mock("@/utils/httpSignature/verify");
 const mockedVerifyActivity = jest.mocked(verifyActivity);
 
-jest.mock("../../../../utils/logger");
+jest.mock("@/utils/logger");
 const mockedLogger = jest.mocked(logger);
 
 jest.mock("./inbox");
@@ -24,17 +25,12 @@ const dummyRemoteUser = {
   publicKey: "publicKey",
 } as never;
 
-const createMockedActivityContext = (activity: unknown) =>
-  createMockedContext(
-    {
-      method: "POST",
-      headers: {
-        accept: "application/activity+json",
-      },
-      body: activity,
-    },
-    "/users/foo/inbox"
-  );
+const createMockedRequest = (body: unknown) => {
+  const mockedRequest = mockDeep<NextRequest>();
+  mockedRequest.nextUrl.pathname = "/users/foo/inbox";
+  mockedRequest.json.mockResolvedValueOnce(body);
+  return mockedRequest;
+};
 
 describe("/users/[userId]/inbox", () => {
   test("正常系", async () => {
@@ -43,29 +39,31 @@ describe("/users/[userId]/inbox", () => {
       type: "Any",
       actor: "https://remote.example.com/users/foo",
     };
-    const ctx = createMockedActivityContext(activity);
+    const request = createMockedRequest(activity);
     mockedFindOrFetchUserByActorId.mockResolvedValue(dummyRemoteUser);
     mockedVerifyActivity.mockReturnValue({ isValid: true });
-    mockedInbox.mockResolvedValue(json({}, 200));
+    mockedInbox.mockResolvedValue({ status: 200, message: "メッセージ" });
     // act
-    await getServerSideProps(ctx);
+    const response = await POST(request);
     // assert
-    expect(mockedLogger.info).not.toHaveBeenCalled();
-    expect(ctx.res.statusCode).toBe(200);
+    expect(mockedLogger.info).toHaveBeenCalledWith(
+      "/users/foo/inbox(200): メッセージ"
+    );
+    expect(response.status).toBe(200);
   });
   test("actorが無ければ400を返す", async () => {
     // arrange
     const activity = {
       type: "Any",
     };
-    const ctx = createMockedActivityContext(activity);
+    const request = createMockedRequest(activity);
     // act
-    await getServerSideProps(ctx);
+    const response = await POST(request);
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("検証エラー")
+      expect.stringContaining("検証失敗")
     );
-    expect(ctx.res.statusCode).toBe(400);
+    expect(response.status).toBe(400);
   });
   test("actorで指定されたユーザーがDBになければ400を返す", async () => {
     // arrange
@@ -73,15 +71,15 @@ describe("/users/[userId]/inbox", () => {
       type: "Any",
       actor: "https://remote.example.com/users/foo",
     };
-    const ctx = createMockedActivityContext(activity);
+    const request = createMockedRequest(activity);
     mockedFindOrFetchUserByActorId.mockResolvedValue(null);
     // act
-    await getServerSideProps(ctx);
+    const response = await POST(request);
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith(
       "actorで指定されたユーザーが見つかりませんでした"
     );
-    expect(ctx.res.statusCode).toBe(400);
+    expect(response.status).toBe(400);
   });
   test("署名の検証結果が不正だったら400を返す", async () => {
     // arrange
@@ -89,15 +87,15 @@ describe("/users/[userId]/inbox", () => {
       type: "Any",
       actor: "https://remote.example.com/users/foo",
     };
-    const ctx = createMockedActivityContext(activity);
+    const request = createMockedRequest(activity);
     mockedFindOrFetchUserByActorId.mockResolvedValue(dummyRemoteUser);
     mockedVerifyActivity.mockReturnValue({ isValid: false, reason: "foo" });
     // act
-    await getServerSideProps(ctx);
+    const response = await POST(request);
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith(
       expect.stringContaining("リクエストヘッダの署名が不正でした")
     );
-    expect(ctx.res.statusCode).toBe(400);
+    expect(response.status).toBe(400);
   });
 });

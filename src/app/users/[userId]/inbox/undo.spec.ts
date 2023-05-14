@@ -1,11 +1,8 @@
 import { Matcher } from "jest-mock-extended";
 
-import { prismaMock } from "../../../../__mocks__/db";
-import { logger } from "../../../../utils/logger";
-import { undo } from "./undo";
+import { mockedPrisma } from "@/utils/mock";
 
-jest.mock("../../../../utils/logger");
-const mockedLogger = jest.mocked(logger);
+import { undo } from "./undo";
 
 const dummyLocalUser = {
   id: "dummyidlocal",
@@ -32,14 +29,13 @@ describe("アンフォロー", () => {
         object: "https://myhost.example.com/users/dummyidlocal",
       },
     };
-    prismaMock.user.findFirst
+    mockedPrisma.user.findFirst
       .calledWith(object({ where: { id: "dummyidlocal" } }))
       .mockResolvedValueOnce(dummyLocalUser as never);
     // act
     const response = await undo(activity, dummyRemoteUser as never);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith("完了: アンフォロー");
-    expect(prismaMock.follow.delete).toHaveBeenCalledWith({
+    expect(mockedPrisma.follow.delete).toHaveBeenCalledWith({
       where: {
         followeeId_followerId: {
           followeeId: dummyLocalUser.id,
@@ -47,6 +43,9 @@ describe("アンフォロー", () => {
         },
       },
     });
-    expect(response.status).toBe(200);
+    expect(response).toEqual({
+      status: 200,
+      message: "完了: アンフォロー",
+    });
   });
 });

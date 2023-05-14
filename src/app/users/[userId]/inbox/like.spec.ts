@@ -1,9 +1,6 @@
-import { prismaMock } from "../../../../__mocks__/db";
-import { logger } from "../../../../utils/logger";
-import { like } from "./like";
+import { mockedPrisma } from "@/utils/mock";
 
-jest.mock("../../../../utils/logger");
-const mockedLogger = jest.mocked(logger);
+import { like } from "./like";
 
 const dummyRemoteUser = {
   id: "dummyidremote",
@@ -22,19 +19,22 @@ describe("いいね", () => {
       object: "https://myhost.example.com/notes/note_local",
       content: "👍",
     };
-    prismaMock.like.create.mockResolvedValueOnce(dummyLocalUser as never);
+    mockedPrisma.like.create.mockResolvedValueOnce(dummyLocalUser as never);
     // act
     const response = await like(activity, dummyRemoteUser as never);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith("完了: いいね");
-    expect(prismaMock.like.create).toHaveBeenCalledWith({
+
+    expect(mockedPrisma.like.create).toHaveBeenCalledWith({
       data: {
         noteId: "note_local",
         userId: dummyRemoteUser.id,
         content: activity.content,
       },
     });
-    expect(response.status).toBe(200);
+    expect(response).toEqual({
+      status: 200,
+      message: "完了: いいね",
+    });
   });
   test("不正なactivityなら400を返す", async () => {
     // arrange
@@ -47,10 +47,10 @@ describe("いいね", () => {
     // act
     const response = await like(activity, dummyRemoteUser as never);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("検証失敗")
-    );
-    expect(response.status).toBe(400);
+    expect(response).toEqual({
+      status: 400,
+      message: expect.stringContaining("検証失敗"),
+    });
   });
   test("URLが/notes/でなければ400を返す", async () => {
     // arrange
@@ -63,9 +63,9 @@ describe("いいね", () => {
     // act
     const response = await like(activity, dummyRemoteUser as never);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith(
-      "検証失敗: ノートのURLではありません"
-    );
-    expect(response.status).toBe(400);
+    expect(response).toEqual({
+      status: 400,
+      message: "activityからいいね対象のノートIDを取得できませんでした",
+    });
   });
 });

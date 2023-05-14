@@ -1,5 +1,4 @@
 import crypto from "crypto";
-import type { IncomingHttpHeaders } from "http";
 import { z } from "zod";
 
 import { textOf } from "./utils";
@@ -55,7 +54,7 @@ type VerifyResult =
 
 export const verifyActivity = (
   resolvedUrl: string,
-  headers: IncomingHttpHeaders,
+  headers: Request["headers"],
   publicKey: string
 ): VerifyResult => {
   const parsedHeaders = headersSchema.safeParse(headers);

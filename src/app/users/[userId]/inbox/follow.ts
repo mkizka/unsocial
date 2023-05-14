@@ -1,12 +1,11 @@
-import { json } from "next-runtime";
 import { z } from "zod";
 
-import { queue } from "../../../../server/background/queue";
-import { prisma } from "../../../../server/db";
-import { env } from "../../../../utils/env";
-import { findUserByActorId } from "../../../../utils/findUserByActorId";
-import { formatZodError } from "../../../../utils/formatZodError";
-import { logger } from "../../../../utils/logger";
+import { queue } from "@/server/background/queue";
+import { prisma } from "@/server/prisma";
+import { env } from "@/utils/env";
+import { findUserByActorId } from "@/utils/findUserByActorId";
+import { formatZodError } from "@/utils/formatZodError";
+
 import type { InboxFunction } from "./types";
 
 const followActivitySchema = z
@@ -32,20 +31,25 @@ const followActivitySchema = z
 export const follow: InboxFunction = async (activity, actorUser) => {
   const parsedFollow = followActivitySchema.safeParse(activity);
   if (!parsedFollow.success) {
-    logger.info("検証失敗: " + formatZodError(parsedFollow.error));
-    return json({}, 400);
+    return {
+      status: 400,
+      message: "検証失敗: " + formatZodError(parsedFollow.error),
+    };
   }
   const followee = await findUserByActorId(new URL(parsedFollow.data.object));
   if (!followee) {
-    logger.info("フォローリクエストで指定されたフォロイーが存在しませんでした");
-    return json({}, 400);
+    return {
+      status: 400,
+      message: "フォローリクエストで指定されたフォロイーが存在しませんでした",
+    };
   }
   if (!followee.privateKey) {
-    logger.info(
-      "フォローリクエストで指定されたフォロイーが秘密鍵を持っていませんでした"
-    );
     // 自ホストのユーザーなら秘密鍵を持っているはずなので、異常な動作
-    return json({}, 503);
+    return {
+      status: 503,
+      message:
+        "フォローリクエストで指定されたフォロイーが秘密鍵を持っていませんでした",
+    };
   }
   await prisma.follow.create({
     data: {
@@ -53,7 +57,6 @@ export const follow: InboxFunction = async (activity, actorUser) => {
       followerId: actorUser.id,
     },
   });
-  logger.info("完了: フォロー");
   queue.push({
     runner: "relayActivity",
     params: {
@@ -72,5 +75,5 @@ export const follow: InboxFunction = async (activity, actorUser) => {
       },
     },
   });
-  return json({}, 200);
+  return { status: 200, message: "完了: フォロー" };
 };

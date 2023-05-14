@@ -1,11 +1,10 @@
-import { json } from "next-runtime";
 import { z } from "zod";
 
-import { prisma } from "../../../../server/db";
-import { env } from "../../../../utils/env";
-import { findUserByActorId } from "../../../../utils/findUserByActorId";
-import { formatZodError } from "../../../../utils/formatZodError";
-import { logger } from "../../../../utils/logger";
+import { prisma } from "@/server/prisma";
+import { env } from "@/utils/env";
+import { findUserByActorId } from "@/utils/findUserByActorId";
+import { formatZodError } from "@/utils/formatZodError";
+
 import type { InboxFunction } from "./types";
 
 const undoActivitySchema = z
@@ -37,17 +36,20 @@ const undoActivitySchema = z
 export const undo: InboxFunction = async (activity, actorUser) => {
   const parsedUndo = undoActivitySchema.safeParse(activity);
   if (!parsedUndo.success) {
-    logger.info("検証失敗: " + formatZodError(parsedUndo.error));
-    return json({}, 400);
+    return {
+      status: 400,
+      message: "検証失敗: " + formatZodError(parsedUndo.error),
+    };
   }
   const followee = await findUserByActorId(
     new URL(parsedUndo.data.object.object)
   );
   if (!followee) {
-    logger.info(
-      "アンフォローリクエストで指定されたフォロイーが存在しませんでした"
-    );
-    return json({}, 400);
+    return {
+      status: 400,
+      message:
+        "アンフォローリクエストで指定されたフォロイーが存在しませんでした",
+    };
   }
   await prisma.follow.delete({
     where: {
@@ -57,6 +59,8 @@ export const undo: InboxFunction = async (activity, actorUser) => {
       },
     },
   });
-  logger.info("完了: アンフォロー");
-  return json({}, 200);
+  return {
+    status: 200,
+    message: "完了: アンフォロー",
+  };
 };

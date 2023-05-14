@@ -1,10 +1,9 @@
-import { json } from "next-runtime";
 import { z } from "zod";
 
-import { prisma } from "../../../../server/db";
-import { env } from "../../../../utils/env";
-import { formatZodError } from "../../../../utils/formatZodError";
-import { logger } from "../../../../utils/logger";
+import { prisma } from "@/server/prisma";
+import { env } from "@/utils/env";
+import { formatZodError } from "@/utils/formatZodError";
+
 import type { InboxFunction } from "./types";
 
 const resolveNoteId = (objectId: URL) => {
@@ -38,13 +37,17 @@ const likeActivitySchema = z
 export const like: InboxFunction = async (activity, actorUser) => {
   const parsedLike = likeActivitySchema.safeParse(activity);
   if (!parsedLike.success) {
-    logger.info("検証失敗: " + formatZodError(parsedLike.error));
-    return json({}, 400);
+    return {
+      status: 400,
+      message: "検証失敗: " + formatZodError(parsedLike.error),
+    };
   }
   const noteId = resolveNoteId(new URL(parsedLike.data.object));
   if (!noteId) {
-    logger.info("検証失敗: ノートのURLではありません");
-    return json({}, 400);
+    return {
+      status: 400,
+      message: "activityからいいね対象のノートIDを取得できませんでした",
+    };
   }
   await prisma.like.create({
     data: {
@@ -53,6 +56,5 @@ export const like: InboxFunction = async (activity, actorUser) => {
       content: parsedLike.data.content,
     },
   });
-  logger.info("完了: いいね");
-  return json({}, 200);
+  return { status: 200, message: "完了: いいね" };
 };

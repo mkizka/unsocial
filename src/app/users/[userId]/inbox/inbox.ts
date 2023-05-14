@@ -1,7 +1,7 @@
-import { json } from "next-runtime";
 import { z } from "zod";
 
-import { logger } from "../../../../utils/logger";
+import { formatZodError } from "@/utils/formatZodError";
+
 import { accept } from "./accept";
 import { create } from "./create";
 import { delete_ } from "./delete";
@@ -32,10 +32,10 @@ const anyActivitySchema = z
 export const inbox: InboxFunction = async (activity, actorUser) => {
   const parsedActivity = anyActivitySchema.safeParse(activity);
   if (!parsedActivity.success) {
-    logger.info(`検証エラー: ${JSON.stringify(activity)}`);
-    return json({}, 400);
+    return {
+      status: 400,
+      message: "検証失敗: " + formatZodError(parsedActivity.error),
+    };
   }
-  // TODO: inboxFnの各ロガーからActivityを消してここでstatusを見てログを出す
-  // 失敗したActivityが必ずログに出るようにする
   return inboxFn[parsedActivity.data.type](parsedActivity.data, actorUser);
 };
