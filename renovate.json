@@ -3,6 +3,6 @@
   "extends": ["config:js-app"],
   "rangeStrategy": "bump",
   "ignoreDeps": ["got", "next-auth"],
-  "baseBranches": ["renovate"],
+  "baseBranches": ["renovate-pr"],
   "automerge": true
 }
