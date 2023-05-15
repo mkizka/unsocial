@@ -10,10 +10,10 @@ patchedDependencies:
 
 dependencies:
   '@next-auth/prisma-adapter':
-    specifier: ^1.0.6
+    specifier: 1.0.6
     version: 1.0.6(@prisma/client@4.14.0)(next-auth@4.19.2)
   '@prisma/client':
-    specifier: ^4.14.0
+    specifier: 4.14.0
     version: 4.14.0(prisma@4.14.0)
   got:
     specifier: 11.8.6
@@ -28,7 +28,7 @@ dependencies:
     specifier: 2.4.1
     version: 2.4.1(patch_hash=fgcw6gwfu4cuywtdzvfi3ecbpa)(next@13.4.2-canary.3)(react-dom@18.3.0-next-fecc288b7-20221025)(react@18.3.0-next-fecc288b7-20221025)
   nodemailer:
-    specifier: ^6.9.2
+    specifier: 6.9.2
     version: 6.9.2
   react:
     specifier: 18.3.0-next-fecc288b7-20221025
@@ -37,30 +37,30 @@ dependencies:
     specifier: 18.3.0-next-fecc288b7-20221025
     version: 18.3.0-next-fecc288b7-20221025(react@18.3.0-next-fecc288b7-20221025)
   winston:
-    specifier: ^3.8.2
+    specifier: 3.8.2
     version: 3.8.2
   zod:
-    specifier: ^3.21.4
+    specifier: 3.21.4
     version: 3.21.4
 
 devDependencies:
   '@playwright/test':
-    specifier: ^1.33.0
+    specifier: 1.33.0
     version: 1.33.0
   '@stryker-mutator/api':
-    specifier: ^6.4.2
+    specifier: 6.4.2
     version: 6.4.2
   '@stryker-mutator/core':
-    specifier: ^6.4.2
+    specifier: 6.4.2
     version: 6.4.2
   '@stryker-mutator/jest-runner':
-    specifier: ^6.4.2
+    specifier: 6.4.2
     version: 6.4.2(@stryker-mutator/core@6.4.2)
   '@types/jest':
-    specifier: ^29.5.1
+    specifier: 29.5.1
     version: 29.5.1
   '@types/node':
-    specifier: ^18.16.3
+    specifier: 18.16.3
     version: 18.16.3
   '@types/react':
     specifier: 18.2.6
@@ -69,64 +69,64 @@ devDependencies:
     specifier: 18.2.4
     version: 18.2.4
   '@typescript-eslint/eslint-plugin':
-    specifier: ^5.59.5
+    specifier: 5.59.5
     version: 5.59.5(@typescript-eslint/parser@5.59.5)(eslint@8.40.0)(typescript@5.0.4)
   '@typescript-eslint/parser':
-    specifier: ^5.59.5
+    specifier: 5.59.5
     version: 5.59.5(eslint@8.40.0)(typescript@5.0.4)
   activitypub-core-types:
-    specifier: ^0.3.2
+    specifier: 0.3.2
     version: 0.3.2
   better-typescript-lib:
     specifier: 2.3.0
     version: 2.3.0(typescript@5.0.4)
   cli-markdown:
-    specifier: ^3.0.3
+    specifier: 3.0.3
     version: 3.0.3
   eslint:
-    specifier: ^8.40.0
+    specifier: 8.40.0
     version: 8.40.0
   eslint-config-next:
     specifier: 13.4.2
     version: 13.4.2(eslint@8.40.0)(typescript@5.0.4)
   eslint-plugin-simple-import-sort:
-    specifier: ^10.0.0
+    specifier: 10.0.0
     version: 10.0.0(eslint@8.40.0)
   eslint-plugin-unused-imports:
-    specifier: ^2.0.0
+    specifier: 2.0.0
     version: 2.0.0(@typescript-eslint/eslint-plugin@5.59.5)(eslint@8.40.0)
   husky:
-    specifier: ^8.0.3
+    specifier: 8.0.3
     version: 8.0.3
   jest:
-    specifier: ^29.5.0
+    specifier: 29.5.0
     version: 29.5.0(@types/node@18.16.3)(ts-node@10.9.1)
   jest-mock-extended:
-    specifier: ^3.0.4
+    specifier: 3.0.4
     version: 3.0.4(jest@29.5.0)(typescript@5.0.4)
   lint-staged:
-    specifier: ^13.2.2
+    specifier: 13.2.2
     version: 13.2.2
   nock:
-    specifier: ^13.3.1
+    specifier: 13.3.1
     version: 13.3.1
   npm-run-all:
-    specifier: ^4.1.5
+    specifier: 4.1.5
     version: 4.1.5
   prettier:
-    specifier: ^2.8.8
+    specifier: 2.8.8
     version: 2.8.8
   prisma:
-    specifier: ^4.14.0
+    specifier: 4.14.0
     version: 4.14.0
   ts-node:
-    specifier: ^10.9.1
+    specifier: 10.9.1
     version: 10.9.1(@types/node@18.16.3)(typescript@5.0.4)
   typescript:
-    specifier: ^5.0.4
+    specifier: 5.0.4
     version: 5.0.4
   zx:
-    specifier: ^7.2.2
+    specifier: 7.2.2
     version: 7.2.2
 
 packages:
@@ -1322,7 +1322,7 @@ packages:
       progress: 2.0.3
       rimraf: 4.4.1
       rxjs: 7.8.1
-      semver: 7.5.0
+      semver: 7.5.1
       source-map: 0.7.4
       tree-kill: 1.2.2
       tslib: 2.5.0
@@ -3016,7 +3016,7 @@ packages:
       es-set-tostringtag: 2.0.1
       es-to-primitive: 1.2.1
       function.prototype.name: 1.1.5
-      get-intrinsic: 1.2.0
+      get-intrinsic: 1.2.1
       get-symbol-description: 1.0.0
       globalthis: 1.0.3
       gopd: 1.0.1
@@ -3064,7 +3064,7 @@ packages:
     resolution: {integrity: sha512-g3OMbtlwY3QewlqAiMLI47KywjWZoEytKr8pf6iTC8uJq5bIAH52Z9pnQ8pVL6whrCto53JZDuUIsifGeLorTg==}
     engines: {node: '>= 0.4'}
     dependencies:
-      get-intrinsic: 1.2.0
+      get-intrinsic: 1.2.1
       has: 1.0.3
       has-tostringtag: 1.0.0
     dev: true
@@ -3738,14 +3738,6 @@ packages:
     engines: {node: 6.* || 8.* || >= 10.*}
     dev: true
 
-  /get-intrinsic@1.2.0:
-    resolution: {integrity: sha512-L049y6nFOuom5wGyRc3/gdTLO94dySVKRACj1RmJZBQXlbTMhtNIgkWkUHq+jYmZvKf14EW1EoJnnjbmoHij0Q==}
-    dependencies:
-      function-bind: 1.1.1
-      has: 1.0.3
-      has-symbols: 1.0.3
-    dev: true
-
   /get-intrinsic@1.2.1:
     resolution: {integrity: sha512-2DcsyfABl+gVHEfCOaTrWgyt+tb6MSEGmKq+kI5HwLbIYgjgmMcV8KQ41uaKz1xxUcn9tJtgFbQUEVcEbd0FYw==}
     dependencies:
@@ -3781,7 +3773,7 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.2
-      get-intrinsic: 1.2.0
+      get-intrinsic: 1.2.1
     dev: true
 
   /get-tsconfig@4.5.0:
@@ -3878,7 +3870,7 @@ packages:
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
-      get-intrinsic: 1.2.0
+      get-intrinsic: 1.2.1
     dev: true
 
   /got@11.8.6:
@@ -3922,7 +3914,7 @@ packages:
   /has-property-descriptors@1.0.0:
     resolution: {integrity: sha512-62DVLZGoiEBDHQyqG4w9xCuZ7eJEwNmJRWw2VY84Oedb7WFcA27fiEVe8oUQx9hAUJ4ekurquucTGwsyO1XGdQ==}
     dependencies:
-      get-intrinsic: 1.2.0
+      get-intrinsic: 1.2.1
     dev: true
 
   /has-proto@1.0.1:
@@ -4112,7 +4104,7 @@ packages:
     resolution: {integrity: sha512-y+FyyR/w8vfIRq4eQcM1EYgSTnmHXPqaF+IgzgraytCFq5Xh8lllDVmAZolPJiZttZLeFSINPYMaEJ7/vWUa1w==}
     dependencies:
       call-bind: 1.0.2
-      get-intrinsic: 1.2.0
+      get-intrinsic: 1.2.1
       is-typed-array: 1.1.10
     dev: true
 
@@ -6273,7 +6265,7 @@ packages:
     resolution: {integrity: sha512-JBUUzyOgEwXQY1NuPtvcj/qcBDbDmEvWufhlnXZIm75DEHp+afM1r1ujJpJsV/gSM4t59tpDyPi1sd6ZaPFfsA==}
     dependencies:
       call-bind: 1.0.2
-      get-intrinsic: 1.2.0
+      get-intrinsic: 1.2.1
       is-regex: 1.1.4
     dev: true
 
@@ -6302,14 +6294,6 @@ packages:
 
   /semver@7.3.8:
     resolution: {integrity: sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      lru-cache: 6.0.0
-    dev: true
-
-  /semver@7.5.0:
-    resolution: {integrity: sha512-+XC0AD/R7Q2mPSRuy2Id0+CGTZ98+8f+KvwirxOKIEyid+XSx6HbC63p+O4IndTHuX5Z+JxQ0TghCkO5Cg/2HA==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
