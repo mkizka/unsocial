@@ -28,7 +28,7 @@ services:
       db:
         condition: service_healthy
   misskey:
-    image: misskey/misskey:13.9
+    image: misskey/misskey:13.12
     volumes:
       - ./docker/misskey/files:/misskey/files
       - ./docker/misskey/.config:/misskey/.config:ro
