@@ -4,5 +4,7 @@
   "rangeStrategy": "bump",
   "ignoreDeps": ["got", "next-auth"],
   "baseBranches": ["renovate-pr"],
-  "automerge": true
+  "automerge": true,
+  "automergeStrategy": "squash",
+  "platformAutomerge": true
 }
