@@ -15,6 +15,8 @@ jobs:
     secrets: inherit
   create-renovate-pr:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
