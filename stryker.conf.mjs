@@ -12,6 +12,8 @@ const config = {
     "src/**/*.ts",
     "src/app/.well-known/**/*.ts",
     "!src/**/*.d.ts",
+    // TODO: サーバーコンポーネントがテスト出来るようになったら消す
+    "!src/**/*.server.ts",
     "!src/**/*.spec.ts",
     "!src/app/.well-known/**/*.spec.ts",
     "!src/**/__fixtures__/**/*.ts",
