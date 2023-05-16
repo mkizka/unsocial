@@ -1,16 +1,18 @@
 "use client";
 import { useTransition } from "react";
 
+import { action } from "./action.server";
+
 type Props = {
-  onClick: () => Promise<void>;
+  noteId: string;
 };
 
-export function DeleteButton({ onClick }: Props) {
+export function DeleteButton({ noteId }: Props) {
   const [isPending, startTransition] = useTransition();
   return (
     <button
       data-testid="delete-button"
-      onClick={() => startTransition(() => onClick())}
+      onClick={() => startTransition(() => action(noteId))}
     >
       {isPending ? "..." : "削除"}
     </button>
