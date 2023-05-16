@@ -3,7 +3,7 @@ import { prisma } from "@/server/prisma";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
 
-export async function action({ noteId }: { noteId: string }) {
+export async function action(noteId: string) {
   const session = await getServerSession();
   if (!session?.user) {
     // TODO: エラーを返す方法が実装されたら修正

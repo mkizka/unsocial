@@ -1,7 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:js-app"],
-  "rangeStrategy": "bump",
   "ignoreDeps": ["got", "next-auth"],
   "baseBranches": ["renovate-pr"],
   "automerge": true,

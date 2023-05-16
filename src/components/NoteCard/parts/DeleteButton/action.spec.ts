@@ -25,7 +25,7 @@ describe("DeleteButton/action", () => {
     } as Session);
     mockedPrisma.note.delete.mockResolvedValue({ id: "__noteId" } as Note);
     // act
-    const response = await action({ noteId: "__noteId" });
+    const response = await action("__noteId");
     // assert
     expect(response).toBeUndefined();
     expect(mockedQueue.push).toHaveBeenCalledWith({
