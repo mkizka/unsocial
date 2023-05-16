@@ -78,7 +78,7 @@ devDependencies:
     specifier: 0.3.2
     version: 0.3.2
   autoprefixer:
-    specifier: ^10.4.14
+    specifier: 10.4.14
     version: 10.4.14(postcss@8.4.23)
   better-typescript-lib:
     specifier: 2.3.0
@@ -117,7 +117,7 @@ devDependencies:
     specifier: 4.1.5
     version: 4.1.5
   postcss:
-    specifier: ^8.4.23
+    specifier: 8.4.23
     version: 8.4.23
   prettier:
     specifier: 2.8.8
@@ -126,7 +126,7 @@ devDependencies:
     specifier: 4.14.0
     version: 4.14.0
   tailwindcss:
-    specifier: ^3.3.2
+    specifier: 3.3.2
     version: 3.3.2(ts-node@10.9.1)
   ts-node:
     specifier: 10.9.1
