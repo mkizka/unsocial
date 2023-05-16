@@ -1,12 +1,11 @@
 import type { Like, Note, User } from "@prisma/client";
-import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getServerSession } from "@/utils/getServerSession";
 
 import { action as deleteAction, DeleteButton } from "./parts/DeleteButton";
-import { action as likeAction, LikeButton } from "./parts/LikeButton";
+import { LikeButton } from "./parts/LikeButton";
 
 export type Props = {
   note: Note & {
@@ -20,12 +19,6 @@ export async function NoteCard({ note }: Props) {
   const userId = session?.user?.id;
   const isMine = userId === note.userId;
   const isLiked = note.likes.some((like) => like.userId === userId);
-
-  async function handleLikeClick() {
-    "use server";
-    await likeAction({ noteId: note.id, content: "👍" });
-    revalidatePath(`/notes/${note.id}`);
-  }
 
   async function handleDeleteClick() {
     "use server";
@@ -41,7 +34,7 @@ export async function NoteCard({ note }: Props) {
         <span>@{note.user.host}</span>
       </p>
       <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
-      <LikeButton isLiked={isLiked} onClick={handleLikeClick} />
+      <LikeButton noteId={note.id} isLiked={isLiked} />
       {isMine && <DeleteButton onClick={handleDeleteClick} />}
       <Link data-testid="note-card__link" href={`/notes/${note.id}`}>
         {note.createdAt.toString()}
