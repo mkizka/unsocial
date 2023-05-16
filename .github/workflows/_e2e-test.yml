@@ -28,6 +28,7 @@ jobs:
       - run: pnpm playwright install --with-deps chromium
       - run: pnpm e2e
       - uses: actions/upload-artifact@v3
+        if: always()
         with:
           path: test-results/
           retention-days: 1

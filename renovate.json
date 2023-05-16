@@ -1,0 +1,9 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:js-app"],
+  "ignoreDeps": ["got", "next-auth"],
+  "baseBranches": ["renovate-pr"],
+  "automerge": true,
+  "automergeStrategy": "squash",
+  "platformAutomerge": true
+}

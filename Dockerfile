@@ -1,4 +1,4 @@
-FROM node:18-slim AS deps
+FROM node:20-slim AS deps
 WORKDIR /app
 COPY prisma ./prisma
 COPY patches ./patches
