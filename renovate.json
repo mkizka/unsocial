@@ -4,6 +4,5 @@
   "ignoreDeps": ["got", "next-auth"],
   "baseBranches": ["renovate-pr"],
   "automerge": true,
-  "automergeStrategy": "squash",
   "platformAutomerge": true
 }
