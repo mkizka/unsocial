@@ -22,6 +22,8 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: renovate-pr
       # https://zenn.dev/kshida/articles/auto-generate-release-pr-with-github-actions
       - name: Check PR
         id: check-pr
@@ -29,7 +31,6 @@ jobs:
       - name: Create PR
         if: steps.check-pr.outputs.count == 0
         run: |
-          git switch renovate-pr
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit --allow-empty -m "Renovate Updates"
