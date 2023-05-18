@@ -13,25 +13,3 @@ jobs:
   mutation-test-prod:
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
-  create-renovate-pr:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v2
-      # https://zenn.dev/kshida/articles/auto-generate-release-pr-with-github-actions
-      - name: Check PR
-        id: check-pr
-        run: echo "count=$(gh pr list -S 'Renovate Updates in:title' | wc -l)" >> "$GITHUB_OUTPUT"
-      - name: Create PR
-        if: steps.check-pr.outputs.count == 0
-        run: |
-          git switch -c renovate-pr
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit --allow-empty -m "Renovate Updates"
-          git push origin renovate-pr
-          gh pr create -B main -H renovate-pr -t "Renovate Updates" -b ''
