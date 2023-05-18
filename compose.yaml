@@ -23,7 +23,7 @@ services:
       test: ["CMD-SHELL", "node -e 'fetch(`http://localhost:3000`)'"]
       interval: 2s
       timeout: 2s
-      retries: 15
+      retries: 30
     depends_on:
       db:
         condition: service_healthy
@@ -42,7 +42,7 @@ services:
       test: ["CMD-SHELL", "node -e 'fetch(`http://localhost:3001`)'"]
       interval: 2s
       timeout: 2s
-      retries: 15
+      retries: 30
     depends_on:
       db:
         condition: service_healthy

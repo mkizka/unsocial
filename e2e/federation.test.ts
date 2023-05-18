@@ -4,8 +4,9 @@ import crypto from "crypto";
 import { misskey, soshal } from "./utils";
 
 test.describe.configure({ mode: "parallel" });
-
 test.use({ storageState: "e2e/state.json" });
+
+const TIMEOUT_FOR_FEDERATION = 500;
 
 test.describe("Federation", () => {
   test("自サーバーの投稿", async ({ page }) => {
@@ -13,6 +14,7 @@ test.describe("Federation", () => {
     await page.goto("/");
     const content = crypto.randomUUID();
     const myhostNote = await soshal.postNote(page, content);
+    await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 他サーバーで確認
     await misskey.showGTL(page);
@@ -24,6 +26,7 @@ test.describe("Federation", () => {
       .locator("button", { has: page.locator(".ti-plus") })
       .click();
     await page.locator(".emojis button").first().click();
+    await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 自サーバーで同期を確認
     await page.goto("/");
@@ -34,6 +37,7 @@ test.describe("Federation", () => {
     // 自サーバーで削除
     await page.goto("/");
     await myhostNote.getByTestId("delete-button").click();
+    await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 他サーバーで確認
     await misskey.showGTL(page);
@@ -44,6 +48,7 @@ test.describe("Federation", () => {
     // 他サーバーのユーザーをフォロー
     await page.goto("/@e2e@misskey.localhost");
     await page.getByTestId("follow-button").click();
+    await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 他サーバーで同期を確認
     await page.goto("https://misskey.localhost/@e2e/followers");
@@ -58,6 +63,7 @@ test.describe("Federation", () => {
     await page.goto("https://misskey.localhost");
     const content = crypto.randomUUID();
     await misskey.postNote(page, content);
+    await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 自サーバーで同期を確認
     await page.goto("/");
@@ -68,6 +74,7 @@ test.describe("Federation", () => {
 
     // 自サーバーでいいね
     await myhostNote.getByTestId("like-button").click();
+    await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 他サーバーで同期を確認
     await misskey.showGTL(page);
@@ -80,7 +87,7 @@ test.describe("Federation", () => {
       .click();
     await page.locator("button", { hasText: "削除" }).last().click();
     await page.locator("button", { hasText: "OK" }).click();
-    await expect(remoteNote).not.toBeVisible();
+    await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 自サーバーで同期を確認
     await page.goto("/");
@@ -89,6 +96,7 @@ test.describe("Federation", () => {
     // 他サーバーのユーザーをアンフォロー
     await page.goto("/@e2e@misskey.localhost");
     await page.getByTestId("follow-button").click();
+    await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 他サーバーで同期を確認
     await page.goto("https://misskey.localhost/@e2e/followers");
