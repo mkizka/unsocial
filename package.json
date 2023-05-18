@@ -20,7 +20,6 @@
     "got": "11.8.6",
     "next": "13.4.3-canary.2",
     "next-auth": "4.19.2",
-    "next-runtime": "2.4.1",
     "nodemailer": "6.9.2",
     "react": "18.3.0-next-fecc288b7-20221025",
     "react-dom": "18.3.0-next-fecc288b7-20221025",
@@ -65,7 +64,6 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "next-runtime@2.4.1": "patches/next-runtime@2.4.1.patch",
       "next-auth@4.19.2": "patches/next-auth@4.19.2.patch"
     }
   }
