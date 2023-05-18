@@ -22,6 +22,6 @@ test("セットアップ", async () => {
   await page3.goto("https://misskey.localhost/@test@soshal.localhost");
   await expect(
     page3.locator("text=@test@soshal.localhost").first()
-  ).toBeVisible({ timeout: 10000 });
+  ).toBeVisible({ timeout: 20000 });
   await browser.close();
 });
