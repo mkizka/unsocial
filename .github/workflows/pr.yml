@@ -24,6 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          ref: renovate-pr
           fetch-depth: 0
       # https://zenn.dev/kshida/articles/auto-generate-release-pr-with-github-actions
       - name: Check PR
@@ -34,7 +35,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -c renovate-pr-reset
+          git reset origin/main --hard
           git commit --allow-empty -m "Renovate Updates"
           git push -f origin renovate-pr
           gh pr create -B main -H renovate-pr -t "Renovate Updates" -b ''
