@@ -15,4 +15,16 @@ const config = {
     ];
   },
 };
+
+if (process.env.NODE_ENV != "production") {
+  config.images = {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "ui-avatars.com",
+      },
+    ],
+  };
+}
+
 export default config;

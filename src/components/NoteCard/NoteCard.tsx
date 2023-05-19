@@ -1,4 +1,5 @@
 import type { Like, Note, User } from "@prisma/client";
+import Image from "next/image";
 import Link from "next/link";
 
 import { getServerSession } from "@/utils/getServerSession";
@@ -20,18 +21,32 @@ export async function NoteCard({ note }: Props) {
   const isLiked = note.likes.some((like) => like.userId === userId);
 
   return (
-    <article data-testid="note-card">
-      <p>
-        {note.user.name}
-        <span>@{note.user.preferredUsername}</span>
-        <span>@{note.user.host}</span>
-      </p>
-      <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
+    <article
+      data-testid="note-card"
+      className="flex items-start bg-white rounded-lg p-4 mb-4 shadow"
+    >
+      <div className="flex-shrink-0">
+        <Image
+          className="h-10 w-10 rounded-full"
+          src={`https://ui-avatars.com/api/?name=${note.user.preferredUsername}`}
+          width={50}
+          height={50}
+          alt={`@${note.user.name}のアイコン`}
+        />
+      </div>
+      <div className="ml-3">
+        <p className="text-gray-700 font-bold">
+          @{note.user.preferredUsername}@{note.user.host}
+        </p>
+        <p className="text-gray-600">{note.content}</p>
+        <p className="text-gray-500 text-sm">
+          <Link data-testid="note-card__link" href={`/notes/${note.id}`}>
+            {note.createdAt.toString()}
+          </Link>
+        </p>
+        {isMine && <DeleteButton noteId={note.id} />}
+      </div>
       <LikeButton noteId={note.id} isLiked={isLiked} />
-      {isMine && <DeleteButton noteId={note.id} />}
-      <Link data-testid="note-card__link" href={`/notes/${note.id}`}>
-        {note.createdAt.toString()}
-      </Link>
     </article>
   );
 }

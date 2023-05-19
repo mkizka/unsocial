@@ -13,9 +13,20 @@ export async function action(formData: FormData) {
 
 export function NoteForm() {
   return (
-    <form action={action}>
-      <textarea data-testid="note-form__textarea" name="content"></textarea>
-      <button data-testid="note-form__button" type="submit">
+    <form
+      action={action}
+      className="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    >
+      <textarea
+        data-testid="note-form__textarea"
+        name="content"
+        className="w-full h-32 border rounded-lg p-2 mb-4"
+      ></textarea>
+      <button
+        data-testid="note-form__button"
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
         送信
       </button>
     </form>
