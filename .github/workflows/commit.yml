@@ -36,5 +36,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git reset origin/main --hard
           git commit --allow-empty -m "Renovate Updates"
-          git push -f origin renovate-pr
+          git push -f origin HEAD
           gh pr create -B main -H renovate-pr -t "Renovate Updates" -b ''
