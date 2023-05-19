@@ -14,7 +14,7 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         <div className="w-screen h-screen flex justify-center bg-gray-100">
-          <div className="max-w-xl">{children}</div>
+          <div className="w-full max-w-xl">{children}</div>
         </div>
       </body>
     </html>
