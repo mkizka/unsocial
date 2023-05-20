@@ -1,14 +1,15 @@
 import { expect } from "@playwright/test";
 
-import { FediversePage } from "./base";
+import { FediverseHandler } from "./base";
 
-export class SoshalPage extends FediversePage {
+export class SoshalHandler extends FediverseHandler {
+  url = "https://soshal.localhost";
   user = "@test@soshal.localhost";
 
   async login() {
     // まれに /api/auth/signin?csrf=true にリダイレクトされることがあるのでリトライ
     await expect(async () => {
-      await this.page.goto("/");
+      await this.goto("/");
       await this.page.locator("[data-testid=login-button]").click();
       await this.page.waitForURL((url) => url.pathname != "/");
       expect(this.page.url()).toContain("/api/auth/verify-request");
@@ -35,10 +36,20 @@ export class SoshalPage extends FediversePage {
     await this.waitForFederation();
   }
 
+  async expectPosted(content: string) {
+    await this.goto("/");
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
   async delete(content: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("delete-button").click();
     await this.waitForFederation();
+  }
+
+  async expectDeleted(content: string) {
+    await this.goto("/");
+    await expect(this.getNote(content)).not.toBeVisible();
   }
 
   async like(content: string) {

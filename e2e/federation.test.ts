@@ -1,12 +1,15 @@
+import { test } from "@playwright/test";
 import crypto from "crypto";
 
-import { test } from "./utils";
+import { MisskeyHandler, SoshalHandler } from "./fediverse";
 
 test.describe.configure({ mode: "parallel" });
 test.use({ storageState: "e2e/state.json" });
 
 test.describe("Federation", () => {
-  test("自サーバーの投稿", async ({ soshal, misskey }) => {
+  test("自サーバーの投稿", async ({ page }) => {
+    const soshal = new SoshalHandler(page);
+    const misskey = new MisskeyHandler(page);
     const content = crypto.randomUUID();
     await soshal.postNote(content);
     await misskey.expectPosted(content);
@@ -16,7 +19,9 @@ test.describe("Federation", () => {
     await misskey.expectDeleted(content);
   });
 
-  test("他サーバーの投稿", async ({ soshal, misskey }) => {
+  test("他サーバーの投稿", async ({ page }) => {
+    const soshal = new SoshalHandler(page);
+    const misskey = new MisskeyHandler(page);
     const content = crypto.randomUUID();
     await soshal.follow(misskey.user);
     await misskey.expectFollowed(soshal.user);

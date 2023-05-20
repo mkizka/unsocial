@@ -23,16 +23,13 @@ const config: PlaywrightTestConfig = {
   use: {
     baseURL: "https://soshal.localhost",
     ignoreHTTPSErrors: true,
-    launchOptions: {
-      args: ["--disable-databases"],
-    },
     serviceWorkers: "block",
   },
 };
 
 if (process.env.CI) {
   config.retries = 3;
-  config.timeout = 5 * 60 * 1000;
+  config.timeout = 90000;
   config.use!.video = "on";
 }
 

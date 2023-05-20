@@ -1,26 +1,33 @@
 import { expect } from "@playwright/test";
 
-import { FediversePage } from "./base";
+import { FediverseHandler } from "./base";
 
-export class MisskeyPage extends FediversePage {
+export class MisskeyHandler extends FediverseHandler {
+  url = "https://misskey.localhost";
   user = "@e2e@misskey.localhost";
 
   async goto(to: string) {
     await expect(async () => {
-      await this.page.goto(new URL(to, "https://misskey.localhost").toString());
-      await expect(this.page.locator(".top")).toBeVisible();
+      await super.goto(to);
+      // 最初に表示されるスプラッシュ(ローディング)画面
+      await expect(this.page.locator("#splash")).not.toBeVisible();
+      // なんらかのエラーが発生した時の再試行ボタン
       await expect(this.page.locator("text=再試行")).not.toBeVisible();
     }).toPass();
-    if (to == "/") {
-      await this.page.locator("button", { hasText: "グローバル" }).click();
-    }
+  }
+
+  async gotoGTL() {
+    await this.goto("/");
+    await this.page
+      .locator("button", {
+        has: this.page.locator(".ti-whirl"),
+      })
+      .click();
   }
 
   async login() {
-    await this.page.goto("https://misskey.localhost");
-    // まれにローディングが終わらないことがあるのでタイムアウトを短めに
-    // IndexedDBが原因っぽいが対処法が分からず
-    await this.page.locator("[data-cy-signin]").click({ timeout: 3000 });
+    await this.goto("/");
+    await this.page.locator("[data-cy-signin]").click();
     await this.page.locator("[data-cy-signin-username] input").fill("e2e");
     await this.page.locator("[data-cy-signin-password] input").fill("e2e");
     await this.page.locator("button[type=submit]").click();
@@ -32,7 +39,7 @@ export class MisskeyPage extends FediversePage {
   }
 
   async postNote(content: string) {
-    await this.goto("/");
+    await this.gotoGTL();
     await this.page.locator("[data-cy-open-post-form]").click();
     await this.page.locator("[data-cy-post-form-text]").fill(content);
     await this.page.locator("[data-cy-open-post-form-submit]").click();
@@ -40,8 +47,13 @@ export class MisskeyPage extends FediversePage {
     await this.waitForFederation();
   }
 
+  async expectPosted(content: string) {
+    await this.gotoGTL();
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
   async delete(content: string) {
-    await this.goto("/");
+    await this.gotoGTL();
     await this.getNote(content)
       .locator("button", { has: this.page.locator(".ti-dots") })
       .click();
@@ -50,8 +62,13 @@ export class MisskeyPage extends FediversePage {
     await this.waitForFederation();
   }
 
+  async expectDeleted(content: string) {
+    await this.gotoGTL();
+    await expect(this.getNote(content)).not.toBeVisible();
+  }
+
   async like(content: string) {
-    await this.goto("/");
+    await this.gotoGTL();
     await this.getNote(content)
       .locator("button", { has: this.page.locator(".ti-plus") })
       .click();
@@ -60,6 +77,7 @@ export class MisskeyPage extends FediversePage {
   }
 
   async expectLiked(content: string) {
+    await this.gotoGTL();
     await expect(
       this.getNote(content).locator("button", { hasText: "1" })
     ).toBeVisible();

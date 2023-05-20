@@ -1,14 +1,21 @@
 import type { Locator, Page } from "@playwright/test";
 
-import { expect } from "../utils/fixtures";
-
-export abstract class FediversePage {
+export abstract class FediverseHandler {
+  abstract url: string;
   abstract user: string;
 
   constructor(public page: Page) {}
 
+  private async _goto(to: string) {
+    const target = new URL(to, this.url).toString();
+    if (this.page.url() == target) {
+      return;
+    }
+    await this.page.goto(target);
+  }
+
   async goto(to: string) {
-    await this.page.goto(to);
+    await this._goto(to);
   }
 
   async waitForFederation() {
@@ -21,17 +28,11 @@ export abstract class FediversePage {
 
   abstract postNote(content: string): Promise<void>;
 
-  async expectPosted(content: string) {
-    await this.goto("/");
-    await expect(this.getNote(content)).toBeVisible();
-  }
+  abstract expectPosted(content: string): Promise<void>;
 
   abstract delete(content: string): Promise<void>;
 
-  async expectDeleted(content: string) {
-    await this.goto("/");
-    await expect(this.getNote(content)).not.toBeVisible();
-  }
+  abstract expectDeleted(content: string): Promise<void>;
 
   abstract like(content: string): Promise<void>;
 
