@@ -46,6 +46,11 @@ export class MisskeyPage extends FediversePage {
     await this.waitForFederation();
   }
 
+  async expectPosted(content: string) {
+    await this.gotoGTL();
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
   async delete(content: string) {
     await this.gotoGTL();
     await this.getNote(content)
@@ -54,6 +59,11 @@ export class MisskeyPage extends FediversePage {
     await this.page.locator("button", { hasText: "削除" }).last().click();
     await this.page.locator("button", { hasText: "OK" }).click();
     await this.waitForFederation();
+  }
+
+  async expectDeleted(content: string) {
+    await this.gotoGTL();
+    await expect(this.getNote(content)).not.toBeVisible();
   }
 
   async like(content: string) {

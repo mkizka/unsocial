@@ -1,7 +1,5 @@
 import type { Locator, Page } from "@playwright/test";
 
-import { expect } from "../utils/fixtures";
-
 export abstract class FediversePage {
   abstract user: string;
 
@@ -21,17 +19,11 @@ export abstract class FediversePage {
 
   abstract postNote(content: string): Promise<void>;
 
-  async expectPosted(content: string) {
-    await this.goto("/");
-    await expect(this.getNote(content)).toBeVisible();
-  }
+  abstract expectPosted(content: string): Promise<void>;
 
   abstract delete(content: string): Promise<void>;
 
-  async expectDeleted(content: string) {
-    await this.goto("/");
-    await expect(this.getNote(content)).not.toBeVisible();
-  }
+  abstract expectDeleted(content: string): Promise<void>;
 
   abstract like(content: string): Promise<void>;
 

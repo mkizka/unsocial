@@ -35,10 +35,20 @@ export class SoshalPage extends FediversePage {
     await this.waitForFederation();
   }
 
+  async expectPosted(content: string) {
+    await this.goto("/");
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
   async delete(content: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("delete-button").click();
     await this.waitForFederation();
+  }
+
+  async expectDeleted(content: string) {
+    await this.goto("/");
+    await expect(this.getNote(content)).not.toBeVisible();
   }
 
   async like(content: string) {
