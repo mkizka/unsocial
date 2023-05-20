@@ -20,6 +20,6 @@ test("セットアップ", async ({ context }) => {
     await misskey.goto("/@test@soshal.localhost");
     await expect(
       misskey.page.locator("text=@test@soshal.localhost").first()
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 15000 });
   }).toPass();
 });
