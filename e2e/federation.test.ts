@@ -16,7 +16,7 @@ test.describe("Federation", () => {
 
     // 他サーバーで確認
     await misskey.goto("/");
-    await expect(misskey.getNote(content)).toBeVisible();
+    await misskey.expectPosted(content);
 
     // 他サーバーでいいね
     await misskey.like(content);
@@ -29,7 +29,7 @@ test.describe("Federation", () => {
     await soshal.delete(content);
 
     // 他サーバーで確認
-    await expect(misskey.getNote(content)).not.toBeVisible();
+    await misskey.expectDeleted(content);
   });
 
   test("他サーバーの投稿", async ({ soshal, misskey }) => {
