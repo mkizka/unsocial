@@ -3,12 +3,13 @@ import { expect } from "@playwright/test";
 import { FediverseHandler } from "./base";
 
 export class SoshalHandler extends FediverseHandler {
+  url = "https://soshal.localhost";
   user = "@test@soshal.localhost";
 
   async login() {
     // まれに /api/auth/signin?csrf=true にリダイレクトされることがあるのでリトライ
     await expect(async () => {
-      await this.page.goto("/");
+      await this.goto("/");
       await this.page.locator("[data-testid=login-button]").click();
       await this.page.waitForURL((url) => url.pathname != "/");
       expect(this.page.url()).toContain("/api/auth/verify-request");

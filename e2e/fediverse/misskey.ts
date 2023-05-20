@@ -3,11 +3,12 @@ import { expect } from "@playwright/test";
 import { FediverseHandler } from "./base";
 
 export class MisskeyHandler extends FediverseHandler {
+  url = "https://misskey.localhost";
   user = "@e2e@misskey.localhost";
 
   async goto(to: string) {
     await expect(async () => {
-      await this.page.goto(new URL(to, "https://misskey.localhost").toString());
+      await super.goto(to);
       // 最初に表示されるスプラッシュ(ローディング)画面
       await expect(this.page.locator("#splash")).not.toBeVisible();
       // なんらかのエラーが発生した時の再試行ボタン

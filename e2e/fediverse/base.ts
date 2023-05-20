@@ -1,12 +1,21 @@
 import type { Locator, Page } from "@playwright/test";
 
 export abstract class FediverseHandler {
+  abstract url: string;
   abstract user: string;
 
   constructor(public page: Page) {}
 
+  private async _goto(to: string) {
+    const target = new URL(to, this.url).toString();
+    if (this.page.url() == target) {
+      return;
+    }
+    await this.page.goto(target);
+  }
+
   async goto(to: string) {
-    await this.page.goto(to);
+    await this._goto(to);
   }
 
   async waitForFederation() {
