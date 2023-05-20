@@ -12,7 +12,11 @@ export class MisskeyPage extends FediversePage {
       await expect(this.page.locator("text=再試行")).not.toBeVisible();
     }).toPass();
     if (to == "/") {
-      await this.page.locator("button", { hasText: "グローバル" }).click();
+      await this.page
+        .locator("button", {
+          has: this.page.locator(".ti-whirl"),
+        })
+        .click();
     }
   }
 

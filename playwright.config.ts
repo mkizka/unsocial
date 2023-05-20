@@ -2,7 +2,7 @@ import type { PlaywrightTestConfig } from "@playwright/test";
 import { defineConfig, devices } from "@playwright/test";
 
 const chromium = {
-  ...devices["Desktop Chrome"],
+  ...devices["Desktop Firefox"],
   locale: "ja-JP",
 };
 
@@ -23,10 +23,6 @@ const config: PlaywrightTestConfig = {
   use: {
     baseURL: "https://soshal.localhost",
     ignoreHTTPSErrors: true,
-    launchOptions: {
-      args: ["--disable-databases"],
-    },
-    serviceWorkers: "block",
   },
 };
 
