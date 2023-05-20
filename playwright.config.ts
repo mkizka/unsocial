@@ -28,9 +28,9 @@ const config: PlaywrightTestConfig = {
 };
 
 if (process.env.CI) {
-  config.retries = 5;
+  config.retries = 3;
   config.timeout = 5 * 60 * 1000;
-  config.use!.video = "on";
+  config.use!.video = "on-first-retry";
 }
 
 export default defineConfig(config);
