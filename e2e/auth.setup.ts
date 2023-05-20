@@ -1,7 +1,6 @@
-import { expect, test } from "@playwright/test";
 import fs from "fs";
 
-import { misskey, soshal } from "./utils";
+import { expect, misskey, soshal, test } from "./utils";
 
 // 並列実行させるにあたってログイン時のメールを識別できないため、
 // setupでログインして使いまわす

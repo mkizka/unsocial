@@ -1,7 +1,6 @@
-import { expect, test } from "@playwright/test";
 import crypto from "crypto";
 
-import { misskey, soshal } from "./utils";
+import { expect, misskey, soshal, test } from "./utils";
 
 test.describe.configure({ mode: "parallel" });
 test.use({ storageState: "e2e/state.json" });

@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./utils";
 
 test.describe("WebFinger", () => {
   test("他サーバーのアカウントを表示できる", async ({ page }) => {
