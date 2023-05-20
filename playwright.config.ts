@@ -30,7 +30,7 @@ const config: PlaywrightTestConfig = {
 if (process.env.CI) {
   config.retries = 5;
   config.timeout = 5 * 60 * 1000;
-  config.use!.video = "retain-on-failure";
+  config.use!.video = "on";
 }
 
 export default defineConfig(config);
