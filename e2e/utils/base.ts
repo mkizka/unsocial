@@ -13,4 +13,5 @@ export abstract class FediversePage {
   abstract postNote(content: string): Promise<void>;
   abstract delete(content: string): Promise<void>;
   abstract like(content: string): Promise<void>;
+  abstract expectLiked(content: string): Promise<void>;
 }

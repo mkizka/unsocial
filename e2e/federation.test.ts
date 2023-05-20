@@ -23,14 +23,7 @@ test.describe("Federation", () => {
 
     // 自サーバーで同期を確認
     await soshal.page.reload();
-    await soshal.page
-      .locator("[data-testid=note-card]", { hasText: content })
-      .getByTestId("note-card__link")
-      .click();
-    await soshal.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
-    await expect(
-      soshal.page.locator("text=@e2e@misskey.localhost")
-    ).toBeVisible();
+    await soshal.expectLiked(content);
 
     // 自サーバーで削除
     await soshal.delete(content);
@@ -75,10 +68,7 @@ test.describe("Federation", () => {
     await soshal.like(content);
 
     // 他サーバーで同期を確認
-    await expect(misskey.getNote(content)).toBeVisible();
-    await expect(
-      misskey.getNote(content).locator("button", { hasText: "1" })
-    ).toBeVisible();
+    await misskey.expectLiked(content);
 
     // 他サーバーの投稿を削除
     await misskey.delete(content);

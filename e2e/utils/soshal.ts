@@ -41,4 +41,12 @@ export class SoshalPage extends FediversePage {
     await this.getNote(content).getByTestId("like-button").click();
     await this.waitForFederation();
   }
+
+  async expectLiked(content: string) {
+    await this.getNote(content).getByTestId("note-card__link").click();
+    await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
+    await expect(
+      this.page.locator("text=@e2e@misskey.localhost")
+    ).toBeVisible();
+  }
 }

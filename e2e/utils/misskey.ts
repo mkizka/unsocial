@@ -53,4 +53,10 @@ export class MisskeyPage extends FediversePage {
     await this.page.locator(".emojis button").first().click();
     await this.waitForFederation();
   }
+
+  async expectLiked(content: string) {
+    await expect(
+      this.getNote(content).locator("button", { hasText: "1" })
+    ).toBeVisible();
+  }
 }
