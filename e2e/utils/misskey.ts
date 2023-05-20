@@ -59,4 +59,8 @@ export class MisskeyPage extends FediversePage {
       this.getNote(content).locator("button", { hasText: "1" })
     ).toBeVisible();
   }
+
+  async follow(user: string) {
+    // TODO: 実装
+  }
 }

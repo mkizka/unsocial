@@ -34,9 +34,7 @@ test.describe("Federation", () => {
 
   test("他サーバーの投稿", async ({ soshal, misskey }) => {
     // 他サーバーのユーザーをフォロー
-    await soshal.goto("/@e2e@misskey.localhost");
-    await soshal.page.getByTestId("follow-button").click();
-    await soshal.page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
+    await soshal.follow("@e2e@misskey.localhost");
 
     // 他サーバーで同期を確認
     await misskey.goto("/@e2e/followers");

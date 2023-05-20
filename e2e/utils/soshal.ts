@@ -49,4 +49,10 @@ export class SoshalPage extends FediversePage {
       this.page.locator("text=@e2e@misskey.localhost")
     ).toBeVisible();
   }
+
+  async follow(user: string) {
+    await this.goto(`/${user}`);
+    await this.page.getByTestId("follow-button").click();
+    await this.waitForFederation();
+  }
 }
