@@ -11,7 +11,7 @@ export class MisskeyHandler extends FediverseHandler {
       await super.goto(to);
       // 最初に表示されるスプラッシュ(ローディング)画面
       await expect(this.page.locator("#splash")).not.toBeVisible();
-      // なんらかのエラーが発生した時のエラーが面
+      // なんらかのエラーが発生した時のエラー画面
       await expect(
         this.page.locator("text=An error has occurred!")
       ).not.toBeVisible();
