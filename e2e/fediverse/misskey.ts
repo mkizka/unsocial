@@ -13,13 +13,15 @@ export class MisskeyPage extends FediversePage {
       // なんらかのエラーが発生した時の再試行ボタン
       await expect(this.page.locator("text=再試行")).not.toBeVisible();
     }).toPass();
-    if (to == "/") {
-      await this.page
-        .locator("button", {
-          has: this.page.locator(".ti-whirl"),
-        })
-        .click();
-    }
+  }
+
+  async gotoGTL() {
+    await this.goto("/");
+    await this.page
+      .locator("button", {
+        has: this.page.locator(".ti-whirl"),
+      })
+      .click();
   }
 
   async login() {
@@ -36,7 +38,7 @@ export class MisskeyPage extends FediversePage {
   }
 
   async postNote(content: string) {
-    await this.goto("/");
+    await this.gotoGTL();
     await this.page.locator("[data-cy-open-post-form]").click();
     await this.page.locator("[data-cy-post-form-text]").fill(content);
     await this.page.locator("[data-cy-open-post-form-submit]").click();
@@ -45,7 +47,7 @@ export class MisskeyPage extends FediversePage {
   }
 
   async delete(content: string) {
-    await this.goto("/");
+    await this.gotoGTL();
     await this.getNote(content)
       .locator("button", { has: this.page.locator(".ti-dots") })
       .click();
@@ -55,7 +57,7 @@ export class MisskeyPage extends FediversePage {
   }
 
   async like(content: string) {
-    await this.goto("/");
+    await this.gotoGTL();
     await this.getNote(content)
       .locator("button", { has: this.page.locator(".ti-plus") })
       .click();
