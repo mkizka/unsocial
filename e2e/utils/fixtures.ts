@@ -7,17 +7,13 @@ export const test = base.extend<{
   soshal: SoshalPage;
   misskey: MisskeyPage;
 }>({
-  soshal: async ({ context }, use) => {
-    const page = await context.newPage();
+  soshal: async ({ page }, use) => {
     const soshal = new SoshalPage(page);
     await use(soshal);
-    await page.close();
   },
-  misskey: async ({ context }, use) => {
-    const page = await context.newPage();
+  misskey: async ({ page }, use) => {
     const misskey = new MisskeyPage(page);
     await use(misskey);
-    await page.close();
   },
 });
 
