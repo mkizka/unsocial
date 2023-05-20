@@ -1,4 +1,3 @@
-import type { Locator } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 import { FediversePage } from "./base";
@@ -10,6 +9,9 @@ export class MisskeyPage extends FediversePage {
       await expect(this.page.locator(".top")).toBeVisible();
       await expect(this.page.locator("text=再試行")).not.toBeVisible();
     }).toPass();
+    if (to == "/") {
+      await this.page.locator("button", { hasText: "グローバル" }).click();
+    }
   }
 
   async login() {
@@ -23,17 +25,20 @@ export class MisskeyPage extends FediversePage {
     await expect(this.page.locator(".account")).toBeVisible();
   }
 
+  getNote(content: string) {
+    return this.page.locator("article", { hasText: content });
+  }
+
   async postNote(content: string) {
     await this.page.locator("[data-cy-open-post-form]").click();
     await this.page.locator("[data-cy-post-form-text]").fill(content);
     await this.page.locator("[data-cy-open-post-form-submit]").click();
-    const note = this.page.locator(`text=${content}`);
-    await expect(note).toBeVisible();
-    return note;
+    await expect(this.getNote(content)).toBeVisible();
+    await this.waitForFederation();
   }
 
-  async delete(note: Locator) {
-    await note
+  async delete(content: string) {
+    await this.getNote(content)
       .locator("button", { has: this.page.locator(".ti-dots") })
       .click();
     await this.page.locator("button", { hasText: "削除" }).last().click();
@@ -41,16 +46,11 @@ export class MisskeyPage extends FediversePage {
     await this.waitForFederation();
   }
 
-  async like(note: Locator) {
-    await note
+  async like(content: string) {
+    await this.getNote(content)
       .locator("button", { has: this.page.locator(".ti-plus") })
       .click();
     await this.page.locator(".emojis button").first().click();
     await this.waitForFederation();
-  }
-
-  async showGTL() {
-    await this.goto("/");
-    await this.page.locator("button", { hasText: "グローバル" }).click();
   }
 }

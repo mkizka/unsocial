@@ -12,31 +12,31 @@ test.describe("Federation", () => {
     // 自サーバーで投稿
     await soshal.goto("/");
     const content = crypto.randomUUID();
-    const myhostNote = await soshal.postNote(content);
-    await soshal.page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
+    await soshal.postNote(content);
 
     // 他サーバーで確認
-    await misskey.showGTL();
-    const remoteNote = misskey.page.locator("article", { hasText: content });
-    await expect(remoteNote).toBeVisible();
+    await misskey.goto("/");
+    await expect(misskey.getNote(content)).toBeVisible();
 
     // 他サーバーでいいね
-    await misskey.like(remoteNote);
+    await misskey.like(content);
 
     // 自サーバーで同期を確認
-    await soshal.goto("/");
-    await myhostNote.getByTestId("note-card__link").click();
+    await soshal.page.reload();
+    await soshal.page
+      .locator("[data-testid=note-card]", { hasText: content })
+      .getByTestId("note-card__link")
+      .click();
     await soshal.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
     await expect(
       soshal.page.locator("text=@e2e@misskey.localhost")
     ).toBeVisible();
 
     // 自サーバーで削除
-    await soshal.delete(myhostNote);
+    await soshal.delete(content);
 
     // 他サーバーで確認
-    await misskey.showGTL();
-    await expect(soshal.page.locator(`text=${content}`)).not.toBeVisible();
+    await expect(misskey.getNote(content)).not.toBeVisible();
   });
 
   test("他サーバーの投稿", async ({ soshal, misskey }) => {
@@ -72,15 +72,16 @@ test.describe("Federation", () => {
     await expect(myhostNote).toBeVisible();
 
     // 自サーバーでいいね
-    await soshal.like(myhostNote);
+    await soshal.like(content);
 
     // 他サーバーで同期を確認
-    await misskey.showGTL();
-    const remoteNote = misskey.page.locator("article", { hasText: content });
-    await expect(remoteNote.locator("button", { hasText: "1" })).toBeVisible();
+    await expect(misskey.getNote(content)).toBeVisible();
+    await expect(
+      misskey.getNote(content).locator("button", { hasText: "1" })
+    ).toBeVisible();
 
     // 他サーバーの投稿を削除
-    await misskey.delete(remoteNote);
+    await misskey.delete(content);
 
     // 自サーバーで同期を確認
     await soshal.goto("/");

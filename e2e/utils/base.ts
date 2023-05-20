@@ -8,8 +8,9 @@ export abstract class FediversePage {
   async waitForFederation() {
     await this.page.waitForTimeout(500);
   }
+  abstract getNote(content: string): Locator;
   abstract login(): Promise<void>;
-  abstract postNote(content: string): Promise<Locator>;
-  abstract delete(note: Locator): Promise<void>;
-  abstract like(note: Locator): Promise<void>;
+  abstract postNote(content: string): Promise<void>;
+  abstract delete(content: string): Promise<void>;
+  abstract like(content: string): Promise<void>;
 }

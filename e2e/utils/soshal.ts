@@ -1,4 +1,3 @@
-import type { Locator } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 import { FediversePage } from "./base";
@@ -22,23 +21,24 @@ export class SoshalPage extends FediversePage {
     await expect(this.page.getByTestId("is-logged-in")).toBeVisible();
   }
 
+  getNote(content: string) {
+    return this.page.locator("[data-testid=note-card]", { hasText: content });
+  }
+
   async postNote(content: string) {
     await this.page.getByTestId("note-form__textarea").fill(content);
     await this.page.getByTestId("note-form__button").click();
-    const note = this.page.locator("[data-testid=note-card]", {
-      hasText: content,
-    });
-    await expect(note).toBeVisible();
-    return note;
-  }
-
-  async delete(note: Locator) {
-    await note.getByTestId("delete-button").click();
+    await expect(this.getNote(content)).toBeVisible();
     await this.waitForFederation();
   }
 
-  async like(note: Locator) {
-    await note.getByTestId("like-button").click();
+  async delete(content: string) {
+    await this.getNote(content).getByTestId("delete-button").click();
+    await this.waitForFederation();
+  }
+
+  async like(content: string) {
+    await this.getNote(content).getByTestId("like-button").click();
     await this.waitForFederation();
   }
 }
