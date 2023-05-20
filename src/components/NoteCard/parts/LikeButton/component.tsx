@@ -1,5 +1,7 @@
 "use client";
-import { useTransition } from "react";
+import { HeartIcon as UnLikedIcon } from "@heroicons/react/24/outline";
+import { HeartIcon as LikedIcon } from "@heroicons/react/24/solid";
+import { experimental_useOptimistic as useOptimistic } from "react";
 
 import { action } from "./action.server";
 
@@ -9,14 +11,21 @@ type Props = {
 };
 
 export function LikeButton({ noteId, isLiked }: Props) {
-  const [isPending, startTransition] = useTransition();
+  // TODO: 期待通りの動作か確認
+  const [optimisticIsLiked, toggleOptimisticIsLike] = useOptimistic(
+    isLiked,
+    (state) => !state
+  );
   return (
     <button
       data-testid="like-button"
-      onClick={() => startTransition(() => action(noteId))}
-      className={`text-sm mt-2 ${isLiked ? "text-red-500" : "text-gray-500"}`}
+      onClick={async () => {
+        toggleOptimisticIsLike(!optimisticIsLiked);
+        await action(noteId);
+      }}
+      className="w-6 h-6"
     >
-      {isPending ? "..." : isLiked ? "👍" : "-"}
+      {optimisticIsLiked ? <LikedIcon /> : <UnLikedIcon />}
     </button>
   );
 }

@@ -15,6 +15,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "@next-auth/prisma-adapter": "1.0.6",
     "@prisma/client": "4.14.1",
     "got": "11.8.6",
