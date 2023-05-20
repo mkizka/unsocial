@@ -63,4 +63,14 @@ export class MisskeyPage extends FediversePage {
   async follow(user: string) {
     // TODO: 実装
   }
+
+  async expectFollowed(user: string) {
+    await this.goto(`/@e2e/followers`);
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+  }
+
+  async expectNotFollowed(user: string) {
+    await this.goto(`/@e2e/followers`);
+    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
+  }
 }

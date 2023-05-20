@@ -22,5 +22,7 @@ export abstract class FediversePage {
   }
   abstract like(content: string): Promise<void>;
   abstract expectLiked(content: string): Promise<void>;
-  abstract follow(content: string): Promise<void>;
+  abstract follow(user: string): Promise<void>;
+  abstract expectFollowed(user: string): Promise<void>;
+  abstract expectNotFollowed(user: string): Promise<void>;
 }

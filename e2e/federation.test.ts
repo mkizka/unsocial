@@ -37,11 +37,7 @@ test.describe("Federation", () => {
     await soshal.follow("@e2e@misskey.localhost");
 
     // 他サーバーで同期を確認
-    await misskey.goto("/@e2e/followers");
-    const testAccountInMisskey = misskey.page.locator(
-      "text=@test@soshal.localhost"
-    );
-    await expect(testAccountInMisskey).toBeVisible();
+    await misskey.expectFollowed("@test@soshal.localhost");
 
     // 自サーバーで同期を確認
     await soshal.goto("/@e2e@misskey.localhost");
@@ -81,7 +77,6 @@ test.describe("Federation", () => {
     await soshal.page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 他サーバーで同期を確認
-    await misskey.goto("/e2e/followers");
-    await expect(testAccountInMisskey).not.toBeVisible();
+    await misskey.expectNotFollowed("@test@soshal.localhost");
   });
 });
