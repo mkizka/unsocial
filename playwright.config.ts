@@ -23,7 +23,6 @@ const config: PlaywrightTestConfig = {
   use: {
     baseURL: "https://soshal.localhost",
     ignoreHTTPSErrors: true,
-    serviceWorkers: "block",
   },
 };
 
