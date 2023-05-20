@@ -23,6 +23,9 @@ const config: PlaywrightTestConfig = {
   use: {
     baseURL: "https://soshal.localhost",
     ignoreHTTPSErrors: true,
+    launchOptions: {
+      args: ["--disable-databases"],
+    },
     serviceWorkers: "block",
   },
 };
