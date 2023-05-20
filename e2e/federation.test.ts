@@ -21,11 +21,7 @@ test.describe("Federation", () => {
     await expect(remoteNote).toBeVisible();
 
     // 他サーバーでいいね
-    await remoteNote
-      .locator("button", { has: misskey.page.locator(".ti-plus") })
-      .click();
-    await misskey.page.locator(".emojis button").first().click();
-    await misskey.page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
+    await misskey.like(remoteNote);
 
     // 自サーバーで同期を確認
     await soshal.goto("/");
@@ -78,8 +74,7 @@ test.describe("Federation", () => {
     await expect(myhostNote).toBeVisible();
 
     // 自サーバーでいいね
-    await myhostNote.getByTestId("like-button").click();
-    await soshal.page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
+    await soshal.like(myhostNote);
 
     // 他サーバーで同期を確認
     await misskey.showGTL();

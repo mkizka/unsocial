@@ -1,3 +1,4 @@
+import type { Locator } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 import { FediversePage } from "./base";
@@ -29,5 +30,10 @@ export class SoshalPage extends FediversePage {
     });
     await expect(note).toBeVisible();
     return note;
+  }
+
+  async like(note: Locator) {
+    await note.getByTestId("like-button").click();
+    await this.waitForFederation();
   }
 }

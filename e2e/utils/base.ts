@@ -5,6 +5,10 @@ export abstract class FediversePage {
   async goto(to: string) {
     await this.page.goto(to);
   }
+  async waitForFederation() {
+    await this.page.waitForTimeout(500);
+  }
   abstract login(): Promise<void>;
   abstract postNote(content: string): Promise<Locator>;
+  abstract like(note: Locator): Promise<void>;
 }

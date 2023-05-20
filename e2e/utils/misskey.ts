@@ -1,3 +1,4 @@
+import type { Locator } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 import { FediversePage } from "./base";
@@ -29,6 +30,14 @@ export class MisskeyPage extends FediversePage {
     const note = this.page.locator(`text=${content}`);
     await expect(note).toBeVisible();
     return note;
+  }
+
+  async like(note: Locator) {
+    await note
+      .locator("button", { has: this.page.locator(".ti-plus") })
+      .click();
+    await this.page.locator(".emojis button").first().click();
+    await this.waitForFederation();
   }
 
   async showGTL() {
