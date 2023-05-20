@@ -1,8 +1,8 @@
 import { expect } from "@playwright/test";
 
-import { FediversePage } from "./base";
+import { FediverseHandler } from "./base";
 
-export class MisskeyPage extends FediversePage {
+export class MisskeyHandler extends FediverseHandler {
   user = "@e2e@misskey.localhost";
 
   async goto(to: string) {
@@ -76,6 +76,7 @@ export class MisskeyPage extends FediversePage {
   }
 
   async expectLiked(content: string) {
+    await this.gotoGTL();
     await expect(
       this.getNote(content).locator("button", { hasText: "1" })
     ).toBeVisible();

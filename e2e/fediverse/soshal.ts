@@ -1,8 +1,8 @@
 import { expect } from "@playwright/test";
 
-import { FediversePage } from "./base";
+import { FediverseHandler } from "./base";
 
-export class SoshalPage extends FediversePage {
+export class SoshalHandler extends FediverseHandler {
   user = "@test@soshal.localhost";
 
   async login() {

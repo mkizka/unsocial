@@ -1,6 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
 
-export abstract class FediversePage {
+export abstract class FediverseHandler {
   abstract user: string;
 
   constructor(public page: Page) {}
