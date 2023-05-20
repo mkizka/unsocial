@@ -19,7 +19,7 @@ test("セットアップ", async () => {
 
   // タイムアウト防止のために、先に自サーバーのユーザーをMisskeyに読み込ませておく
   const page3 = await context.newPage();
-  await page3.goto("https://misskey.localhost/@test@soshal.localhost");
+  await misskey.goto(page3, "/@test@soshal.localhost");
   await expect(
     page3.locator("text=@test@soshal.localhost").first()
   ).toBeVisible({ timeout: 20000 });

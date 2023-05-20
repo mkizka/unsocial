@@ -1,6 +1,14 @@
 import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
+export const goto = async (page: Page, to: string) => {
+  await expect(async () => {
+    await page.goto(new URL(to, "https://misskey.localhost").toString());
+    await expect(page.locator(".top")).toBeVisible();
+    await expect(page.locator("text=再試行")).not.toBeVisible();
+  }).toPass();
+};
+
 export const login = async (page: Page) => {
   await page.goto("https://misskey.localhost");
   // まれにローディングが終わらないことがあるのでタイムアウトを短めに
@@ -20,6 +28,6 @@ export const postNote = async (page: Page, content: string) => {
 };
 
 export const showGTL = async (page: Page) => {
-  await page.goto("https://misskey.localhost");
+  await goto(page, "/");
   await page.locator("button", { hasText: "グローバル" }).click();
 };

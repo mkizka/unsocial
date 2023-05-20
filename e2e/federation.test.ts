@@ -51,7 +51,7 @@ test.describe("Federation", () => {
     await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 他サーバーで同期を確認
-    await page.goto("https://misskey.localhost/@e2e/followers");
+    await misskey.goto(page, "/@e2e/followers");
     const testAccountInMisskey = page.locator("text=@test@soshal.localhost");
     await expect(testAccountInMisskey).toBeVisible();
 
@@ -60,7 +60,7 @@ test.describe("Federation", () => {
     await expect(page.getByTestId("follow-button")).toHaveText("フォロー中");
 
     // 他サーバーで投稿
-    await page.goto("https://misskey.localhost");
+    await misskey.goto(page, "/");
     const content = crypto.randomUUID();
     await misskey.postNote(page, content);
     await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
@@ -99,7 +99,7 @@ test.describe("Federation", () => {
     await page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
 
     // 他サーバーで同期を確認
-    await page.goto("https://misskey.localhost/@e2e/followers");
+    await misskey.goto(page, "/e2e/followers");
     await expect(testAccountInMisskey).not.toBeVisible();
   });
 });

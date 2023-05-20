@@ -21,7 +21,7 @@ export default defineConfig({
   ],
   use: {
     baseURL: "https://soshal.localhost",
-    video: "retain-on-failure",
+    video: process.env.CI ? "retain-on-failure" : "off",
     ignoreHTTPSErrors: true,
   },
 });
