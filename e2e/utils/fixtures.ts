@@ -1,8 +1,7 @@
 // https://playwright.dev/docs/next/chrome-extensions#testing
 import { type BrowserContext, chromium, test as base } from "@playwright/test";
 
-import { MisskeyPage } from "./misskey";
-import { SoshalPage } from "./soshal";
+import { MisskeyPage, SoshalPage } from "../fediverse";
 
 export const test = base.extend<{
   context: BrowserContext;

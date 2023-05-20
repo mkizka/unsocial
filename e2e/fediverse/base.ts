@@ -1,6 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
 
-import { expect } from "./fixtures";
+import { expect } from "../utils/fixtures";
 
 export abstract class FediversePage {
   constructor(public page: Page) {}

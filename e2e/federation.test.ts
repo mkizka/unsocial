@@ -6,7 +6,7 @@ test.describe.configure({ mode: "parallel" });
 test.use({ storageState: "e2e/state.json" });
 
 test.describe("Federation", () => {
-  test("自サーバーの投稿", async ({ soshal, misskey, context }) => {
+  test("自サーバーの投稿", async ({ soshal, misskey }) => {
     const content = crypto.randomUUID();
     await soshal.postNote(content);
     await misskey.expectPosted(content);
