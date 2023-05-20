@@ -1,28 +1,35 @@
-import { defineConfig } from "@playwright/test";
+import type { PlaywrightTestConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
-export default defineConfig({
+const chromium = {
+  ...devices["Desktop Chrome"],
+  locale: "ja-JP",
+};
+
+const config: PlaywrightTestConfig = {
   testDir: "e2e",
-  retries: 3,
-  timeout: 5 * 60 * 1000,
   projects: [
     {
       name: "setup",
-      use: {
-        locale: "ja-JP",
-      },
+      use: chromium,
       testMatch: "e2e/auth.setup.ts",
     },
     {
       name: "chromium",
-      use: {
-        locale: "ja-JP",
-      },
+      use: chromium,
       dependencies: ["setup"],
     },
   ],
   use: {
     baseURL: "https://soshal.localhost",
-    video: process.env.CI ? "retain-on-failure" : "off",
     ignoreHTTPSErrors: true,
   },
-});
+};
+
+if (process.env.CI) {
+  config.retries = 5;
+  config.timeout = 5 * 60 * 1000;
+  config.use!.video = "retain-on-failure";
+}
+
+export default defineConfig(config);
