@@ -40,10 +40,7 @@ test.describe("Federation", () => {
     await misskey.expectFollowed("@test@soshal.localhost");
 
     // 自サーバーで同期を確認
-    await soshal.goto("/@e2e@misskey.localhost");
-    await expect(soshal.page.getByTestId("follow-button")).toHaveText(
-      "フォロー中"
-    );
+    await soshal.expectFollowing("@e2e@misskey.localhost");
 
     // 他サーバーで投稿
     await misskey.goto("/");

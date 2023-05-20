@@ -56,6 +56,17 @@ export class SoshalPage extends FediversePage {
     await this.waitForFederation();
   }
 
+  async expectFollowing(user: string) {
+    await this.goto(`/${user}`);
+    await expect(this.page.getByTestId("follow-button")).toHaveText(
+      "フォロー中"
+    );
+  }
+
+  async expectFollowed(user: string) {
+    // TODO: 実装
+  }
+
   async expectNotFollowed(user: string) {
     // TODO: 実装
   }
