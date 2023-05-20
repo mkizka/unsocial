@@ -32,6 +32,11 @@ export class SoshalPage extends FediversePage {
     return note;
   }
 
+  async delete(note: Locator) {
+    await note.getByTestId("delete-button").click();
+    await this.waitForFederation();
+  }
+
   async like(note: Locator) {
     await note.getByTestId("like-button").click();
     await this.waitForFederation();

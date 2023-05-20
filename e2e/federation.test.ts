@@ -32,9 +32,7 @@ test.describe("Federation", () => {
     ).toBeVisible();
 
     // 自サーバーで削除
-    await soshal.goto("/");
-    await myhostNote.getByTestId("delete-button").click();
-    await soshal.page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
+    await soshal.delete(myhostNote);
 
     // 他サーバーで確認
     await misskey.showGTL();
@@ -82,12 +80,7 @@ test.describe("Federation", () => {
     await expect(remoteNote.locator("button", { hasText: "1" })).toBeVisible();
 
     // 他サーバーの投稿を削除
-    await remoteNote
-      .locator("button", { has: misskey.page.locator(".ti-dots") })
-      .click();
-    await misskey.page.locator("button", { hasText: "削除" }).last().click();
-    await misskey.page.locator("button", { hasText: "OK" }).click();
-    await misskey.page.waitForTimeout(TIMEOUT_FOR_FEDERATION);
+    await misskey.delete(remoteNote);
 
     // 自サーバーで同期を確認
     await soshal.goto("/");

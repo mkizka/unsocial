@@ -32,6 +32,15 @@ export class MisskeyPage extends FediversePage {
     return note;
   }
 
+  async delete(note: Locator) {
+    await note
+      .locator("button", { has: this.page.locator(".ti-dots") })
+      .click();
+    await this.page.locator("button", { hasText: "削除" }).last().click();
+    await this.page.locator("button", { hasText: "OK" }).click();
+    await this.waitForFederation();
+  }
+
   async like(note: Locator) {
     await note
       .locator("button", { has: this.page.locator(".ti-plus") })

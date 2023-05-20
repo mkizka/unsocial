@@ -10,5 +10,6 @@ export abstract class FediversePage {
   }
   abstract login(): Promise<void>;
   abstract postNote(content: string): Promise<Locator>;
+  abstract delete(note: Locator): Promise<void>;
   abstract like(note: Locator): Promise<void>;
 }
