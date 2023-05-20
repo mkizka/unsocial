@@ -21,13 +21,10 @@ export class MisskeyPage extends FediversePage {
   }
 
   async login() {
-    await expect(async () => {
-      await this.page.goto("https://misskey.localhost/flush");
-      await this.page.goto("https://misskey.localhost");
-      // まれにローディングが終わらないことがあるのでタイムアウトを短めに
-      // IndexedDBが原因っぽいが対処法が分からず
-      await this.page.locator("[data-cy-signin]").click({ timeout: 3000 });
-    }).toPass();
+    await this.page.goto("https://misskey.localhost");
+    // まれにローディングが終わらないことがあるのでタイムアウトを短めに
+    // IndexedDBが原因っぽいが対処法が分からず
+    await this.page.locator("[data-cy-signin]").click({ timeout: 3000 });
     await this.page.locator("[data-cy-signin-username] input").fill("e2e");
     await this.page.locator("[data-cy-signin-password] input").fill("e2e");
     await this.page.locator("button[type=submit]").click();
