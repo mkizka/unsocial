@@ -8,12 +8,10 @@ export const test = base.extend<{
   misskey: MisskeyPage;
 }>({
   soshal: async ({ page }, use) => {
-    const soshal = new SoshalPage(page);
-    await use(soshal);
+    await use(new SoshalPage(page));
   },
   misskey: async ({ page }, use) => {
-    const misskey = new MisskeyPage(page);
-    await use(misskey);
+    await use(new MisskeyPage(page));
   },
 });
 

@@ -23,7 +23,7 @@ export class MisskeyPage extends FediversePage {
   }
 
   async login() {
-    await this.page.goto("https://misskey.localhost");
+    await this.goto("/");
     await this.page.locator("[data-cy-signin]").click();
     await this.page.locator("[data-cy-signin-username] input").fill("e2e");
     await this.page.locator("[data-cy-signin-password] input").fill("e2e");
