@@ -3,6 +3,8 @@ import { expect } from "@playwright/test";
 import { FediversePage } from "./base";
 
 export class SoshalPage extends FediversePage {
+  user = "@test@soshal.localhost";
+
   async login() {
     // まれに /api/auth/signin?csrf=true にリダイレクトされることがあるのでリトライ
     await expect(async () => {

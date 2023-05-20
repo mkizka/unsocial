@@ -3,6 +3,8 @@ import { expect } from "@playwright/test";
 import { FediversePage } from "./base";
 
 export class MisskeyPage extends FediversePage {
+  user = "@e2e@misskey.localhost";
+
   async goto(to: string) {
     await expect(async () => {
       await this.page.goto(new URL(to, "https://misskey.localhost").toString());
