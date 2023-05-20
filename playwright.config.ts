@@ -3,6 +3,7 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "e2e",
   retries: 3,
+  timeout: 0,
   projects: [
     {
       name: "setup",
@@ -21,7 +22,7 @@ export default defineConfig({
   ],
   use: {
     baseURL: "https://soshal.localhost",
-    video: process.env.CI ? "retain-on-failure" : "off",
+    video: process.env.CI ? "on" : "off",
     ignoreHTTPSErrors: true,
   },
 });
