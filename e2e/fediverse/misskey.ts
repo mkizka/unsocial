@@ -8,7 +8,9 @@ export class MisskeyPage extends FediversePage {
   async goto(to: string) {
     await expect(async () => {
       await this.page.goto(new URL(to, "https://misskey.localhost").toString());
-      await expect(this.page.locator(".top")).toBeVisible();
+      // 最初に表示されるスプラッシュ(ローディング)画面
+      await expect(this.page.locator("#splash")).not.toBeVisible();
+      // なんらかのエラーが発生した時の再試行ボタン
       await expect(this.page.locator("text=再試行")).not.toBeVisible();
     }).toPass();
     if (to == "/") {
@@ -22,9 +24,7 @@ export class MisskeyPage extends FediversePage {
 
   async login() {
     await this.page.goto("https://misskey.localhost");
-    // まれにローディングが終わらないことがあるのでタイムアウトを短めに
-    // IndexedDBが原因っぽいが対処法が分からず
-    await this.page.locator("[data-cy-signin]").click({ timeout: 3000 });
+    await this.page.locator("[data-cy-signin]").click();
     await this.page.locator("[data-cy-signin-username] input").fill("e2e");
     await this.page.locator("[data-cy-signin-password] input").fill("e2e");
     await this.page.locator("button[type=submit]").click();
