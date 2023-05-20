@@ -14,10 +14,12 @@ export abstract class FediversePage {
   abstract login(): Promise<void>;
   abstract postNote(content: string): Promise<void>;
   async expectPosted(content: string) {
+    await this.goto("/");
     await expect(this.getNote(content)).toBeVisible();
   }
   abstract delete(content: string): Promise<void>;
   async expectDeleted(content: string) {
+    await this.goto("/");
     await expect(this.getNote(content)).not.toBeVisible();
   }
   abstract like(content: string): Promise<void>;

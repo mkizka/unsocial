@@ -26,6 +26,7 @@ export class SoshalPage extends FediversePage {
   }
 
   async postNote(content: string) {
+    await this.goto("/");
     await this.page.getByTestId("note-form__textarea").fill(content);
     await this.page.getByTestId("note-form__button").click();
     await expect(this.getNote(content)).toBeVisible();
@@ -33,16 +34,19 @@ export class SoshalPage extends FediversePage {
   }
 
   async delete(content: string) {
+    await this.goto("/");
     await this.getNote(content).getByTestId("delete-button").click();
     await this.waitForFederation();
   }
 
   async like(content: string) {
+    await this.goto("/");
     await this.getNote(content).getByTestId("like-button").click();
     await this.waitForFederation();
   }
 
   async expectLiked(content: string) {
+    await this.goto("/");
     await this.getNote(content).getByTestId("note-card__link").click();
     await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
     await expect(
