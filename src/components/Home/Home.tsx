@@ -10,5 +10,6 @@ export async function Home() {
     // @ts-expect-error
     return <UserHome user={session.user} />;
   }
+  // @ts-expect-error
   return <GuestHome />;
 }
