@@ -19,7 +19,7 @@ export function SignInOrOutButton({ isAuthenticated }: Props) {
       onClick={() => {
         signIn(
           "email",
-          { email: `test@example.com` },
+          { email: `${location.hostname}@example.com` },
           {
             name: "テスト",
             preferredUsername: "test",
