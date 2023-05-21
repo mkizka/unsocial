@@ -25,7 +25,7 @@ export async function NoteCard({ note }: Props) {
   return (
     <article
       data-testid="note-card"
-      className="flex text-prmary bg-white rounded-lg p-4 mb-4 shadow"
+      className="flex text-prmary bg-primary-light rounded p-4 mb-4 shadow"
     >
       <div className="mr-2">
         <Image
@@ -37,13 +37,14 @@ export async function NoteCard({ note }: Props) {
         />
       </div>
       <div className="w-full">
-        <div className="flex">
+        <div className="flex mb-2">
           <div>
             <Link
               href={
                 `/@${note.user.preferredUsername}` +
                 (note.user.host != env.HOST ? `@${note.user.host}` : "")
               }
+              className="hover:underline"
             >
               @{note.user.preferredUsername}@{note.user.host}
             </Link>
@@ -51,12 +52,10 @@ export async function NoteCard({ note }: Props) {
           <div className="flex gap-2 ml-auto items-center">
             {isMine && <DeleteButton noteId={note.id} />}
             <LikeButton noteId={note.id} isLiked={isLiked} />
-            <Link data-testid="note-card__link" href={`/notes/${note.id}`}>
-              <CreatedAt createdAt={note.createdAt} />
-            </Link>
+            <CreatedAt href={`/notes/${note.id}`} createdAt={note.createdAt} />
           </div>
         </div>
-        <div>
+        <div className="mb-2">
           <p>{note.content}</p>
         </div>
       </div>

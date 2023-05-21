@@ -13,7 +13,7 @@ export function DeleteButton({ noteId }: Props) {
     <button
       data-testid="delete-button"
       onClick={() => startTransition(() => action(noteId))}
-      className="text-red-500"
+      className="text-accent hover:text-accent-dark transition-colors"
     >
       {isPending ? "..." : "削除"}
     </button>
