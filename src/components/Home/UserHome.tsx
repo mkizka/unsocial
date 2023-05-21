@@ -26,6 +26,9 @@ export async function UserHome({ user }: Props) {
         },
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return (
     <main>
