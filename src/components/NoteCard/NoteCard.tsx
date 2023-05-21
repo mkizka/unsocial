@@ -30,7 +30,7 @@ export async function NoteCard({ note }: Props) {
       <div className="mr-2">
         <Image
           className="h-10 w-10 rounded-full"
-          src={`https://ui-avatars.com/api/?name=@${note.user.preferredUsername}@${note.user.host}`}
+          src={`/icon?name=${note.user.preferredUsername}`}
           width={50}
           height={50}
           alt={`@${note.user.name}のアイコン`}
