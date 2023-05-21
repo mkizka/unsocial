@@ -11,8 +11,10 @@ export class SoshalHandler extends FediverseHandler {
     await expect(async () => {
       await this.goto("/");
       await this.page.locator("[data-testid=login-button]").click();
-      await this.page.waitForURL((url) => url.pathname != "/");
-      expect(this.page.url()).toContain("/api/auth/verify-request");
+      await this.page.waitForURL(
+        (url) => url.pathname.startsWith("/api/auth/verify-request"),
+        { timeout: 10000 }
+      );
     }).toPass();
     await this.page.goto("http://localhost:8025");
     await this.page.locator(".msglist-message").first().click();
