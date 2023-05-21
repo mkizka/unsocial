@@ -9,13 +9,13 @@ export class MisskeyHandler extends FediverseHandler {
   async goto(to: string) {
     await expect(async () => {
       await super.goto(to);
-      // 最初に表示されるスプラッシュ(ローディング)画面
-      await expect(this.page.locator("#splash")).not.toBeVisible();
-      // なんらかのエラーが発生した時のエラー画面
+      // 最初に表示されるスプラッシュ(ローディング)画面が消えるまで待つ
+      await expect(this.page.locator("#misskey_app")).toBeVisible();
+      // 表示された画面がエラー画面でない
       await expect(
         this.page.locator("text=An error has occurred!")
       ).not.toBeVisible();
-      // なんらかのエラーが発生した時の再試行ボタン
+      // 表示された画面に再試行ボタンがない
       await expect(this.page.locator("text=再試行")).not.toBeVisible();
     }).toPass();
   }
