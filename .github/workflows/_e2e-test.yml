@@ -30,7 +30,7 @@ jobs:
       - run: ./scripts/setup-for-docker.sh
       - run: cp -f .env.docker .env && docker compose up -d --build
       - run: pnpm playwright install --with-deps chromium
-      - run: pnpm e2e --reporter=html
+      - run: pnpm e2e
       - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/e2e-html "s3://${{ env.UPLOAD_DIR }}" --recursive
         if: (success() || failure()) && github.event_name == 'pull_request'
       - uses: gh640/command-result-action@v1
