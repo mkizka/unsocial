@@ -32,11 +32,17 @@ jobs:
       - run: pnpm playwright install --with-deps chromium
       - run: pnpm e2e --reporter=html
       - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp playwright-report "s3://${{ env.UPLOAD_DIR }}" --recursive
+      - uses: gh640/command-result-action@v1
+        if: github.event_name == 'pull_request'
+        id: e2e-report
+        env:
+          E2E_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
+        with:
+          command: ./scripts/e2e-report.mts
       - uses: thollander/actions-comment-pull-request@v2
         if: github.event_name == 'pull_request'
         with:
-          message: |
-            :performing_arts: [playwright-report](${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}/index.html)
+          message: ${{ steps.e2e-report.outputs.stdout }}
           comment_tag: e2e-test-result
       - uses: actions/upload-artifact@v3
         if: always() && github.event_name != 'pull_request'

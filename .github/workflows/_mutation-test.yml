@@ -25,10 +25,9 @@ jobs:
         run: |
           mv stryker.log reports/
           aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.UPLOAD_DIR }}" --recursive
-      - name: show-diff-result
-        uses: gh640/command-result-action@v1
+      - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
-        id: diff-result
+        id: mutation-report
         env:
           MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
         with:
@@ -36,5 +35,5 @@ jobs:
       - uses: thollander/actions-comment-pull-request@v2
         if: github.event_name == 'pull_request'
         with:
-          message: ${{ steps.diff-result.outputs.stdout }}
+          message: ${{ steps.mutation-report.outputs.stdout }}
           comment_tag: mutation-test-result

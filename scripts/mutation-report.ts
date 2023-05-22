@@ -1,8 +1,5 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env -S pnpm tsx
 import fs from "fs";
-import { $, fetch } from "zx";
-
-$.verbose = false;
 
 type Result = {
   files: {
