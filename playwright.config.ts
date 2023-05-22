@@ -29,6 +29,7 @@ const config: PlaywrightTestConfig = {
 
 if (process.env.CI) {
   config.retries = 3;
+  config.reporter = "github";
   config.timeout = 90000;
   config.use!.video = "on";
 }

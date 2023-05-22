@@ -24,10 +24,10 @@ export default async function NotePage({
     return notFound();
   }
   return (
-    <>
+    <main className="pt-5">
       {/* @ts-expect-error */}
       <NoteCard note={note} />
       <UserList users={note.likes.map((like) => like.user)} />
-    </>
+    </main>
   );
 }
