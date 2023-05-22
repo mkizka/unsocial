@@ -8,6 +8,8 @@ jobs:
     uses: ./.github/workflows/_unit-test.yml
   e2e-test-pr:
     uses: ./.github/workflows/_e2e-test.yml
+    with:
+      upload-artifact: true
   mutation-test-pr:
     permissions:
       contents: read

@@ -2,6 +2,17 @@ name: _e2e-test
 
 on:
   workflow_call:
+    inputs:
+      upload-artifact:
+        type: boolean
+        default: false
+
+env:
+  UPLOAD_DIR: soshal-gha/e2e-test/${{ github.sha }}
+  ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: ap-northeast-1
 
 jobs:
   test:
@@ -23,9 +34,16 @@ jobs:
       - run: ./scripts/setup-for-docker.sh
       - run: cp -f .env.docker .env && docker compose up -d --build
       - run: pnpm playwright install --with-deps chromium
-      - run: pnpm e2e
+      - run: pnpm e2e --reporter=html
+      - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp playwright-report "s3://${{ env.UPLOAD_DIR }}" --recursive
+      - uses: thollander/actions-comment-pull-request@v2
+        if: github.event_name == 'pull_request'
+        with:
+          message: |
+            :performing_arts: [playwright-report](${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }})
+          comment_tag: e2e-test-result
       - uses: actions/upload-artifact@v3
-        if: always()
+        if: always() && inputs.upload-artifact
         with:
           path: test-results/
           retention-days: 1
