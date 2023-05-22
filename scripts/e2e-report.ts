@@ -13,7 +13,7 @@ const { commits } = JSON.parse(stdout.toString()) as {
 const comment = ["| commit | 結果 |", "| --- | --- |"];
 
 for (const commit of commits) {
-  const link = `[playwright-report](${process.env.E2E_TEST_S3_BASEURL}/index.html)`;
+  const link = `:performing_arts: [playwright-report](${process.env.E2E_TEST_S3_BASEURL}/index.html)`;
   comment.push(`| ${commit.messageHeadline} (${commit.oid}) | ${link}`);
 }
 
