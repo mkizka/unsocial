@@ -6,6 +6,7 @@ const config = {
   testRunner: "jest",
   coverageAnalysis: "perTest",
   incremental: true,
+  incrementalFile: "reports/mutation/stryker-incremental.json",
   timeoutMS: 30000,
   maxTestRunnerReuse: 20,
   mutate: [
