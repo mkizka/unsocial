@@ -31,7 +31,7 @@ jobs:
       - run: cp -f .env.docker .env && docker compose up -d --build
       - run: pnpm playwright install --with-deps chromium
       - run: pnpm e2e
-      - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/e2e-html "s3://${{ env.UPLOAD_DIR }}" --recursive
+      - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/e2e "s3://${{ env.UPLOAD_DIR }}" --recursive
         if: (success() || failure()) && github.event_name == 'pull_request'
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
@@ -51,6 +51,6 @@ jobs:
         if: (success() || failure()) && github.event_name != 'pull_request'
         with:
           name: e2e-${{ github.sha }}
-          path: reports/e2e-html
+          path: reports/e2e
           retention-days: 1
           if-no-files-found: ignore

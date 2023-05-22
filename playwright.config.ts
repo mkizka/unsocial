@@ -8,8 +8,11 @@ const chromium = {
 
 const config: PlaywrightTestConfig = {
   testDir: "e2e",
-  outputDir: "reports/e2e-data",
-  reporter: [["list"], ["html", { outputFolder: "reports/e2e-html" }]],
+  outputDir: "reports/.e2e",
+  reporter: [
+    ["list"],
+    ["html", { open: "never", outputFolder: "reports/e2e" }],
+  ],
   projects: [
     {
       name: "setup",
