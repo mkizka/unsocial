@@ -36,9 +36,10 @@ jobs:
         if: github.event_name == 'pull_request'
         id: e2e-report
         env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
           E2E_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
         with:
-          command: ./scripts/e2e-report.mts
+          command: ./scripts/e2e-report.ts
       - uses: thollander/actions-comment-pull-request@v2
         if: github.event_name == 'pull_request'
         with:
