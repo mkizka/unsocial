@@ -86,7 +86,7 @@ const main = async () => {
 
   const text = `${await table()}
   
-  :gun: [mutation.html](${baseUrl}/mutation/mutation.html)
+  :gun: [mutation.html](${baseUrl}/mutation.html)
   :page_facing_up: [stryker.log](${baseUrl}/stryker.log)`;
 
   console.log(text);

@@ -31,7 +31,8 @@ jobs:
       - run: cp -f .env.docker .env && docker compose up -d --build
       - run: pnpm playwright install --with-deps chromium
       - run: pnpm e2e --reporter=html
-      - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp playwright-report "s3://${{ env.UPLOAD_DIR }}" --recursive
+      - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/e2e-html "s3://${{ env.UPLOAD_DIR }}" --recursive
+        if: (success() || failure()) && github.event_name == 'pull_request'
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
         id: e2e-report
@@ -42,12 +43,12 @@ jobs:
         with:
           command: ./scripts/e2e-report.ts
       - uses: thollander/actions-comment-pull-request@v2
-        if: github.event_name == 'pull_request'
+        if: (success() || failure()) && github.event_name == 'pull_request'
         with:
           message: ${{ steps.e2e-report.outputs.stdout }}
           comment_tag: e2e-report
       - uses: actions/upload-artifact@v3
-        if: always() && github.event_name != 'pull_request'
+        if: (success() || failure()) && github.event_name != 'pull_request'
         with:
           path: test-results/
           retention-days: 1

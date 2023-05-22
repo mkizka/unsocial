@@ -12,9 +12,6 @@ next-env.d.ts
 .stryker-tmp
 reports
 
-# playwright
-test-results/
-
 # mkcert
 *.pem
 *.crt
