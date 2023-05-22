@@ -36,4 +36,4 @@ jobs:
         if: github.event_name == 'pull_request'
         with:
           message: ${{ steps.mutation-report.outputs.stdout }}
-          comment_tag: mutation-test-result
+          comment_tag: mutation-report

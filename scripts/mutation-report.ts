@@ -81,11 +81,15 @@ const table = async () => {
     : "ミューテーションテスト結果に変化がありませんでした";
 };
 
-const baseUrl = process.env.MUTATION_TEST_S3_BASEURL ?? "";
+const main = async () => {
+  const baseUrl = process.env.MUTATION_TEST_S3_BASEURL ?? "";
 
-const text = `${await table()}
+  const text = `${await table()}
+  
+  :gun: [mutation.html](${baseUrl}/mutation/mutation.html)
+  :page_facing_up: [stryker.log](${baseUrl}/stryker.log)`;
 
-:gun: [mutation.html](${baseUrl}/mutation/mutation.html)
-:page_facing_up: [stryker.log](${baseUrl}/stryker.log)`;
+  console.log(text);
+};
 
-console.log(text);
+main().catch(console.error);
