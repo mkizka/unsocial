@@ -23,7 +23,7 @@
     "next-auth": "4.19.2",
     "nodemailer": "6.9.2",
     "react": "18.3.0-canary-5309f1028-20230517",
-    "react-dom": "18.3.0-canary-5309f1028-20230517",
+    "react-dom": "18.3.0-next-fecc288b7-20221025",
     "winston": "3.8.2",
     "zod": "3.21.4"
   },
