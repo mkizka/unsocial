@@ -4,9 +4,8 @@ on:
   workflow_call:
 
 env:
-  BRANCH_NAME: ${{ github.head_ref || 'main' }}
+  UPLOAD_DIR: soshal-gha/mutation-test/main
   ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
-  BUCKET_NAME: soshal-mutation-test
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ap-northeast-1
@@ -25,13 +24,13 @@ jobs:
       - name: upload-reports
         run: |
           mv stryker.log reports/
-          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.BUCKET_NAME }}/${{ env.BRANCH_NAME }}" --recursive
+          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports "s3://${{ env.UPLOAD_DIR }}" --recursive
       - name: show-diff-result
         uses: gh640/command-result-action@v1
         if: ${{ github.event_name == 'pull_request' }}
         id: diff-result
         env:
-          MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.BUCKET_NAME }}/${{ env.BRANCH_NAME }}
+          MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
         with:
           command: ./scripts/mutation-report.mts
       - uses: thollander/actions-comment-pull-request@v2
