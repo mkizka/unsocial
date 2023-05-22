@@ -50,6 +50,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: (success() || failure()) && github.event_name != 'pull_request'
         with:
-          path: test-results/
+          name: e2e-${{ github.sha }}
+          path: reports/e2e-html
           retention-days: 1
           if-no-files-found: ignore
