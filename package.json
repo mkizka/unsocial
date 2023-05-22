@@ -60,9 +60,7 @@
     "typescript": "5.0.4",
     "zx": "7.2.2"
   },
-  "ct3aMetadata": {
-    "initVersion": "7.0.0"
-  },
+  "packageManager": "pnpm@8.5.1",
   "pnpm": {
     "patchedDependencies": {
       "next-auth@4.19.2": "patches/next-auth@4.19.2.patch"
