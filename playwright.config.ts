@@ -8,6 +8,8 @@ const chromium = {
 
 const config: PlaywrightTestConfig = {
   testDir: "e2e",
+  outputDir: "reports/e2e-data",
+  reporter: [["list"], ["html", { outputFolder: "reports/e2e-html" }]],
   projects: [
     {
       name: "setup",
@@ -24,14 +26,14 @@ const config: PlaywrightTestConfig = {
     baseURL: "https://soshal.localhost",
     ignoreHTTPSErrors: true,
     serviceWorkers: "block",
+    video: "on",
+    trace: "on",
   },
 };
 
 if (process.env.CI) {
   config.retries = 3;
-  config.reporter = "github";
   config.timeout = 90000;
-  config.use!.video = "on";
 }
 
 export default defineConfig(config);

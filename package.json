@@ -11,7 +11,7 @@
     "lint": "next lint && prettier . --check",
     "mutation-test": "run-s mutation-test:*",
     "mutation-test:run-only": "./scripts/mutation-test.sh",
-    "mutation-test:report": "./scripts/mutation-report.mts | md",
+    "mutation-test:report": "./scripts/mutation-report.ts | md",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -57,8 +57,8 @@
     "prisma": "4.14.1",
     "tailwindcss": "3.3.2",
     "ts-node": "10.9.1",
-    "typescript": "5.0.4",
-    "zx": "7.2.2"
+    "tsx": "3.12.7",
+    "typescript": "5.0.4"
   },
   "packageManager": "pnpm@8.5.1",
   "pnpm": {

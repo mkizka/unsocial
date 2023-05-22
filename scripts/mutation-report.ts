@@ -1,8 +1,5 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env -S pnpm tsx
 import fs from "fs";
-import { $, fetch } from "zx";
-
-$.verbose = false;
 
 type Result = {
   files: {
@@ -57,7 +54,7 @@ const table = async () => {
   const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
   const mainScores = getScorePerFile(
     await fetchJson(
-      "https://minio-s3.paas.mkizka.dev/soshal-mutation-test/main/mutation/mutation.json"
+      "https://minio-s3.paas.mkizka.dev/soshal-gha/mutation-test/main/mutation.json"
     )
   );
   const filenames = [
@@ -84,11 +81,15 @@ const table = async () => {
     : "ミューテーションテスト結果に変化がありませんでした";
 };
 
-const baseUrl = process.env.MUTATION_TEST_S3_BASEURL ?? "";
+const main = async () => {
+  const baseUrl = process.env.MUTATION_TEST_S3_BASEURL ?? "";
 
-const text = `${await table()}
+  const text = `${await table()}
+  
+  :gun: [mutation.html](${baseUrl}/mutation.html)
+  :page_facing_up: [stryker.log](${baseUrl}/stryker.log)`;
 
-:gun: [mutation.html](${baseUrl}/mutation/mutation.html)
-:page_facing_up: [stryker.log](${baseUrl}/stryker.log)`;
+  console.log(text);
+};
 
-console.log(text);
+main().catch(console.error);
