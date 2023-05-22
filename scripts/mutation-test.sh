@@ -9,7 +9,7 @@ echo "$BRANCH_NAME のキャッシュファイルをダウンロード..."
 curl -f --progress-bar -o reports/stryker-incremental.json "https://minio-s3.paas.mkizka.dev/soshal-gha/mutation-test/$BRANCH_NAME/stryker-incremental.json"
 if [ ! -f reports/stryker-incremental.json ]; then
   echo "main のキャッシュファイルをダウンロード..."
-  curl -f --progress-bar -o reports/stryker-incremental.json https://minio-s3.paas.mkizka.dev/soshal-gha/mutation-test/main/stryker-incremental.json
+  curl -f --progress-bar -o reports/stryker-incremental.json https://minio-s3.paas.mkizka.dev/soshal-gha/mutation-test/feature-e2e-report/stryker-incremental.json
 fi
 if [ ! -f reports/stryker-incremental.json ]; then
   echo "キャッシュファイルが取得できませんでした"
