@@ -10,8 +10,6 @@ jobs:
     uses: ./.github/workflows/_unit-test.yml
   e2e-test-prod:
     uses: ./.github/workflows/_e2e-test.yml
-    with:
-      upload-artifact: true
   mutation-test-prod:
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
