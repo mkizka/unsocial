@@ -7,7 +7,7 @@ patchedDependencies:
 
 dependencies:
   '@heroicons/react':
-    specifier: ^2.0.18
+    specifier: 2.0.18
     version: 2.0.18(react@18.3.0-canary-5309f1028-20230517)
   '@next-auth/prisma-adapter':
     specifier: 1.0.6
