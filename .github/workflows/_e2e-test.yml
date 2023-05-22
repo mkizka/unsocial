@@ -36,10 +36,10 @@ jobs:
         if: github.event_name == 'pull_request'
         with:
           message: |
-            :performing_arts: [playwright-report](${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }})
+            :performing_arts: [playwright-report](${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}/index.html)
           comment_tag: e2e-test-result
       - uses: actions/upload-artifact@v3
-        if: always() &&  github.event_name != 'pull_request'
+        if: always() && github.event_name != 'pull_request'
         with:
           path: test-results/
           retention-days: 1
