@@ -3,7 +3,6 @@
   "extends": ["config:js-app"],
   "ignoreDeps": ["react", "got", "next-auth"],
   "baseBranches": ["renovate-pr"],
-  "bumpVersion": "prerelease",
   "automerge": true,
   "platformAutomerge": true
 }
