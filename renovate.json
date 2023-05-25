@@ -4,5 +4,11 @@
   "ignoreDeps": ["react", "got", "next-auth"],
   "baseBranches": ["renovate-pr"],
   "automerge": true,
-  "platformAutomerge": true
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "matchPackageNames": ["next"],
+      "allowedVersions": "/.*/"
+    }
+  ]
 }
