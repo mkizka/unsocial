@@ -1,10 +1,12 @@
 "use client";
-import type { Follow, FollowStatus } from "@prisma/client";
+import type { FollowStatus } from "@prisma/client";
 import { useTransition } from "react";
 
+import { action } from "./action.server";
+
 type Props = {
-  follow: Pick<Follow, "status"> | null;
-  onClick: () => Promise<void>;
+  followeeId: string;
+  followStatus?: FollowStatus;
 };
 
 const FOLLOW_TEXT = {
@@ -15,15 +17,15 @@ const FOLLOW_TEXT = {
   [key in FollowStatus]: string;
 };
 
-export function FollowButton({ follow, onClick }: Props) {
+export function FollowButton({ followeeId, followStatus }: Props) {
   const [isPending, startTransition] = useTransition();
 
   return (
     <button
       data-testid={isPending ? "follow-button-loading" : "follow-button"}
-      onClick={() => startTransition(() => onClick())}
+      onClick={() => startTransition(() => action(followeeId))}
     >
-      {follow ? FOLLOW_TEXT[follow.status] : "フォロー"}
+      {followStatus ? FOLLOW_TEXT[followStatus] : "フォロー"}
     </button>
   );
 }
