@@ -24,7 +24,7 @@
     "nodemailer": "6.9.2",
     "react": "18.3.0-canary-9a72e6227-20230525",
     "react-dom": "18.3.0-canary-9a72e6227-20230525",
-    "winston": "3.8.2",
+    "winston": "3.9.0",
     "zod": "3.21.4"
   },
   "devDependencies": {
