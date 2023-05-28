@@ -20,3 +20,6 @@ reports
 # others
 .DS_Store
 *.log
+
+# Local Netlify folder
+.netlify
