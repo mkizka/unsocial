@@ -3,6 +3,15 @@ import { z } from "zod";
 
 import { formatZodError } from "./formatZodError";
 
+const getHostIfExists = (...keys: string[]) => {
+  for (const key of keys) {
+    if (process.env[key]) {
+      return new URL(process.env[key]!).host;
+    }
+  }
+  return null;
+};
+
 const serverEnvSchema = z.object({
   DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
@@ -10,14 +19,8 @@ const serverEnvSchema = z.object({
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
       : z.string().min(1).optional(),
-  NEXTAUTH_URL:
-    // next-authはVERCEL_URLがあればそれを使うので検証しない
-    // https://next-auth.js.org/configuration/options#nextauth_url
-    process.env.VERCEL_URL ? z.any() : z.string().url(),
   HOST: z.preprocess(
-    (str) =>
-      process.env.VERCEL_URL ??
-      (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).host : str),
+    (str) => getHostIfExists("VERCEL_URL", "NEXTAUTH_URL", "DEPLOY_URL") ?? str,
     z.string().min(1)
   ),
   EMAIL_SERVER_USER: z.string().default("user"),
