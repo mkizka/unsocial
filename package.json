@@ -10,7 +10,7 @@
     "start": "next start",
     "test": "jest",
     "e2e": "playwright test",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate; exit 0",
     "lint": "next lint && prettier . --check",
     "mutation-test": "run-s mutation-test:*",
     "mutation-test:run-only": "./scripts/mutation-test.sh",
