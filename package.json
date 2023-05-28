@@ -7,6 +7,7 @@
     "dev": "run-s dev:*",
     "dev:setup": "docker compose up -d mysql mail",
     "dev:start": "prisma db push && next dev",
+    "start": "next start",
     "test": "jest",
     "e2e": "playwright test",
     "postinstall": "prisma generate",
