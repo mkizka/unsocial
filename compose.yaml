@@ -86,7 +86,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysql", "-uroot", "-ppassword", "-e", "SELECT 1"]
       interval: 2s
       timeout: 2s
       retries: 5
