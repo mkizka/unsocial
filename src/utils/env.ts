@@ -4,8 +4,7 @@ import { z } from "zod";
 import { formatZodError } from "./formatZodError";
 
 const serverEnvSchema = z.object({
-  POSTGRES_PRISMA_URL: z.string().url(),
-  POSTGRES_URL_NON_POOLING: z.string().url(),
+  DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === "production"

@@ -2,15 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl         = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Example {
@@ -25,6 +23,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -59,13 +59,15 @@ model VerificationToken {
 
 model Note {
   id        String   @id @default(nanoid(8))
-  url       String? // TODO: objectUrlに変える
+  url       String?  
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   content   String
   published DateTime
   createdAt DateTime @default(now())
   likes     Like[]
+
+  @@index([userId])
 }
 
 enum FollowStatus {
@@ -84,6 +86,7 @@ model Follow {
   createdAt  DateTime     @default(now())
 
   @@unique([followeeId, followerId])
+  @@index([followerId])
 }
 
 model Like {
@@ -96,4 +99,5 @@ model Like {
   createdAt DateTime @default(now())
 
   @@unique([userId, noteId])
+  @@index([noteId])
 }
