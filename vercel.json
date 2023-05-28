@@ -1,6 +1,0 @@
-{
-  "buildCommand": "pnpm prisma migrate deploy && pnpm build",
-  "github": {
-    "silent": true
-  }
-}
