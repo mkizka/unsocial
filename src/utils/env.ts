@@ -3,15 +3,6 @@ import { z } from "zod";
 
 import { formatZodError } from "./formatZodError";
 
-const getHostIfExists = (...keys: string[]) => {
-  for (const key of keys) {
-    if (process.env[key]) {
-      return new URL(process.env[key]!).host;
-    }
-  }
-  return null;
-};
-
 const serverEnvSchema = z.object({
   DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),

@@ -7,7 +7,7 @@ COPY patches ./patches
 COPY package.json pnpm-lock.yaml ./
 RUN corepack enable pnpm && pnpm i
 COPY . .
-RUN corepack enable pnpm && pnpm build
+RUN pnpm build
 
 # runner
 FROM node:18-slim AS runner
