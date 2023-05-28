@@ -9,6 +9,7 @@ RUN corepack enable pnpm && pnpm i
 # builder
 FROM node:18-slim AS builder
 WORKDIR /app
+RUN apt update && apt install -y ca-certificates
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN corepack enable pnpm && pnpm build
@@ -27,6 +28,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# https://zenn.dev/catnose99/scraps/404b1df1941ed6
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 USER nextjs
 EXPOSE 3000
