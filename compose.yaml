@@ -10,7 +10,8 @@ volumes:
 
 services:
   web:
-    build: .
+    build:
+      dockerfile: ./Dockerfile.local
     volumes:
       - .:/app
       - ./docker/mkcert:/mkcert
