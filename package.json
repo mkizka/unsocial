@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "SKIP_ENV_VALIDATION=1 next build",
     "dev": "run-s dev:*",
     "dev:setup": "docker compose up -d mysql mail",
     "dev:start": "prisma db push && next dev",
