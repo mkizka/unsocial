@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prebuild": "node scripts/prebuild.mjs",
     "build": "next build",
     "dev": "run-s dev:*",
     "dev:setup": "docker compose up -d mysql mail",
