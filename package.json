@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "docker compose up -d db mail && next dev",
+    "dev": "run-s dev:*",
+    "dev:setup": "docker compose up -d mysql mail",
+    "dev:start": "prisma db push && next dev",
     "test": "jest",
     "e2e": "playwright test",
     "postinstall": "prisma generate",
