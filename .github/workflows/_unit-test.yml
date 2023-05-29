@@ -13,6 +13,6 @@ jobs:
         with:
           cache: pnpm
       - run: pnpm i
-      - run: pnpm tsc --noEmit
+      - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm test
