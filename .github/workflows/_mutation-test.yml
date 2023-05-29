@@ -34,7 +34,7 @@ jobs:
         env:
           MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
         with:
-          command: ./scripts/mutation-report.ts
+          command: cd apps/web && ./scripts/mutation-report.ts
       - uses: thollander/actions-comment-pull-request@v2
         if: github.event_name == 'pull_request'
         with:
