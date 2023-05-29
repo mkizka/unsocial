@@ -1,7 +1,7 @@
-import { queue } from "@/server/background/queue";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
 import { prisma } from "@/utils/prisma";
+import { relayActivity } from "@/utils/relayActivity";
 
 export async function action(formData: FormData) {
   const session = await getServerSession();
@@ -20,11 +20,8 @@ export async function action(formData: FormData) {
       published: new Date(),
     },
   });
-  queue.push({
-    runner: "relayActivity",
-    params: {
-      sender: session.user,
-      activity: activityStreams.create(note),
-    },
+  relayActivity({
+    sender: session.user,
+    activity: activityStreams.create(note),
   });
 }

@@ -1,17 +1,17 @@
 import type { Note } from "@prisma/client";
 import type { Session } from "next-auth";
 
-import { queue } from "@/server/background/queue";
 import { getServerSession } from "@/utils/getServerSession";
 import { mockedPrisma } from "@/utils/mock";
+import { relayActivity } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
 jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
 
-jest.mock("@/server/background/queue");
-const mockedQueue = jest.mocked(queue);
+jest.mock("@/utils/relayActivity");
+const mockedRelayActivity = jest.mocked(relayActivity);
 
 const dummySessionUser = {
   id: "__id",
@@ -28,12 +28,9 @@ describe("DeleteButton/action", () => {
     const response = await action("__noteId");
     // assert
     expect(response).toBeUndefined();
-    expect(mockedQueue.push).toHaveBeenCalledWith({
-      runner: "relayActivity",
-      params: {
-        sender: dummySessionUser,
-        activity: expect.objectContaining({ type: "Delete" }),
-      },
+    expect(mockedRelayActivity).toHaveBeenCalledWith({
+      sender: dummySessionUser,
+      activity: expect.objectContaining({ type: "Delete" }),
     });
   });
 });

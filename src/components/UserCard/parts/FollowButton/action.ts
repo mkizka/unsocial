@@ -1,8 +1,8 @@
-import { queue } from "@/server/background/queue";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
 import { prisma } from "@/utils/prisma";
+import { relayActivity } from "@/utils/relayActivity";
 
 type User = {
   id: string;
@@ -29,13 +29,10 @@ const follow = async (user: User, followeeId: string) => {
     if (!follow.followee.actorUrl) {
       throw new Error("フォロー先のURLがありません");
     }
-    queue.push({
-      runner: "relayActivity",
-      params: {
-        sender: user,
-        activity: activityStreams.follow(follow, follow.followee.actorUrl),
-      },
-    });
+    relayActivity({
+      sender: user,
+      activity: activityStreams.follow(follow, follow.followee.actorUrl),
+    }).catch(console.error);
   } else {
     await prisma.follow.update({
       where: { id: follow.id },
@@ -65,15 +62,12 @@ const unfollow = async (user: User, followeeId: string) => {
     if (!follow.followee.actorUrl) {
       throw new Error("フォロー先のURLがありません");
     }
-    queue.push({
-      runner: "relayActivity",
-      params: {
-        sender: user,
-        activity: activityStreams.undo(
-          activityStreams.follow(follow, follow.followee.actorUrl)
-        ),
-      },
-    });
+    relayActivity({
+      sender: user,
+      activity: activityStreams.undo(
+        activityStreams.follow(follow, follow.followee.actorUrl)
+      ),
+    }).catch(console.error);
   }
 };
 
