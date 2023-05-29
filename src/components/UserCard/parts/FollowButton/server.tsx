@@ -1,5 +1,5 @@
-import { prisma } from "@/server/prisma";
 import { getServerSession } from "@/utils/getServerSession";
+import { prisma } from "@/utils/prisma";
 
 import { FollowButton as Client } from "./client";
 

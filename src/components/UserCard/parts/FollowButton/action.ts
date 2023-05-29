@@ -1,8 +1,8 @@
 import { queue } from "@/server/background/queue";
-import { prisma } from "@/server/prisma";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
+import { prisma } from "@/utils/prisma";
 
 type User = {
   id: string;
