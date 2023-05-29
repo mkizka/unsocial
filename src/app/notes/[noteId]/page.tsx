@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { NoteCard } from "@/components/NoteCard";
 import { UserList } from "@/components/UserList";
-import { prisma } from "@/server/prisma";
+import { prisma } from "@/utils/prisma";
 
 export default async function NotePage({
   params,

@@ -1,7 +1,7 @@
 import { queue } from "@/server/background/queue";
-import { prisma } from "@/server/prisma";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
+import { prisma } from "@/utils/prisma";
 
 export async function action(noteId: string) {
   const session = await getServerSession();
