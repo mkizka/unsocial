@@ -1,7 +1,7 @@
-import { queue } from "@/server/background/queue";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
 import { prisma } from "@/utils/prisma";
+import { relayActivity } from "@/utils/relayActivity";
 
 export async function action(noteId: string) {
   const session = await getServerSession();
@@ -11,14 +11,11 @@ export async function action(noteId: string) {
   }
   // TODO: 自分のじゃなかったらエラー吐く
   await prisma.note.delete({ where: { id: noteId } });
-  queue.push({
-    runner: "relayActivity",
-    params: {
-      sender: session.user,
-      activity: activityStreams.delete({
-        id: noteId,
-        userId: session.user.id,
-      }),
-    },
+  relayActivity({
+    sender: session.user,
+    activity: activityStreams.delete({
+      id: noteId,
+      userId: session.user.id,
+    }),
   });
 }

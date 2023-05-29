@@ -1,11 +1,11 @@
 import type { Like } from "@prisma/client";
 
-import { queue } from "@/server/background/queue";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
 import { logger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
+import { relayActivity } from "@/utils/relayActivity";
 
 type User = {
   id: string;
@@ -39,12 +39,9 @@ const like = async (user: User, input: unknown) => {
       logger.error("ノートのURLがありません");
       return;
     }
-    queue.push({
-      runner: "relayActivity",
-      params: {
-        sender: user,
-        activity: activityStreams.like(like, like.note.url),
-      },
+    relayActivity({
+      sender: user,
+      activity: activityStreams.like(like, like.note.url),
     });
   }
 };
@@ -69,14 +66,9 @@ const unlike = async (user: User, like: LikeWithNote) => {
       logger.error("ノートのURLがありません");
       return;
     }
-    queue.push({
-      runner: "relayActivity",
-      params: {
-        sender: user,
-        activity: activityStreams.undo(
-          activityStreams.like(like, like.note.url)
-        ),
-      },
+    relayActivity({
+      sender: user,
+      activity: activityStreams.undo(activityStreams.like(like, like.note.url)),
     });
   }
 };
