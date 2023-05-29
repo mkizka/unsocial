@@ -2,6 +2,7 @@
 node_modules/
 coverage/
 *.tsbuildinfo
+dist/
 
 # next
 .next/
@@ -20,6 +21,3 @@ reports
 # others
 .DS_Store
 *.log
-
-# Local Netlify folder
-.netlify

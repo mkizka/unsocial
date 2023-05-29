@@ -1,0 +1,4 @@
+{
+  "watch": ["src/server.ts"],
+  "exec": "NODE_ENV=development ts-node --project tsconfig.server.json src/server.ts"
+}
