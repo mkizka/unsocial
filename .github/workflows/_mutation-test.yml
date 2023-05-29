@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./packages/web
+        working-directory: apps/web
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
