@@ -34,7 +34,7 @@ port: 3001
 #───┘ PostgreSQL configuration └────────────────────────────────
 
 db:
-  host: db
+  host: postgres
   port: 5432
 
   # Database name

@@ -1,7 +1,8 @@
 version: "3"
 
 volumes:
-  db_data:
+  postgres_data:
+  mysql_data:
   redis_data:
   mail_data:
   next:
@@ -9,7 +10,8 @@ volumes:
 
 services:
   web:
-    build: .
+    build:
+      dockerfile: ./Dockerfile.local
     volumes:
       - .:/app
       - ./docker/mkcert:/mkcert
@@ -20,12 +22,12 @@ services:
     environment:
       - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem
     healthcheck:
-      test: ["CMD-SHELL", "node -e 'fetch(`http://localhost:3000`)'"]
+      test: ["CMD-SHELL", "node -e 'fetch(`http://localhost:3000/health`)'"]
       interval: 2s
       timeout: 2s
       retries: 30
     depends_on:
-      db:
+      mysql:
         condition: service_healthy
   misskey:
     image: misskey/misskey:13.12
@@ -44,7 +46,7 @@ services:
       timeout: 2s
       retries: 30
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
   nginx:
     image: nginx:1-alpine
@@ -63,13 +65,11 @@ services:
         condition: service_healthy
       misskey:
         condition: service_healthy
-  db:
+  postgres:
     image: postgres:15-alpine
-    ports:
-      - 5432:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
-      - ./docker/db:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres:/docker-entrypoint-initdb.d
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=misskey
@@ -78,6 +78,19 @@ services:
       interval: 2s
       timeout: 2s
       retries: 5
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    healthcheck:
+      test: ["CMD", "mysql", "-uroot", "-ppassword", "-e", "SELECT 1"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
   redis:
     image: redis:7-alpine
     volumes:
