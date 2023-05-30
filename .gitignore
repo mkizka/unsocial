@@ -17,9 +17,9 @@ reports
 *.crt
 *.key
 
+# turborepo
+.turbo/
+
 # others
 .DS_Store
 *.log
-
-# Local Netlify folder
-.netlify

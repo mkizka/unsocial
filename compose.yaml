@@ -11,14 +11,16 @@ volumes:
 services:
   web:
     build:
+      context: ./apps/web
       dockerfile: ./Dockerfile.local
     volumes:
-      - .:/app
+      - ./apps/web:/app
       - ./docker/mkcert:/mkcert
       - next:/app/.next
       - node_modules:/app/node_modules
     ports:
       - 3000:3000
+    env_file: .env.docker
     environment:
       - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem
     healthcheck:
