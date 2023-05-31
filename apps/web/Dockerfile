@@ -1,5 +1,5 @@
 # builder
-FROM node:18-slim AS builder
+FROM node:20-slim AS builder
 RUN apt update && apt install -y ca-certificates
 WORKDIR /app
 COPY prisma ./prisma
@@ -10,7 +10,7 @@ COPY . .
 RUN pnpm build
 
 # runner
-FROM node:18-slim AS runner
+FROM node:20-slim AS runner
 WORKDIR /app
 ENV NODE_ENV production
 COPY --from=builder /app/next.config.mjs ./
