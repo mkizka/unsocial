@@ -23,7 +23,7 @@
     "got": "11.8.6",
     "next": "canary",
     "next-auth": "4.19.2",
-    "nodemailer": "6.9.2",
+    "nodemailer": "6.9.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "winston": "3.9.0",
