@@ -53,10 +53,5 @@
     "tailwindcss": "3.3.2",
     "ts-node": "10.9.1",
     "typescript": "5.0.4"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "next-auth@4.19.2": "patches/next-auth@4.19.2.patch"
-    }
   }
 }
