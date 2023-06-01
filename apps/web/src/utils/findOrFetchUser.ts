@@ -1,6 +1,5 @@
-import { z } from "zod";
-
 import { prisma } from "@soshal/database";
+import { z } from "zod";
 
 import { env } from "./env";
 import { fetchJson } from "./fetchJson";

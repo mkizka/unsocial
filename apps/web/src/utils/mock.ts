@@ -1,9 +1,8 @@
 // Stryker disable all
 import type { PrismaClient } from "@soshal/database";
+import { prisma } from "@soshal/database";
 import type { DeepMockProxy } from "jest-mock-extended";
 import { mockDeep, mockReset } from "jest-mock-extended";
-
-import { prisma } from "@soshal/database";
 
 jest.mock("@soshal/database", () => ({
   prisma: mockDeep<PrismaClient>(),

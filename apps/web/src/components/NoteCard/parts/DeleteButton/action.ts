@@ -1,5 +1,6 @@
-import { queue } from "@/server/background/queue";
 import { prisma } from "@soshal/database";
+
+import { queue } from "@/server/background/queue";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
 

@@ -1,6 +1,6 @@
+import { prisma } from "@soshal/database";
 import { z } from "zod";
 
-import { prisma } from "@soshal/database";
 import { findUserByActorId } from "@/utils/findUserByActorId";
 import { formatZodError } from "@/utils/formatZodError";
 

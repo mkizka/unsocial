@@ -1,6 +1,6 @@
+import { prisma } from "@soshal/database";
 import { z } from "zod";
 
-import { prisma } from "@soshal/database";
 import { env } from "@/utils/env";
 import { formatZodError } from "@/utils/formatZodError";
 
