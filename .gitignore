@@ -9,8 +9,8 @@ next-env.d.ts
 .env
 
 # stryker
-.stryker-tmp
-reports
+.stryker-tmp/
+reports/
 
 # mkcert
 *.pem
