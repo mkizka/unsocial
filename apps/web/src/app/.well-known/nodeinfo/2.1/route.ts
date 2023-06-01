@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import pkg from "@/../package.json";
-import { prisma } from "@/server/prisma";
+import { prisma } from "@soshal/database";
 
 export const dynamic = "force-dynamic";
 

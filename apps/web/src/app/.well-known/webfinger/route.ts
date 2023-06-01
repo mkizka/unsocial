@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { NextRequest } from "next/server";
-import { prisma } from "@/server/prisma";
+import { prisma } from "@soshal/database";
 
 import { NextResponse } from "next/server";
 

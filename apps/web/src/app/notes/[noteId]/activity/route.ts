@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
-import { prisma } from "@/server/prisma";
+import { prisma } from "@soshal/database";
 import { activityStreams } from "@/utils/activitypub";
 
 export async function GET(

@@ -4,7 +4,7 @@ import crypto from "crypto";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 
-import { prisma } from "@/server/prisma";
+import { prisma } from "@soshal/database";
 import { env } from "@/utils/env";
 
 export const authOptions: NextAuthOptions = {

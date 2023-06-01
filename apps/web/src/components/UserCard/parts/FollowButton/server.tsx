@@ -1,4 +1,4 @@
-import { prisma } from "@/server/prisma";
+import { prisma } from "@soshal/database";
 import { getServerSession } from "@/utils/getServerSession";
 
 import { FollowButton as Client } from "./client";
