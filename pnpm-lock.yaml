@@ -44,6 +44,9 @@ importers:
       '@prisma/client':
         specifier: 4.15.0
         version: 4.15.0(prisma@4.15.0)
+      '@soshal/database':
+        specifier: workspace:^
+        version: link:../../packages/database
       got:
         specifier: 11.8.6
         version: 11.8.6
@@ -153,6 +156,15 @@ importers:
       typescript:
         specifier: 5.0.4
         version: 5.0.4
+
+  packages/database:
+    dependencies:
+      '@prisma/client':
+        specifier: 4.15.0
+        version: 4.15.0(prisma@4.15.0)
+      prisma:
+        specifier: 4.15.0
+        version: 4.15.0
 
   packages/eslint-config:
     dependencies:
