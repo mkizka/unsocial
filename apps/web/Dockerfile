@@ -4,7 +4,7 @@ RUN apt update && apt install -y ca-certificates
 WORKDIR /app
 COPY prisma ./prisma
 COPY patches ./patches
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
 RUN corepack enable pnpm && pnpm i
 COPY . .
 RUN pnpm build
