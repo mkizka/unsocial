@@ -26,6 +26,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+    profiles:
+      - e2e
   misskey:
     image: misskey/misskey:13.12
     volumes:
@@ -52,6 +54,8 @@ services:
     ports:
       - 80:80
       - 443:443
+    extra_hosts:
+      - host.docker.internal:host-gateway
     networks:
       default:
         aliases:

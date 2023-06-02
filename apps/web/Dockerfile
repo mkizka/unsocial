@@ -15,7 +15,7 @@ COPY --from=setup /app/out/json/ .
 COPY --from=setup /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN corepack enable pnpm && pnpm i
 COPY --from=setup /app/out/full/ .
-RUN pnpm build --filter=@soshal/web
+RUN pnpm build
 
 # runner
 FROM base AS runner
@@ -25,6 +25,8 @@ COPY --from=builder /app/apps/web/.next/standalone ./
 COPY --from=builder /app/apps/web/.next/static ./apps/web/.next/static
 # https://zenn.dev/catnose99/scraps/404b1df1941ed6
 COPY --from=setup /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /app/packages/database/prisma ./prisma
+RUN npm i -g prisma
 
 EXPOSE 3000
-CMD node apps/web/server.js
+CMD prisma db push && node apps/web/server.js

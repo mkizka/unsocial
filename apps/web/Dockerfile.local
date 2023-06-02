@@ -1,5 +1,0 @@
-FROM node:20-slim
-WORKDIR /app
-COPY . .
-RUN corepack enable pnpm && pnpm i
-CMD pnpm db:push && pnpm -r dev:start

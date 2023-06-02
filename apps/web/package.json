@@ -5,7 +5,7 @@
   "scripts": {
     "build": "SKIP_ENV_VALIDATION=1 next build",
     "dev": "run-s dev:*",
-    "dev:setup": "docker compose up -d mysql mail",
+    "dev:setup": "docker compose up -d",
     "dev:start": "next dev",
     "start": "next start",
     "test": "jest",
