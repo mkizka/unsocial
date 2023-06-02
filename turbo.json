@@ -9,6 +9,7 @@
     "mutation-test": {},
     "typecheck": {},
     "dev": {
+      "dependsOn": ["^db:push"],
       "cache": false
     },
     "db:generate": {
