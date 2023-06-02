@@ -1,4 +1,4 @@
-import type { Note, User } from "@prisma/client";
+import type { Note, User } from "@soshal/database";
 
 import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";
 import { mockedPrisma } from "@/utils/mock";

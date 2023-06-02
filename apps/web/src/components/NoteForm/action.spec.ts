@@ -1,4 +1,4 @@
-import type { Note } from "@prisma/client";
+import type { Note } from "@soshal/database";
 import type { Session } from "next-auth";
 
 import { queue } from "@/server/background/queue";
