@@ -29,9 +29,9 @@
   },
   "devDependencies": {
     "@soshal/eslint-config": "workspace:^",
-    "@stryker-mutator/api": "6.4.2",
-    "@stryker-mutator/core": "6.4.2",
-    "@stryker-mutator/jest-runner": "6.4.2",
+    "@stryker-mutator/api": "7.0.0",
+    "@stryker-mutator/core": "7.0.0",
+    "@stryker-mutator/jest-runner": "7.0.0",
     "@types/jest": "29.5.2",
     "@types/node": "20.2.0",
     "@types/react": "18.2.8",
