@@ -1,5 +1,4 @@
 import type { AP } from "activitypub-core-types";
-import got from "got";
 import type { Session } from "next-auth";
 
 import { signActivity } from "@/utils/httpSignature/sign";
@@ -13,9 +12,9 @@ export const relayActivity = async (params: {
   const inboxUrl = new URL("https://misskey.localhost/inbox");
   const signedHeaders = signActivity({ ...params, inboxUrl });
   logger.info(`Activity送信: ${JSON.stringify(params.activity)}`);
-  const response = await got(inboxUrl, {
+  const response = await fetch(inboxUrl, {
     method: "POST",
-    json: params.activity,
+    body: JSON.stringify(params.activity),
     headers: {
       Accept: "application/activity+json",
       ...signedHeaders,
