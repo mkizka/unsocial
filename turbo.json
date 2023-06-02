@@ -5,9 +5,15 @@
       "dependsOn": ["^db:generate"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
-    "lint": {},
-    "test": {},
-    "typecheck": {},
+    "lint": {
+      "dependsOn": ["^db:generate"]
+    },
+    "test": {
+      "dependsOn": ["^db:generate"]
+    },
+    "typecheck": {
+      "dependsOn": ["^db:generate"]
+    },
     "dev": {
       "dependsOn": ["^db:generate"],
       "cache": false
