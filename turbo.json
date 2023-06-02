@@ -11,6 +11,9 @@
     "test": {
       "dependsOn": ["^db:generate"]
     },
+    "mutation-test": {
+      "dependsOn": ["^db:generate"]
+    },
     "typecheck": {
       "dependsOn": ["^db:generate"]
     },

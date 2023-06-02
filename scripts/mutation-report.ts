@@ -51,7 +51,9 @@ const getScorePerFile = (result: Result) => {
 };
 
 const table = async () => {
-  const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
+  const prScores = getScorePerFile(
+    readJson("apps/web/reports/mutation/mutation.json")
+  );
   const mainScores = getScorePerFile(
     await fetchJson(
       "https://minio-s3.paas.mkizka.dev/soshal-gha/mutation-test/main/mutation.json"
