@@ -10,7 +10,6 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "e2e": "playwright test",
-    "postinstall": "dotenv -- turbo run db:generate",
     "prepare": "husky install"
   },
   "dependencies": {
