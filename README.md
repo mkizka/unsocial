@@ -4,28 +4,19 @@
 
 ## 開発手順
 
-pnpm が必要
+pnpm, mkcert, docker が必要
 
 ```
+./scripts/setup-for-docker.sh
 cp -f .env.example .env
 pnpm i
 pnpm dev
 ```
 
-http://localhost:3000 を開く
-
-### 連合の動作確認が必要な場合
-
-mkcert と docker が必要
-
-```
-cp -f .env.docker .env
-./scripts/setup-for-docker.sh
-docker compose up -d --build
-```
-
-https://soshal.localhost  
-https://misskey.localhost を開く
+- 開発環境
+  - http://localhost:3000
+- 連合の動作確認
+  - https://misskey.localhost
 
 ## やること(自サーバーで確認できるもの)
 
