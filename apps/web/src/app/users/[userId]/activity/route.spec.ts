@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { User } from "@soshal/database";
 
 import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";
 

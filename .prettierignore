@@ -1,4 +1,2 @@
-apps/web/.next/
 pnpm-lock.yaml
-.stryker-tmp/
 e2e/state.json

@@ -13,9 +13,6 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/web
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -23,11 +20,10 @@ jobs:
         with:
           cache: pnpm
       - run: pnpm i
-      - run: pnpm mutation-test:run-only --fileLogLevel trace
+      - run: pnpm mutation-test
       - name: upload-reports
         run: |
-          mv stryker.log reports/mutation/
-          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/mutation "s3://${{ env.UPLOAD_DIR }}" --recursive
+          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp apps/web/reports/mutation "s3://${{ env.UPLOAD_DIR }}" --recursive
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
         id: mutation-report
@@ -35,7 +31,6 @@ jobs:
           MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
         with:
           command: ./scripts/mutation-report.ts
-          cwd: apps/web
       - uses: thollander/actions-comment-pull-request@v2
         if: github.event_name == 'pull_request'
         with:

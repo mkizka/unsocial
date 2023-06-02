@@ -4,9 +4,7 @@
   "private": true,
   "scripts": {
     "build": "SKIP_ENV_VALIDATION=1 next build",
-    "dev": "run-s dev:*",
-    "dev:setup": "docker compose up -d mysql mail",
-    "dev:start": "next dev",
+    "dev": "next",
     "start": "next start",
     "test": "jest",
     "typecheck": "tsc",
