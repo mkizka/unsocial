@@ -6,7 +6,9 @@ export const fetcher = async (...args: Parameters<typeof fetch>) => {
     if (!response.ok) {
       logger.info(`${response.status}: ${response.url}`);
     }
-    return response.json() as Promise<object>;
-  } catch (e) {}
+    return (await response.json()) as object;
+  } catch (e) {
+    logger.info(`fetcher-error: ${e}`);
+  }
   return null;
 };
