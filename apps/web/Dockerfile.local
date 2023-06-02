@@ -1,18 +1,5 @@
-FROM node:20-slim AS base
-
-# setup
-FROM base AS setup
+FROM node:20-slim
 WORKDIR /app
-RUN yarn global add turbo
 COPY . .
-RUN corepack enable pnpm && turbo prune --scope=@soshal/web --docker
-
-# runner
-FROM base AS runner
-WORKDIR /app
-COPY --from=setup /app/out/json/ .
-COPY --from=setup /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN corepack enable pnpm && pnpm i
-COPY --from=setup /app/out/full/ .
-
-CMD pnpm db:push && pnpm dev
+CMD pnpm db:push && pnpm -r dev:start

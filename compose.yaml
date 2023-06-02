@@ -10,8 +10,9 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./apps/web/Dockerfile
+      dockerfile: ./apps/web/Dockerfile.local
     volumes:
+      - .:/app
       - ./docker/mkcert:/mkcert
     ports:
       - 3000:3000
