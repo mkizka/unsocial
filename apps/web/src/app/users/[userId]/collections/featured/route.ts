@@ -1,7 +1,7 @@
+import { prisma } from "@soshal/database";
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
-import { prisma } from "@/server/prisma";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";

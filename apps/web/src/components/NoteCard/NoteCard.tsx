@@ -1,4 +1,4 @@
-import type { Like, Note, User } from "@prisma/client";
+import type { Like, Note, User } from "@soshal/database";
 import Image from "next/image";
 import Link from "next/link";
 

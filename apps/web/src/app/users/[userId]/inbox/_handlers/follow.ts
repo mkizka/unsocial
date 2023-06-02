@@ -1,7 +1,7 @@
+import { prisma } from "@soshal/database";
 import { z } from "zod";
 
 import { queue } from "@/server/background/queue";
-import { prisma } from "@/server/prisma";
 import { env } from "@/utils/env";
 import { findUserByActorId } from "@/utils/findUserByActorId";
 import { formatZodError } from "@/utils/formatZodError";

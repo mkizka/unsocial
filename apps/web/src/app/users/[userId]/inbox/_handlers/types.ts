@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { User } from "@soshal/database";
 
 export type InboxFunction = (
   activity: unknown,

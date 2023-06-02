@@ -27,7 +27,7 @@ describe("/.well-known/nodeinfo", () => {
           "homepage": "https://github.com/mkizka/soshal",
           "name": "soshal",
           "repository": "https://github.com/mkizka/soshal.git",
-          "version": "0.1.0",
+          "version": "0.0.1",
         },
         "usage": {
           "localComments": 0,

@@ -1,0 +1,16 @@
+{
+  "name": "@soshal/database",
+  "version": "0.0.1",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push --skip-generate"
+  },
+  "dependencies": {
+    "@prisma/client": "4.15.0"
+  },
+  "devDependencies": {
+    "prisma": "4.15.0"
+  }
+}

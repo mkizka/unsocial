@@ -1,7 +1,7 @@
-import type { Like } from "@prisma/client";
+import type { Like } from "@soshal/database";
+import { prisma } from "@soshal/database";
 
 import { queue } from "@/server/background/queue";
-import { prisma } from "@/server/prisma";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";

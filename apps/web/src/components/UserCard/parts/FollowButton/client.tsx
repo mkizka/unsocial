@@ -1,5 +1,5 @@
 "use client";
-import type { FollowStatus } from "@prisma/client";
+import type { FollowStatus } from "@soshal/database";
 import { useTransition } from "react";
 
 import { action } from "./action.server";

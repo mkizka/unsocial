@@ -1,6 +1,5 @@
+import { prisma } from "@soshal/database";
 import type { Session } from "next-auth";
-
-import { prisma } from "@/server/prisma";
 
 import { NoteForm } from "../NoteForm";
 import { Timeline } from "../Timeline";

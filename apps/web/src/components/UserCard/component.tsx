@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { User } from "@soshal/database";
 
 import { getServerSession } from "@/utils/getServerSession";
 

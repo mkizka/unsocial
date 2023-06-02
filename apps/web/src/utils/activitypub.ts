@@ -1,4 +1,4 @@
-import type { Follow, Like, Note, User } from "@prisma/client";
+import type { Follow, Like, Note, User } from "@soshal/database";
 import type { AP } from "activitypub-core-types";
 
 import { env } from "./env";

@@ -25,6 +25,7 @@
     }
   },
   "include": [
+    ".eslintrc.js",
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "src/app/.well-known/**/*.ts",

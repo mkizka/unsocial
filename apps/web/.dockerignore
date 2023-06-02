@@ -1,9 +1,0 @@
-.env
-Dockerfile
-.dockerignore
-node_modules
-*.log
-README.md
-.next
-.git
-.github
