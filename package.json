@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "dotenv -- turbo run dev",
+    "dev": "./scripts/dev.sh",
     "test": "turbo run test",
     "mutation-test": "turbo run mutation-test",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
-    "db:push": "dotenv -- turbo run db:push",
     "e2e": "playwright test",
+    "postinstall": "dotenv -- turbo run db:generate",
     "prepare": "husky install"
   },
   "dependencies": {

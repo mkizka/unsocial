@@ -2,23 +2,13 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["^db:generate"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
-    "lint": {
-      "dependsOn": ["^db:generate"]
-    },
-    "test": {
-      "dependsOn": ["^db:generate"]
-    },
-    "mutation-test": {
-      "dependsOn": ["^db:generate"]
-    },
-    "typecheck": {
-      "dependsOn": ["^db:generate"]
-    },
+    "lint": {},
+    "test": {},
+    "mutation-test": {},
+    "typecheck": {},
     "dev": {
-      "dependsOn": ["^db:generate"],
       "cache": false
     },
     "db:generate": {
