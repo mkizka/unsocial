@@ -6,7 +6,9 @@ const defaultOptions: RequestInit = {
   },
 };
 
-export const fetcher = async (url: RequestInfo, init?: RequestInit) => {
+type FetchArgs = Parameters<typeof fetch>;
+
+export const fetcher = async (url: FetchArgs[0], init?: FetchArgs[1]) => {
   try {
     const response = await fetch(url, { ...defaultOptions, ...init });
     if (!response.ok) {
