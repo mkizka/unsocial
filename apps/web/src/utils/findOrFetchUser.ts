@@ -2,7 +2,7 @@ import { prisma } from "@soshal/database";
 import { z } from "zod";
 
 import { env } from "./env";
-import { fetchJson } from "./fetchJson";
+import { fetcher } from "./fetcher";
 import { formatZodError } from "./formatZodError";
 import { logger } from "./logger";
 
@@ -51,11 +51,11 @@ const fetchActorIdByWebFinger = async (
     "resource",
     `acct:${preferredUsername}@${host}`
   );
-  const response = await fetchJson(webFingerUrl);
-  if (!response) {
+  const body = await fetcher(webFingerUrl);
+  if (!body) {
     return null;
   }
-  return resolveWebFingerResponse(response.body);
+  return resolveWebFingerResponse(body);
 };
 
 const personSchema = z.object({
@@ -75,12 +75,12 @@ const personSchema = z.object({
 });
 
 const fetchValidPerson = async (url: URL) => {
-  const response = await fetchJson(url, {
+  const body = await fetcher(url, {
     headers: {
       accept: "application/activity+json",
     },
   });
-  const parsed = personSchema.safeParse(response?.body);
+  const parsed = personSchema.safeParse(body);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));
     return null;
