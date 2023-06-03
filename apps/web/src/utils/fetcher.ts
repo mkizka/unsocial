@@ -1,8 +1,14 @@
 import { logger } from "./logger";
 
-export const fetcher = async (...args: Parameters<typeof fetch>) => {
+const defaultOptions: RequestInit = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
+export const fetcher = async (url: RequestInfo, init?: RequestInit) => {
   try {
-    const response = await fetch(...args);
+    const response = await fetch(url, { ...defaultOptions, ...init });
     if (!response.ok) {
       logger.info(`${response.status}: ${response.url}`);
     }
