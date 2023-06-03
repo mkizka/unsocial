@@ -1,12 +1,12 @@
 import { logger } from "./logger";
 
-const defaultOptions: RequestInit = {
+type FetchArgs = Parameters<typeof fetch>;
+
+const defaultOptions: FetchArgs[1] = {
   headers: {
     "Content-Type": "application/json",
   },
 };
-
-type FetchArgs = Parameters<typeof fetch>;
 
 export const fetcher = async (url: FetchArgs[0], init?: FetchArgs[1]) => {
   try {
