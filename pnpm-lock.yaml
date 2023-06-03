@@ -76,9 +76,6 @@ importers:
       '@soshal/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
-      '@stryker-mutator/api':
-        specifier: 7.0.0
-        version: 7.0.0
       '@stryker-mutator/core':
         specifier: 7.0.0
         version: 7.0.0
