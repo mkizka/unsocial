@@ -9,12 +9,7 @@ export function Timeline({ notes }: Props) {
   return (
     <div>
       {notes.map((note) => (
-        // @ts-expect-error
-        <NoteCard
-          // 型検証のための改行
-          key={note.id}
-          note={note}
-        />
+        <NoteCard key={note.id} note={note} />
       ))}
     </div>
   );

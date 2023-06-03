@@ -19,10 +19,7 @@ export async function UserCard({ user }: Props) {
         <span>@{user.preferredUsername}</span>
         <span>{user.host && `@${user.host}`}</span>
       </p>
-      {canFollow && (
-        // @ts-expect-error
-        <FollowButton followeeId={user.id} />
-      )}
+      {canFollow && <FollowButton followeeId={user.id} />}
     </div>
   );
 }

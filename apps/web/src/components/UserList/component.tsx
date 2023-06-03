@@ -9,7 +9,6 @@ export function UserList({ users }: Props) {
   return (
     <div>
       {users.map((user) => (
-        // @ts-expect-error
         <UserCard key={user.id} user={user} />
       ))}
     </div>
