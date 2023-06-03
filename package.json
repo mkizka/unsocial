@@ -6,7 +6,7 @@
     "build": "turbo run build",
     "dev": "./scripts/dev.sh",
     "test": "turbo run test",
-    "mutation-test": "turbo run mutation-test",
+    "mutation-test": "turbo run mutation-test && ./scripts/mutation-report.ts",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "e2e": "playwright test",
