@@ -7,9 +7,7 @@ export async function Home() {
   const session = await getServerSession();
 
   if (session?.user) {
-    // @ts-expect-error
     return <UserHome user={session.user} />;
   }
-  // @ts-expect-error
   return <GuestHome />;
 }
