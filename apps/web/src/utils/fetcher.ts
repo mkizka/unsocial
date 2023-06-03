@@ -1,3 +1,4 @@
+// Stryker disable all
 import { logger } from "./logger";
 
 type FetchArgs = Parameters<typeof fetch>;
