@@ -42,9 +42,6 @@ importers:
       '@next-auth/prisma-adapter':
         specifier: 1.0.7
         version: 1.0.7(@prisma/client@4.15.0)(next-auth@4.19.2)
-      '@prisma/client':
-        specifier: 4.15.0
-        version: 4.15.0(prisma@4.15.0)
       '@soshal/database':
         specifier: workspace:^
         version: link:../../packages/database
