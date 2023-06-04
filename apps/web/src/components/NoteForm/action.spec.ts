@@ -1,23 +1,23 @@
 import type { Note } from "@soshal/database";
 import type { Session } from "next-auth";
 
-import { queue } from "@/server/background/queue";
 import { getServerSession } from "@/utils/getServerSession";
 import { mockedPrisma } from "@/utils/mock";
+import { relayActivity } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
 jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
 
-jest.mock("@/server/background/queue");
-const mockedQueue = jest.mocked(queue);
+jest.mock("@/utils/relayActivity");
+const mockedRelayActivity = jest.mocked(relayActivity);
 
 describe("NoteForm/action", () => {
   test("正常系", async () => {
     // arrange
-    const dummySession = { user: { id: "__session__user__id" } } as Session;
-    mockedGetServerSession.mockResolvedValue(dummySession);
+    const dummySession = { user: { id: "__session__user__id" } };
+    mockedGetServerSession.mockResolvedValue(dummySession as Session);
     mockedPrisma.note.create.mockResolvedValue({
       id: "__noteId",
       userId: "__note__userId",
@@ -29,13 +29,10 @@ describe("NoteForm/action", () => {
     const response = await action(form);
     // assert
     expect(response).toBeUndefined();
-    expect(mockedQueue.push).toHaveBeenCalledWith({
-      runner: "relayActivity",
-      params: {
-        sender: dummySession.user,
-        activity: expect.objectContaining({ type: "Create" }),
-      },
-    });
+    expect(mockedRelayActivity).toHaveBeenCalledWith(
+      dummySession.user.id,
+      expect.objectContaining({ type: "Create" })
+    );
   });
   test("ログインしていない場合はエラーを返す", async () => {
     // arrange
