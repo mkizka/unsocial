@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "typecheck": "tsc",
-    "lint": "eslint ."
+    "lint": "eslint . && prettier . --check"
   },
   "devDependencies": {
     "@soshal/eslint-config": "workspace:^",

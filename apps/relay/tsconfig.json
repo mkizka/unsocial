@@ -7,5 +7,6 @@
   },
   "ts-node": {
     "transpileOnly": true
-  }
+  },
+  "include": [".eslintrc.js", "**/*.ts"]
 }

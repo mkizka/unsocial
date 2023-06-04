@@ -1,6 +1,7 @@
 import arg from "arg";
-import { startServer } from "./server";
+
 import { relayActivity } from "./relay";
+import { startServer } from "./server";
 
 const args = arg(
   {
