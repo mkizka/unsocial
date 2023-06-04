@@ -17,6 +17,7 @@ services:
       - 3000:3000
     env_file: .env.docker
     environment:
+      - E2E=1
       - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem
     healthcheck:
       test: ["CMD-SHELL", "node -e 'fetch(`http://localhost:3000/health`)'"]

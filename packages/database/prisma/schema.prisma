@@ -11,12 +11,6 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Example {
-  id        String   @id @default(nanoid(8))
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model Session {
   id           String   @id @default(nanoid(8))
   sessionToken String   @unique
@@ -28,23 +22,24 @@ model Session {
 }
 
 model User {
-  id                String    @id @default(nanoid(8))
+  id                String         @id @default(nanoid(8))
   preferredUsername String
   host              String
   name              String?
-  email             String?   @unique
+  email             String?        @unique
   emailVerified     DateTime?
   icon              String?
   image             String?
-  publicKey         String?   @db.Text
-  privateKey        String?   @db.Text
+  publicKey         String?        @db.Text
+  privateKey        String?        @db.Text
   actorUrl          String?
   inboxUrl          String?
   sessions          Session[]
   notes             Note[]
-  followee          Follow[]  @relation("followee")
-  follower          Follow[]  @relation("follower")
+  followee          Follow[]       @relation("followee")
+  follower          Follow[]       @relation("follower")
   likes             Like[]
+  relayRequests     RelayRequest[]
 
   @@unique([preferredUsername, host])
 }
@@ -100,4 +95,14 @@ model Like {
 
   @@unique([userId, noteId])
   @@index([noteId])
+}
+
+model RelayRequest {
+  id        String   @id @default(nanoid(8))
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activity  String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }

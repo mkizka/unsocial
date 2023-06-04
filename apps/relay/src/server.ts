@@ -12,18 +12,17 @@ export const startServer = () => {
   });
 
   fastify.post<{
-    Querystring: {
-      relayId?: string;
+    Body: {
+      id?: string;
     };
   }>("/relay", (request, reply) => {
-    if (!request.query.relayId) {
+    if (!request.body.id) {
       return reply.code(400).send();
     }
-    relayActivity(request.query.relayId);
+    relayActivity(request.body.id);
     reply.code(202).send();
   });
 
   const port = Number(process.env.PORT) || 3001;
-
   fastify.listen({ port });
 };

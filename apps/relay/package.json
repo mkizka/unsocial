@@ -4,8 +4,8 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "NODE_DEV=production node dist/index.js",
-    "dev": "NODE_DEV=development ts-node-dev src/index.ts --dev",
+    "start": "NODE_ENV=production node dist/index.js",
+    "dev": "NODE_ENV=development ts-node-dev --exit-child src/index.ts -- --dev",
     "lint": "eslint . && prettier . --check"
   },
   "dependencies": {

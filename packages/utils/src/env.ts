@@ -6,6 +6,7 @@ import { formatZodError } from "./formatZodError";
 const serverEnvSchema = z.object({
   DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
+  E2E: z.coerce.boolean().default(false),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
