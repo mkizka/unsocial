@@ -1,6 +1,4 @@
-import type { AP } from "activitypub-core-types";
 import crypto from "crypto";
-import type { Session } from "next-auth";
 
 import { env } from "../env";
 import { textOf } from "./utils";
@@ -17,11 +15,16 @@ const getSignature = (textToSign: string, privateKey: string) => {
   return sig.sign(privateKey, "base64");
 };
 
+type Sender = {
+  id: string;
+  privateKey: string;
+};
+
 // TODO: 理解する
 // https://docs.joinmastodon.org/spec/security/
 export const signActivity = (params: {
-  sender: NonNullable<Session["user"]>;
-  activity: AP.Activity;
+  sender: Sender;
+  activity: object;
   inboxUrl: URL;
 }) => {
   const order = ["(request-target)", "host", "date", "digest"];

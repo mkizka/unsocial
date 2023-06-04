@@ -1,9 +1,9 @@
 import { prisma } from "@soshal/database";
+import { env } from "@soshal/utils";
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
 import { activityStreams } from "@/utils/activitypub";
-import { env } from "@/utils/env";
 import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";
 
 export async function GET(

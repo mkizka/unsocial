@@ -54,10 +54,11 @@ type VerifyResult =
 
 export const verifyActivity = (
   resolvedUrl: string,
-  headers: Request["headers"],
+  headers: Headers,
   publicKey: string
 ): VerifyResult => {
   const parsedHeaders = headersSchema.safeParse(
+    // @ts-ignore
     Object.fromEntries(headers.entries())
   );
   if (!parsedHeaders.success) {

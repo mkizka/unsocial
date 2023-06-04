@@ -1,6 +1,13 @@
 import { mockedKeys } from "./__fixtures__/keys";
 import { signActivity } from "./sign";
 
+jest.mock("../env", () => ({
+  env: {
+    ...process.env,
+    HOST: "myhost.example.com",
+  },
+}));
+
 afterAll(() => {
   jest.useRealTimers();
 });

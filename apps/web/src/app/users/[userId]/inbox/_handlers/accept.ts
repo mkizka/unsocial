@@ -1,8 +1,8 @@
 import { prisma } from "@soshal/database";
+import { formatZodError } from "@soshal/utils";
 import { z } from "zod";
 
 import { findUserByActorId } from "@/utils/findUserByActorId";
-import { formatZodError } from "@/utils/formatZodError";
 
 import type { InboxFunction } from "./types";
 

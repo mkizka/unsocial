@@ -1,6 +1,5 @@
+import { formatZodError } from "@soshal/utils";
 import { z } from "zod";
-
-import { formatZodError } from "@/utils/formatZodError";
 
 import { accept } from "./accept";
 import { create } from "./create";

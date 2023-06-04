@@ -1,9 +1,8 @@
 import { prisma } from "@soshal/database";
+import { env, formatZodError } from "@soshal/utils";
 import { z } from "zod";
 
-import { env } from "./env";
 import { fetcher } from "./fetcher";
-import { formatZodError } from "./formatZodError";
 import { logger } from "./logger";
 
 const webfingerSchema = z.object({

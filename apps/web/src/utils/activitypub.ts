@@ -1,7 +1,6 @@
 import type { Follow, Like, Note, User } from "@soshal/database";
+import { env } from "@soshal/utils";
 import type { AP } from "activitypub-core-types";
-
-import { env } from "./env";
 
 const required = <T>(value: T | null | undefined) => {
   if (value === null || value === undefined) throw new Error("値が必要です");
