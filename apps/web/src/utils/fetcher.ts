@@ -1,4 +1,4 @@
-import { logger } from "./logger";
+import { logger } from "@soshal/utils";
 
 type FetchArgs = Parameters<typeof fetch>;
 

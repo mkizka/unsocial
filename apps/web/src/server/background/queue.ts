@@ -1,6 +1,5 @@
-import { env } from "@soshal/utils";
+import { env, logger } from "@soshal/utils";
 
-import { logger } from "../../utils/logger";
 import { relayActivity } from "./runners/relay";
 
 const runners = {

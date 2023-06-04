@@ -1,11 +1,11 @@
 import type { User } from "@soshal/database";
+import { logger } from "@soshal/utils";
 
 // なぜか"./mock"だとモック出来ない
 import { mockedPrisma } from "@/utils/mock";
 
 import { fetcher } from "./fetcher";
 import { findOrFetchUserByWebfinger } from "./findOrFetchUser";
-import { logger } from "./logger";
 
 const dummyUser: User = {
   id: "dummyId",
@@ -39,7 +39,7 @@ const dummyPerson = {
 jest.mock("./fetcher");
 const mockedFetcher = jest.mocked(fetcher);
 
-jest.mock("./logger");
+jest.mock("@soshal/utils");
 const mockedLogger = jest.mocked(logger);
 
 describe("findOrFetchUser", () => {
