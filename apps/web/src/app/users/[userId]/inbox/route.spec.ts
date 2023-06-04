@@ -1,8 +1,8 @@
+import { verifyActivity } from "@soshal/utils";
 import { mockDeep } from "jest-mock-extended";
 import type { NextRequest } from "next/server";
 
 import { findOrFetchUserByActorId } from "@/utils/findOrFetchUser";
-import { verifyActivity } from "@/utils/httpSignature/verify";
 import { logger } from "@/utils/logger";
 
 import { inbox } from "./_handlers";
@@ -11,7 +11,7 @@ import { POST } from "./route";
 jest.mock("@/utils/findOrFetchUser");
 const mockedFindOrFetchUserByActorId = jest.mocked(findOrFetchUserByActorId);
 
-jest.mock("@/utils/httpSignature/verify");
+jest.mock("@soshal/utils");
 const mockedVerifyActivity = jest.mocked(verifyActivity);
 
 jest.mock("@/utils/logger");

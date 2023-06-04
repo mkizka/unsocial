@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "commonjs"
+  },
+  "include": [".eslintrc.js", "**/*.ts"]
+}

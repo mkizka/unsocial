@@ -1,8 +1,7 @@
 import { prisma } from "@soshal/database";
+import { env } from "@soshal/utils";
+import { formatZodError } from "@soshal/utils";
 import { z } from "zod";
-
-import { env } from "@/utils/env";
-import { formatZodError } from "@/utils/formatZodError";
 
 import type { InboxFunction } from "./types";
 

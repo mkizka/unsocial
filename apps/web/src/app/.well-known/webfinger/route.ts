@@ -4,7 +4,7 @@ import { prisma } from "@soshal/database";
 
 import { NextResponse } from "next/server";
 
-import { env } from "@/utils/env";
+import { env } from "@soshal/utils";
 
 export async function GET({ nextUrl }: NextRequest) {
   const resource = nextUrl.searchParams.get("resource");

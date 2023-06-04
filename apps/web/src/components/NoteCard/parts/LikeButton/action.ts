@@ -1,9 +1,9 @@
 import type { Like } from "@soshal/database";
 import { prisma } from "@soshal/database";
+import { env } from "@soshal/utils";
 
 import { queue } from "@/server/background/queue";
 import { activityStreams } from "@/utils/activitypub";
-import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
 import { logger } from "@/utils/logger";
 

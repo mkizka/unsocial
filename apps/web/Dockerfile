@@ -31,4 +31,4 @@ COPY --from=setup /app/packages/database/prisma ./prisma
 RUN npm i -g prisma
 
 EXPOSE 3000
-CMD prisma db push && node apps/web/server.js
+CMD prisma db push --skip-generate && node apps/web/server.js

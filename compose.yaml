@@ -34,8 +34,6 @@ services:
       - ./docker/misskey/files:/misskey/files
       - ./docker/misskey/.config:/misskey/.config:ro
       - ./docker/mkcert:/mkcert
-    ports:
-      - 3001:3001
     environment:
       - NODE_ENV=development
       - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem

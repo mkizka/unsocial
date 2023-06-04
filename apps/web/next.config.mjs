@@ -3,6 +3,7 @@
 const config = {
   reactStrictMode: true,
   output: "standalone",
+  transpilePackages: ["@soshal/utils"],
   experimental: {
     serverActions: true,
   },

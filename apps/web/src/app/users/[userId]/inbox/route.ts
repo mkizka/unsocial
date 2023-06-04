@@ -1,10 +1,9 @@
+import { formatZodError, verifyActivity } from "@soshal/utils";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { findOrFetchUserByActorId } from "@/utils/findOrFetchUser";
-import { formatZodError } from "@/utils/formatZodError";
-import { verifyActivity } from "@/utils/httpSignature/verify";
 import { logger } from "@/utils/logger";
 
 import { inbox } from "./_handlers";

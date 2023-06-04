@@ -1,5 +1,5 @@
-import { env } from "../../utils/env";
-import { globalize } from "../../utils/globalize";
+import { env } from "@soshal/utils";
+
 import { logger } from "../../utils/logger";
 import { relayActivity } from "./runners/relay";
 
@@ -63,4 +63,4 @@ class Queue {
   }
 }
 
-export const queue = globalize("queue", () => new Queue());
+export const queue = new Queue();

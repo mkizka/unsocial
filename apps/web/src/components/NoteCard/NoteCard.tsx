@@ -1,8 +1,8 @@
 import type { Like, Note, User } from "@soshal/database";
+import { env } from "@soshal/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
 
 import { CreatedAt } from "./parts/CreatedAt";
