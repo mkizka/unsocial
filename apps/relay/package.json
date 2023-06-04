@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fastify/one-line-logger": "^1.2.0",
+    "@soshal/database": "workspace:^",
     "@soshal/utils": "workspace:^",
     "arg": "^5.0.2",
     "fastify": "^4.17.0"

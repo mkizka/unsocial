@@ -1,9 +1,9 @@
 import { signActivity } from "@soshal/utils";
+import { logger } from "@soshal/utils";
 import type { AP } from "activitypub-core-types";
 import type { Session } from "next-auth";
 
 import { fetcher } from "@/utils/fetcher";
-import { logger } from "@/utils/logger";
 
 export const relayActivity = async (params: {
   sender: NonNullable<Session["user"]>;

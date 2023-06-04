@@ -1,12 +1,12 @@
+import { logger } from "@soshal/utils";
 import { Matcher } from "jest-mock-extended";
 
 import { queue } from "@/server/background/queue";
-import { logger } from "@/utils/logger";
 import { mockedPrisma } from "@/utils/mock";
 
 import { follow } from "./follow";
 
-jest.mock("@/utils/logger");
+jest.mock("@soshal/utils");
 const mockedLogger = jest.mocked(logger);
 
 jest.mock("@/server/background/queue");

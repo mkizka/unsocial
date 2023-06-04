@@ -1,11 +1,11 @@
 import type { Like } from "@soshal/database";
 import { prisma } from "@soshal/database";
 import { env } from "@soshal/utils";
+import { logger } from "@soshal/utils";
 
 import { queue } from "@/server/background/queue";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
-import { logger } from "@/utils/logger";
 
 type User = {
   id: string;

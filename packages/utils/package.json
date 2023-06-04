@@ -19,6 +19,7 @@
     "typescript": "5.0.4"
   },
   "dependencies": {
+    "winston": "^3.9.0",
     "zod": "3.21.4"
   }
 }

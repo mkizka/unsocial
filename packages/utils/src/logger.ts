@@ -1,5 +1,6 @@
-// Stryker disable all
 import { createLogger, format, transports } from "winston";
+
+import { env } from "./env";
 
 export const logger = createLogger({
   format: format.combine(
@@ -11,8 +12,7 @@ export const logger = createLogger({
   ),
   transports: [
     new transports.Console({
-      // env.tsでもloggerを使いたいのでprocess.envを参照する
-      silent: process.env.NODE_ENV == "test",
+      silent: env.NODE_ENV == "test",
     }),
   ],
 });
