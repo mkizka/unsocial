@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "module": "commonjs"
+  },
+  "ts-node": {
+    "transpileOnly": true
+  }
+}
