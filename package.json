@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "docker compose up -d db mail && next dev",
+    "dev": "./scripts/dev.sh",
     "test": "jest",
     "e2e": "playwright test",
     "postinstall": "prisma generate",
