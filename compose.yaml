@@ -29,7 +29,7 @@ services:
     profiles:
       - e2e
   misskey:
-    image: misskey/misskey:13.12
+    image: misskey/misskey:13.13
     volumes:
       - ./docker/misskey/files:/misskey/files
       - ./docker/misskey/.config:/misskey/.config:ro
