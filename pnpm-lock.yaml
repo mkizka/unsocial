@@ -23,10 +23,10 @@ dependencies:
     version: 13.4.5-canary.6(@babel/core@7.21.5)(react-dom@18.3.0-canary-9a72e6227-20230525)(react@18.3.0-canary-9a72e6227-20230525)
   next-auth:
     specifier: 4.19.2
-    version: 4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.6)(nodemailer@6.9.2)(react-dom@18.3.0-canary-9a72e6227-20230525)(react@18.3.0-canary-9a72e6227-20230525)
+    version: 4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.6)(nodemailer@6.9.3)(react-dom@18.3.0-canary-9a72e6227-20230525)(react@18.3.0-canary-9a72e6227-20230525)
   nodemailer:
-    specifier: 6.9.2
-    version: 6.9.2
+    specifier: 6.9.3
+    version: 6.9.3
   react:
     specifier: 18.3.0-canary-9a72e6227-20230525
     version: 18.3.0-canary-9a72e6227-20230525
@@ -1333,7 +1333,7 @@ packages:
       next-auth: ^4
     dependencies:
       '@prisma/client': 4.14.1(prisma@4.14.1)
-      next-auth: 4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.6)(nodemailer@6.9.2)(react-dom@18.3.0-canary-9a72e6227-20230525)(react@18.3.0-canary-9a72e6227-20230525)
+      next-auth: 4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.6)(nodemailer@6.9.3)(react-dom@18.3.0-canary-9a72e6227-20230525)(react@18.3.0-canary-9a72e6227-20230525)
     dev: false
 
   /@next/env@13.4.5-canary.6:
@@ -5289,7 +5289,7 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-auth@4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.6)(nodemailer@6.9.2)(react-dom@18.3.0-canary-9a72e6227-20230525)(react@18.3.0-canary-9a72e6227-20230525):
+  /next-auth@4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.6)(nodemailer@6.9.3)(react-dom@18.3.0-canary-9a72e6227-20230525)(react@18.3.0-canary-9a72e6227-20230525):
     resolution: {integrity: sha512-6V2YG3IJQVhgCAH7mvT3yopTW92gMdUrcwGX7NQ0dCreT/+axGua/JmVdarjec0C/oJukKpIYRgjMlV+L5ZQOQ==}
     peerDependencies:
       next: ^12.2.5 || ^13
@@ -5305,7 +5305,7 @@ packages:
       cookie: 0.5.0
       jose: 4.14.3
       next: 13.4.5-canary.6(@babel/core@7.21.5)(react-dom@18.3.0-canary-9a72e6227-20230525)(react@18.3.0-canary-9a72e6227-20230525)
-      nodemailer: 6.9.2
+      nodemailer: 6.9.3
       oauth: 0.9.15
       openid-client: 5.4.2
       preact: 10.13.2
@@ -5399,8 +5399,8 @@ packages:
   /node-releases@2.0.10:
     resolution: {integrity: sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w==}
 
-  /nodemailer@6.9.2:
-    resolution: {integrity: sha512-4+TYaa/e1nIxQfyw/WzNPYTEZ5OvHIDEnmjs4LPmIfccPQN+2CYKmGHjWixn/chzD3bmUTu5FMfpltizMxqzdg==}
+  /nodemailer@6.9.3:
+    resolution: {integrity: sha512-fy9v3NgTzBngrMFkDsKEj0r02U7jm6XfC3b52eoNV+GCrGj+s8pt5OqhiJdWKuw51zCTdiNR/IUD1z33LIIGpg==}
     engines: {node: '>=6.0.0'}
     dev: false
 
