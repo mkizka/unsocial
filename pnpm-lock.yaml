@@ -50,10 +50,10 @@ importers:
         version: link:../../packages/database
       next:
         specifier: canary
-        version: 13.4.5-canary.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
+        version: 13.4.5-canary.5(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 4.19.2
-        version: 4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.4)(nodemailer@6.9.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.5)(nodemailer@6.9.3)(react-dom@18.2.0)(react@18.2.0)
       nodemailer:
         specifier: 6.9.3
         version: 6.9.3
@@ -98,8 +98,8 @@ importers:
         specifier: 10.4.14
         version: 10.4.14(postcss@8.4.24)
       better-typescript-lib:
-        specifier: 2.3.1
-        version: 2.3.1(typescript@5.1.3)
+        specifier: 2.4.0
+        version: 2.4.0(typescript@5.1.3)
       cli-markdown:
         specifier: 3.0.3
         version: 3.0.3
@@ -653,128 +653,128 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@better-typescript-lib/decorators@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-faDjdQnA16/gFcvmAwT4H7SR1CoN7p+gHi26AI0xYQ1lNAJ7jhvz+bGJG2LE3MffriggFbpzagt/9R9WP+ys1w==}
+  /@better-typescript-lib/decorators@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-phg1WNdqwgNR0SOZksvWUQh+ihAO6BJfyBR7aZuiQ774tI1CD79JjVyrsrf5A9bEeNV98kzvbUfzRpufrVzanw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/dom@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-qGNxG6njqvQPe5WKF6aXOAof1ANpocUzpIYwg/TZznH4A0UG1rD8wt04B5P0t0ezMtNfg24Wm1KGzAiSDiLMiA==}
+  /@better-typescript-lib/dom@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-dbsU1nxiI4vd+um2Rjow0VC17wb8Y8bH3Nohu+UA8OMLWvPpQ+OVwmS1O/nSH/yd3Tdrw9t5Es1giYHa1aj03w==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es2015@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-c/1r+KgSlkDqPX6R+aQGSCyjSwNAu+aBO/jboj7bblDw1zDlFO3ynCxGq0KKXCKcQ9+vd1rR79alusgtzCUthQ==}
+  /@better-typescript-lib/es2015@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-Fca8305Qa7M78+kK3ocUvyRW3f4G5impperBZvfEgxkLN84UwamcgDCVFPfl3NsGijfZz2TeLPEBHBMeEDy2hQ==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es2016@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-PzZd7FWmvySSmy62c4Rzf3B/nK38wgaZbfNZ/jOvpbY4K8NhoRS2ZHZTGfQHv84Gomeu1oMDkOd9ZcsRSzyExA==}
+  /@better-typescript-lib/es2016@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-4UTjc8g/miAN7DK70URgeBm4hqPnDxzdA6Ov7j2u004w5AiZpZWjoJUg61QcMtmAqRPocI8H39jBYpLu9ssNsw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es2017@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-sqFItdYwY1tTjtJQRCvYtUHlkj5fyV/sVAmxfKXi4Z4FUtqdhXdNXdC18G92v4/BJHx36M3BaKdwGXeY4Pe3/A==}
+  /@better-typescript-lib/es2017@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-Q9rInvoShqBWh6cDfdcLA/Pp9Y8WH52wUBx7TygklLvUw++JsfA4EoybVqfGwU6Dlkfx4Q8J7/EpUolIEyQEqw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es2018@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-aoTFQyOBNrEC5AM1R9h48ausVflvlTMVuxQShgPYpnk5Kg+P+ROj4aYLUaehXeplEDI8Ovj1yyC1YFfVUAErJQ==}
+  /@better-typescript-lib/es2018@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-HzqqRAX5yMs6J7SjoWzbqLdkq6xuSBsPc5wmiF6jkJVQLgllLbRVi+6R8T0HAKOUL59f+3qqpHTldRJW5K2Wnw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es2019@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-NX0Xp+8jPVQWQPKTOlo/PKlfUk/4s7tJESHNpyP9nZk/0bIgTZNxA2/pEgPha7eOxXX0mDNlpkNL/Zob8fhlew==}
+  /@better-typescript-lib/es2019@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-AsdRLaO7+1JaBxbh6kXO2H30j96/6/1RP6/pqStLGNtxxME9n6Z1heZFIyQEKYyAI6+ZjBqy0zsaCClGgSOo/A==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es2020@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-ASHm0aDQR+xhZINosjNmAXS/TFjj5WfUE9fobw0jmFiGADNta/0xymzqBy3C7PoxRp1jm6Egfj3SpQIlVREM5A==}
+  /@better-typescript-lib/es2020@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-Oi4rsoEpIQMPELcw+k6DslY9VrPognLcqJRM8sMcEDZyQQidCSJIjmMHSB33AoWUbz2g7DG+XrQqNV4SKaRMiQ==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es2021@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-/haxPUujAUISJLK+FcuezGF5BP4Y98gi3QboKLyw01CynJ4mBv0NnWJhVpkIUA68rRgj65bjORpwzSAd3IjRNg==}
+  /@better-typescript-lib/es2021@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-YMW/CJnyldgzFkB03FC0x1WTkIow9J0uIm5EawbUT+uJe5qV8ReOJmy0a7dWaCOkfgdSQsY4bcmnrSiYqnltXA==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es2022@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-HQ1VQMnCfDRBdBhQiJZISf0ZwVHj6vvEEixTdR0ff4o6hXe8olw4smMI5Hq8JnAjeBaLqkEFANa8D9sacpTZdA==}
+  /@better-typescript-lib/es2022@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-JOZCvCFNS/dnAHRC+uevby2+GKtfBp0EMS4aSVV4isoPFBoN7zgR0yBYazuxG3V6J6Msv8k1QoKs5ECnDl0PGw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es2023@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-mFD/z7Ai8KhUhyYq6ZB055YctQDBqYHhqtF6PWge21gR+mK2bu0Z+e2xFTctw7bcowJXJRgTFa4G6docPRNWBg==}
+  /@better-typescript-lib/es2023@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-h5J/CNbuScHZxETfJr8QemkKVPtFOO9ZrJbvXrJfsIWXYh0o5My3jr/qxcP/psTZY7i0Hp+Yd/4Fp7o6LskPlg==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es5@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-6WqrWwn65my+K13TMM1AMv7N1M7UIDxo6Ur/AvYpvfl7nD8ymC78OQcw1BsJUIVqz6UfffNFgU8gVULhR6Imug==}
+  /@better-typescript-lib/es5@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-jGRqmPxrDcPY+xo7FaOEJdM/Q7c1rCxWSp3ts9UuUvjLeOcl31agJaJFvckKi3ewzHL61MZPrpiWLIJOU5wjCw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/es6@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-rLEHpnK3AMfz6Ipcjee593hRrzftTYNEcdZvZz7QfVyfCaLp9/IY2IunGR3ZndTMBvOY5uLp/w8BRCOdwPgPYw==}
+  /@better-typescript-lib/es6@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-elsjOkPljXbGcZFVyRPoJIeG3G8rHaXi7YLeD0OryyzvyfikbUH7Xzv2dy04ZCZ4XTZ5GykRCrzVQ9TS5OIKPw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/esnext@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-lcjU6r8wAk9fAN/ZYRBGxXfUCf2mXF/EggiSv/eJCDkCPWirc7K+p+kZRVwxzS8CMYV0cmIgtdUTXZ8k9z6z5g==}
+  /@better-typescript-lib/esnext@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-IApFRGRoU8yTm7RLdZtncFlnHD/quYQcxd9p5lvQkMW+wZgmsOyM78L75h00UrDWPQf9Gojx7/SFdRXm6lNE9Q==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/scripthost@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-Ix4GHXS1Z9bIW0Gq4lNZqn9gVXtQ7lRd+rGPzVzwvpPG0fEd3/BTW8qGQZJg6PplAh5fs3KlkPb7dlhuYC2oMQ==}
+  /@better-typescript-lib/scripthost@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-OjxKeO8+1jKQEkbzlXlcOv3io6B+cJ6IB93zSzKw8sl3uqBN1IWonUBeoK96XL1tNzV1m8eEgAikMtSWt2m/HA==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.1.3
     dev: true
 
-  /@better-typescript-lib/webworker@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-MhkUtKSeswZYekzb8z7HEvxGNWyam3I+BWmJi3QEADLc6utM+Laeer9oQIfNJKX/jz5JsaPCsMXLT8LpHjp07w==}
+  /@better-typescript-lib/webworker@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-1B0UDJhBP2MkJfNmiH838sEfHgleL1R5HRLiRU1xzxMogmofs61scdZ5oAXL1wQ6r3+RvWXt0xZv9fJZQZAYpg==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
@@ -1365,11 +1365,11 @@ packages:
       next-auth: ^4
     dependencies:
       '@prisma/client': 4.15.0(prisma@4.15.0)
-      next-auth: 4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.4)(nodemailer@6.9.3)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.5)(nodemailer@6.9.3)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /@next/env@13.4.5-canary.4:
-    resolution: {integrity: sha512-bJ4q5mj2/vEjVSwN0YbPEbgklg0aXLFDDZ6EvE6kR3EujP/wFFGVUYkA6H5ZI55OktCOu6DGZJX4mzrFiEvXwQ==}
+  /@next/env@13.4.5-canary.5:
+    resolution: {integrity: sha512-us7qHv6JyjY+FpENNfr6+r9drJHl884aWXEXETwsGTV6rjBlhtLQSZJMOcT2b6oQcLwp9fJvGC6YoYfkK6sscA==}
     dev: false
 
   /@next/eslint-plugin-next@13.4.4:
@@ -1378,8 +1378,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-  /@next/swc-darwin-arm64@13.4.5-canary.4:
-    resolution: {integrity: sha512-dO4uNRr07x/41EoRTE0oyb4TMFMvil54f+nqS1nVrNRKjyFsVNs79lgsc5yeIZdcs3UHQeFELMyqGuZfoGdqMA==}
+  /@next/swc-darwin-arm64@13.4.5-canary.5:
+    resolution: {integrity: sha512-AARiH4+RIetMVRiPoWvmcByT09wei1woJogJLcGqyfzrzzvJmEjaXu5ZPvToBNHvM7qwAUXQfFg3bF7GpNrC0w==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -1387,8 +1387,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-darwin-x64@13.4.5-canary.4:
-    resolution: {integrity: sha512-Ds3Yg0F/AHUDBWhr4DL9MwPrehwt0CUBDjKoERIm0dqnZ+wuh24YyaUIvaE+HjH+wdcdvy+E9AIgyuEUgsk3PQ==}
+  /@next/swc-darwin-x64@13.4.5-canary.5:
+    resolution: {integrity: sha512-2uZRCouENy8xHr31jakTHMBSF+P2g3GUD8Rfa4xSyPRsh8CTFu3AkMiO45iXi2oCkEdakaHBMEWx4lJ/DKp51Q==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -1396,8 +1396,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-gnu@13.4.5-canary.4:
-    resolution: {integrity: sha512-bNz/qtcgJM4eW5KXETrM5MmLB+LllhkNZ17vNxkb1BvCa5zOvmk9GaiDWetGkppWd9T8ySPkxkVFVGLTl6K9CA==}
+  /@next/swc-linux-arm64-gnu@13.4.5-canary.5:
+    resolution: {integrity: sha512-m83v7YcxLwrkSJx0lwrolNzRZ0rEcG8WJBroluumyT+Ao1ErZ3IppyEspanazE1Q9938MfZtRUeJU7HVvfmsqQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -1405,8 +1405,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-musl@13.4.5-canary.4:
-    resolution: {integrity: sha512-Umm5QmDOgB3tx+juAGISYRi0QR3OHsVCQ22Nh3iYwZfEDqGDbatNOcyAjQM2S473PPhnRNzVyotWblb7L1TApw==}
+  /@next/swc-linux-arm64-musl@13.4.5-canary.5:
+    resolution: {integrity: sha512-tVzvtJu/Igv9ukf7Lceerq0tFT82clM8ENnqpKOwKCHdWkOBzmEf4j+l6uVusnPwLzBCUQsVFFiTNBQeUzfd9w==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -1414,8 +1414,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-gnu@13.4.5-canary.4:
-    resolution: {integrity: sha512-x+LEaO4uHuWQXBeEdwQWBdOSeuAmZKhyY4QfJSdW3tKxlxXS2WUetkr4dUI7m9tSuLtGOKkgT4WqwagdgeGqzw==}
+  /@next/swc-linux-x64-gnu@13.4.5-canary.5:
+    resolution: {integrity: sha512-RjJVpeFdCeNg6bHVh6/1v3lThCzxTyVyLywOX4vbqkwaEzw3xh5+IrkOuK/wgOuX7nZ9YiFNIGhoP1C4/ylcdg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -1423,8 +1423,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-musl@13.4.5-canary.4:
-    resolution: {integrity: sha512-RCR8Hh3ZIM2g187Jn+jWOpoVScer0hfTGtzc9/OnlPKXeXpnqWIuDMbso3M8SznPshCDGJNuB9NseGlGMGULPA==}
+  /@next/swc-linux-x64-musl@13.4.5-canary.5:
+    resolution: {integrity: sha512-ZRrwQlTSk+11o9+Ud6v4TUkwf9EHydFSDE2mPaKIG3M8MOkMZK09Ztg34HWwbPkwZW1Niz+uAPt3Bna6DIcrvA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -1432,8 +1432,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-arm64-msvc@13.4.5-canary.4:
-    resolution: {integrity: sha512-9V7clsRyMQxBgNBvRY3XQ1g3ECdJHq/9/5VSJoKWcAoR9coHUEYOFXeRDMMLW07wXheZoY3JYkZ4X0TIS+s+gw==}
+  /@next/swc-win32-arm64-msvc@13.4.5-canary.5:
+    resolution: {integrity: sha512-voeXErVk72kS5gtuaQWiyIjUFglcQlMz94lak0eflOXe4fSj6FgjVqIBqglgeh1xeWmLnRiurud93qBRboY0yw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -1441,8 +1441,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-ia32-msvc@13.4.5-canary.4:
-    resolution: {integrity: sha512-vEaVslFcB3cYfwYFaPczBNPaVFjaAgCXM8dX0gzm7tZkkCrUHrW6rriSPoNSWjCuYiwHsdVKxUUwBOhQXK+Jug==}
+  /@next/swc-win32-ia32-msvc@13.4.5-canary.5:
+    resolution: {integrity: sha512-RM8oDp2nmDQbMPp/4FFhTIja0ckrRv/kedQ0g7lgbLtUyHmUtIwbVENj8QAHpVAUroKxsl1d//8wpRo0OH4LuQ==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
@@ -1450,8 +1450,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-x64-msvc@13.4.5-canary.4:
-    resolution: {integrity: sha512-bNC/RWxH3a3t9lX8qxugVOhC1sLFA4TIcQPGVTmHig91/LibwEKfNoz6iuRwk+vs5zDy+xvGQAs5v+Y5V7CvUQ==}
+  /@next/swc-win32-x64-msvc@13.4.5-canary.5:
+    resolution: {integrity: sha512-7g3ZUWW1zvHvT5ZhtVCXxV/R9/lA2hBUG0fSPY//cDIObM9aVXRlIq2t6MxlkRhldtHSh32zgxv20XnchEUocQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -2231,27 +2231,27 @@ packages:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: true
 
-  /better-typescript-lib@2.3.1(typescript@5.1.3):
-    resolution: {integrity: sha512-8WhrEea4DC6XtDscJupdX9kyo6774fqPFDVg+PzK4XOBFvgMDivKY1wCQAGmQl195y8Gaw+X8qD4LELr4jVouQ==}
+  /better-typescript-lib@2.4.0(typescript@5.1.3):
+    resolution: {integrity: sha512-LMFX7HPN5qlJiW5IlJiicTT2XcJJ8wRTq3D1YinmZzqNQ0lKX409EK+4cmkuMZTkfyZXBxOca29zvZwIGt9Q3Q==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
-      '@typescript/lib-decorators': /@better-typescript-lib/decorators@2.3.1(typescript@5.1.3)
-      '@typescript/lib-dom': /@better-typescript-lib/dom@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es2015': /@better-typescript-lib/es2015@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es2016': /@better-typescript-lib/es2016@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es2017': /@better-typescript-lib/es2017@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es2018': /@better-typescript-lib/es2018@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es2019': /@better-typescript-lib/es2019@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es2020': /@better-typescript-lib/es2020@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es2021': /@better-typescript-lib/es2021@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es2022': /@better-typescript-lib/es2022@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es2023': /@better-typescript-lib/es2023@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es5': /@better-typescript-lib/es5@2.3.1(typescript@5.1.3)
-      '@typescript/lib-es6': /@better-typescript-lib/es6@2.3.1(typescript@5.1.3)
-      '@typescript/lib-esnext': /@better-typescript-lib/esnext@2.3.1(typescript@5.1.3)
-      '@typescript/lib-scripthost': /@better-typescript-lib/scripthost@2.3.1(typescript@5.1.3)
-      '@typescript/lib-webworker': /@better-typescript-lib/webworker@2.3.1(typescript@5.1.3)
+      '@typescript/lib-decorators': /@better-typescript-lib/decorators@2.4.0(typescript@5.1.3)
+      '@typescript/lib-dom': /@better-typescript-lib/dom@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es2015': /@better-typescript-lib/es2015@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es2016': /@better-typescript-lib/es2016@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es2017': /@better-typescript-lib/es2017@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es2018': /@better-typescript-lib/es2018@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es2019': /@better-typescript-lib/es2019@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es2020': /@better-typescript-lib/es2020@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es2021': /@better-typescript-lib/es2021@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es2022': /@better-typescript-lib/es2022@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es2023': /@better-typescript-lib/es2023@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es5': /@better-typescript-lib/es5@2.4.0(typescript@5.1.3)
+      '@typescript/lib-es6': /@better-typescript-lib/es6@2.4.0(typescript@5.1.3)
+      '@typescript/lib-esnext': /@better-typescript-lib/esnext@2.4.0(typescript@5.1.3)
+      '@typescript/lib-scripthost': /@better-typescript-lib/scripthost@2.4.0(typescript@5.1.3)
+      '@typescript/lib-webworker': /@better-typescript-lib/webworker@2.4.0(typescript@5.1.3)
       typescript: 5.1.3
     dev: true
 
@@ -5101,7 +5101,7 @@ packages:
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
-  /next-auth@4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.4)(nodemailer@6.9.3)(react-dom@18.2.0)(react@18.2.0):
+  /next-auth@4.19.2(patch_hash=haztbgj26y5otdgdqpl2p5f6uy)(next@13.4.5-canary.5)(nodemailer@6.9.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-6V2YG3IJQVhgCAH7mvT3yopTW92gMdUrcwGX7NQ0dCreT/+axGua/JmVdarjec0C/oJukKpIYRgjMlV+L5ZQOQ==}
     peerDependencies:
       next: ^12.2.5 || ^13
@@ -5116,7 +5116,7 @@ packages:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.14.4
-      next: 13.4.5-canary.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.5-canary.5(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       nodemailer: 6.9.3
       oauth: 0.9.15
       openid-client: 5.4.2
@@ -5132,8 +5132,8 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /next@13.4.5-canary.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-bbovnh/fzx7cZbEF6AVhol/mwkwr+neRd5kPCk8KEVc+EcKNPULzdntE1zXWrLTKfgiGb2XQRbFjCAFx03nqdA==}
+  /next@13.4.5-canary.5(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-HEpJyHEaiHrChpfsd/WG3WArS+lQfuVf5kLaRhPm1F067FK778Pun1oetjBY0S1Hf1QLYU308I0UVfIISsXpwQ==}
     engines: {node: '>=16.8.0'}
     hasBin: true
     peerDependencies:
@@ -5150,7 +5150,7 @@ packages:
       sass:
         optional: true
     dependencies:
-      '@next/env': 13.4.5-canary.4
+      '@next/env': 13.4.5-canary.5
       '@swc/helpers': 0.5.1
       busboy: 1.6.0
       caniuse-lite: 1.0.30001492
@@ -5160,15 +5160,15 @@ packages:
       styled-jsx: 5.1.1(@babel/core@7.22.1)(react@18.2.0)
       zod: 3.21.4
     optionalDependencies:
-      '@next/swc-darwin-arm64': 13.4.5-canary.4
-      '@next/swc-darwin-x64': 13.4.5-canary.4
-      '@next/swc-linux-arm64-gnu': 13.4.5-canary.4
-      '@next/swc-linux-arm64-musl': 13.4.5-canary.4
-      '@next/swc-linux-x64-gnu': 13.4.5-canary.4
-      '@next/swc-linux-x64-musl': 13.4.5-canary.4
-      '@next/swc-win32-arm64-msvc': 13.4.5-canary.4
-      '@next/swc-win32-ia32-msvc': 13.4.5-canary.4
-      '@next/swc-win32-x64-msvc': 13.4.5-canary.4
+      '@next/swc-darwin-arm64': 13.4.5-canary.5
+      '@next/swc-darwin-x64': 13.4.5-canary.5
+      '@next/swc-linux-arm64-gnu': 13.4.5-canary.5
+      '@next/swc-linux-arm64-musl': 13.4.5-canary.5
+      '@next/swc-linux-x64-gnu': 13.4.5-canary.5
+      '@next/swc-linux-x64-musl': 13.4.5-canary.5
+      '@next/swc-win32-arm64-msvc': 13.4.5-canary.5
+      '@next/swc-win32-ia32-msvc': 13.4.5-canary.5
+      '@next/swc-win32-x64-msvc': 13.4.5-canary.5
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
