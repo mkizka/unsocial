@@ -1,12 +1,16 @@
 import { Matcher } from "jest-mock-extended";
 
+import { queue } from "@/server/background/queue";
+import { logger } from "@/utils/logger";
 import { mockedPrisma } from "@/utils/mock";
-import { relayActivity } from "@/utils/relayActivity";
 
 import { follow } from "./follow";
 
-jest.mock("@/utils/relayActivity");
-const mockedRelayActivity = jest.mocked(relayActivity);
+jest.mock("@/utils/logger");
+const mockedLogger = jest.mocked(logger);
+
+jest.mock("@/server/background/queue");
+const mockedQueue = jest.mocked(queue);
 
 const dummyLocalUser = {
   id: "dummyidlocal",
@@ -42,18 +46,21 @@ describe("フォロー", () => {
         followerId: dummyRemoteUser.id,
       },
     });
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
-      sender: {
-        id: dummyLocalUser.id,
-        privateKey: dummyLocalUser.privateKey,
-      },
-      activity: {
-        type: "Accept",
-        actor: new URL(activity.object),
-        object: {
-          type: "Follow",
-          actor: new URL(activity.actor),
-          object: new URL(activity.object),
+    expect(mockedQueue.push).toHaveBeenCalledWith({
+      runner: "relayActivity",
+      params: {
+        sender: {
+          id: dummyLocalUser.id,
+          privateKey: dummyLocalUser.privateKey,
+        },
+        activity: {
+          type: "Accept",
+          actor: new URL(activity.object),
+          object: {
+            type: "Follow",
+            actor: new URL(activity.actor),
+            object: new URL(activity.object),
+          },
         },
       },
     });

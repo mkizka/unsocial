@@ -1,7 +1,7 @@
 import { z } from "zod";
 
+import { prisma } from "@/server/prisma";
 import { formatZodError } from "@/utils/formatZodError";
-import { prisma } from "@/utils/prisma";
 
 import type { InboxFunction } from "./types";
 

@@ -1,13 +1,13 @@
 import type { Session } from "next-auth";
 
+import { queue } from "@/server/background/queue";
 import { getServerSession } from "@/utils/getServerSession";
 import { mockedPrisma } from "@/utils/mock";
-import { relayActivity } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
-jest.mock("@/utils/relayActivity");
-const mockedRelayActivity = jest.mocked(relayActivity);
+jest.mock("@/server/background/queue");
+const mockedQueue = jest.mocked(queue);
 
 jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
@@ -58,7 +58,7 @@ describe("LikeButton/action", () => {
         },
       }
     `);
-    expect(mockedRelayActivity).not.toHaveBeenCalled();
+    expect(mockedQueue.push).not.toHaveBeenCalled();
   });
 
   test("リモートユーザーのNote", async () => {
@@ -104,11 +104,14 @@ describe("LikeButton/action", () => {
         },
       }
     `);
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
-      sender: dummyLocalUser,
-      activity: expect.objectContaining({
-        type: "Like",
-      }),
+    expect(mockedQueue.push).toHaveBeenCalledWith({
+      runner: "relayActivity",
+      params: {
+        sender: dummyLocalUser,
+        activity: expect.objectContaining({
+          type: "Like",
+        }),
+      },
     });
   });
 
@@ -141,7 +144,7 @@ describe("LikeButton/action", () => {
         id: dummyLike.id,
       },
     });
-    expect(mockedRelayActivity).not.toHaveBeenCalled();
+    expect(mockedQueue.push).not.toHaveBeenCalled();
   });
 
   test("リモートユーザーのNote(いいね済みの場合)", async () => {
@@ -172,9 +175,12 @@ describe("LikeButton/action", () => {
     expect(mockedPrisma.like.delete).toHaveBeenCalledWith({
       where: { id: "likeId" },
     });
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
-      sender: dummyLocalUser,
-      activity: expect.objectContaining({ type: "Undo" }),
+    expect(mockedQueue.push).toHaveBeenCalledWith({
+      params: {
+        sender: dummyLocalUser,
+        activity: expect.objectContaining({ type: "Undo" }),
+      },
+      runner: "relayActivity",
     });
   });
 });

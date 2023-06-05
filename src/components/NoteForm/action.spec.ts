@@ -1,17 +1,17 @@
 import type { Note } from "@prisma/client";
 import type { Session } from "next-auth";
 
+import { queue } from "@/server/background/queue";
 import { getServerSession } from "@/utils/getServerSession";
 import { mockedPrisma } from "@/utils/mock";
-import { relayActivity } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
 jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
 
-jest.mock("@/utils/relayActivity");
-const mockedRelayActivity = jest.mocked(relayActivity);
+jest.mock("@/server/background/queue");
+const mockedQueue = jest.mocked(queue);
 
 describe("NoteForm/action", () => {
   test("正常系", async () => {
@@ -29,9 +29,12 @@ describe("NoteForm/action", () => {
     const response = await action(form);
     // assert
     expect(response).toBeUndefined();
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
-      sender: dummySession.user,
-      activity: expect.objectContaining({ type: "Create" }),
+    expect(mockedQueue.push).toHaveBeenCalledWith({
+      runner: "relayActivity",
+      params: {
+        sender: dummySession.user,
+        activity: expect.objectContaining({ type: "Create" }),
+      },
     });
   });
   test("ログインしていない場合はエラーを返す", async () => {

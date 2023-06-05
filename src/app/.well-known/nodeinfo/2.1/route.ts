@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 
 import pkg from "@/../package.json";
-import { prisma } from "@/utils/prisma";
-
-export const dynamic = "force-dynamic";
+import { prisma } from "@/server/prisma";
 
 export async function GET() {
   const userCount = await prisma.user.count();

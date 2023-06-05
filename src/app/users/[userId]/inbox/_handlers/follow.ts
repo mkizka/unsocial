@@ -1,10 +1,10 @@
 import { z } from "zod";
 
+import { queue } from "@/server/background/queue";
+import { prisma } from "@/server/prisma";
 import { env } from "@/utils/env";
 import { findUserByActorId } from "@/utils/findUserByActorId";
 import { formatZodError } from "@/utils/formatZodError";
-import { prisma } from "@/utils/prisma";
-import { relayActivity } from "@/utils/relayActivity";
 
 import type { InboxFunction } from "./types";
 
@@ -57,18 +57,21 @@ export const follow: InboxFunction = async (activity, actorUser) => {
       followerId: actorUser.id,
     },
   });
-  relayActivity({
-    sender: {
-      id: followee.id,
-      privateKey: followee.privateKey,
-    },
-    activity: {
-      type: "Accept",
-      actor: new URL(`https://${env.HOST}/users/${followee.id}`),
-      object: {
-        ...parsedFollow.data,
-        actor: new URL(parsedFollow.data.actor),
-        object: new URL(parsedFollow.data.object),
+  queue.push({
+    runner: "relayActivity",
+    params: {
+      sender: {
+        id: followee.id,
+        privateKey: followee.privateKey,
+      },
+      activity: {
+        type: "Accept",
+        actor: new URL(`https://${env.HOST}/users/${followee.id}`),
+        object: {
+          ...parsedFollow.data,
+          actor: new URL(parsedFollow.data.actor),
+          object: new URL(parsedFollow.data.object),
+        },
       },
     },
   });
