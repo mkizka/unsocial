@@ -30,7 +30,7 @@ jobs:
       - name: Setup and Build
         run: |
           docker compose up -d
-          cp -f .env.example
+          cp -f .env.example .env
           pnpm prisma db push
           pnpm build
       - run: pnpm playwright install --with-deps chromium
