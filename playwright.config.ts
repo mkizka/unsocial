@@ -32,6 +32,11 @@ const config: PlaywrightTestConfig = {
     video: "on",
     trace: "on",
   },
+  webServer: {
+    command: "pnpm start",
+    port: 3000,
+    reuseExistingServer: !process.env.CI,
+  },
 };
 
 if (process.env.CI) {

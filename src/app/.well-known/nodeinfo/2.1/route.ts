@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import pkg from "@/../package.json";
 import { prisma } from "@/utils/prisma";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const userCount = await prisma.user.count();
   // TODO: ローカルだけを対象に集計する
