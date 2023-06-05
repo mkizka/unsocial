@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm prisma migrate deploy && pnpm build",
+  "buildCommand": "pnpm prisma db push && pnpm build",
   "github": {
     "silent": true
   }

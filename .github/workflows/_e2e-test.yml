@@ -21,14 +21,21 @@ jobs:
           cache: pnpm
       - run: pnpm i
       # https://github.com/FiloSottile/mkcert#linux
-      - name: install-mkcert
+      - name: Install mkcert
         run: |
           sudo apt install -y libnss3-tools
           curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
           chmod +x mkcert-v*-linux-amd64
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
-      - run: ./scripts/setup-for-docker.sh
-      - run: cp -f .env.docker .env && docker compose up -d --build
+      - name: Setup docker
+        run: |
+          ./scripts/setup-for-docker.sh
+          docker compose up -d
+      - name: Setup application
+        run: |
+          cp -f .env.example .env
+          pnpm prisma db push
+          pnpm build
       - run: pnpm playwright install --with-deps chromium
       - run: pnpm e2e
       - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/e2e "s3://${{ env.UPLOAD_DIR }}/${{ github.event.pull_request.head.sha }}" --recursive

@@ -32,6 +32,11 @@ const config: PlaywrightTestConfig = {
     video: "on",
     trace: "on",
   },
+  webServer: {
+    command: "NODE_EXTRA_CA_CERTS=./docker/mkcert/rootCA.pem pnpm start",
+    port: 3000,
+    reuseExistingServer: !process.env.CI,
+  },
 };
 
 if (process.env.CI) {
