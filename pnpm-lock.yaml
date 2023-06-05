@@ -82,8 +82,8 @@ devDependencies:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.24)
   better-typescript-lib:
-    specifier: 2.3.1
-    version: 2.3.1(typescript@5.0.4)
+    specifier: 2.4.0
+    version: 2.4.0(typescript@5.0.4)
   cli-markdown:
     specifier: 3.0.3
     version: 3.0.3
@@ -630,128 +630,128 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@better-typescript-lib/decorators@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-faDjdQnA16/gFcvmAwT4H7SR1CoN7p+gHi26AI0xYQ1lNAJ7jhvz+bGJG2LE3MffriggFbpzagt/9R9WP+ys1w==}
+  /@better-typescript-lib/decorators@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-phg1WNdqwgNR0SOZksvWUQh+ihAO6BJfyBR7aZuiQ774tI1CD79JjVyrsrf5A9bEeNV98kzvbUfzRpufrVzanw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/dom@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-qGNxG6njqvQPe5WKF6aXOAof1ANpocUzpIYwg/TZznH4A0UG1rD8wt04B5P0t0ezMtNfg24Wm1KGzAiSDiLMiA==}
+  /@better-typescript-lib/dom@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-dbsU1nxiI4vd+um2Rjow0VC17wb8Y8bH3Nohu+UA8OMLWvPpQ+OVwmS1O/nSH/yd3Tdrw9t5Es1giYHa1aj03w==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es2015@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-c/1r+KgSlkDqPX6R+aQGSCyjSwNAu+aBO/jboj7bblDw1zDlFO3ynCxGq0KKXCKcQ9+vd1rR79alusgtzCUthQ==}
+  /@better-typescript-lib/es2015@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-Fca8305Qa7M78+kK3ocUvyRW3f4G5impperBZvfEgxkLN84UwamcgDCVFPfl3NsGijfZz2TeLPEBHBMeEDy2hQ==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es2016@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-PzZd7FWmvySSmy62c4Rzf3B/nK38wgaZbfNZ/jOvpbY4K8NhoRS2ZHZTGfQHv84Gomeu1oMDkOd9ZcsRSzyExA==}
+  /@better-typescript-lib/es2016@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-4UTjc8g/miAN7DK70URgeBm4hqPnDxzdA6Ov7j2u004w5AiZpZWjoJUg61QcMtmAqRPocI8H39jBYpLu9ssNsw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es2017@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-sqFItdYwY1tTjtJQRCvYtUHlkj5fyV/sVAmxfKXi4Z4FUtqdhXdNXdC18G92v4/BJHx36M3BaKdwGXeY4Pe3/A==}
+  /@better-typescript-lib/es2017@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-Q9rInvoShqBWh6cDfdcLA/Pp9Y8WH52wUBx7TygklLvUw++JsfA4EoybVqfGwU6Dlkfx4Q8J7/EpUolIEyQEqw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es2018@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-aoTFQyOBNrEC5AM1R9h48ausVflvlTMVuxQShgPYpnk5Kg+P+ROj4aYLUaehXeplEDI8Ovj1yyC1YFfVUAErJQ==}
+  /@better-typescript-lib/es2018@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-HzqqRAX5yMs6J7SjoWzbqLdkq6xuSBsPc5wmiF6jkJVQLgllLbRVi+6R8T0HAKOUL59f+3qqpHTldRJW5K2Wnw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es2019@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-NX0Xp+8jPVQWQPKTOlo/PKlfUk/4s7tJESHNpyP9nZk/0bIgTZNxA2/pEgPha7eOxXX0mDNlpkNL/Zob8fhlew==}
+  /@better-typescript-lib/es2019@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-AsdRLaO7+1JaBxbh6kXO2H30j96/6/1RP6/pqStLGNtxxME9n6Z1heZFIyQEKYyAI6+ZjBqy0zsaCClGgSOo/A==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es2020@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-ASHm0aDQR+xhZINosjNmAXS/TFjj5WfUE9fobw0jmFiGADNta/0xymzqBy3C7PoxRp1jm6Egfj3SpQIlVREM5A==}
+  /@better-typescript-lib/es2020@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-Oi4rsoEpIQMPELcw+k6DslY9VrPognLcqJRM8sMcEDZyQQidCSJIjmMHSB33AoWUbz2g7DG+XrQqNV4SKaRMiQ==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es2021@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-/haxPUujAUISJLK+FcuezGF5BP4Y98gi3QboKLyw01CynJ4mBv0NnWJhVpkIUA68rRgj65bjORpwzSAd3IjRNg==}
+  /@better-typescript-lib/es2021@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-YMW/CJnyldgzFkB03FC0x1WTkIow9J0uIm5EawbUT+uJe5qV8ReOJmy0a7dWaCOkfgdSQsY4bcmnrSiYqnltXA==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es2022@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-HQ1VQMnCfDRBdBhQiJZISf0ZwVHj6vvEEixTdR0ff4o6hXe8olw4smMI5Hq8JnAjeBaLqkEFANa8D9sacpTZdA==}
+  /@better-typescript-lib/es2022@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-JOZCvCFNS/dnAHRC+uevby2+GKtfBp0EMS4aSVV4isoPFBoN7zgR0yBYazuxG3V6J6Msv8k1QoKs5ECnDl0PGw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es2023@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-mFD/z7Ai8KhUhyYq6ZB055YctQDBqYHhqtF6PWge21gR+mK2bu0Z+e2xFTctw7bcowJXJRgTFa4G6docPRNWBg==}
+  /@better-typescript-lib/es2023@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-h5J/CNbuScHZxETfJr8QemkKVPtFOO9ZrJbvXrJfsIWXYh0o5My3jr/qxcP/psTZY7i0Hp+Yd/4Fp7o6LskPlg==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es5@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-6WqrWwn65my+K13TMM1AMv7N1M7UIDxo6Ur/AvYpvfl7nD8ymC78OQcw1BsJUIVqz6UfffNFgU8gVULhR6Imug==}
+  /@better-typescript-lib/es5@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-jGRqmPxrDcPY+xo7FaOEJdM/Q7c1rCxWSp3ts9UuUvjLeOcl31agJaJFvckKi3ewzHL61MZPrpiWLIJOU5wjCw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/es6@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-rLEHpnK3AMfz6Ipcjee593hRrzftTYNEcdZvZz7QfVyfCaLp9/IY2IunGR3ZndTMBvOY5uLp/w8BRCOdwPgPYw==}
+  /@better-typescript-lib/es6@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-elsjOkPljXbGcZFVyRPoJIeG3G8rHaXi7YLeD0OryyzvyfikbUH7Xzv2dy04ZCZ4XTZ5GykRCrzVQ9TS5OIKPw==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/esnext@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-lcjU6r8wAk9fAN/ZYRBGxXfUCf2mXF/EggiSv/eJCDkCPWirc7K+p+kZRVwxzS8CMYV0cmIgtdUTXZ8k9z6z5g==}
+  /@better-typescript-lib/esnext@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-IApFRGRoU8yTm7RLdZtncFlnHD/quYQcxd9p5lvQkMW+wZgmsOyM78L75h00UrDWPQf9Gojx7/SFdRXm6lNE9Q==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/scripthost@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-Ix4GHXS1Z9bIW0Gq4lNZqn9gVXtQ7lRd+rGPzVzwvpPG0fEd3/BTW8qGQZJg6PplAh5fs3KlkPb7dlhuYC2oMQ==}
+  /@better-typescript-lib/scripthost@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-OjxKeO8+1jKQEkbzlXlcOv3io6B+cJ6IB93zSzKw8sl3uqBN1IWonUBeoK96XL1tNzV1m8eEgAikMtSWt2m/HA==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
       typescript: 5.0.4
     dev: true
 
-  /@better-typescript-lib/webworker@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-MhkUtKSeswZYekzb8z7HEvxGNWyam3I+BWmJi3QEADLc6utM+Laeer9oQIfNJKX/jz5JsaPCsMXLT8LpHjp07w==}
+  /@better-typescript-lib/webworker@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-1B0UDJhBP2MkJfNmiH838sEfHgleL1R5HRLiRU1xzxMogmofs61scdZ5oAXL1wQ6r3+RvWXt0xZv9fJZQZAYpg==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
@@ -2255,27 +2255,27 @@ packages:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: true
 
-  /better-typescript-lib@2.3.1(typescript@5.0.4):
-    resolution: {integrity: sha512-8WhrEea4DC6XtDscJupdX9kyo6774fqPFDVg+PzK4XOBFvgMDivKY1wCQAGmQl195y8Gaw+X8qD4LELr4jVouQ==}
+  /better-typescript-lib@2.4.0(typescript@5.0.4):
+    resolution: {integrity: sha512-LMFX7HPN5qlJiW5IlJiicTT2XcJJ8wRTq3D1YinmZzqNQ0lKX409EK+4cmkuMZTkfyZXBxOca29zvZwIGt9Q3Q==}
     peerDependencies:
       typescript: '>=4.5.2'
     dependencies:
-      '@typescript/lib-decorators': /@better-typescript-lib/decorators@2.3.1(typescript@5.0.4)
-      '@typescript/lib-dom': /@better-typescript-lib/dom@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es2015': /@better-typescript-lib/es2015@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es2016': /@better-typescript-lib/es2016@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es2017': /@better-typescript-lib/es2017@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es2018': /@better-typescript-lib/es2018@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es2019': /@better-typescript-lib/es2019@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es2020': /@better-typescript-lib/es2020@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es2021': /@better-typescript-lib/es2021@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es2022': /@better-typescript-lib/es2022@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es2023': /@better-typescript-lib/es2023@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es5': /@better-typescript-lib/es5@2.3.1(typescript@5.0.4)
-      '@typescript/lib-es6': /@better-typescript-lib/es6@2.3.1(typescript@5.0.4)
-      '@typescript/lib-esnext': /@better-typescript-lib/esnext@2.3.1(typescript@5.0.4)
-      '@typescript/lib-scripthost': /@better-typescript-lib/scripthost@2.3.1(typescript@5.0.4)
-      '@typescript/lib-webworker': /@better-typescript-lib/webworker@2.3.1(typescript@5.0.4)
+      '@typescript/lib-decorators': /@better-typescript-lib/decorators@2.4.0(typescript@5.0.4)
+      '@typescript/lib-dom': /@better-typescript-lib/dom@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es2015': /@better-typescript-lib/es2015@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es2016': /@better-typescript-lib/es2016@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es2017': /@better-typescript-lib/es2017@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es2018': /@better-typescript-lib/es2018@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es2019': /@better-typescript-lib/es2019@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es2020': /@better-typescript-lib/es2020@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es2021': /@better-typescript-lib/es2021@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es2022': /@better-typescript-lib/es2022@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es2023': /@better-typescript-lib/es2023@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es5': /@better-typescript-lib/es5@2.4.0(typescript@5.0.4)
+      '@typescript/lib-es6': /@better-typescript-lib/es6@2.4.0(typescript@5.0.4)
+      '@typescript/lib-esnext': /@better-typescript-lib/esnext@2.4.0(typescript@5.0.4)
+      '@typescript/lib-scripthost': /@better-typescript-lib/scripthost@2.4.0(typescript@5.0.4)
+      '@typescript/lib-webworker': /@better-typescript-lib/webworker@2.4.0(typescript@5.0.4)
       typescript: 5.0.4
     dev: true
 
