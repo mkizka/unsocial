@@ -1,4 +1,4 @@
-import { prisma } from "@/server/prisma";
+import { prisma } from "@/utils/prisma";
 
 import { Timeline } from "../Timeline";
 import { SignInOrOutButton } from "./parts/LoginButton";

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { prisma } from "@/server/prisma";
+import { prisma } from "@/utils/prisma";
 
 import { env } from "./env";
 import { fetchJson } from "./fetchJson";

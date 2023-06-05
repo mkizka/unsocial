@@ -1,17 +1,18 @@
 import type { Follow, User } from "@prisma/client";
 import type { Session } from "next-auth";
 
-import { queue } from "@/server/background/queue";
 import { getServerSession } from "@/utils/getServerSession";
 import { mockedPrisma } from "@/utils/mock";
+import { relayActivity } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
 jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
 
-jest.mock("@/server/background/queue");
-const mockedQueue = jest.mocked(queue);
+jest.mock("@/utils/relayActivity");
+const mockedRelayActivity = jest.mocked(relayActivity);
+mockedRelayActivity.mockResolvedValue(undefined);
 
 const dummyRemoteUser = {
   id: "dummy_remote",
@@ -75,14 +76,11 @@ describe("FollowButton/action", () => {
         },
       },
     });
-    expect(mockedQueue.push).toHaveBeenCalledWith({
-      runner: "relayActivity",
-      params: {
-        sender: dummySessionUser,
-        activity: expect.objectContaining({
-          type: "Follow",
-        }),
-      },
+    expect(mockedRelayActivity).toHaveBeenCalledWith({
+      sender: dummySessionUser,
+      activity: expect.objectContaining({
+        type: "Follow",
+      }),
     });
   });
   test("ローカルユーザー", async () => {
@@ -122,7 +120,7 @@ describe("FollowButton/action", () => {
       data: { status: "ACCEPTED" },
       where: { id: "followId" },
     });
-    expect(mockedQueue.push).not.toHaveBeenCalled();
+    expect(mockedRelayActivity).not.toHaveBeenCalled();
   });
   test("リモートユーザー(解除)", async () => {
     // arrange
@@ -166,14 +164,11 @@ describe("FollowButton/action", () => {
         },
       },
     });
-    expect(mockedQueue.push).toHaveBeenCalledWith({
-      runner: "relayActivity",
-      params: {
-        sender: dummySessionUser,
-        activity: expect.objectContaining({
-          type: "Undo",
-        }),
-      },
+    expect(mockedRelayActivity).toHaveBeenCalledWith({
+      sender: dummySessionUser,
+      activity: expect.objectContaining({
+        type: "Undo",
+      }),
     });
   });
   test("ローカルユーザー(解除)", async () => {
@@ -211,6 +206,6 @@ describe("FollowButton/action", () => {
         },
       },
     });
-    expect(mockedQueue.push).not.toHaveBeenCalled();
+    expect(mockedRelayActivity).not.toHaveBeenCalled();
   });
 });
