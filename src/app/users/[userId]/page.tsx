@@ -12,6 +12,5 @@ export default async function UserPage({
   if (!user) {
     notFound();
   }
-  // @ts-expect-error
   return <UserCard user={user} />;
 }
