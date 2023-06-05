@@ -42,7 +42,7 @@
     "autoprefixer": "10.4.14",
     "better-typescript-lib": "2.4.0",
     "cli-markdown": "3.0.3",
-    "eslint": "8.41.0",
+    "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "eslint-plugin-simple-import-sort": "10.0.0",
     "eslint-plugin-unused-imports": "2.0.0",
