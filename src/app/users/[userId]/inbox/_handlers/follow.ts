@@ -57,7 +57,7 @@ export const follow: InboxFunction = async (activity, actorUser) => {
       followerId: actorUser.id,
     },
   });
-  relayActivity({
+  await relayActivity({
     sender: {
       id: followee.id,
       privateKey: followee.privateKey,

@@ -20,7 +20,7 @@ export async function action(formData: FormData) {
       published: new Date(),
     },
   });
-  relayActivity({
+  await relayActivity({
     sender: session.user,
     activity: activityStreams.create(note),
   });

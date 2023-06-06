@@ -11,7 +11,7 @@ export async function action(noteId: string) {
   }
   // TODO: 自分のじゃなかったらエラー吐く
   await prisma.note.delete({ where: { id: noteId } });
-  relayActivity({
+  await relayActivity({
     sender: session.user,
     activity: activityStreams.delete({
       id: noteId,
