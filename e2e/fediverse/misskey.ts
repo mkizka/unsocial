@@ -35,7 +35,7 @@ export class MisskeyHandler extends FediverseHandler {
     await this.page.locator("[data-cy-signin-username] input").fill("e2e");
     await this.page.locator("[data-cy-signin-password] input").fill("e2e");
     await this.page.locator("button[type=submit]").click();
-    await expect(this.page.locator(".account")).toBeVisible();
+    await expect(this.page.locator("text=@e2e")).toBeVisible();
   }
 
   getNote(content: string) {
