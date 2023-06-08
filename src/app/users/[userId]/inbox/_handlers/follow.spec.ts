@@ -40,6 +40,7 @@ describe("フォロー", () => {
       data: {
         followeeId: dummyLocalUser.id,
         followerId: dummyRemoteUser.id,
+        status: "ACCEPTED",
       },
     });
     expect(mockedRelayActivity).toHaveBeenCalledWith({
