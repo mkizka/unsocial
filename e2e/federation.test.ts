@@ -11,12 +11,17 @@ test.describe("Federation", () => {
     const soshal = new SoshalHandler(page);
     const misskey = new MisskeyHandler(page);
     const content = crypto.randomUUID();
+    await misskey.follow(soshal.user);
+    await soshal.expectFollowed(misskey.user);
+    await misskey.expectFollowing(soshal.user);
     await soshal.postNote(content);
     await misskey.expectPosted(content);
     await misskey.like(content);
     await soshal.expectLiked(content);
     await soshal.delete(content);
     await misskey.expectDeleted(content);
+    await misskey.unfollow(soshal.user);
+    await soshal.expectNotFollowed(misskey.user);
   });
 
   test("他サーバーの投稿", async ({ page }) => {

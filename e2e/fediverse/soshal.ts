@@ -83,10 +83,10 @@ export class SoshalHandler extends FediverseHandler {
   }
 
   async expectFollowed(user: string) {
-    // TODO: 実装
+    // TODO: フォロワー一覧を実装したら実装
   }
 
   async expectNotFollowed(user: string) {
-    // TODO: 実装
+    // TODO: フォロワー一覧を実装したら実装
   }
 }
