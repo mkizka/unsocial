@@ -28,7 +28,7 @@ describe("フォロー", () => {
     const activity = {
       type: "Follow",
       actor: "https://remote.example.com/u/dummy_remote",
-      object: "https://myhost.example.com/users/dummyidlocal",
+      object: "https://myhost.example.com/users/dummyidlocal/activity",
     };
     mockedPrisma.user.findFirst
       .calledWith(object({ where: { id: "dummyidlocal" } }))
