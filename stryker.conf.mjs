@@ -1,3 +1,5 @@
+// @ts-check
+/** @type {import('@stryker-mutator/api/core').PartialStrykerOptions} */
 const config = {
   packageManager: "pnpm",
   reporters: ["progress", "html", "json"],
