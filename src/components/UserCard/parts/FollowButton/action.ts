@@ -29,7 +29,7 @@ const follow = async (user: User, followeeId: string) => {
     if (!follow.followee.actorUrl) {
       throw new Error("フォロー先のURLがありません");
     }
-    relayActivity({
+    await relayActivity({
       sender: user,
       activity: activityStreams.follow(follow, follow.followee.actorUrl),
     }).catch(console.error);
@@ -62,7 +62,7 @@ const unfollow = async (user: User, followeeId: string) => {
     if (!follow.followee.actorUrl) {
       throw new Error("フォロー先のURLがありません");
     }
-    relayActivity({
+    await relayActivity({
       sender: user,
       activity: activityStreams.undo(
         activityStreams.follow(follow, follow.followee.actorUrl)

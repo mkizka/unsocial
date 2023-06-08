@@ -55,16 +55,17 @@ export const follow: InboxFunction = async (activity, actorUser) => {
     data: {
       followeeId: followee.id,
       followerId: actorUser.id,
+      status: "ACCEPTED",
     },
   });
-  relayActivity({
+  await relayActivity({
     sender: {
       id: followee.id,
       privateKey: followee.privateKey,
     },
     activity: {
       type: "Accept",
-      actor: new URL(`https://${env.HOST}/users/${followee.id}`),
+      actor: new URL(`https://${env.HOST}/users/${followee.id}/activity`),
       object: {
         ...parsedFollow.data,
         actor: new URL(parsedFollow.data.actor),

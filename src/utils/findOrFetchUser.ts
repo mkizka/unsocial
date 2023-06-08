@@ -63,6 +63,11 @@ const personSchema = z.object({
   id: z.string().url(),
   name: z.string().nullable(),
   preferredUsername: z.string().min(1),
+  endpoints: z
+    .object({
+      sharedInbox: z.string().url().optional(),
+    })
+    .optional(),
   inbox: z.string().url(),
   icon: z
     .object({
@@ -102,7 +107,7 @@ const fetchUserByActorId = async (actorId: URL) => {
       //image: person.image.url,
       //icon: person.icon.url,
       actorUrl: person.id,
-      inboxUrl: person.inbox,
+      inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
       publicKey: person.publicKey.publicKeyPem,
     },
   });

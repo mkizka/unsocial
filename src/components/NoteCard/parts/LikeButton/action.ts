@@ -39,7 +39,7 @@ const like = async (user: User, input: unknown) => {
       logger.error("ノートのURLがありません");
       return;
     }
-    relayActivity({
+    await relayActivity({
       sender: user,
       activity: activityStreams.like(like, like.note.url),
     });
@@ -66,7 +66,7 @@ const unlike = async (user: User, like: LikeWithNote) => {
       logger.error("ノートのURLがありません");
       return;
     }
-    relayActivity({
+    await relayActivity({
       sender: user,
       activity: activityStreams.undo(activityStreams.like(like, like.note.url)),
     });

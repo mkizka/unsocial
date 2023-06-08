@@ -95,6 +95,49 @@ describe("findOrFetchUser", () => {
       expect(user).toEqual(dummyUser);
     });
   });
+  test("DBになければWebFingerを叩いて新規ユーザーとして保存する(sharedInboxがあればそれを使う)", async () => {
+    // arrange
+    mockedPrisma.user.findFirst.mockResolvedValue(null);
+    const webFingerScope = nock("https://remote.example.com")
+      .get("/.well-known/webfinger")
+      .query({
+        resource: "acct:dummy@remote.example.com",
+      })
+      .reply(200, {
+        links: [
+          { rel: "dummy", href: "https://example.com" },
+          { rel: "self", href: "https://remote.example.com/users/dummyId" },
+        ],
+      });
+    const remoteUserScope = nock("https://remote.example.com")
+      .get("/users/dummyId")
+      .reply(200, {
+        ...dummyPerson,
+        endpoints: {
+          sharedInbox: "https://remote.example.com/inbox",
+        },
+      });
+    mockedPrisma.user.create.mockResolvedValue(dummyUser);
+    // act
+    const user = await findOrFetchUserByWebfinger(
+      "dummy",
+      "remote.example.com"
+    );
+    // assert
+    expect(mockedPrisma.user.create).toHaveBeenCalledWith({
+      data: {
+        name: "Dummy",
+        host: "remote.example.com",
+        preferredUsername: "dummy",
+        publicKey: "publicKey",
+        actorUrl: "https://remote.example.com/u/dummyId",
+        inboxUrl: "https://remote.example.com/inbox",
+      },
+    });
+    expect(webFingerScope.isDone()).toBe(true);
+    expect(remoteUserScope.isDone()).toBe(true);
+    expect(user).toEqual(dummyUser);
+  });
   describe("異常系", () => {
     test("hostが不正ならnullを返す", async () => {
       // act
