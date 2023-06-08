@@ -88,7 +88,15 @@ export class MisskeyHandler extends FediverseHandler {
   }
 
   async follow(user: string) {
-    // TODO: 実装
+    await this.goto(`/${user}`);
+    await this.page.locator("button", { hasText: "フォロー" }).click();
+    await this.waitForFederation();
+  }
+
+  async unfollow(user: string) {
+    await this.follow(user);
+    await this.page.locator("button", { hasText: "OK" }).click();
+    await this.waitForFederation();
   }
 
   async expectFollowing(user: string) {
