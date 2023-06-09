@@ -7,6 +7,9 @@ import { relayActivityToFollowers } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
+jest.useFakeTimers();
+jest.setSystemTime(new Date("2023-01-01T00:00:00Z"));
+
 jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
 
@@ -28,6 +31,15 @@ describe("NoteForm/action", () => {
     form.append("content", "テスト");
     const response = await action(form);
     // assert
+    expect(mockedPrisma.note.create.mock.lastCall?.[0]).toMatchInlineSnapshot(`
+      {
+        "data": {
+          "content": "テスト",
+          "published": 2023-01-01T00:00:00.000Z,
+          "userId": "__session__user__id",
+        },
+      }
+    `);
     expect(response).toBeUndefined();
     expect(mockedRelayActivityToFollowers).toHaveBeenCalledWith({
       sender: dummySession.user,

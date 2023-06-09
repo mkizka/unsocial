@@ -2,12 +2,12 @@ import type { Session } from "next-auth";
 
 import { getServerSession } from "@/utils/getServerSession";
 import { mockedPrisma } from "@/utils/mock";
-import { relayActivity } from "@/utils/relayActivity";
+import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
 jest.mock("@/utils/relayActivity");
-const mockedRelayActivity = jest.mocked(relayActivity);
+const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
 
 jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
@@ -46,19 +46,14 @@ describe("LikeButton/action", () => {
         },
         "include": {
           "note": {
-            "select": {
-              "url": true,
-              "user": {
-                "select": {
-                  "host": true,
-                },
-              },
+            "include": {
+              "user": true,
             },
           },
         },
       }
     `);
-    expect(mockedRelayActivity).not.toHaveBeenCalled();
+    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
   });
 
   test("リモートユーザーのNote", async () => {
@@ -68,11 +63,11 @@ describe("LikeButton/action", () => {
     } as Session);
     mockedPrisma.like.create.mockResolvedValue({
       id: "likeId",
-      userId: dummyLocalUser.id,
       note: {
         // @ts-ignore
         url: "https://remote.example.com/n/note_remote",
         user: {
+          inboxUrl: "https://remote.example.com/inbox",
           host: "remote.example.com",
         },
       },
@@ -92,19 +87,15 @@ describe("LikeButton/action", () => {
         },
         "include": {
           "note": {
-            "select": {
-              "url": true,
-              "user": {
-                "select": {
-                  "host": true,
-                },
-              },
+            "include": {
+              "user": true,
             },
           },
         },
       }
     `);
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
+    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      inboxUrl: new URL("https://remote.example.com/inbox"),
       sender: dummyLocalUser,
       activity: expect.objectContaining({
         type: "Like",
@@ -141,7 +132,7 @@ describe("LikeButton/action", () => {
         id: dummyLike.id,
       },
     });
-    expect(mockedRelayActivity).not.toHaveBeenCalled();
+    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
   });
 
   test("リモートユーザーのNote(いいね済みの場合)", async () => {
@@ -155,6 +146,7 @@ describe("LikeButton/action", () => {
       note: {
         url: "https://remote.example.com/n/note_remote",
         user: {
+          inboxUrl: "https://remote.example.com/inbox",
           host: "remote.example.com",
         },
       },
@@ -172,7 +164,8 @@ describe("LikeButton/action", () => {
     expect(mockedPrisma.like.delete).toHaveBeenCalledWith({
       where: { id: "likeId" },
     });
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
+    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      inboxUrl: new URL("https://remote.example.com/inbox"),
       sender: dummyLocalUser,
       activity: expect.objectContaining({ type: "Undo" }),
     });

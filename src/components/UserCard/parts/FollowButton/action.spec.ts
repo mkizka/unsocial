@@ -1,9 +1,9 @@
-import type { Follow, User } from "@prisma/client";
+import type { Follow } from "@prisma/client";
 import type { Session } from "next-auth";
 
 import { getServerSession } from "@/utils/getServerSession";
 import { mockedPrisma } from "@/utils/mock";
-import { relayActivity } from "@/utils/relayActivity";
+import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
@@ -11,23 +11,16 @@ jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
 
 jest.mock("@/utils/relayActivity");
-const mockedRelayActivity = jest.mocked(relayActivity);
-mockedRelayActivity.mockResolvedValue(undefined);
+const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
 
 const dummyRemoteUser = {
   id: "dummy_remote",
   name: "Dummy",
   preferredUsername: "dummy",
   host: "remote.example.com",
-  email: null,
-  emailVerified: null,
-  image: null,
-  icon: null,
-  publicKey: null,
-  privateKey: null,
   actorUrl: "https://remote.example.com/users/dummy_remote",
-  inboxUrl: null,
-} satisfies User;
+  inboxUrl: "https://remote.example.com/inbox",
+};
 
 const dummyLocalUser = {
   id: "dummy_local",
@@ -51,13 +44,15 @@ describe("FollowButton/action", () => {
       id: "followId",
       followeeId: dummyRemoteUser.id,
       followee: {
+        // @ts-ignore
         host: dummyRemoteUser.host,
         actorUrl: dummyRemoteUser.actorUrl,
+        inboxUrl: dummyRemoteUser.inboxUrl,
       },
       followerId: dummySessionUser.id,
       status: "SENT",
       createdAt: new Date(),
-    } as never);
+    });
     // act
     await action({ followeeId: dummyRemoteUser.id });
     // assert
@@ -68,15 +63,11 @@ describe("FollowButton/action", () => {
         status: "SENT",
       },
       include: {
-        followee: {
-          select: {
-            actorUrl: true,
-            host: true,
-          },
-        },
+        followee: true,
       },
     });
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
+    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      inboxUrl: new URL(dummyRemoteUser.inboxUrl),
       sender: dummySessionUser,
       activity: expect.objectContaining({
         type: "Follow",
@@ -92,12 +83,13 @@ describe("FollowButton/action", () => {
       id: "followId",
       followeeId: dummyLocalUser.id,
       followee: {
+        // @ts-ignore
         host: dummyLocalUser.host,
       },
       followerId: dummySessionUser.id,
       status: "SENT",
       createdAt: new Date(),
-    } as never);
+    });
     // act
     await action({ followeeId: dummyLocalUser.id });
     // assert
@@ -108,19 +100,14 @@ describe("FollowButton/action", () => {
         status: "SENT",
       },
       include: {
-        followee: {
-          select: {
-            actorUrl: true,
-            host: true,
-          },
-        },
+        followee: true,
       },
     });
     expect(mockedPrisma.follow.update).toHaveBeenCalledWith({
       data: { status: "ACCEPTED" },
       where: { id: "followId" },
     });
-    expect(mockedRelayActivity).not.toHaveBeenCalled();
+    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
   });
   test("リモートユーザー(解除)", async () => {
     // arrange
@@ -132,13 +119,15 @@ describe("FollowButton/action", () => {
       id: "followId",
       followeeId: dummyRemoteUser.id,
       followee: {
+        // @ts-ignore
         host: dummyRemoteUser.host,
         actorUrl: dummyRemoteUser.actorUrl,
+        inboxUrl: dummyRemoteUser.inboxUrl,
       },
       followerId: dummySessionUser.id,
       status: "SENT",
       createdAt: new Date(),
-    } as never);
+    });
     // act
     await action({ followeeId: dummyRemoteUser.id });
     // assert
@@ -156,15 +145,11 @@ describe("FollowButton/action", () => {
         },
       },
       include: {
-        followee: {
-          select: {
-            actorUrl: true,
-            host: true,
-          },
-        },
+        followee: true,
       },
     });
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
+    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      inboxUrl: new URL(dummyRemoteUser.inboxUrl),
       sender: dummySessionUser,
       activity: expect.objectContaining({
         type: "Undo",
@@ -181,12 +166,13 @@ describe("FollowButton/action", () => {
       id: "followId",
       followeeId: dummyLocalUser.id,
       followee: {
+        // @ts-ignore
         host: dummyLocalUser.host,
       },
       followerId: dummySessionUser.id,
       status: "SENT",
       createdAt: new Date(),
-    } as never);
+    });
     // act
     await action({ followeeId: dummyLocalUser.id });
     // assert
@@ -198,14 +184,9 @@ describe("FollowButton/action", () => {
         },
       },
       include: {
-        followee: {
-          select: {
-            actorUrl: true,
-            host: true,
-          },
-        },
+        followee: true,
       },
     });
-    expect(mockedRelayActivity).not.toHaveBeenCalled();
+    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
   });
 });
