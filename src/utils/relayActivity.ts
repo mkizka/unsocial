@@ -21,7 +21,7 @@ const getUniqueInboxUrls = async (userId: string) => {
   return [...new Set(followerInboxes)].map((inboxUrl) => new URL(inboxUrl));
 };
 
-const relayActivityToInboxUrl = async (params: {
+export const relayActivityToInboxUrl = async (params: {
   sender: NonNullable<Session["user"]>;
   activity: AP.Activity;
   inboxUrl: URL;

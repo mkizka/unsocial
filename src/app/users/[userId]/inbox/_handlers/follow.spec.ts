@@ -1,12 +1,12 @@
 import { Matcher } from "jest-mock-extended";
 
 import { mockedPrisma } from "@/utils/mock";
-import { relayActivity } from "@/utils/relayActivity";
+import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { follow } from "./follow";
 
 jest.mock("@/utils/relayActivity");
-const mockedRelayActivity = jest.mocked(relayActivity);
+const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
 
 const dummyLocalUser = {
   id: "dummyidlocal",
@@ -15,6 +15,7 @@ const dummyLocalUser = {
 
 const dummyRemoteUser = {
   id: "dummyidremote",
+  inboxUrl: "https://remote.example.com/inbox",
 };
 
 export const object = <T>(expectedValue: T) =>
@@ -43,7 +44,8 @@ describe("フォロー", () => {
         status: "ACCEPTED",
       },
     });
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
+    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      inboxUrl: new URL(dummyRemoteUser.inboxUrl),
       sender: {
         id: dummyLocalUser.id,
         privateKey: dummyLocalUser.privateKey,
