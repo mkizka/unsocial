@@ -2,12 +2,12 @@ import type { Session } from "next-auth";
 
 import { getServerSession } from "@/utils/getServerSession";
 import { mockedPrisma } from "@/utils/mock";
-import { relayActivity } from "@/utils/relayActivity";
+import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
 jest.mock("@/utils/relayActivity");
-const mockedRelayActivity = jest.mocked(relayActivity);
+const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
 
 jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
@@ -58,7 +58,7 @@ describe("LikeButton/action", () => {
         },
       }
     `);
-    expect(mockedRelayActivity).not.toHaveBeenCalled();
+    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
   });
 
   test("リモートユーザーのNote", async () => {
@@ -68,7 +68,11 @@ describe("LikeButton/action", () => {
     } as Session);
     mockedPrisma.like.create.mockResolvedValue({
       id: "likeId",
-      userId: dummyLocalUser.id,
+      user: {
+        // @ts-ignore
+        id: "dummy_local",
+        inboxUrl: "https://remote.example.com/inbox",
+      },
       note: {
         // @ts-ignore
         url: "https://remote.example.com/n/note_remote",
@@ -104,7 +108,8 @@ describe("LikeButton/action", () => {
         },
       }
     `);
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
+    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      inboxUrl: "https://remote.example.com/inbox",
       sender: dummyLocalUser,
       activity: expect.objectContaining({
         type: "Like",
@@ -141,7 +146,7 @@ describe("LikeButton/action", () => {
         id: dummyLike.id,
       },
     });
-    expect(mockedRelayActivity).not.toHaveBeenCalled();
+    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
   });
 
   test("リモートユーザーのNote(いいね済みの場合)", async () => {
@@ -151,7 +156,11 @@ describe("LikeButton/action", () => {
     } as Session);
     const dummyLike = {
       id: "likeId",
-      noteId: "noteId",
+      user: {
+        // @ts-ignore
+        id: "dummy_local",
+        inboxUrl: "https://remote.example.com/inbox",
+      },
       note: {
         url: "https://remote.example.com/n/note_remote",
         user: {
@@ -172,7 +181,8 @@ describe("LikeButton/action", () => {
     expect(mockedPrisma.like.delete).toHaveBeenCalledWith({
       where: { id: "likeId" },
     });
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
+    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      inboxUrl: "https://remote.example.com/inbox",
       sender: dummyLocalUser,
       activity: expect.objectContaining({ type: "Undo" }),
     });

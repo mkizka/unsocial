@@ -1,31 +1,24 @@
-import type { Like } from "@prisma/client";
+import type { Like, Note, User } from "@prisma/client";
+import type { Session } from "next-auth";
 
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
 import { logger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
-import { relayActivity } from "@/utils/relayActivity";
+import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
-type User = {
-  id: string;
-  privateKey: string;
-};
+type SessionUser = NonNullable<Session["user"]>;
 
 const include = {
   note: {
-    select: {
-      user: {
-        select: {
-          host: true,
-        },
-      },
-      url: true,
+    include: {
+      user: true,
     },
   },
 };
 
-const like = async (user: User, input: unknown) => {
+const like = async (user: SessionUser, input: unknown) => {
   const like = await prisma.like.create({
     data: {
       userId: user.id,
@@ -39,7 +32,12 @@ const like = async (user: User, input: unknown) => {
       logger.error("ノートのURLがありません");
       return;
     }
-    await relayActivity({
+    if (!like.note.user.inboxUrl) {
+      logger.error("ノートユーザーのinboxUrlがありません");
+      return;
+    }
+    await relayActivityToInboxUrl({
+      inboxUrl: new URL(like.note.user.inboxUrl),
       sender: user,
       activity: activityStreams.like(like, like.note.url),
     });
@@ -47,15 +45,12 @@ const like = async (user: User, input: unknown) => {
 };
 
 type LikeWithNote = Like & {
-  note: {
-    url: string | null;
-    user: {
-      host: string;
-    };
+  note: Note & {
+    user: User;
   };
 };
 
-const unlike = async (user: User, like: LikeWithNote) => {
+const unlike = async (user: SessionUser, like: LikeWithNote) => {
   await prisma.like.delete({
     where: {
       id: like.id,
@@ -66,7 +61,12 @@ const unlike = async (user: User, like: LikeWithNote) => {
       logger.error("ノートのURLがありません");
       return;
     }
-    await relayActivity({
+    if (!like.note.user.inboxUrl) {
+      logger.error("ノートユーザーのinboxUrlがありません");
+      return;
+    }
+    await relayActivityToInboxUrl({
+      inboxUrl: new URL(like.note.user.inboxUrl),
       sender: user,
       activity: activityStreams.undo(activityStreams.like(like, like.note.url)),
     });
