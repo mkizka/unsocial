@@ -41,7 +41,7 @@ describe("relayActivity", () => {
     });
   });
 
-  describe("relayActivityToInboxUrl", () => {
+  describe("relayActivityToFollowers", () => {
     test("正常系", async () => {
       // arrange
       const dummySender = {
@@ -73,8 +73,13 @@ describe("relayActivity", () => {
         activity: { type: "Dummy" },
       });
       // assert
-      expect(mockedSignActivity).toHaveBeenCalledWith({
-        inboxUrl: new URL("https://remote.example.com/inbox"),
+      expect(mockedSignActivity).toHaveBeenNthCalledWith(1, {
+        inboxUrl: new URL("https://remote1.example.com/inbox"),
+        sender: dummySender,
+        activity: { type: "Dummy" },
+      });
+      expect(mockedSignActivity).toHaveBeenNthCalledWith(2, {
+        inboxUrl: new URL("https://remote2.example.com/inbox"),
         sender: dummySender,
         activity: { type: "Dummy" },
       });
