@@ -46,13 +46,8 @@ describe("LikeButton/action", () => {
         },
         "include": {
           "note": {
-            "select": {
-              "url": true,
-              "user": {
-                "select": {
-                  "host": true,
-                },
-              },
+            "include": {
+              "user": true,
             },
           },
         },
@@ -68,15 +63,11 @@ describe("LikeButton/action", () => {
     } as Session);
     mockedPrisma.like.create.mockResolvedValue({
       id: "likeId",
-      user: {
-        // @ts-ignore
-        id: "dummy_local",
-        inboxUrl: "https://remote.example.com/inbox",
-      },
       note: {
         // @ts-ignore
         url: "https://remote.example.com/n/note_remote",
         user: {
+          inboxUrl: "https://remote.example.com/inbox",
           host: "remote.example.com",
         },
       },
@@ -96,20 +87,15 @@ describe("LikeButton/action", () => {
         },
         "include": {
           "note": {
-            "select": {
-              "url": true,
-              "user": {
-                "select": {
-                  "host": true,
-                },
-              },
+            "include": {
+              "user": true,
             },
           },
         },
       }
     `);
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      inboxUrl: "https://remote.example.com/inbox",
+      inboxUrl: new URL("https://remote.example.com/inbox"),
       sender: dummyLocalUser,
       activity: expect.objectContaining({
         type: "Like",
@@ -156,14 +142,10 @@ describe("LikeButton/action", () => {
     } as Session);
     const dummyLike = {
       id: "likeId",
-      user: {
-        // @ts-ignore
-        id: "dummy_local",
-        inboxUrl: "https://remote.example.com/inbox",
-      },
       note: {
         url: "https://remote.example.com/n/note_remote",
         user: {
+          inboxUrl: "https://remote.example.com/inbox",
           host: "remote.example.com",
         },
       },
@@ -182,7 +164,7 @@ describe("LikeButton/action", () => {
       where: { id: "likeId" },
     });
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      inboxUrl: "https://remote.example.com/inbox",
+      inboxUrl: new URL("https://remote.example.com/inbox"),
       sender: dummyLocalUser,
       activity: expect.objectContaining({ type: "Undo" }),
     });
