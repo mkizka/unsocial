@@ -1,7 +1,7 @@
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
 import { prisma } from "@/utils/prisma";
-import { relayActivity } from "@/utils/relayActivity";
+import { relayActivityToFollowers } from "@/utils/relayActivity";
 
 export async function action(noteId: string) {
   const session = await getServerSession();
@@ -11,7 +11,7 @@ export async function action(noteId: string) {
   }
   // TODO: 自分のじゃなかったらエラー吐く
   await prisma.note.delete({ where: { id: noteId } });
-  await relayActivity({
+  await relayActivityToFollowers({
     sender: session.user,
     activity: activityStreams.delete({
       id: noteId,
