@@ -49,22 +49,3 @@ export const relayActivityToFollowers = async (params: {
   );
   await Promise.all(promises);
 };
-
-export const relayActivity = async (params: {
-  sender: NonNullable<Session["user"]>;
-  activity: AP.Activity;
-}) => {
-  // TODO: 連合先の各サーバーに送信するようにする
-  const inboxUrl = new URL("https://misskey.localhost/inbox");
-  const signedHeaders = signActivity({ ...params, inboxUrl });
-  logger.info(`Activity送信: ${JSON.stringify(params.activity)}`);
-  const response = await got(inboxUrl, {
-    method: "POST",
-    json: params.activity,
-    headers: {
-      Accept: "application/activity+json",
-      ...signedHeaders,
-    },
-  });
-  logger.info(`${inboxUrl}: ${response.body}`);
-};

@@ -142,6 +142,7 @@ describe("LikeButton/action", () => {
     } as Session);
     const dummyLike = {
       id: "likeId",
+      noteId: "noteId",
       note: {
         url: "https://remote.example.com/n/note_remote",
         user: {
