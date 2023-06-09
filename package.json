@@ -29,7 +29,7 @@
     "zod": "3.21.4"
   },
   "devDependencies": {
-    "@playwright/test": "1.34.3",
+    "@playwright/test": "1.35.0",
     "@stryker-mutator/api": "7.0.2",
     "@stryker-mutator/core": "7.0.2",
     "@stryker-mutator/jest-runner": "7.0.2",
