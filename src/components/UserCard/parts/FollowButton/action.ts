@@ -1,8 +1,9 @@
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
+import { logger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
-import { relayActivity } from "@/utils/relayActivity";
+import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 type User = {
   id: string;
@@ -17,22 +18,23 @@ const follow = async (user: User, followeeId: string) => {
       status: "SENT",
     },
     include: {
-      followee: {
-        select: {
-          host: true,
-          actorUrl: true,
-        },
-      },
+      followee: true,
     },
   });
   if (follow.followee.host != env.HOST) {
     if (!follow.followee.actorUrl) {
-      throw new Error("フォロー先のURLがありません");
+      logger.error("フォロー先のURLがありません");
+      return;
     }
-    await relayActivity({
+    if (!follow.followee.inboxUrl) {
+      logger.error("フォロー先のinboxUrlがありません");
+      return;
+    }
+    await relayActivityToInboxUrl({
+      inboxUrl: new URL(follow.followee.inboxUrl),
       sender: user,
       activity: activityStreams.follow(follow, follow.followee.actorUrl),
-    }).catch(console.error);
+    });
   } else {
     await prisma.follow.update({
       where: { id: follow.id },
@@ -50,24 +52,25 @@ const unfollow = async (user: User, followeeId: string) => {
       },
     },
     include: {
-      followee: {
-        select: {
-          host: true,
-          actorUrl: true,
-        },
-      },
+      followee: true,
     },
   });
   if (follow.followee.host != env.HOST) {
     if (!follow.followee.actorUrl) {
-      throw new Error("フォロー先のURLがありません");
+      logger.error("フォロー先のURLがありません");
+      return;
     }
-    await relayActivity({
+    if (!follow.followee.inboxUrl) {
+      logger.error("フォロー先のinboxUrlがありません");
+      return;
+    }
+    await relayActivityToInboxUrl({
+      inboxUrl: new URL(follow.followee.inboxUrl),
       sender: user,
       activity: activityStreams.undo(
         activityStreams.follow(follow, follow.followee.actorUrl)
       ),
-    }).catch(console.error);
+    });
   }
 };
 

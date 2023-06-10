@@ -3,7 +3,7 @@ import type { Session } from "next-auth";
 
 import { getServerSession } from "@/utils/getServerSession";
 import { mockedPrisma } from "@/utils/mock";
-import { relayActivity } from "@/utils/relayActivity";
+import { relayActivityToFollowers } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
@@ -11,7 +11,7 @@ jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
 
 jest.mock("@/utils/relayActivity");
-const mockedRelayActivity = jest.mocked(relayActivity);
+const mockedRelayActivityToFollowers = jest.mocked(relayActivityToFollowers);
 
 const dummySessionUser = {
   id: "__id",
@@ -28,7 +28,7 @@ describe("DeleteButton/action", () => {
     const response = await action("__noteId");
     // assert
     expect(response).toBeUndefined();
-    expect(mockedRelayActivity).toHaveBeenCalledWith({
+    expect(mockedRelayActivityToFollowers).toHaveBeenCalledWith({
       sender: dummySessionUser,
       activity: expect.objectContaining({ type: "Delete" }),
     });

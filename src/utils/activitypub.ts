@@ -82,7 +82,10 @@ const convertDelete = (note: Pick<Note, "id" | "userId">): AP.Delete => {
     ...contexts,
     type: "Delete",
     actor: new URL(`https://${env.HOST}/users/${note.userId}/activity`),
-    object: new URL(`https://${env.HOST}/notes/${note.id}/activity`),
+    object: {
+      type: "Tombstone",
+      id: new URL(`https://${env.HOST}/notes/${note.id}/activity`),
+    },
   };
 };
 

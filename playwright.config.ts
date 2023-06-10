@@ -26,15 +26,14 @@ const config: PlaywrightTestConfig = {
     },
   ],
   use: {
-    baseURL: "https://soshal.localhost",
     ignoreHTTPSErrors: true,
     serviceWorkers: "block",
     video: "on",
     trace: "on",
   },
   webServer: {
-    command: "NODE_EXTRA_CA_CERTS=./docker/mkcert/rootCA.pem pnpm start",
-    port: 3000,
+    command: "pnpm e2e:server",
+    port: 3001,
     reuseExistingServer: !process.env.CI,
   },
 };

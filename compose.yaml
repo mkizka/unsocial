@@ -18,7 +18,7 @@ services:
       - NODE_ENV=development
       - NODE_EXTRA_CA_CERTS=/mkcert/rootCA.pem
     healthcheck:
-      test: ["CMD-SHELL", "node -e 'fetch(`http://localhost:3001`)'"]
+      test: ["CMD-SHELL", "node -e 'fetch(`http://localhost:3000`)'"]
       interval: 2s
       timeout: 2s
       retries: 30
@@ -38,6 +38,8 @@ services:
       default:
         aliases:
           - soshal.localhost
+          - myhost-soshal.localhost
+          - remote-soshal.localhost
           - misskey.localhost
     depends_on:
       misskey:

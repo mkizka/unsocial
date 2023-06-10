@@ -2,9 +2,9 @@ import { expect } from "@playwright/test";
 
 import { FediverseHandler } from "./base";
 
-export class SoshalHandler extends FediverseHandler {
-  url = "https://soshal.localhost";
-  user = "@test@soshal.localhost";
+export class MyhostSoshalHandler extends FediverseHandler {
+  domain = "myhost-soshal.localhost";
+  user = "@test@myhost-soshal.localhost";
 
   async login() {
     // まれに /api/auth/signin?csrf=true にリダイレクトされることがあるのでリトライ
@@ -17,7 +17,10 @@ export class SoshalHandler extends FediverseHandler {
       );
     }).toPass();
     await this.page.goto("http://localhost:8025");
-    await this.page.locator(".msglist-message").first().click();
+    await this.page
+      .locator(".msglist-message", { hasText: `${this.domain}@example.com` })
+      .first()
+      .click();
     const signInUrl = await this.page
       .frameLocator("iframe")
       .getByRole("link", { name: "Sign in" })
@@ -35,7 +38,6 @@ export class SoshalHandler extends FediverseHandler {
     await this.page.getByTestId("note-form__textarea").fill(content);
     await this.page.getByTestId("note-form__button").click();
     await expect(this.getNote(content)).toBeVisible();
-    await this.waitForFederation();
   }
 
   async expectPosted(content: string) {
@@ -46,7 +48,6 @@ export class SoshalHandler extends FediverseHandler {
   async delete(content: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("delete-button").click();
-    await this.waitForFederation();
   }
 
   async expectDeleted(content: string) {
@@ -57,22 +58,22 @@ export class SoshalHandler extends FediverseHandler {
   async like(content: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("like-button").click();
-    await this.waitForFederation();
   }
 
-  async expectLiked(content: string) {
+  async expectLiked(content: string, user: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("note-card__link").click();
     await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
-    await expect(
-      this.page.locator("text=@e2e@misskey.localhost")
-    ).toBeVisible();
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.getByTestId("follow-button").click();
-    await this.waitForFederation();
+  }
+
+  async unfollow(user: string) {
+    await this.follow(user);
   }
 
   async expectFollowing(user: string) {
@@ -89,4 +90,9 @@ export class SoshalHandler extends FediverseHandler {
   async expectNotFollowed(user: string) {
     // TODO: フォロワー一覧を実装したら実装
   }
+}
+
+export class RemoteSoshalHandler extends MyhostSoshalHandler {
+  domain = "remote-soshal.localhost";
+  user = "@test@remote-soshal.localhost";
 }

@@ -4,7 +4,7 @@ import { env } from "@/utils/env";
 import { findUserByActorId } from "@/utils/findUserByActorId";
 import { formatZodError } from "@/utils/formatZodError";
 import { prisma } from "@/utils/prisma";
-import { relayActivity } from "@/utils/relayActivity";
+import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import type { InboxFunction } from "./types";
 
@@ -51,6 +51,14 @@ export const follow: InboxFunction = async (activity, actorUser) => {
         "フォローリクエストで指定されたフォロイーが秘密鍵を持っていませんでした",
     };
   }
+  if (!actorUser.inboxUrl) {
+    // 他ホストのユーザーならinboxUrlを持っているはずなので、異常な動作
+    return {
+      status: 503,
+      message:
+        "フォローリクエストを送信したユーザーがinboxUrlを持っていませんでした",
+    };
+  }
   await prisma.follow.create({
     data: {
       followeeId: followee.id,
@@ -58,7 +66,8 @@ export const follow: InboxFunction = async (activity, actorUser) => {
       status: "ACCEPTED",
     },
   });
-  await relayActivity({
+  await relayActivityToInboxUrl({
+    inboxUrl: new URL(actorUser.inboxUrl),
     sender: {
       id: followee.id,
       privateKey: followee.privateKey,
