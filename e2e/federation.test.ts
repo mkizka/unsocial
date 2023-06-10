@@ -16,18 +16,30 @@ type RunTestParams = {
   to: FediverseHandler;
 };
 
+// fromからtoへ投稿が連合するシナリオ
 const runTest = async ({ from, to }: RunTestParams) => {
   const content = crypto.randomUUID();
+  // リモートからフォロー
   await to.followAndWait(from.user);
+  // フォローされたことを確認
   await from.expectFollowed(to.user);
+  // リモートでフォローできたことを確認
   await to.expectFollowing(from.user);
+  // 投稿
   await from.postNoteAndWait(content);
+  // リモートで投稿を確認
   await to.expectPosted(content);
+  // リモートからいいね
   await to.likeAndWait(content);
+  // いいねされたことを確認
   await from.expectLiked(content, to.user);
+  // 投稿を削除
   await from.deleteAndWait(content);
+  // リモートで削除されたことを確認
   await to.expectDeleted(content);
+  // リモートからフォロー解除
   await to.unfollowAndWait(from.user);
+  // フォロー解除されたことを確認
   await from.expectNotFollowed(to.user);
 };
 
