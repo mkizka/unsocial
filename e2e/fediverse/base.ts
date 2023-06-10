@@ -1,13 +1,13 @@
 import type { Locator, Page } from "@playwright/test";
 
 export abstract class FediverseHandler {
-  abstract url: string;
+  abstract domain: string;
   abstract user: string;
 
   constructor(public page: Page) {}
 
   async goto(to: string) {
-    await this.page.goto(new URL(to, this.url).toString());
+    await this.page.goto(new URL(to, `https://${this.domain}`).toString());
   }
 
   async waitForFederation() {
@@ -43,7 +43,7 @@ export abstract class FediverseHandler {
     await this.waitForFederation();
   }
 
-  abstract expectLiked(content: string): Promise<void>;
+  abstract expectLiked(content: string, user: string): Promise<void>;
 
   protected abstract follow(user: string): Promise<void>;
 
