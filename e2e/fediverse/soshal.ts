@@ -71,6 +71,10 @@ export class SoshalHandler extends FediverseHandler {
     await this.page.getByTestId("follow-button").click();
   }
 
+  async unfollow(user: string) {
+    await this.follow(user);
+  }
+
   async expectFollowing(user: string) {
     await this.goto(`/${user}`);
     await expect(this.page.getByTestId("follow-button")).toHaveText(
