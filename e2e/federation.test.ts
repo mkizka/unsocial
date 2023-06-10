@@ -1,51 +1,67 @@
 import { test } from "@playwright/test";
 import crypto from "crypto";
 
-import { MisskeyHandler, SoshalHandler } from "./fediverse";
+import {
+  MisskeyHandler,
+  MyhostSoshalHandler,
+  RemoteSoshalHandler,
+} from "./fediverse";
 import type { FediverseHandler } from "./fediverse/base";
 
 test.describe.configure({ mode: "parallel" });
 test.use({ storageState: "e2e/state.json" });
 
 type RunTestParams = {
-  myhost: FediverseHandler;
-  remote: FediverseHandler;
+  from: FediverseHandler;
+  to: FediverseHandler;
 };
 
-const runTest = async ({ myhost, remote }: RunTestParams) => {
+// fromからtoへ投稿が連合するシナリオ
+const runTest = async ({ from, to }: RunTestParams) => {
   const content = crypto.randomUUID();
-  await remote.followAndWait(myhost.user);
-  await myhost.expectFollowed(remote.user);
-  await remote.expectFollowing(myhost.user);
-  await myhost.postNoteAndWait(content);
-  await remote.expectPosted(content);
-  await remote.likeAndWait(content);
-  await myhost.expectLiked(content);
-  await myhost.deleteAndWait(content);
-  await remote.expectDeleted(content);
-  await remote.unfollowAndWait(myhost.user);
-  await myhost.expectNotFollowed(remote.user);
+  // リモートからフォロー
+  await to.followAndWait(from.user);
+  // フォローされたことを確認
+  await from.expectFollowed(to.user);
+  // リモートでフォローできたことを確認
+  await to.expectFollowing(from.user);
+  // 投稿
+  await from.postNoteAndWait(content);
+  // リモートで投稿を確認
+  await to.expectPosted(content);
+  // リモートからいいね
+  await to.likeAndWait(content);
+  // いいねされたことを確認
+  await from.expectLiked(content, to.user);
+  // 投稿を削除
+  await from.deleteAndWait(content);
+  // リモートで削除されたことを確認
+  await to.expectDeleted(content);
+  // リモートからフォロー解除
+  await to.unfollowAndWait(from.user);
+  // フォロー解除されたことを確認
+  await from.expectNotFollowed(to.user);
 };
 
 test.describe("Federation", () => {
-  // test("Soshal → Soshal", async ({ page }) => {
-  //   await runTest({
-  //     myhost: new SoshalHandler(page),
-  //     remote: new RemoteSoshalHandler(page),
-  //   });
-  // });
+  test("Soshal → Soshal", async ({ page }) => {
+    await runTest({
+      from: new MyhostSoshalHandler(page),
+      to: new RemoteSoshalHandler(page),
+    });
+  });
 
   test("Soshal → Misskey", async ({ page }) => {
     await runTest({
-      myhost: new SoshalHandler(page),
-      remote: new MisskeyHandler(page),
+      from: new MyhostSoshalHandler(page),
+      to: new MisskeyHandler(page),
     });
   });
 
   test("Misskey → Soshal", async ({ page }) => {
     await runTest({
-      myhost: new MisskeyHandler(page),
-      remote: new SoshalHandler(page),
+      from: new MisskeyHandler(page),
+      to: new MyhostSoshalHandler(page),
     });
   });
 });

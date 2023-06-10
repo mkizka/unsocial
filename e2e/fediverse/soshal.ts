@@ -2,9 +2,9 @@ import { expect } from "@playwright/test";
 
 import { FediverseHandler } from "./base";
 
-export class SoshalHandler extends FediverseHandler {
-  url = "https://soshal.localhost";
-  user = "@test@soshal.localhost";
+export class MyhostSoshalHandler extends FediverseHandler {
+  domain = "myhost-soshal.localhost";
+  user = "@test@myhost-soshal.localhost";
 
   async login() {
     // まれに /api/auth/signin?csrf=true にリダイレクトされることがあるのでリトライ
@@ -17,7 +17,10 @@ export class SoshalHandler extends FediverseHandler {
       );
     }).toPass();
     await this.page.goto("http://localhost:8025");
-    await this.page.locator(".msglist-message").first().click();
+    await this.page
+      .locator(".msglist-message", { hasText: `${this.domain}@example.com` })
+      .first()
+      .click();
     const signInUrl = await this.page
       .frameLocator("iframe")
       .getByRole("link", { name: "Sign in" })
@@ -57,13 +60,11 @@ export class SoshalHandler extends FediverseHandler {
     await this.getNote(content).getByTestId("like-button").click();
   }
 
-  async expectLiked(content: string) {
+  async expectLiked(content: string, user: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("note-card__link").click();
     await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
-    await expect(
-      this.page.locator("text=@e2e@misskey.localhost")
-    ).toBeVisible();
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async follow(user: string) {
@@ -89,4 +90,9 @@ export class SoshalHandler extends FediverseHandler {
   async expectNotFollowed(user: string) {
     // TODO: フォロワー一覧を実装したら実装
   }
+}
+
+export class RemoteSoshalHandler extends MyhostSoshalHandler {
+  domain = "remote-soshal.localhost";
+  user = "@test@remote-soshal.localhost";
 }

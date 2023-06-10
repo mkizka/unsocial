@@ -3,7 +3,7 @@ import { expect } from "@playwright/test";
 import { FediverseHandler } from "./base";
 
 export class MisskeyHandler extends FediverseHandler {
-  url = "https://misskey.localhost";
+  domain = "misskey.localhost";
   user = "@e2e@misskey.localhost";
 
   async goto(to: string) {

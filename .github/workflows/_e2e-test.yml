@@ -27,15 +27,10 @@ jobs:
           curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
           chmod +x mkcert-v*-linux-amd64
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
-      - name: Setup docker
+      - name: Setup e2e
         run: |
           ./scripts/setup-for-docker.sh
-          docker compose up -d
-      - name: Setup application
-        run: |
-          cp -f .env.example .env
-          pnpm prisma db push
-          pnpm build
+          ./scripts/setup-for-e2e.sh
       - run: pnpm playwright install --with-deps chromium
       - run: pnpm e2e
       - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/e2e "s3://${{ env.UPLOAD_DIR }}/${{ github.event.pull_request.head.sha }}" --recursive
