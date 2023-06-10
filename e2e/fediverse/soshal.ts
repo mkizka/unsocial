@@ -35,7 +35,6 @@ export class SoshalHandler extends FediverseHandler {
     await this.page.getByTestId("note-form__textarea").fill(content);
     await this.page.getByTestId("note-form__button").click();
     await expect(this.getNote(content)).toBeVisible();
-    await this.waitForFederation();
   }
 
   async expectPosted(content: string) {
@@ -46,7 +45,6 @@ export class SoshalHandler extends FediverseHandler {
   async delete(content: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("delete-button").click();
-    await this.waitForFederation();
   }
 
   async expectDeleted(content: string) {
@@ -57,7 +55,6 @@ export class SoshalHandler extends FediverseHandler {
   async like(content: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("like-button").click();
-    await this.waitForFederation();
   }
 
   async expectLiked(content: string) {
@@ -72,7 +69,6 @@ export class SoshalHandler extends FediverseHandler {
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.getByTestId("follow-button").click();
-    await this.waitForFederation();
   }
 
   async expectFollowing(user: string) {
