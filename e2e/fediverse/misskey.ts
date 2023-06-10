@@ -48,7 +48,6 @@ export class MisskeyHandler extends FediverseHandler {
     await this.page.locator("[data-cy-post-form-text]").fill(content);
     await this.page.locator("[data-cy-open-post-form-submit]").click();
     await expect(this.getNote(content)).toBeVisible();
-    await this.waitForFederation();
   }
 
   async expectPosted(content: string) {
@@ -63,7 +62,6 @@ export class MisskeyHandler extends FediverseHandler {
       .click();
     await this.page.locator("button", { hasText: "削除" }).last().click();
     await this.page.locator("button", { hasText: "OK" }).click();
-    await this.waitForFederation();
   }
 
   async expectDeleted(content: string) {
@@ -77,7 +75,6 @@ export class MisskeyHandler extends FediverseHandler {
       .locator("button", { has: this.page.locator(".ti-plus") })
       .click();
     await this.page.locator(".emojis button").first().click();
-    await this.waitForFederation();
   }
 
   async expectLiked(content: string) {
@@ -90,13 +87,11 @@ export class MisskeyHandler extends FediverseHandler {
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.locator("button", { hasText: "フォロー" }).click();
-    await this.waitForFederation();
   }
 
   async unfollow(user: string) {
     await this.follow(user);
     await this.page.locator("button", { hasText: "OK" }).click();
-    await this.waitForFederation();
   }
 
   async expectFollowing(user: string) {
