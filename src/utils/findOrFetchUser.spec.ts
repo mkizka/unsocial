@@ -188,7 +188,7 @@ describe("findOrFetchUser", () => {
       );
       // assert
       expect(mockedLogger.warn).toBeCalledWith(
-        expect.stringContaining("ERR_NON_2XX_3XX_RESPONSE")
+        expect.stringContaining("HTTPエラー")
       );
       expect(user).toEqual(null);
     });
