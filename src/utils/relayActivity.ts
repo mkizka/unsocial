@@ -32,7 +32,6 @@ export const relayActivityToInboxUrl = async (params: {
     method: "POST",
     body: JSON.stringify(params.activity),
     headers: {
-      "Content-Type": "application/activity+json",
       Accept: "application/activity+json",
       ...signedHeaders,
     },

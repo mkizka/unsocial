@@ -7,7 +7,7 @@ export const fetchJson = (...[input, init]: Parameters<typeof fetch>) => {
     ...init,
     headers: {
       ...init?.headers,
-      Accept: "application/json",
+      "Content-Type": "application/json",
     },
   })
     .then((response) => {
