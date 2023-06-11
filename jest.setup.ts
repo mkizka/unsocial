@@ -1,10 +1,14 @@
-import nock from "nock";
+import { server } from "@/mocks/server";
 
-nock.disableNetConnect();
+beforeAll(() =>
+  server.listen({
+    onUnhandledRequest: "error",
+  })
+);
 
-beforeEach(() => {
-  nock.cleanAll();
-});
+afterEach(() => server.resetHandlers());
+
+afterAll(() => server.close());
 
 jest.mock("@/utils/env", () => ({
   env: {

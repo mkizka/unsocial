@@ -1,5 +1,6 @@
-import nock from "nock";
+import { rest } from "msw";
 
+import { server } from "@/mocks/server";
 import { signActivity } from "@/utils/httpSignature/sign";
 import { mockedPrisma } from "@/utils/mock";
 
@@ -19,9 +20,11 @@ describe("relayActivity", () => {
         id: "dummy_sender",
         privateKey: "dummy_privateKey",
       };
-      const scope = nock("https://remote.example.com")
-        .post("/inbox")
-        .reply(202);
+      server.use(
+        rest.post("https://remote.example.com/inbox", (_, res, ctx) => {
+          return res.once(ctx.status(202));
+        })
+      );
       // @ts-ignore
       mockedSignActivity.mockReturnValue({});
       // act
@@ -37,7 +40,6 @@ describe("relayActivity", () => {
         sender: dummySender,
         activity: { type: "Dummy" },
       });
-      expect(scope.isDone()).toBeTruthy();
     });
   });
 
@@ -58,12 +60,14 @@ describe("relayActivity", () => {
         // @ts-ignore
         { follower: { inboxUrl: null } },
       ]);
-      const scope1 = nock("https://remote1.example.com")
-        .post("/inbox")
-        .reply(202);
-      const scope2 = nock("https://remote2.example.com")
-        .post("/inbox")
-        .reply(202);
+      server.use(
+        rest.post("https://remote1.example.com/inbox", (_, res, ctx) => {
+          return res.once(ctx.status(202));
+        }),
+        rest.post("https://remote2.example.com/inbox", (_, res, ctx) => {
+          return res.once(ctx.status(202));
+        })
+      );
       // @ts-ignore
       mockedSignActivity.mockReturnValue({});
       // act
@@ -83,8 +87,6 @@ describe("relayActivity", () => {
         sender: dummySender,
         activity: { type: "Dummy" },
       });
-      expect(scope1.isDone()).toBeTruthy();
-      expect(scope2.isDone()).toBeTruthy();
     });
   });
 });
