@@ -56,7 +56,7 @@ const fetchActorIdByWebFinger = async (
   if (!response) {
     return null;
   }
-  return resolveWebFingerResponse(response.body);
+  return resolveWebFingerResponse(response);
 };
 
 const personSchema = z.object({
@@ -86,7 +86,7 @@ const fetchValidPerson = async (url: URL) => {
       accept: "application/activity+json",
     },
   });
-  const parsed = personSchema.safeParse(response?.body);
+  const parsed = personSchema.safeParse(response);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));
     return null;

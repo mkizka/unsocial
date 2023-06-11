@@ -1,10 +1,10 @@
 import type { AP } from "activitypub-core-types";
-import got from "got";
 import type { Session } from "next-auth";
 
 import { signActivity } from "@/utils/httpSignature/sign";
 import { logger } from "@/utils/logger";
 
+import { fetchJson } from "./fetchJson";
 import { prisma } from "./prisma";
 
 const isNotNull = <T>(value: T): value is NonNullable<T> => value != null;
@@ -28,15 +28,16 @@ export const relayActivityToInboxUrl = async (params: {
 }) => {
   const signedHeaders = signActivity(params);
   logger.info(`Activity送信: ${JSON.stringify(params.activity)}`);
-  const response = await got(params.inboxUrl, {
+  const response = await fetchJson(params.inboxUrl, {
     method: "POST",
-    json: params.activity,
+    body: JSON.stringify(params.activity),
     headers: {
+      "Content-Type": "application/activity+json",
       Accept: "application/activity+json",
       ...signedHeaders,
     },
   });
-  logger.info(`${params.inboxUrl}: ${response.body}`);
+  logger.info(`${params.inboxUrl}: ${response}`);
 };
 
 export const relayActivityToFollowers = async (params: {
