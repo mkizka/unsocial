@@ -1,4 +1,5 @@
 import type { User } from "@prisma/client";
+import { mockDeep } from "jest-mock-extended";
 
 import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";
 
@@ -10,13 +11,15 @@ const mockedFindOrFetchUserByParams = jest.mocked(findOrFetchUserByParams);
 describe("/users/[userId]/activity", () => {
   test("GET", async () => {
     // arrange
+    const mockedRequest = mockDeep<Request>();
+    mockedRequest.headers.get.mockReturnValueOnce("application/activity+json");
     mockedFindOrFetchUserByParams.mockResolvedValueOnce({
       id: "__id",
       publicKey: "__publicKey",
     } as User);
-    // act
     const dummyParams = { userId: "__id" };
-    const response = await GET({} as Request, { params: dummyParams });
+    // act
+    const response = await GET(mockedRequest, { params: dummyParams });
     // assert
     expect(mockedFindOrFetchUserByParams).toHaveBeenCalledWith(dummyParams);
     expect(response.status).toBe(200);
