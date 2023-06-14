@@ -5,12 +5,17 @@ import { activityStreams } from "@/utils/activitypub";
 import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";
 
 export async function GET(
-  _: Request,
+  request: Request,
   { params }: { params: { userId: string } }
 ) {
   const user = await findOrFetchUserByParams(params);
   if (!user) {
     notFound();
+  }
+  if (request.headers.get("accept")?.includes("text/html")) {
+    return NextResponse.redirect(
+      new URL(`/@${user.preferredUsername}`, request.url)
+    );
   }
   return NextResponse.json(activityStreams.user(user), {
     headers: {
