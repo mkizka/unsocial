@@ -105,7 +105,7 @@ const fetchUserByActorId = async (actorId: URL) => {
       preferredUsername: person.preferredUsername,
       host: actorId.host,
       //image: person.image.url,
-      //icon: person.icon.url,
+      icon: person.icon?.url ?? null,
       actorUrl: person.id,
       inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
       publicKey: person.publicKey.publicKeyPem,

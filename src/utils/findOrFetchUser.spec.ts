@@ -98,6 +98,7 @@ describe("findOrFetchUser", () => {
         data: {
           name: "Dummy",
           host: "remote.example.com",
+          icon: null,
           preferredUsername: "dummy",
           publicKey: "publicKey",
           actorUrl: "https://remote.example.com/u/dummyId",
@@ -107,7 +108,7 @@ describe("findOrFetchUser", () => {
       expect(user).toEqual(dummyUser);
     });
   });
-  test("DBになければWebFingerを叩いて新規ユーザーとして保存する(sharedInboxがあればそれを使う)", async () => {
+  test("DBになければWebFingerを叩いて新規ユーザーとして保存する(sharedInbox,iconがあればそれを使う)", async () => {
     // arrange
     mockedPrisma.user.findFirst.mockResolvedValue(null);
     server.use(
@@ -137,6 +138,9 @@ describe("findOrFetchUser", () => {
         return res.once(
           ctx.json({
             ...dummyPerson,
+            icon: {
+              url: "https://remote.example.com/icons/dummy",
+            },
             endpoints: {
               sharedInbox: "https://remote.example.com/inbox",
             },
@@ -155,6 +159,7 @@ describe("findOrFetchUser", () => {
       data: {
         name: "Dummy",
         host: "remote.example.com",
+        icon: "https://remote.example.com/icons/dummy",
         preferredUsername: "dummy",
         publicKey: "publicKey",
         actorUrl: "https://remote.example.com/u/dummyId",
