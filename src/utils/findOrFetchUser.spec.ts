@@ -9,15 +9,26 @@ import { mockedPrisma } from "@/utils/mock";
 import { findOrFetchUserByWebfinger } from "./findOrFetchUser";
 import { logger } from "./logger";
 
+const mockedNow = new Date("2023-01-01T12:00:00Z");
 jest.useFakeTimers();
-jest.setSystemTime(new Date("2023-01-01T12:00:00Z"));
+jest.setSystemTime(mockedNow);
 
 const dummyUser = {
   id: "dummyId",
   name: "Dummy",
   preferredUsername: "dummy",
   host: "remote.example.com",
+  icon: null,
+  actorUrl: "https://remote.example.com/u/dummyId",
+  inboxUrl: "https://remote.example.com/u/dummyId/inbox",
+  publicKey: "publicKey",
   lastFetchedAt: new Date("2023-01-01T11:00:00Z"),
+};
+
+const { id: _, ...dummyUserWithoutId } = dummyUser;
+const upsertData = {
+  ...dummyUserWithoutId,
+  lastFetchedAt: mockedNow,
 };
 
 const dummyPerson: AP.Person = {
@@ -87,23 +98,17 @@ describe("findOrFetchUser", () => {
         ...dummyUser,
         lastFetchedAt: new Date("2023-01-01T00:00:00Z"),
       } as User);
-      mockedPrisma.user.create.mockResolvedValue(dummyUser as User);
+      mockedPrisma.user.upsert.mockResolvedValue(dummyUser as User);
       // act
       const user = await findOrFetchUserByWebfinger(
         "dummy",
         "remote.example.com"
       );
       // assert
-      expect(mockedPrisma.user.create).toHaveBeenCalledWith({
-        data: {
-          name: "Dummy",
-          host: "remote.example.com",
-          icon: null,
-          preferredUsername: "dummy",
-          publicKey: "publicKey",
-          actorUrl: "https://remote.example.com/u/dummyId",
-          inboxUrl: "https://remote.example.com/u/dummyId/inbox",
-        },
+      expect(mockedPrisma.user.upsert).toHaveBeenCalledWith({
+        where: { id: "dummyId" },
+        create: upsertData,
+        update: upsertData,
       });
       expect(user).toEqual(dummyUser);
     });
@@ -137,23 +142,17 @@ describe("findOrFetchUser", () => {
           res.once(ctx.json(dummyPerson))
         )
       );
-      mockedPrisma.user.create.mockResolvedValue(dummyUser as User);
+      mockedPrisma.user.upsert.mockResolvedValue(dummyUser as User);
       // act
       const user = await findOrFetchUserByWebfinger(
         "dummy",
         "remote.example.com"
       );
       // assert
-      expect(mockedPrisma.user.create).toHaveBeenCalledWith({
-        data: {
-          name: "Dummy",
-          host: "remote.example.com",
-          icon: null,
-          preferredUsername: "dummy",
-          publicKey: "publicKey",
-          actorUrl: "https://remote.example.com/u/dummyId",
-          inboxUrl: "https://remote.example.com/u/dummyId/inbox",
-        },
+      expect(mockedPrisma.user.upsert).toHaveBeenCalledWith({
+        where: { id: "dummyId" },
+        create: upsertData,
+        update: upsertData,
       });
       expect(user).toEqual(dummyUser);
     });
@@ -198,23 +197,22 @@ describe("findOrFetchUser", () => {
         );
       })
     );
-    mockedPrisma.user.create.mockResolvedValue(dummyUser as User);
+    mockedPrisma.user.upsert.mockResolvedValue(dummyUser as User);
     // act
     const user = await findOrFetchUserByWebfinger(
       "dummy",
       "remote.example.com"
     );
     // assert
-    expect(mockedPrisma.user.create).toHaveBeenCalledWith({
-      data: {
-        name: "Dummy",
-        host: "remote.example.com",
-        icon: "https://remote.example.com/icons/dummy",
-        preferredUsername: "dummy",
-        publicKey: "publicKey",
-        actorUrl: "https://remote.example.com/u/dummyId",
-        inboxUrl: "https://remote.example.com/inbox",
-      },
+    const data = {
+      ...upsertData,
+      icon: "https://remote.example.com/icons/dummy",
+      inboxUrl: "https://remote.example.com/inbox",
+    };
+    expect(mockedPrisma.user.upsert).toHaveBeenCalledWith({
+      where: { id: "dummyId" },
+      create: data,
+      update: data,
     });
     expect(user).toEqual(dummyUser);
   });

@@ -5,6 +5,7 @@ import { prisma } from "@/utils/prisma";
 
 import { env } from "./env";
 import { fetchJson } from "./fetchJson";
+import { resolveUserId } from "./findUserByActorId";
 import { formatZodError } from "./formatZodError";
 import { logger } from "./logger";
 
@@ -100,17 +101,24 @@ const fetchUserByActorId = async (actorId: URL) => {
   if (!person) {
     return null;
   }
-  return prisma.user.create({
-    data: {
-      name: person.name,
-      preferredUsername: person.preferredUsername,
-      host: actorId.host,
-      //image: person.image.url,
-      icon: person.icon?.url ?? null,
-      actorUrl: person.id,
-      inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
-      publicKey: person.publicKey.publicKeyPem,
-    },
+  const userId = resolveUserId(actorId);
+  if (!userId) {
+    return null;
+  }
+  const data = {
+    name: person.name,
+    preferredUsername: person.preferredUsername,
+    host: actorId.host,
+    icon: person.icon?.url ?? null,
+    actorUrl: person.id,
+    inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
+    publicKey: person.publicKey.publicKeyPem,
+    lastFetchedAt: new Date(),
+  };
+  return prisma.user.upsert({
+    where: { id: userId },
+    update: data,
+    create: data,
   });
 };
 
