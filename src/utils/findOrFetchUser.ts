@@ -1,3 +1,4 @@
+import type { User } from "@prisma/client";
 import { z } from "zod";
 
 import { prisma } from "@/utils/prisma";
@@ -123,6 +124,20 @@ export const findOrFetchUserByActorId = async (actorId: URL) => {
   return fetchUserByActorId(actorId);
 };
 
+const shouldFetch = (user: User | null) => {
+  if (!user) {
+    return true;
+  }
+  if (user.host == env.HOST) {
+    return false;
+  }
+  if (!user.lastFetchedAt) {
+    return true;
+  }
+  const diff = Date.now() - user.lastFetchedAt.getTime();
+  return diff > 1000 * 60 * 60 * 3;
+};
+
 export const findOrFetchUserByWebfinger = async (
   preferredUsername: string,
   host: string
@@ -130,14 +145,14 @@ export const findOrFetchUserByWebfinger = async (
   const existingUser = await prisma.user.findFirst({
     where: { preferredUsername, host },
   });
-  if (existingUser) {
-    return existingUser;
+  if (shouldFetch(existingUser)) {
+    const actorId = await fetchActorIdByWebFinger(preferredUsername, host);
+    if (!actorId) {
+      return null;
+    }
+    return fetchUserByActorId(actorId);
   }
-  const actorId = await fetchActorIdByWebFinger(preferredUsername, host);
-  if (!actorId) {
-    return null;
-  }
-  return fetchUserByActorId(actorId);
+  return existingUser;
 };
 
 export const findOrFetchUserByParams = async (params: { userId: string }) => {

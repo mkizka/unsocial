@@ -9,19 +9,15 @@ import { mockedPrisma } from "@/utils/mock";
 import { findOrFetchUserByWebfinger } from "./findOrFetchUser";
 import { logger } from "./logger";
 
-const dummyUser: User = {
+jest.useFakeTimers();
+jest.setSystemTime(new Date("2023-01-01T12:00:00Z"));
+
+const dummyUser = {
   id: "dummyId",
   name: "Dummy",
   preferredUsername: "dummy",
   host: "remote.example.com",
-  email: null,
-  emailVerified: null,
-  image: null,
-  icon: null,
-  publicKey: null,
-  privateKey: null,
-  actorUrl: null,
-  inboxUrl: null,
+  lastFetchedAt: new Date("2023-01-01T11:00:00Z"),
 };
 
 const dummyPerson: AP.Person = {
@@ -43,9 +39,9 @@ const mockedLogger = jest.mocked(logger);
 
 describe("findOrFetchUser", () => {
   describe("正常系", () => {
-    test("DBにあればそれを返す", async () => {
+    test("最近fetchしたユーザーがDBにあればそれを返す", async () => {
       // arrange
-      mockedPrisma.user.findFirst.mockResolvedValue(dummyUser);
+      mockedPrisma.user.findFirst.mockResolvedValue(dummyUser as User);
       // act
       const user = await findOrFetchUserByWebfinger(
         "dummy",
@@ -54,6 +50,60 @@ describe("findOrFetchUser", () => {
       // assert
       expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
         where: { preferredUsername: "dummy", host: "remote.example.com" },
+      });
+      expect(user).toEqual(dummyUser);
+    });
+    test("fetchしてから時間が経っていればWebFingerを叩いて新規ユーザーとして保存する", async () => {
+      // arrange
+      mockedPrisma.user.findFirst.mockResolvedValue(null);
+      server.use(
+        rest.get(
+          "https://remote.example.com/.well-known/webfinger",
+          (req, res, ctx) => {
+            if (
+              req.url.searchParams.get("resource") !=
+              "acct:dummy@remote.example.com"
+            ) {
+              return res.once(ctx.status(404));
+            }
+            return res.once(
+              ctx.json({
+                links: [
+                  { rel: "dummy", href: "https://example.com" },
+                  {
+                    rel: "self",
+                    href: "https://remote.example.com/users/dummyId",
+                  },
+                ],
+              })
+            );
+          }
+        ),
+        rest.get("https://remote.example.com/users/dummyId", (_, res, ctx) =>
+          res.once(ctx.json(dummyPerson))
+        )
+      );
+      mockedPrisma.user.findFirst.mockResolvedValue({
+        ...dummyUser,
+        lastFetchedAt: new Date("2023-01-01T00:00:00Z"),
+      } as User);
+      mockedPrisma.user.create.mockResolvedValue(dummyUser as User);
+      // act
+      const user = await findOrFetchUserByWebfinger(
+        "dummy",
+        "remote.example.com"
+      );
+      // assert
+      expect(mockedPrisma.user.create).toHaveBeenCalledWith({
+        data: {
+          name: "Dummy",
+          host: "remote.example.com",
+          icon: null,
+          preferredUsername: "dummy",
+          publicKey: "publicKey",
+          actorUrl: "https://remote.example.com/u/dummyId",
+          inboxUrl: "https://remote.example.com/u/dummyId/inbox",
+        },
       });
       expect(user).toEqual(dummyUser);
     });
@@ -87,7 +137,7 @@ describe("findOrFetchUser", () => {
           res.once(ctx.json(dummyPerson))
         )
       );
-      mockedPrisma.user.create.mockResolvedValue(dummyUser);
+      mockedPrisma.user.create.mockResolvedValue(dummyUser as User);
       // act
       const user = await findOrFetchUserByWebfinger(
         "dummy",
@@ -148,7 +198,7 @@ describe("findOrFetchUser", () => {
         );
       })
     );
-    mockedPrisma.user.create.mockResolvedValue(dummyUser);
+    mockedPrisma.user.create.mockResolvedValue(dummyUser as User);
     // act
     const user = await findOrFetchUserByWebfinger(
       "dummy",
