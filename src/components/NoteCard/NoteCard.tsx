@@ -1,4 +1,5 @@
 import type { Like, Note, User } from "@prisma/client";
+import Image from "next/image";
 import Link from "next/link";
 
 import { env } from "@/utils/env";
@@ -27,11 +28,11 @@ export async function NoteCard({ note }: Props) {
       className="flex text-prmary bg-primary-light rounded p-4 mb-4 shadow"
     >
       <div className="mr-2">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           className="h-10 w-10 rounded-full"
           src={
-            note.user.icon ?? `/icon.png?name=${note.user.preferredUsername}`
+            note.user.icon ??
+            `https://soshal.vercel.app/icon.png?name=${note.user.preferredUsername}`
           }
           width={50}
           height={50}
