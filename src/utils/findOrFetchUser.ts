@@ -182,10 +182,10 @@ const findOrFetchUserByWebfinger = async (params: {
   return fetchUserByWebfinger(params);
 };
 
-export const findOrFetchUserByParams = async (userId: string) => {
-  const decodedUserId = decodeURIComponent(userId);
-  if (decodedUserId.startsWith("@")) {
-    const [preferredUsername, host] = decodedUserId.split("@").slice(1);
+export const findOrFetchUserByParams = async (params: { userId: string }) => {
+  const userId = decodeURIComponent(params.userId);
+  if (userId.startsWith("@")) {
+    const [preferredUsername, host] = userId.split("@").slice(1);
     if (!preferredUsername) {
       return null;
     }
@@ -194,5 +194,5 @@ export const findOrFetchUserByParams = async (userId: string) => {
       host: host ?? env.HOST,
     });
   }
-  return prisma.user.findFirst({ where: { id: decodedUserId } });
+  return prisma.user.findFirst({ where: { id: userId } });
 };

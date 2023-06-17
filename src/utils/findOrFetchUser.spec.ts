@@ -6,7 +6,7 @@ import { server } from "@/mocks/server";
 // なぜか"./mock"だとモック出来ない
 import { mockedPrisma } from "@/utils/mock";
 
-import { findOrFetchUserByWebfinger } from "./findOrFetchUser";
+import { findOrFetchUserByParams } from "./findOrFetchUser";
 import { logger } from "./logger";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
@@ -23,11 +23,10 @@ const dummyUser = {
   inboxUrl: "https://remote.example.com/u/dummyId/inbox",
   publicKey: "publicKey",
   lastFetchedAt: new Date("2023-01-01T11:00:00Z"),
-};
+} as User;
 
-const { id: _, ...dummyUserWithoutId } = dummyUser;
-const upsertData = {
-  ...dummyUserWithoutId,
+const { id: _, ...expectedData } = {
+  ...dummyUser,
   lastFetchedAt: mockedNow,
 };
 
@@ -48,16 +47,59 @@ const dummyPerson: AP.Person = {
 jest.mock("./logger");
 const mockedLogger = jest.mocked(logger);
 
+const restWebfinger = (response?: object) => {
+  return rest.get(
+    "https://remote.example.com/.well-known/webfinger",
+    (req, res, ctx) => {
+      if (
+        req.url.searchParams.get("resource") != "acct:dummy@remote.example.com"
+      ) {
+        return res(ctx.status(404));
+      }
+      return res(
+        ctx.json({
+          links: [
+            { rel: "dummy", href: "https://example.com" },
+            {
+              rel: "self",
+              href: "https://remote.example.com/users/dummyId",
+            },
+          ],
+          ...response,
+        })
+      );
+    }
+  );
+};
+
+const restWebfinger404 = () => {
+  return rest.get(
+    "https://remote.example.com/.well-known/webfinger",
+    (_, res, ctx) => res.once(ctx.status(404))
+  );
+};
+
+const restDummyId = (person?: object) => {
+  return rest.get("https://remote.example.com/users/dummyId", (_, res, ctx) =>
+    res.once(ctx.json({ ...dummyPerson, ...person }))
+  );
+};
+
+const restDummyIdInvalid = (person?: object) => {
+  return rest.get("https://remote.example.com/users/dummyId", (_, res, ctx) =>
+    res.once(ctx.json({ invalid: "dummy" }))
+  );
+};
+
+const params = { userId: "@dummy@remote.example.com" };
+
 describe("findOrFetchUser", () => {
   describe("正常系", () => {
     test("最近fetchしたユーザーがDBにあればそれを返す", async () => {
       // arrange
-      mockedPrisma.user.findFirst.mockResolvedValue(dummyUser as User);
+      mockedPrisma.user.findFirst.mockResolvedValue(dummyUser);
       // act
-      const user = await findOrFetchUserByWebfinger(
-        "dummy",
-        "remote.example.com"
-      );
+      const user = await findOrFetchUserByParams(params);
       // assert
       expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
         where: { preferredUsername: "dummy", host: "remote.example.com" },
@@ -66,160 +108,62 @@ describe("findOrFetchUser", () => {
     });
     test("fetchしてから時間が経っていればWebFingerを叩いて新規ユーザーとして保存する", async () => {
       // arrange
-      mockedPrisma.user.findFirst.mockResolvedValue(null);
-      server.use(
-        rest.get(
-          "https://remote.example.com/.well-known/webfinger",
-          (req, res, ctx) => {
-            if (
-              req.url.searchParams.get("resource") !=
-              "acct:dummy@remote.example.com"
-            ) {
-              return res.once(ctx.status(404));
-            }
-            return res.once(
-              ctx.json({
-                links: [
-                  { rel: "dummy", href: "https://example.com" },
-                  {
-                    rel: "self",
-                    href: "https://remote.example.com/users/dummyId",
-                  },
-                ],
-              })
-            );
-          }
-        ),
-        rest.get("https://remote.example.com/users/dummyId", (_, res, ctx) =>
-          res.once(ctx.json(dummyPerson))
-        )
-      );
+      server.use(restWebfinger(), restDummyId());
       mockedPrisma.user.findFirst.mockResolvedValue({
         ...dummyUser,
         lastFetchedAt: new Date("2023-01-01T00:00:00Z"),
-      } as User);
-      mockedPrisma.user.upsert.mockResolvedValue(dummyUser as User);
+      });
+      mockedPrisma.user.update.mockResolvedValue(dummyUser);
       // act
-      const user = await findOrFetchUserByWebfinger(
-        "dummy",
-        "remote.example.com"
-      );
+      const user = await findOrFetchUserByParams(params);
       // assert
-      expect(mockedPrisma.user.upsert).toHaveBeenCalledWith({
-        where: { id: "dummyId" },
-        create: upsertData,
-        update: upsertData,
+      expect(mockedPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: dummyUser.id },
+        data: expectedData,
       });
       expect(user).toEqual(dummyUser);
     });
     test("DBになければWebFingerを叩いて新規ユーザーとして保存する", async () => {
       // arrange
+      server.use(restWebfinger(), restDummyId());
       mockedPrisma.user.findFirst.mockResolvedValue(null);
-      server.use(
-        rest.get(
-          "https://remote.example.com/.well-known/webfinger",
-          (req, res, ctx) => {
-            if (
-              req.url.searchParams.get("resource") !=
-              "acct:dummy@remote.example.com"
-            ) {
-              return res.once(ctx.status(404));
-            }
-            return res.once(
-              ctx.json({
-                links: [
-                  { rel: "dummy", href: "https://example.com" },
-                  {
-                    rel: "self",
-                    href: "https://remote.example.com/users/dummyId",
-                  },
-                ],
-              })
-            );
-          }
-        ),
-        rest.get("https://remote.example.com/users/dummyId", (_, res, ctx) =>
-          res.once(ctx.json(dummyPerson))
-        )
-      );
-      mockedPrisma.user.upsert.mockResolvedValue(dummyUser as User);
+      mockedPrisma.user.create.mockResolvedValue(dummyUser);
       // act
-      const user = await findOrFetchUserByWebfinger(
-        "dummy",
-        "remote.example.com"
-      );
+      const user = await findOrFetchUserByParams(params);
       // assert
-      expect(mockedPrisma.user.upsert).toHaveBeenCalledWith({
-        where: { id: "dummyId" },
-        create: upsertData,
-        update: upsertData,
+      expect(mockedPrisma.user.create).toHaveBeenCalledWith({
+        data: expectedData,
+      });
+      expect(user).toEqual(dummyUser);
+    });
+    test("DBになければWebFingerを叩いて新規ユーザーとして保存する(sharedInbox,iconがあればそれを使う)", async () => {
+      // arrange
+      server.use(
+        restWebfinger(),
+        restDummyId({
+          icon: { url: "https://remote.example.com/icons/dummy" },
+          endpoints: { sharedInbox: "https://remote.example.com/inbox" },
+        })
+      );
+      mockedPrisma.user.findFirst.mockResolvedValue(null);
+      mockedPrisma.user.create.mockResolvedValue(dummyUser);
+      // act
+      const user = await findOrFetchUserByParams(params);
+      // assert
+      expect(mockedPrisma.user.create).toHaveBeenCalledWith({
+        data: {
+          ...expectedData,
+          icon: "https://remote.example.com/icons/dummy",
+          inboxUrl: "https://remote.example.com/inbox",
+        },
       });
       expect(user).toEqual(dummyUser);
     });
   });
-  test("DBになければWebFingerを叩いて新規ユーザーとして保存する(sharedInbox,iconがあればそれを使う)", async () => {
-    // arrange
-    mockedPrisma.user.findFirst.mockResolvedValue(null);
-    server.use(
-      rest.get(
-        "https://remote.example.com/.well-known/webfinger",
-        (req, res, ctx) => {
-          if (
-            req.url.searchParams.get("resource") !=
-            "acct:dummy@remote.example.com"
-          ) {
-            return res.once(ctx.status(404));
-          }
-          return res.once(
-            ctx.json({
-              links: [
-                { rel: "dummy", href: "https://example.com" },
-                {
-                  rel: "self",
-                  href: "https://remote.example.com/users/dummyId",
-                },
-              ],
-            })
-          );
-        }
-      ),
-      rest.get("https://remote.example.com/users/dummyId", (_, res, ctx) => {
-        return res.once(
-          ctx.json({
-            ...dummyPerson,
-            icon: {
-              url: "https://remote.example.com/icons/dummy",
-            },
-            endpoints: {
-              sharedInbox: "https://remote.example.com/inbox",
-            },
-          })
-        );
-      })
-    );
-    mockedPrisma.user.upsert.mockResolvedValue(dummyUser as User);
-    // act
-    const user = await findOrFetchUserByWebfinger(
-      "dummy",
-      "remote.example.com"
-    );
-    // assert
-    const data = {
-      ...upsertData,
-      icon: "https://remote.example.com/icons/dummy",
-      inboxUrl: "https://remote.example.com/inbox",
-    };
-    expect(mockedPrisma.user.upsert).toHaveBeenCalledWith({
-      where: { id: "dummyId" },
-      create: data,
-      update: data,
-    });
-    expect(user).toEqual(dummyUser);
-  });
   describe("異常系", () => {
     test("hostが不正ならnullを返す", async () => {
       // act
-      const user = await findOrFetchUserByWebfinger("dummmy", "\\");
+      const user = await findOrFetchUserByParams({ userId: "@dummy@\\" });
       // assert
       expect(mockedLogger.info).toHaveBeenCalledWith(
         "https://\\がURLとして不正でした"
@@ -228,17 +172,9 @@ describe("findOrFetchUser", () => {
     });
     test("hostのWebFingerが200を返さない場合はnullを返す", async () => {
       // arrange
-      server.use(
-        rest.get(
-          "https://remote.example.com/.well-known/webfinger",
-          (_, res, ctx) => res.once(ctx.status(404))
-        )
-      );
+      server.use(restWebfinger404());
       // act
-      const user = await findOrFetchUserByWebfinger(
-        "dummy",
-        "remote.example.com"
-      );
+      const user = await findOrFetchUserByParams(params);
       // assert
       expect(mockedLogger.warn).toBeCalledWith(
         expect.stringContaining("HTTPエラー")
@@ -247,17 +183,9 @@ describe("findOrFetchUser", () => {
     });
     test("hostのWebFingerが不正な場合はnullを返す", async () => {
       // arrange
-      server.use(
-        rest.get(
-          "https://remote.example.com/.well-known/webfinger",
-          (_, res, ctx) => res.once(ctx.json({ links: "invalid" }))
-        )
-      );
+      server.use(restWebfinger({ links: "invalid" }));
       // act
-      const user = await findOrFetchUserByWebfinger(
-        "dummy",
-        "remote.example.com"
-      );
+      const user = await findOrFetchUserByParams(params);
       // assert
       expect(mockedLogger.info).toBeCalledWith(
         expect.stringContaining("検証失敗")
@@ -266,54 +194,21 @@ describe("findOrFetchUser", () => {
     });
     test("hostのWebFingerにhrefがなかった場合はnullを返す", async () => {
       // arrange
-      server.use(
-        rest.get(
-          "https://remote.example.com/.well-known/webfinger",
-          (_, res, ctx) =>
-            res.once(
-              ctx.json({
-                links: [],
-              })
-            )
-        )
-      );
+      server.use(restWebfinger({ links: [] }));
       // act
-      const user = await findOrFetchUserByWebfinger(
-        "dummy",
-        "remote.example.com"
-      );
+      const user = await findOrFetchUserByParams(params);
       // assert
       expect(mockedLogger.info).toBeCalledWith(
         "WebFingerからrel=selfの要素が取得できませんでした"
       );
       expect(user).toEqual(null);
     });
+
     test("hostのhrefから有効なデータが返されなかった場合はnullを返す", async () => {
       // arrange
-      server.use(
-        rest.get(
-          "https://remote.example.com/.well-known/webfinger",
-          (_, res, ctx) =>
-            res.once(
-              ctx.json({
-                links: [
-                  {
-                    rel: "self",
-                    href: "https://remote.example.com/users/dummyId",
-                  },
-                ],
-              })
-            )
-        ),
-        rest.get("https://remote.example.com/users/dummyId", (_, res, ctx) => {
-          return res.once(ctx.json({ invalid: "dummy" }));
-        })
-      );
+      server.use(restWebfinger(), restDummyIdInvalid());
       // act
-      const user = await findOrFetchUserByWebfinger(
-        "dummy",
-        "remote.example.com"
-      );
+      const user = await findOrFetchUserByParams(params);
       // assert
       expect(mockedLogger.info).toBeCalledWith(
         expect.stringContaining("検証失敗")
