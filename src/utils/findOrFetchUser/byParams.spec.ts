@@ -182,6 +182,13 @@ describe("findOrFetchUserByParams", () => {
     });
   });
   describe("異常系", () => {
+    test("@のみならnullを返す", async () => {
+      // act
+      const user = await findOrFetchUserByParams({ userId: "@" });
+      // assert
+      expect(mockedPrisma.user.findFirst).not.toHaveBeenCalled();
+      expect(user).toEqual(null);
+    });
     test("hostが不正ならnullを返す", async () => {
       // act
       const user = await findOrFetchUserByParams({ userId: "@dummy@\\" });

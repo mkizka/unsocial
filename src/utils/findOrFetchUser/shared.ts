@@ -7,10 +7,7 @@ import { formatZodError } from "../formatZodError";
 import { logger } from "../logger";
 import { prisma } from "../prisma";
 
-export const shouldReFetch = (user: User | null) => {
-  if (!user) {
-    return true;
-  }
+export const shouldReFetch = (user: User) => {
   if (user.host == env.HOST) {
     return false;
   }
@@ -18,7 +15,7 @@ export const shouldReFetch = (user: User | null) => {
     return true;
   }
   const diff = Date.now() - user.lastFetchedAt.getTime();
-  return diff > 1000 * 60 * 60 * 3;
+  return diff >= 1000 * 60 * 60 * 3;
 };
 
 const personSchema = z.object({
