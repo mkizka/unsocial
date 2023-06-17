@@ -6,8 +6,8 @@ import { server } from "@/mocks/server";
 // なぜか"./mock"だとモック出来ない
 import { mockedPrisma } from "@/utils/mock";
 
-import { findOrFetchUserByParams } from "./findOrFetchUser";
-import { logger } from "./logger";
+import { logger } from "../logger";
+import { findOrFetchUserByParams } from "./byParams";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
 jest.useFakeTimers();
@@ -44,7 +44,7 @@ const dummyPerson: AP.Person = {
   },
 };
 
-jest.mock("./logger");
+jest.mock("../logger");
 const mockedLogger = jest.mocked(logger);
 
 const restWebfinger = (response?: object) => {
@@ -93,7 +93,7 @@ const restDummyIdInvalid = (person?: object) => {
 
 const params = { userId: "@dummy@remote.example.com" };
 
-describe("findOrFetchUser", () => {
+describe("findOrFetchUserByParams", () => {
   describe("正常系", () => {
     test("最近fetchしたユーザーがDBにあればそれを返す", async () => {
       // arrange
