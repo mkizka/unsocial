@@ -2,7 +2,7 @@ import { prisma } from "@/utils/prisma";
 
 import { logger } from "./logger";
 
-export const resolveUserId = (actorId: URL) => {
+const resolveUserId = (actorId: URL) => {
   if (!actorId.pathname.startsWith("/users/")) {
     logger.info("actorIdからuserIdが取得できませんでした");
     return null;
