@@ -1,6 +1,4 @@
-import { Matcher } from "jest-mock-extended";
-
-import { mockedPrisma } from "@/utils/mock";
+import { mockedPrisma, objectMatcher } from "@/utils/mock";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { follow } from "./follow";
@@ -18,11 +16,6 @@ const dummyRemoteUser = {
   inboxUrl: "https://remote.example.com/inbox",
 };
 
-export const object = <T>(expectedValue: T) =>
-  new Matcher((actualValue) => {
-    return JSON.stringify(expectedValue) == JSON.stringify(actualValue);
-  }, "");
-
 describe("フォロー", () => {
   test("正常系", async () => {
     // arrange
@@ -32,7 +25,7 @@ describe("フォロー", () => {
       object: "https://myhost.example.com/users/dummyidlocal/activity",
     };
     mockedPrisma.user.findFirst
-      .calledWith(object({ where: { id: "dummyidlocal" } }))
+      .calledWith(objectMatcher({ where: { id: "dummyidlocal" } }))
       .mockResolvedValueOnce(dummyLocalUser as never);
     // act
     const response = await follow(activity, dummyRemoteUser as never);
