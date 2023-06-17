@@ -1,5 +1,4 @@
 import type { Like, Note, User } from "@prisma/client";
-import Image from "next/image";
 import Link from "next/link";
 
 import { env } from "@/utils/env";
@@ -11,7 +10,7 @@ import { LikeButton } from "./parts/LikeButton";
 
 export type Props = {
   note: Note & {
-    user: Pick<User, "name" | "preferredUsername" | "host">;
+    user: Pick<User, "name" | "preferredUsername" | "host" | "icon">;
     likes: Pick<Like, "userId">[];
   };
 };
@@ -28,9 +27,12 @@ export async function NoteCard({ note }: Props) {
       className="flex text-prmary bg-primary-light rounded p-4 mb-4 shadow"
     >
       <div className="mr-2">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           className="h-10 w-10 rounded-full"
-          src={`/icon.png?name=${note.user.preferredUsername}`}
+          src={
+            note.user.icon ?? `/icon.png?name=${note.user.preferredUsername}`
+          }
           width={50}
           height={50}
           alt={`@${note.user.name}のアイコン`}

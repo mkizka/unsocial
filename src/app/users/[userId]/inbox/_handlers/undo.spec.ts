@@ -1,6 +1,4 @@
-import { Matcher } from "jest-mock-extended";
-
-import { mockedPrisma } from "@/utils/mock";
+import { mockedPrisma, objectMatcher } from "@/utils/mock";
 
 import { undo } from "./undo";
 
@@ -11,11 +9,6 @@ const dummyLocalUser = {
 const dummyRemoteUser = {
   id: "dummyidremote",
 };
-
-export const object = <T>(expectedValue: T) =>
-  new Matcher((actualValue) => {
-    return JSON.stringify(expectedValue) == JSON.stringify(actualValue);
-  }, "");
 
 describe("アンフォロー", () => {
   test("正常系", async () => {
@@ -30,7 +23,7 @@ describe("アンフォロー", () => {
       },
     };
     mockedPrisma.user.findFirst
-      .calledWith(object({ where: { id: "dummyidlocal" } }))
+      .calledWith(objectMatcher({ where: { id: "dummyidlocal" } }))
       .mockResolvedValueOnce(dummyLocalUser as never);
     // act
     const response = await undo(activity, dummyRemoteUser as never);

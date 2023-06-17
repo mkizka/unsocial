@@ -1,3 +1,4 @@
+import type { User } from "@prisma/client";
 import { z } from "zod";
 
 import { prisma } from "@/utils/prisma";
@@ -38,19 +39,19 @@ const resolveWebFingerResponse = (data: unknown) => {
   return safeUrl(link.href!);
 };
 
-const fetchActorIdByWebFinger = async (
-  preferredUsername: string,
-  host: string
-) => {
-  const remoteUrl = safeUrl(`https://${host}`);
+const fetchActorIdByWebFinger = async (params: {
+  preferredUsername: string;
+  host: string;
+}) => {
+  const remoteUrl = safeUrl(`https://${params.host}`);
   if (!remoteUrl) {
-    logger.info(`https://${host}がURLとして不正でした`);
+    logger.info(`https://${params.host}がURLとして不正でした`);
     return null;
   }
   const webFingerUrl = new URL("/.well-known/webfinger", remoteUrl);
   webFingerUrl.searchParams.append(
     "resource",
-    `acct:${preferredUsername}@${host}`
+    `acct:${params.preferredUsername}@${params.host}`
   );
   const response = await fetchJson(webFingerUrl);
   if (!response) {
@@ -94,23 +95,30 @@ const fetchValidPerson = async (url: URL) => {
   return parsed.data;
 };
 
-const fetchUserByActorId = async (actorId: URL) => {
+const fetchUserByActorId = async ({
+  actorId,
+  userIdForUpdate,
+}: {
+  actorId: URL;
+  userIdForUpdate?: string;
+}) => {
   const person = await fetchValidPerson(actorId);
   if (!person) {
     return null;
   }
-  return prisma.user.create({
-    data: {
-      name: person.name,
-      preferredUsername: person.preferredUsername,
-      host: actorId.host,
-      //image: person.image.url,
-      //icon: person.icon.url,
-      actorUrl: person.id,
-      inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
-      publicKey: person.publicKey.publicKeyPem,
-    },
-  });
+  const data = {
+    name: person.name,
+    preferredUsername: person.preferredUsername,
+    host: actorId.host,
+    icon: person.icon?.url ?? null,
+    actorUrl: person.id,
+    inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
+    publicKey: person.publicKey.publicKeyPem,
+    lastFetchedAt: new Date(),
+  };
+  return userIdForUpdate
+    ? prisma.user.update({ where: { id: userIdForUpdate }, data })
+    : prisma.user.create({ data });
 };
 
 export const findOrFetchUserByActorId = async (actorId: URL) => {
@@ -118,26 +126,60 @@ export const findOrFetchUserByActorId = async (actorId: URL) => {
     where: { actorUrl: actorId.toString() },
   });
   if (existingUser) {
+    if (shouldReFetch(existingUser)) {
+      return fetchUserByActorId({ actorId, userIdForUpdate: existingUser.id });
+    }
     return existingUser;
   }
-  return fetchUserByActorId(actorId);
+  return fetchUserByActorId({ actorId });
 };
 
-export const findOrFetchUserByWebfinger = async (
-  preferredUsername: string,
-  host: string
-) => {
-  const existingUser = await prisma.user.findFirst({
-    where: { preferredUsername, host },
-  });
-  if (existingUser) {
-    return existingUser;
+const shouldReFetch = (user: User | null) => {
+  if (!user) {
+    return true;
   }
-  const actorId = await fetchActorIdByWebFinger(preferredUsername, host);
+  if (user.host == env.HOST) {
+    return false;
+  }
+  if (!user.lastFetchedAt) {
+    return true;
+  }
+  const diff = Date.now() - user.lastFetchedAt.getTime();
+  return diff > 1000 * 60 * 60 * 3;
+};
+
+const fetchUserByWebfinger = async (params: {
+  preferredUsername: string;
+  host: string;
+  userIdForUpdate?: string;
+}) => {
+  const actorId = await fetchActorIdByWebFinger(params);
   if (!actorId) {
     return null;
   }
-  return fetchUserByActorId(actorId);
+  return fetchUserByActorId({
+    actorId,
+    userIdForUpdate: params.userIdForUpdate,
+  });
+};
+
+const findOrFetchUserByWebfinger = async (params: {
+  preferredUsername: string;
+  host: string;
+}) => {
+  const existingUser = await prisma.user.findFirst({
+    where: params,
+  });
+  if (existingUser) {
+    if (shouldReFetch(existingUser)) {
+      return fetchUserByWebfinger({
+        ...params,
+        userIdForUpdate: existingUser.id,
+      });
+    }
+    return existingUser;
+  }
+  return fetchUserByWebfinger(params);
 };
 
 export const findOrFetchUserByParams = async (params: { userId: string }) => {
@@ -147,7 +189,10 @@ export const findOrFetchUserByParams = async (params: { userId: string }) => {
     if (!preferredUsername) {
       return null;
     }
-    return findOrFetchUserByWebfinger(preferredUsername, host ?? env.HOST);
+    return findOrFetchUserByWebfinger({
+      preferredUsername,
+      host: host ?? env.HOST,
+    });
   }
   return prisma.user.findFirst({ where: { id: userId } });
 };
