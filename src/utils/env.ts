@@ -17,6 +17,7 @@ const serverEnvSchema = z.object({
     process.env.VERCEL_URL ? z.any() : z.string().url(),
   HOST: z.preprocess(
     (str) =>
+      process.env.HOST ??
       process.env.VERCEL_URL ??
       (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).host : str),
     z.string().min(1)

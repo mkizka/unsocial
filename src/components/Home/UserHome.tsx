@@ -13,18 +13,8 @@ type Props = {
 export async function UserHome({ user }: Props) {
   const notes = await prisma.note.findMany({
     include: {
-      user: {
-        select: {
-          name: true,
-          preferredUsername: true,
-          host: true,
-        },
-      },
-      likes: {
-        select: {
-          userId: true,
-        },
-      },
+      user: true,
+      likes: true,
     },
     orderBy: {
       createdAt: "desc",

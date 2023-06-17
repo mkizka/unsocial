@@ -1,4 +1,5 @@
 import type { Note } from "@prisma/client";
+import { mockDeep } from "jest-mock-extended";
 
 import { mockedPrisma } from "@/utils/mock";
 
@@ -7,6 +8,8 @@ import { GET } from "./route";
 describe("/notes/[noteId]/activity", () => {
   test("GET", async () => {
     // arrange
+    const mockedRequest = mockDeep<Request>();
+    mockedRequest.headers.get.mockReturnValueOnce("application/activity+json");
     mockedPrisma.note.findFirst.mockResolvedValueOnce({
       id: "noteId",
       userId: "userId",
@@ -14,7 +17,7 @@ describe("/notes/[noteId]/activity", () => {
       createdAt: new Date("2021-01-01T00:00:00.000Z"),
     } as Note);
     // act
-    const response = await GET({} as Request, { params: { noteId: "noteId" } });
+    const response = await GET(mockedRequest, { params: { noteId: "noteId" } });
     // assert
     expect(mockedPrisma.note.findFirst.mock.lastCall?.[0])
       .toMatchInlineSnapshot(`

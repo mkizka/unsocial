@@ -13,12 +13,6 @@ datasource db {
   shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
-model Example {
-  id        String   @id @default(nanoid(8))
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model Session {
   id           String   @id @default(nanoid(8))
   sessionToken String   @unique
@@ -36,10 +30,12 @@ model User {
   emailVerified     DateTime?
   icon              String?
   image             String?
+  // TODO: 誤って公開しないように別テーブルにする
   publicKey         String?
   privateKey        String?
   actorUrl          String?
   inboxUrl          String?
+  lastFetchedAt     DateTime?
   sessions          Session[]
   notes             Note[]
   followee          Follow[]  @relation("followee")
