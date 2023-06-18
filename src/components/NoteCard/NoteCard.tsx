@@ -21,6 +21,9 @@ export async function NoteCard({ note }: Props) {
   const userId = session?.user?.id;
   const isMine = userId === note.userId;
   const isLiked = note.likes.some((like) => like.userId === userId);
+  const href =
+    `/@${note.user.preferredUsername}` +
+    (note.user.host != env.HOST ? `@${note.user.host}` : "");
 
   return (
     <article
@@ -28,28 +31,24 @@ export async function NoteCard({ note }: Props) {
       className="flex text-prmary bg-primary-light rounded p-4 mb-4 shadow"
     >
       <div className="mr-2">
-        <Image
-          className="h-10 w-10 rounded-full"
-          src={
-            note.user.icon ??
-            `https://soshal.vercel.app/icon.png?name=${note.user.preferredUsername}`
-          }
-          width={50}
-          height={50}
-          alt={`@${note.user.name}のアイコン`}
-        />
+        <Link href={href}>
+          <Image
+            className="rounded-full"
+            src={
+              note.user.icon ??
+              `https://${env.HOST}/icon.png?name=${note.user.preferredUsername}`
+            }
+            width={50}
+            height={50}
+            alt={`@${note.user.preferredUsername}のアイコン`}
+          />
+        </Link>
       </div>
       <div className="w-full">
         <div className="flex mb-2">
           <div>
-            <Link
-              href={
-                `/@${note.user.preferredUsername}` +
-                (note.user.host != env.HOST ? `@${note.user.host}` : "")
-              }
-              className="hover:underline"
-            >
-              @{note.user.preferredUsername}@{note.user.host}
+            <Link href={href} className="hover:underline">
+              @{note.user.preferredUsername}
             </Link>
           </div>
           <div className="flex gap-2 ml-auto items-center">
@@ -58,9 +57,10 @@ export async function NoteCard({ note }: Props) {
             <CreatedAt href={`/notes/${note.id}`} createdAt={note.createdAt} />
           </div>
         </div>
-        <div className="mb-2">
-          <p>{note.content}</p>
-        </div>
+        <div
+          className="mb-2"
+          dangerouslySetInnerHTML={{ __html: note.content }}
+        ></div>
       </div>
     </article>
   );
