@@ -28,39 +28,35 @@ export async function NoteCard({ note }: Props) {
   return (
     <article
       data-testid="note-card"
-      className="flex text-prmary bg-primary-light rounded p-4 mb-4 shadow"
+      className="flex relative text-prmary bg-primary-light rounded pt-3 px-3 pb-5 mb-2 shadow"
     >
-      <div className="mr-2">
-        <Link href={href}>
+      <div className="w-full pl-[40px]">
+        <Link className="absolute left-2" href={href}>
           <Image
             className="rounded-full"
             src={
               note.user.icon ??
               `https://${env.HOST}/icon.png?name=${note.user.preferredUsername}`
             }
-            width={50}
-            height={50}
+            width={36}
+            height={36}
             alt={`@${note.user.preferredUsername}のアイコン`}
           />
         </Link>
-      </div>
-      <div className="w-full">
-        <div className="flex mb-2">
-          <div>
-            <Link href={href} className="hover:underline">
-              @{note.user.preferredUsername}
-            </Link>
-          </div>
-          <div className="flex gap-2 ml-auto items-center">
+        <div className="flex">
+          <Link href={href} className="block truncate hover:underline">
+            {note.user.name && <span className="mr-1">{note.user.name}</span>}
+            <span className="text-gray">
+              @{note.user.preferredUsername}@{note.user.host}
+            </span>
+          </Link>
+          <div className="flex gap-1 ml-auto pl-1 items-center">
             {isMine && <DeleteButton noteId={note.id} />}
             <LikeButton noteId={note.id} isLiked={isLiked} />
             <CreatedAt href={`/notes/${note.id}`} createdAt={note.createdAt} />
           </div>
         </div>
-        <div
-          className="mb-2"
-          dangerouslySetInnerHTML={{ __html: note.content }}
-        ></div>
+        <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
       </div>
     </article>
   );

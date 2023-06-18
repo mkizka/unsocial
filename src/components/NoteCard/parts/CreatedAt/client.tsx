@@ -21,7 +21,11 @@ export function Client({ href, initialText, createdAt }: Props) {
   }, [createdAt]);
 
   return (
-    <Link data-testid="note-card__link" href={href} className="hover:underline">
+    <Link
+      data-testid="note-card__link"
+      href={href}
+      className="w-fit whitespace-nowrap hover:underline"
+    >
       {createdAtText}
     </Link>
   );
