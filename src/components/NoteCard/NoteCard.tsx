@@ -1,5 +1,4 @@
 import type { Like, Note, User } from "@prisma/client";
-import Image from "next/image";
 import Link from "next/link";
 
 import { env } from "@/utils/env";
@@ -32,12 +31,10 @@ export async function NoteCard({ note }: Props) {
     >
       <div className="w-full pl-[48px]">
         <Link className="absolute left-3" href={href}>
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             className="rounded-full"
-            src={
-              note.user.icon ??
-              `https://${env.HOST}/icon.png?name=${note.user.preferredUsername}`
-            }
+            src={`/icon?preferredUsername=${note.user.preferredUsername}&host=${note.user.host}`}
             width={36}
             height={36}
             alt={`@${note.user.preferredUsername}のアイコン`}
