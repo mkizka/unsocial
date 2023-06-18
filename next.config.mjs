@@ -5,14 +5,6 @@ const config = {
   experimental: {
     serverActions: true,
   },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
-  },
   async rewrites() {
     return [
       {

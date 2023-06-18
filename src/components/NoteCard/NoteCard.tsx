@@ -34,10 +34,7 @@ export async function NoteCard({ note }: Props) {
         <Link className="absolute left-3" href={href}>
           <Image
             className="rounded-full"
-            src={
-              note.user.icon ??
-              `https://${env.HOST}/icon.png?name=${note.user.preferredUsername}`
-            }
+            src={`/icon?preferredUsername=${note.user.preferredUsername}&host=${note.user.host}`}
             width={36}
             height={36}
             alt={`@${note.user.preferredUsername}のアイコン`}

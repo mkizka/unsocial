@@ -4,7 +4,8 @@ import { ImageResponse } from "next/server";
 export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
-  const name = request.nextUrl.searchParams.get("name");
+  const preferredUsername =
+    request.nextUrl.searchParams.get("preferredUsername");
   return new ImageResponse(
     (
       <div
@@ -17,7 +18,7 @@ export async function GET(request: NextRequest) {
           fontSize: 60,
         }}
       >
-        {name?.slice(0, 2) || ""}
+        {preferredUsername?.slice(0, 2) || ""}
       </div>
     ),
     {
