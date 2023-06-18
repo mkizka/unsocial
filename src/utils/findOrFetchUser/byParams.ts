@@ -53,7 +53,11 @@ const fetchActorIdByWebFinger = async (params: {
     "resource",
     `acct:${params.preferredUsername}@${params.host}`
   );
-  const response = await fetchJson(webFingerUrl);
+  const response = await fetchJson(webFingerUrl, {
+    next: {
+      revalidate: 10,
+    },
+  });
   if (!response) {
     return null;
   }
