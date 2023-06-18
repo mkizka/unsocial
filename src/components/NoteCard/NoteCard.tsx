@@ -28,10 +28,10 @@ export async function NoteCard({ note }: Props) {
   return (
     <article
       data-testid="note-card"
-      className="flex relative text-prmary bg-primary-light rounded pt-3 px-3 pb-5 mb-2 shadow"
+      className="flex relative text-prmary bg-primary-light rounded pt-3 pl-3 pr-4 pb-5 mb-2 shadow"
     >
-      <div className="w-full pl-[40px]">
-        <Link className="absolute left-2" href={href}>
+      <div className="w-full pl-[48px]">
+        <Link className="absolute left-3" href={href}>
           <Image
             className="rounded-full"
             src={
