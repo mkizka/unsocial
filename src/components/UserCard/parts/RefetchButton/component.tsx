@@ -15,7 +15,6 @@ export function RefetchButton({ userId }: Props) {
   return (
     <button
       className="flex items-center"
-      data-testid="follow-button"
       onClick={() => startTransition(() => action(userId))}
     >
       <div className="whitespace-nowrap">ユーザー情報を再取得</div>
