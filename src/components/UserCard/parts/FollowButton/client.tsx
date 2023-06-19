@@ -22,6 +22,7 @@ export function FollowButton({ followeeId, followStatus }: Props) {
 
   return (
     <button
+      className="block"
       data-testid={isPending ? "follow-button-loading" : "follow-button"}
       onClick={() => startTransition(() => action(followeeId))}
     >

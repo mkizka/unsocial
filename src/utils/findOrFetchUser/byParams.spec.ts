@@ -98,10 +98,10 @@ describe("findOrFetchUserByParams", () => {
       // arrange
       mockedPrisma.user.findFirst.mockResolvedValue(dummyUser);
       // act
-      const user = await findOrFetchUserByParams({ userId: "dummy" });
+      const user = await findOrFetchUserByParams({ userId: "dummyId" });
       // assert
       expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
-        where: { id: "dummy" },
+        where: { id: "dummyId" },
       });
       expect(user).toEqual(dummyUser);
     });
@@ -137,6 +137,23 @@ describe("findOrFetchUserByParams", () => {
       mockedPrisma.user.update.mockResolvedValue(dummyUser);
       // act
       const user = await findOrFetchUserByParams(params);
+      // assert
+      expect(mockedPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: dummyUser.id },
+        data: expectedData,
+      });
+      expect(user).toEqual(dummyUser);
+    });
+    test("fetchしてから時間が経っていればWebFingerを叩いて既存ユーザーを更新する(id指定)", async () => {
+      // arrange
+      server.use(restWebfinger(), restDummyId());
+      mockedPrisma.user.findFirst.mockResolvedValue({
+        ...dummyUser,
+        lastFetchedAt: new Date("2023-01-01T00:00:00Z"),
+      });
+      mockedPrisma.user.update.mockResolvedValue(dummyUser);
+      // act
+      const user = await findOrFetchUserByParams({ userId: dummyUser.id });
       // assert
       expect(mockedPrisma.user.update).toHaveBeenCalledWith({
         where: { id: dummyUser.id },
