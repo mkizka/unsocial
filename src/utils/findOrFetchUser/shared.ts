@@ -42,7 +42,7 @@ const personSchema = z.object({
 const fetchValidPerson = async (url: URL) => {
   const response = await fetchJson(url, {
     next: {
-      revalidate: 10,
+      revalidate: 0,
     },
     headers: {
       accept: "application/activity+json",
