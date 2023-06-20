@@ -7,7 +7,7 @@ import { env } from "./env";
 const logger = winston.createLogger({
   format: winston.format.combine(
     winston.format.colorize({
-      colors: { info: "blue" },
+      colors: { info: "cyan" },
     }),
     winston.format.uncolorize({
       level: env.NODE_ENV != "development",
