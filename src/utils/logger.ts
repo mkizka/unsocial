@@ -8,13 +8,12 @@ import {
 
 import { env } from "./env";
 
-export const logger = createOriginalLogger({
+const logger = createOriginalLogger({
   format: format.combine(
     format.colorize({
-      // next.jsのロガーっぽくするため
+      level: env.NODE_ENV == "development",
       colors: { info: "blue" },
     }),
-    format.timestamp(),
     format.printf((log) =>
       util.format(
         `- %s%s %s`,

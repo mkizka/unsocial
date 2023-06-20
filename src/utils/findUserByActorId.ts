@@ -1,6 +1,8 @@
 import { prisma } from "@/utils/prisma";
 
-import { logger } from "./logger";
+import { createLogger } from "./logger";
+
+const logger = createLogger("findUserByActorId");
 
 const resolveUserId = (actorId: URL) => {
   if (!actorId.pathname.startsWith("/users/")) {

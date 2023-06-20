@@ -4,8 +4,10 @@ import { z } from "zod";
 import { env } from "../env";
 import { fetchJson } from "../fetchJson";
 import { formatZodError } from "../formatZodError";
-import { logger } from "../logger";
+import { createLogger } from "../logger";
 import { prisma } from "../prisma";
+
+const logger = createLogger("findOrFetchUser");
 
 export const shouldReFetch = (user: User) => {
   if (user.host == env.HOST) {

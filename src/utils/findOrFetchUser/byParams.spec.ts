@@ -2,9 +2,9 @@ import type { User } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 import { rest } from "msw";
 
+import { mockedLogger } from "@/mocks/logger";
 import { server } from "@/mocks/server";
 
-import { logger } from "../logger";
 import { mockedPrisma } from "../mock";
 import { findOrFetchUserByParams } from "./byParams";
 
@@ -42,9 +42,6 @@ const dummyPerson: AP.Person = {
     publicKeyPem: "publicKey",
   },
 };
-
-jest.mock("../logger");
-const mockedLogger = jest.mocked(logger);
 
 const restWebfinger = (response?: object) => {
   return rest.get(

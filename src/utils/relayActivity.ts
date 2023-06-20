@@ -2,10 +2,12 @@ import type { AP } from "activitypub-core-types";
 import type { Session } from "next-auth";
 
 import { signActivity } from "@/utils/httpSignature/sign";
-import { logger } from "@/utils/logger";
 
 import { fetchJson } from "./fetchJson";
+import { createLogger } from "./logger";
 import { prisma } from "./prisma";
+
+const logger = createLogger("relayActivity");
 
 const isNotNull = <T>(value: T): value is NonNullable<T> => value != null;
 
