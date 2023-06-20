@@ -5,8 +5,10 @@ import { prisma } from "@/utils/prisma";
 import { env } from "../env";
 import { fetchJson } from "../fetchJson";
 import { formatZodError } from "../formatZodError";
-import { logger } from "../logger";
+import { createLogger } from "../logger";
 import { fetchUserByActorId, shouldReFetch } from "./shared";
+
+const logger = createLogger("findOrFetchUserByParams");
 
 const webfingerSchema = z.object({
   links: z.array(

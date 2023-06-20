@@ -1,7 +1,7 @@
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
-import { logger } from "@/utils/logger";
+import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
@@ -9,6 +9,8 @@ type User = {
   id: string;
   privateKey: string;
 };
+
+const logger = createLogger("FollowButton");
 
 const follow = async (user: User, followeeId: string) => {
   const follow = await prisma.follow.create({

@@ -1,5 +1,7 @@
-import { logger } from "@/utils/logger";
+import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
+
+const logger = createLogger("RefetchButton");
 
 export async function action(userId: string) {
   const { count } = await prisma.user.updateMany({

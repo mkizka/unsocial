@@ -14,7 +14,7 @@
     "postinstall": "prisma generate",
     "lint": "next lint && prettier . --check",
     "typecheck": "tsc",
-    "all": "run-s -s typecheck lint test",
+    "all": "run-s -s typecheck test lint",
     "mutation-test": "run-s mutation-test:*",
     "mutation-test:run-only": "./scripts/mutation-test.sh",
     "mutation-test:report": "./scripts/mutation-report.ts | md",

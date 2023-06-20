@@ -1,5 +1,7 @@
 // Stryker disable all
-import { logger } from "./logger";
+import { createLogger } from "./logger";
+
+const logger = createLogger("fetchJson");
 
 export const fetchJson = (...[input, init]: Parameters<typeof fetch>) => {
   // mswはURLインスタンスで渡されたリクエストをモック出来ない？
