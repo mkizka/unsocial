@@ -1,20 +1,18 @@
 // Stryker disable all
 import util from "util";
-import {
-  createLogger as createOriginalLogger,
-  format,
-  transports,
-} from "winston";
+import winston from "winston";
 
 import { env } from "./env";
 
-const logger = createOriginalLogger({
-  format: format.combine(
-    format.colorize({
-      level: env.NODE_ENV == "development",
+const logger = winston.createLogger({
+  format: winston.format.combine(
+    winston.format.colorize({
       colors: { info: "blue" },
     }),
-    format.printf((log) =>
+    winston.format.uncolorize({
+      level: env.NODE_ENV != "development",
+    }),
+    winston.format.printf((log) =>
       util.format(
         `- %s%s %s`,
         log.level,
@@ -23,11 +21,8 @@ const logger = createOriginalLogger({
       )
     )
   ),
-  transports: [
-    new transports.Console({
-      silent: env.NODE_ENV == "test",
-    }),
-  ],
+  silent: env.NODE_ENV == "test",
+  transports: new winston.transports.Console(),
 });
 
 export const createLogger = (name: string) => logger.child({ name });
