@@ -1,8 +1,8 @@
 import { rest } from "msw";
 
+import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
 import { signActivity } from "@/utils/httpSignature/sign";
-import { mockedPrisma } from "@/utils/mock";
 
 import {
   relayActivityToFollowers,

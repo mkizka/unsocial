@@ -1,4 +1,4 @@
-import { mockedPrisma, objectMatcher } from "@/utils/mock";
+import { mockedPrisma, objectMatcher } from "@/mocks/prisma";
 
 import { undo } from "./undo";
 

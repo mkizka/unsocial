@@ -2,9 +2,9 @@ import type { User } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 import { rest } from "msw";
 
+import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
 
-import { mockedPrisma } from "../mock";
 import { findOrFetchUserByActorId } from "./byActorId";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");

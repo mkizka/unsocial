@@ -1,7 +1,7 @@
 import type { Note } from "@prisma/client";
 import { mockDeep } from "jest-mock-extended";
 
-import { mockedPrisma } from "@/utils/mock";
+import { mockedPrisma } from "@/mocks/prisma";
 
 import { GET } from "./route";
 

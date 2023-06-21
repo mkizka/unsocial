@@ -1,4 +1,4 @@
-import { mockedPrisma, objectMatcher } from "@/utils/mock";
+import { mockedPrisma, objectMatcher } from "@/mocks/prisma";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { follow } from "./follow";

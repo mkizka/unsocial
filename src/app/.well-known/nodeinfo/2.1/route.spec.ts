@@ -1,4 +1,4 @@
-import { mockedPrisma } from "@/utils/mock";
+import { mockedPrisma } from "@/mocks/prisma";
 
 import { GET } from "./route";
 
