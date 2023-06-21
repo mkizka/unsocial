@@ -1,4 +1,4 @@
-import { mockedPrisma, objectMatcher } from "@/utils/mock";
+import { mockedPrisma } from "@/mocks/prisma";
 
 import { undo } from "./undo";
 
@@ -22,12 +22,13 @@ describe("アンフォロー", () => {
         object: "https://myhost.example.com/users/dummyidlocal",
       },
     };
-    mockedPrisma.user.findFirst
-      .calledWith(objectMatcher({ where: { id: "dummyidlocal" } }))
-      .mockResolvedValueOnce(dummyLocalUser as never);
+    mockedPrisma.user.findFirst.mockResolvedValueOnce(dummyLocalUser as never);
     // act
     const response = await undo(activity, dummyRemoteUser as never);
     // assert
+    expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
+      where: { id: "dummyidlocal" },
+    });
     expect(mockedPrisma.follow.delete).toHaveBeenCalledWith({
       where: {
         followeeId_followerId: {

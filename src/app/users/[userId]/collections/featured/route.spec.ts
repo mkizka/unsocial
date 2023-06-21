@@ -1,7 +1,7 @@
 import type { Note, User } from "@prisma/client";
 
+import { mockedPrisma } from "@/mocks/prisma";
 import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";
-import { mockedPrisma } from "@/utils/mock";
 
 import { GET } from "./route";
 

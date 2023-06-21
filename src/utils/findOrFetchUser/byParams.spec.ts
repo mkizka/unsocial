@@ -3,9 +3,9 @@ import type { AP } from "activitypub-core-types";
 import { rest } from "msw";
 
 import { mockedLogger } from "@/mocks/logger";
+import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
 
-import { mockedPrisma } from "../mock";
 import { findOrFetchUserByParams } from "./byParams";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
