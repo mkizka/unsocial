@@ -14,7 +14,7 @@ export function RefetchButton({ userId }: Props) {
 
   return (
     <button
-      className="flex items-center"
+      className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-md"
       onClick={() => startTransition(() => action(userId))}
     >
       <div className="whitespace-nowrap">ユーザー情報を再取得</div>
