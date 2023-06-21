@@ -1,4 +1,5 @@
 "use client";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { useTransition } from "react";
 
 import { Spinner } from "@/components/Spinner";
@@ -14,15 +15,10 @@ export function RefetchButton({ userId }: Props) {
 
   return (
     <button
-      className="flex items-center"
+      className="flex items-center justify-center w-6 h-6"
       onClick={() => startTransition(() => action(userId))}
     >
-      <div className="whitespace-nowrap">ユーザー情報を再取得</div>
-      {isPending && (
-        <div className="w-5 h-5">
-          <Spinner />
-        </div>
-      )}
+      {isPending ? <Spinner /> : <ArrowPathIcon />}
     </button>
   );
 }

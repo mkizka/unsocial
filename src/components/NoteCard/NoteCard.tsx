@@ -1,17 +1,17 @@
 import type { Like, Note, User } from "@prisma/client";
-import Image from "next/image";
 import Link from "next/link";
 
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
 
+import { UserIcon } from "../UserIcon";
 import { CreatedAt } from "./parts/CreatedAt";
 import { DeleteButton } from "./parts/DeleteButton";
 import { LikeButton } from "./parts/LikeButton";
 
 export type Props = {
   note: Note & {
-    user: Pick<User, "name" | "preferredUsername" | "host" | "icon">;
+    user: User;
     likes: Pick<Like, "userId">[];
   };
 };
@@ -32,12 +32,11 @@ export async function NoteCard({ note }: Props) {
     >
       <div className="w-full pl-[48px]">
         <Link className="absolute left-3" href={href}>
-          <Image
+          <UserIcon
+            user={note.user}
             className="rounded-full"
-            src={`/icon?preferredUsername=${note.user.preferredUsername}&host=${note.user.host}`}
             width={36}
             height={36}
-            alt={`@${note.user.preferredUsername}のアイコン`}
           />
         </Link>
         <div className="flex">
