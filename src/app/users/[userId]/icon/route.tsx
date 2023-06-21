@@ -1,31 +1,22 @@
 import { notFound } from "next/navigation";
-import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import { env } from "@/utils/env";
 import { prisma } from "@/utils/prisma";
 
-export async function GET(request: NextRequest) {
-  const preferredUsername =
-    request.nextUrl.searchParams.get("preferredUsername");
-  const host = request.nextUrl.searchParams.get("host");
-  if (!preferredUsername || !host) {
-    notFound();
-  }
+export async function GET(
+  _: Request,
+  { params }: { params: { userId: string } }
+) {
   const user = await prisma.user.findUnique({
-    where: {
-      preferredUsername_host: {
-        preferredUsername,
-        host,
-      },
-    },
+    where: { id: params.userId },
   });
   if (!user) {
     notFound();
   }
   const url =
     user.icon ??
-    `https://${env.HOST}/icon/edge?preferredUsername=${preferredUsername}`;
+    `https://${env.HOST}/users/_/icon/edge?text=${user.preferredUsername}`;
   const image = await fetch(url);
   return new NextResponse(await image.blob(), {
     headers: {
