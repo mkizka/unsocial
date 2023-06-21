@@ -10,6 +10,7 @@ export function UserIcon({ user, ...props }: Props) {
   return (
     <Image
       {...props}
+      className={"hover:opacity-80 " + props.className}
       src={`/users/${user.id}/icon?${user.lastFetchedAt?.getTime() ?? ""}`}
       alt={`@${user.preferredUsername}のアイコン`}
     />

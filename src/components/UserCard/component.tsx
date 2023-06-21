@@ -19,26 +19,20 @@ export async function UserCard({ user }: Props) {
   const canFollow = session?.user && session.user.id != user.id;
 
   return (
-    <div className="bg-primary-light rounded p-4 mb-4 shadow">
-      <div className="flex items-center space-x-2">
+    <div className="bg-primary-light rounded p-4 pb-8 mb-4 shadow">
+      <div className="flex items-center w-full">
         <UserIcon user={user} width={64} height={64} className="rounded-full" />
-        <div>
+        <div className="ml-4">
           <h1 className="text-2xl font-bold">{user.name}</h1>
           <div className="text-gray">
             @{user.preferredUsername}@{user.host}
           </div>
         </div>
+        <div className="ml-auto flex items-center gap-2">
+          {canFollow && <FollowButton followeeId={user.id} />}
+          {env.HOST != user.host && <RefetchButton userId={user.id} />}
+        </div>
       </div>
-      {env.HOST != user.host && (
-        <div className="flex justify-end">
-          <RefetchButton userId={user.id} />
-        </div>
-      )}
-      {canFollow && (
-        <div className="flex justify-end">
-          <FollowButton followeeId={user.id} />
-        </div>
-      )}
     </div>
   );
 }

@@ -10,7 +10,7 @@ type Props = {
 };
 
 const FOLLOW_TEXT = {
-  SENT: "フォロー送信済み",
+  SENT: "承認待ち",
   ACCEPTED: "フォロー中",
   FAILED: "再フォロー", // TODO: 実装する
 } as const satisfies {
@@ -22,7 +22,7 @@ export function FollowButton({ followeeId, followStatus }: Props) {
 
   return (
     <button
-      className="block bg-blue-500 text-white px-4 py-2 rounded-md"
+      className="block bg-secondary text-light whitespace-nowrap w-24 shadow text-sm px-4 py-2 rounded"
       data-testid={isPending ? "follow-button-loading" : "follow-button"}
       onClick={() => startTransition(() => action(followeeId))}
     >
