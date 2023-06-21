@@ -50,7 +50,7 @@
     "cli-markdown": "3.0.3",
     "dotenv-cli": "7.2.1",
     "eslint": "8.43.0",
-    "eslint-config-next": "13.4.6",
+    "eslint-config-next": "13.4.7",
     "eslint-plugin-simple-import-sort": "10.0.0",
     "eslint-plugin-unused-imports": "2.0.0",
     "husky": "8.0.3",
