@@ -13,6 +13,7 @@ export function UserIcon({ user, ...props }: Props) {
       className={"hover:opacity-80 " + props.className}
       src={`/users/${user.id}/icon?${user.lastFetchedAt?.getTime() ?? ""}`}
       alt={`@${user.preferredUsername}のアイコン`}
+      priority
     />
   );
 }
