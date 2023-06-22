@@ -1,75 +1,104 @@
 // Stryker disable all
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import crypto from "crypto";
+import bcryptjs from "bcryptjs";
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import EmailProvider from "next-auth/providers/email";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { z } from "zod";
 
 import { env } from "@/utils/env";
+import { formatZodError } from "@/utils/formatZodError";
+import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
+
+const logger = createLogger("next-auth");
+
+const credentialsSchema = z.object({
+  name: z.string().optional(),
+  preferredUsername: z.string().min(1, "ユーザーIDは必須です"),
+  password: z.string().min(8, "パスワードは8文字以上にしてください"),
+});
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    async session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-        session.user.privateKey = user.privateKey;
-      }
+    async session({ session, token }) {
+      session.user = {
+        id: token.id,
+      };
       return session;
     },
-  },
-  events: {
-    async createUser({ user }) {
-      // 以下のコマンドの内容と同じように生成する
-      //   openssl genrsa -out private.pem 2048
-      //   openssl rsa -in private.pem -outform PEM -pubout -out public.pem
-      // 参考: https://blog.joinmastodon.org/2018/06/how-to-implement-a-basic-activitypub-server/
-      const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
-        modulusLength: 2048,
-        publicKeyEncoding: {
-          type: "spki",
-          format: "pem",
-        },
-        privateKeyEncoding: {
-          type: "pkcs8",
-          format: "pem",
-        },
-      });
-      await prisma.user.update({
-        where: {
-          id: user.id,
-        },
-        data: {
-          publicKey,
-          privateKey,
-        },
-      });
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
     },
   },
-  adapter: {
-    ...PrismaAdapter(prisma),
-    createUser: (data) =>
-      // 謎の型エラー
-      // @ts-ignore
-      prisma.user.create({
-        // @ts-ignore
-        data: {
-          ...data,
-          preferredUsername: "test",
-          host: env.HOST,
-        },
-      }),
+  logger: {
+    error(code, message) {
+      logger.error(`${code} ${JSON.stringify(message)}`);
+    },
+    warn(code) {
+      logger.warn(code);
+    },
   },
   providers: [
-    EmailProvider({
-      server: {
-        host: env.EMAIL_SERVER_HOST,
-        port: env.EMAIL_SERVER_PORT,
-        auth: {
-          user: env.EMAIL_SERVER_USER,
-          pass: env.EMAIL_SERVER_PASS,
+    // @ts-ignore
+    CredentialsProvider({
+      credentials: {
+        name: {
+          label: "ユーザー名",
+          type: "text",
+          placeholder: "表示される名前",
         },
+        preferredUsername: {
+          label: "ユーザーID",
+          type: "text",
+          placeholder: "user_name",
+        },
+        password: { label: "パスワード", type: "password" },
       },
-      from: env.EMAIL_FROM,
+      // @ts-ignore
+      async authorize(credentials) {
+        const parsedCredentials = credentialsSchema.safeParse(credentials);
+        if (!parsedCredentials.success) {
+          logger.info(formatZodError(parsedCredentials.error));
+          return null;
+        }
+        const user = await prisma.user.findUnique({
+          where: {
+            preferredUsername_host: {
+              preferredUsername: parsedCredentials.data.preferredUsername,
+              host: env.HOST,
+            },
+          },
+          include: {
+            credentials: true,
+          },
+        });
+        if (
+          user?.credentials &&
+          bcryptjs.compareSync(
+            parsedCredentials.data.password,
+            user.credentials.hashedPassword
+          )
+        ) {
+          return { id: user.id };
+        }
+        const newUser = await prisma.user.create({
+          data: {
+            name: parsedCredentials.data.name ?? null,
+            preferredUsername: parsedCredentials.data.preferredUsername,
+            host: env.HOST,
+            credentials: {
+              create: {
+                hashedPassword: bcryptjs.hashSync(
+                  parsedCredentials.data.password
+                ),
+              },
+            },
+          },
+        });
+        return { id: newUser.id };
+      },
     }),
   ],
 };

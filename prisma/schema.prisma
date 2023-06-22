@@ -22,11 +22,11 @@ model Session {
 }
 
 model User {
-  id                String    @id @default(nanoid(8))
+  id                String       @id @default(nanoid(8))
   preferredUsername String
   host              String
   name              String?
-  email             String?   @unique
+  email             String?      @unique
   emailVerified     DateTime?
   icon              String?
   image             String?
@@ -38,11 +38,19 @@ model User {
   lastFetchedAt     DateTime?
   sessions          Session[]
   notes             Note[]
-  followee          Follow[]  @relation("followee")
-  follower          Follow[]  @relation("follower")
+  followee          Follow[]     @relation("followee")
+  follower          Follow[]     @relation("follower")
   likes             Like[]
+  credentials       Credentials?
 
   @@unique([preferredUsername, host])
+}
+
+model Credentials {
+  id             String @id @default(nanoid(8))
+  userId         String @unique
+  hashedPassword String
+  user           User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
