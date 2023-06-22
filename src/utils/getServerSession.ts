@@ -2,7 +2,7 @@
 import { getServerSession as _getServerSession } from "next-auth";
 import { cache } from "react";
 
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const getServerSession = cache(async () => {
   // テスト実行時にエラーが出るため動的インポートする
