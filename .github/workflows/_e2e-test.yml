@@ -10,7 +10,6 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ap-northeast-1
 
-#
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,8 +19,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/.next/cache
-          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('src/**') }}
-          restore-keys: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
