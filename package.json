@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "@playwright/test": "1.35.1",
-    "@stryker-mutator/api": "7.0.2",
-    "@stryker-mutator/core": "7.0.2",
-    "@stryker-mutator/jest-runner": "7.0.2",
+    "@stryker-mutator/api": "7.1.0",
+    "@stryker-mutator/core": "7.1.0",
+    "@stryker-mutator/jest-runner": "7.1.0",
     "@tailwindcss/forms": "0.5.3",
     "@types/bcryptjs": "2.4.2",
     "@types/jest": "29.5.2",
