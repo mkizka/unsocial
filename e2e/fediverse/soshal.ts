@@ -3,8 +3,8 @@ import { expect } from "@playwright/test";
 import { FediverseHandler } from "./base";
 
 export class MyhostSoshalHandler extends FediverseHandler {
-  domain = "soshal.localhost";
-  user = "@test@soshal.localhost";
+  domain = "myhost-soshal.localhost";
+  user = "@test@myhost-soshal.localhost";
 
   async login() {
     await this.goto("/auth");
