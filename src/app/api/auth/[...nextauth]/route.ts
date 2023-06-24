@@ -22,12 +22,14 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       session.user = {
         id: token.id,
+        privateKey: token.privateKey,
       };
       return session;
     },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.privateKey = user.privateKey!;
       }
       return token;
     },
@@ -80,7 +82,7 @@ export const authOptions: NextAuthOptions = {
             user.credentials.hashedPassword
           )
         ) {
-          return { id: user.id };
+          return { id: user.id, privateKey: user.privateKey };
         }
         const newUser = await prisma.user.create({
           data: {
@@ -96,7 +98,7 @@ export const authOptions: NextAuthOptions = {
             },
           },
         });
-        return { id: newUser.id };
+        return { id: newUser.id, privateKey: newUser.privateKey };
       },
     }),
   ],
