@@ -35,8 +35,7 @@ services:
       default:
         aliases:
           - soshal.localhost
-          - myhost-soshal.localhost
-          - remote-soshal.localhost
+          - remote.localhost
           - misskey.localhost
     depends_on:
       misskey:
