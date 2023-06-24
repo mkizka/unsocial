@@ -1,8 +1,8 @@
 import type { Note } from "@prisma/client";
 import type { Session } from "next-auth";
 
+import { mockedPrisma } from "@/mocks/prisma";
 import { getServerSession } from "@/utils/getServerSession";
-import { mockedPrisma } from "@/utils/mock";
 import { relayActivityToFollowers } from "@/utils/relayActivity";
 
 import { action } from "./action";

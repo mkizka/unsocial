@@ -1,18 +1,28 @@
 // Stryker disable all
-import { createLogger, format, transports } from "winston";
+import util from "util";
+import winston from "winston";
 
-export const logger = createLogger({
-  format: format.combine(
-    format.timestamp(),
-    format.splat(),
-    format.printf(
-      (log) => `${log.timestamp} - [${log.level.toUpperCase()}] ${log.message}`
+import { env } from "./env";
+
+const logger = winston.createLogger({
+  format: winston.format.combine(
+    winston.format.colorize({
+      colors: { info: "cyan" },
+    }),
+    winston.format.uncolorize({
+      level: env.NODE_ENV != "development",
+    }),
+    winston.format.printf((log) =>
+      util.format(
+        `- %s%s %s`,
+        log.level,
+        log.name ? `(${log.name})` : "",
+        log.message
+      )
     )
   ),
-  transports: [
-    new transports.Console({
-      // env.tsでもloggerを使いたいのでprocess.envを参照する
-      silent: process.env.NODE_ENV == "test",
-    }),
-  ],
+  silent: env.NODE_ENV == "test",
+  transports: new winston.transports.Console(),
 });
+
+export const createLogger = (name: string) => logger.child({ name });

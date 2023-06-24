@@ -4,13 +4,14 @@ import Link from "next/link";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
 
+import { UserIcon } from "../UserIcon";
 import { CreatedAt } from "./parts/CreatedAt";
 import { DeleteButton } from "./parts/DeleteButton";
 import { LikeButton } from "./parts/LikeButton";
 
 export type Props = {
   note: Note & {
-    user: Pick<User, "name" | "preferredUsername" | "host" | "icon">;
+    user: User;
     likes: Pick<Like, "userId">[];
   };
 };
@@ -20,46 +21,38 @@ export async function NoteCard({ note }: Props) {
   const userId = session?.user?.id;
   const isMine = userId === note.userId;
   const isLiked = note.likes.some((like) => like.userId === userId);
+  const href =
+    `/@${note.user.preferredUsername}` +
+    (note.user.host != env.HOST ? `@${note.user.host}` : "");
 
   return (
     <article
       data-testid="note-card"
-      className="flex text-prmary bg-primary-light rounded p-4 mb-4 shadow"
+      className="flex relative text-prmary bg-primary-light rounded pt-3 pl-3 pr-4 pb-5 mb-2 shadow"
     >
-      <div className="mr-2">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="h-10 w-10 rounded-full"
-          src={
-            note.user.icon ?? `/icon.png?name=${note.user.preferredUsername}`
-          }
-          width={50}
-          height={50}
-          alt={`@${note.user.name}のアイコン`}
-        />
-      </div>
-      <div className="w-full">
-        <div className="flex mb-2">
-          <div>
-            <Link
-              href={
-                `/@${note.user.preferredUsername}` +
-                (note.user.host != env.HOST ? `@${note.user.host}` : "")
-              }
-              className="hover:underline"
-            >
+      <div className="w-full pl-[48px]">
+        <Link className="absolute left-3" href={href}>
+          <UserIcon
+            user={note.user}
+            className="rounded-full"
+            width={36}
+            height={36}
+          />
+        </Link>
+        <div className="flex">
+          <Link href={href} className="block truncate hover:underline">
+            {note.user.name && <span className="mr-1">{note.user.name}</span>}
+            <span className="text-gray">
               @{note.user.preferredUsername}@{note.user.host}
-            </Link>
-          </div>
-          <div className="flex gap-2 ml-auto items-center">
+            </span>
+          </Link>
+          <div className="flex gap-1 ml-auto pl-1 items-center">
             {isMine && <DeleteButton noteId={note.id} />}
             <LikeButton noteId={note.id} isLiked={isLiked} />
             <CreatedAt href={`/notes/${note.id}`} createdAt={note.createdAt} />
           </div>
         </div>
-        <div className="mb-2">
-          <p>{note.content}</p>
-        </div>
+        <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
       </div>
     </article>
   );

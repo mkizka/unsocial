@@ -5,9 +5,11 @@ import { z } from "zod";
 import { findOrFetchUserByActorId } from "@/utils/findOrFetchUser";
 import { formatZodError } from "@/utils/formatZodError";
 import { verifyActivity } from "@/utils/httpSignature/verify";
-import { logger } from "@/utils/logger";
+import { createLogger } from "@/utils/logger";
 
 import { inbox } from "./_handlers";
+
+const logger = createLogger("/users/[userId]/inbox");
 
 const anyActivitySchema = z
   .object({

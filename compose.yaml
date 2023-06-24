@@ -3,9 +3,6 @@ version: "3"
 volumes:
   db_data:
   redis_data:
-  mail_data:
-  next:
-  node_modules:
 
 services:
   misskey:

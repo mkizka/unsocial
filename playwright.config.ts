@@ -38,9 +38,4 @@ const config: PlaywrightTestConfig = {
   },
 };
 
-if (process.env.CI) {
-  config.retries = 3;
-  config.timeout = 90000;
-}
-
 export default defineConfig(config);

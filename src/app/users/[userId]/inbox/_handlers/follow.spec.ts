@@ -1,4 +1,4 @@
-import { mockedPrisma, objectMatcher } from "@/utils/mock";
+import { mockedPrisma } from "@/mocks/prisma";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { follow } from "./follow";
@@ -24,12 +24,13 @@ describe("フォロー", () => {
       actor: "https://remote.example.com/u/dummy_remote",
       object: "https://myhost.example.com/users/dummyidlocal/activity",
     };
-    mockedPrisma.user.findFirst
-      .calledWith(objectMatcher({ where: { id: "dummyidlocal" } }))
-      .mockResolvedValueOnce(dummyLocalUser as never);
+    mockedPrisma.user.findFirst.mockResolvedValueOnce(dummyLocalUser as never);
     // act
     const response = await follow(activity, dummyRemoteUser as never);
     // assert
+    expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
+      where: { id: "dummyidlocal" },
+    });
     expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
       data: {
         followeeId: dummyLocalUser.id,

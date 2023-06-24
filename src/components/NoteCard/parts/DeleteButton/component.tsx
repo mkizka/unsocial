@@ -1,5 +1,8 @@
 "use client";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useTransition } from "react";
+
+import { Spinner } from "@/components/Spinner";
 
 import { action } from "./action.server";
 
@@ -13,9 +16,9 @@ export function DeleteButton({ noteId }: Props) {
     <button
       data-testid="delete-button"
       onClick={() => startTransition(() => action(noteId))}
-      className="text-accent hover:text-accent-dark transition-colors"
+      className="text-accent hover:text-accent-dark w-5 h-5 transition-colors"
     >
-      {isPending ? "..." : "削除"}
+      {isPending ? <Spinner /> : <XMarkIcon />}
     </button>
   );
 }

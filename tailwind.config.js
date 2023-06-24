@@ -17,9 +17,10 @@ module.exports = {
         "accent-dark": colors.rose["600"],
         "accent-light": colors.rose["400"],
         dark: colors.gray["700"], // 背景が明るい文字
+        gray: colors.gray["400"],
         light: colors.gray["100"], // 背景が暗い文字
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };

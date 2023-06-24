@@ -1,16 +1,22 @@
-import { type DefaultSession } from "next-auth";
+import type { User as PrismaUser } from "@prisma/client";
 
+// https://next-auth.js.org/getting-started/typescript#main-module
 declare module "next-auth" {
-  /**
-   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
   interface Session {
-    user?: {
+    user: {
       id: string;
       privateKey: string;
-    } & DefaultSession["user"];
+    };
   }
-  interface User {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface User extends PrismaUser {}
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id: string;
     privateKey: string;
   }
 }
+
+export {};

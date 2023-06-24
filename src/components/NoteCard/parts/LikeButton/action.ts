@@ -4,7 +4,7 @@ import type { Session } from "next-auth";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
-import { logger } from "@/utils/logger";
+import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
@@ -17,6 +17,8 @@ const include = {
     },
   },
 };
+
+const logger = createLogger("LikeButton");
 
 const like = async (user: SessionUser, input: unknown) => {
   const like = await prisma.like.create({

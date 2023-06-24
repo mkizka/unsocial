@@ -1,9 +1,10 @@
 // Stryker disable all
 import { getServerSession as _getServerSession } from "next-auth";
+import { cache } from "react";
 
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export const getServerSession = async () => {
+export const getServerSession = cache(async () => {
   // テスト実行時にエラーが出るため動的インポートする
   const { cookies, headers } = await import("next/headers");
   // Error: Invariant: Method expects to have requestAsyncStorage, none available への回避策
@@ -18,6 +19,7 @@ export const getServerSession = async () => {
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const res = { getHeader() {}, setCookie() {}, setHeader() {} };
+
   // @ts-ignore
   return _getServerSession(req, res, authOptions);
-};
+});

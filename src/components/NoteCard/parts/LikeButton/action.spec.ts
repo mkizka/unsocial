@@ -1,7 +1,7 @@
 import type { Session } from "next-auth";
 
+import { mockedPrisma } from "@/mocks/prisma";
 import { getServerSession } from "@/utils/getServerSession";
-import { mockedPrisma } from "@/utils/mock";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { action } from "./action";
@@ -14,7 +14,6 @@ const mockedGetServerSession = jest.mocked(getServerSession);
 
 const dummyLocalUser = {
   id: "dummy_local",
-  privateKey: "privateKey",
 };
 
 describe("LikeButton/action", () => {

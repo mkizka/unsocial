@@ -2,12 +2,11 @@ import type { User } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 import { rest } from "msw";
 
+import { mockedLogger } from "@/mocks/logger";
+import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
-// なぜか"./mock"だとモック出来ない
-import { mockedPrisma } from "@/utils/mock";
 
-import { findOrFetchUserByParams } from "./findOrFetchUser";
-import { logger } from "./logger";
+import { findOrFetchUserByParams } from "./byParams";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
 jest.useFakeTimers();
@@ -43,9 +42,6 @@ const dummyPerson: AP.Person = {
     publicKeyPem: "publicKey",
   },
 };
-
-jest.mock("./logger");
-const mockedLogger = jest.mocked(logger);
 
 const restWebfinger = (response?: object) => {
   return rest.get(
@@ -93,8 +89,30 @@ const restDummyIdInvalid = (person?: object) => {
 
 const params = { userId: "@dummy@remote.example.com" };
 
-describe("findOrFetchUser", () => {
+describe("findOrFetchUserByParams", () => {
   describe("正常系", () => {
+    test("@から始まっていなければidとしてDBを検索する", async () => {
+      // arrange
+      mockedPrisma.user.findFirst.mockResolvedValue(dummyUser);
+      // act
+      const user = await findOrFetchUserByParams({ userId: "dummyId" });
+      // assert
+      expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
+        where: { id: "dummyId" },
+      });
+      expect(user).toEqual(dummyUser);
+    });
+    test("@が先頭のみであれば以降をpreferredUsername、hostをenv.HOSTとしてDBを検索する", async () => {
+      // arrange
+      mockedPrisma.user.findFirst.mockResolvedValue(dummyUser);
+      // act
+      const user = await findOrFetchUserByParams({ userId: "@dummy" });
+      // assert
+      expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
+        where: { preferredUsername: "dummy", host: "myhost.example.com" },
+      });
+      expect(user).toEqual(dummyUser);
+    });
     test("最近fetchしたユーザーがDBにあればそれを返す", async () => {
       // arrange
       mockedPrisma.user.findFirst.mockResolvedValue(dummyUser);
@@ -106,7 +124,7 @@ describe("findOrFetchUser", () => {
       });
       expect(user).toEqual(dummyUser);
     });
-    test("fetchしてから時間が経っていればWebFingerを叩いて新規ユーザーとして保存する", async () => {
+    test("fetchしてから時間が経っていればWebFingerを叩いて既存ユーザーを更新する", async () => {
       // arrange
       server.use(restWebfinger(), restDummyId());
       mockedPrisma.user.findFirst.mockResolvedValue({
@@ -116,6 +134,23 @@ describe("findOrFetchUser", () => {
       mockedPrisma.user.update.mockResolvedValue(dummyUser);
       // act
       const user = await findOrFetchUserByParams(params);
+      // assert
+      expect(mockedPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: dummyUser.id },
+        data: expectedData,
+      });
+      expect(user).toEqual(dummyUser);
+    });
+    test("fetchしてから時間が経っていればWebFingerを叩いて既存ユーザーを更新する(id指定)", async () => {
+      // arrange
+      server.use(restWebfinger(), restDummyId());
+      mockedPrisma.user.findFirst.mockResolvedValue({
+        ...dummyUser,
+        lastFetchedAt: new Date("2023-01-01T00:00:00Z"),
+      });
+      mockedPrisma.user.update.mockResolvedValue(dummyUser);
+      // act
+      const user = await findOrFetchUserByParams({ userId: dummyUser.id });
       // assert
       expect(mockedPrisma.user.update).toHaveBeenCalledWith({
         where: { id: dummyUser.id },
@@ -161,6 +196,13 @@ describe("findOrFetchUser", () => {
     });
   });
   describe("異常系", () => {
+    test("@のみならnullを返す", async () => {
+      // act
+      const user = await findOrFetchUserByParams({ userId: "@" });
+      // assert
+      expect(mockedPrisma.user.findFirst).not.toHaveBeenCalled();
+      expect(user).toEqual(null);
+    });
     test("hostが不正ならnullを返す", async () => {
       // act
       const user = await findOrFetchUserByParams({ userId: "@dummy@\\" });
