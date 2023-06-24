@@ -51,9 +51,18 @@ export function AuthForm({ type }: Props) {
       onSubmit={handleSubmit}
     >
       {type === "signUp" && (
-        <TextInputField name="name" label="ユーザー名" required={false} />
+        <TextInputField
+          name="name"
+          label="ユーザー名"
+          autoComplete="name"
+          required={false}
+        />
       )}
-      <TextInputField name="username" label="ユーザーID" />
+      <TextInputField
+        name="preferredUsername"
+        label="ユーザーID"
+        autoComplete="username"
+      />
       <PasswordInputField type={type} />
       <SubmitButton>{texts[type].button}</SubmitButton>
     </form>

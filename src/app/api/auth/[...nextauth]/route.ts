@@ -43,21 +43,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   providers: [
-    // @ts-ignore
     CredentialsProvider({
-      credentials: {
-        name: {
-          label: "ユーザー名",
-          type: "text",
-          placeholder: "表示される名前",
-        },
-        preferredUsername: {
-          label: "ユーザーID",
-          type: "text",
-          placeholder: "user_name",
-        },
-        password: { label: "パスワード", type: "password" },
-      },
       // @ts-ignore
       async authorize(credentials) {
         const parsedCredentials = credentialsSchema.safeParse(credentials);
