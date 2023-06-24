@@ -1,5 +1,6 @@
 // Stryker disable all
 import bcryptjs from "bcryptjs";
+import crypto from "crypto";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
@@ -16,6 +17,20 @@ const credentialsSchema = z.object({
   preferredUsername: z.string().min(1, "ユーザーIDは必須です"),
   password: z.string().min(8, "パスワードは8文字以上にしてください"),
 });
+
+const createKeys = () => {
+  return crypto.generateKeyPairSync("rsa", {
+    modulusLength: 2048,
+    publicKeyEncoding: {
+      type: "spki",
+      format: "pem",
+    },
+    privateKeyEncoding: {
+      type: "pkcs8",
+      format: "pem",
+    },
+  });
+};
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
@@ -70,11 +85,14 @@ export const authOptions: NextAuthOptions = {
         ) {
           return { id: user.id, privateKey: user.privateKey };
         }
+        const keys = createKeys();
         const newUser = await prisma.user.create({
           data: {
             name: parsedCredentials.data.name ?? null,
             preferredUsername: parsedCredentials.data.preferredUsername,
             host: env.HOST,
+            publicKey: keys.publicKey,
+            privateKey: keys.privateKey,
             credentials: {
               create: {
                 hashedPassword: bcryptjs.hashSync(
