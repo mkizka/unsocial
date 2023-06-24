@@ -22,7 +22,7 @@ export async function UserHome({ user }: Props) {
   });
   return (
     <main>
-      <p data-testid="is-logged-in">{user.name}でログイン中</p>
+      <p data-testid="is-logged-in">{user.id}でログイン中</p>
       <SignInOrOutButton isAuthenticated />
       <NoteForm />
       <Timeline notes={notes} />

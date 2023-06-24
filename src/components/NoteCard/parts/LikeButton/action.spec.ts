@@ -14,7 +14,6 @@ const mockedGetServerSession = jest.mocked(getServerSession);
 
 const dummyLocalUser = {
   id: "dummy_local",
-  privateKey: "privateKey",
 };
 
 describe("LikeButton/action", () => {

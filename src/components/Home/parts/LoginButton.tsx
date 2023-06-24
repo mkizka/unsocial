@@ -17,14 +17,11 @@ export function SignInOrOutButton({ isAuthenticated }: Props) {
     <button
       data-testid="login-button"
       onClick={() => {
-        signIn(
-          "email",
-          { email: `${location.hostname}@example.com` },
-          {
-            name: "テスト",
-            preferredUsername: "test",
-          }
-        );
+        signIn("credentials", {
+          name: "ほげ",
+          preferredUsername: "test",
+          password: "hogefuga",
+        });
       }}
     >
       ログイン
