@@ -9,7 +9,6 @@ import {
 import type { FediverseHandler } from "./fediverse/base";
 
 test.describe.configure({ mode: "parallel" });
-test.use({ storageState: "e2e/state.json" });
 
 type RunTestParams = {
   from: FediverseHandler;
@@ -19,6 +18,10 @@ type RunTestParams = {
 // fromからtoへ投稿が連合するシナリオ
 const runTest = async ({ from, to }: RunTestParams) => {
   const content = crypto.randomUUID();
+  // ログイン
+  await from.login();
+  // リモートにログイン
+  await to.login();
   // リモートからフォロー
   await to.followAndWait(from.user);
   // フォローされたことを確認
