@@ -3,29 +3,15 @@ import { expect } from "@playwright/test";
 import { FediverseHandler } from "./base";
 
 export class MyhostSoshalHandler extends FediverseHandler {
-  domain = "myhost-soshal.localhost";
-  user = "@test@myhost-soshal.localhost";
+  domain = "soshal.localhost";
+  user = "@test@soshal.localhost";
 
   async login() {
-    // まれに /api/auth/signin?csrf=true にリダイレクトされることがあるのでリトライ
-    await expect(async () => {
-      await this.goto("/");
-      await this.page.locator("[data-testid=login-button]").click();
-      await this.page.waitForURL(
-        (url) => url.pathname.startsWith("/api/auth/verify-request"),
-        { timeout: 10000 }
-      );
-    }).toPass();
-    await this.page.goto("http://localhost:8025");
-    await this.page
-      .locator(".msglist-message", { hasText: `${this.domain}@example.com` })
-      .first()
-      .click();
-    const signInUrl = await this.page
-      .frameLocator("iframe")
-      .getByRole("link", { name: "Sign in" })
-      .getAttribute("href");
-    await this.page.goto(signInUrl!);
+    await this.goto("/auth");
+    await this.page.getByTestId("text-input-name").fill("テスト");
+    await this.page.getByTestId("text-input-username").fill("test");
+    await this.page.getByTestId("password-input").fill("testtest");
+    await this.page.getByTestId("submit-button").click();
     await expect(this.page.getByTestId("is-logged-in")).toBeVisible();
   }
 
