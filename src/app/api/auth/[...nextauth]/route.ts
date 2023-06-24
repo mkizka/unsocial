@@ -60,8 +60,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         const parsedCredentials = credentialsSchema.safeParse(credentials);
         if (!parsedCredentials.success) {
-          logger.info(formatZodError(parsedCredentials.error));
-          return null;
+          throw new Error(formatZodError(parsedCredentials.error));
         }
         const user = await prisma.user.findUnique({
           where: {
