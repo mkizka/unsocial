@@ -8,7 +8,6 @@ export class MyhostSoshalHandler extends FediverseHandler {
 
   async login() {
     await this.goto("/auth");
-    await this.page.getByTestId("text-input-name").fill("テスト");
     await this.page.getByTestId("text-input-preferredUsername").fill("test");
     await this.page.getByTestId("password-input").fill("testtest");
     await this.page.getByTestId("submit-button").click();
