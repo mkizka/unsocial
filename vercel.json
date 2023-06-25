@@ -1,5 +1,6 @@
 {
   "buildCommand": "pnpm prisma db push && pnpm build",
+  "ignoreCommand": "node scripts/vercel-ignore-step.js",
   "github": {
     "silent": true
   }
