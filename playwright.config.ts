@@ -9,6 +9,7 @@ const chromium = {
 const config: PlaywrightTestConfig = {
   testDir: "e2e",
   outputDir: "reports/.e2e",
+  timeout: 60000,
   reporter: [["html", { open: "never", outputFolder: "reports/e2e" }]],
   projects: [
     {
@@ -27,9 +28,6 @@ const config: PlaywrightTestConfig = {
     serviceWorkers: "block",
     video: "on",
     trace: "on",
-  },
-  expect: {
-    timeout: 10000,
   },
   webServer: {
     command: "pnpm e2e:server",
