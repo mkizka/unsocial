@@ -8,8 +8,6 @@ import {
 } from "./fediverse";
 import type { FediverseHandler } from "./fediverse/base";
 
-test.describe.configure({ mode: "parallel" });
-
 type RunTestParams = {
   from: FediverseHandler;
   to: FediverseHandler;
