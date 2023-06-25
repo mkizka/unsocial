@@ -41,7 +41,7 @@ export class MisskeyHandler extends FediverseHandler {
   async expectedUser(user: string) {
     await expect(async () => {
       await this.goto(`/${user}`);
-      await expect(this.page.locator(`text=${this.user}`).first()).toBeVisible({
+      await expect(this.page.locator(`text=${user}`).first()).toBeVisible({
         timeout: 15000,
       });
     }).toPass();
