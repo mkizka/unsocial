@@ -12,6 +12,7 @@ export async function GET({ nextUrl }: NextRequest) {
     !(
       resource &&
       resource.startsWith("acct:") &&
+      // TODO: 自ホスト以外も返すべきなのか調べる
       resource.endsWith(`@${env.HOST}`)
     )
   ) {
@@ -19,10 +20,14 @@ export async function GET({ nextUrl }: NextRequest) {
   }
   const preferredUsername = resource
     .replace("acct:", "") // startsWithされてるので必ず先頭にある
-    .split("@")[0]; // endsWithされてるので必ず1文字以上ある
-  // TODO: 自ホストのユーザーのみ返す？hostも見る？
-  const user = await prisma.user.findFirst({
-    where: { preferredUsername },
+    .split("@")[0]!; // endsWithされてるので必ず1文字以上ある
+  const user = await prisma.user.findUnique({
+    where: {
+      preferredUsername_host: {
+        preferredUsername,
+        host: env.HOST,
+      },
+    },
   });
   if (!user) {
     notFound();
