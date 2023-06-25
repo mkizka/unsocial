@@ -34,6 +34,7 @@ const config: PlaywrightTestConfig = {
   webServer: {
     command: "pnpm e2e:server",
     port: 3000,
+    stdout: "pipe",
     reuseExistingServer: !process.env.CI,
   },
 };
