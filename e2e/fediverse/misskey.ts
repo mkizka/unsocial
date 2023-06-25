@@ -38,6 +38,11 @@ export class MisskeyHandler extends FediverseHandler {
     await expect(this.page.locator("text=@e2e")).toBeVisible();
   }
 
+  async expectedUser(user: string) {
+    await this.goto(`/${user}`);
+    await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
+  }
+
   getNote(content: string) {
     return this.page.locator("article", { hasText: content });
   }

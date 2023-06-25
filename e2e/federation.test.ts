@@ -22,6 +22,10 @@ const runTest = async ({ from, to }: RunTestParams) => {
   await from.login();
   // リモートにログイン
   await to.login();
+  // リモートのユーザーを確認
+  await from.expectedUser(to.user);
+  // リモートでユーザーを確認
+  await to.expectedUser(from.user);
   // リモートからフォロー
   await to.followAndWait(from.user);
   // フォローされたことを確認

@@ -14,6 +14,11 @@ export class MyhostSoshalHandler extends FediverseHandler {
     await expect(this.page.getByTestId("is-logged-in")).toBeVisible();
   }
 
+  async expectedUser(user: string) {
+    await this.goto(`/${user}`);
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+  }
+
   getNote(content: string) {
     return this.page.locator("[data-testid=note-card]", { hasText: content });
   }
