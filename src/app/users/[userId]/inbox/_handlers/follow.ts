@@ -47,8 +47,7 @@ export const follow: InboxFunction = async (activity, actorUser) => {
     // 自ホストのユーザーなら秘密鍵を持っているはずなので、異常な動作
     return {
       status: 503,
-      message:
-        "フォローリクエストで指定されたフォロイーが秘密鍵を持っていませんでした",
+      message: `フォローリクエストで指定されたフォロイー(@${followee.preferredUsername}@${followee.host})が秘密鍵を持っていませんでした`,
     };
   }
   if (!actorUser.inboxUrl) {

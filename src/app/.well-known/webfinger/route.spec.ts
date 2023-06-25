@@ -16,7 +16,7 @@ const createDummyRequest = (params: Record<string, string>) => {
 describe("/.well-known/webfinger", () => {
   test("GET", async () => {
     // arrange
-    mockedPrisma.user.findFirst.mockResolvedValue({
+    mockedPrisma.user.findUnique.mockResolvedValue({
       id: "foo",
     } as User);
     const dummyRequest = createDummyRequest({
@@ -27,6 +27,14 @@ describe("/.well-known/webfinger", () => {
     // assert
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe("application/jrd+json");
+    expect(mockedPrisma.user.findUnique).toBeCalledWith({
+      where: {
+        preferredUsername_host: {
+          preferredUsername: "test",
+          host: "myhost.example.com",
+        },
+      },
+    });
     expect(await response.json()).toMatchInlineSnapshot(`
       {
         "links": [

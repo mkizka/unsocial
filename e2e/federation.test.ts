@@ -8,9 +8,6 @@ import {
 } from "./fediverse";
 import type { FediverseHandler } from "./fediverse/base";
 
-test.describe.configure({ mode: "parallel" });
-test.use({ storageState: "e2e/state.json" });
-
 type RunTestParams = {
   from: FediverseHandler;
   to: FediverseHandler;
@@ -19,28 +16,32 @@ type RunTestParams = {
 // fromからtoへ投稿が連合するシナリオ
 const runTest = async ({ from, to }: RunTestParams) => {
   const content = crypto.randomUUID();
-  // リモートからフォロー
-  await to.followAndWait(from.user);
-  // フォローされたことを確認
-  await from.expectFollowed(to.user);
-  // リモートでフォローできたことを確認
-  await to.expectFollowing(from.user);
-  // 投稿
-  await from.postNoteAndWait(content);
-  // リモートで投稿を確認
-  await to.expectPosted(content);
-  // リモートからいいね
-  await to.likeAndWait(content);
-  // いいねされたことを確認
-  await from.expectLiked(content, to.user);
-  // 投稿を削除
-  await from.deleteAndWait(content);
-  // リモートで削除されたことを確認
-  await to.expectDeleted(content);
-  // リモートからフォロー解除
-  await to.unfollowAndWait(from.user);
-  // フォロー解除されたことを確認
-  await from.expectNotFollowed(to.user);
+  await test.step(`${from.domain}: ログイン`, () => from.login());
+  await test.step(`${to.domain}: ログイン`, () => to.login());
+  await test.step(`${from.domain}: ユーザーを確認`, () =>
+    from.expectedUser(to.user));
+  await test.step(`${to.domain}: ユーザーを確認`, () =>
+    to.expectedUser(from.user));
+  await test.step(`${to.domain}: ${from.user}をフォロー`, () =>
+    to.followAndWait(from.user));
+  await test.step(`${from.domain}: フォローされたことを確認`, () =>
+    from.expectFollowed(to.user));
+  await test.step(`${to.domain}: フォローできたことを確認`, () =>
+    to.expectFollowing(from.user));
+  await test.step(`${from.domain}: 投稿`, () => from.postNoteAndWait(content));
+  await test.step(`${to.domain}: 投稿が連合されたことを確認`, () =>
+    to.expectPosted(content));
+  await test.step(`${to.domain}: いいね`, () => to.likeAndWait(content));
+  await test.step(`${from.domain}: いいねされたことを確認`, () =>
+    from.expectLiked(content, to.user));
+  await test.step(`${from.domain}: 投稿を削除`, () =>
+    from.deleteAndWait(content));
+  await test.step(`${to.domain}: 削除されたことを確認`, () =>
+    to.expectDeleted(content));
+  await test.step(`${to.domain}: フォロー解除`, () =>
+    to.unfollowAndWait(from.user));
+  await test.step(`${from.domain}: フォロー解除されたことを確認`, () =>
+    from.expectNotFollowed(to.user));
 };
 
 test.describe("Federation", () => {

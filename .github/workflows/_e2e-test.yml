@@ -15,6 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      # https://nextjs.org/docs/pages/building-your-application/deploying/ci-build-caching#github-actions
+      - uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:

@@ -18,6 +18,8 @@ export abstract class FediverseHandler {
 
   abstract login(): Promise<void>;
 
+  abstract expectedUser(user: string): Promise<void>;
+
   protected abstract postNote(content: string): Promise<void>;
 
   async postNoteAndWait(content: string) {

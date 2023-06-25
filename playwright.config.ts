@@ -9,10 +9,8 @@ const chromium = {
 const config: PlaywrightTestConfig = {
   testDir: "e2e",
   outputDir: "reports/.e2e",
-  reporter: [
-    ["list"],
-    ["html", { open: "never", outputFolder: "reports/e2e" }],
-  ],
+  timeout: 60000,
+  reporter: [["html", { open: "never", outputFolder: "reports/e2e" }]],
   projects: [
     {
       name: "setup",
@@ -33,7 +31,8 @@ const config: PlaywrightTestConfig = {
   },
   webServer: {
     command: "pnpm e2e:server",
-    port: 3001,
+    port: 3000,
+    stdout: "pipe",
     reuseExistingServer: !process.env.CI,
   },
 };
