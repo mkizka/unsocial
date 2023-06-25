@@ -3,16 +3,20 @@ import { expect } from "@playwright/test";
 import { FediverseHandler } from "./base";
 
 export class MyhostSoshalHandler extends FediverseHandler {
-  domain = "myhost-soshal.localhost";
-  user = "@test@myhost-soshal.localhost";
+  domain = "soshal.localhost";
+  user = "@test@soshal.localhost";
 
   async login() {
     await this.goto("/auth");
-    await this.page.getByTestId("text-input-name").fill("テスト");
     await this.page.getByTestId("text-input-preferredUsername").fill("test");
     await this.page.getByTestId("password-input").fill("testtest");
     await this.page.getByTestId("submit-button").click();
     await expect(this.page.getByTestId("is-logged-in")).toBeVisible();
+  }
+
+  async expectedUser(user: string) {
+    await this.goto(`/${user}`);
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   getNote(content: string) {
@@ -71,14 +75,16 @@ export class MyhostSoshalHandler extends FediverseHandler {
 
   async expectFollowed(user: string) {
     // TODO: フォロワー一覧を実装したら実装
+    await this.goto("/");
   }
 
   async expectNotFollowed(user: string) {
     // TODO: フォロワー一覧を実装したら実装
+    await this.goto("/");
   }
 }
 
 export class RemoteSoshalHandler extends MyhostSoshalHandler {
-  domain = "remote-soshal.localhost";
-  user = "@test@remote-soshal.localhost";
+  domain = "remote.localhost";
+  user = "@test@remote.localhost";
 }
