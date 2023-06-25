@@ -18,36 +18,26 @@ type RunTestParams = {
 // fromからtoへ投稿が連合するシナリオ
 const runTest = async ({ from, to }: RunTestParams) => {
   const content = crypto.randomUUID();
-  // ログイン
-  await from.login();
-  // リモートにログイン
-  await to.login();
-  // リモートのユーザーを確認
-  await from.expectedUser(to.user);
-  // リモートでユーザーを確認
-  await to.expectedUser(from.user);
-  // リモートからフォロー
-  await to.followAndWait(from.user);
-  // フォローされたことを確認
-  await from.expectFollowed(to.user);
-  // リモートでフォローできたことを確認
-  await to.expectFollowing(from.user);
-  // 投稿
-  await from.postNoteAndWait(content);
-  // リモートで投稿を確認
-  await to.expectPosted(content);
-  // リモートからいいね
-  await to.likeAndWait(content);
-  // いいねされたことを確認
-  await from.expectLiked(content, to.user);
-  // 投稿を削除
-  await from.deleteAndWait(content);
-  // リモートで削除されたことを確認
-  await to.expectDeleted(content);
-  // リモートからフォロー解除
-  await to.unfollowAndWait(from.user);
-  // フォロー解除されたことを確認
-  await from.expectNotFollowed(to.user);
+  await test.step("from: ログイン", () => from.login());
+  await test.step("to: ログイン", () => to.login());
+  await test.step("from: ユーザーを確認", () => from.expectedUser(to.user));
+  await test.step("to: ユーザーを確認", () => to.expectedUser(from.user));
+  await test.step("to: フォロー", () => to.followAndWait(from.user));
+  await test.step("from: フォローされたことを確認", () =>
+    from.expectFollowed(to.user));
+  await test.step("to: フォローできたことを確認", () =>
+    to.expectFollowing(from.user));
+  await test.step("from: 投稿", () => from.postNoteAndWait(content));
+  await test.step("to: 投稿が連合されたことを確認", () =>
+    to.expectPosted(content));
+  await test.step("to: いいね", () => to.likeAndWait(content));
+  await test.step("from: いいねされたことを確認", () =>
+    from.expectLiked(content, to.user));
+  await test.step("from: 投稿を削除", () => from.deleteAndWait(content));
+  await test.step("to: 削除されたことを確認", () => to.expectDeleted(content));
+  await test.step("to: フォロー解除", () => to.unfollowAndWait(from.user));
+  await test.step("from: フォロー解除されたことを確認", () =>
+    from.expectNotFollowed(to.user));
 };
 
 test.describe("Federation", () => {
