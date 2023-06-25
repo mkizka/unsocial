@@ -18,25 +18,31 @@ type RunTestParams = {
 // fromからtoへ投稿が連合するシナリオ
 const runTest = async ({ from, to }: RunTestParams) => {
   const content = crypto.randomUUID();
-  await test.step("from: ログイン", () => from.login());
-  await test.step("to: ログイン", () => to.login());
-  await test.step("from: ユーザーを確認", () => from.expectedUser(to.user));
-  await test.step("to: ユーザーを確認", () => to.expectedUser(from.user));
-  await test.step("to: フォロー", () => to.followAndWait(from.user));
-  await test.step("from: フォローされたことを確認", () =>
+  await test.step(`${from.domain}: ログイン`, () => from.login());
+  await test.step(`${to.domain}: ログイン`, () => to.login());
+  await test.step(`${from.domain}: ユーザーを確認`, () =>
+    from.expectedUser(to.user));
+  await test.step(`${to.domain}: ユーザーを確認`, () =>
+    to.expectedUser(from.user));
+  await test.step(`${to.domain}: ${from.user}をフォロー`, () =>
+    to.followAndWait(from.user));
+  await test.step(`${from.domain}: フォローされたことを確認`, () =>
     from.expectFollowed(to.user));
-  await test.step("to: フォローできたことを確認", () =>
+  await test.step(`${to.domain}: フォローできたことを確認`, () =>
     to.expectFollowing(from.user));
-  await test.step("from: 投稿", () => from.postNoteAndWait(content));
-  await test.step("to: 投稿が連合されたことを確認", () =>
+  await test.step(`${from.domain}: 投稿`, () => from.postNoteAndWait(content));
+  await test.step(`${to.domain}: 投稿が連合されたことを確認`, () =>
     to.expectPosted(content));
-  await test.step("to: いいね", () => to.likeAndWait(content));
-  await test.step("from: いいねされたことを確認", () =>
+  await test.step(`${to.domain}: いいね`, () => to.likeAndWait(content));
+  await test.step(`${from.domain}: いいねされたことを確認`, () =>
     from.expectLiked(content, to.user));
-  await test.step("from: 投稿を削除", () => from.deleteAndWait(content));
-  await test.step("to: 削除されたことを確認", () => to.expectDeleted(content));
-  await test.step("to: フォロー解除", () => to.unfollowAndWait(from.user));
-  await test.step("from: フォロー解除されたことを確認", () =>
+  await test.step(`${from.domain}: 投稿を削除`, () =>
+    from.deleteAndWait(content));
+  await test.step(`${to.domain}: 削除されたことを確認`, () =>
+    to.expectDeleted(content));
+  await test.step(`${to.domain}: フォロー解除`, () =>
+    to.unfollowAndWait(from.user));
+  await test.step(`${from.domain}: フォロー解除されたことを確認`, () =>
     from.expectNotFollowed(to.user));
 };
 
