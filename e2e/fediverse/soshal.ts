@@ -75,10 +75,12 @@ export class MyhostSoshalHandler extends FediverseHandler {
 
   async expectFollowed(user: string) {
     // TODO: フォロワー一覧を実装したら実装
+    await this.goto("/");
   }
 
   async expectNotFollowed(user: string) {
     // TODO: フォロワー一覧を実装したら実装
+    await this.goto("/");
   }
 }
 
