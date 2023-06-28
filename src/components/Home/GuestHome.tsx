@@ -1,7 +1,8 @@
+import Link from "next/link";
+
 import { prisma } from "@/utils/prisma";
 
 import { Timeline } from "../Timeline";
-import { SignInOrOutButton } from "./parts/LoginButton";
 
 export async function GuestHome() {
   const notes = await prisma.note.findMany({
@@ -15,7 +16,7 @@ export async function GuestHome() {
   });
   return (
     <main>
-      <SignInOrOutButton />
+      <Link href="/auth">ログイン</Link>
       <Timeline notes={notes} />
     </main>
   );

@@ -4,7 +4,7 @@ import { prisma } from "@/utils/prisma";
 
 import { NoteForm } from "../NoteForm";
 import { Timeline } from "../Timeline";
-import { SignInOrOutButton } from "./parts/LoginButton";
+import { SignOutButton } from "./parts/LoginButton";
 
 type Props = {
   user: NonNullable<Session["user"]>;
@@ -23,7 +23,7 @@ export async function UserHome({ user }: Props) {
   return (
     <main>
       <p data-testid="is-logged-in">{user.id}でログイン中</p>
-      <SignInOrOutButton isAuthenticated />
+      <SignOutButton />
       <NoteForm />
       <Timeline notes={notes} />
     </main>
