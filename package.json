@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@heroicons/react": "2.0.18",
-    "@prisma/client": "4.16.1",
+    "@prisma/client": "4.16.2",
     "bcryptjs": "2.4.3",
     "next": "canary",
     "next-auth": "4.22.1",
