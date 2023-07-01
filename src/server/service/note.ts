@@ -10,6 +10,7 @@ const format = (note: noteRepository.NoteCard, userId?: string) => {
     ...note,
     isMine: userId === note.userId,
     isLiked: note.likes.some((like) => like.userId === userId),
+    url: `/notes/${note.id}`,
     user: {
       ...note.user,
       displayUsername: `@${note.user.preferredUsername}@${note.user.host}`,
@@ -17,7 +18,6 @@ const format = (note: noteRepository.NoteCard, userId?: string) => {
         `/@${note.user.preferredUsername}` +
         (note.user.host != env.HOST ? `@${note.user.host}` : ""),
     },
-    url: `/notes/${note.id}`,
   };
 };
 
