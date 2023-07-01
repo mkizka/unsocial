@@ -1,4 +1,5 @@
 import type { User } from "@prisma/client";
+import { cache } from "react";
 
 import { env } from "@/utils/env";
 import { formatZodError } from "@/utils/formatZodError";
@@ -45,7 +46,7 @@ const fetchUserByActorId = async ({
   return userRepository.createOrUpdateUser(person, userIdForUpdate);
 };
 
-export const findOrFetchUserByActorId = async (actorId: URL) => {
+export const findOrFetchUserByActorId = cache(async (actorId: URL) => {
   const existingUser = await userRepository.findByActorId(actorId);
   if (existingUser) {
     if (shouldReFetch(existingUser)) {
@@ -54,7 +55,7 @@ export const findOrFetchUserByActorId = async (actorId: URL) => {
     return existingUser;
   }
   return fetchUserByActorId({ actorId });
-};
+});
 
 const resolveWebFingerResponse = (data: unknown) => {
   const parsed = webFingerSchema.safeParse(data);
@@ -116,17 +117,19 @@ const findOrFetchUserByWebfinger = async (
   return fetchUserByWebfinger(where);
 };
 
-export const findOrFetchUserByParams = async (params: { userId: string }) => {
-  const userId = decodeURIComponent(params.userId);
-  if (userId.startsWith("@")) {
-    const [preferredUsername, host] = userId.split("@").slice(1);
-    if (!preferredUsername) {
-      return null;
+export const findOrFetchUserByParams = cache(
+  async (params: { userId: string }) => {
+    const userId = decodeURIComponent(params.userId);
+    if (userId.startsWith("@")) {
+      const [preferredUsername, host] = userId.split("@").slice(1);
+      if (!preferredUsername) {
+        return null;
+      }
+      return findOrFetchUserByWebfinger({
+        preferredUsername,
+        host: host ?? env.HOST,
+      });
     }
-    return findOrFetchUserByWebfinger({
-      preferredUsername,
-      host: host ?? env.HOST,
-    });
+    return findOrFetchUserByWebfinger({ id: userId });
   }
-  return findOrFetchUserByWebfinger({ id: userId });
-};
+);

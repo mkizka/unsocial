@@ -17,9 +17,9 @@ export type FindFirstParams =
     }
   | { id: string };
 
-export const findFirst = (where: FindFirstParams) => {
+export const findFirst = cache((where: FindFirstParams) => {
   return prisma.user.findFirst({ where });
-};
+});
 
 export const createOrUpdateUser = (
   person: personSchema.Person,
