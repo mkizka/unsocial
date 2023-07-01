@@ -35,6 +35,15 @@ const expectNote = (note: NoteCard | null) => {
   expect(note?.user.url).toBe("/@preferredUsername@remote.example.com");
 };
 
+const include = {
+  user: true,
+  likes: {
+    include: {
+      user: true,
+    },
+  },
+};
+
 describe("noteService", () => {
   describe("findUniqueNoteCard", () => {
     test("自分の投稿かついいね済み", async () => {
@@ -50,6 +59,10 @@ describe("noteService", () => {
       const note = await findUniqueNoteCard("noteId");
       // assert
       expectNote(note);
+      expect(mockedPrisma.note.findUnique).toBeCalledWith({
+        where: { id: "noteId" },
+        include,
+      });
     });
     test("自分の投稿でない", async () => {
       // arrange
@@ -122,6 +135,10 @@ describe("noteService", () => {
       const [note] = await findManyNoteCards();
       // assert
       expectNote(note!);
+      expect(mockedPrisma.note.findMany).toBeCalledWith({
+        include,
+        orderBy: { createdAt: "desc" },
+      });
     });
     test("ノートが無かった場合はgetUserを呼ばない", async () => {
       // arrange
@@ -147,6 +164,11 @@ describe("noteService", () => {
       const [note] = await findManyNoteCardsByUserId("noteId");
       // assert
       expectNote(note!);
+      expect(mockedPrisma.note.findMany).toBeCalledWith({
+        where: { userId: "noteId" },
+        include,
+        orderBy: { createdAt: "desc" },
+      });
     });
     test("ノートが無かった場合はgetUserを呼ばない", async () => {
       // arrange
