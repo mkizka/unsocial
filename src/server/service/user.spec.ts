@@ -5,7 +5,7 @@ import { rest } from "msw";
 import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
 
-import { findOrFetchUserByActorId } from "./byActorId";
+import { findOrFetchUserByActorId } from "./user";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
 jest.useFakeTimers();
