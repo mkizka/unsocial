@@ -1,6 +1,7 @@
 {
-  "buildCommand": "pnpm prisma db push && pnpm build",
+  "buildCommand": "pnpm prisma db push --skip-generate && pnpm build",
   "ignoreCommand": "node scripts/vercel-ignore-step.js",
+  "regions": ["hnd1"],
   "github": {
     "silent": true
   }

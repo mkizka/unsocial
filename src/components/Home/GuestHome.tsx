@@ -1,21 +1,14 @@
-import { prisma } from "@/utils/prisma";
+import Link from "next/link";
+
+import { noteService } from "@/server/service";
 
 import { Timeline } from "../Timeline";
-import { SignInOrOutButton } from "./parts/LoginButton";
 
 export async function GuestHome() {
-  const notes = await prisma.note.findMany({
-    include: {
-      user: true,
-      likes: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const notes = await noteService.findManyNoteCards();
   return (
     <main>
-      <SignInOrOutButton />
+      <Link href="/auth">ログイン</Link>
       <Timeline notes={notes} />
     </main>
   );

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
+import { userService } from "@/server/service";
 import { env } from "@/utils/env";
-import { findUserByActorId } from "@/utils/findUserByActorId";
 import { formatZodError } from "@/utils/formatZodError";
 import { prisma } from "@/utils/prisma";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
@@ -36,7 +36,9 @@ export const follow: InboxFunction = async (activity, actorUser) => {
       message: "検証失敗: " + formatZodError(parsedFollow.error),
     };
   }
-  const followee = await findUserByActorId(new URL(parsedFollow.data.object));
+  const followee = await userService.findUserByActorId(
+    new URL(parsedFollow.data.object)
+  );
   if (!followee) {
     return {
       status: 400,

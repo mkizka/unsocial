@@ -59,8 +59,3 @@ services:
     image: redis:7-alpine
     volumes:
       - redis_data:/data
-  mail:
-    image: mailhog/mailhog:v1.0.1
-    ports:
-      - 1025:1025
-      - 8025:8025

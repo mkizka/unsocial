@@ -1,29 +1,21 @@
 import type { Session } from "next-auth";
 
-import { prisma } from "@/utils/prisma";
+import { noteService } from "@/server/service";
 
 import { NoteForm } from "../NoteForm";
 import { Timeline } from "../Timeline";
-import { SignInOrOutButton } from "./parts/LoginButton";
+import { SignOutButton } from "./parts/LoginButton";
 
 type Props = {
   user: NonNullable<Session["user"]>;
 };
 
 export async function UserHome({ user }: Props) {
-  const notes = await prisma.note.findMany({
-    include: {
-      user: true,
-      likes: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const notes = await noteService.findManyNoteCards();
   return (
     <main>
       <p data-testid="is-logged-in">{user.id}でログイン中</p>
-      <SignInOrOutButton isAuthenticated />
+      <SignOutButton />
       <NoteForm />
       <Timeline notes={notes} />
     </main>
