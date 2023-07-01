@@ -6,7 +6,11 @@ import { mockedLogger } from "@/mocks/logger";
 import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
 
-import { findOrFetchUserByActorId, findOrFetchUserByParams } from "./user";
+import {
+  findOrFetchUserByActorId,
+  findOrFetchUserByParams,
+  findUserByActorId,
+} from "./user";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
 jest.useFakeTimers();
@@ -308,6 +312,38 @@ describe("userService", () => {
           expect.stringContaining("検証失敗")
         );
         expect(user).toEqual(null);
+      });
+    });
+  });
+  describe("findUserByActorId", () => {
+    describe("正常系", () => {
+      test.each`
+        actorUrl                                      | userId
+        ${"https://myhost.example.com/users/foo"}     | ${"foo"}
+        ${"https://myhost.example.com/users/foo/bar"} | ${"foo"}
+      `(
+        "$actorUrl に対して id: $userId のユーザーを返す",
+        async ({ actorUrl, userId }) => {
+          // act
+          await findUserByActorId(new URL(actorUrl));
+          // assert
+          expect(mockedPrisma.user.findFirst).toBeCalledWith({
+            where: { id: userId },
+          });
+        }
+      );
+    });
+    describe("異常系", () => {
+      test.each`
+        actorUrl
+        ${"https://myhost.example.com/user/foo"}
+        ${"https://myhost.example.com/foo/users/bar"}
+      `("$actorUrl に対して null を返す", async ({ actorUrl, userId }) => {
+        // act
+        const user = await findUserByActorId(new URL(actorUrl));
+        // assert
+        expect(user).toBeNull();
+        expect(mockedPrisma.user.findFirst).not.toHaveBeenCalled();
       });
     });
   });
