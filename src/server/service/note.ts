@@ -12,12 +12,12 @@ const format = (note: noteRepository.NoteCard, userId?: string) => {
     isLiked: note.likes.some((like) => like.userId === userId),
     user: {
       ...note.user,
-      displayId: `@${note.user.preferredUsername}@${note.user.host}`,
-      url: `/@${note.user.preferredUsername}`,
+      displayUsername: `@${note.user.preferredUsername}@${note.user.host}`,
+      url:
+        `/@${note.user.preferredUsername}` +
+        (note.user.host != env.HOST ? `@${note.user.host}` : ""),
     },
-    url:
-      `/@${note.user.preferredUsername}` +
-      (note.user.host != env.HOST ? `@${note.user.host}` : ""),
+    url: `/notes/${note.id}`,
   };
 };
 

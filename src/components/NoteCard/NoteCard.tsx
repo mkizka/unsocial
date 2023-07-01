@@ -29,12 +29,12 @@ export async function NoteCard({ note }: Props) {
         <div className="flex">
           <Link href={note.user.url} className="block truncate hover:underline">
             {note.user.name && <span className="mr-1">{note.user.name}</span>}
-            <span className="text-gray">{note.user.displayId}</span>
+            <span className="text-gray">{note.user.displayUsername}</span>
           </Link>
           <div className="flex gap-1 ml-auto pl-1 items-center">
             {note.isMine && <DeleteButton noteId={note.id} />}
             <LikeButton noteId={note.id} isLiked={note.isLiked} />
-            <CreatedAt href={`/notes/${note.id}`} createdAt={note.createdAt} />
+            <CreatedAt href={note.url} createdAt={note.createdAt} />
           </div>
         </div>
         <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
