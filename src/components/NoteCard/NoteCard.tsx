@@ -18,7 +18,7 @@ export async function NoteCard({ note }: Props) {
       className="flex relative text-prmary bg-primary-light rounded pt-3 pl-3 pr-4 pb-5 mb-2 shadow"
     >
       <div className="w-full pl-[48px]">
-        <Link className="absolute left-3" href={note.url}>
+        <Link className="absolute left-3" href={note.user.url}>
           <UserIcon
             user={note.user}
             className="rounded-full"
