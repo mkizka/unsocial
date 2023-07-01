@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-import { repository } from "@/server/repository";
+import { noteService } from "@/server/service";
 
 import { Timeline } from "../Timeline";
 
 export async function GuestHome() {
-  const notes = await repository.note.findTimeline();
+  const notes = await noteService.findManyNoteCards();
   return (
     <main>
       <Link href="/auth">ログイン</Link>

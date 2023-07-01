@@ -23,3 +23,8 @@ export const getServerSession = cache(async () => {
   // @ts-ignore
   return _getServerSession(req, res, authOptions);
 });
+
+export const getUser = async () => {
+  const session = await getServerSession();
+  return session?.user ?? null;
+};

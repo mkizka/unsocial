@@ -1,6 +1,6 @@
 import type { Session } from "next-auth";
 
-import { repository } from "@/server/repository";
+import { noteService } from "@/server/service";
 
 import { NoteForm } from "../NoteForm";
 import { Timeline } from "../Timeline";
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export async function UserHome({ user }: Props) {
-  const notes = await repository.note.findTimeline();
+  const notes = await noteService.findManyNoteCards();
   return (
     <main>
       <p data-testid="is-logged-in">{user.id}でログイン中</p>

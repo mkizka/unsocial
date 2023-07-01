@@ -1,3 +1,1 @@
-import * as note from "./note";
-
-export const repository = { note };
+export * as noteRepository from "./note";
