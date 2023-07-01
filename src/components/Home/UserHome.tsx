@@ -1,6 +1,6 @@
 import type { Session } from "next-auth";
 
-import { prisma } from "@/utils/prisma";
+import { noteService } from "@/server/service";
 
 import { NoteForm } from "../NoteForm";
 import { Timeline } from "../Timeline";
@@ -11,15 +11,7 @@ type Props = {
 };
 
 export async function UserHome({ user }: Props) {
-  const notes = await prisma.note.findMany({
-    include: {
-      user: true,
-      likes: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const notes = await noteService.findManyNoteCards();
   return (
     <main>
       <p data-testid="is-logged-in">{user.id}でログイン中</p>

@@ -1,19 +1,11 @@
 import Link from "next/link";
 
-import { prisma } from "@/utils/prisma";
+import { noteService } from "@/server/service";
 
 import { Timeline } from "../Timeline";
 
 export async function GuestHome() {
-  const notes = await prisma.note.findMany({
-    include: {
-      user: true,
-      likes: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const notes = await noteService.findManyNoteCards();
   return (
     <main>
       <Link href="/auth">ログイン</Link>

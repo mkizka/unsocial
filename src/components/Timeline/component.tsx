@@ -1,8 +1,9 @@
-import type { Props as NoteCardProps } from "../NoteCard";
+import type { noteService } from "@/server/service";
+
 import { NoteCard } from "../NoteCard";
 
 type Props = {
-  notes: NoteCardProps["note"][];
+  notes: noteService.NoteCard[];
 };
 
 export function Timeline({ notes }: Props) {

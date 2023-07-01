@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { findUserByActorId } from "@/utils/findUserByActorId";
+import { userService } from "@/server/service";
 import { formatZodError } from "@/utils/formatZodError";
 import { prisma } from "@/utils/prisma";
 
@@ -23,7 +23,7 @@ export const accept: InboxFunction = async (activity, followee) => {
       message: "検証失敗: " + formatZodError(parsedAccept.error),
     };
   }
-  const follower = await findUserByActorId(
+  const follower = await userService.findUserByActorId(
     new URL(parsedAccept.data.object.actor)
   );
   if (!follower) {

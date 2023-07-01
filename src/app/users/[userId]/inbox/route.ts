@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { findOrFetchUserByActorId } from "@/utils/findOrFetchUser";
+import { userService } from "@/server/service";
 import { formatZodError } from "@/utils/formatZodError";
 import { verifyActivity } from "@/utils/httpSignature/verify";
 import { createLogger } from "@/utils/logger";
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     logger.info("検証失敗" + formatZodError(activity.error));
     return NextResponse.json({}, { status: 400 });
   }
-  const actorUser = await findOrFetchUserByActorId(
+  const actorUser = await userService.findOrFetchUserByActorId(
     new URL(activity.data.actor)
   );
   if (!actorUser) {

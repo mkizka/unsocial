@@ -1,16 +1,16 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
+import { userService } from "@/server/service";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
-import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";
 import { prisma } from "@/utils/prisma";
 
 export async function GET(
   _: Request,
   { params }: { params: { userId: string } }
 ) {
-  const user = await findOrFetchUserByParams(params);
+  const user = await userService.findOrFetchUserByParams(params);
   if (!user) {
     notFound();
   }
