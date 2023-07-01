@@ -11,15 +11,6 @@ const includeForNoteCard = {
   },
 };
 
-export const findManyNoteCards = cache(() => {
-  return prisma.note.findMany({
-    include: includeForNoteCard,
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-});
-
 export const findUniqueNoteCard = cache((id: string) => {
   return prisma.note.findUnique({
     where: { id },
@@ -30,3 +21,22 @@ export const findUniqueNoteCard = cache((id: string) => {
 export type NoteCard = NonNullable<
   Awaited<ReturnType<typeof findUniqueNoteCard>>
 >;
+
+export const findManyNoteCards = cache(() => {
+  return prisma.note.findMany({
+    include: includeForNoteCard,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+});
+
+export const findManyNoteCardsByUserId = cache((userId: string) => {
+  return prisma.note.findMany({
+    where: { userId },
+    include: includeForNoteCard,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+});

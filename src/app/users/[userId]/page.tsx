@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 
 import { Timeline } from "@/components/Timeline";
 import { UserCard } from "@/components/UserCard";
+import { noteService } from "@/server/service";
 import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";
-import { prisma } from "@/utils/prisma";
 
 export default async function UserPage({
   params,
@@ -14,10 +14,7 @@ export default async function UserPage({
   if (!user) {
     notFound();
   }
-  const notes = await prisma.note.findMany({
-    where: { userId: user.id },
-    include: { user: true, likes: true },
-  });
+  const notes = await noteService.findManyNoteCardsByUserId(user.id);
   return (
     <>
       <UserCard user={user} />
