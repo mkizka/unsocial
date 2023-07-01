@@ -10,6 +10,17 @@ export const findByActorId = cache((actorId: URL) => {
   });
 });
 
+export type FindFirstParams =
+  | {
+      preferredUsername: string;
+      host: string;
+    }
+  | { id: string };
+
+export const findFirst = (where: FindFirstParams) => {
+  return prisma.user.findFirst({ where });
+};
+
 export const createOrUpdateUser = (
   person: personSchema.Person,
   userIdForUpdate?: string

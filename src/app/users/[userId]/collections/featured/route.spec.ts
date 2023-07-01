@@ -1,12 +1,14 @@
 import type { Note, User } from "@prisma/client";
 
 import { mockedPrisma } from "@/mocks/prisma";
-import { findOrFetchUserByParams } from "@/utils/findOrFetchUser";
+import { userService } from "@/server/service";
 
 import { GET } from "./route";
 
-jest.mock("@/utils/findOrFetchUser");
-const mockedFindOrFetchUserByParams = jest.mocked(findOrFetchUserByParams);
+jest.mock("@/server/service");
+const mockedFindOrFetchUserByParams = jest.mocked(
+  userService.findOrFetchUserByParams
+);
 
 describe("/users/[userId]/collections/featured", () => {
   test("GET", async () => {
