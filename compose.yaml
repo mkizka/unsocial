@@ -5,6 +5,47 @@ volumes:
   redis_data:
 
 services:
+  mastodon:
+    image: tootsuite/mastodon:v4.1
+    env_file: docker/mastodon/.env.production
+    command: bash -c "bundle exec rake db:migrate && bundle exec rails s -p 3000"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q --spider --proxy=off localhost:3000/health || exit 1",
+        ]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./docker/mastodon/public/system:/mastodon/public/system
+  mastodon-streaming:
+    image: tootsuite/mastodon:v4.1
+    env_file: ./docker/mastodon/.env.production
+    command: node ./streaming
+    healthcheck:
+      # prettier-ignore
+      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
+    depends_on:
+      mastodon:
+        condition: service_healthy
+  mastodon-sidekiq:
+    image: tootsuite/mastodon:v4.1
+    env_file: ./docker/mastodon/.env.production
+    command: bundle exec sidekiq
+    depends_on:
+      mastodon:
+        condition: service_healthy
+    volumes:
+      - ./docker/mastodon/public/system:/mastodon/public/system
+    healthcheck:
+      test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 6' || false"]
   misskey:
     image: misskey/misskey:13.13
     volumes:
@@ -22,6 +63,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
   nginx:
     image: nginx:1-alpine
     volumes:
@@ -37,8 +80,11 @@ services:
           - soshal.localhost
           - remote.localhost
           - misskey.localhost
+          - mastodon.localhost
     depends_on:
       misskey:
+        condition: service_healthy
+      mastodon:
         condition: service_healthy
   db:
     image: postgres:15-alpine
@@ -49,7 +95,6 @@ services:
       - ./docker/db:/docker-entrypoint-initdb.d
     environment:
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=misskey
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 2s
@@ -59,3 +104,7 @@ services:
     image: redis:7-alpine
     volumes:
       - redis_data:/data
+  mail:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - 8025:8025
