@@ -95,7 +95,6 @@ services:
       - ./docker/db:/docker-entrypoint-initdb.d
     environment:
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=misskey
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 2s
