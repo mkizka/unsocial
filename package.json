@@ -50,7 +50,7 @@
     "activitypub-core-types": "0.3.2",
     "autoprefixer": "10.4.14",
     "better-typescript-lib": "2.4.0",
-    "cli-markdown": "3.0.3",
+    "cli-markdown": "3.0.5",
     "dotenv-cli": "7.2.1",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.8",
