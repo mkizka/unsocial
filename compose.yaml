@@ -21,7 +21,10 @@ services:
       redis:
         condition: service_started
     volumes:
+      - ./docker/mkcert:/mkcert
       - ./docker/mastodon/public/system:/mastodon/public/system
+    environment:
+      - SSL_CERT_FILE=/mkcert/rootCA.pem
   mastodon-streaming:
     image: tootsuite/mastodon:v4.1
     env_file: ./docker/mastodon/.env.production
