@@ -7,7 +7,7 @@ volumes:
 services:
   mastodon:
     image: tootsuite/mastodon:v4.1
-    env_file: docker/mastodon/.env.production
+    env_file: ./docker/mastodon/.env.production
     command: bash -c "bundle exec rake db:migrate && bundle exec rails s -p 3000"
     healthcheck:
       # prettier-ignore
@@ -23,8 +23,6 @@ services:
     volumes:
       - ./docker/mkcert:/mkcert
       - ./docker/mastodon/public/system:/mastodon/public/system
-    environment:
-      - SSL_CERT_FILE=/mkcert/rootCA.pem
   mastodon-streaming:
     image: tootsuite/mastodon:v4.1
     env_file: ./docker/mastodon/.env.production
