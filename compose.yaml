@@ -10,11 +10,8 @@ services:
     env_file: docker/mastodon/.env.production
     command: bash -c "bundle exec rake db:migrate && bundle exec rails s -p 3000"
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "wget -q --spider --proxy=off localhost:3000/health || exit 1",
-        ]
+      # prettier-ignore
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
       interval: 2s
       timeout: 2s
       retries: 30
