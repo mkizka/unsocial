@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 import { userService } from "@/server/service";
-import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { formatZodError } from "@/utils/formatZodError";
 import { prisma } from "@/utils/prisma";
@@ -38,7 +37,7 @@ export const follow: InboxFunction = async (activity, actorUser) => {
     };
   }
   const followee = await userService.findUserByActorId(
-    new URL(parsedFollow.data.object),
+    new URL(parsedFollow.data.object)
   );
   if (!followee) {
     return {
@@ -74,7 +73,15 @@ export const follow: InboxFunction = async (activity, actorUser) => {
       id: followee.id,
       privateKey: followee.privateKey,
     },
-    activity: activityStreams.accept(actorUser, parsedFollow.data),
+    activity: {
+      type: "Accept",
+      actor: new URL(`https://${env.HOST}/users/${followee.id}/activity`),
+      object: {
+        ...parsedFollow.data,
+        actor: new URL(parsedFollow.data.actor),
+        object: new URL(parsedFollow.data.object),
+      },
+    },
   });
   return { status: 200, message: "完了: フォロー" };
 };

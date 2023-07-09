@@ -101,15 +101,6 @@ const convertFollow = (follow: Follow, followeeUrl: string): AP.Follow => {
   };
 };
 
-const convertAccept = (user: User, reveivedFollow: object): AP.Accept => {
-  return {
-    ...contexts,
-    type: "Accept",
-    actor: new URL(`https://${env.HOST}/users/${user.id}/activity`),
-    object: reveivedFollow as AP.Follow,
-  };
-};
-
 const convertLike = (like: Like, noteUrl: string): AP.Like => {
   return {
     ...contexts,
@@ -139,7 +130,6 @@ export const activityStreams = {
   create: convertCreate,
   delete: convertDelete,
   follow: convertFollow,
-  accept: convertAccept,
   like: convertLike,
   undo: convertUndo,
 };
