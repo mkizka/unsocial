@@ -2,6 +2,7 @@ import { test } from "@playwright/test";
 import crypto from "crypto";
 
 import {
+  MastodonHandler,
   MisskeyHandler,
   MyhostSoshalHandler,
   RemoteSoshalHandler,
@@ -62,6 +63,20 @@ test.describe("Federation", () => {
   test("Misskey → Soshal", async ({ page }) => {
     await runTest({
       from: new MisskeyHandler(page),
+      to: new MyhostSoshalHandler(page),
+    });
+  });
+
+  test("Soshal → Mastodon", async ({ page }) => {
+    await runTest({
+      from: new MyhostSoshalHandler(page),
+      to: new MastodonHandler(page),
+    });
+  });
+
+  test("Mastodon → Soshal", async ({ page }) => {
+    await runTest({
+      from: new MastodonHandler(page),
       to: new MyhostSoshalHandler(page),
     });
   });
