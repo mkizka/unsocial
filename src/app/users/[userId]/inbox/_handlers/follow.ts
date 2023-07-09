@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { z } from "zod";
 
 import { userService } from "@/server/service";
@@ -37,7 +38,7 @@ export const follow: InboxFunction = async (activity, actorUser) => {
     };
   }
   const followee = await userService.findUserByActorId(
-    new URL(parsedFollow.data.object)
+    new URL(parsedFollow.data.object),
   );
   if (!followee) {
     return {
@@ -74,6 +75,12 @@ export const follow: InboxFunction = async (activity, actorUser) => {
       privateKey: followee.privateKey,
     },
     activity: {
+      "@context": [
+        "https://www.w3.org/ns/activitystreams",
+        "https://w3id.org/security/v1",
+      ],
+      // TODO: いいの？
+      id: new URL(`https://${env.HOST}/${crypto.randomUUID()}`),
       type: "Accept",
       actor: new URL(`https://${env.HOST}/users/${followee.id}/activity`),
       object: {
