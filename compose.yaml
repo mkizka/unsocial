@@ -8,7 +8,7 @@ services:
   mastodon:
     image: tootsuite/mastodon:v4.1
     env_file: ./docker/mastodon/.env.production
-    command: bash -c "bundle exec rake db:migrate && bundle exec rails s -p 3000"
+    command: bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rake db:migrate && bundle exec rails s -p 3000"
     healthcheck:
       # prettier-ignore
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
