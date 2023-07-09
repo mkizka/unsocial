@@ -39,7 +39,7 @@ export const signActivity = (params: {
   return {
     ...header,
     signature:
-      `keyId="https://${env.HOST}/users/${params.sender.id}#main-key",` +
+      `keyId="https://${env.HOST}/users/${params.sender.id}/activity#main-key",` +
       `algorithm="rsa-sha256",` +
       `headers="${order.join(" ")}",` +
       `signature="${signature}"`,
