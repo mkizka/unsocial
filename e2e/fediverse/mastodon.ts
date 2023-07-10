@@ -15,7 +15,7 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async expectedUser(user: string) {
-    await this.goto("/public/local");
+    await this.goto("/");
     await this.page.locator(".search__input").fill(user);
     await this.page.locator(".search__input").press("Enter");
     await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
@@ -26,19 +26,19 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async postNote(content: string) {
-    await this.goto("/public/local");
+    await this.goto("/");
     await this.page.locator(".autosuggest-textarea__textarea").fill(content);
     await this.page.locator("button[type=submit]").click();
     await expect(this.getNote(content)).toBeVisible();
   }
 
   async expectPosted(content: string) {
-    await this.goto("/public/local");
+    await this.goto("/");
     await expect(this.getNote(content)).toBeVisible();
   }
 
   async delete(content: string) {
-    await this.goto("/public/local");
+    await this.goto("/");
     await this.getNote(content)
       .locator("button", { has: this.page.locator(".fa-ellipsis-h") })
       .click();
@@ -47,19 +47,19 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async expectDeleted(content: string) {
-    await this.goto("/public/local");
+    await this.goto("/");
     await expect(this.getNote(content)).not.toBeVisible();
   }
 
   async like(content: string) {
-    await this.goto("/public/local");
+    await this.goto("/");
     await this.getNote(content)
       .locator("button", { has: this.page.locator(".fa-star") })
       .click();
   }
 
   async expectLiked(content: string) {
-    await this.goto("/public/local");
+    await this.goto("/");
     await this.getNote(content).locator(".status__relative-time").click();
     await expect(this.page.locator(".detailed-status__favorites")).toHaveText(
       "1",
