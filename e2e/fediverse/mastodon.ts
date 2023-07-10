@@ -52,11 +52,18 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async like(content: string) {
-    throw new Error("未実装");
+    await this.goto("/");
+    await this.getNote(content)
+      .locator("button", { has: this.page.locator(".fa-star") })
+      .click();
   }
 
   async expectLiked(content: string) {
-    throw new Error("未実装");
+    await this.goto("/");
+    await this.getNote(content).locator(".status__relative-time").click();
+    await expect(this.page.locator(".detailed-status__favorites")).toHaveText(
+      "1",
+    );
   }
 
   async follow(user: string) {
@@ -71,7 +78,9 @@ export class MastodonHandler extends FediverseHandler {
 
   async expectFollowing(user: string) {
     await this.goto(`/${user}`);
-    await this.page.locator("button", { hasText: "フォロー解除" }).click();
+    await expect(
+      this.page.locator("button", { hasText: "フォロー解除" }),
+    ).toBeVisible();
   }
 
   async expectFollowed(user: string) {
