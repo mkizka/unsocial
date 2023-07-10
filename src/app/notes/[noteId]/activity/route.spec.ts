@@ -35,7 +35,7 @@ describe("/notes/[noteId]/activity", () => {
     `);
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe(
-      "application/activity+json"
+      "application/activity+json",
     );
     expect(await response.json()).toMatchInlineSnapshot(`
       {
@@ -60,7 +60,7 @@ describe("/notes/[noteId]/activity", () => {
   test("ノートが無かった場合はnotFound()を呼ぶ", async () => {
     mockedPrisma.note.findFirst.mockResolvedValueOnce(null);
     await expect(
-      GET({} as Request, { params: { noteId: "noteId" } })
+      GET({} as Request, { params: { noteId: "noteId" } }),
     ).rejects.toThrow("NEXT_NOT_FOUND");
   });
 });

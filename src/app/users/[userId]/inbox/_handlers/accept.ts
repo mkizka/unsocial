@@ -24,7 +24,7 @@ export const accept: InboxFunction = async (activity, followee) => {
     };
   }
   const follower = await userService.findUserByActorId(
-    new URL(parsedAccept.data.object.actor)
+    new URL(parsedAccept.data.object.actor),
   );
   if (!follower) {
     return {

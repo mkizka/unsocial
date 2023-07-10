@@ -55,10 +55,10 @@ type VerifyResult =
 export const verifyActivity = (
   resolvedUrl: string,
   headers: Request["headers"],
-  publicKey: string
+  publicKey: string,
 ): VerifyResult => {
   const parsedHeaders = headersSchema.safeParse(
-    Object.fromEntries(headers.entries())
+    Object.fromEntries(headers.entries()),
   );
   if (!parsedHeaders.success) {
     return {
@@ -78,7 +78,7 @@ export const verifyActivity = (
   const isValid = createVerify(textToSign).verify(
     publicKey,
     signature.signature,
-    "base64"
+    "base64",
   );
   if (!isValid) {
     return { isValid, reason: "verifyの結果がfalseでした" };

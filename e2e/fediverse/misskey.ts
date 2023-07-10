@@ -13,7 +13,7 @@ export class MisskeyHandler extends FediverseHandler {
       await expect(this.page.locator("#misskey_app")).toBeVisible();
       // 表示された画面がエラー画面でない
       await expect(
-        this.page.locator("text=An error has occurred!")
+        this.page.locator("text=An error has occurred!"),
       ).not.toBeVisible();
       // 表示された画面に再試行ボタンがない
       await expect(this.page.locator("text=再試行")).not.toBeVisible();
@@ -89,7 +89,7 @@ export class MisskeyHandler extends FediverseHandler {
   async expectLiked(content: string) {
     await this.gotoGTL();
     await expect(
-      this.getNote(content).locator("button", { hasText: "1" })
+      this.getNote(content).locator("button", { hasText: "1" }),
     ).toBeVisible();
   }
 

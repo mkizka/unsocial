@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({}, { status: 400 });
   }
   const actorUser = await userService.findOrFetchUserByActorId(
-    new URL(activity.data.actor)
+    new URL(activity.data.actor),
   );
   if (!actorUser) {
     logger.info("actorで指定されたユーザーが見つかりませんでした");
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
   const validation = verifyActivity(
     request.nextUrl.pathname,
     request.headers,
-    actorUser.publicKey!
+    actorUser.publicKey!,
   );
   if (!validation.isValid) {
     logger.info("リクエストヘッダの署名が不正でした: " + validation.reason);
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
   }
   const result = await inbox(activity.data, actorUser);
   logger.info(
-    request.nextUrl.pathname + `(${result.status}): ${result.message}`
+    request.nextUrl.pathname + `(${result.status}): ${result.message}`,
   );
   return NextResponse.json({}, { status: result.status });
 }

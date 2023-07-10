@@ -6,7 +6,7 @@ import { prisma } from "@/utils/prisma";
 
 export async function GET(
   request: Request,
-  { params: { noteId } }: { params: { noteId: string } }
+  { params: { noteId } }: { params: { noteId: string } },
 ) {
   const note = await prisma.note.findFirst({
     select: {

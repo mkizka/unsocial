@@ -70,7 +70,7 @@ const unfollow = async (user: User, followeeId: string) => {
       inboxUrl: new URL(follow.followee.inboxUrl),
       sender: user,
       activity: activityStreams.undo(
-        activityStreams.follow(follow, follow.followee.actorUrl)
+        activityStreams.follow(follow, follow.followee.actorUrl),
       ),
     });
   }

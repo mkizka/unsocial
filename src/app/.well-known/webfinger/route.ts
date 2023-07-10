@@ -47,6 +47,6 @@ export async function GET({ nextUrl }: NextRequest) {
       headers: {
         "Content-Type": "application/jrd+json",
       },
-    }
+    },
   );
 }

@@ -17,9 +17,9 @@ const logger = winston.createLogger({
         `- %s%s %s`,
         log.level,
         log.name ? `(${log.name})` : "",
-        log.message
-      )
-    )
+        log.message,
+      ),
+    ),
   ),
   silent: env.NODE_ENV == "test",
   transports: new winston.transports.Console(),

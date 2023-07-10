@@ -98,7 +98,7 @@ const fetchUserByWebfinger = async (params: {
 };
 
 const findOrFetchUserByWebfinger = async (
-  where: userRepository.FindFirstParams
+  where: userRepository.FindFirstParams,
 ) => {
   const existingUser = await userRepository.findFirst(where);
   if (existingUser) {
@@ -131,7 +131,7 @@ export const findOrFetchUserByParams = cache(
       });
     }
     return findOrFetchUserByWebfinger({ id: userId });
-  }
+  },
 );
 
 const resolveUserId = (actorId: URL) => {

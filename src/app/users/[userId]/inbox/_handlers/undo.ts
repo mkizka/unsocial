@@ -42,7 +42,7 @@ export const undo: InboxFunction = async (activity, actorUser) => {
     };
   }
   const followee = await userService.findUserByActorId(
-    new URL(parsedUndo.data.object.object)
+    new URL(parsedUndo.data.object.object),
   );
   if (!followee) {
     return {
