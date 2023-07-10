@@ -53,18 +53,22 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async unfollow(user: string) {
-    throw new Error("未実装");
+    await this.goto(`/${user}`);
+    await this.page.locator("button", { hasText: "フォロー解除" }).click();
   }
 
   async expectFollowing(user: string) {
-    throw new Error("未実装");
+    await this.goto(`/${user}`);
+    await this.page.locator("button", { hasText: "フォロー解除" }).click();
   }
 
   async expectFollowed(user: string) {
-    throw new Error("未実装");
+    await this.goto(`/@e2e/followers`);
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async expectNotFollowed(user: string) {
-    throw new Error("未実装");
+    await this.goto(`/@e2e/followers`);
+    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 }
