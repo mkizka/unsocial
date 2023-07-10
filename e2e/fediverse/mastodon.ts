@@ -15,7 +15,8 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async expectedUser(user: string) {
-    throw new Error("未実装");
+    await this.goto(`/${user}`);
+    await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
   }
 
   getNote(content: string) {
@@ -47,7 +48,8 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async follow(user: string) {
-    throw new Error("未実装");
+    await this.goto(`/${user}`);
+    await this.page.locator("button", { hasText: "フォロー" }).click();
   }
 
   async unfollow(user: string) {
