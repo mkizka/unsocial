@@ -30,7 +30,7 @@ const likeActivitySchema = z
         }
         return val;
       }),
-    content: z.string(),
+    content: z.string().optional(),
   })
   .passthrough();
 
@@ -53,7 +53,7 @@ export const like: InboxFunction = async (activity, actorUser) => {
     data: {
       noteId,
       userId: actorUser.id,
-      content: parsedLike.data.content,
+      content: parsedLike.data.content ?? "👍",
     },
   });
   return { status: 200, message: "完了: いいね" };
