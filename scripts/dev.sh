@@ -1,4 +1,5 @@
 #/usr/bin/bash
+set -eu
 
 docker compose up -d
 pnpm prisma db push

@@ -46,3 +46,7 @@ fi
 echo "Fix misskey file permissions (See: https://github.com/misskey-dev/misskey/pull/9560)"
 sudo chown -hR 991.991 ./docker/misskey/files
 echo "Done"
+
+echo "Fix mastodon file permissions (See: https://github.com/mastodon/mastodon/issues/3676)"
+sudo chown -hR 991.991 ./docker/mastodon/public/system
+echo "Done"
