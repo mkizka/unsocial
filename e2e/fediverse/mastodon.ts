@@ -42,8 +42,8 @@ export class MastodonHandler extends FediverseHandler {
     await this.getNote(content)
       .locator("button", { has: this.page.locator(".fa-ellipsis-h") })
       .click();
-    await this.page.locator("button", { hasText: "削除" }).click();
-    await this.page.locator("button", { hasText: "削除" }).click();
+    await this.page.locator("a", { hasText: "削除" }).click();
+    await this.page.locator("a", { hasText: "削除" }).click();
   }
 
   async expectDeleted(content: string) {
