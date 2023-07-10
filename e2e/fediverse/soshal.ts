@@ -16,7 +16,7 @@ export class MyhostSoshalHandler extends FediverseHandler {
 
   async expectedUser(user: string) {
     await this.goto(`/${user}`);
-    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+    await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
   }
 
   getNote(content: string) {
@@ -69,7 +69,7 @@ export class MyhostSoshalHandler extends FediverseHandler {
   async expectFollowing(user: string) {
     await this.goto(`/${user}`);
     await expect(this.page.getByTestId("follow-button")).toHaveText(
-      "フォロー中"
+      "フォロー中",
     );
   }
 
