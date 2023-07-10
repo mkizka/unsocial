@@ -18,7 +18,7 @@ export async function GET(
     user.icon ??
     `https://${env.HOST}/users/_/icon/edge?text=${user.preferredUsername}`;
   const image = await fetch(url);
-  return new NextResponse(await image.blob(), {
+  return new NextResponse(await image.arrayBuffer(), {
     headers: {
       "Content-Type": image.headers.get("Content-Type") ?? "image/png",
       // https://vercel.com/docs/concepts/functions/edge-functions/edge-caching#recommended-cache-control
