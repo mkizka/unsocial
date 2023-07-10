@@ -15,7 +15,7 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async expectedUser(user: string) {
-    //
+    throw new Error("未実装");
   }
 
   getNote(content: string) {
@@ -23,46 +23,46 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async postNote(content: string) {
-    //
+    throw new Error("未実装");
   }
 
   async expectPosted(content: string) {
-    //
+    throw new Error("未実装");
   }
 
   async delete(content: string) {
-    //
+    throw new Error("未実装");
   }
 
   async expectDeleted(content: string) {
-    //
+    throw new Error("未実装");
   }
 
   async like(content: string) {
-    //
+    throw new Error("未実装");
   }
 
   async expectLiked(content: string) {
-    //
+    throw new Error("未実装");
   }
 
   async follow(user: string) {
-    //
+    throw new Error("未実装");
   }
 
   async unfollow(user: string) {
-    //
+    throw new Error("未実装");
   }
 
   async expectFollowing(user: string) {
-    //
+    throw new Error("未実装");
   }
 
   async expectFollowed(user: string) {
-    //
+    throw new Error("未実装");
   }
 
   async expectNotFollowed(user: string) {
-    //
+    throw new Error("未実装");
   }
 }
