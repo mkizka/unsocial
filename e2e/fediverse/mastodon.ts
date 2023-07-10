@@ -24,11 +24,15 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async postNote(content: string) {
-    throw new Error("未実装");
+    await this.goto("/");
+    await this.page.locator(".autosuggest-textarea__textarea").fill(content);
+    await this.page.locator("button[type=submit]").click();
+    await expect(this.getNote(content)).toBeVisible();
   }
 
   async expectPosted(content: string) {
-    throw new Error("未実装");
+    await this.goto("/");
+    await expect(this.getNote(content)).toBeVisible();
   }
 
   async delete(content: string) {
