@@ -23,7 +23,7 @@ describe("relayActivity", () => {
       server.use(
         rest.post("https://remote.example.com/inbox", (_, res, ctx) => {
           return res.once(ctx.status(202));
-        })
+        }),
       );
       // @ts-ignore
       mockedSignActivity.mockReturnValue({});
@@ -66,7 +66,7 @@ describe("relayActivity", () => {
         }),
         rest.post("https://remote2.example.com/inbox", (_, res, ctx) => {
           return res.once(ctx.status(202));
-        })
+        }),
       );
       // @ts-ignore
       mockedSignActivity.mockReturnValue({});

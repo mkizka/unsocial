@@ -20,7 +20,7 @@ const serverEnvSchema = z.object({
       process.env.HOST ??
       process.env.VERCEL_URL ??
       (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).host : str),
-    z.string().min(1)
+    z.string().min(1),
   ),
   EMAIL_SERVER_USER: z.string().default("user"),
   EMAIL_SERVER_PASS: z.string().default("password"),
@@ -34,7 +34,7 @@ export const env = (() => {
     const parsed = serverEnvSchema.safeParse(process.env);
     if (!parsed.success) {
       throw new Error(
-        `❌ Invalid environment variables: ${formatZodError(parsed.error)}`
+        `❌ Invalid environment variables: ${formatZodError(parsed.error)}`,
       );
     }
     return parsed.data;

@@ -10,7 +10,7 @@ import { POST } from "./route";
 
 jest.mock("@/server/service");
 const mockedFindOrFetchUserByActorId = jest.mocked(
-  userService.findOrFetchUserByActorId
+  userService.findOrFetchUserByActorId,
 );
 
 jest.mock("@/utils/httpSignature/verify");
@@ -46,7 +46,7 @@ describe("/users/[userId]/inbox", () => {
     const response = await POST(request);
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith(
-      "/users/foo/inbox(200): メッセージ"
+      "/users/foo/inbox(200): メッセージ",
     );
     expect(response.status).toBe(200);
   });
@@ -60,7 +60,7 @@ describe("/users/[userId]/inbox", () => {
     const response = await POST(request);
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("検証失敗")
+      expect.stringContaining("検証失敗"),
     );
     expect(response.status).toBe(400);
   });
@@ -76,7 +76,7 @@ describe("/users/[userId]/inbox", () => {
     const response = await POST(request);
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith(
-      "actorで指定されたユーザーが見つかりませんでした"
+      "actorで指定されたユーザーが見つかりませんでした",
     );
     expect(response.status).toBe(400);
   });
@@ -93,7 +93,7 @@ describe("/users/[userId]/inbox", () => {
     const response = await POST(request);
     // assert
     expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("リクエストヘッダの署名が不正でした")
+      expect.stringContaining("リクエストヘッダの署名が不正でした"),
     );
     expect(response.status).toBe(400);
   });

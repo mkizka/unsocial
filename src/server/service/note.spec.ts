@@ -30,7 +30,7 @@ const expectNote = (note: NoteCard | null) => {
   expect(note?.url).toBe("/notes/noteId");
   expect(note?.user).toMatchObject(dummyNote.user);
   expect(note?.user.displayUsername).toBe(
-    "@preferredUsername@remote.example.com"
+    "@preferredUsername@remote.example.com",
   );
   expect(note?.user.url).toBe("/@preferredUsername@remote.example.com");
 };
@@ -49,7 +49,7 @@ describe("noteService", () => {
     test("自分の投稿かついいね済み", async () => {
       // arrange
       mockedPrisma.note.findUnique.mockResolvedValueOnce(
-        dummyNote as unknown as Note
+        dummyNote as unknown as Note,
       );
       mockedGetUser.mockResolvedValueOnce({
         id: "userId",
@@ -67,7 +67,7 @@ describe("noteService", () => {
     test("自分の投稿でない", async () => {
       // arrange
       mockedPrisma.note.findUnique.mockResolvedValueOnce(
-        dummyNote as unknown as Note
+        dummyNote as unknown as Note,
       );
       mockedGetUser.mockResolvedValueOnce({
         id: "otherUserId",

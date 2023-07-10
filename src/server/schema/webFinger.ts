@@ -5,7 +5,7 @@ const schema = z.object({
     z.object({
       rel: z.string(),
       href: z.string().url().optional(),
-    })
+    }),
   ),
 });
 

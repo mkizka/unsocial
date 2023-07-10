@@ -66,28 +66,28 @@ const restWebfinger = (response?: object) => {
             },
           ],
           ...response,
-        })
+        }),
       );
-    }
+    },
   );
 };
 
 const restWebfinger404 = () => {
   return rest.get(
     "https://remote.example.com/.well-known/webfinger",
-    (_, res, ctx) => res.once(ctx.status(404))
+    (_, res, ctx) => res.once(ctx.status(404)),
   );
 };
 
 const restDummyId = (person?: object) => {
   return rest.get("https://remote.example.com/u/dummyId", (_, res, ctx) =>
-    res.once(ctx.json({ ...dummyPerson, ...person }))
+    res.once(ctx.json({ ...dummyPerson, ...person })),
   );
 };
 
 const restDummyIdInvalid = (person?: object) => {
   return rest.get("https://remote.example.com/u/dummyId", (_, res, ctx) =>
-    res.once(ctx.json({ invalid: "dummy" }))
+    res.once(ctx.json({ invalid: "dummy" })),
   );
 };
 
@@ -101,7 +101,7 @@ describe("userService", () => {
         mockedPrisma.user.findFirst.mockResolvedValueOnce(dummyUser);
         // act
         const user = await findOrFetchUserByActorId(
-          new URL(dummyUser.actorUrl!)
+          new URL(dummyUser.actorUrl!),
         );
         // assert
         expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
@@ -119,7 +119,7 @@ describe("userService", () => {
         mockedPrisma.user.update.mockResolvedValue(dummyUser);
         // act
         const user = await findOrFetchUserByActorId(
-          new URL(dummyUser.actorUrl!)
+          new URL(dummyUser.actorUrl!),
         );
         // assert
         expect(mockedPrisma.user.update).toHaveBeenCalledWith({
@@ -135,7 +135,7 @@ describe("userService", () => {
         mockedPrisma.user.create.mockResolvedValue(dummyUser);
         // act
         const user = await findOrFetchUserByActorId(
-          new URL(dummyUser.actorUrl!)
+          new URL(dummyUser.actorUrl!),
         );
         // assert
         expect(mockedPrisma.user.create).toHaveBeenCalledWith({
@@ -234,7 +234,7 @@ describe("userService", () => {
           restDummyId({
             icon: { url: "https://remote.example.com/icons/dummy" },
             endpoints: { sharedInbox: "https://remote.example.com/inbox" },
-          })
+          }),
         );
         mockedPrisma.user.findFirst.mockResolvedValue(null);
         mockedPrisma.user.create.mockResolvedValue(dummyUser);
@@ -264,7 +264,7 @@ describe("userService", () => {
         const user = await findOrFetchUserByParams({ userId: "@dummy@\\" });
         // assert
         expect(mockedLogger.info).toHaveBeenCalledWith(
-          "https://\\がURLとして不正でした"
+          "https://\\がURLとして不正でした",
         );
         expect(user).toEqual(null);
       });
@@ -275,7 +275,7 @@ describe("userService", () => {
         const user = await findOrFetchUserByParams(params);
         // assert
         expect(mockedLogger.warn).toBeCalledWith(
-          expect.stringContaining("HTTPエラー")
+          expect.stringContaining("HTTPエラー"),
         );
         expect(user).toEqual(null);
       });
@@ -286,7 +286,7 @@ describe("userService", () => {
         const user = await findOrFetchUserByParams(params);
         // assert
         expect(mockedLogger.info).toBeCalledWith(
-          expect.stringContaining("検証失敗")
+          expect.stringContaining("検証失敗"),
         );
         expect(user).toEqual(null);
       });
@@ -297,7 +297,7 @@ describe("userService", () => {
         const user = await findOrFetchUserByParams(params);
         // assert
         expect(mockedLogger.info).toBeCalledWith(
-          "WebFingerからrel=selfの要素が取得できませんでした"
+          "WebFingerからrel=selfの要素が取得できませんでした",
         );
         expect(user).toEqual(null);
       });
@@ -309,7 +309,7 @@ describe("userService", () => {
         const user = await findOrFetchUserByParams(params);
         // assert
         expect(mockedLogger.info).toBeCalledWith(
-          expect.stringContaining("検証失敗")
+          expect.stringContaining("検証失敗"),
         );
         expect(user).toEqual(null);
       });
@@ -330,7 +330,7 @@ describe("userService", () => {
           expect(mockedPrisma.user.findFirst).toBeCalledWith({
             where: { id: userId },
           });
-        }
+        },
       );
     });
     describe("異常系", () => {

@@ -32,7 +32,7 @@ const createPrisma = () => {
       const result = await next(params);
       const after = Date.now();
       logger.info(
-        `Query ${params.model}.${params.action} took ${after - before}ms`
+        `Query ${params.model}.${params.action} took ${after - before}ms`,
       );
       return result;
     });

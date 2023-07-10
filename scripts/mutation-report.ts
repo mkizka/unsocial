@@ -39,10 +39,10 @@ const getScorePerFile = (result: Result) => {
   const score: Score = {};
   for (const [filename, { mutants }] of Object.entries(result.files)) {
     const detected = mutants.filter((mutant) =>
-      ["Killed", "Timeout"].includes(mutant.status)
+      ["Killed", "Timeout"].includes(mutant.status),
     ).length;
     const undetected = mutants.filter((mutant) =>
-      ["Survived", "NoCoverage"].includes(mutant.status)
+      ["Survived", "NoCoverage"].includes(mutant.status),
     ).length;
     score[filename] =
       Math.round((detected / (detected + undetected)) * 10000) / 100;
@@ -54,8 +54,8 @@ const table = async () => {
   const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
   const mainScores = getScorePerFile(
     await fetchJson(
-      "https://minio-s3.paas.mkizka.dev/soshal-gha/mutation-test/main/mutation.json"
-    )
+      "https://minio-s3.paas.mkizka.dev/soshal-gha/mutation-test/main/mutation.json",
+    ),
   );
   const filenames = [
     ...new Set([...Object.keys(prScores), ...Object.keys(mainScores)]),

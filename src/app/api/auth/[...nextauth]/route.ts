@@ -80,7 +80,7 @@ export const authOptions: NextAuthOptions = {
           user?.credentials &&
           bcryptjs.compareSync(
             parsedCredentials.data.password,
-            user.credentials.hashedPassword
+            user.credentials.hashedPassword,
           )
         ) {
           return { id: user.id, privateKey: user.privateKey };
@@ -96,7 +96,7 @@ export const authOptions: NextAuthOptions = {
             credentials: {
               create: {
                 hashedPassword: bcryptjs.hashSync(
-                  parsedCredentials.data.password
+                  parsedCredentials.data.password,
                 ),
               },
             },

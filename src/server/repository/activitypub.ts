@@ -27,7 +27,7 @@ export const fetchWebFinger = async (params: {
   const webFingerUrl = new URL("/.well-known/webfinger", remoteUrl);
   webFingerUrl.searchParams.append(
     "resource",
-    `acct:${params.preferredUsername}@${params.host}`
+    `acct:${params.preferredUsername}@${params.host}`,
   );
   const response = await fetchJson(webFingerUrl, {
     next: {

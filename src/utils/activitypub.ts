@@ -16,14 +16,15 @@ const contexts = {
 };
 
 const convertUser = (
-  user: User
+  user: User,
 ): AP.Person & {
   featured?: AP.OrderedCollectionReference;
 } => {
   const userAddress = `https://${env.HOST}/users/${user.id}`;
+  const activityAddress = `${userAddress}/activity`;
   return {
     ...contexts,
-    id: new URL(`${userAddress}/activity`),
+    id: new URL(activityAddress),
     type: "Person",
     inbox: new URL(`${userAddress}/inbox`),
     outbox: new URL(`${userAddress}/outbox`),
@@ -34,8 +35,8 @@ const convertUser = (
     name: user.name || "",
     url: new URL(userAddress),
     publicKey: {
-      id: userAddress,
-      owner: userAddress,
+      id: `${activityAddress}#main-key`,
+      owner: activityAddress,
       publicKeyPem: required(user.publicKey),
     },
     // TODO: user.iconを追加する
@@ -47,7 +48,7 @@ const convertUser = (
 };
 
 const convertNote = (
-  note: Pick<Note, "id" | "userId" | "content" | "createdAt">
+  note: Pick<Note, "id" | "userId" | "content" | "createdAt">,
 ): AP.Note => {
   const userAddress = `https://${env.HOST}/users/${note.userId}`;
   return {

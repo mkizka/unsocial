@@ -14,7 +14,7 @@ export function LikeButton({ noteId, isLiked }: Props) {
   // TODO: 期待通りの動作か確認
   const [optimisticIsLiked, toggleOptimisticIsLike] = useOptimistic(
     isLiked,
-    (state) => !state
+    (state) => !state,
   );
   return (
     <button

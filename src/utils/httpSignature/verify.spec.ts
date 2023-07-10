@@ -31,7 +31,7 @@ describe("verifyActivity", () => {
     const actual = verifyActivity(
       "/inbox",
       new Headers(header),
-      mockedKeys.publickKey
+      mockedKeys.publickKey,
     );
     // assert
     expect(actual).toEqual({

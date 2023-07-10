@@ -45,6 +45,11 @@ describe("フォロー", () => {
         privateKey: dummyLocalUser.privateKey,
       },
       activity: {
+        "@context": [
+          "https://www.w3.org/ns/activitystreams",
+          "https://w3id.org/security/v1",
+        ],
+        id: expect.any(URL),
         type: "Accept",
         actor: new URL(activity.object),
         object: {

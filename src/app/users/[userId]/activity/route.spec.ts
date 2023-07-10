@@ -7,7 +7,7 @@ import { GET } from "./route";
 
 jest.mock("@/server/service");
 const mockedFindOrFetchUserByParams = jest.mocked(
-  userService.findOrFetchUserByParams
+  userService.findOrFetchUserByParams,
 );
 
 describe("/users/[userId]/activity", () => {
@@ -26,12 +26,12 @@ describe("/users/[userId]/activity", () => {
     expect(mockedFindOrFetchUserByParams).toHaveBeenCalledWith(dummyParams);
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe(
-      "application/activity+json"
+      "application/activity+json",
     );
     expect(await response.json()).toEqual(
       expect.objectContaining({
         type: "Person",
-      })
+      }),
     );
   });
 });

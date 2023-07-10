@@ -41,8 +41,7 @@ describe("いいね", () => {
     const activity = {
       type: "Like",
       actor: "https://remote.example.com/u/dummy_remote",
-      object: "https://myhost.example.com/notes/note_local",
-      // contentがない
+      // objectがない
     };
     // act
     const response = await like(activity, dummyRemoteUser as never);

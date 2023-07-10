@@ -26,6 +26,6 @@ describe("signActivity", () => {
       const headers = signActivity({ sender, activity, inboxUrl });
       // assert
       expect(headers).toMatchSnapshot();
-    }
+    },
   );
 });

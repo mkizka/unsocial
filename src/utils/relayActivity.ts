@@ -18,7 +18,7 @@ const getUniqueInboxUrls = async (userId: string) => {
       include: { follower: true },
     })
     .then((follows) =>
-      follows.map((follow) => follow.follower.inboxUrl).filter(isNotNull)
+      follows.map((follow) => follow.follower.inboxUrl).filter(isNotNull),
     );
   return [...new Set(followerInboxes)].map((inboxUrl) => new URL(inboxUrl));
 };
@@ -47,7 +47,7 @@ export const relayActivityToFollowers = async (params: {
 }) => {
   const inboxUrls = await getUniqueInboxUrls(params.sender.id);
   const promises = inboxUrls.map((inboxUrl) =>
-    relayActivityToInboxUrl({ ...params, inboxUrl })
+    relayActivityToInboxUrl({ ...params, inboxUrl }),
   );
   await Promise.all(promises);
 };

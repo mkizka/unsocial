@@ -8,7 +8,7 @@ import { prisma } from "@/utils/prisma";
 
 export async function GET(
   _: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: { userId: string } },
 ) {
   const user = await userService.findOrFetchUserByParams(params);
   if (!user) {
@@ -33,6 +33,6 @@ export async function GET(
       headers: {
         "Content-Type": "application/activity+json",
       },
-    }
+    },
   );
 }

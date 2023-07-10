@@ -6,7 +6,7 @@ import { activityStreams } from "@/utils/activitypub";
 
 export async function GET(
   request: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: { userId: string } },
 ) {
   const user = await userService.findOrFetchUserByParams(params);
   if (!user) {
@@ -14,7 +14,7 @@ export async function GET(
   }
   if (request.headers.get("accept")?.includes("text/html")) {
     return NextResponse.redirect(
-      new URL(`/@${user.preferredUsername}`, request.url)
+      new URL(`/@${user.preferredUsername}`, request.url),
     );
   }
   return NextResponse.json(activityStreams.user(user), {

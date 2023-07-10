@@ -23,7 +23,7 @@ export const findFirst = cache((where: FindFirstParams) => {
 
 export const createOrUpdateUser = (
   person: personSchema.Person,
-  userIdForUpdate?: string
+  userIdForUpdate?: string,
 ) => {
   const data = {
     name: person.name,

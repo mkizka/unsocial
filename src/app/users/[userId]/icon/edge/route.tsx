@@ -23,6 +23,6 @@ export async function GET({ nextUrl }: NextRequest) {
     {
       width: 100,
       height: 100,
-    }
+    },
   );
 }
