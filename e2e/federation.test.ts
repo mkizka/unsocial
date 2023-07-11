@@ -65,11 +65,19 @@ const runTest = async ({ from, to }: RunTestParams) => {
       () => from.expectLiked(content, to.user),
     ],
     [
+      `${to.domain}: いいね削除`, //
+      () => to.unlikeAndWait(content),
+    ],
+    [
+      `${from.domain}: いいねが削除されたことを確認`,
+      () => from.expectNotLiked(content, to.user),
+    ],
+    [
       `${from.domain}: 投稿を削除`, //
       () => from.deleteAndWait(content),
     ],
     [
-      `${to.domain}: 削除されたことを確認`, //
+      `${to.domain}: 投稿が削除されたことを確認`, //
       () => to.expectDeleted(content),
     ],
     [

@@ -50,11 +50,22 @@ export class MyhostSoshalHandler extends FediverseHandler {
     await this.getNote(content).getByTestId("like-button").click();
   }
 
+  async unlike(content: string) {
+    await this.like(content);
+  }
+
   async expectLiked(content: string, user: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("note-card__link").click();
     await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
     await expect(this.page.locator(`text=${user}`)).toBeVisible();
+  }
+
+  async expectNotLiked(content: string, user: string) {
+    await this.goto("/");
+    await this.getNote(content).getByTestId("note-card__link").click();
+    await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
+    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 
   async follow(user: string) {

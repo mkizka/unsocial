@@ -58,11 +58,23 @@ export class MastodonHandler extends FediverseHandler {
       .click();
   }
 
+  async unlike(content: string) {
+    await this.like(content);
+  }
+
   async expectLiked(content: string) {
     await this.goto("/");
     await this.getNote(content).locator(".status__relative-time").click();
     await expect(this.page.locator(".detailed-status__favorites")).toHaveText(
       "1",
+    );
+  }
+
+  async expectNotLiked(content: string) {
+    await this.goto("/");
+    await this.getNote(content).locator(".status__relative-time").click();
+    await expect(this.page.locator(".detailed-status__favorites")).toHaveText(
+      "0",
     );
   }
 
