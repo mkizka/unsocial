@@ -9,25 +9,16 @@ import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import type { InboxFunction } from "./types";
 
-const followActivitySchema = z
-  .object({
-    type: z.literal("Follow"),
-    actor: z.string().url(),
-    object: z
-      .string()
-      .url()
-      .transform((val, ctx) => {
-        if (new URL(val).host != env.HOST) {
-          ctx.addIssue({
-            code: "custom",
-            message: "フォロー先が自ホストではありません",
-          });
-          return z.NEVER;
-        }
-        return val;
-      }),
-  })
-  .passthrough();
+export const followActivitySchema = z.object({
+  type: z.literal("Follow"),
+  actor: z.string().url(),
+  object: z
+    .string()
+    .url()
+    .refine((val) => new URL(val).host == env.HOST, {
+      message: "フォロー先が自ホストではありません",
+    }),
+});
 
 export const follow: InboxFunction = async (activity, actorUser) => {
   const parsedFollow = followActivitySchema.safeParse(activity);

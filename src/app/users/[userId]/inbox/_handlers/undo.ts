@@ -1,49 +1,22 @@
+import type { User } from "@prisma/client";
 import { z } from "zod";
 
 import { userService } from "@/server/service";
-import { env } from "@/utils/env";
 import { stringifyZodError } from "@/utils/formatZodError";
 import { prisma } from "@/utils/prisma";
 
+import { followActivitySchema } from "./follow";
+import { likeActivitySchema } from "./like";
 import type { InboxFunction } from "./types";
 
-const undoActivitySchema = z
-  .object({
-    type: z.literal("Undo"),
-    actor: z.string().url(),
-    object: z
-      .object({
-        type: z.literal("Follow"),
-        actor: z.string().url(),
-        object: z
-          .string()
-          .url()
-          .transform((val, ctx) => {
-            if (new URL(val).host != env.HOST) {
-              ctx.addIssue({
-                code: "custom",
-                message: "フォロー先が自ホストではありません",
-              });
-              return z.NEVER;
-            }
-            return val;
-          }),
-      })
-      .passthrough(),
-  })
-  .passthrough();
+const undoActivitySchema = z.object({
+  type: z.literal("Undo"),
+  actor: z.string().url(),
+  object: z.union([followActivitySchema, likeActivitySchema]),
+});
 
-export const undo: InboxFunction = async (activity, actorUser) => {
-  const parsedUndo = undoActivitySchema.safeParse(activity);
-  if (!parsedUndo.success) {
-    return {
-      status: 400,
-      message: stringifyZodError(parsedUndo.error, activity),
-    };
-  }
-  const followee = await userService.findUserByActorId(
-    new URL(parsedUndo.data.object.object),
-  );
+const undoFollow = async (actorUser: User, undoActorId: URL) => {
+  const followee = await userService.findUserByActorId(undoActorId);
   if (!followee) {
     return {
       status: 400,
@@ -63,4 +36,44 @@ export const undo: InboxFunction = async (activity, actorUser) => {
     status: 200,
     message: "完了: アンフォロー",
   };
+};
+
+// TODO: service化してlike.tsと共通にする
+const resolveNoteId = (objectId: URL) => {
+  if (!objectId.pathname.startsWith("/notes/")) {
+    return null;
+  }
+  return objectId.pathname.split("/")[2];
+};
+
+const undoLike = async (actorUser: User, undoObjectId: URL) => {
+  const noteId = resolveNoteId(undoObjectId);
+  if (!noteId) {
+    return {
+      status: 400,
+      message: "activityからいいね削除対象のノートIDを取得できませんでした",
+    };
+  }
+  await prisma.like.deleteMany({
+    where: {
+      noteId,
+      userId: actorUser.id,
+    },
+  });
+  return { status: 200, message: "完了: いいね削除" };
+};
+
+export const undo: InboxFunction = async (activity, actorUser) => {
+  const parsedUndo = undoActivitySchema.safeParse(activity);
+  if (!parsedUndo.success) {
+    return {
+      status: 400,
+      message: stringifyZodError(parsedUndo.error, activity),
+    };
+  }
+  const undoObject = parsedUndo.data.object;
+  if (undoObject.type === "Follow") {
+    return undoFollow(actorUser, new URL(undoObject.object));
+  }
+  return undoLike(actorUser, new URL(undoObject.object));
 };

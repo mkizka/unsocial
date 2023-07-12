@@ -13,26 +13,17 @@ const resolveNoteId = (objectId: URL) => {
   return objectId.pathname.split("/")[2];
 };
 
-const likeActivitySchema = z
-  .object({
-    type: z.literal("Like"),
-    actor: z.string().url(),
-    object: z
-      .string()
-      .url()
-      .transform((val, ctx) => {
-        if (new URL(val).host != env.HOST) {
-          ctx.addIssue({
-            code: "custom",
-            message: "自ホストのノートではありません",
-          });
-          return z.NEVER;
-        }
-        return val;
-      }),
-    content: z.string().optional(),
-  })
-  .passthrough();
+export const likeActivitySchema = z.object({
+  type: z.literal("Like"),
+  actor: z.string().url(),
+  object: z
+    .string()
+    .url()
+    .refine((val) => new URL(val).host == env.HOST, {
+      message: "自ホストのノートではありません",
+    }),
+  content: z.string().optional(),
+});
 
 export const like: InboxFunction = async (activity, actorUser) => {
   const parsedLike = likeActivitySchema.safeParse(activity);
