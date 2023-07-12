@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { userService } from "@/server/service";
 import { env } from "@/utils/env";
-import { formatZodError } from "@/utils/formatZodError";
+import { stringifyZodError } from "@/utils/formatZodError";
 import { prisma } from "@/utils/prisma";
 
 import type { InboxFunction } from "./types";
@@ -38,7 +38,7 @@ export const undo: InboxFunction = async (activity, actorUser) => {
   if (!parsedUndo.success) {
     return {
       status: 400,
-      message: "検証失敗: " + formatZodError(parsedUndo.error),
+      message: stringifyZodError(parsedUndo.error, activity),
     };
   }
   const followee = await userService.findUserByActorId(

@@ -42,8 +42,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({}, { status: 400 });
   }
   const result = await inbox(activity.data, actorUser);
-  logger.info(
-    request.nextUrl.pathname + `(${result.status}): ${result.message}`,
-  );
+  logger[result.status != 200 ? "warn" : "info"](result.message);
   return NextResponse.json({}, { status: result.status });
 }

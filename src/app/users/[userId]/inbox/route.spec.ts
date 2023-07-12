@@ -45,9 +45,7 @@ describe("/users/[userId]/inbox", () => {
     // act
     const response = await POST(request);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith(
-      "/users/foo/inbox(200): メッセージ",
-    );
+    expect(mockedLogger.info).toHaveBeenCalledWith("メッセージ");
     expect(response.status).toBe(200);
   });
   test("actorが無ければ400を返す", async () => {
