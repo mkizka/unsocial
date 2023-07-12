@@ -40,12 +40,21 @@ export abstract class FediverseHandler {
 
   protected abstract like(content: string): Promise<void>;
 
+  protected abstract unlike(content: string): Promise<void>;
+
   async likeAndWait(content: string) {
     await this.like(content);
     await this.waitForFederation();
   }
 
+  async unlikeAndWait(content: string) {
+    await this.unlike(content);
+    await this.waitForFederation();
+  }
+
   abstract expectLiked(content: string, user: string): Promise<void>;
+
+  abstract expectNotLiked(content: string, user: string): Promise<void>;
 
   protected abstract follow(user: string): Promise<void>;
 

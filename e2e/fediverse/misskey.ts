@@ -86,11 +86,25 @@ export class MisskeyHandler extends FediverseHandler {
     await this.page.locator(".emojis button").first().click();
   }
 
+  async unlike(content: string) {
+    await this.gotoGTL();
+    await this.getNote(content)
+      .locator("button", { has: this.page.locator(".ti-minus") })
+      .click();
+  }
+
   async expectLiked(content: string) {
     await this.gotoGTL();
     await expect(
       this.getNote(content).locator("button", { hasText: "1" }),
     ).toBeVisible();
+  }
+
+  async expectNotLiked(content: string) {
+    await this.gotoGTL();
+    await expect(
+      this.getNote(content).locator("button", { hasText: "1" }),
+    ).not.toBeVisible();
   }
 
   async follow(user: string) {
@@ -104,7 +118,8 @@ export class MisskeyHandler extends FediverseHandler {
   }
 
   async expectFollowing(user: string) {
-    // TODO: 実装
+    await this.goto(`/@e2e//following`);
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async expectFollowed(user: string) {
