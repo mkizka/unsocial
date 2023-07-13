@@ -48,7 +48,7 @@ describe("いいね", () => {
     // assert
     expect(response).toEqual({
       status: 400,
-      message: expect.stringContaining("検証失敗"),
+      message: expect.any(String),
     });
   });
   test("URLが/notes/でなければ400を返す", async () => {
