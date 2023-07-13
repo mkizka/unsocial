@@ -39,7 +39,7 @@
     "@stryker-mutator/api": "7.1.0",
     "@stryker-mutator/core": "7.1.0",
     "@stryker-mutator/jest-runner": "7.1.0",
-    "@tailwindcss/forms": "0.5.3",
+    "@tailwindcss/forms": "0.5.4",
     "@types/bcryptjs": "2.4.2",
     "@types/jest": "29.5.3",
     "@types/node": "20.4.2",
