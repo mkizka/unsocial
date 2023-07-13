@@ -2,12 +2,24 @@ import type { User } from "@prisma/client";
 import { z } from "zod";
 
 import { userService } from "@/server/service";
+import { env } from "@/utils/env";
 import { stringifyZodError } from "@/utils/formatZodError";
 import { prisma } from "@/utils/prisma";
 
 import { followActivitySchema } from "./follow";
-import { likeActivitySchema } from "./like";
 import type { InboxFunction } from "./types";
+
+const likeActivitySchema = z.object({
+  type: z.literal("Like"),
+  actor: z.string().url(),
+  object: z
+    .string()
+    .url()
+    .refine((val) => new URL(val).host == env.HOST, {
+      message: "自ホストのノートではありません",
+    }),
+  content: z.string().optional(),
+});
 
 const undoActivitySchema = z.object({
   type: z.literal("Undo"),
