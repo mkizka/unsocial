@@ -3,7 +3,7 @@ import type { Follow } from "@prisma/client";
 import { mockedPrisma } from "@/mocks/prisma";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
-import * as followService from "./follow";
+import { handle } from "./follow";
 
 jest.mock("@/utils/relayActivity");
 const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
@@ -18,7 +18,7 @@ const dummyRemoteUser = {
   inboxUrl: "https://remote.example.com/inbox",
 };
 
-describe(followService.name, () => {
+describe("inboxFollowService", () => {
   test("正常系", async () => {
     // arrange
     const activity = {
@@ -29,10 +29,7 @@ describe(followService.name, () => {
     mockedPrisma.user.findFirst.mockResolvedValueOnce(dummyLocalUser as never);
     mockedPrisma.follow.create.mockResolvedValue({} as Follow);
     // act
-    const error = await followService.handle(
-      activity,
-      dummyRemoteUser as never,
-    );
+    const error = await handle(activity, dummyRemoteUser as never);
     // assert
     expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
       where: { id: "dummyidlocal" },

@@ -12,9 +12,7 @@ import {
   UnexpectedActivityRequestError,
 } from "./shared";
 
-export const name = "followService";
-
-const logger = createLogger(name);
+const logger = createLogger("inboxFollowService");
 
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedFollow = followSchema.safeParse(activity);

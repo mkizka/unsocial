@@ -1,7 +1,7 @@
 import { mockedLogger } from "@/mocks/logger";
 import { mockedPrisma } from "@/mocks/prisma";
 
-import * as likeService from "./like";
+import { handle } from "./like";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
@@ -15,7 +15,7 @@ const dummyLocalUser = {
   id: "dummyidlocal",
 };
 
-describe(likeService.name, () => {
+describe("inboxLikeService", () => {
   test("正常系", async () => {
     // arrange
     const activity = {
@@ -26,7 +26,7 @@ describe(likeService.name, () => {
     };
     mockedPrisma.like.create.mockResolvedValueOnce(dummyLocalUser as never);
     // act
-    const error = await likeService.handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, dummyRemoteUser as never);
     // assert
 
     expect(mockedPrisma.like.create).toHaveBeenCalledWith({
@@ -47,7 +47,7 @@ describe(likeService.name, () => {
     };
     mockedPrisma.like.create.mockResolvedValueOnce(dummyLocalUser as never);
     // act
-    const error = await likeService.handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, dummyRemoteUser as never);
     // assert
     expect(mockedPrisma.like.create).toHaveBeenCalledWith({
       data: {
@@ -67,7 +67,7 @@ describe(likeService.name, () => {
     };
     mockedPrisma.like.create.mockRejectedValue(new Error());
     // act
-    const error = await likeService.handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, dummyRemoteUser as never);
     // assert
     expect(mockedLogger.warn).toHaveBeenCalledWith(expect.any(Error));
     expect(error).toBeUndefined();
@@ -80,7 +80,7 @@ describe(likeService.name, () => {
       // objectがない
     };
     // act
-    const error = await likeService.handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, dummyRemoteUser as never);
     // assert
     expect(error).toBeInstanceOf(ActivitySchemaValidationError);
     expect(error!.message).toEqual(expect.stringContaining("Required"));
@@ -94,7 +94,7 @@ describe(likeService.name, () => {
       content: "👍",
     };
     // act
-    const error = await likeService.handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, dummyRemoteUser as never);
     // assert
     expect(error).toBeInstanceOf(BadActivityRequestError);
     expect(error!.message).toBe(

@@ -1,2 +1,2 @@
-export * as followService from "./follow";
-export * as likeService from "./like";
+export * as inboxFollowService from "./follow";
+export * as inboxLikeService from "./like";

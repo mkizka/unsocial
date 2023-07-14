@@ -9,9 +9,7 @@ import {
   resolveNoteId,
 } from "./shared";
 
-export const name = "likeService";
-
-const logger = createLogger(name);
+const logger = createLogger("inboxLikeService");
 
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedLike = likeSchema.safeParse(activity);
