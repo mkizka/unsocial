@@ -1,7 +1,9 @@
+import type { Follow } from "@prisma/client";
+
 import { mockedPrisma } from "@/mocks/prisma";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
-import { follow } from "./follow";
+import * as followService from "./follow";
 
 jest.mock("@/utils/relayActivity");
 const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
@@ -16,7 +18,7 @@ const dummyRemoteUser = {
   inboxUrl: "https://remote.example.com/inbox",
 };
 
-describe("フォロー", () => {
+describe(followService.name, () => {
   test("正常系", async () => {
     // arrange
     const activity = {
@@ -25,8 +27,12 @@ describe("フォロー", () => {
       object: "https://myhost.example.com/users/dummyidlocal/activity",
     };
     mockedPrisma.user.findFirst.mockResolvedValueOnce(dummyLocalUser as never);
+    mockedPrisma.follow.create.mockResolvedValue({} as Follow);
     // act
-    const response = await follow(activity, dummyRemoteUser as never);
+    const error = await followService.handle(
+      activity,
+      dummyRemoteUser as never,
+    );
     // assert
     expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
       where: { id: "dummyidlocal" },
@@ -59,9 +65,6 @@ describe("フォロー", () => {
         },
       },
     });
-    expect(response).toEqual({
-      status: 200,
-      message: "完了: フォロー",
-    });
+    expect(error).toBeUndefined();
   });
 });

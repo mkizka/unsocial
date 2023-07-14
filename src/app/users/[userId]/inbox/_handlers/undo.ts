@@ -6,8 +6,18 @@ import { env } from "@/utils/env";
 import { stringifyZodError } from "@/utils/formatZodError";
 import { prisma } from "@/utils/prisma";
 
-import { followActivitySchema } from "./follow";
 import type { InboxFunction } from "./types";
+
+const followActivitySchema = z.object({
+  type: z.literal("Follow"),
+  actor: z.string().url(),
+  object: z
+    .string()
+    .url()
+    .refine((val) => new URL(val).host == env.HOST, {
+      message: "フォロー先が自ホストではありません",
+    }),
+});
 
 const likeActivitySchema = z.object({
   type: z.literal("Like"),

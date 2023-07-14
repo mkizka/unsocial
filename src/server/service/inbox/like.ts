@@ -3,9 +3,9 @@ import { likeSchema } from "@/server/schema";
 import { createLogger } from "@/utils/logger";
 
 import {
-  type ActivityHandler,
   ActivitySchemaValidationError,
   BadActivityRequestError,
+  type InboxHandler,
   resolveNoteId,
 } from "./shared";
 
@@ -13,7 +13,7 @@ export const name = "likeService";
 
 const logger = createLogger(name);
 
-export const handle: ActivityHandler = async (activity, actorUser) => {
+export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedLike = likeSchema.safeParse(activity);
   if (!parsedLike.success) {
     return new ActivitySchemaValidationError(activity, parsedLike.error);

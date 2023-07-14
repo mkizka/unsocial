@@ -21,7 +21,7 @@ export class BadActivityRequestError extends InboxError {}
 // 送られてきたActivityは正しかったが、受け取った側の状態が原因で処理できなかった場合のエラー
 export class UnexpectedActivityRequestError extends InboxError {}
 
-export type ActivityHandler = (
+export type InboxHandler = (
   activity: unknown,
   actorUser: User,
 ) => Promise<InboxError | void>;
