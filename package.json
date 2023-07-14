@@ -30,7 +30,7 @@
     "nodemailer": "6.9.3",
     "react": "18.3.0-canary-8ec962d82-20230623",
     "react-dom": "18.3.0-canary-8ec962d82-20230623",
-    "sharp": "0.32.2",
+    "sharp": "0.32.3",
     "winston": "3.10.0",
     "zod": "3.21.4"
   },
