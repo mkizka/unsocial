@@ -4,7 +4,8 @@ on:
   workflow_call:
 
 env:
-  UPLOAD_DIR: soshal-gha/mutation-test/${{ github.head_ref || 'main' }}
+  UPLOAD_DIR: soshal-gha/mutation-test
+  BRANCH_NAME: ${{ github.head_ref || 'main' }}
   ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -24,7 +25,7 @@ jobs:
       - name: upload-reports
         run: |
           mv stryker.log reports/mutation/
-          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/mutation "s3://${{ env.UPLOAD_DIR }}" --recursive
+          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/mutation "s3://${{ env.UPLOAD_DIR }}/${{ env.BRANCH_NAME }}" --recursive
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
         id: mutation-report
