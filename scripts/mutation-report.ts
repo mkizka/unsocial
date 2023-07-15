@@ -83,10 +83,12 @@ const table = async () => {
 
 const main = async () => {
   const baseUrl = process.env.MUTATION_TEST_S3_BASEURL ?? "";
+  const branchName = process.env.BRANCH_NAME ?? "";
 
   const text = `${await table()}
   
-  :gun: [mutation.html](${baseUrl}/mutation.html)
+  :gun: [mutation.html (${branchName})](${baseUrl}/${branchName}/mutation.html)
+  :gun: [mutation.html (main)](${baseUrl}/main/mutation.html)
   :page_facing_up: [stryker.log](${baseUrl}/stryker.log)`;
 
   console.log(text);
