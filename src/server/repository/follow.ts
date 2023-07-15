@@ -14,6 +14,22 @@ export const createAndAccept = (params: CreateParams) => {
   });
 };
 
+type AcceptParams = {
+  followeeId: string;
+  followerId: string;
+};
+
+export const accept = (params: AcceptParams) => {
+  return prisma.follow.update({
+    where: {
+      followeeId_followerId: params,
+    },
+    data: {
+      status: "ACCEPTED",
+    },
+  });
+};
+
 type RemoveParams = {
   followeeId: string;
   followerId: string;

@@ -1,6 +1,6 @@
 import { mockedPrisma } from "@/mocks/prisma";
 
-import { accept } from "./accept";
+import { handle } from "./accept";
 
 const dummyRemoteUser = {
   id: "dummy_remote",
@@ -24,7 +24,7 @@ describe("フォロー承認", () => {
     };
     mockedPrisma.user.findFirst.mockResolvedValue(dummyLocalUser);
     // act
-    const response = await accept(activity, dummyRemoteUser);
+    const error = await handle(activity, dummyRemoteUser);
     // assert
     expect(mockedPrisma.follow.update).toHaveBeenCalledWith({
       where: {
@@ -37,9 +37,6 @@ describe("フォロー承認", () => {
         status: "ACCEPTED",
       },
     });
-    expect(response).toEqual({
-      status: 200,
-      message: "完了: フォロー承認",
-    });
+    expect(error).toBeUndefined();
   });
 });
