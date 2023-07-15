@@ -18,7 +18,7 @@
     "all": "run-s -s typecheck test lint:fix",
     "mutation-test": "run-s mutation-test:*",
     "mutation-test:run-only": "./scripts/mutation-test.sh",
-    "mutation-test:report": "./scripts/mutation-report.ts | md",
+    "mutation-test:report": "./scripts/mutation/report.ts | md",
     "prepare": "husky install"
   },
   "dependencies": {
