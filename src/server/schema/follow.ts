@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { env } from "@/utils/env";
 
-const schema = z.object({
+export const schema = z.object({
   type: z.literal("Follow"),
   actor: z.string().url(),
   object: z

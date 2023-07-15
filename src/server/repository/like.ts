@@ -2,14 +2,25 @@ import { cache } from "react";
 
 import { prisma } from "@/utils/prisma";
 
-type Options = {
+type CreateParams = {
   noteId: string;
   userId: string;
   content: string;
 };
 
-export const create = cache((options: Options) => {
+export const create = cache((params: CreateParams) => {
   return prisma.like.create({
-    data: options,
+    data: params,
+  });
+});
+
+type RemoveParams = {
+  noteId: string;
+  userId: string;
+};
+
+export const remove = cache((params: RemoveParams) => {
+  return prisma.like.deleteMany({
+    where: params,
   });
 });
