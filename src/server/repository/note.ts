@@ -2,6 +2,8 @@ import { cache } from "react";
 
 import { prisma } from "@/utils/prisma";
 
+import type { noteSchema } from "../schema";
+
 const includeForNoteCard = {
   user: true,
   likes: {
@@ -40,3 +42,21 @@ export const findManyNoteCardsByUserId = cache((userId: string) => {
     },
   });
 });
+
+type CreateParams = {
+  activity: noteSchema.Note;
+  userId: string;
+};
+
+export const createFromActivity = cache(
+  ({ activity, userId }: CreateParams) => {
+    return prisma.note.create({
+      data: {
+        userId,
+        url: activity.id,
+        content: activity.content,
+        published: activity.published,
+      },
+    });
+  },
+);

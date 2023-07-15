@@ -1,6 +1,6 @@
 import { mockedPrisma } from "@/mocks/prisma";
 
-import { create } from "./create";
+import { handle } from "./create";
 
 const dummyRemoteUser = {
   id: "dummyidremote",
@@ -23,7 +23,7 @@ describe("ノート", () => {
       },
     };
     // act
-    const response = await create(activity, dummyRemoteUser as never);
+    const error = await handle(activity, dummyRemoteUser as never);
     // assert
     expect(mockedPrisma.note.create).toHaveBeenCalledWith({
       data: {
@@ -33,6 +33,6 @@ describe("ノート", () => {
         published: activity.object.published,
       },
     });
-    expect(response).toEqual({ status: 200, message: "完了: ノート作成" });
+    expect(error).toBeUndefined();
   });
 });
