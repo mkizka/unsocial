@@ -1,32 +1,8 @@
-import { z } from "zod";
-
-import { formatZodError } from "@/utils/formatZodError";
-import { prisma } from "@/utils/prisma";
+import { inboxDeleteService } from "@/server/service/inbox";
 
 import type { InboxFunction } from "./types";
 
-const deleteSchema = z.object({
-  type: z.literal("Delete"),
-  actor: z.string().url(),
-  object: z.object({
-    type: z.literal("Tombstone"),
-    id: z.string().url(),
-  }),
-});
-
-export const delete_: InboxFunction = async (activity) => {
-  const parsedNote = deleteSchema.safeParse(activity);
-  if (!parsedNote.success) {
-    return {
-      status: 400,
-      message: "検証失敗: " + formatZodError(parsedNote.error),
-    };
-  }
-  // urlはユニークでないのでdeleteManyを使うが、実際は一つのノートのみ削除されるはず
-  await prisma.note.deleteMany({
-    where: {
-      url: parsedNote.data.object.id,
-    },
-  });
+export const delete_: InboxFunction = async (activity, actorUser) => {
+  await inboxDeleteService.handle(activity, actorUser);
   return { status: 200, message: "完了: ノート削除" };
 };

@@ -2,7 +2,8 @@ import { cache } from "react";
 
 import { prisma } from "@/utils/prisma";
 
-import type { noteSchema } from "../schema";
+import type { deleteSchema } from "../schema";
+import { type noteSchema } from "../schema";
 
 const includeForNoteCard = {
   user: true,
@@ -60,3 +61,12 @@ export const createFromActivity = cache(
     });
   },
 );
+
+export const removeByActivity = cache((activity: deleteSchema.Delete) => {
+  // urlはユニークでないのでdeleteManyを使うが、実際は一つのノートのみ削除されるはず
+  return prisma.note.deleteMany({
+    where: {
+      url: activity.object.id,
+    },
+  });
+});
