@@ -21,6 +21,10 @@ const config = {
   ],
   // 権限エラーになることがあるため
   ignorePatterns: ["docker"],
-  plugins: ["@stryker-mutator/jest-runner"],
+  checkers: ["typescript"],
+  plugins: [
+    "@stryker-mutator/jest-runner",
+    "@stryker-mutator/typescript-checker",
+  ],
 };
 export default config;
