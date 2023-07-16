@@ -3,11 +3,10 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { userService } from "@/server/service";
+import { inboxService } from "@/server/service/inbox";
 import { formatZodError } from "@/utils/formatZodError";
 import { verifyActivity } from "@/utils/httpSignature/verify";
 import { createLogger } from "@/utils/logger";
-
-import { inbox } from "./_handlers";
 
 const logger = createLogger("/users/[userId]/inbox");
 
@@ -41,7 +40,6 @@ export async function POST(request: NextRequest) {
     logger.info("リクエストヘッダの署名が不正でした: " + validation.reason);
     return NextResponse.json({}, { status: 400 });
   }
-  const result = await inbox(activity.data, actorUser);
-  logger[result.status != 200 ? "warn" : "info"](result.message);
-  return NextResponse.json({}, { status: result.status });
+  await inboxService.handle(activity.data, actorUser);
+  return NextResponse.json({}, { status: 200 });
 }

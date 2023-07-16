@@ -32,3 +32,25 @@ export const resolveNoteId = (objectId: URL) => {
   }
   return objectId.pathname.split("/")[2];
 };
+
+// export class InboxError extends Error {
+//   private logger: Logger;
+//   protected level: "warn" | "error" = "warn";
+
+//   constructor(
+//     message: string | object,
+//     activity: unknown,
+//     error?: z.ZodError<unknown>
+//   ) {
+//     super(JSON.stringify({ message, activity, error }));
+//     this.logger = createLogger(this.name);
+//   }
+
+//   public get statusCode() {
+//     return this.level === "warn" ? 400 : 500;
+//   }
+
+//   public log() {
+//     this.logger[this.level](this.message);
+//   }
+// }
