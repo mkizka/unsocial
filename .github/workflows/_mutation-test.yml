@@ -21,7 +21,7 @@ jobs:
         with:
           cache: pnpm
       - run: pnpm i
-      - run: pnpm mutation-test:run-only --force --fileLogLevel trace
+      - run: pnpm mutation-test:run-only --fileLogLevel trace
       - name: upload-reports
         run: |
           mv stryker.log reports/mutation/
