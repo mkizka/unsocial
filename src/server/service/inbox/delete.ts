@@ -9,5 +9,5 @@ export const handle: InboxHandler = async (activity) => {
   if (!parsedDelete.success) {
     return new ActivitySchemaValidationError(activity, parsedDelete.error);
   }
-  noteRepository.removeByActivity(parsedDelete.data);
+  await noteRepository.removeByActivity(parsedDelete.data);
 };
