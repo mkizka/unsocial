@@ -1,8 +1,13 @@
+import type { User } from "@prisma/client";
+
+import { verifyActivity } from "@/utils/httpSignature/verify";
+
+import { userService } from "..";
 import { handle as accept } from "./accept";
 import { handle as create } from "./create";
 import { handle as delete_ } from "./delete";
 import { handle as follow } from "./follow";
-import { handle as inbox } from "./inbox";
+import { perform } from "./inbox";
 import { ActivitySchemaValidationError } from "./shared";
 import { handle as undo } from "./undo";
 
@@ -21,7 +26,20 @@ const mockedUndo = jest.mocked(undo);
 jest.mock("./create");
 const mockedCreate = jest.mocked(create);
 
-const dummyRemoteUser = {} as never;
+const dummyUser = {} as User;
+
+jest.mock("..");
+const mockedUserService = jest.mocked(userService);
+mockedUserService.findOrFetchUserByActorId.mockResolvedValue(dummyUser);
+
+jest.mock("@/utils/httpSignature/verify");
+const mockedVerifyActivity = jest.mocked(verifyActivity);
+mockedVerifyActivity.mockReturnValue({ isValid: true });
+
+const params = {
+  pathname: "/users/dummy/inbox",
+  headers: new Headers(),
+};
 
 describe("ユーザーinbox", () => {
   test.each`
@@ -38,9 +56,10 @@ describe("ユーザーinbox", () => {
       actor: "https://remote.example.com/u/dummy_remote",
     };
     // act
-    await inbox(activity, dummyRemoteUser);
+    const error = await perform({ activity, ...params });
     // assert
-    expect(fn).toBeCalledWith(activity, dummyRemoteUser);
+    expect(error).toBeUndefined();
+    expect(fn).toBeCalledWith(activity, dummyUser);
   });
   test("未実装のtypeの場合はエラーを返す", async () => {
     // arrange
@@ -49,7 +68,7 @@ describe("ユーザーinbox", () => {
       actor: "https://remote.example.com/u/dummy_remote",
     };
     // act
-    const error = await inbox(activity, dummyRemoteUser);
+    const error = await perform({ activity, ...params });
     // assert
     expect(error).toBeInstanceOf(ActivitySchemaValidationError);
   });
@@ -60,7 +79,7 @@ describe("ユーザーinbox", () => {
       actor: "https://remote.example.com/u/dummy_remote",
     };
     // act
-    const error = await inbox(activity, dummyRemoteUser);
+    const error = await perform({ activity, ...params });
     // assert
     expect(error).toBeInstanceOf(ActivitySchemaValidationError);
   });

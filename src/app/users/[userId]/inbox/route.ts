@@ -1,45 +1,25 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { z } from "zod";
 
-import { userService } from "@/server/service";
 import { inboxService } from "@/server/service/inbox";
-import { formatZodError } from "@/utils/formatZodError";
-import { verifyActivity } from "@/utils/httpSignature/verify";
+import { UnexpectedActivityRequestError } from "@/server/service/inbox/shared";
 import { createLogger } from "@/utils/logger";
 
 const logger = createLogger("/users/[userId]/inbox");
 
-const anyActivitySchema = z
-  .object({
-    actor: z.string().url(),
-  })
-  .passthrough();
-
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const activity = anyActivitySchema.safeParse(body);
-  if (!activity.success) {
-    logger.info("検証失敗" + formatZodError(activity.error));
+  const error = await inboxService.perform({
+    activity: body,
+    pathname: request.nextUrl.pathname,
+    headers: request.headers,
+  });
+  if (error) {
+    logger.warn(error.message);
+    if (error instanceof UnexpectedActivityRequestError) {
+      return NextResponse.json({}, { status: 500 });
+    }
     return NextResponse.json({}, { status: 400 });
   }
-  const actorUser = await userService.findOrFetchUserByActorId(
-    new URL(activity.data.actor),
-  );
-  if (!actorUser) {
-    logger.info("actorで指定されたユーザーが見つかりませんでした");
-    return NextResponse.json({}, { status: 400 });
-  }
-  // TODO: Userの公開鍵を必須にする
-  const validation = verifyActivity(
-    request.nextUrl.pathname,
-    request.headers,
-    actorUser.publicKey!,
-  );
-  if (!validation.isValid) {
-    logger.info("リクエストヘッダの署名が不正でした: " + validation.reason);
-    return NextResponse.json({}, { status: 400 });
-  }
-  await inboxService.handle(activity.data, actorUser);
   return NextResponse.json({}, { status: 200 });
 }
