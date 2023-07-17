@@ -6,7 +6,7 @@ const dummyRemoteUser = {
   id: "dummyidremote",
 };
 
-describe("ノート", () => {
+describe("inboxCreateService", () => {
   test("正常系", async () => {
     // arrange
     const activity = {

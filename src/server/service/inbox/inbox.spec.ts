@@ -6,9 +6,9 @@ import { userService } from "..";
 import { handle as accept } from "./accept";
 import { handle as create } from "./create";
 import { handle as delete_ } from "./delete";
+import { ActivitySchemaValidationError } from "./errors";
 import { handle as follow } from "./follow";
 import { perform } from "./inbox";
-import { ActivitySchemaValidationError } from "./shared";
 import { handle as undo } from "./undo";
 
 jest.mock("./follow");

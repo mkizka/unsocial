@@ -2,11 +2,11 @@ import { followRepository } from "@/server/repository";
 import { acceptSchema } from "@/server/schema";
 
 import { userService } from "..";
-import type { InboxHandler } from "./shared";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "./shared";
+} from "./errors";
+import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, followee) => {
   const parsedAccept = acceptSchema.safeParse(activity);
@@ -18,6 +18,7 @@ export const handle: InboxHandler = async (activity, followee) => {
   );
   if (!follower) {
     return new BadActivityRequestError(
+      activity,
       "Acceptされたフォロワーが存在しませんでした",
     );
   }

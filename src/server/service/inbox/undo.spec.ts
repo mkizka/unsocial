@@ -10,7 +10,7 @@ const dummyRemoteUser = {
   id: "dummyidremote",
 };
 
-describe("アンフォロー", () => {
+describe("inboxUndoService", () => {
   test("正常系", async () => {
     // arrange
     const activity = {

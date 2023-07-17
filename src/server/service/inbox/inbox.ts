@@ -6,16 +6,15 @@ import { userService } from "..";
 import * as inboxAcceptService from "./accept";
 import * as inboxCreateService from "./create";
 import * as inboxDeleteService from "./delete";
-import * as inboxFollowService from "./follow";
-import * as inboxLikeService from "./like";
-import type { InboxHandler } from "./shared";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "./shared";
+} from "./errors";
+import * as inboxFollowService from "./follow";
+import * as inboxLikeService from "./like";
 import * as inboxUndoService from "./undo";
 
-const inboxFn = {
+const inboxServices = {
   Follow: inboxFollowService,
   Accept: inboxAcceptService,
   Delete: inboxDeleteService,
@@ -29,21 +28,10 @@ const keysOf = <T extends object>(obj: T) =>
 
 const anyActivitySchema = z
   .object({
-    type: z.enum(keysOf(inboxFn)),
+    type: z.enum(keysOf(inboxServices)),
     actor: z.string().url(),
   })
   .passthrough();
-
-const handle: InboxHandler = async (activity, actorUser) => {
-  const parsedActivity = anyActivitySchema.safeParse(activity);
-  if (!parsedActivity.success) {
-    return new ActivitySchemaValidationError(activity, parsedActivity.error);
-  }
-  await inboxFn[parsedActivity.data.type].handle(
-    parsedActivity.data,
-    actorUser,
-  );
-};
 
 type PerformParams = {
   activity: unknown;
@@ -65,6 +53,7 @@ export const perform = async ({
   );
   if (!actorUser) {
     return new BadActivityRequestError(
+      activity,
       "actorで指定されたユーザーが見つかりませんでした",
     );
   }
@@ -72,8 +61,12 @@ export const perform = async ({
   const validation = verifyActivity(pathname, headers, actorUser.publicKey!);
   if (!validation.isValid) {
     return new BadActivityRequestError(
+      activity,
       "リクエストヘッダの署名が不正でした: " + validation.reason,
     );
   }
-  return handle(parsedActivity.data, actorUser);
+  return inboxServices[parsedActivity.data.type].handle(
+    parsedActivity.data,
+    actorUser,
+  );
 };

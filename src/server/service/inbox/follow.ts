@@ -10,9 +10,9 @@ import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-  type InboxHandler,
   UnexpectedActivityRequestError,
-} from "./shared";
+} from "./errors";
+import { type InboxHandler } from "./shared";
 
 const logger = createLogger("inboxFollowService");
 
@@ -26,18 +26,21 @@ export const handle: InboxHandler = async (activity, actorUser) => {
   );
   if (!followee) {
     return new BadActivityRequestError(
+      activity,
       "フォローリクエストで指定されたフォロイーが存在しませんでした",
     );
   }
   if (!followee.privateKey) {
     // 自ホストのユーザーなら秘密鍵を持っているはずなので、異常な動作
     return new UnexpectedActivityRequestError(
+      activity,
       `フォローリクエストで指定されたフォロイー(@${followee.preferredUsername}@${followee.host})が秘密鍵を持っていませんでした`,
     );
   }
   if (!actorUser.inboxUrl) {
     // 他ホストのユーザーならinboxUrlを持っているはずなので、異常な動作
     return new UnexpectedActivityRequestError(
+      activity,
       "フォローリクエストを送信したユーザーがinboxUrlを持っていませんでした",
     );
   }

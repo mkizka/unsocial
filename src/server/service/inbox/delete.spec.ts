@@ -2,7 +2,7 @@ import { mockedPrisma } from "@/mocks/prisma";
 
 import { handle } from "./delete";
 
-describe("ノート削除", () => {
+describe("inboxDeleteService", () => {
   test("正常系", async () => {
     // arrange
     const activity = {

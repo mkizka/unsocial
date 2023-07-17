@@ -1,11 +1,11 @@
 import { mockedLogger } from "@/mocks/logger";
 import { mockedPrisma } from "@/mocks/prisma";
 
-import { handle } from "./like";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "./shared";
+} from "./errors";
+import { handle } from "./like";
 
 const dummyRemoteUser = {
   id: "dummyidremote",
@@ -97,8 +97,10 @@ describe("inboxLikeService", () => {
     const error = await handle(activity, dummyRemoteUser as never);
     // assert
     expect(error).toBeInstanceOf(BadActivityRequestError);
-    expect(error!.message).toBe(
-      "activityからいいね対象のノートIDを取得できませんでした",
+    expect(error!.message).toEqual(
+      expect.stringContaining(
+        "activityからいいね対象のノートIDを取得できませんでした",
+      ),
     );
   });
 });

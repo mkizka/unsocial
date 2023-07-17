@@ -5,9 +5,8 @@ import { createLogger } from "@/utils/logger";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-  type InboxHandler,
-  resolveNoteId,
-} from "./shared";
+} from "./errors";
+import { type InboxHandler, resolveNoteId } from "./shared";
 
 const logger = createLogger("inboxLikeService");
 
@@ -19,6 +18,7 @@ export const handle: InboxHandler = async (activity, actorUser) => {
   const noteId = resolveNoteId(new URL(parsedLike.data.object));
   if (!noteId) {
     return new BadActivityRequestError(
+      activity,
       "activityからいいね対象のノートIDを取得できませんでした",
     );
   }

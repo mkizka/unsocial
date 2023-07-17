@@ -10,7 +10,7 @@ const dummyLocalUser = {
   id: "dummy_local",
 } as never;
 
-describe("フォロー承認", () => {
+describe("inboxAcceptService", () => {
   test("正常系", async () => {
     // arrange
     const activity = {
