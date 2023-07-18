@@ -1,5 +1,5 @@
 import { likeRepository } from "@/server/repository";
-import { likeSchema } from "@/server/schema";
+import { inboxLikeSchema } from "@/server/schema/like";
 import { createLogger } from "@/utils/logger";
 
 import {
@@ -11,7 +11,7 @@ import { type InboxHandler, resolveNoteId } from "./shared";
 const logger = createLogger("inboxLikeService");
 
 export const handle: InboxHandler = async (activity, actorUser) => {
-  const parsedLike = likeSchema.safeParse(activity);
+  const parsedLike = inboxLikeSchema.safeParse(activity);
   if (!parsedLike.success) {
     return new ActivitySchemaValidationError(activity, parsedLike.error);
   }

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const schema = z.object({
+export const inboxAcceptSchema = z.object({
   type: z.literal("Accept"),
   object: z.object({
     type: z.literal("Follow"),
@@ -9,6 +9,4 @@ const schema = z.object({
   }),
 });
 
-export const safeParse = schema.safeParse;
-
-export type Accept = z.infer<typeof schema>;
+export type AcceptActivity = z.infer<typeof inboxAcceptSchema>;

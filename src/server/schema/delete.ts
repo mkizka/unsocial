@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const schema = z.object({
+export const inboxDeleteSchema = z.object({
   type: z.literal("Delete"),
   actor: z.string().url(),
   object: z.object({
@@ -9,6 +9,4 @@ const schema = z.object({
   }),
 });
 
-export const safeParse = schema.safeParse;
-
-export type Delete = z.infer<typeof schema>;
+export type DeleteActivity = z.infer<typeof inboxDeleteSchema>;

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const schema = z.object({
+export const webFingerSchema = z.object({
   links: z.array(
     z.object({
       rel: z.string(),
@@ -9,6 +9,4 @@ const schema = z.object({
   ),
 });
 
-export const safeParse = schema.safeParse;
-
-export type WebFinger = z.infer<typeof schema>;
+export type WebFinger = z.infer<typeof webFingerSchema>;

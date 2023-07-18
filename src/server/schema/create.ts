@@ -1,13 +1,11 @@
 import { z } from "zod";
 
-import { schema as note } from "./note";
+import { inboxNoteSchema } from "./note";
 
-const schema = z.object({
+export const inboxCreateSchema = z.object({
   type: z.literal("Create"),
   actor: z.string().url(),
-  object: note,
+  object: inboxNoteSchema,
 });
 
-export const safeParse = schema.safeParse;
-
-export type Create = z.infer<typeof schema>;
+export type CreateActivity = z.infer<typeof inboxCreateSchema>;
