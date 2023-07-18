@@ -11,7 +11,7 @@ import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
   UnexpectedActivityRequestError,
-} from "./errors";
+} from "../errors";
 import { type InboxHandler } from "./shared";
 
 const logger = createLogger("inboxFollowService");

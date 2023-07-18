@@ -3,27 +3,27 @@ import type { User } from "@prisma/client";
 import { verifyActivity } from "@/utils/httpSignature/verify";
 
 import { userService } from "..";
-import { handle as accept } from "./accept";
-import { handle as create } from "./create";
-import { handle as delete_ } from "./delete";
 import { ActivitySchemaValidationError } from "./errors";
-import { handle as follow } from "./follow";
+import { handle as accept } from "./handlers/accept";
+import { handle as create } from "./handlers/create";
+import { handle as delete_ } from "./handlers/delete";
+import { handle as follow } from "./handlers/follow";
+import { handle as undo } from "./handlers/undo";
 import { perform } from "./inbox";
-import { handle as undo } from "./undo";
 
-jest.mock("./follow");
+jest.mock("./handlers/follow");
 const mockedFollow = jest.mocked(follow);
 
-jest.mock("./accept");
+jest.mock("./handlers/accept");
 const mockedAccept = jest.mocked(accept);
 
-jest.mock("./delete");
+jest.mock("./handlers/delete");
 const mockedDelete = jest.mocked(delete_);
 
-jest.mock("./undo");
+jest.mock("./handlers/undo");
 const mockedUndo = jest.mocked(undo);
 
-jest.mock("./create");
+jest.mock("./handlers/create");
 const mockedCreate = jest.mocked(create);
 
 const dummyUser = {} as User;

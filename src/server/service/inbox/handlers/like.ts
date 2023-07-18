@@ -5,7 +5,7 @@ import { createLogger } from "@/utils/logger";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "./errors";
+} from "../errors";
 import { type InboxHandler, resolveNoteId } from "./shared";
 
 const logger = createLogger("inboxLikeService");

@@ -4,12 +4,12 @@ import { followRepository, likeRepository } from "@/server/repository";
 import { undoSchema } from "@/server/schema";
 import type { Undo } from "@/server/schema/undo";
 
-import { userService } from "..";
-import type { InboxError } from "./errors";
+import { userService } from "../..";
+import type { InboxError } from "../errors";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "./errors";
+} from "../errors";
 import type { InboxHandler } from "./shared";
 import { resolveNoteId } from "./shared";
 

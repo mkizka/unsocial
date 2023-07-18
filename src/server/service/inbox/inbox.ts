@@ -3,16 +3,16 @@ import { z } from "zod";
 import { verifyActivity } from "@/utils/httpSignature/verify";
 
 import { userService } from "..";
-import * as inboxAcceptService from "./accept";
-import * as inboxCreateService from "./create";
-import * as inboxDeleteService from "./delete";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
 } from "./errors";
-import * as inboxFollowService from "./follow";
-import * as inboxLikeService from "./like";
-import * as inboxUndoService from "./undo";
+import * as inboxAcceptService from "./handlers/accept";
+import * as inboxCreateService from "./handlers/create";
+import * as inboxDeleteService from "./handlers/delete";
+import * as inboxFollowService from "./handlers/follow";
+import * as inboxLikeService from "./handlers/like";
+import * as inboxUndoService from "./handlers/undo";
 
 const inboxServices = {
   Follow: inboxFollowService,

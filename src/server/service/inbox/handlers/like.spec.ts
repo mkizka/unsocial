@@ -4,7 +4,7 @@ import { mockedPrisma } from "@/mocks/prisma";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "./errors";
+} from "../errors";
 import { handle } from "./like";
 
 const dummyRemoteUser = {

@@ -1,7 +1,7 @@
 import { noteRepository } from "@/server/repository";
 import { createSchema } from "@/server/schema";
 
-import { ActivitySchemaValidationError } from "./errors";
+import { ActivitySchemaValidationError } from "../errors";
 import { type InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, actorUser) => {
