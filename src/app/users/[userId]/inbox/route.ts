@@ -17,5 +17,5 @@ export async function POST(request: NextRequest) {
     logger[error.level](error.message);
     return NextResponse.json({}, { status: error.statusCode });
   }
-  return NextResponse.json({}, { status: 200 });
+  return NextResponse.json({});
 }

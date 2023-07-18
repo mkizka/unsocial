@@ -2,23 +2,13 @@ import { mockDeep } from "jest-mock-extended";
 import type { NextRequest } from "next/server";
 
 import { mockedLogger } from "@/mocks/logger";
-import { userService } from "@/server/service";
-import { verifyActivity } from "@/utils/httpSignature/verify";
+import { inboxService } from "@/server/service/inbox";
+import { BadActivityRequestError } from "@/server/service/inbox/errors";
 
 import { POST } from "./route";
 
-jest.mock("@/server/service");
-const mockedFindOrFetchUserByActorId = jest.mocked(
-  userService.findOrFetchUserByActorId,
-);
-
-jest.mock("@/utils/httpSignature/verify");
-const mockedVerifyActivity = jest.mocked(verifyActivity);
-
-const dummyRemoteUser = {
-  id: "dummyidremote",
-  publicKey: "publicKey",
-} as never;
+jest.mock("@/server/service/inbox");
+const mockedInboxService = jest.mocked(inboxService);
 
 const createMockedRequest = (body: Record<string, string>) => {
   const mockedRequest = mockDeep<NextRequest>();
@@ -27,8 +17,7 @@ const createMockedRequest = (body: Record<string, string>) => {
   return mockedRequest;
 };
 
-// TODO: 修正
-describe.skip("/users/[userId]/inbox", () => {
+describe("/users/[userId]/inbox", () => {
   test("正常系", async () => {
     // arrange
     const activity = {
@@ -36,58 +25,26 @@ describe.skip("/users/[userId]/inbox", () => {
       actor: "https://remote.example.com/users/foo",
     };
     const request = createMockedRequest(activity);
-    mockedFindOrFetchUserByActorId.mockResolvedValue(dummyRemoteUser);
-    mockedVerifyActivity.mockReturnValue({ isValid: true });
     // act
     const response = await POST(request);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith("メッセージ");
+    expect(mockedLogger.info).not.toHaveBeenCalled();
     expect(response.status).toBe(200);
   });
-  test("actorが無ければ400を返す", async () => {
+  test("inboxServiceが返したエラーに応じてレスポンスを返す", async () => {
     // arrange
     const activity = {
       type: "Any",
     };
     const request = createMockedRequest(activity);
-    // act
-    const response = await POST(request);
-    // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("検証失敗"),
+    mockedInboxService.perform.mockResolvedValueOnce(
+      new BadActivityRequestError(activity, "エラー"),
     );
-    expect(response.status).toBe(400);
-  });
-  test("actorで指定されたユーザーがDBになければ400を返す", async () => {
-    // arrange
-    const activity = {
-      type: "Any",
-      actor: "https://remote.example.com/users/foo",
-    };
-    const request = createMockedRequest(activity);
-    mockedFindOrFetchUserByActorId.mockResolvedValue(null);
     // act
     const response = await POST(request);
     // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith(
-      "actorで指定されたユーザーが見つかりませんでした",
-    );
-    expect(response.status).toBe(400);
-  });
-  test("署名の検証結果が不正だったら400を返す", async () => {
-    // arrange
-    const activity = {
-      type: "Any",
-      actor: "https://remote.example.com/users/foo",
-    };
-    const request = createMockedRequest(activity);
-    mockedFindOrFetchUserByActorId.mockResolvedValue(dummyRemoteUser);
-    mockedVerifyActivity.mockReturnValue({ isValid: false, reason: "foo" });
-    // act
-    const response = await POST(request);
-    // assert
-    expect(mockedLogger.info).toHaveBeenCalledWith(
-      expect.stringContaining("リクエストヘッダの署名が不正でした"),
+    expect(mockedLogger.warn).toHaveBeenCalledWith(
+      expect.stringContaining("エラー"),
     );
     expect(response.status).toBe(400);
   });
