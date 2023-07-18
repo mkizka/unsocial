@@ -1,14 +1,12 @@
 import { z } from "zod";
 
-import { schema as follow } from "./follow";
-import { schema as like } from "./like";
+import { inboxFollowSchema } from "./follow";
+import { inboxLikeSchema } from "./like";
 
-const schema = z.object({
+export const inboxUndoSchema = z.object({
   type: z.literal("Undo"),
   actor: z.string().url(),
-  object: z.union([follow, like]),
+  object: z.union([inboxFollowSchema, inboxLikeSchema]),
 });
 
-export const safeParse = schema.safeParse;
-
-export type Undo = z.infer<typeof schema>;
+export type UndoActivity = z.infer<typeof inboxUndoSchema>;

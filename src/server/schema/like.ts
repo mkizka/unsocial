@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { env } from "@/utils/env";
 
-export const schema = z.object({
+export const inboxLikeSchema = z.object({
   type: z.literal("Like"),
   actor: z.string().url(),
   object: z
@@ -14,6 +14,4 @@ export const schema = z.object({
   content: z.string().optional(),
 });
 
-export const safeParse = schema.safeParse;
-
-export type Like = z.infer<typeof schema>;
+export type LikeActivity = z.infer<typeof inboxLikeSchema>;

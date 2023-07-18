@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 import { followRepository } from "@/server/repository";
-import { followSchema } from "@/server/schema";
+import { inboxFollowSchema } from "@/server/schema/follow";
 import { userService } from "@/server/service";
 import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
@@ -17,7 +17,7 @@ import { type InboxHandler } from "./shared";
 const logger = createLogger("inboxFollowService");
 
 export const handle: InboxHandler = async (activity, actorUser) => {
-  const parsedFollow = followSchema.safeParse(activity);
+  const parsedFollow = inboxFollowSchema.safeParse(activity);
   if (!parsedFollow.success) {
     return new ActivitySchemaValidationError(activity, parsedFollow.error);
   }

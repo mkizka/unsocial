@@ -1,5 +1,5 @@
 import { followRepository } from "@/server/repository";
-import { acceptSchema } from "@/server/schema";
+import { inboxAcceptSchema } from "@/server/schema/accept";
 
 import { userService } from "../..";
 import {
@@ -9,7 +9,7 @@ import {
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, followee) => {
-  const parsedAccept = acceptSchema.safeParse(activity);
+  const parsedAccept = inboxAcceptSchema.safeParse(activity);
   if (!parsedAccept.success) {
     return new ActivitySchemaValidationError(activity, parsedAccept.error);
   }

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const schema = z.object({
+export const inboxPersonSchema = z.object({
   id: z.string().url(),
   name: z.string().nullable(),
   preferredUsername: z.string().min(1),
@@ -21,6 +21,4 @@ const schema = z.object({
   }),
 });
 
-export const safeParse = schema.safeParse;
-
-export type Person = z.infer<typeof schema>;
+export type PersonActivity = z.infer<typeof inboxPersonSchema>;

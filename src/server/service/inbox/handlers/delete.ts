@@ -1,11 +1,11 @@
 import { noteRepository } from "@/server/repository";
-import { deleteSchema } from "@/server/schema";
+import { inboxDeleteSchema } from "@/server/schema/delete";
 
 import { ActivitySchemaValidationError } from "../errors";
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity) => {
-  const parsedDelete = deleteSchema.safeParse(activity);
+  const parsedDelete = inboxDeleteSchema.safeParse(activity);
   if (!parsedDelete.success) {
     return new ActivitySchemaValidationError(activity, parsedDelete.error);
   }
