@@ -1,6 +1,6 @@
 import { mockedPrisma } from "@/mocks/prisma";
 
-import { undo } from "./undo";
+import { handle } from "./undo";
 
 const dummyLocalUser = {
   id: "dummyidlocal",
@@ -10,7 +10,7 @@ const dummyRemoteUser = {
   id: "dummyidremote",
 };
 
-describe("アンフォロー", () => {
+describe("inboxUndoService", () => {
   test("正常系", async () => {
     // arrange
     const activity = {
@@ -24,7 +24,7 @@ describe("アンフォロー", () => {
     };
     mockedPrisma.user.findFirst.mockResolvedValueOnce(dummyLocalUser as never);
     // act
-    const response = await undo(activity, dummyRemoteUser as never);
+    const error = await handle(activity, dummyRemoteUser as never);
     // assert
     expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
       where: { id: "dummyidlocal" },
@@ -37,9 +37,6 @@ describe("アンフォロー", () => {
         },
       },
     });
-    expect(response).toEqual({
-      status: 200,
-      message: "完了: アンフォロー",
-    });
+    expect(error).toBeUndefined();
   });
 });

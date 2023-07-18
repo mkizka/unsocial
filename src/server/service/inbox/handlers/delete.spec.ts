@@ -1,8 +1,8 @@
 import { mockedPrisma } from "@/mocks/prisma";
 
-import { delete_ } from "./delete";
+import { handle } from "./delete";
 
-describe("ノート削除", () => {
+describe("inboxDeleteService", () => {
   test("正常系", async () => {
     // arrange
     const activity = {
@@ -14,16 +14,13 @@ describe("ノート削除", () => {
       },
     };
     // act
-    const response = await delete_(activity, {} as never);
+    const error = await handle(activity, {} as never);
     // assert
     expect(mockedPrisma.note.deleteMany).toHaveBeenCalledWith({
       where: {
         url: activity.object.id,
       },
     });
-    expect(response).toEqual({
-      status: 200,
-      message: "完了: ノート削除",
-    });
+    expect(error).toBeUndefined();
   });
 });
