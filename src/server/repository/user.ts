@@ -2,7 +2,7 @@ import { cache } from "react";
 
 import { prisma } from "@/utils/prisma";
 
-import type { personSchema } from "../schema";
+import type { PersonActivity } from "../schema/person";
 
 export const findByActorId = cache((actorId: URL) => {
   return prisma.user.findFirst({
@@ -22,7 +22,7 @@ export const findFirst = cache((where: FindFirstParams) => {
 });
 
 export const createOrUpdateUser = (
-  person: personSchema.Person,
+  person: PersonActivity,
   userIdForUpdate?: string,
 ) => {
   const data = {

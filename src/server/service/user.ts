@@ -7,7 +7,8 @@ import { createLogger } from "@/utils/logger";
 import { safeUrl } from "@/utils/safeUrl";
 
 import { apRepository, userRepository } from "../repository";
-import { personSchema, webFingerSchema } from "../schema";
+import { inboxPersonSchema } from "../schema/person";
+import { webFingerSchema } from "../schema/webFinger";
 
 const logger = createLogger("userService");
 
@@ -24,7 +25,7 @@ const shouldReFetch = (user: User) => {
 
 const fetchValidPerson = async (actorId: URL) => {
   const response = await apRepository.fetchActor(actorId);
-  const parsed = personSchema.safeParse(response);
+  const parsed = inboxPersonSchema.safeParse(response);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));
     return null;
