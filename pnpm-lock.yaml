@@ -19,10 +19,10 @@ dependencies:
     version: 13.4.11-canary.0(@babel/core@7.22.1)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
   next-auth:
     specifier: 4.22.3
-    version: 4.22.3(next@13.4.11-canary.0)(nodemailer@6.9.3)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
+    version: 4.22.3(next@13.4.11-canary.0)(nodemailer@6.9.4)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
   nodemailer:
-    specifier: 6.9.3
-    version: 6.9.3
+    specifier: 6.9.4
+    version: 6.9.4
   react:
     specifier: 18.3.0-canary-8ec962d82-20230623
     version: 18.3.0-canary-8ec962d82-20230623
@@ -5593,7 +5593,7 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-auth@4.22.3(next@13.4.11-canary.0)(nodemailer@6.9.3)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623):
+  /next-auth@4.22.3(next@13.4.11-canary.0)(nodemailer@6.9.4)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623):
     resolution: {integrity: sha512-XAgy9xV3J2eJOXrQhmxdjV6MLM29ibm6WtMXc3KY6IPZeApf+SuBuPvlqCUfbu5YsAzlg9WSw6u01dChTfeZOA==}
     peerDependencies:
       next: ^12.2.5 || ^13
@@ -5609,7 +5609,7 @@ packages:
       cookie: 0.5.0
       jose: 4.14.3
       next: 13.4.11-canary.0(@babel/core@7.22.1)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
-      nodemailer: 6.9.3
+      nodemailer: 6.9.4
       oauth: 0.9.15
       openid-client: 5.4.2
       preact: 10.13.2
@@ -5716,8 +5716,8 @@ packages:
   /node-releases@2.0.10:
     resolution: {integrity: sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w==}
 
-  /nodemailer@6.9.3:
-    resolution: {integrity: sha512-fy9v3NgTzBngrMFkDsKEj0r02U7jm6XfC3b52eoNV+GCrGj+s8pt5OqhiJdWKuw51zCTdiNR/IUD1z33LIIGpg==}
+  /nodemailer@6.9.4:
+    resolution: {integrity: sha512-CXjQvrQZV4+6X5wP6ZIgdehJamI63MFoYFGGPtHudWym9qaEHDNdPzaj5bfMCvxG1vhAileSWW90q7nL0N36mA==}
     engines: {node: '>=6.0.0'}
     dev: false
 
