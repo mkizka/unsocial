@@ -9,6 +9,7 @@ const config = {
   incrementalFile: "reports/mutation/stryker-incremental.json",
   timeoutMS: 30000,
   maxTestRunnerReuse: 20,
+  ignoreStatic: true,
   mutate: [
     "src/**/*.ts",
     "src/app/.well-known/**/*.ts",
