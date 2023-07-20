@@ -2,14 +2,14 @@
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import type { ReactEventHandler } from "react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { PasswordInputField } from "../form/PasswordInputField";
 import { SubmitButton } from "../form/SubmitButton";
 import { TextInputField } from "../form/TextInputField";
 
 type Props = {
-  type: "signUp" | "signIn";
+  action: "signUp" | "signIn";
 };
 
 const texts = {
@@ -23,22 +23,26 @@ const texts = {
   },
 };
 
-export function AuthForm({ type }: Props) {
+export function AuthForm({ action }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit: ReactEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     if (!ref.current) return;
+    setLoading(true);
     const form = new FormData(ref.current);
     const response = await signIn("credentials", {
       redirect: false,
+      action,
       name: form.get("name"),
       preferredUsername: form.get("preferredUsername"),
       password: form.get("password"),
     });
     if (response?.error) {
-      alert(response.error ?? texts[type].error);
+      alert(response.error ?? texts[action].error);
+      setLoading(false);
     } else {
       router.push("/");
     }
@@ -50,7 +54,7 @@ export function AuthForm({ type }: Props) {
       ref={ref}
       onSubmit={handleSubmit}
     >
-      {type === "signUp" && (
+      {action === "signUp" && (
         <TextInputField
           name="name"
           label="ユーザー名"
@@ -63,8 +67,8 @@ export function AuthForm({ type }: Props) {
         label="ユーザーID"
         autoComplete="username"
       />
-      <PasswordInputField type={type} />
-      <SubmitButton>{texts[type].button}</SubmitButton>
+      <PasswordInputField action={action} />
+      <SubmitButton loading={loading}>{texts[action].button}</SubmitButton>
     </form>
   );
 }
