@@ -1,22 +1,18 @@
-import type { User as PrismaUser } from "@prisma/client";
+interface SessionUser {
+  id: string;
+  privateKey: string;
+}
 
 // https://next-auth.js.org/getting-started/typescript#main-module
 declare module "next-auth" {
   interface Session {
-    user: {
-      id: string;
-      privateKey: string;
-    };
+    user: SessionUser;
   }
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface User extends PrismaUser {}
+  interface User extends SessionUser {}
 }
 
 declare module "next-auth/jwt" {
-  interface JWT {
-    id: string;
-    privateKey: string;
-  }
+  interface JWT extends SessionUser {}
 }
 
 export {};

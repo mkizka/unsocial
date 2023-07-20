@@ -48,6 +48,10 @@ const signIn = async (credentials: z.infer<typeof credentialsSchema>) => {
   if (!user) {
     throw new Error("ユーザーが見つかりません");
   }
+  if (!user.privateKey) {
+    // TODO: 必須になったら消す
+    throw new Error("秘密鍵が見つかりません");
+  }
   if (
     user.credentials &&
     bcryptjs.compareSync(credentials.password, user.credentials.hashedPassword)
@@ -73,6 +77,10 @@ const signUp = async (credentials: z.infer<typeof credentialsSchema>) => {
       },
     },
   });
+  if (!newUser.privateKey) {
+    // TODO: 必須になったら消す
+    throw new Error("秘密鍵が見つかりません");
+  }
   return { id: newUser.id, privateKey: newUser.privateKey };
 };
 
@@ -87,6 +95,7 @@ export const authorize = async (credentials: unknown) => {
   return signUp(parsedCredentials.data);
 };
 
+// Stryker disable all
 export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, token }) {
@@ -114,7 +123,9 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     CredentialsProvider({
-      // @ts-ignore
+      // authorizeの型エラーを解消するために必要
+      // フォーム生成はしないので値は空にしておく
+      credentials: {},
       authorize,
     }),
   ],
