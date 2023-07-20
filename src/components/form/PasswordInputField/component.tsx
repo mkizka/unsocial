@@ -1,15 +1,15 @@
 import { TextInput } from "../TextInput";
 
 type Props = {
-  type: "signUp" | "signIn";
+  action: "signUp" | "signIn";
 };
 
-export function PasswordInputField({ type }: Props) {
+export function PasswordInputField({ action }: Props) {
   return (
     <div className="space-y-2">
       <div className="flex justify-between">
         <label htmlFor="password">パスワード(8文字以上)</label>
-        {type == "signIn" && (
+        {action == "signIn" && (
           <a href="#" className="block text-secondary hover:underline">
             パスワードを忘れた場合
           </a>
@@ -20,7 +20,7 @@ export function PasswordInputField({ type }: Props) {
         name="password"
         type="password"
         data-testid="password-input"
-        autoComplete={type == "signUp" ? "new-password" : "current-password"}
+        autoComplete={action == "signUp" ? "new-password" : "current-password"}
         required
       />
     </div>
