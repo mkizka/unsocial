@@ -16,10 +16,10 @@ dependencies:
     version: 2.4.3
   next:
     specifier: canary
-    version: 13.4.11-canary.2(@babel/core@7.22.1)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
+    version: 13.4.12-canary.0(@babel/core@7.22.1)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
   next-auth:
     specifier: 4.22.3
-    version: 4.22.3(next@13.4.11-canary.2)(nodemailer@6.9.4)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
+    version: 4.22.3(next@13.4.12-canary.0)(nodemailer@6.9.4)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
   nodemailer:
     specifier: 6.9.4
     version: 6.9.4
@@ -65,8 +65,8 @@ devDependencies:
     specifier: 29.5.3
     version: 29.5.3
   '@types/node':
-    specifier: 20.4.2
-    version: 20.4.2
+    specifier: 20.4.3
+    version: 20.4.3
   '@types/react':
     specifier: 18.2.15
     version: 18.2.15
@@ -111,7 +111,7 @@ devDependencies:
     version: 8.0.3
   jest:
     specifier: 29.6.1
-    version: 29.6.1(@types/node@20.4.2)(ts-node@10.9.1)
+    version: 29.6.1(@types/node@20.4.3)(ts-node@10.9.1)
   jest-mock-extended:
     specifier: 3.0.4
     version: 3.0.4(jest@29.6.1)(typescript@5.1.6)
@@ -138,7 +138,7 @@ devDependencies:
     version: 3.3.3(ts-node@10.9.1)
   ts-node:
     specifier: 10.9.1
-    version: 10.9.1(@types/node@20.4.2)(typescript@5.1.6)
+    version: 10.9.1(@types/node@20.4.3)(typescript@5.1.6)
   tsx:
     specifier: 3.12.7
     version: 3.12.7
@@ -1106,7 +1106,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       chalk: 4.1.2
       jest-message-util: 29.6.1
       jest-util: 29.6.1
@@ -1127,14 +1127,14 @@ packages:
       '@jest/test-result': 29.6.1
       '@jest/transform': 29.6.1
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       ci-info: 3.8.0
       exit: 0.1.2
       graceful-fs: 4.2.11
       jest-changed-files: 29.5.0
-      jest-config: 29.6.1(@types/node@20.4.2)(ts-node@10.9.1)
+      jest-config: 29.6.1(@types/node@20.4.3)(ts-node@10.9.1)
       jest-haste-map: 29.6.1
       jest-message-util: 29.6.1
       jest-regex-util: 29.4.3
@@ -1161,7 +1161,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 29.6.1
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       jest-mock: 29.6.1
     dev: true
 
@@ -1188,7 +1188,7 @@ packages:
     dependencies:
       '@jest/types': 29.6.1
       '@sinonjs/fake-timers': 10.0.2
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       jest-message-util: 29.6.1
       jest-mock: 29.6.1
       jest-util: 29.6.1
@@ -1221,7 +1221,7 @@ packages:
       '@jest/transform': 29.6.1
       '@jest/types': 29.6.1
       '@jridgewell/trace-mapping': 0.3.18
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       chalk: 4.1.2
       collect-v8-coverage: 1.0.1
       exit: 0.1.2
@@ -1309,7 +1309,7 @@ packages:
       '@jest/schemas': 29.6.0
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       '@types/yargs': 17.0.24
       chalk: 4.1.2
     dev: true
@@ -1378,8 +1378,8 @@ packages:
       - supports-color
     dev: true
 
-  /@next/env@13.4.11-canary.2:
-    resolution: {integrity: sha512-uhvcQGEGrxrnr8kCIO22rPhT8438GHsR6dQY+3rIISaLTPe3/NEzd5znQCbCZevYii3ZVMn8oULwc3P5h9NR1g==}
+  /@next/env@13.4.12-canary.0:
+    resolution: {integrity: sha512-q4QCrXUvrrFuZBJ49hxbylb3qEjSCxRw4kloIRGEimPzt5iW2DSx5u9pzp0s1kxm55NOs0FdPK5xdT8b/XwFHQ==}
     dev: false
 
   /@next/eslint-plugin-next@13.4.11:
@@ -1388,8 +1388,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-  /@next/swc-darwin-arm64@13.4.11-canary.2:
-    resolution: {integrity: sha512-+yO+w9Q7J2qn9o34mYELDOMkQjHrJGaef+eSdn94eqJeBwmucCfOAMu3x+uYEgkLyifHsofQdc8qO2sVYaC56Q==}
+  /@next/swc-darwin-arm64@13.4.12-canary.0:
+    resolution: {integrity: sha512-dtoQQTlrs8tmf53IrsdLGNwvBYkF/PMQcLycFtXC1j5kURHzJhvAcw4mD7vH/BDw3xWiwf/LBnZorvi7GhjDRA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -1397,8 +1397,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-darwin-x64@13.4.11-canary.2:
-    resolution: {integrity: sha512-yXXEoVoBGJ5OhxSb5mt+cP0/7MdU/Lxy3+cql0OVYwSI3mnbwxUKk0Rb7hLG4hx/8Z9tNfHUpViVQPuNCHpP5g==}
+  /@next/swc-darwin-x64@13.4.12-canary.0:
+    resolution: {integrity: sha512-jNgpW0KgIi6jTzsEileEhcXdVLXHLnkStZdIZzUGV3XknsawjERV++P1w0dLg8bTLdUWl9ARrdGBkGDF0LnW7Q==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -1406,8 +1406,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-gnu@13.4.11-canary.2:
-    resolution: {integrity: sha512-jO0qscDbwLm8oVjuSW/StnhQIapNNbgu+ZVbP4Z2PkMDVIwLqeE3xYAFNQ3cOXlXzPGycKXPEVc/4D012OJ/ng==}
+  /@next/swc-linux-arm64-gnu@13.4.12-canary.0:
+    resolution: {integrity: sha512-i4WoNa33usp7j04D/CfzdgSjKV43MnqVErjrlvhUgF6YO7luoQCmWbSGQ96X6LF2Uac8hWs10C+oHAWtMw7s0g==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -1415,8 +1415,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-musl@13.4.11-canary.2:
-    resolution: {integrity: sha512-PFv7qqw9o6DJjKAxMMlTZNLwwLqmTMg7t5P0XOaYgswU80tu5jiTdNHU2z03+V5BDg9WsMTfWFv3IEh4z/NvYQ==}
+  /@next/swc-linux-arm64-musl@13.4.12-canary.0:
+    resolution: {integrity: sha512-y9LAS7TY26ipuJ1FlydgFR0hRzugk5NRVYJ9azUNwRhvW+nZaQVNDEkdSE6pD4CGAlmxK9ArNtP0C2/LTVNzNQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -1424,8 +1424,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-gnu@13.4.11-canary.2:
-    resolution: {integrity: sha512-NqFm77PILq5GFUke7vse2vLOuH3AZfNCowD/O1zFQWSZigUMGPQFojOL+X+8ML40Wu9ck6pCXo2+qY7zZsYCzA==}
+  /@next/swc-linux-x64-gnu@13.4.12-canary.0:
+    resolution: {integrity: sha512-8XIAJ/nVPjdLbDDZidSdSSiDb91uuTqwjo3rwPmd2etBKjf6IuNbbW7WE6dUvcx01/d2NWjBWRycmo/LvnPBvQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -1433,8 +1433,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-musl@13.4.11-canary.2:
-    resolution: {integrity: sha512-RxNRyalGxPmLFuVpfLYvNEKzaKZEp42RwKcTW67GWB24EWc8uLioq8mHxPzy5QfZ0CVdAuVROff43vBLX0p89w==}
+  /@next/swc-linux-x64-musl@13.4.12-canary.0:
+    resolution: {integrity: sha512-s1IC1em0Bgprcb3/Th/52odgB81vJ1S0JG03q8oNjiQdKAvOl94eIVLHLGZaELlEWmYauMKsJ1RUMjCMeVRowg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -1442,8 +1442,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-arm64-msvc@13.4.11-canary.2:
-    resolution: {integrity: sha512-gOm/8bw8Q6m/h5tqRrv6kgyjjVaXojAFdkXNqyRrxKmu5fIcux/rTMOHYmKVYWLZWwkzhxz5G9H6cjqgrIHbNw==}
+  /@next/swc-win32-arm64-msvc@13.4.12-canary.0:
+    resolution: {integrity: sha512-xSE3ghYwMbDSGW/5qow+LNxOty8FLzt1mr2FfxERcdRVsUysAxaTx75nz1ig57e1b8U2jIRTfbBP13A5wQugMQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -1451,8 +1451,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-ia32-msvc@13.4.11-canary.2:
-    resolution: {integrity: sha512-vz9xERkhxPWdXoPwkndc3A0fmPWXPwpvXr8RP1EkzxVohdj5IAaU760wWElvUr3evFmibmz6376FjdA3+oofTw==}
+  /@next/swc-win32-ia32-msvc@13.4.12-canary.0:
+    resolution: {integrity: sha512-M+k/zAfY9ts5SX8glR94TK0xuHNasu2gKYbWl38zPffueb4F/k6bIczWbyzkLbJsOYrjHd6KxNLaNIRXc6bFnQ==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
@@ -1460,8 +1460,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-x64-msvc@13.4.11-canary.2:
-    resolution: {integrity: sha512-sO17a3uGUyYl2s2vbW//6UUV+Oob3qAQ4uthj4iIJv9D6O7I+M3TprnjSN5PLM8ieCsY2EYk/37yLqskvcBLyg==}
+  /@next/swc-win32-x64-msvc@13.4.12-canary.0:
+    resolution: {integrity: sha512-AKYEd2iy6rsycL4jfx/DH+f4ajLmCMYNNrw+4lHU1jSFZr+XSdP0j+aybI2YdtpUzLE0kKed9pg1lRlHlf1vxw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -1522,7 +1522,7 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       playwright-core: 1.36.1
     optionalDependencies:
       fsevents: 2.3.2
@@ -1752,7 +1752,7 @@ packages:
   /@types/graceful-fs@4.1.6:
     resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
     dependencies:
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
     dev: true
 
   /@types/istanbul-lib-coverage@2.0.4:
@@ -1798,8 +1798,8 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: true
 
-  /@types/node@20.4.2:
-    resolution: {integrity: sha512-Dd0BYtWgnWJKwO1jkmTrzofjK2QXXcai0dmtzvIBhcA+RsG5h8R3xlyta0kGOZRNfL9GuRtb1knmPEhQrePCEw==}
+  /@types/node@20.4.3:
+    resolution: {integrity: sha512-Yu3+r4Mn/iY6Mf0aihncZQ1qOjOUrCiodbHHY1hds5O+7BbKp9t+Li7zLO13zO8j9L2C6euz8xsYQP0rjGvVXw==}
     dev: true
 
   /@types/prettier@2.7.2:
@@ -1835,7 +1835,7 @@ packages:
   /@types/set-cookie-parser@2.4.2:
     resolution: {integrity: sha512-fBZgytwhYAUkj/jC/FAV4RQ5EerRup1YQsXQCh8rZfiHkc4UahC192oH0smGwsXol3cL3A5oETuAHeQHmhXM4w==}
     dependencies:
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
     dev: true
 
   /@types/stack-utils@2.0.1:
@@ -3818,7 +3818,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/expect-utils': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       jest-get-type: 29.4.3
       jest-matcher-utils: 29.6.1
       jest-message-util: 29.6.1
@@ -4715,7 +4715,7 @@ packages:
       '@jest/expect': 29.6.1
       '@jest/test-result': 29.6.1
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       chalk: 4.1.2
       co: 4.6.0
       dedent: 0.7.0
@@ -4735,7 +4735,7 @@ packages:
       - supports-color
     dev: true
 
-  /jest-cli@29.6.1(@types/node@20.4.2)(ts-node@10.9.1):
+  /jest-cli@29.6.1(@types/node@20.4.3)(ts-node@10.9.1):
     resolution: {integrity: sha512-607dSgTA4ODIN6go9w6xY3EYkyPFGicx51a69H7yfvt7lN53xNswEVLovq+E77VsTRi5fWprLH0yl4DJgE8Ing==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     hasBin: true
@@ -4752,7 +4752,7 @@ packages:
       exit: 0.1.2
       graceful-fs: 4.2.11
       import-local: 3.1.0
-      jest-config: 29.6.1(@types/node@20.4.2)(ts-node@10.9.1)
+      jest-config: 29.6.1(@types/node@20.4.3)(ts-node@10.9.1)
       jest-util: 29.6.1
       jest-validate: 29.6.1
       prompts: 2.4.2
@@ -4763,7 +4763,7 @@ packages:
       - ts-node
     dev: true
 
-  /jest-config@29.6.1(@types/node@20.4.2)(ts-node@10.9.1):
+  /jest-config@29.6.1(@types/node@20.4.3)(ts-node@10.9.1):
     resolution: {integrity: sha512-XdjYV2fy2xYixUiV2Wc54t3Z4oxYPAELUzWnV6+mcbq0rh742X2p52pii5A3oeRzYjLnQxCsZmp0qpI6klE2cQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     peerDependencies:
@@ -4778,7 +4778,7 @@ packages:
       '@babel/core': 7.22.1
       '@jest/test-sequencer': 29.6.1
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       babel-jest: 29.6.1(@babel/core@7.22.1)
       chalk: 4.1.2
       ci-info: 3.8.0
@@ -4798,7 +4798,7 @@ packages:
       pretty-format: 29.6.1
       slash: 3.0.0
       strip-json-comments: 3.1.1
-      ts-node: 10.9.1(@types/node@20.4.2)(typescript@5.1.6)
+      ts-node: 10.9.1(@types/node@20.4.3)(typescript@5.1.6)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4838,7 +4838,7 @@ packages:
       '@jest/environment': 29.6.1
       '@jest/fake-timers': 29.6.1
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       jest-mock: 29.6.1
       jest-util: 29.6.1
     dev: true
@@ -4854,7 +4854,7 @@ packages:
     dependencies:
       '@jest/types': 29.6.1
       '@types/graceful-fs': 4.1.6
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       anymatch: 3.1.3
       fb-watchman: 2.0.2
       graceful-fs: 4.2.11
@@ -4906,7 +4906,7 @@ packages:
       jest: ^24.0.0 || ^25.0.0 || ^26.0.0 || ^27.0.0 || ^28.0.0 || ^29.0.0
       typescript: ^3.0.0 || ^4.0.0 || ^5.0.0
     dependencies:
-      jest: 29.6.1(@types/node@20.4.2)(ts-node@10.9.1)
+      jest: 29.6.1(@types/node@20.4.3)(ts-node@10.9.1)
       ts-essentials: 7.0.3(typescript@5.1.6)
       typescript: 5.1.6
     dev: true
@@ -4916,7 +4916,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       jest-util: 29.6.1
     dev: true
 
@@ -4971,7 +4971,7 @@ packages:
       '@jest/test-result': 29.6.1
       '@jest/transform': 29.6.1
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       chalk: 4.1.2
       emittery: 0.13.1
       graceful-fs: 4.2.11
@@ -5002,7 +5002,7 @@ packages:
       '@jest/test-result': 29.6.1
       '@jest/transform': 29.6.1
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       chalk: 4.1.2
       cjs-module-lexer: 1.2.2
       collect-v8-coverage: 1.0.1
@@ -5055,7 +5055,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       chalk: 4.1.2
       ci-info: 3.8.0
       graceful-fs: 4.2.11
@@ -5080,7 +5080,7 @@ packages:
     dependencies:
       '@jest/test-result': 29.6.1
       '@jest/types': 29.6.1
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       emittery: 0.13.1
@@ -5092,13 +5092,13 @@ packages:
     resolution: {integrity: sha512-U+Wrbca7S8ZAxAe9L6nb6g8kPdia5hj32Puu5iOqBCMTMWFHXuK6dOV2IFrpedbTV8fjMFLdWNttQTBL6u2MRA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       jest-util: 29.6.1
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
 
-  /jest@29.6.1(@types/node@20.4.2)(ts-node@10.9.1):
+  /jest@29.6.1(@types/node@20.4.3)(ts-node@10.9.1):
     resolution: {integrity: sha512-Nirw5B4nn69rVUZtemCQhwxOBhm0nsp3hmtF4rzCeWD7BkjAXRIji7xWQfnTNbz9g0aVsBX6aZK3n+23LM6uDw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     hasBin: true
@@ -5111,7 +5111,7 @@ packages:
       '@jest/core': 29.6.1(ts-node@10.9.1)
       '@jest/types': 29.6.1
       import-local: 3.1.0
-      jest-cli: 29.6.1(@types/node@20.4.2)(ts-node@10.9.1)
+      jest-cli: 29.6.1(@types/node@20.4.3)(ts-node@10.9.1)
     transitivePeerDependencies:
       - '@types/node'
       - supports-color
@@ -5593,7 +5593,7 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-auth@4.22.3(next@13.4.11-canary.2)(nodemailer@6.9.4)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623):
+  /next-auth@4.22.3(next@13.4.12-canary.0)(nodemailer@6.9.4)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623):
     resolution: {integrity: sha512-XAgy9xV3J2eJOXrQhmxdjV6MLM29ibm6WtMXc3KY6IPZeApf+SuBuPvlqCUfbu5YsAzlg9WSw6u01dChTfeZOA==}
     peerDependencies:
       next: ^12.2.5 || ^13
@@ -5608,7 +5608,7 @@ packages:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.14.3
-      next: 13.4.11-canary.2(@babel/core@7.22.1)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
+      next: 13.4.12-canary.0(@babel/core@7.22.1)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623)
       nodemailer: 6.9.4
       oauth: 0.9.15
       openid-client: 5.4.2
@@ -5623,8 +5623,8 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /next@13.4.11-canary.2(@babel/core@7.22.1)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623):
-    resolution: {integrity: sha512-jQy5DNPzT1TzlAmyuhCql92fgG9++0kRMAi8QCIw9nv3mAL2+/sV64mTxMd7Etdqqv7k9YVQ5YAjJqyJ/3pDjg==}
+  /next@13.4.12-canary.0(@babel/core@7.22.1)(react-dom@18.3.0-canary-8ec962d82-20230623)(react@18.3.0-canary-8ec962d82-20230623):
+    resolution: {integrity: sha512-4i5uVvjsWbGX5va0JFlhGFAke0OVOC2rYdQ33vkrMCtH8IyANo+CbwxX7Y0k/9FGtSaM/7xpNXhQsOJH7r69ew==}
     engines: {node: '>=16.8.0'}
     hasBin: true
     peerDependencies:
@@ -5641,7 +5641,7 @@ packages:
       sass:
         optional: true
     dependencies:
-      '@next/env': 13.4.11-canary.2
+      '@next/env': 13.4.12-canary.0
       '@swc/helpers': 0.5.1
       busboy: 1.6.0
       caniuse-lite: 1.0.30001506
@@ -5652,15 +5652,15 @@ packages:
       watchpack: 2.4.0
       zod: 3.21.4
     optionalDependencies:
-      '@next/swc-darwin-arm64': 13.4.11-canary.2
-      '@next/swc-darwin-x64': 13.4.11-canary.2
-      '@next/swc-linux-arm64-gnu': 13.4.11-canary.2
-      '@next/swc-linux-arm64-musl': 13.4.11-canary.2
-      '@next/swc-linux-x64-gnu': 13.4.11-canary.2
-      '@next/swc-linux-x64-musl': 13.4.11-canary.2
-      '@next/swc-win32-arm64-msvc': 13.4.11-canary.2
-      '@next/swc-win32-ia32-msvc': 13.4.11-canary.2
-      '@next/swc-win32-x64-msvc': 13.4.11-canary.2
+      '@next/swc-darwin-arm64': 13.4.12-canary.0
+      '@next/swc-darwin-x64': 13.4.12-canary.0
+      '@next/swc-linux-arm64-gnu': 13.4.12-canary.0
+      '@next/swc-linux-arm64-musl': 13.4.12-canary.0
+      '@next/swc-linux-x64-gnu': 13.4.12-canary.0
+      '@next/swc-linux-x64-musl': 13.4.12-canary.0
+      '@next/swc-win32-arm64-msvc': 13.4.12-canary.0
+      '@next/swc-win32-ia32-msvc': 13.4.12-canary.0
+      '@next/swc-win32-x64-msvc': 13.4.12-canary.0
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
@@ -6187,7 +6187,7 @@ packages:
     dependencies:
       lilconfig: 2.1.0
       postcss: 8.4.27
-      ts-node: 10.9.1(@types/node@20.4.2)(typescript@5.1.6)
+      ts-node: 10.9.1(@types/node@20.4.3)(typescript@5.1.6)
       yaml: 2.3.1
     dev: true
 
@@ -7209,7 +7209,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
 
-  /ts-node@10.9.1(@types/node@20.4.2)(typescript@5.1.6):
+  /ts-node@10.9.1(@types/node@20.4.3)(typescript@5.1.6):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -7228,7 +7228,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 20.4.2
+      '@types/node': 20.4.3
       acorn: 8.8.2
       acorn-walk: 8.2.0
       arg: 4.1.3
