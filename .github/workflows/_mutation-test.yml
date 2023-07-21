@@ -5,7 +5,7 @@ on:
 
 env:
   UPLOAD_DIR: soshal-gha/mutation-test
-  BRANCH_NAME: main
+  BRANCH_NAME: ${{ github.head_ref || 'main' }}
   ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -21,7 +21,7 @@ jobs:
         with:
           cache: pnpm
       - run: pnpm i
-      - run: pnpm stryker run --fileLogLevel trace
+      - run: pnpm mutation-test:run-only --fileLogLevel trace
       - name: upload-reports
         run: |
           mv stryker.log reports/mutation/
