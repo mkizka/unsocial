@@ -35,12 +35,13 @@
     "zod": "3.21.4"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.4.0",
     "@playwright/test": "1.36.1",
     "@stryker-mutator/api": "7.1.1",
     "@stryker-mutator/core": "7.1.1",
     "@stryker-mutator/jest-runner": "7.1.1",
-    "@tailwindcss/forms": "0.5.4",
     "@stryker-mutator/typescript-checker": "7.1.1",
+    "@tailwindcss/forms": "0.5.4",
     "@types/bcryptjs": "2.4.2",
     "@types/jest": "29.5.3",
     "@types/node": "20.4.3",
