@@ -8,7 +8,7 @@ const env = { ...process.env };
 (async () => {
   // If running the web server then migrate existing database
   if (process.argv.slice(2).join(" ") === "pnpm run start") {
-    await exec("npx prisma db push");
+    await exec("npx prisma db push --skip-generate");
   }
 
   // launch application

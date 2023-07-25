@@ -21,11 +21,6 @@ const serverEnvSchema = z.object({
       (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).host : str),
     z.string().min(1),
   ),
-  EMAIL_SERVER_USER: z.string().default("user"),
-  EMAIL_SERVER_PASS: z.string().default("password"),
-  EMAIL_SERVER_HOST: z.string(),
-  EMAIL_SERVER_PORT: z.coerce.number().default(1025),
-  EMAIL_FROM: z.string().email().default("from@example.com"),
 });
 
 export const env = (() => {
