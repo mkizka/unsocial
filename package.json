@@ -2,6 +2,9 @@
   "name": "soshal",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "build": "SKIP_ENV_VALIDATION=1 next build",
     "start": "./scripts/start.sh",
