@@ -19,6 +19,7 @@ jobs:
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
+          node-version-file: .node-version
           cache: pnpm
       - run: pnpm i
       - run: pnpm mutation-test:run-only --fileLogLevel trace
