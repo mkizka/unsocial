@@ -113,8 +113,8 @@ devDependencies:
     specifier: 29.6.2
     version: 29.6.2(@types/node@20.4.6)(ts-node@10.9.1)
   jest-mock-extended:
-    specifier: 3.0.4
-    version: 3.0.4(jest@29.6.2)(typescript@5.1.6)
+    specifier: 3.0.5
+    version: 3.0.5(jest@29.6.2)(typescript@5.1.6)
   lint-staged:
     specifier: 13.2.3
     version: 13.2.3
@@ -4959,8 +4959,8 @@ packages:
       stack-utils: 2.0.6
     dev: true
 
-  /jest-mock-extended@3.0.4(jest@29.6.2)(typescript@5.1.6):
-    resolution: {integrity: sha512-2ynEZ7IEJNrhrgshklDMhrOdnmW4Nt+PhkyRqZxRgpwMo7JjmFWMzyp0+eSyk+H9KK1QjXI5xTZIw6x7cVDcRg==}
+  /jest-mock-extended@3.0.5(jest@29.6.2)(typescript@5.1.6):
+    resolution: {integrity: sha512-/eHdaNPUAXe7f65gHH5urc8SbRVWjYxBqmCgax2uqOBJy8UUcCBMN1upj1eZ8y/i+IqpyEm4Kq0VKss/GCCTdw==}
     peerDependencies:
       jest: ^24.0.0 || ^25.0.0 || ^26.0.0 || ^27.0.0 || ^28.0.0 || ^29.0.0
       typescript: ^3.0.0 || ^4.0.0 || ^5.0.0
