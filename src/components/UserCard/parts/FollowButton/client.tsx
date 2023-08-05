@@ -22,7 +22,7 @@ export function FollowButton({ followeeId, followStatus }: Props) {
 
   return (
     <button
-      className="block bg-secondary text-light whitespace-nowrap w-24 shadow text-sm px-4 py-2 rounded"
+      className="block w-24 whitespace-nowrap rounded bg-secondary px-4 py-2 text-sm text-light shadow"
       data-testid={isPending ? "follow-button-loading" : "follow-button"}
       onClick={() => startTransition(() => action(followeeId))}
     >

@@ -17,7 +17,7 @@ if [ ! -f $CACHE_PATH ]; then
 fi
 if [ ! -f $CACHE_PATH ]; then
   echo "キャッシュファイルが取得できませんでした"
-  exit 1;
+  exit 1
 fi
 
 pnpm stryker run "$@"

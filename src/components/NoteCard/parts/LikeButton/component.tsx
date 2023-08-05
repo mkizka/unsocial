@@ -23,7 +23,7 @@ export function LikeButton({ noteId, isLiked }: Props) {
         toggleOptimisticIsLike(!optimisticIsLiked);
         await action(noteId);
       }}
-      className="w-5 h-5 text-secondary hover:text-secondary-dark transition-colors"
+      className="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark"
     >
       {optimisticIsLiked ? <LikedIcon /> : <UnLikedIcon />}
     </button>
