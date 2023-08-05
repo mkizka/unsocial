@@ -16,7 +16,7 @@
     "e2e:server:remote": "dotenv -e e2e/.env.remote -- next start -p 3001",
     "lint": "./scripts/lint.sh",
     "lint:fix": "./scripts/lint.sh --fix",
-    "mutation-test": "run-s mutation-test:*",
+    "mutation-test": "run-s mutation-test:run-only mutation-test:report",
     "mutation-test:report": "./scripts/mutation-report.ts | md",
     "mutation-test:run-only": "./scripts/mutation-test.sh",
     "postinstall": "prisma generate",
