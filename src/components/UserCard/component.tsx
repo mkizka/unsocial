@@ -19,8 +19,8 @@ export async function UserCard({ user }: Props) {
   const canFollow = session?.user && session.user.id != user.id;
 
   return (
-    <div className="bg-primary-light rounded p-4 pb-8 mb-4 shadow">
-      <div className="flex items-center w-full">
+    <div className="mb-4 rounded bg-primary-light p-4 pb-8 shadow">
+      <div className="flex w-full items-center">
         <UserIcon user={user} width={64} height={64} className="rounded-full" />
         <div className="ml-4">
           <h1 className="text-2xl font-bold">{user.name}</h1>

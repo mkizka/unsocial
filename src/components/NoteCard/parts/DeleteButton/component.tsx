@@ -16,7 +16,7 @@ export function DeleteButton({ noteId }: Props) {
     <button
       data-testid="delete-button"
       onClick={() => startTransition(() => action(noteId))}
-      className="text-accent hover:text-accent-dark w-5 h-5 transition-colors"
+      className="h-5 w-5 text-accent transition-colors hover:text-accent-dark"
     >
       {isPending ? <Spinner /> : <XMarkIcon />}
     </button>
