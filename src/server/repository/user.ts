@@ -21,6 +21,15 @@ export const findFirst = cache((where: FindFirstParams) => {
   return prisma.user.findFirst({ where });
 });
 
+export const findFirstWithCredentials = cache((where: FindFirstParams) => {
+  return prisma.user.findFirst({
+    where,
+    include: {
+      credentials: true,
+    },
+  });
+});
+
 export const createOrUpdateUser = (
   person: PersonActivity,
   userIdForUpdate?: string,
