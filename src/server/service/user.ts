@@ -148,5 +148,5 @@ export const findUserByActorId = async (actorId: URL) => {
   if (!userId) {
     return null;
   }
-  return userRepository.findFirst({ id: userId });
+  return userRepository.findFirstWithCredentials({ id: userId });
 };
