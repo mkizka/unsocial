@@ -25,9 +25,22 @@ export type NoteCard = NonNullable<
   Awaited<ReturnType<typeof findUniqueNoteCard>>
 >;
 
-export const findManyNoteCards = cache(() => {
+export type FindManyParams = {
+  count: number;
+  since?: Date;
+  until?: Date;
+};
+
+export const findManyNoteCards = cache((params: FindManyParams) => {
   return prisma.note.findMany({
+    where: {
+      createdAt: {
+        gte: params.since,
+        lte: params.until,
+      },
+    },
     include: includeForNoteCard,
+    take: params.count,
     orderBy: {
       createdAt: "desc",
     },
@@ -45,12 +58,27 @@ export const findManyNoteCardsByUserId = cache((userId: string) => {
 });
 
 type CreateParams = {
+  userId: string;
+  content: string;
+};
+
+export const create = cache(({ userId, content }: CreateParams) => {
+  return prisma.note.create({
+    data: {
+      userId,
+      content,
+      published: new Date(),
+    },
+  });
+});
+
+type CreateFromActivityParams = {
   activity: NoteActivity;
   userId: string;
 };
 
 export const createFromActivity = cache(
-  ({ activity, userId }: CreateParams) => {
+  ({ activity, userId }: CreateFromActivityParams) => {
     return prisma.note.create({
       data: {
         userId,

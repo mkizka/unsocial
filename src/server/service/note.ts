@@ -21,6 +21,8 @@ const format = (note: noteRepository.NoteCard, userId?: string) => {
   };
 };
 
+export type NoteCard = NonNullable<Awaited<ReturnType<typeof format>>>;
+
 export const findUniqueNoteCard = cache(async (id: string) => {
   const note = await noteRepository.findUniqueNoteCard(id);
   if (!note) {
@@ -30,18 +32,16 @@ export const findUniqueNoteCard = cache(async (id: string) => {
   return format(note, user?.id);
 });
 
-export type NoteCard = NonNullable<
-  Awaited<ReturnType<typeof findUniqueNoteCard>>
->;
-
-export const findManyNoteCards = cache(async () => {
-  const notes = await noteRepository.findManyNoteCards();
-  if (notes.length == 0) {
-    return [];
-  }
-  const user = await getUser();
-  return notes.map((note) => format(note, user?.id));
-});
+export const findManyNoteCards = cache(
+  async (params: noteRepository.FindManyParams) => {
+    const notes = await noteRepository.findManyNoteCards(params);
+    if (notes.length == 0) {
+      return [];
+    }
+    const user = await getUser();
+    return notes.map((note) => format(note, user?.id));
+  },
+);
 
 export const findManyNoteCardsByUserId = cache(async (userId: string) => {
   const notes = await noteRepository.findManyNoteCardsByUserId(userId);

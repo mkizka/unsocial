@@ -23,6 +23,9 @@ const dummyNote = {
   ],
 };
 
+const dummySince = new Date("2023-01-01T00:00:00.000Z");
+const dummyUntil = new Date("2023-01-01T00:00:00.000Z");
+
 const expectNote = (note: NoteCard | null) => {
   expect(note).toMatchObject(dummyNote);
   expect(note?.isMine).toBe(true);
@@ -132,11 +135,22 @@ describe("noteService", () => {
         privateKey: "privateKey",
       });
       // act
-      const [note] = await findManyNoteCards();
+      const [note] = await findManyNoteCards({
+        since: dummySince,
+        until: dummyUntil,
+        count: 10,
+      });
       // assert
       expectNote(note!);
       expect(mockedPrisma.note.findMany).toBeCalledWith({
         include,
+        take: 10,
+        where: {
+          createdAt: {
+            gte: dummySince,
+            lte: dummyUntil,
+          },
+        },
         orderBy: { createdAt: "desc" },
       });
     });
@@ -144,7 +158,11 @@ describe("noteService", () => {
       // arrange
       mockedPrisma.note.findMany.mockResolvedValueOnce([]);
       // act
-      const notes = await findManyNoteCards();
+      const notes = await findManyNoteCards({
+        since: dummySince,
+        until: dummyUntil,
+        count: 10,
+      });
       // assert
       expect(mockedGetUser).not.toBeCalled();
       expect(notes).toEqual([]);
