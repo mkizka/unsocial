@@ -1,6 +1,8 @@
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 FROM node:20.5-slim AS base
-RUN apt update && apt install -y openssl
+RUN apt-get update && apt-get install -y openssl \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 FROM base AS deps
 WORKDIR /app
