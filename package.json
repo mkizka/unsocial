@@ -21,14 +21,13 @@
     "mutation-test:run-only": "./scripts/mutation-test.sh",
     "postinstall": "prisma generate",
     "prepare": "husky install",
-    "start": "./scripts/start.sh",
     "test": "jest"
   },
   "dependencies": {
     "@heroicons/react": "2.0.18",
     "@prisma/client": "5.1.1",
     "bcryptjs": "2.4.3",
-    "next": "canary",
+    "next": "13.4.12",
     "next-auth": "4.22.3",
     "nodemailer": "6.9.4",
     "react": "18.3.0-canary-8ec962d82-20230623",
