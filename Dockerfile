@@ -20,6 +20,7 @@ RUN corepack enable pnpm \
   && pnpm build
 
 FROM base AS runner
+RUN apt update && apt install -y openssl
 WORKDIR /app
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
