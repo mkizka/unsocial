@@ -15,7 +15,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
-RUN corepack enable pnpm && pnpm build
+RUN corepack enable pnpm \
+  && pnpm prisma db push --skip-generate \
+  && pnpm build
 
 FROM base AS runner
 RUN apt update && apt install -y openssl
