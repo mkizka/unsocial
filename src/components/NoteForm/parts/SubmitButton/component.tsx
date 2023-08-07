@@ -10,7 +10,7 @@ export function SubmitButton() {
     <button
       data-testid="note-form__button"
       type="submit"
-      className="bg-secondary text-light w-20 h-8 py-1 px-4 rounded"
+      className="h-8 w-20 rounded bg-secondary px-4 py-1 text-light"
       disabled={pending}
     >
       {pending ? <Spinner /> : "送信"}

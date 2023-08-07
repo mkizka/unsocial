@@ -329,6 +329,7 @@ describe("userService", () => {
           // assert
           expect(mockedPrisma.user.findFirst).toBeCalledWith({
             where: { id: userId },
+            include: { credentials: true },
           });
         },
       );

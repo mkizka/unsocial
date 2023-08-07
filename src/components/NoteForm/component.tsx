@@ -16,13 +16,13 @@ export function NoteForm() {
   return (
     <form
       action={action}
-      className="w-full mx-auto bg-primary-light shadow rounded px-8 pt-6 pb-4 mb-4"
+      className="mx-auto mb-4 w-full rounded bg-primary-light px-8 pb-4 pt-6 shadow"
     >
       <textarea
         data-testid="note-form__textarea"
         name="content"
         placeholder="ここにテキストを入力"
-        className="w-full h-32 border-primary-dark outline-none resize-none rounded p-4"
+        className="h-32 w-full resize-none rounded border-primary-dark p-4 outline-none"
       ></textarea>
       <div className="flex justify-end">
         <SubmitButton />

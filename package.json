@@ -2,27 +2,27 @@
   "name": "soshal",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@8.6.12",
   "engines": {
     "node": "20.x"
   },
   "scripts": {
+    "all": "run-s -s lint:fix test",
     "build": "SKIP_ENV_VALIDATION=1 next build",
-    "start": "./scripts/start.sh",
     "dev": "./scripts/dev.sh",
-    "test": "jest",
     "e2e": "playwright test",
     "e2e:server": "NODE_EXTRA_CA_CERTS=./docker/mkcert/rootCA.pem run-p -l e2e:server:*",
     "e2e:server:myhost": "dotenv -e e2e/.env.myhost -- next start",
     "e2e:server:remote": "dotenv -e e2e/.env.remote -- next start -p 3001",
-    "postinstall": "prisma generate",
-    "lint": "next lint && prettier . --check",
-    "lint:fix": "next lint --fix && prettier . --write --check",
-    "typecheck": "tsc",
-    "all": "run-s -s typecheck test lint:fix",
-    "mutation-test": "run-s mutation-test:*",
-    "mutation-test:run-only": "./scripts/mutation-test.sh",
+    "lint": "./scripts/lint.sh",
+    "lint:fix": "./scripts/lint.sh --fix",
+    "mutation-test": "run-s mutation-test:run-only mutation-test:report",
     "mutation-test:report": "./scripts/mutation-report.ts | md",
-    "prepare": "husky install"
+    "mutation-test:run-only": "./scripts/mutation-test.sh",
+    "postinstall": "prisma generate",
+    "prepare": "husky install",
+    "start": "./scripts/start.sh",
+    "test": "jest"
   },
   "dependencies": {
     "@heroicons/react": "2.0.18",
@@ -42,8 +42,8 @@
     "@stryker-mutator/api": "7.1.1",
     "@stryker-mutator/core": "7.1.1",
     "@stryker-mutator/jest-runner": "7.1.1",
-    "@tailwindcss/forms": "0.5.4",
     "@stryker-mutator/typescript-checker": "7.1.1",
+    "@tailwindcss/forms": "0.5.4",
     "@types/bcryptjs": "2.4.2",
     "@types/jest": "29.5.3",
     "@types/node": "20.4.8",
@@ -68,11 +68,14 @@
     "npm-run-all": "4.1.5",
     "postcss": "8.4.27",
     "prettier": "3.0.1",
+    "prettier-plugin-pkg": "^0.18.0",
+    "prettier-plugin-sh": "^0.13.1",
+    "prettier-plugin-tailwindcss": "^0.4.1",
     "prisma": "5.1.1",
+    "shellcheck": "^2.2.0",
     "tailwindcss": "3.3.3",
     "ts-node": "10.9.1",
     "tsx": "3.12.7",
     "typescript": "5.1.6"
-  },
-  "packageManager": "pnpm@8.6.12"
+  }
 }

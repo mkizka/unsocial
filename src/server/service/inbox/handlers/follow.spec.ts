@@ -10,7 +10,9 @@ const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
 
 const dummyLocalUser = {
   id: "dummyidlocal",
-  privateKey: "privateKey",
+  credentials: {
+    privateKey: "privateKey",
+  },
 };
 
 const dummyRemoteUser = {
@@ -33,6 +35,7 @@ describe("inboxFollowService", () => {
     // assert
     expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
       where: { id: "dummyidlocal" },
+      include: { credentials: true },
     });
     expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
       data: {
@@ -45,7 +48,7 @@ describe("inboxFollowService", () => {
       inboxUrl: new URL(dummyRemoteUser.inboxUrl),
       sender: {
         id: dummyLocalUser.id,
-        privateKey: dummyLocalUser.privateKey,
+        privateKey: dummyLocalUser.credentials.privateKey,
       },
       activity: {
         "@context": [
