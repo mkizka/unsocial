@@ -20,7 +20,6 @@
     "mutation-test:report": "./scripts/mutation-report.ts | md",
     "mutation-test:run-only": "./scripts/mutation-test.sh",
     "postinstall": "prisma generate",
-    "prebuild": "prisma db push",
     "prepare": "husky install",
     "test": "jest"
   },
