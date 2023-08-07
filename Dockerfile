@@ -1,8 +1,9 @@
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
-FROM node:20-slim AS base
+FROM node:20.5-slim AS base
 
 FROM base AS deps
 WORKDIR /app
+RUN apt update && apt install -y openssl
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
