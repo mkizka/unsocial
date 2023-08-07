@@ -9,6 +9,7 @@ RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
 FROM base AS builder
 WORKDIR /app
+RUN apt update && apt install -y openssl
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN corepack enable pnpm && pnpm build
