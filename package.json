@@ -28,7 +28,7 @@
     "@prisma/client": "5.1.1",
     "bcryptjs": "2.4.3",
     "next": "13.4.12",
-    "next-auth": "4.22.4",
+    "next-auth": "4.22.5",
     "nodemailer": "6.9.4",
     "react": "18.3.0-canary-8ec962d82-20230623",
     "react-dom": "18.3.0-canary-8ec962d82-20230623",
