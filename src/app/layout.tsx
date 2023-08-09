@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Soshal",
+  title: "Unsocial",
   description: "ActivityPubおためし実装",
 };
 

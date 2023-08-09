@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 env:
-  UPLOAD_DIR: soshal-gha/mutation-test
+  UPLOAD_DIR: unsocial-gha/mutation-test
   BRANCH_NAME: ${{ github.head_ref || 'main' }}
   ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

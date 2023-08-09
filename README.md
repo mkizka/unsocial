@@ -1,6 +1,6 @@
-# soshal
+# unsocial
 
-名前は仮
+無料～5ドルくらいで運用可能な個人向けActivityPubサーバー(を目指す)
 
 ## 開発手順
 
@@ -13,7 +13,7 @@ pnpm i
 pnpm dev
 ```
 
-https://soshal.localhost  
+https://unsocial.localhost  
 https://misskey.localhost  
 https://mastodon.localhost を開く
 

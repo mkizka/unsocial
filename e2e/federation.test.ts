@@ -4,8 +4,8 @@ import crypto from "crypto";
 import {
   MastodonHandler,
   MisskeyHandler,
-  MyhostSoshalHandler,
-  RemoteSoshalHandler,
+  MyhostUnsocialHandler,
+  RemoteUnsocialHandler,
 } from "./fediverse";
 import type { FediverseHandler } from "./fediverse/base";
 
@@ -95,38 +95,38 @@ const runTest = async ({ from, to }: RunTestParams) => {
 };
 
 test.describe("Federation", () => {
-  test("Soshal → Soshal", async ({ page }) => {
+  test("Unsocial → Unsocial", async ({ page }) => {
     await runTest({
-      from: new MyhostSoshalHandler(page),
-      to: new RemoteSoshalHandler(page),
+      from: new MyhostUnsocialHandler(page),
+      to: new RemoteUnsocialHandler(page),
     });
   });
 
-  test("Soshal → Misskey", async ({ page }) => {
+  test("Unsocial → Misskey", async ({ page }) => {
     await runTest({
-      from: new MyhostSoshalHandler(page),
+      from: new MyhostUnsocialHandler(page),
       to: new MisskeyHandler(page),
     });
   });
 
-  test("Misskey → Soshal", async ({ page }) => {
+  test("Misskey → Unsocial", async ({ page }) => {
     await runTest({
       from: new MisskeyHandler(page),
-      to: new MyhostSoshalHandler(page),
+      to: new MyhostUnsocialHandler(page),
     });
   });
 
-  test("Soshal → Mastodon", async ({ page }) => {
+  test("Unsocial → Mastodon", async ({ page }) => {
     await runTest({
-      from: new MyhostSoshalHandler(page),
+      from: new MyhostUnsocialHandler(page),
       to: new MastodonHandler(page),
     });
   });
 
-  test("Mastodon → Soshal", async ({ page }) => {
+  test("Mastodon → Unsocial", async ({ page }) => {
     await runTest({
       from: new MastodonHandler(page),
-      to: new MyhostSoshalHandler(page),
+      to: new MyhostUnsocialHandler(page),
     });
   });
 });
