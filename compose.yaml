@@ -76,7 +76,7 @@ services:
     networks:
       default:
         aliases:
-          - soshal.localhost
+          - unsocial.localhost
           - remote.localhost
           - misskey.localhost
           - mastodon.localhost

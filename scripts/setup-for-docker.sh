@@ -21,7 +21,7 @@ echo "Generte cert files to $CERTS_DIR"
 mkdir -p $CERTS_DIR
 mkcert -cert-file $CERTS_DIR/misskey.crt -key-file $CERTS_DIR/misskey.key misskey.localhost 2> /dev/null
 mkcert -cert-file $CERTS_DIR/mastodon.crt -key-file $CERTS_DIR/mastodon.key mastodon.localhost 2> /dev/null
-mkcert -cert-file $CERTS_DIR/soshal.crt -key-file $CERTS_DIR/soshal.key soshal.localhost 2> /dev/null
+mkcert -cert-file $CERTS_DIR/unsocial.crt -key-file $CERTS_DIR/unsocial.key unsocial.localhost 2> /dev/null
 mkcert -cert-file $CERTS_DIR/remote.crt -key-file $CERTS_DIR/remote.key remote.localhost 2> /dev/null
 echo "Done"
 

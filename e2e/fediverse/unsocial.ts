@@ -2,9 +2,9 @@ import { expect } from "@playwright/test";
 
 import { FediverseHandler } from "./base";
 
-export class MyhostSoshalHandler extends FediverseHandler {
-  domain = "soshal.localhost";
-  user = "@test@soshal.localhost";
+export class MyhostUnsocialHandler extends FediverseHandler {
+  domain = "unsocial.localhost";
+  user = "@test@unsocial.localhost";
 
   async login() {
     await this.goto("/auth");
@@ -93,7 +93,7 @@ export class MyhostSoshalHandler extends FediverseHandler {
   }
 }
 
-export class RemoteSoshalHandler extends MyhostSoshalHandler {
+export class RemoteUnsocialHandler extends MyhostUnsocialHandler {
   domain = "remote.localhost";
   user = "@test@remote.localhost";
 }

@@ -14,11 +14,10 @@ export async function GET() {
       // https://nodeinfo.diaspora.software/protocol.html
       version: "2.1",
       software: {
-        // TODO: 名前決まったら変える
-        name: "soshal",
+        name: "unsocial",
         version: pkg.version,
-        repository: "https://github.com/mkizka/soshal.git",
-        homepage: "https://github.com/mkizka/soshal",
+        repository: "https://github.com/mkizka/unsocial.git",
+        homepage: "https://github.com/mkizka/unsocial",
       },
       protocols: ["activitypub"],
       services: { inbound: [], outbound: [] },
