@@ -5,7 +5,7 @@ on:
 
 env:
   UPLOAD_DIR: unsocial-gha/mutation-test
-  BRANCH_NAME: ${{ github.head_ref || 'main' }}
+  BRANCH_NAME: main
   ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
