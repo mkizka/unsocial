@@ -30,7 +30,7 @@ export const handle: InboxHandler = async (activity, actorUser) => {
       "フォローリクエストで指定されたフォロイーが存在しませんでした",
     );
   }
-  if (!followee.credentials) {
+  if (!followee.credential) {
     // 自ホストのユーザーなら秘密鍵を持っているはずなので、異常な動作
     return new UnexpectedActivityRequestError(
       activity,
@@ -54,7 +54,7 @@ export const handle: InboxHandler = async (activity, actorUser) => {
     inboxUrl: new URL(actorUser.inboxUrl),
     sender: {
       id: followee.id,
-      privateKey: followee.credentials.privateKey,
+      privateKey: followee.credential.privateKey,
     },
     activity: {
       "@context": [
