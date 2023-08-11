@@ -12,7 +12,7 @@ export async function action(noteId: string) {
   // TODO: 自分のじゃなかったらエラー吐く
   await prisma.note.delete({ where: { id: noteId } });
   await relayActivityToFollowers({
-    sender: session.user,
+    userId: session.user.id,
     activity: activityStreams.delete({
       id: noteId,
       userId: session.user.id,

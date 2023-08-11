@@ -18,12 +18,13 @@ describe("signActivity", () => {
     ({ inboxUrl, date, activity }) => {
       // arrange
       jest.useFakeTimers().setSystemTime(new Date(date));
-      const sender = {
-        id: "userId",
-        privateKey: mockedKeys.privateKey,
-      };
       // act
-      const headers = signActivity({ sender, activity, inboxUrl });
+      const headers = signActivity({
+        userId: "userId",
+        privateKey: mockedKeys.privateKey,
+        activity,
+        inboxUrl,
+      });
       // assert
       expect(headers).toMatchSnapshot();
     },

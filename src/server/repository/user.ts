@@ -25,7 +25,7 @@ export const findFirstWithCredentials = cache((where: FindFirstParams) => {
   return prisma.user.findFirst({
     where,
     include: {
-      credentials: true,
+      credential: true,
     },
   });
 });
