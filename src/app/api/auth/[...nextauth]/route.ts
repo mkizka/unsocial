@@ -55,7 +55,7 @@ const signIn = async (credentials: z.infer<typeof credentialsSchema>) => {
   if (
     bcryptjs.compareSync(credentials.password, user.credential.hashedPassword)
   ) {
-    return { id: user.id, privateKey: user.credential.privateKey };
+    return { id: user.id };
   }
   throw new Error("パスワードが間違っています");
 };
@@ -79,11 +79,7 @@ const signUp = async (credentials: z.infer<typeof credentialsSchema>) => {
       credential: true,
     },
   });
-  return {
-    id: newUser.id,
-    // 必ずあるので無視
-    privateKey: newUser.credential!.privateKey,
-  };
+  return { id: newUser.id };
 };
 
 export const authorize = async (credentials: unknown) => {
@@ -103,14 +99,12 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       session.user = {
         id: token.id,
-        privateKey: token.privateKey,
       };
       return session;
     },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.privateKey = user.privateKey!;
       }
       return token;
     },

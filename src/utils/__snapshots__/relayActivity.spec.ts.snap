@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`relayActivity relayActivityToFollowers 正常系 1`] = `
+{
+  "accept": "application/activity+json",
+  "content-type": "application/json",
+  "date": "Wed, 01 Jan 2020 15:00:00 GMT",
+  "digest": "SHA-256=GJpn7Z0rhlxi7/yIwjEeQln6ix6FqsnOBpzQ156l7mM=",
+  "host": "remote1.example.com",
+  "signature": "keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="HP4z0xdQEgCzB1ayHVyMA/HgXO+SV5PyZtfVhB7Fc2FuFdYR5nQVgn86ZgA12gyqfpvekAyKfEu/KHAjiU0OUoP7XzHQi4R368rH2MSFBLGetMr6ih4gCjpLv5qdjNRZimM13scz9Dasxt4QVa5WoRIYgAwcdpEzBpuGhcewDlcRcT/Lnwd7JHZGPNcVMdnLRn7zsksEr1wwLrkwplSNHVDCmwUOAmpt3SmQbm6d+jtrDTebY5pJCkwKYkWhWEdED80/5ScXKszbPypUiER2gOITjv+Z52b8Z+5JPbDKfsvHfxkubZjxhAS9MaddAdXEpjAoiFywL4dyqVWMiQ=="",
+}
+`;
+
+exports[`relayActivity relayActivityToFollowers 正常系 2`] = `
+{
+  "accept": "application/activity+json",
+  "content-type": "application/json",
+  "date": "Wed, 01 Jan 2020 15:00:00 GMT",
+  "digest": "SHA-256=GJpn7Z0rhlxi7/yIwjEeQln6ix6FqsnOBpzQ156l7mM=",
+  "host": "remote2.example.com",
+  "signature": "keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="dUEV0rTeHU2l60P+1oIB9V+59fu2KW7oINiJ8c6JWj0XuTfR77RouOjDa7ydD194FbY6noGEg9NmrbaiYHvAsNq6QWlq4jN9vee1a5U51WrD9/8vduhxxL11SdxxiqRFlnD6J5/hcYWw3+LuOgsdD366eA7qgDFTj43WxelRAPhl7ZTbP6PX08ZauIWhdmVoSWZnn4ENgSg7rpEGZrwOSLYBH9sRqIBbcNhb9w1qlfdjnaDpDLSqyBRV2xzUzj/AWO1Rc7pfGTzKCuFxsYXVKkcx2aVFI71ztN68OjJm6lZmxf6QBBeD+xoT31rVh93u/TgGW24lwxhVSDDU1A=="",
+}
+`;
+
+exports[`relayActivity relayActivityToInboxUrl 正常系 1`] = `
+{
+  "accept": "application/activity+json",
+  "content-type": "application/json",
+  "date": "Wed, 01 Jan 2020 15:00:00 GMT",
+  "digest": "SHA-256=GJpn7Z0rhlxi7/yIwjEeQln6ix6FqsnOBpzQ156l7mM=",
+  "host": "remote.example.com",
+  "signature": "keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="MYlsSoVsAnRAH6+d9DNInUw0aeLPON9K297b1Plm4V2F0zeKGv46sZMhFXxvci63WTslCJRjjHPxFDMajizNjN3dBDzVCZlVhY/eamXDTJwyYl2efmuckxtd1WCTlbFOfE4DD5Ud10E30b/DxhnVXL6ZFWdQofR+FrRXgsEmLwHIyFQbXgdUnSmGi0gEYVkrb/JolnBbX/Leu3IhaZ7osAUgM2txJB8eEL0QqeYqRwf1ZD2QPH6EVE5rngb50gLaxzlNqjutKgDdoeYY+4mV11FsH6HzkrDcJuTxRsqjiffSYXKU1QJTC/etiLaGtK71lBsq+ovu1Nl6oczNCQ=="",
+}
+`;

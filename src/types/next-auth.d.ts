@@ -1,6 +1,5 @@
 interface SessionUser {
   id: string;
-  privateKey: string;
 }
 
 // https://next-auth.js.org/getting-started/typescript#main-module

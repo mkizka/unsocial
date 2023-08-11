@@ -39,8 +39,8 @@ const like = async (user: SessionUser, input: unknown) => {
       return;
     }
     await relayActivityToInboxUrl({
+      userId: user.id,
       inboxUrl: new URL(like.note.user.inboxUrl),
-      sender: user,
       activity: activityStreams.like(like, like.note.url),
     });
   }
@@ -68,8 +68,8 @@ const unlike = async (user: SessionUser, like: LikeWithNote) => {
       return;
     }
     await relayActivityToInboxUrl({
+      userId: user.id,
       inboxUrl: new URL(like.note.user.inboxUrl),
-      sender: user,
       activity: activityStreams.undo(activityStreams.like(like, like.note.url)),
     });
   }
