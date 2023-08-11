@@ -17,7 +17,7 @@ describe("authorize", () => {
     };
     mockedPrisma.user.findUnique.mockResolvedValueOnce({
       id: "userId",
-      credentials: {
+      credential: {
         privateKey: "privateKey",
         hashedPassword: "hashedPassword",
       },
@@ -26,10 +26,7 @@ describe("authorize", () => {
     // act
     const result = await authorize(dummyForms);
     // assert
-    expect(result).toEqual({
-      id: "userId",
-      privateKey: "privateKey",
-    });
+    expect(result).toEqual({ id: "userId" });
   });
   test("action = signUp", async () => {
     // arrange
@@ -41,7 +38,7 @@ describe("authorize", () => {
     };
     mockedPrisma.user.create.mockResolvedValueOnce({
       id: "userId",
-      credentials: {
+      credential: {
         privateKey: "privateKey",
       },
     } as unknown as User);
@@ -54,7 +51,7 @@ describe("authorize", () => {
         preferredUsername: "test",
         host: "myhost.example.com",
         publicKey: expect.any(String),
-        credentials: {
+        credential: {
           create: {
             hashedPassword: expect.any(String),
             privateKey: expect.any(String),
@@ -62,13 +59,10 @@ describe("authorize", () => {
         },
       },
       include: {
-        credentials: true,
+        credential: true,
       },
     });
-    expect(result).toEqual({
-      id: "userId",
-      privateKey: "privateKey",
-    });
+    expect(result).toEqual({ id: "userId" });
   });
   test("actionが無いとエラー", async () => {
     // arrange
@@ -125,7 +119,7 @@ describe("authorize", () => {
     };
     mockedPrisma.user.findUnique.mockResolvedValueOnce({
       id: "userId",
-      credentials: {
+      credential: {
         privateKey: "privateKey",
       },
     } as unknown as User);

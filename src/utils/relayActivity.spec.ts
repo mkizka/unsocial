@@ -1,58 +1,57 @@
+import type { Credential } from "@prisma/client";
 import { rest } from "msw";
 
 import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
-import { signActivity } from "@/utils/httpSignature/sign";
 
+import { mockedKeys } from "./httpSignature/__fixtures__/keys";
 import {
   relayActivityToFollowers,
   relayActivityToInboxUrl,
 } from "./relayActivity";
 
-jest.mock("@/utils/httpSignature/sign");
-const mockedSignActivity = jest.mocked(signActivity);
+jest.useFakeTimers();
+jest.setSystemTime(new Date("2020-01-01T00:00:00Z"));
 
 describe("relayActivity", () => {
   describe("relayActivityToInboxUrl", () => {
     test("正常系", async () => {
       // arrange
-      const dummySender = {
-        id: "dummy_sender",
-        privateKey: "dummy_privateKey",
-      };
+      const dummyUserId = "dummy_userId";
+      mockedPrisma.credential.findUnique.mockResolvedValueOnce({
+        privateKey: mockedKeys.privateKey,
+      } as Credential);
+      const headerFn = jest.fn();
+      const bodyFn = jest.fn();
       server.use(
-        rest.post("https://remote.example.com/inbox", (_, res, ctx) => {
+        rest.post("https://remote.example.com/inbox", async (req, res, ctx) => {
+          headerFn(req.headers.all());
+          bodyFn(await req.json());
           return res.once(ctx.status(202));
         }),
       );
-      // @ts-ignore
-      mockedSignActivity.mockReturnValue({});
       // act
       await relayActivityToInboxUrl({
+        userId: dummyUserId,
         inboxUrl: new URL("https://remote.example.com/inbox"),
-        sender: dummySender,
         // @ts-ignore
         activity: { type: "Dummy" },
       });
       // assert
-      expect(mockedSignActivity).toHaveBeenCalledWith({
-        inboxUrl: new URL("https://remote.example.com/inbox"),
-        sender: dummySender,
-        activity: { type: "Dummy" },
-      });
+      expect(headerFn.mock.calls[0][0]).toMatchSnapshot();
+      expect(bodyFn.mock.calls[0][0]).toEqual({ type: "Dummy" });
     });
   });
 
   describe("relayActivityToFollowers", () => {
     test("正常系", async () => {
       // arrange
-      const dummySender = {
-        id: "dummy_sender",
-        privateKey: "dummy_privateKey",
-      };
+      const dummyUserId = "dummy_userId";
       mockedPrisma.follow.findMany.mockResolvedValue([
-        // @ts-ignore
-        { follower: { inboxUrl: "https://remote1.example.com/inbox" } },
+        {
+          // @ts-ignore
+          follower: { inboxUrl: "https://remote1.example.com/users/foo/inbox" },
+        },
         // @ts-ignore
         { follower: { inboxUrl: "https://remote2.example.com/inbox" } },
         // @ts-ignore
@@ -60,33 +59,39 @@ describe("relayActivity", () => {
         // @ts-ignore
         { follower: { inboxUrl: null } },
       ]);
-      server.use(
-        rest.post("https://remote1.example.com/inbox", (_, res, ctx) => {
+      mockedPrisma.credential.findUnique.mockResolvedValueOnce({
+        privateKey: mockedKeys.privateKey,
+      } as Credential);
+      const headerFn = jest.fn();
+      const bodyFn = jest.fn();
+      const inbox1 = rest.post(
+        "https://remote1.example.com/users/foo/inbox",
+        async (req, res, ctx) => {
+          headerFn(req.headers.all());
+          bodyFn(await req.json());
           return res.once(ctx.status(202));
-        }),
-        rest.post("https://remote2.example.com/inbox", (_, res, ctx) => {
-          return res.once(ctx.status(202));
-        }),
+        },
       );
-      // @ts-ignore
-      mockedSignActivity.mockReturnValue({});
+      const inbox2 = rest.post(
+        "https://remote2.example.com/inbox",
+        async (req, res, ctx) => {
+          headerFn(req.headers.all());
+          bodyFn(await req.json());
+          return res.once(ctx.status(202));
+        },
+      );
+      server.use(inbox1, inbox2);
       // act
       await relayActivityToFollowers({
-        sender: dummySender,
+        userId: dummyUserId,
         // @ts-ignore
         activity: { type: "Dummy" },
       });
       // assert
-      expect(mockedSignActivity).toHaveBeenNthCalledWith(1, {
-        inboxUrl: new URL("https://remote1.example.com/inbox"),
-        sender: dummySender,
-        activity: { type: "Dummy" },
-      });
-      expect(mockedSignActivity).toHaveBeenNthCalledWith(2, {
-        inboxUrl: new URL("https://remote2.example.com/inbox"),
-        sender: dummySender,
-        activity: { type: "Dummy" },
-      });
+      expect(headerFn.mock.calls[0][0]).toMatchSnapshot();
+      expect(headerFn.mock.calls[1][0]).toMatchSnapshot();
+      expect(bodyFn.mock.calls[0][0]).toEqual({ type: "Dummy" });
+      expect(bodyFn.mock.calls[1][0]).toEqual({ type: "Dummy" });
     });
   });
 });

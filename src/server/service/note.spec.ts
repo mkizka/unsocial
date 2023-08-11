@@ -56,7 +56,6 @@ describe("noteService", () => {
       );
       mockedGetUser.mockResolvedValueOnce({
         id: "userId",
-        privateKey: "privateKey",
       });
       // act
       const note = await findUniqueNoteCard("noteId");
@@ -74,7 +73,6 @@ describe("noteService", () => {
       );
       mockedGetUser.mockResolvedValueOnce({
         id: "otherUserId",
-        privateKey: "privateKey",
       });
       // act
       const note = await findUniqueNoteCard("noteId");
@@ -89,7 +87,6 @@ describe("noteService", () => {
       } as unknown as Note);
       mockedGetUser.mockResolvedValueOnce({
         id: "userId",
-        privateKey: "privateKey",
       });
       // act
       const note = await findUniqueNoteCard("noteId");
@@ -107,7 +104,6 @@ describe("noteService", () => {
       } as unknown as Note);
       mockedGetUser.mockResolvedValueOnce({
         id: "userId",
-        privateKey: "privateKey",
       });
       // act
       const note = await findUniqueNoteCard("noteId");
@@ -132,7 +128,6 @@ describe("noteService", () => {
       ] as unknown as Note[]);
       mockedGetUser.mockResolvedValueOnce({
         id: "userId",
-        privateKey: "privateKey",
       });
       // act
       const [note] = await findManyNoteCards({
@@ -176,7 +171,6 @@ describe("noteService", () => {
       ] as unknown as Note[]);
       mockedGetUser.mockResolvedValueOnce({
         id: "userId",
-        privateKey: "privateKey",
       });
       // act
       const [note] = await findManyNoteCardsByUserId("noteId");

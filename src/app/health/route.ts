@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 
 import { env } from "@/utils/env";
 
+export const dynamic = "force-dynamic";
+
 export function GET() {
   return NextResponse.json({
     status: "ok",

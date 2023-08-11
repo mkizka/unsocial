@@ -36,12 +36,12 @@ model User {
   followee          Follow[]     @relation("followee")
   follower          Follow[]     @relation("follower")
   likes             Like[]
-  credentials       Credentials?
+  credential       Credential?
 
   @@unique([preferredUsername, host])
 }
 
-model Credentials {
+model Credential {
   id             String @id @default(nanoid(8))
   userId         String @unique
   hashedPassword String

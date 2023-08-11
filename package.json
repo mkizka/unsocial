@@ -1,5 +1,5 @@
 {
-  "name": "soshal",
+  "name": "unsocial",
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@8.6.11",
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "all": "run-s -s lint:fix test",
-    "build": "SKIP_ENV_VALIDATION=1 next build",
+    "build": "./scripts/build.sh",
     "dev": "./scripts/dev.sh",
     "e2e": "playwright test",
     "e2e:server": "NODE_EXTRA_CA_CERTS=./docker/mkcert/rootCA.pem run-p -l e2e:server:*",
@@ -22,14 +22,13 @@
     "postinstall": "prisma generate",
     "prepare": "husky install",
     "seed": "NODE_ENV=development dotenv -- ./scripts/seed.ts",
-    "start": "./scripts/start.sh",
     "test": "jest"
   },
   "dependencies": {
     "@heroicons/react": "2.0.18",
     "@prisma/client": "5.1.1",
     "bcryptjs": "2.4.3",
-    "next": "canary",
+    "next": "13.4.12",
     "next-auth": "4.22.3",
     "nodemailer": "6.9.4",
     "react": "18.3.0-canary-8ec962d82-20230623",

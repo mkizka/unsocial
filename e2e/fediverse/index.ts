@@ -1,3 +1,3 @@
 export * from "./mastodon";
 export * from "./misskey";
-export * from "./soshal";
+export * from "./unsocial";

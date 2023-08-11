@@ -94,8 +94,8 @@ describe("LikeButton/action", () => {
       }
     `);
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      userId: dummyLocalUser.id,
       inboxUrl: new URL("https://remote.example.com/inbox"),
-      sender: dummyLocalUser,
       activity: expect.objectContaining({
         type: "Like",
       }),
@@ -164,8 +164,8 @@ describe("LikeButton/action", () => {
       where: { id: "likeId" },
     });
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      userId: dummyLocalUser.id,
       inboxUrl: new URL("https://remote.example.com/inbox"),
-      sender: dummyLocalUser,
       activity: expect.objectContaining({ type: "Undo" }),
     });
   });

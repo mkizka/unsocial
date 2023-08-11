@@ -1,3 +1,5 @@
+import type { Session } from "next-auth";
+
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
@@ -5,14 +7,11 @@ import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
-type User = {
-  id: string;
-  privateKey: string;
-};
-
 const logger = createLogger("FollowButton");
 
-const follow = async (user: User, followeeId: string) => {
+type SessionUser = NonNullable<Session["user"]>;
+
+const follow = async (user: SessionUser, followeeId: string) => {
   const follow = await prisma.follow.create({
     data: {
       followeeId: followeeId,
@@ -33,8 +32,8 @@ const follow = async (user: User, followeeId: string) => {
       return;
     }
     await relayActivityToInboxUrl({
+      userId: user.id,
       inboxUrl: new URL(follow.followee.inboxUrl),
-      sender: user,
       activity: activityStreams.follow(follow, follow.followee.actorUrl),
     });
   } else {
@@ -45,7 +44,7 @@ const follow = async (user: User, followeeId: string) => {
   }
 };
 
-const unfollow = async (user: User, followeeId: string) => {
+const unfollow = async (user: SessionUser, followeeId: string) => {
   const follow = await prisma.follow.delete({
     where: {
       followeeId_followerId: {
@@ -67,8 +66,8 @@ const unfollow = async (user: User, followeeId: string) => {
       return;
     }
     await relayActivityToInboxUrl({
+      userId: user.id,
       inboxUrl: new URL(follow.followee.inboxUrl),
-      sender: user,
       activity: activityStreams.undo(
         activityStreams.follow(follow, follow.followee.actorUrl),
       ),
