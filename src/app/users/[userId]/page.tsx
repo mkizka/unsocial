@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { Timeline } from "@/components/Timeline";
 import { UserCard } from "@/components/UserCard";
-import { userService } from "@/server/service";
+import { noteService, userService } from "@/server/service";
 
 export default async function UserPage({
   params,
@@ -13,12 +13,11 @@ export default async function UserPage({
   if (!user) {
     notFound();
   }
-  // TODO: 修正
-  // const notes = await noteService.findManyNoteCardsByUserId(user.id);
+  const notes = await noteService.findManyNoteCardsByUserId(user.id);
   return (
     <>
       <UserCard user={user} />
-      <Timeline />
+      <Timeline notes={notes} />
     </>
   );
 }
