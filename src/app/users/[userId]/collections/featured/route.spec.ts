@@ -21,7 +21,7 @@ describe("/users/[userId]/collections/featured", () => {
         id: "__note__id",
         userId: "__note__userId",
         content: "__note__content",
-        createdAt: new Date("2023-01-01"),
+        createdAt: new Date("2023-01-01T00:00:00Z"),
       } as Note,
     ]);
     // act
