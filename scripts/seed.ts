@@ -22,12 +22,15 @@ const main = async () => {
     password: "testtest",
   });
   await Promise.all(
-    Array.from({ length: 100 }).map((_, i) =>
-      noteRepository.create({
+    Array.from({ length: 100 }).map(async (_, i) => {
+      const published = new Date("2023-01-01T00:00:00Z");
+      published.setSeconds(published.getSeconds() + i);
+      await noteRepository.create({
         userId: user.id,
-        content: `テスト${i}`,
-      }),
-    ),
+        content: "テスト " + published.toISOString(),
+        published,
+      });
+    }),
   );
   logger.info("シード作成完了");
 };
