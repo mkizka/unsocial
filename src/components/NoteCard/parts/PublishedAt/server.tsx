@@ -6,7 +6,7 @@ type Props = {
   createdAt: Date;
 };
 
-export function CreatedAt(props: Props) {
+export function PublishedAt(props: Props) {
   // react-hydration-error が出るので、初期値のみサーバーコンポーネントで計算してから渡す
   return <Client {...props} initialText={format(props.createdAt)} />;
 }

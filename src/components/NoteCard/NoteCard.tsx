@@ -6,6 +6,9 @@ import { forwardRef } from "react";
 import type { noteService } from "@/server/service";
 
 import { UserIcon } from "../UserIcon";
+import { DeleteButton } from "./parts/DeleteButton";
+import { LikeButton } from "./parts/LikeButton";
+import { PublishedAt } from "./parts/PublishedAt";
 
 export type Props = {
   note: noteService.NoteCard;
@@ -33,9 +36,9 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
             <span className="text-gray">{note.user.displayUsername}</span>
           </Link>
           <div className="ml-auto flex items-center gap-1 pl-1">
-            {/* {note.isMine && <DeleteButton noteId={note.id} />} */}
-            {/* <LikeButton noteId={note.id} isLiked={note.isLiked} /> */}
-            {/* <CreatedAt href={note.url} createdAt={note.createdAt} /> */}
+            {note.isMine && <DeleteButton noteId={note.id} />}
+            <LikeButton noteId={note.id} isLiked={note.isLiked} />
+            <PublishedAt href={note.url} createdAt={note.published} />
           </div>
         </div>
         <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
