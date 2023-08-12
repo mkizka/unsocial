@@ -1,5 +1,5 @@
 "use client";
-import useSWRInfinite from "swr/infinite";
+import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 
 import type { TimelineResponse } from "@/app/api/timeline/route";
 
@@ -21,7 +21,11 @@ const fetcher = (url: string) =>
     (res) => res.json() as unknown as Promise<TimelineResponse>,
   );
 
-export function Timeline() {
+type Props = {
+  firstLoadedNotes: TimelineResponse;
+};
+
+export function ClientComponent({ firstLoadedNotes }: Props) {
   const {
     data: notes,
     isValidating,
@@ -32,6 +36,9 @@ export function Timeline() {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateFirstPage: false,
+    fallback: {
+      [unstable_serialize(getKey)]: [firstLoadedNotes],
+    },
   });
 
   if (error) return <div>failed to load</div>;

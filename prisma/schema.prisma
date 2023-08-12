@@ -63,6 +63,7 @@ model Note {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   content   String
+  // TODO: publishedAtに変える
   published DateTime
   createdAt DateTime @default(now())
   likes     Like[]
