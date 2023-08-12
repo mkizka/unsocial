@@ -21,6 +21,7 @@
     "mutation-test:run-only": "./scripts/mutation-test.sh",
     "postinstall": "prisma generate",
     "prepare": "husky install",
+    "seed": "NODE_ENV=development dotenv -- ./scripts/seed.ts",
     "test": "jest"
   },
   "dependencies": {
@@ -33,6 +34,7 @@
     "react": "18.3.0-canary-8ec962d82-20230623",
     "react-dom": "18.3.0-canary-8ec962d82-20230623",
     "sharp": "0.32.4",
+    "swr": "^2.2.0",
     "winston": "3.10.0",
     "zod": "3.21.4"
   },

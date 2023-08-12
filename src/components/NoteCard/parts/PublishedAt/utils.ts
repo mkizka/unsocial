@@ -1,4 +1,6 @@
-export function format(date: Date) {
+// /api/timelineから返されるJSONでは文字列になっているため
+export function format(publishedAt: Date | string) {
+  const date = new Date(publishedAt);
   let diff = (new Date().getTime() - date.getTime()) / 1000;
   if (diff < 60) return `${Math.floor(diff)}秒前`;
   diff /= 60;
