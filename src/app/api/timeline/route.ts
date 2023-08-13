@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import superjson from "superjson";
 import { z } from "zod";
 
 import { noteService } from "@/server/service";
@@ -31,16 +32,10 @@ export const GET = handler(
   }),
   async (_, query) => {
     const notes = await noteService.findManyNoteCards(query);
-    return NextResponse.json(notes);
+    return NextResponse.json(superjson.serialize(notes));
   },
 );
 
-type InferResponse<
-  T extends (request: NextRequest) => Promise<NextResponse<unknown>>,
-> = Awaited<ReturnType<T>> extends NextResponse<infer Response>
-  ? Response extends { error: unknown }
-    ? never
-    : Response
-  : never;
-
-export type TimelineResponse = InferResponse<typeof GET>;
+export type TimelineResponse = Awaited<
+  ReturnType<typeof noteService.findManyNoteCards>
+>;
