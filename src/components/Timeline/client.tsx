@@ -1,4 +1,5 @@
 "use client";
+import superjson from "superjson";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 
 import type { TimelineResponse } from "@/app/api/timeline/route";
@@ -16,10 +17,10 @@ const getKey = (_: number, previousPageData: TimelineResponse | null) => {
 };
 
 const fetcher = (url: string) =>
-  fetch(url).then(
-    // TODO: 型見直す
-    (res) => res.json() as unknown as Promise<TimelineResponse>,
-  );
+  fetch(url).then(async (res) => {
+    const body = await res.text();
+    return superjson.parse<TimelineResponse>(body);
+  });
 
 type Props = {
   firstLoadedNotes: TimelineResponse;
