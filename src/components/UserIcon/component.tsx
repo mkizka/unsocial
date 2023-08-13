@@ -12,7 +12,7 @@ export function UserIcon({ user, ...props }: Props) {
     <img
       {...props}
       className={"hover:opacity-80 " + props.className}
-      src={`/users/${user.id}/icon${key ? `?${key}` : ""}`}
+      src={`/users/${user.id}/icon.png${key ? `?${key}` : ""}`}
       alt={`@${user.preferredUsername}のアイコン`}
     />
   );
