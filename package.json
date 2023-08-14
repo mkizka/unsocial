@@ -59,7 +59,7 @@
     "cli-markdown": "3.0.5",
     "dotenv-cli": "7.2.1",
     "eslint": "8.47.0",
-    "eslint-config-next": "13.4.13",
+    "eslint-config-next": "13.4.15",
     "eslint-plugin-simple-import-sort": "10.0.0",
     "eslint-plugin-unused-imports": "3.0.0",
     "husky": "8.0.3",
