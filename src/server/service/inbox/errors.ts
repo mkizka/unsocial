@@ -4,13 +4,27 @@ export class InboxError extends Error {
   public level: "warn" | "error" = "warn";
   public statusCode: number = 400;
 
-  constructor(message: string | object, data: unknown) {
+  constructor(
+    private messageOrError: string | object,
+    private data: unknown,
+  ) {
     super();
-    this.message = JSON.stringify({
+  }
+
+  private get payload() {
+    return {
       name: this.constructor.name,
-      message,
-      data,
-    });
+      message: this.messageOrError,
+      data: this.data,
+    };
+  }
+
+  public get message() {
+    return JSON.stringify(this.payload);
+  }
+
+  public get messageFormatted() {
+    return JSON.stringify(this.payload, null, 2);
   }
 }
 
