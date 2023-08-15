@@ -143,8 +143,8 @@ devDependencies:
     specifier: 0.13.1
     version: 0.13.1(prettier@3.0.1)
   prettier-plugin-tailwindcss:
-    specifier: 0.5.2
-    version: 0.5.2(prettier@3.0.1)
+    specifier: 0.5.3
+    version: 0.5.3(prettier@3.0.1)
   prisma:
     specifier: 5.1.1
     version: 5.1.1
@@ -6482,8 +6482,8 @@ packages:
       sh-syntax: 0.4.1
     dev: true
 
-  /prettier-plugin-tailwindcss@0.5.2(prettier@3.0.1):
-    resolution: {integrity: sha512-i4swJk4f8YWK99BRPX3DdDNwMr6U1X8y9rvxGeX5zf090+SsHpPSVjgOb041Hh6/nZJWPi/JYno9UgBDm+/RxA==}
+  /prettier-plugin-tailwindcss@0.5.3(prettier@3.0.1):
+    resolution: {integrity: sha512-M5K80V21yM+CTm/FEFYRv9/9LyInYbCSXpIoPAKMm8zy89IOwdiA2e4JVbcO7tvRtAQWz32zdj7/WKcsmFyAVg==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
