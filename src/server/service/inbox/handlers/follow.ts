@@ -19,22 +19,22 @@ const logger = createLogger("inboxFollowService");
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedFollow = inboxFollowSchema.safeParse(activity);
   if (!parsedFollow.success) {
-    return new ActivitySchemaValidationError(activity, parsedFollow.error);
+    return new ActivitySchemaValidationError(parsedFollow.error, activity);
   }
   const followee = await userService.findUserByActorId(
     new URL(parsedFollow.data.object),
   );
   if (!followee) {
     return new BadActivityRequestError(
-      activity,
       "フォローリクエストで指定されたフォロイーが存在しませんでした",
+      activity,
     );
   }
   if (!actorUser.inboxUrl) {
     // 他ホストのユーザーならinboxUrlを持っているはずなので、異常な動作
     return new UnexpectedActivityRequestError(
-      activity,
       "フォローリクエストを送信したユーザーがinboxUrlを持っていませんでした",
+      activity,
     );
   }
   await followRepository

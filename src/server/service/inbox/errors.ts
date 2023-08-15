@@ -4,16 +4,20 @@ export class InboxError extends Error {
   public level: "warn" | "error" = "warn";
   public statusCode: number = 400;
 
-  constructor(activity: unknown, message: string | object) {
+  constructor(message: string | object, data: unknown) {
     super();
-    this.message = JSON.stringify({ name: this.name, activity, message });
+    this.message = JSON.stringify({
+      name: this.constructor.name,
+      message,
+      data,
+    });
   }
 }
 
 // 送られてきたActivityの構造をzodで検証した際のエラー
 export class ActivitySchemaValidationError extends InboxError {
-  constructor(activity: unknown, error: z.ZodError<unknown>) {
-    super(activity, error);
+  constructor(error: z.ZodError<unknown>, activity: unknown) {
+    super(error.flatten().fieldErrors, activity);
   }
 }
 

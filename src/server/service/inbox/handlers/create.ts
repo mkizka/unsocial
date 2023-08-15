@@ -7,7 +7,7 @@ import { type InboxHandler } from "./shared";
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedNote = inboxCreateSchema.safeParse(activity);
   if (!parsedNote.success) {
-    return new ActivitySchemaValidationError(activity, parsedNote.error);
+    return new ActivitySchemaValidationError(parsedNote.error, activity);
   }
   await noteRepository.createFromActivity({
     activity: parsedNote.data.object,
