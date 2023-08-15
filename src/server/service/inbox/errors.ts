@@ -1,11 +1,13 @@
 import type { z } from "zod";
 
+type ZodFieldErrors = { [key in string]?: string[] };
+
 export class InboxError extends Error {
   public level: "warn" | "error" = "warn";
   public statusCode: number = 400;
 
   constructor(
-    private messageOrError: string | object,
+    private messageOrError: string | ZodFieldErrors,
     private data: unknown,
   ) {
     super();
@@ -29,9 +31,9 @@ export class InboxError extends Error {
 }
 
 // 送られてきたActivityの構造をzodで検証した際のエラー
-export class ActivitySchemaValidationError extends InboxError {
-  constructor(error: z.ZodError<unknown>, activity: unknown) {
-    super(error.flatten().fieldErrors, activity);
+export class ActivitySchemaValidationError<T> extends InboxError {
+  constructor(errors: z.ZodError<T>, data: unknown) {
+    super(errors.flatten().fieldErrors, data);
   }
 }
 

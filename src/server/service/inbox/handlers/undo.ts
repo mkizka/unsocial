@@ -37,8 +37,8 @@ const undoLike: UndoInboxHandler = async (activity, actorUser) => {
   const noteId = resolveNoteId(new URL(activity.object.object));
   if (!noteId) {
     return new BadActivityRequestError(
-      activity,
       "activityからいいね削除対象のノートIDを取得できませんでした",
+      activity,
     );
   }
   await likeRepository.remove({
