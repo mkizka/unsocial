@@ -21,6 +21,7 @@ const serverEnvSchema = z.object({
       (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).host : str),
     z.string().min(1),
   ),
+  DISCORD_WEBHOOK_URL: z.string().url().optional(),
 });
 
 export const env = (() => {

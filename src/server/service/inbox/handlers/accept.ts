@@ -11,15 +11,15 @@ import type { InboxHandler } from "./shared";
 export const handle: InboxHandler = async (activity, followee) => {
   const parsedAccept = inboxAcceptSchema.safeParse(activity);
   if (!parsedAccept.success) {
-    return new ActivitySchemaValidationError(activity, parsedAccept.error);
+    return new ActivitySchemaValidationError(parsedAccept.error, activity);
   }
   const follower = await userService.findUserByActorId(
     new URL(parsedAccept.data.object.actor),
   );
   if (!follower) {
     return new BadActivityRequestError(
-      activity,
       "Acceptされたフォロワーが存在しませんでした",
+      activity,
     );
   }
   await followRepository.accept({

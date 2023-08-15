@@ -13,13 +13,13 @@ const logger = createLogger("inboxLikeService");
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedLike = inboxLikeSchema.safeParse(activity);
   if (!parsedLike.success) {
-    return new ActivitySchemaValidationError(activity, parsedLike.error);
+    return new ActivitySchemaValidationError(parsedLike.error, activity);
   }
   const noteId = resolveNoteId(new URL(parsedLike.data.object));
   if (!noteId) {
     return new BadActivityRequestError(
-      activity,
       "activityからいいね対象のノートIDを取得できませんでした",
+      activity,
     );
   }
   await likeRepository

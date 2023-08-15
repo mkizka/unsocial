@@ -23,8 +23,8 @@ const undoFollow: UndoInboxHandler = async (activity, actorUser) => {
   );
   if (!followee) {
     return new BadActivityRequestError(
-      activity,
       "アンフォローリクエストで指定されたフォロイーが存在しませんでした",
+      activity,
     );
   }
   await followRepository.remove({
@@ -37,8 +37,8 @@ const undoLike: UndoInboxHandler = async (activity, actorUser) => {
   const noteId = resolveNoteId(new URL(activity.object.object));
   if (!noteId) {
     return new BadActivityRequestError(
-      activity,
       "activityからいいね削除対象のノートIDを取得できませんでした",
+      activity,
     );
   }
   await likeRepository.remove({
@@ -55,7 +55,7 @@ const undoHandlers = {
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedUndo = inboxUndoSchema.safeParse(activity);
   if (!parsedUndo.success) {
-    return new ActivitySchemaValidationError(activity, parsedUndo.error);
+    return new ActivitySchemaValidationError(parsedUndo.error, activity);
   }
   await undoHandlers[parsedUndo.data.object.type](parsedUndo.data, actorUser);
 };

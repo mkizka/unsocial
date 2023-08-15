@@ -1,19 +1,39 @@
 import type { z } from "zod";
 
+type ZodFieldErrors = { [key in string]?: string[] };
+
 export class InboxError extends Error {
   public level: "warn" | "error" = "warn";
   public statusCode: number = 400;
 
-  constructor(activity: unknown, message: string | object) {
+  constructor(
+    private messageOrError: string | ZodFieldErrors,
+    private data: unknown,
+  ) {
     super();
-    this.message = JSON.stringify({ name: this.name, activity, message });
+  }
+
+  private get payload() {
+    return {
+      name: this.constructor.name,
+      message: this.messageOrError,
+      data: this.data,
+    };
+  }
+
+  public get message() {
+    return JSON.stringify(this.payload);
+  }
+
+  public get messageFormatted() {
+    return JSON.stringify(this.payload, null, 2);
   }
 }
 
 // 送られてきたActivityの構造をzodで検証した際のエラー
-export class ActivitySchemaValidationError extends InboxError {
-  constructor(activity: unknown, error: z.ZodError<unknown>) {
-    super(activity, error);
+export class ActivitySchemaValidationError<T> extends InboxError {
+  constructor(errors: z.ZodError<T>, data: unknown) {
+    super(errors.flatten().fieldErrors, data);
   }
 }
 

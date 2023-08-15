@@ -46,23 +46,23 @@ export const perform = async ({
 }: PerformParams) => {
   const parsedActivity = anyActivitySchema.safeParse(activity);
   if (!parsedActivity.success) {
-    return new ActivitySchemaValidationError(activity, parsedActivity.error);
+    return new ActivitySchemaValidationError(parsedActivity.error, activity);
   }
   const actorUser = await userService.findOrFetchUserByActorId(
     new URL(parsedActivity.data.actor),
   );
   if (!actorUser) {
     return new BadActivityRequestError(
-      activity,
       "actorで指定されたユーザーが見つかりませんでした",
+      activity,
     );
   }
   // TODO: Userの公開鍵を必須にする
   const validation = verifyActivity(pathname, headers, actorUser.publicKey!);
   if (!validation.isValid) {
     return new BadActivityRequestError(
-      activity,
       "リクエストヘッダの署名が不正でした: " + validation.reason,
+      { activity, headers },
     );
   }
   return inboxServices[parsedActivity.data.type].handle(

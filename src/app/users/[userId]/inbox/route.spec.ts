@@ -38,7 +38,7 @@ describe("/users/[userId]/inbox", () => {
     };
     const request = createMockedRequest(activity);
     mockedInboxService.perform.mockResolvedValueOnce(
-      new BadActivityRequestError(activity, "エラー"),
+      new BadActivityRequestError("エラー", activity),
     );
     // act
     const response = await POST(request);
