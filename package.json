@@ -55,7 +55,6 @@
     "@typescript-eslint/parser": "6.3.0",
     "activitypub-core-types": "0.3.2",
     "autoprefixer": "10.4.14",
-    "better-typescript-lib": "2.4.0",
     "cli-markdown": "3.0.5",
     "dotenv-cli": "7.2.1",
     "eslint": "8.47.0",
