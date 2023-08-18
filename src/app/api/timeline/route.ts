@@ -13,7 +13,7 @@ const handler =
     ) => Promise<NextResponse<R>>,
   ) =>
   async (request: NextRequest) => {
-    const query = Object.fromEntries(request.nextUrl.searchParams.entries());
+    const query = Object.fromEntries(request.nextUrl.searchParams);
     const parsed = schema.safeParse(query);
     if (!parsed.success) {
       return NextResponse.json(
