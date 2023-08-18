@@ -62,7 +62,7 @@ export const perform = async ({
   if (!validation.isValid) {
     return new BadActivityRequestError(
       "リクエストヘッダの署名が不正でした: " + validation.reason,
-      { activity, headers },
+      { activity, headers: Object.fromEntries(headers) },
     );
   }
   return inboxServices[parsedActivity.data.type].handle(

@@ -57,9 +57,7 @@ export const verifyActivity = (
   headers: Request["headers"],
   publicKey: string,
 ): VerifyResult => {
-  const parsedHeaders = headersSchema.safeParse(
-    Object.fromEntries(headers.entries()),
-  );
+  const parsedHeaders = headersSchema.safeParse(Object.fromEntries(headers));
   if (!parsedHeaders.success) {
     return {
       isValid: false,
