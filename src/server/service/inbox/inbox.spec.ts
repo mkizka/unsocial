@@ -34,7 +34,7 @@ mockedUserService.findOrFetchUserByActorId.mockResolvedValue(dummyUser);
 
 jest.mock("@/utils/httpSignature/verify");
 const mockedVerifyActivity = jest.mocked(verifyActivity);
-mockedVerifyActivity.mockReturnValue({ isValid: true });
+mockedVerifyActivity.mockResolvedValue({ isValid: true });
 
 const params = {
   pathname: "/users/dummy/inbox",

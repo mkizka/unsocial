@@ -25,19 +25,19 @@ export type SignActivityParams = {
 
 export const signActivity = (params: SignActivityParams) => {
   const order = ["(request-target)", "host", "date", "digest"];
-  const header = {
+  const headers = {
     host: params.inboxUrl.host,
     date: new Date().toUTCString(),
     digest: `SHA-256=${createDigest(params.activity)}`,
   };
-  const headerToSign = {
-    "(request-target)": `post ${params.inboxUrl.pathname}`,
-    ...header,
-  };
-  const textToSign = textOf(headerToSign, order);
+  const textToSign = textOf({
+    pathname: params.inboxUrl.pathname,
+    headers,
+    order,
+  });
   const signature = getSignature(textToSign, params.privateKey);
   return {
-    ...header,
+    ...headers,
     signature:
       `keyId="https://${env.HOST}/users/${params.userId}/activity#main-key",` +
       `algorithm="rsa-sha256",` +

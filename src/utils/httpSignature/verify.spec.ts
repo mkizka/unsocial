@@ -1,3 +1,7 @@
+import type { User } from "@prisma/client";
+
+import { mockedPrisma } from "@/mocks/prisma";
+
 import {
   expectedHeader,
   invalidDateHeader,
@@ -15,28 +19,27 @@ import { verifyActivity } from "./verify";
 
 describe("verifyActivity", () => {
   test.each`
-    header                        | expectedIsValid | expectedReason                                    | description
-    ${expectedHeader}             | ${true}         | ${undefined}                                      | ${"署名されたActivityを検証する"}
-    ${noKeyIdHeader}              | ${false}        | ${"Required"}                                     | ${"検証に必要な公開鍵がない"}
-    ${noAlgorithmHeader}          | ${false}        | ${'Invalid literal value, expected "rsa-sha256"'} | ${"検証に必要なアルゴリズム名がない"}
-    ${noHeadersHeader}            | ${false}        | ${"Required"}                                     | ${"検証に必要なヘッダー順指定がない"}
-    ${noSignatureHeader}          | ${false}        | ${"Required"}                                     | ${"検証に必要なシグネチャーがない"}
-    ${invalidDateHeader}          | ${false}        | ${"verifyの結果がfalseでした"}                    | ${"Dateが異なればsignatureも異なる"}
-    ${invalidDigestHeader}        | ${false}        | ${"verifyの結果がfalseでした"}                    | ${"Digestが異なればsignatureも異なる"}
-    ${invalidHostHeader}          | ${false}        | ${"verifyの結果がfalseでした"}                    | ${"Hostが異なればsignatureも異なる"}
-    ${invalidSignatureHeader}     | ${false}        | ${"verifyの結果がfalseでした"}                    | ${"Signatureが異なればsignatureも異なる"}
-    ${unSupportedAlgorithmHeader} | ${false}        | ${'Invalid literal value, expected "rsa-sha256"'} | ${"アルゴリズムがrsa-sha256でない"}
-  `("$description", ({ header, expectedIsValid, expectedReason }) => {
+    header                        | publicKey                | isValid  | reason                                            | description
+    ${expectedHeader}             | ${mockedKeys.publickKey} | ${true}  | ${undefined}                                      | ${"署名されたActivityを検証する"}
+    ${noKeyIdHeader}              | ${mockedKeys.publickKey} | ${false} | ${"Required"}                                     | ${"検証に必要なkeyIdがない場合、検証結果は不正"}
+    ${noAlgorithmHeader}          | ${mockedKeys.publickKey} | ${false} | ${'Invalid literal value, expected "rsa-sha256"'} | ${"検証に必要なアルゴリズム名がない場合、検証結果は不正"}
+    ${noHeadersHeader}            | ${mockedKeys.publickKey} | ${false} | ${"Required"}                                     | ${"検証に必要なヘッダー順指定がない場合、検証結果は不正"}
+    ${noSignatureHeader}          | ${mockedKeys.publickKey} | ${false} | ${"Required"}                                     | ${"検証に必要なシグネチャーがない場合、検証結果は不正"}
+    ${expectedHeader}             | ${null}                  | ${false} | ${"keyIdから公開鍵が取得できませんでした"}        | ${"公開鍵がない場合、検証結果は不正"}
+    ${invalidDateHeader}          | ${mockedKeys.publickKey} | ${false} | ${"検証の結果不正と判断されました"}               | ${"Dateが異なればsignatureも異なる"}
+    ${invalidDigestHeader}        | ${mockedKeys.publickKey} | ${false} | ${"検証の結果不正と判断されました"}               | ${"Digestが異なればsignatureも異なる"}
+    ${invalidHostHeader}          | ${mockedKeys.publickKey} | ${false} | ${"検証の結果不正と判断されました"}               | ${"Hostが異なればsignatureも異なる"}
+    ${invalidSignatureHeader}     | ${mockedKeys.publickKey} | ${false} | ${"検証の結果不正と判断されました"}               | ${"Signatureが異なればsignatureも異なる"}
+    ${unSupportedAlgorithmHeader} | ${mockedKeys.publickKey} | ${false} | ${'Invalid literal value, expected "rsa-sha256"'} | ${"アルゴリズムはrsa-sha256以外は未サポート"}
+  `("$description", async ({ header, publicKey, isValid, reason }) => {
+    // arrange
+    mockedPrisma.user.findFirst.mockResolvedValue({
+      host: "myhost.example.com", // webfingerに通信しないようにテストでは全てローカルユーザーとして扱う
+      publicKey,
+    } as User);
     // act
-    const actual = verifyActivity(
-      "/inbox",
-      new Headers(header),
-      mockedKeys.publickKey,
-    );
+    const actual = await verifyActivity("/inbox", new Headers(header));
     // assert
-    expect(actual).toEqual({
-      isValid: expectedIsValid,
-      reason: expectedReason,
-    });
+    expect(actual).toEqual({ isValid, reason });
   });
 });
