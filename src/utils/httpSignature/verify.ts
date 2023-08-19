@@ -10,6 +10,12 @@ const signatureSchema = z.object({
   signature: z.string(),
 });
 
+/**
+ * `keyId="https://example.com/users/foo#main-key",algorithm="rsa-sha256",...`
+ * のような形式の文字列を
+ * `{ keyId: "https://example.com/users/foo#main-key", algorithm: "rsa-sha256", ... }`
+ * のようなオブジェクトに変換する
+ */
 const parse = (signature: string) => {
   const result: { [key: string]: string } = {};
   for (const column of signature.split(",")) {
@@ -52,6 +58,7 @@ type VerifyResult =
       reason: string;
     };
 
+// TODO: digestがActivityと一致するかを検証する
 export const verifyActivity = (
   resolvedUrl: string,
   headers: Request["headers"],
