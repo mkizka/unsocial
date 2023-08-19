@@ -1,6 +1,8 @@
 import crypto from "crypto";
 import { z } from "zod";
 
+import { userService } from "@/server/service";
+
 import { textOf } from "./utils";
 
 const signatureSchema = z.object({
@@ -49,6 +51,16 @@ const createVerify = (textToSign: string) => {
   return verify;
 };
 
+const findOrFetchPublicKeyByKeyId = async (keyId: string) => {
+  const actorId = new URL(keyId);
+  actorId.hash = "";
+  const user = await userService.findOrFetchUserByActorId(actorId);
+  if (!user) {
+    return null;
+  }
+  return user.publicKey;
+};
+
 type VerifyResult =
   | {
       isValid: true;
@@ -59,11 +71,10 @@ type VerifyResult =
     };
 
 // TODO: digestがActivityと一致するかを検証する
-export const verifyActivity = (
-  resolvedUrl: string,
+export const verifyActivity = async (
+  pathname: string,
   headers: Request["headers"],
-  publicKey: string,
-): VerifyResult => {
+): Promise<VerifyResult> => {
   const parsedHeaders = headersSchema.safeParse(Object.fromEntries(headers));
   if (!parsedHeaders.success) {
     return {
@@ -73,20 +84,19 @@ export const verifyActivity = (
         "リクエストヘッダーが不正でした",
     };
   }
-  const { signature, ...headersWithoutSignature } = parsedHeaders.data;
-  const headerToSign = {
-    "(request-target)": `post ${resolvedUrl}`,
-    ...headersWithoutSignature,
-  };
-  const order = signature.headers.split(" ");
-  const textToSign = textOf(headerToSign, order);
-  const isValid = createVerify(textToSign).verify(
-    publicKey,
-    signature.signature,
-    "base64",
-  );
+  const { keyId, signature, headers: order } = parsedHeaders.data.signature;
+  const publicKey = await findOrFetchPublicKeyByKeyId(keyId);
+  if (!publicKey) {
+    return { isValid: false, reason: "keyIdから公開鍵が取得できませんでした" };
+  }
+  const text = textOf({
+    pathname,
+    headers: parsedHeaders.data,
+    order: order.split(" "),
+  });
+  const isValid = createVerify(text).verify(publicKey, signature, "base64");
   if (!isValid) {
-    return { isValid, reason: "verifyの結果がfalseでした" };
+    return { isValid, reason: "検証の結果不正と判断されました" };
   }
   return { isValid };
 };
