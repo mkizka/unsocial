@@ -26,22 +26,22 @@ export async function UserPage({ userId, currentTab }: Props) {
           root: {
             name: "投稿",
             href: rootPath,
-            render: () => <Timeline notes={notes} />,
+            render: () => <Timeline />,
           },
           likes: {
             name: "いいね",
             href: `${rootPath}/likes`,
-            render: () => <Timeline notes={notes} />,
+            render: () => <Timeline />,
           },
           following: {
             name: "フォロー",
             href: `${rootPath}/following`,
-            render: () => <Timeline notes={notes} />,
+            render: () => <Timeline />,
           },
           followers: {
             name: "フォロワー",
             href: `${rootPath}/followers`,
-            render: () => <Timeline notes={notes} />,
+            render: () => <Timeline />,
           },
         }}
       />

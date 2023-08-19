@@ -19,11 +19,11 @@ export function UserTab({ tabs, current }: Props) {
   }
   return (
     <>
-      <div className="flex mb-2 rounded overflow-x-scroll hidden-scrollbar">
+      <div className="hidden-scrollbar mb-2 flex overflow-x-scroll rounded">
         {Object.entries(tabs).map(([key, tab]) => (
           <div
             key={tab.name}
-            className="bg-primary-light w-full text-sm text-center p-4 shadow"
+            className="w-full bg-primary-light p-4 text-center text-sm shadow"
           >
             <Link
               href={tab.href}
