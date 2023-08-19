@@ -1,21 +1,24 @@
 import Link from "next/link";
+import type { Ref } from "react";
+import { forwardRef } from "react";
 
 import type { noteService } from "@/server/service";
 
 import { UserIcon } from "../UserIcon";
-import { CreatedAt } from "./parts/CreatedAt";
 import { DeleteButton } from "./parts/DeleteButton";
 import { LikeButton } from "./parts/LikeButton";
+import { PublishedAt } from "./parts/PublishedAt";
 
 export type Props = {
   note: noteService.NoteCard;
 };
 
-export async function NoteCard({ note }: Props) {
+function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
   return (
     <article
+      ref={ref}
       data-testid="note-card"
-      className="flex relative text-prmary bg-primary-light rounded pt-3 pl-3 pr-4 pb-5 mb-2 shadow"
+      className="text-prmary relative mb-2 flex rounded bg-primary-light pb-5 pl-3 pr-4 pt-3 shadow"
     >
       <div className="w-full pl-[48px]">
         <Link className="absolute left-3" href={note.user.url}>
@@ -31,10 +34,10 @@ export async function NoteCard({ note }: Props) {
             {note.user.name && <span className="mr-1">{note.user.name}</span>}
             <span className="text-gray">{note.user.displayUsername}</span>
           </Link>
-          <div className="flex gap-1 ml-auto pl-1 items-center">
+          <div className="ml-auto flex items-center gap-1 pl-1">
             {note.isMine && <DeleteButton noteId={note.id} />}
             <LikeButton noteId={note.id} isLiked={note.isLiked} />
-            <CreatedAt href={note.url} createdAt={note.createdAt} />
+            <PublishedAt href={note.url} publishedAt={note.published} />
           </div>
         </div>
         <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
@@ -42,3 +45,5 @@ export async function NoteCard({ note }: Props) {
     </article>
   );
 }
+
+export const NoteCard = forwardRef(_NoteCard);

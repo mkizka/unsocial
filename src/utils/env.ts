@@ -4,8 +4,7 @@ import { z } from "zod";
 import { formatZodError } from "./formatZodError";
 
 const serverEnvSchema = z.object({
-  POSTGRES_PRISMA_URL: z.string().url(),
-  POSTGRES_URL_NON_POOLING: z.string().url(),
+  DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === "production"
@@ -22,11 +21,7 @@ const serverEnvSchema = z.object({
       (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).host : str),
     z.string().min(1),
   ),
-  EMAIL_SERVER_USER: z.string().default("user"),
-  EMAIL_SERVER_PASS: z.string().default("password"),
-  EMAIL_SERVER_HOST: z.string(),
-  EMAIL_SERVER_PORT: z.coerce.number().default(1025),
-  EMAIL_FROM: z.string().email().default("from@example.com"),
+  DISCORD_WEBHOOK_URL: z.string().url().optional(),
 });
 
 export const env = (() => {

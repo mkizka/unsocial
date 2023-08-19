@@ -9,6 +9,6 @@ export default async function SigninPage() {
   if (session) {
     redirect("/");
   }
-  const count = await prisma.credentials.count();
+  const count = await prisma.credential.count();
   return <AuthForm action={count > 0 ? "signIn" : "signUp"} />;
 }

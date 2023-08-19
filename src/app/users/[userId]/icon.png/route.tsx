@@ -16,7 +16,7 @@ export async function GET(
   }
   const url =
     user.icon ??
-    `https://${env.HOST}/users/_/icon/edge?text=${user.preferredUsername}`;
+    `https://${env.HOST}/users/_/icon.edge.png?text=${user.preferredUsername}`;
   const image = await fetch(url);
   return new NextResponse(await image.arrayBuffer(), {
     headers: {

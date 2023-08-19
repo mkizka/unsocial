@@ -24,9 +24,9 @@ describe("/.well-known/nodeinfo", () => {
           "outbound": [],
         },
         "software": {
-          "homepage": "https://github.com/mkizka/soshal",
-          "name": "soshal",
-          "repository": "https://github.com/mkizka/soshal.git",
+          "homepage": "https://github.com/mkizka/unsocial",
+          "name": "unsocial",
+          "repository": "https://github.com/mkizka/unsocial.git",
           "version": "0.1.0",
         },
         "usage": {

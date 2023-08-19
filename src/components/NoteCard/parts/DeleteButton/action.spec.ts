@@ -29,7 +29,7 @@ describe("DeleteButton/action", () => {
     // assert
     expect(response).toBeUndefined();
     expect(mockedRelayActivityToFollowers).toHaveBeenCalledWith({
-      sender: dummySessionUser,
+      userId: dummySessionUser.id,
       activity: expect.objectContaining({ type: "Delete" }),
     });
   });

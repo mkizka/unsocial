@@ -21,7 +21,7 @@ export async function action(formData: FormData) {
     },
   });
   await relayActivityToFollowers({
-    sender: session.user,
+    userId: session.user.id,
     activity: activityStreams.create(note),
   });
 }

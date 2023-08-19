@@ -50,7 +50,7 @@ export function AuthForm({ action }: Props) {
 
   return (
     <form
-      className="flex flex-col text-dark gap-8 mx-auto max-w-sm"
+      className="mx-auto flex max-w-sm flex-col gap-8 text-dark"
       ref={ref}
       onSubmit={handleSubmit}
     >

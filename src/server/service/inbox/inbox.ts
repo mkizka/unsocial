@@ -44,27 +44,33 @@ export const perform = async ({
   pathname,
   headers,
 }: PerformParams) => {
+  // 1. Activityのスキーマを検証する
   const parsedActivity = anyActivitySchema.safeParse(activity);
   if (!parsedActivity.success) {
-    return new ActivitySchemaValidationError(activity, parsedActivity.error);
+    return new ActivitySchemaValidationError(parsedActivity.error, activity);
   }
+
+  // 2. ヘッダーの署名を検証する
+  const validation = await verifyActivity(pathname, headers);
+  if (!validation.isValid) {
+    return new BadActivityRequestError(
+      "リクエストヘッダの署名が不正でした: " + validation.reason,
+      { activity, headers: Object.fromEntries(headers) },
+    );
+  }
+
+  // 3. actorで指定されたユーザーを取得する
   const actorUser = await userService.findOrFetchUserByActorId(
     new URL(parsedActivity.data.actor),
   );
   if (!actorUser) {
     return new BadActivityRequestError(
-      activity,
       "actorで指定されたユーザーが見つかりませんでした",
-    );
-  }
-  // TODO: Userの公開鍵を必須にする
-  const validation = verifyActivity(pathname, headers, actorUser.publicKey!);
-  if (!validation.isValid) {
-    return new BadActivityRequestError(
       activity,
-      "リクエストヘッダの署名が不正でした: " + validation.reason,
     );
   }
+
+  // 4. ハンドラーを呼び出す
   return inboxServices[parsedActivity.data.type].handle(
     parsedActivity.data,
     actorUser,

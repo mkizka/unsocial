@@ -42,7 +42,7 @@ describe("NoteForm/action", () => {
     `);
     expect(response).toBeUndefined();
     expect(mockedRelayActivityToFollowers).toHaveBeenCalledWith({
-      sender: dummySession.user,
+      userId: dummySession.user.id,
       activity: expect.objectContaining({ type: "Create" }),
     });
   });

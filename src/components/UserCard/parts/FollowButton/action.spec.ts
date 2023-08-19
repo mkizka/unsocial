@@ -31,7 +31,6 @@ const dummyLocalUser = {
 
 const dummySessionUser = {
   id: "dummy_session",
-  privateKey: "privateKey",
 };
 
 describe("FollowButton/action", () => {
@@ -67,8 +66,8 @@ describe("FollowButton/action", () => {
       },
     });
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      userId: dummySessionUser.id,
       inboxUrl: new URL(dummyRemoteUser.inboxUrl),
-      sender: dummySessionUser,
       activity: expect.objectContaining({
         type: "Follow",
       }),
@@ -149,8 +148,8 @@ describe("FollowButton/action", () => {
       },
     });
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      userId: dummySessionUser.id,
       inboxUrl: new URL(dummyRemoteUser.inboxUrl),
-      sender: dummySessionUser,
       activity: expect.objectContaining({
         type: "Undo",
       }),

@@ -42,21 +42,20 @@ const signIn = async (credentials: z.infer<typeof credentialsSchema>) => {
       },
     },
     include: {
-      credentials: true,
+      credential: true,
     },
   });
   if (!user) {
     throw new Error("ユーザーが見つかりません");
   }
-  if (!user.privateKey) {
-    // TODO: 必須になったら消す
-    throw new Error("秘密鍵が見つかりません");
+  if (!user.credential) {
+    logger.error(`credentialsが見つかりませんでした: ${user.id}`);
+    throw new Error("予期しないエラーが発生しました");
   }
   if (
-    user.credentials &&
-    bcryptjs.compareSync(credentials.password, user.credentials.hashedPassword)
+    bcryptjs.compareSync(credentials.password, user.credential.hashedPassword)
   ) {
-    return { id: user.id, privateKey: user.privateKey };
+    return { id: user.id };
   }
   throw new Error("パスワードが間違っています");
 };
@@ -69,19 +68,18 @@ const signUp = async (credentials: z.infer<typeof credentialsSchema>) => {
       preferredUsername: credentials.preferredUsername,
       host: env.HOST,
       publicKey: keys.publicKey,
-      privateKey: keys.privateKey,
-      credentials: {
+      credential: {
         create: {
           hashedPassword: bcryptjs.hashSync(credentials.password),
+          privateKey: keys.privateKey,
         },
       },
     },
+    include: {
+      credential: true,
+    },
   });
-  if (!newUser.privateKey) {
-    // TODO: 必須になったら消す
-    throw new Error("秘密鍵が見つかりません");
-  }
-  return { id: newUser.id, privateKey: newUser.privateKey };
+  return { id: newUser.id };
 };
 
 export const authorize = async (credentials: unknown) => {
@@ -101,14 +99,12 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       session.user = {
         id: token.id,
-        privateKey: token.privateKey,
       };
       return session;
     },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.privateKey = user.privateKey!;
       }
       return token;
     },

@@ -19,29 +19,22 @@ const logger = createLogger("inboxFollowService");
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedFollow = inboxFollowSchema.safeParse(activity);
   if (!parsedFollow.success) {
-    return new ActivitySchemaValidationError(activity, parsedFollow.error);
+    return new ActivitySchemaValidationError(parsedFollow.error, activity);
   }
   const followee = await userService.findUserByActorId(
     new URL(parsedFollow.data.object),
   );
   if (!followee) {
     return new BadActivityRequestError(
-      activity,
       "フォローリクエストで指定されたフォロイーが存在しませんでした",
-    );
-  }
-  if (!followee.privateKey) {
-    // 自ホストのユーザーなら秘密鍵を持っているはずなので、異常な動作
-    return new UnexpectedActivityRequestError(
       activity,
-      `フォローリクエストで指定されたフォロイー(@${followee.preferredUsername}@${followee.host})が秘密鍵を持っていませんでした`,
     );
   }
   if (!actorUser.inboxUrl) {
     // 他ホストのユーザーならinboxUrlを持っているはずなので、異常な動作
     return new UnexpectedActivityRequestError(
-      activity,
       "フォローリクエストを送信したユーザーがinboxUrlを持っていませんでした",
+      activity,
     );
   }
   await followRepository
@@ -51,11 +44,8 @@ export const handle: InboxHandler = async (activity, actorUser) => {
     })
     .catch((e) => logger.warn(e));
   await relayActivityToInboxUrl({
+    userId: followee.id,
     inboxUrl: new URL(actorUser.inboxUrl),
-    sender: {
-      id: followee.id,
-      privateKey: followee.privateKey,
-    },
     activity: {
       "@context": [
         "https://www.w3.org/ns/activitystreams",

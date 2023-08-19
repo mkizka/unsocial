@@ -1,6 +1,5 @@
 import type { AP } from "activitypub-core-types";
 import crypto from "crypto";
-import type { Session } from "next-auth";
 
 import { env } from "../env";
 import { textOf } from "./utils";
@@ -17,29 +16,30 @@ const getSignature = (textToSign: string, privateKey: string) => {
   return sig.sign(privateKey, "base64");
 };
 
-// TODO: 理解する
-// https://docs.joinmastodon.org/spec/security/
-export const signActivity = (params: {
-  sender: NonNullable<Session["user"]>;
+export type SignActivityParams = {
+  userId: string;
+  privateKey: string;
   activity: AP.Activity;
   inboxUrl: URL;
-}) => {
+};
+
+export const signActivity = (params: SignActivityParams) => {
   const order = ["(request-target)", "host", "date", "digest"];
-  const header = {
+  const headers = {
     host: params.inboxUrl.host,
     date: new Date().toUTCString(),
     digest: `SHA-256=${createDigest(params.activity)}`,
   };
-  const headerToSign = {
-    "(request-target)": `post ${params.inboxUrl.pathname}`,
-    ...header,
-  };
-  const textToSign = textOf(headerToSign, order);
-  const signature = getSignature(textToSign, params.sender.privateKey);
+  const textToSign = textOf({
+    pathname: params.inboxUrl.pathname,
+    headers,
+    order,
+  });
+  const signature = getSignature(textToSign, params.privateKey);
   return {
-    ...header,
+    ...headers,
     signature:
-      `keyId="https://${env.HOST}/users/${params.sender.id}/activity#main-key",` +
+      `keyId="https://${env.HOST}/users/${params.userId}/activity#main-key",` +
       `algorithm="rsa-sha256",` +
       `headers="${order.join(" ")}",` +
       `signature="${signature}"`,

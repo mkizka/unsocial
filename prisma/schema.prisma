@@ -2,14 +2,12 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl         = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Session {
@@ -29,9 +27,7 @@ model User {
   emailVerified     DateTime?
   icon              String?
   image             String?
-  // TODO: 誤って公開しないように別テーブルにする
   publicKey         String?
-  privateKey        String?
   actorUrl          String?
   inboxUrl          String?
   lastFetchedAt     DateTime?
@@ -40,15 +36,16 @@ model User {
   followee          Follow[]     @relation("followee")
   follower          Follow[]     @relation("follower")
   likes             Like[]
-  credentials       Credentials?
+  credential       Credential?
 
   @@unique([preferredUsername, host])
 }
 
-model Credentials {
+model Credential {
   id             String @id @default(nanoid(8))
   userId         String @unique
   hashedPassword String
+  privateKey     String
   user           User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -66,6 +63,7 @@ model Note {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   content   String
+  // TODO: publishedAtに変える
   published DateTime
   createdAt DateTime @default(now())
   likes     Like[]

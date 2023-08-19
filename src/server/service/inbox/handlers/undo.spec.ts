@@ -28,6 +28,7 @@ describe("inboxUndoService", () => {
     // assert
     expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
       where: { id: "dummyidlocal" },
+      include: { credential: true },
     });
     expect(mockedPrisma.follow.delete).toHaveBeenCalledWith({
       where: {

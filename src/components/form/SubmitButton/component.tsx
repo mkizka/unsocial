@@ -1,20 +1,21 @@
-import { type ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 
 import { Spinner } from "@/components/Spinner";
 
-type Props = {
+type Props = ComponentProps<"button"> & {
   loading: boolean;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
-export function SubmitButton({ loading, children }: Props) {
+export function SubmitButton({ loading, children, ...props }: Props) {
   return (
     <button
-      className="block h-10 w-full text-center rounded px-3 py-1.5 shadow
-    text-light bg-secondary hover:bg-secondary-dark"
+      className="block h-10 w-full rounded bg-secondary px-3 py-1.5 text-center
+    text-light shadow hover:bg-secondary-dark"
       type="submit"
       data-testid="submit-button"
       disabled={loading}
+      {...props}
     >
       {loading ? <Spinner /> : children}
     </button>
