@@ -23,11 +23,11 @@ export const postDicord = async (text: string) => {
     logger.info("$DISCORD_WEBHOOK_URLがないのでDiscordへの投稿をスキップ");
     return;
   }
-  const contents = sliceText(`\`\`\`\n${text}\n\`\`\``, 2000);
+  const contents = sliceText(text, 1990);
   for (const content of contents) {
     await fetchJson(env.DISCORD_WEBHOOK_URL, {
       method: "POST",
-      body: JSON.stringify({ content }),
+      body: JSON.stringify({ content: `\`\`\`\n${content}\n\`\`\`` }),
     })
       .then(() => logger.info(`Discordへの投稿に成功しました`))
       .catch((e) => logger.warn(`Discordへの投稿に失敗しました: ${e}`));
