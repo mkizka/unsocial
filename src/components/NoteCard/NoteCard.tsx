@@ -37,7 +37,7 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
           <div className="ml-auto flex items-center gap-1 pl-1">
             {note.isMine && <DeleteButton noteId={note.id} />}
             <LikeButton noteId={note.id} isLiked={note.isLiked} />
-            <PublishedAt href={note.url} publishedAt={note.published} />
+            <PublishedAt href={note.url} publishedAt={note.publishedAt} />
           </div>
         </div>
         <div dangerouslySetInnerHTML={{ __html: note.content }}></div>

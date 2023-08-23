@@ -11,7 +11,7 @@ const getKey = (_: number, previousPageData: TimelineResponse | null) => {
   if (previousPageData) {
     if (previousPageData.length === 0) return null;
     const lastNote = previousPageData.flat().at(-1);
-    return `/api/timeline?until=${lastNote?.published?.toISOString()}`;
+    return `/api/timeline?until=${lastNote?.publishedAt?.toISOString()}`;
   }
   return `/api/timeline`;
 };

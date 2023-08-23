@@ -30,7 +30,7 @@ describe("inboxCreateService", () => {
         url: activity.object.id,
         userId: dummyRemoteUser.id,
         content: activity.object.content,
-        published: activity.object.published,
+        publishedAt: activity.object.published,
       },
     });
     expect(error).toBeUndefined();

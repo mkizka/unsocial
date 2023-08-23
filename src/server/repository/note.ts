@@ -34,7 +34,7 @@ export type FindManyParams = {
 export const findManyNoteCards = cache((params: FindManyParams) => {
   return prisma.note.findMany({
     where: {
-      published: {
+      publishedAt: {
         gt: params.since,
         lt: params.until,
       },
@@ -42,7 +42,7 @@ export const findManyNoteCards = cache((params: FindManyParams) => {
     include: includeForNoteCard,
     take: params.count,
     orderBy: {
-      published: "desc",
+      publishedAt: "desc",
     },
   });
 });
@@ -68,7 +68,7 @@ export const create = cache(({ userId, content, published }: CreateParams) => {
     data: {
       userId,
       content,
-      published,
+      publishedAt: published,
     },
   });
 });
@@ -85,7 +85,7 @@ export const createFromActivity = cache(
         userId,
         url: activity.id,
         content: activity.content,
-        published: activity.published,
+        publishedAt: activity.published,
       },
     });
   },

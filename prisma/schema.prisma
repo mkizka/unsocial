@@ -58,15 +58,14 @@ model VerificationToken {
 }
 
 model Note {
-  id        String   @id @default(nanoid(8))
-  url       String? // TODO: objectUrlに変える
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  content   String
-  // TODO: publishedAtに変える
-  published DateTime
-  createdAt DateTime @default(now())
-  likes     Like[]
+  id          String   @id @default(nanoid(8))
+  url         String? // TODO: objectUrlに変える
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content     String
+  publishedAt DateTime
+  createdAt   DateTime @default(now())
+  likes       Like[]
 }
 
 enum FollowStatus {
