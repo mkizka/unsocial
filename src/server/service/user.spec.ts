@@ -275,7 +275,7 @@ describe("userService", () => {
         const user = await findOrFetchUserByParams(params);
         // assert
         expect(mockedLogger.warn).toBeCalledWith(
-          expect.stringContaining("HTTPエラー"),
+          expect.stringContaining("Not HTTP 2XX"),
         );
         expect(user).toEqual(null);
       });
