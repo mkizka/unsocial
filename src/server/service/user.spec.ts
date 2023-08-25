@@ -13,8 +13,6 @@ import {
 } from "./user";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
-jest.useFakeTimers();
-jest.setSystemTime(mockedNow);
 
 const dummyUser = {
   id: "dummyId",
@@ -103,6 +101,12 @@ const restDummyId404 = () => {
   );
 };
 
+const restDummyIdTimeout = () => {
+  return rest.get("https://remote.example.com/u/dummyId", (_, res, ctx) =>
+    res.once(ctx.delay("infinite")),
+  );
+};
+
 const restDummyIdInvalid = (person?: object) => {
   return rest.get("https://remote.example.com/u/dummyId", (_, res, ctx) =>
     res.once(ctx.json({ invalid: "dummy" })),
@@ -112,6 +116,11 @@ const restDummyIdInvalid = (person?: object) => {
 const params = { userId: "@dummy@remote.example.com" };
 
 describe("userService", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(mockedNow);
+  });
+
   describe("findOrFetchUserByActorId", () => {
     describe("正常系", () => {
       test("最近fetchしたユーザーがDBにあればそれを返す", async () => {
@@ -159,11 +168,8 @@ describe("userService", () => {
       });
       test("fetchしてから時間が経っていてActorIdを叩いたがタイムアウトした場合、既存ユーザーを返す", async () => {
         // arrange
-        server.use(
-          rest.get(dummyUser.actorUrl!, (_, res, ctx) =>
-            res.once(ctx.delay(3000)),
-          ),
-        );
+        jest.useRealTimers(); // タイムアウトのテストのために一時的にリアルタイムに戻す
+        server.use(restDummyIdTimeout());
         mockedPrisma.user.findFirst.mockResolvedValue(dummyOldUser);
         // act
         const user = await findOrFetchUserByActorId(
@@ -275,6 +281,7 @@ describe("userService", () => {
       });
       test("fetchしてから時間が経っていてWebFingerを叩いてタイムアウトした場合、既存ユーザーを返す", async () => {
         // arrange
+        jest.useRealTimers(); // タイムアウトのテストのために一時的にリアルタイムに戻す
         server.use(restWebfingerTimeout(), restDummyId());
         mockedPrisma.user.findFirst.mockResolvedValue(dummyOldUser);
         // act
