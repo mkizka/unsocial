@@ -3,7 +3,12 @@ import { rest } from "msw";
 import { mockedLogger } from "@/mocks/logger";
 import { server } from "@/mocks/server";
 
-import { fetchJson } from "./fetchJson";
+import {
+  fetchJson,
+  JSONParseError,
+  NotOKError,
+  TimeoutError,
+} from "./fetchJson";
 
 const dummyUrl = "https://remote.example.com/api";
 
@@ -48,7 +53,7 @@ describe("fetchJson", () => {
       2,
       `fetch(${dummyUrl}): OK`,
     );
-    expect(response).toBeNull();
+    expect(response).toBeInstanceOf(JSONParseError);
   });
   test("POST", async () => {
     // arrange
@@ -96,9 +101,9 @@ describe("fetchJson", () => {
     const response = await fetchJson(dummyUrl);
     // assert
     expect(mockedLogger.warn).toBeCalledWith(
-      `fetchエラー(${dummyUrl}): Not HTTP 2XX`,
+      `fetchエラー(${dummyUrl}): NotOKError`,
     );
-    expect(response).toBeNull();
+    expect(response).toBeInstanceOf(NotOKError);
   });
   test("タイムアウト", async () => {
     // arrange
@@ -111,8 +116,8 @@ describe("fetchJson", () => {
     const response = await fetchJson(dummyUrl, { timeout: 1 });
     // assert
     expect(mockedLogger.warn).toBeCalledWith(
-      `fetchエラー(${dummyUrl}): Timeout`,
+      `fetchエラー(${dummyUrl}): TimeoutError`,
     );
-    expect(response).toBeNull();
+    expect(response).toBeInstanceOf(TimeoutError);
   });
 });

@@ -2,6 +2,24 @@ import { createLogger } from "./logger";
 
 const logger = createLogger("fetchJson");
 
+export class FetchError extends Error {}
+
+export class TimeoutError extends FetchError {
+  name = "TimeoutError";
+}
+
+export class NotOKError extends FetchError {
+  name = "NotOKError";
+}
+
+export class JSONParseError extends FetchError {
+  name = "JSONParseError";
+}
+
+export class UnexpectedError extends FetchError {
+  name = "UnexpectedError";
+}
+
 export const fetchJson = (
   input: Parameters<typeof fetch>[0],
   init?: Parameters<typeof fetch>[1] & { timeout?: number },
@@ -16,23 +34,32 @@ export const fetchJson = (
   }
   let timeoutId: ReturnType<typeof setTimeout>;
   return Promise.race([
-    // なぜかmswがエラーになるのでURLインスタンスが来ても文字列になるようにしておく
-    fetch(input.toString(), options).then(async (response) => {
+    fetch(
+      // なぜかmswがエラーになるのでURLインスタンスが来ても文字列になるようにしておく
+      input.toString(),
+      options,
+    ).then(async (response) => {
       logger.info(`fetch(${input}): ${await response.clone().text()}`);
       if (!response.ok) {
-        throw new Error("Not HTTP 2XX");
+        return new NotOKError();
       }
-      return response.json().catch(() => null);
+      try {
+        return await response.json();
+      } catch {
+        return new JSONParseError();
+      }
     }),
-    new Promise((_, reject) => {
+    new Promise((resolve) => {
       timeoutId = setTimeout(() => {
-        reject(new Error("Timeout"));
+        resolve(new TimeoutError());
       }, timeout ?? 5000);
     }),
   ])
-    .catch((error) => {
-      logger.warn(`fetchエラー(${input}): ${error.message}`);
-      return null;
+    .then((jsonOrError) => {
+      if (jsonOrError instanceof FetchError) {
+        logger.warn(`fetchエラー(${input}): ${jsonOrError.name}`);
+      }
+      return jsonOrError;
     })
     .finally(() => {
       clearTimeout(timeoutId);

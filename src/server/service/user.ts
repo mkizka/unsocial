@@ -2,6 +2,7 @@ import type { User } from "@prisma/client";
 import { cache } from "react";
 
 import { env } from "@/utils/env";
+import { FetchError } from "@/utils/fetchJson";
 import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
 import { safeUrl } from "@/utils/safeUrl";
@@ -25,6 +26,9 @@ const shouldReFetch = (user: User) => {
 
 const fetchValidPerson = async (actorId: URL) => {
   const response = await apRepository.fetchActor(actorId);
+  if (response instanceof FetchError) {
+    return null;
+  }
   const parsed = inboxPersonSchema.safeParse(response);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));
@@ -77,7 +81,7 @@ const fetchActorIdByWebFinger = async (params: {
   host: string;
 }) => {
   const response = await apRepository.fetchWebFinger(params);
-  if (!response) {
+  if (response instanceof FetchError) {
     return null;
   }
   return resolveWebFingerResponse(response);
