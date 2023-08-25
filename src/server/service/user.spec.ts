@@ -85,7 +85,7 @@ const restWebfinger404 = () => {
 const restWebfingerTimeout = () => {
   return rest.get(
     "https://remote.example.com/.well-known/webfinger",
-    (_, res, ctx) => res.once(ctx.delay("infinite")),
+    (_, res, ctx) => res.once(ctx.delay(3000)),
   );
 };
 
@@ -103,7 +103,7 @@ const restDummyId404 = () => {
 
 const restDummyIdTimeout = () => {
   return rest.get("https://remote.example.com/u/dummyId", (_, res, ctx) =>
-    res.once(ctx.delay("infinite")),
+    res.once(ctx.delay(3000)),
   );
 };
 
