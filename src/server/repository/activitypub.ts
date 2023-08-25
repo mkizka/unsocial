@@ -15,7 +15,7 @@ export const fetchActor = (actorId: URL) => {
   });
 };
 
-export const fetchWebFinger = async (params: {
+export const fetchWebFinger = (params: {
   preferredUsername: string;
   host: string;
 }) => {

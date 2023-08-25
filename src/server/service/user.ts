@@ -37,7 +37,7 @@ const fetchValidPerson = async (actorId: URL) => {
   return parsed.data;
 };
 
-const fetchUserByActorId = async ({
+const createOrUpdateUserByActorId = async ({
   actorId,
   userIdForUpdate,
 }: {
@@ -55,11 +55,15 @@ export const findOrFetchUserByActorId = cache(async (actorId: URL) => {
   const existingUser = await userRepository.findByActorId(actorId);
   if (existingUser) {
     if (shouldReFetch(existingUser)) {
-      return fetchUserByActorId({ actorId, userIdForUpdate: existingUser.id });
+      const user = await createOrUpdateUserByActorId({
+        actorId,
+        userIdForUpdate: existingUser.id,
+      });
+      if (user) return user;
     }
     return existingUser;
   }
-  return fetchUserByActorId({ actorId });
+  return createOrUpdateUserByActorId({ actorId });
 });
 
 const resolveWebFingerResponse = (data: unknown) => {
@@ -96,7 +100,7 @@ const fetchUserByWebfinger = async (params: {
   if (!actorId) {
     return null;
   }
-  return fetchUserByActorId({
+  return createOrUpdateUserByActorId({
     actorId,
     userIdForUpdate: params.userIdForUpdate,
   });
@@ -108,11 +112,12 @@ const findOrFetchUserByWebfinger = async (
   const existingUser = await userRepository.findFirst(where);
   if (existingUser) {
     if (shouldReFetch(existingUser)) {
-      return fetchUserByWebfinger({
+      const user = await fetchUserByWebfinger({
         preferredUsername: existingUser.preferredUsername,
         host: existingUser.host,
         userIdForUpdate: existingUser.id,
       });
+      if (user) return user;
     }
     return existingUser;
   }

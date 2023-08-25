@@ -1,3 +1,4 @@
+import { env } from "./env";
 import { createLogger } from "./logger";
 
 const logger = createLogger("fetchJson");
@@ -19,6 +20,8 @@ export class JSONParseError extends FetchError {
 export class UnexpectedError extends FetchError {
   name = "UnexpectedError";
 }
+
+const defaultTimeout = env.NODE_ENV === "test" ? 100 : 5000;
 
 export const fetchJson = (
   input: Parameters<typeof fetch>[0],
@@ -52,7 +55,7 @@ export const fetchJson = (
     new Promise((resolve) => {
       timeoutId = setTimeout(() => {
         resolve(new TimeoutError());
-      }, timeout ?? 5000);
+      }, timeout ?? defaultTimeout);
     }),
   ])
     .then((jsonOrError) => {
