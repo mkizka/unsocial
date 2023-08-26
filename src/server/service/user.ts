@@ -2,6 +2,7 @@ import type { User } from "@prisma/client";
 import { cache } from "react";
 
 import { env } from "@/utils/env";
+import { FetchError } from "@/utils/fetchJson";
 import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
 import { safeUrl } from "@/utils/safeUrl";
@@ -25,6 +26,9 @@ const shouldReFetch = (user: User) => {
 
 const fetchValidPerson = async (actorId: URL) => {
   const response = await apRepository.fetchActor(actorId);
+  if (response instanceof FetchError) {
+    return null;
+  }
   const parsed = inboxPersonSchema.safeParse(response);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));
@@ -33,7 +37,7 @@ const fetchValidPerson = async (actorId: URL) => {
   return parsed.data;
 };
 
-const fetchUserByActorId = async ({
+const createOrUpdateUserByActorId = async ({
   actorId,
   userIdForUpdate,
 }: {
@@ -51,11 +55,15 @@ export const findOrFetchUserByActorId = cache(async (actorId: URL) => {
   const existingUser = await userRepository.findByActorId(actorId);
   if (existingUser) {
     if (shouldReFetch(existingUser)) {
-      return fetchUserByActorId({ actorId, userIdForUpdate: existingUser.id });
+      const user = await createOrUpdateUserByActorId({
+        actorId,
+        userIdForUpdate: existingUser.id,
+      });
+      if (user) return user;
     }
     return existingUser;
   }
-  return fetchUserByActorId({ actorId });
+  return createOrUpdateUserByActorId({ actorId });
 });
 
 const resolveWebFingerResponse = (data: unknown) => {
@@ -77,7 +85,7 @@ const fetchActorIdByWebFinger = async (params: {
   host: string;
 }) => {
   const response = await apRepository.fetchWebFinger(params);
-  if (!response) {
+  if (response instanceof FetchError) {
     return null;
   }
   return resolveWebFingerResponse(response);
@@ -92,7 +100,7 @@ const fetchUserByWebfinger = async (params: {
   if (!actorId) {
     return null;
   }
-  return fetchUserByActorId({
+  return createOrUpdateUserByActorId({
     actorId,
     userIdForUpdate: params.userIdForUpdate,
   });
@@ -104,11 +112,12 @@ const findOrFetchUserByWebfinger = async (
   const existingUser = await userRepository.findFirst(where);
   if (existingUser) {
     if (shouldReFetch(existingUser)) {
-      return fetchUserByWebfinger({
+      const user = await fetchUserByWebfinger({
         preferredUsername: existingUser.preferredUsername,
         host: existingUser.host,
         userIdForUpdate: existingUser.id,
       });
+      if (user) return user;
     }
     return existingUser;
   }
