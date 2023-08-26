@@ -21,28 +21,36 @@ export class UnexpectedError extends FetchError {
   name = "UnexpectedError";
 }
 
-const defaultTimeout = env.NODE_ENV === "test" ? 100 : 5000;
+const defaultOptions = {
+  method: "GET",
+  timeout: env.NODE_ENV === "test" ? 100 : 5000,
+};
 
 export const fetchJson = (
   input: Parameters<typeof fetch>[0],
-  init?: Parameters<typeof fetch>[1] & { timeout?: number },
+  options?: Parameters<typeof fetch>[1] & { timeout?: number },
 ) => {
-  logger.info(`fetch(${input}): 開始`);
-  const { timeout, ...options } = init ?? {};
-  if (options.method == "POST") {
-    options.headers = {
-      ...options.headers,
+  const { timeout, ...init } = {
+    ...defaultOptions,
+    ...options,
+  };
+  if (init.method == "POST") {
+    init.headers = {
+      ...init.headers,
       "Content-Type": "application/json",
     };
   }
   let timeoutId: ReturnType<typeof setTimeout>;
+  logger.info(`fetch(${init.method} ${input}): 開始`);
   return Promise.race([
     fetch(
       // なぜかmswがエラーになるのでURLインスタンスが来ても文字列になるようにしておく
       input.toString(),
-      options,
+      init,
     ).then(async (response) => {
-      logger.info(`fetch(${input}): ${await response.clone().text()}`);
+      logger.info(
+        `fetch(${init.method} ${input}): ${await response.clone().text()}`,
+      );
       if (!response.ok) {
         return new NotOKError();
       }
@@ -55,12 +63,14 @@ export const fetchJson = (
     new Promise((resolve) => {
       timeoutId = setTimeout(() => {
         resolve(new TimeoutError());
-      }, timeout ?? defaultTimeout);
+      }, timeout);
     }),
   ])
     .then((jsonOrError) => {
       if (jsonOrError instanceof FetchError) {
-        logger.warn(`fetchエラー(${input}): ${jsonOrError.name}`);
+        logger.warn(
+          `fetchエラー(${init.method} ${input}): ${jsonOrError.name}`,
+        );
       }
       return jsonOrError;
     })

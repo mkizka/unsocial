@@ -27,11 +27,11 @@ describe("fetchJson", () => {
     // assert
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       1,
-      `fetch(${dummyUrl}): 開始`,
+      `fetch(GET ${dummyUrl}): 開始`,
     );
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       2,
-      `fetch(${dummyUrl}): {"success":true}`,
+      `fetch(GET ${dummyUrl}): {"success":true}`,
     );
     expect(response).toEqual({ success: true });
   });
@@ -47,11 +47,11 @@ describe("fetchJson", () => {
     // assert
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       1,
-      `fetch(${dummyUrl}): 開始`,
+      `fetch(GET ${dummyUrl}): 開始`,
     );
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       2,
-      `fetch(${dummyUrl}): OK`,
+      `fetch(GET ${dummyUrl}): OK`,
     );
     expect(response).toBeInstanceOf(JSONParseError);
   });
@@ -77,11 +77,11 @@ describe("fetchJson", () => {
     // assert
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       1,
-      `fetch(${dummyUrl}): 開始`,
+      `fetch(POST ${dummyUrl}): 開始`,
     );
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       2,
-      `fetch(${dummyUrl}): {"success":true}`,
+      `fetch(POST ${dummyUrl}): {"success":true}`,
     );
     expect(headerFn.mock.calls[0][0]).toEqual({
       bar: "baz",
@@ -101,7 +101,7 @@ describe("fetchJson", () => {
     const response = await fetchJson(dummyUrl);
     // assert
     expect(mockedLogger.warn).toBeCalledWith(
-      `fetchエラー(${dummyUrl}): NotOKError`,
+      `fetchエラー(GET ${dummyUrl}): NotOKError`,
     );
     expect(response).toBeInstanceOf(NotOKError);
   });
@@ -116,7 +116,7 @@ describe("fetchJson", () => {
     const response = await fetchJson(dummyUrl, { timeout: 1 });
     // assert
     expect(mockedLogger.warn).toBeCalledWith(
-      `fetchエラー(${dummyUrl}): TimeoutError`,
+      `fetchエラー(GET ${dummyUrl}): TimeoutError`,
     );
     expect(response).toBeInstanceOf(TimeoutError);
   });
