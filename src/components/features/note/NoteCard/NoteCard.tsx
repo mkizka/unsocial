@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Ref } from "react";
 import { forwardRef } from "react";
 
+import { UserIcon } from "@/components/features/user/UserIcon";
 import type { noteService } from "@/server/service";
 
-import { UserIcon } from "../UserIcon";
 import { DeleteButton } from "./parts/DeleteButton";
 import { LikeButton } from "./parts/LikeButton";
 import { PublishedAt } from "./parts/PublishedAt";
