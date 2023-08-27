@@ -9,7 +9,7 @@ export function UserList({ users }: Props) {
     <div>
       {users.map((user) => (
         <p key={user.id}>
-          @${user.preferredUsername}@${user.host}
+          @{user.preferredUsername}@{user.host}
         </p>
       ))}
     </div>
