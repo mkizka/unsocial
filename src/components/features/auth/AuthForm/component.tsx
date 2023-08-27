@@ -4,9 +4,9 @@ import { signIn } from "next-auth/react";
 import type { ReactEventHandler } from "react";
 import { useRef, useState } from "react";
 
-import { PasswordInputField } from "../form/PasswordInputField";
-import { SubmitButton } from "../form/SubmitButton";
-import { TextInputField } from "../form/TextInputField";
+import { SubmitButton } from "../../../clients/SubmitButton";
+import { PasswordInputField } from "./PasswordInputField";
+import { TextInputField } from "./TextInputField";
 
 type Props = {
   action: "signUp" | "signIn";
