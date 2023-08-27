@@ -1,15 +1,16 @@
-import type { Props as UserCardProps } from "../UserCard";
-import { UserCard } from "../UserCard";
+import type { NoteCard } from "@/server/service/note";
 
 type Props = {
-  users: UserCardProps["user"][];
+  users: NoteCard["likes"][0]["user"][];
 };
 
 export function UserList({ users }: Props) {
   return (
     <div>
       {users.map((user) => (
-        <UserCard key={user.id} user={user} />
+        <p key={user.id}>
+          @{user.preferredUsername}@{user.host}
+        </p>
       ))}
     </div>
   );
