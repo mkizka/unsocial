@@ -24,16 +24,6 @@ export async function UserPage({ userId, currentTab }: Props) {
             href: `${rootPath}/likes`,
             render: () => <p>未実装</p>,
           },
-          following: {
-            name: "フォロー",
-            href: `${rootPath}/following`,
-            render: () => <p>未実装</p>,
-          },
-          followers: {
-            name: "フォロワー",
-            href: `${rootPath}/followers`,
-            render: () => <p>未実装</p>,
-          },
         }}
       />
     </>
