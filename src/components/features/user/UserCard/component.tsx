@@ -5,7 +5,7 @@ import { followService, userService } from "@/server/service";
 import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
 
-import { UserIcon } from "../../../UserIcon";
+import { UserIcon } from "../UserIcon";
 import { FollowButton } from "./FollowButton";
 import { RefetchButton } from "./RefetchButton";
 
