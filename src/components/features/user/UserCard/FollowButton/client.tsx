@@ -2,7 +2,7 @@
 import type { FollowStatus } from "@prisma/client";
 import { useTransition } from "react";
 
-import { Spinner } from "@/components/clients/Spinner";
+import { Spinner } from "@/components/Spinner";
 
 import { action } from "./action.server";
 

@@ -3,8 +3,9 @@ import superjson from "superjson";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 
 import type { TimelineResponse } from "@/app/api/timeline/route";
-import { SubmitButton } from "@/components/clients/SubmitButton";
-import { NoteCard } from "@/components/features/note/NoteCard";
+
+import { SubmitButton } from "../form/SubmitButton";
+import { NoteCard } from "../NoteCard";
 
 const getKey = (_: number, previousPageData: TimelineResponse | null) => {
   if (previousPageData) {

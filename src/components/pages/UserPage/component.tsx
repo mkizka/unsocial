@@ -1,5 +1,5 @@
 import { UserCard } from "@/components/features/user/UserCard";
-import { UserTab } from "@/components/features/user/UserTab";
+import { UserTab } from "@/components/UserTab";
 
 type Props = {
   userId: string;

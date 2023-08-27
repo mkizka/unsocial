@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Timeline } from "@/components/features/note/Timeline";
+import { Timeline } from "../Timeline";
 
 export async function GuestHome() {
   return (

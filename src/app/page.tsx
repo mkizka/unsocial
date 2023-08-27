@@ -1,4 +1,4 @@
-import { Home } from "@/components/pages/Home";
+import { Home } from "@/components/Home";
 
 export default async function HomePage() {
   return <Home />;

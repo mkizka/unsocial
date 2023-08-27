@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { AuthForm } from "@/components/features/auth/AuthForm";
+import { AuthForm } from "@/components/AuthForm";
 import { getServerSession } from "@/utils/getServerSession";
 import { prisma } from "@/utils/prisma";
 

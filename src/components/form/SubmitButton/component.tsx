@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react";
 
-import { Spinner } from "@/components/clients/Spinner";
+import { Spinner } from "@/components/Spinner";
 
 type Props = ComponentProps<"button"> & {
   loading: boolean;

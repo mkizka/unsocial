@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { NoteCard } from "@/components/features/note/NoteCard";
-import { UserList } from "@/components/server/UserList";
+import { NoteCard } from "@/components/NoteCard";
+import { UserList } from "@/components/UserList";
 import { noteService } from "@/server/service";
 
 export default async function NotePage({
