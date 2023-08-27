@@ -35,7 +35,7 @@ describe("NoteForm/action", () => {
       {
         "data": {
           "content": "テスト",
-          "published": 2023-01-01T00:00:00.000Z,
+          "publishedAt": 2023-01-01T00:00:00.000Z,
           "userId": "__session__user__id",
         },
       }

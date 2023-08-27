@@ -15,7 +15,7 @@ export const fetchActor = (actorId: URL) => {
   });
 };
 
-export const fetchWebFinger = async (params: {
+export const fetchWebFinger = (params: {
   preferredUsername: string;
   host: string;
 }) => {
@@ -29,10 +29,9 @@ export const fetchWebFinger = async (params: {
     "resource",
     `acct:${params.preferredUsername}@${params.host}`,
   );
-  const response = await fetchJson(webFingerUrl, {
+  return fetchJson(webFingerUrl, {
     next: {
       revalidate: 0,
     },
   });
-  return response;
 };

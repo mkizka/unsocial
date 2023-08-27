@@ -13,8 +13,6 @@ import {
 } from "./user";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
-jest.useFakeTimers();
-jest.setSystemTime(mockedNow);
 
 const dummyUser = {
   id: "dummyId",
@@ -45,6 +43,11 @@ const dummyPerson: AP.Person = {
     owner: "https://remote.example.com/u/dummyId",
     publicKeyPem: "publicKey",
   },
+};
+
+const dummyOldUser = {
+  ...dummyUser,
+  lastFetchedAt: new Date("2023-01-01T00:00:00Z"),
 };
 
 const restWebfinger = (response?: object) => {
@@ -79,9 +82,28 @@ const restWebfinger404 = () => {
   );
 };
 
+const restWebfingerTimeout = () => {
+  return rest.get(
+    "https://remote.example.com/.well-known/webfinger",
+    (_, res, ctx) => res.once(ctx.delay(3000)),
+  );
+};
+
 const restDummyId = (person?: object) => {
   return rest.get("https://remote.example.com/u/dummyId", (_, res, ctx) =>
     res.once(ctx.json({ ...dummyPerson, ...person })),
+  );
+};
+
+const restDummyId404 = () => {
+  return rest.get("https://remote.example.com/u/dummyId", (_, res, ctx) =>
+    res.once(ctx.status(404)),
+  );
+};
+
+const restDummyIdTimeout = () => {
+  return rest.get("https://remote.example.com/u/dummyId", (_, res, ctx) =>
+    res.once(ctx.delay(3000)),
   );
 };
 
@@ -94,6 +116,11 @@ const restDummyIdInvalid = (person?: object) => {
 const params = { userId: "@dummy@remote.example.com" };
 
 describe("userService", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(mockedNow);
+  });
+
   describe("findOrFetchUserByActorId", () => {
     describe("正常系", () => {
       test("最近fetchしたユーザーがDBにあればそれを返す", async () => {
@@ -109,13 +136,10 @@ describe("userService", () => {
         });
         expect(user).toEqual(dummyUser);
       });
-      test("fetchしてから時間が経っていればWebFingerを叩いて既存ユーザーを更新する", async () => {
+      test("fetchしてから時間が経っていればActorIdを叩いて既存ユーザーを更新する", async () => {
         // arrange
         server.use(restDummyId());
-        mockedPrisma.user.findFirst.mockResolvedValue({
-          ...dummyUser,
-          lastFetchedAt: new Date("2023-01-01T00:00:00Z"),
-        });
+        mockedPrisma.user.findFirst.mockResolvedValue(dummyOldUser);
         mockedPrisma.user.update.mockResolvedValue(dummyUser);
         // act
         const user = await findOrFetchUserByActorId(
@@ -128,7 +152,36 @@ describe("userService", () => {
         });
         expect(user).toEqual(dummyUser);
       });
-      test("DBになければWebFingerを叩いて新規ユーザーとして保存する", async () => {
+      test("fetchしてから時間が経ってActorIdを叩いたが失敗した場合、既存ユーザーを返す", async () => {
+        // arrange
+        server.use(restDummyId404());
+        mockedPrisma.user.findFirst.mockResolvedValue(dummyOldUser);
+        // act
+        const user = await findOrFetchUserByActorId(
+          new URL(dummyUser.actorUrl!),
+        );
+        // assert
+        expect(mockedLogger.warn).toHaveBeenCalledWith(
+          expect.stringContaining("NotOKError"),
+        );
+        expect(user).toEqual(dummyOldUser);
+      });
+      test("fetchしてから時間が経っていてActorIdを叩いたがタイムアウトした場合、既存ユーザーを返す", async () => {
+        // arrange
+        jest.useRealTimers(); // タイムアウトのテストのために一時的にリアルタイムに戻す
+        server.use(restDummyIdTimeout());
+        mockedPrisma.user.findFirst.mockResolvedValue(dummyOldUser);
+        // act
+        const user = await findOrFetchUserByActorId(
+          new URL(dummyUser.actorUrl!),
+        );
+        // assert
+        expect(mockedLogger.warn).toHaveBeenCalledWith(
+          expect.stringContaining("TimeoutError"),
+        );
+        expect(user).toEqual(dummyOldUser);
+      });
+      test("DBになければActorIdを叩いて新規ユーザーとして保存する", async () => {
         // arrange
         server.use(restDummyId());
         mockedPrisma.user.findFirst.mockResolvedValue(null);
@@ -214,6 +267,31 @@ describe("userService", () => {
         });
         expect(user).toEqual(dummyUser);
       });
+      test("fetchしてから時間が経っていてWebFingerを叩いたが失敗した場合、既存ユーザーを返す", async () => {
+        // arrange
+        server.use(restWebfinger404(), restDummyId());
+        mockedPrisma.user.findFirst.mockResolvedValue(dummyOldUser);
+        // act
+        const user = await findOrFetchUserByParams({ userId: dummyUser.id });
+        // assert
+        expect(mockedLogger.warn).toHaveBeenCalledWith(
+          expect.stringContaining("NotOKError"),
+        );
+        expect(user).toEqual(dummyOldUser);
+      });
+      test("fetchしてから時間が経っていてWebFingerを叩いてタイムアウトした場合、既存ユーザーを返す", async () => {
+        // arrange
+        jest.useRealTimers(); // タイムアウトのテストのために一時的にリアルタイムに戻す
+        server.use(restWebfingerTimeout(), restDummyId());
+        mockedPrisma.user.findFirst.mockResolvedValue(dummyOldUser);
+        // act
+        const user = await findOrFetchUserByParams({ userId: dummyUser.id });
+        // assert
+        expect(mockedLogger.warn).toHaveBeenCalledWith(
+          expect.stringContaining("TimeoutError"),
+        );
+        expect(user).toEqual(dummyOldUser);
+      });
       test("DBになければWebFingerを叩いて新規ユーザーとして保存する", async () => {
         // arrange
         server.use(restWebfinger(), restDummyId());
@@ -275,7 +353,7 @@ describe("userService", () => {
         const user = await findOrFetchUserByParams(params);
         // assert
         expect(mockedLogger.warn).toBeCalledWith(
-          expect.stringContaining("HTTPエラー"),
+          expect.stringContaining("NotOKError"),
         );
         expect(user).toEqual(null);
       });

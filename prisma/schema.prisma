@@ -19,24 +19,24 @@ model Session {
 }
 
 model User {
-  id                String       @id @default(nanoid(8))
+  id                String      @id @default(nanoid(8))
   preferredUsername String
   host              String
   name              String?
-  email             String?      @unique
+  email             String?     @unique
   emailVerified     DateTime?
   icon              String?
   image             String?
   publicKey         String?
-  actorUrl          String?
+  actorUrl          String?     @unique
   inboxUrl          String?
   lastFetchedAt     DateTime?
   sessions          Session[]
   notes             Note[]
-  followee          Follow[]     @relation("followee")
-  follower          Follow[]     @relation("follower")
+  followee          Follow[]    @relation("followee")
+  follower          Follow[]    @relation("follower")
   likes             Like[]
-  credential       Credential?
+  credential        Credential?
 
   @@unique([preferredUsername, host])
 }
@@ -58,15 +58,14 @@ model VerificationToken {
 }
 
 model Note {
-  id        String   @id @default(nanoid(8))
-  url       String? // TODO: objectUrlに変える
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  content   String
-  // TODO: publishedAtに変える
-  published DateTime
-  createdAt DateTime @default(now())
-  likes     Like[]
+  id          String   @id @default(nanoid(8))
+  url         String?  @unique
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content     String
+  publishedAt DateTime
+  createdAt   DateTime @default(now())
+  likes       Like[]
 }
 
 enum FollowStatus {

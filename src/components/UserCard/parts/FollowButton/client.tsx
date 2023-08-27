@@ -2,9 +2,11 @@
 import type { FollowStatus } from "@prisma/client";
 import { useTransition } from "react";
 
+import { Spinner } from "@/components/Spinner";
+
 import { action } from "./action.server";
 
-type Props = {
+type FollowButtonProps = {
   followeeId: string;
   followStatus?: FollowStatus;
 };
@@ -17,16 +19,31 @@ const FOLLOW_TEXT = {
   [key in FollowStatus]: string;
 };
 
-export function FollowButton({ followeeId, followStatus }: Props) {
+export function FollowButton({ followeeId, followStatus }: FollowButtonProps) {
   const [isPending, startTransition] = useTransition();
 
   return (
     <button
-      className="block w-24 whitespace-nowrap rounded bg-secondary px-4 py-2 text-sm text-light shadow"
-      data-testid={isPending ? "follow-button-loading" : "follow-button"}
+      className="block h-9 w-24 whitespace-nowrap rounded bg-secondary  px-4 py-2 text-sm text-light shadow"
+      data-testid="follow-button"
       onClick={() => startTransition(() => action(followeeId))}
     >
-      {followStatus ? FOLLOW_TEXT[followStatus] : "フォロー"}
+      <InnerText isLoading={isPending} followStatus={followStatus} />
     </button>
   );
+}
+
+type InnerTextProps = {
+  isLoading: boolean;
+  followStatus?: FollowStatus;
+};
+
+function InnerText({ isLoading, followStatus }: InnerTextProps) {
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (followStatus) {
+    return FOLLOW_TEXT[followStatus];
+  }
+  return "フォロー";
 }

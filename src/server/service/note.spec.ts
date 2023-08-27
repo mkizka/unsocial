@@ -141,12 +141,14 @@ describe("noteService", () => {
         include,
         take: 10,
         where: {
-          published: {
+          publishedAt: {
             gt: dummySince,
             lt: dummyUntil,
           },
         },
-        orderBy: { published: "desc" },
+        orderBy: {
+          publishedAt: "desc",
+        },
       });
     });
     test("ノートが無かった場合はgetUserを呼ばない", async () => {
