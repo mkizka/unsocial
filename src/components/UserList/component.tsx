@@ -1,5 +1,5 @@
-import type { Props as UserCardProps } from "../UserCard";
-import { UserCard } from "../UserCard";
+import type { Props as UserCardProps } from "../features/user/UserCard";
+import { UserCard } from "../features/user/UserCard";
 
 type Props = {
   users: UserCardProps["user"][];

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
+import { UserCard } from "@/components/features/user/UserCard";
 import { Timeline } from "@/components/Timeline";
-import { UserCard } from "@/components/UserCard";
 import { UserTab } from "@/components/UserTab";
 import { noteService, userService } from "@/server/service";
 
