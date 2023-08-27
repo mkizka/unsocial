@@ -1,11 +1,27 @@
 import { prisma } from "@/utils/prisma";
 
-type CreateParams = {
+export const countFollowers = (userId: string) => {
+  return prisma.follow.count({
+    where: {
+      followeeId: userId,
+    },
+  });
+};
+
+export const countFollowees = (userId: string) => {
+  return prisma.follow.count({
+    where: {
+      followerId: userId,
+    },
+  });
+};
+
+type UniqueParams = {
   followeeId: string;
   followerId: string;
 };
 
-export const createAndAccept = (params: CreateParams) => {
+export const createAndAccept = (params: UniqueParams) => {
   return prisma.follow.create({
     data: {
       ...params,
@@ -14,12 +30,7 @@ export const createAndAccept = (params: CreateParams) => {
   });
 };
 
-type AcceptParams = {
-  followeeId: string;
-  followerId: string;
-};
-
-export const accept = (params: AcceptParams) => {
+export const accept = (params: UniqueParams) => {
   return prisma.follow.update({
     where: {
       followeeId_followerId: params,
@@ -30,12 +41,7 @@ export const accept = (params: AcceptParams) => {
   });
 };
 
-type RemoveParams = {
-  followeeId: string;
-  followerId: string;
-};
-
-export const remove = (options: RemoveParams) => {
+export const remove = (options: UniqueParams) => {
   return prisma.follow.delete({
     where: {
       followeeId_followerId: options,
