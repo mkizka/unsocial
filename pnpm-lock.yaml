@@ -36,8 +36,8 @@ dependencies:
     specifier: 1.13.1
     version: 1.13.1
   swr:
-    specifier: 2.2.1
-    version: 2.2.1(react@18.3.0-canary-8ec962d82-20230623)
+    specifier: 2.2.2
+    version: 2.2.2(react@18.3.0-canary-8ec962d82-20230623)
   winston:
     specifier: 3.10.0
     version: 3.10.0
@@ -7180,8 +7180,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /swr@2.2.1(react@18.3.0-canary-8ec962d82-20230623):
-    resolution: {integrity: sha512-KJVA7dGtOBeZ+2sycEuzUfVIP5lZ/cd0xjevv85n2YG0x1uHJQicjAtahVZL6xG3+TjqhbBqimwYzVo3saeVXQ==}
+  /swr@2.2.2(react@18.3.0-canary-8ec962d82-20230623):
+    resolution: {integrity: sha512-CbR41AoMD4TQBQw9ic3GTXspgfM9Y8Mdhb5Ob4uIKXhWqnRLItwA5fpGvB7SmSw3+zEjb0PdhiEumtUvYoQ+bQ==}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
     dependencies:
