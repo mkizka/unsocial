@@ -8,7 +8,7 @@ import { prisma } from "./prisma";
 
 const logger = createLogger("relayActivity");
 
-const isNotNull = <T>(value: T): value is NonNullable<T> => value != null;
+const isNotNull = <T>(value: T): value is NonNullable<T> => value !== null;
 
 const getUniqueInboxUrls = async (userId: string) => {
   const followerInboxes = await prisma.follow
