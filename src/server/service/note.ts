@@ -16,7 +16,7 @@ const format = (note: noteRepository.NoteCard, userId?: string) => {
       displayUsername: `@${note.user.preferredUsername}@${note.user.host}`,
       url:
         `/@${note.user.preferredUsername}` +
-        (note.user.host != env.HOST ? `@${note.user.host}` : ""),
+        (note.user.host !== env.HOST ? `@${note.user.host}` : ""),
     },
   };
 };
@@ -35,7 +35,7 @@ export const findUniqueNoteCard = cache(async (id: string) => {
 export const findManyNoteCards = cache(
   async (params: noteRepository.FindManyParams) => {
     const notes = await noteRepository.findManyNoteCards(params);
-    if (notes.length == 0) {
+    if (notes.length === 0) {
       return [];
     }
     const user = await getUser();
@@ -45,7 +45,7 @@ export const findManyNoteCards = cache(
 
 export const findManyNoteCardsByUserId = cache(async (userId: string) => {
   const notes = await noteRepository.findManyNoteCardsByUserId(userId);
-  if (notes.length == 0) {
+  if (notes.length === 0) {
     return [];
   }
   const user = await getUser();

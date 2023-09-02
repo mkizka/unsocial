@@ -12,7 +12,7 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 const logLevels =
-  env.NODE_ENV == "development"
+  env.NODE_ENV === "development"
     ? (["info", "warn", "error"] as const)
     : (["error"] as const);
 
@@ -25,7 +25,7 @@ const createPrisma = () => {
       logger[level](e.message);
     });
   }
-  if (env.NODE_ENV == "development") {
+  if (env.NODE_ENV === "development") {
     // https://www.prisma.io/docs/concepts/components/prisma-client/middleware/logging-middleware
     instance.$use(async (params, next) => {
       const before = Date.now();

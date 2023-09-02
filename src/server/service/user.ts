@@ -14,7 +14,7 @@ import { webFingerSchema } from "../schema/webFinger";
 const logger = createLogger("userService");
 
 const shouldReFetch = (user: User) => {
-  if (user.host == env.HOST) {
+  if (user.host === env.HOST) {
     return false;
   }
   if (!user.lastFetchedAt) {
@@ -72,7 +72,7 @@ const resolveWebFingerResponse = (data: unknown) => {
     logger.info("検証失敗: " + formatZodError(parsed.error));
     return null;
   }
-  const link = parsed.data.links.find((link) => link.rel == "self");
+  const link = parsed.data.links.find((link) => link.rel === "self");
   if (!link) {
     logger.info("WebFingerからrel=selfの要素が取得できませんでした");
     return null;

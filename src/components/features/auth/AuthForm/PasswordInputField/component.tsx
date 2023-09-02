@@ -9,7 +9,7 @@ export function PasswordInputField({ action }: Props) {
     <div className="space-y-2">
       <div className="flex justify-between">
         <label htmlFor="password">パスワード(8文字以上)</label>
-        {action == "signIn" && (
+        {action === "signIn" && (
           <a href="#" className="block text-secondary hover:underline">
             パスワードを忘れた場合
           </a>
@@ -20,7 +20,7 @@ export function PasswordInputField({ action }: Props) {
         name="password"
         type="password"
         data-testid="password-input"
-        autoComplete={action == "signUp" ? "new-password" : "current-password"}
+        autoComplete={action === "signUp" ? "new-password" : "current-password"}
         required
       />
     </div>

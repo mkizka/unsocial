@@ -14,7 +14,7 @@ export async function action(userId: string) {
     },
     data: { lastFetchedAt: null },
   });
-  if (count == 0) {
+  if (count === 0) {
     logger.info("ユーザー情報の再取得が行われませんでした");
   }
 }
