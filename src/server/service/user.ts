@@ -48,15 +48,7 @@ const createOrUpdateUserByActorId = async ({
   if (!person) {
     return null;
   }
-  return userRepository
-    .createOrUpdateUser(person, userIdForUpdate)
-    .catch((error) => {
-      if (error.code === "P2002") {
-        logger.info("すでに存在するユーザーを作成したのでスキップします");
-        return null;
-      }
-      throw error;
-    });
+  return userRepository.createOrUpdateUser(person, userIdForUpdate);
 };
 
 export const findOrFetchUserByActorId = cache(async (actorId: URL) => {
