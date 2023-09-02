@@ -16,7 +16,7 @@ const sliceText = (text: string, count: number) => {
 };
 
 export const postDicord = async (text: string) => {
-  if (env.NODE_ENV == "test") {
+  if (env.NODE_ENV === "test") {
     return;
   }
   if (!env.DISCORD_WEBHOOK_URL) {

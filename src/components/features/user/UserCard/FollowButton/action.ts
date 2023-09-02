@@ -22,7 +22,7 @@ const follow = async (user: SessionUser, followeeId: string) => {
       followee: true,
     },
   });
-  if (follow.followee.host != env.HOST) {
+  if (follow.followee.host !== env.HOST) {
     if (!follow.followee.actorUrl) {
       logger.error("フォロー先のURLがありません");
       return;
@@ -56,7 +56,7 @@ const unfollow = async (user: SessionUser, followeeId: string) => {
       followee: true,
     },
   });
-  if (follow.followee.host != env.HOST) {
+  if (follow.followee.host !== env.HOST) {
     if (!follow.followee.actorUrl) {
       logger.error("フォロー先のURLがありません");
       return;

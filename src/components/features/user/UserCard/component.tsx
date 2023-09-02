@@ -20,7 +20,7 @@ export async function UserCard({ userId }: Props) {
     notFound();
   }
   const { followersCount, followeesCount } = await followService.count(userId);
-  const canFollow = session?.user && session.user.id != user.id;
+  const canFollow = session?.user && session.user.id !== user.id;
   return (
     <section className="mb-4 rounded bg-primary-light p-4 pb-6 shadow">
       <div className="mb-2 flex w-full items-center">
@@ -48,7 +48,7 @@ export async function UserCard({ userId }: Props) {
           <span className="ml-1">フォロワー</span>
         </Link>
         {canFollow && <FollowButton followeeId={user.id} />}
-        {env.HOST != user.host && <RefetchButton userId={user.id} />}
+        {env.HOST !== user.host && <RefetchButton userId={user.id} />}
       </div>
     </section>
   );

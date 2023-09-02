@@ -34,7 +34,7 @@ export const fetchJson = (
     ...defaultOptions,
     ...options,
   };
-  if (init.method == "POST") {
+  if (init.method === "POST") {
     init.headers = {
       ...init.headers,
       "Content-Type": "application/json",
