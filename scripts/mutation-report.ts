@@ -67,7 +67,7 @@ const table = async () => {
   for (const filename of filenames) {
     const prText = `${prScores[filename] ?? "なし"}`;
     const mainText = `${mainScores[filename] ?? "なし"}`;
-    if (prText == mainText) {
+    if (prText === mainText) {
       continue;
     }
     const diffText =

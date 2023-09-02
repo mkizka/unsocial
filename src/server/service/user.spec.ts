@@ -55,7 +55,7 @@ const restWebfinger = (response?: object) => {
     "https://remote.example.com/.well-known/webfinger",
     (req, res, ctx) => {
       if (
-        req.url.searchParams.get("resource") != "acct:dummy@remote.example.com"
+        req.url.searchParams.get("resource") !== "acct:dummy@remote.example.com"
       ) {
         return res(ctx.status(404));
       }

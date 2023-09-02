@@ -49,7 +49,7 @@ export function ClientComponent({ firstLoadedNotes }: Props) {
       {notes.flat().map((note, i) => (
         <NoteCard key={note.id} note={note} />
       ))}
-      {notes.at(-1)?.length != 0 && (
+      {notes.at(-1)?.length !== 0 && (
         <SubmitButton
           loading={isValidating}
           onClick={() => setSize((size) => size + 1)}

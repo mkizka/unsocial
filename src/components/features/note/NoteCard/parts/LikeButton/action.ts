@@ -29,7 +29,7 @@ const like = async (user: SessionUser, input: unknown) => {
     },
     include,
   });
-  if (like.note.user.host != env.HOST) {
+  if (like.note.user.host !== env.HOST) {
     if (!like.note.url) {
       logger.error("ノートのURLがありません");
       return;
@@ -58,7 +58,7 @@ const unlike = async (user: SessionUser, like: LikeWithNote) => {
       id: like.id,
     },
   });
-  if (like.note.user.host != env.HOST) {
+  if (like.note.user.host !== env.HOST) {
     if (!like.note.url) {
       logger.error("ノートのURLがありません");
       return;

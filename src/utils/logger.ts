@@ -10,7 +10,7 @@ const logger = winston.createLogger({
       colors: { info: "cyan" },
     }),
     winston.format.uncolorize({
-      level: env.NODE_ENV != "development",
+      level: env.NODE_ENV !== "development",
     }),
     winston.format.printf((log) =>
       util.format(
@@ -21,7 +21,7 @@ const logger = winston.createLogger({
       ),
     ),
   ),
-  silent: env.NODE_ENV == "test",
+  silent: env.NODE_ENV === "test",
   transports: new winston.transports.Console(),
 });
 
