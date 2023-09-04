@@ -16,14 +16,18 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
-RUN corepack enable pnpm && pnpm build
+RUN corepack enable pnpm \
+  && pnpm build \
+  && pnpm i --prod --ignore-scripts
 
 FROM base AS runner
 WORKDIR /app
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
 
 ARG RAILWAY_STATIC_URL
 ENV NEXTAUTH_URL=https://$RAILWAY_STATIC_URL
-CMD ["node", "server.js"]
+ENV NODE_ENV=production
+CMD ["node", "dist/server.js"]
