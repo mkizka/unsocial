@@ -17,7 +17,8 @@ COPY . .
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
 RUN corepack enable pnpm \
-  && pnpm build
+  && pnpm build \
+  && pnpm i --prod --ignore-scripts
 
 FROM base AS runner
 WORKDIR /app
