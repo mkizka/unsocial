@@ -1,6 +1,9 @@
 # node
 node_modules/
 coverage/
+
+# typescript
+dist/
 *.tsbuildinfo
 
 # next
