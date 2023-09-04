@@ -3,7 +3,6 @@
 const config = {
   reactStrictMode: true,
   experimental: {
-    instrumentationHook: true,
     serverActions: true,
   },
   async rewrites() {
