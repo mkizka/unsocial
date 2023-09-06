@@ -3,12 +3,13 @@ FROM node:20.5-slim AS base
 RUN apt-get update && apt-get install -y openssl \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
+RUN corepack enable pnpm
 
 FROM base AS deps
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma
-RUN corepack enable pnpm && pnpm i --frozen-lockfile
+RUN pnpm i --frozen-lockfile
 
 FROM base AS builder
 WORKDIR /app
@@ -16,9 +17,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
-RUN corepack enable pnpm \
-  && pnpm build \
-  && pnpm i --prod --ignore-scripts
+RUN pnpm build \
+  && pnpm prune --prod --config.ignore-scripts=true
 
 FROM base AS runner
 WORKDIR /app
