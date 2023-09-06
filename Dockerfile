@@ -12,7 +12,7 @@ RUN corepack enable pnpm
 FROM base AS deps
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma
-RUN --mount=type=cache,id=s/b79ff6b6-2558-4624-b5a4-4fcfc14af63c-pnpm,target=/pnpm/store pnpm i --frozen-lockfile
+RUN pnpm i --frozen-lockfile
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
