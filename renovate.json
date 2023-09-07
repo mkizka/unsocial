@@ -8,8 +8,7 @@
   "packageRules": [
     {
       "matchPackagePatterns": ["next"],
-      "allowedVersions": "/canary/",
-      "ignoreUnstable": false
+      "followTag": "canary"
     }
   ]
 }
