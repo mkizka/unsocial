@@ -12,7 +12,7 @@
     {
       "matchPackageNames": ["react", "react-dom"],
       "followTag": "canary",
-      "extends": ["schedule:monthly"]
+      "extends": ["schedule:weekly"]
     }
   ]
 }
