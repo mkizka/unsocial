@@ -4,5 +4,11 @@
   "ignoreDeps": ["react", "react-dom"],
   "baseBranches": ["renovate-pr"],
   "automerge": true,
-  "platformAutomerge": true
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["next"],
+      "ignoreUnstable": false
+    }
+  ]
 }
