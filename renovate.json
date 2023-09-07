@@ -1,8 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:js-app"],
-  "ignoreDeps": ["react", "react-dom"],
   "baseBranches": ["renovate-pr"],
   "automerge": true,
-  "platformAutomerge": true
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["next"],
+      "followTag": "canary"
+    },
+    {
+      "matchPackageNames": ["react", "react-dom"],
+      "followTag": "canary",
+      "extends": ["schedule:weekly"]
+    }
+  ]
 }
