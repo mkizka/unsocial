@@ -2,11 +2,14 @@ import type { User } from "@prisma/client";
 import Image from "next/image";
 import type { ComponentProps } from "react";
 
-type Props = Omit<ComponentProps<typeof Image>, "src" | "alt"> & {
+export type UserIconProps = Omit<
+  ComponentProps<typeof Image>,
+  "src" | "alt"
+> & {
   user: Pick<User, "id" | "preferredUsername" | "lastFetchedAt">;
 };
 
-export function UserIcon({ user, ...props }: Props) {
+export function UserIcon({ user, ...props }: UserIconProps) {
   const key = user.lastFetchedAt?.getTime();
   return (
     <Image
