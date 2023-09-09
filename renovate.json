@@ -6,6 +6,10 @@
   "platformAutomerge": true,
   "packageRules": [
     {
+      "matchDatasources": ["node-version"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
       "matchPackagePatterns": ["next"],
       "followTag": "canary"
     },
