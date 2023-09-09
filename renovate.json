@@ -6,10 +6,22 @@
   "platformAutomerge": true,
   "packageRules": [
     {
-      "matchPackagePatterns": ["next"],
+      "matchDatasources": ["node-version", "docker"],
+      "matchDepNames": ["node"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@types/node"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["next"],
       "followTag": "canary"
     },
     {
+      "matchDatasources": ["npm"],
       "matchPackageNames": ["react", "react-dom"],
       "followTag": "canary",
       "extends": ["schedule:weekly"]
