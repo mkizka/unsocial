@@ -1,8 +1,35 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:js-app"],
-  "ignoreDeps": ["react", "react-dom"],
   "baseBranches": ["renovate-pr"],
   "automerge": true,
-  "platformAutomerge": true
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "matchDatasources": ["node-version"],
+      "matchPackageNames": ["nodejs/node"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["node"],
+      "allowedVersions": "/^18\\.[0-9]+\\.[0-9]+\\-slim$/"
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@types/node"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["next"],
+      "followTag": "canary"
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["react", "react-dom"],
+      "followTag": "canary",
+      "extends": ["schedule:weekly"]
+    }
+  ]
 }
