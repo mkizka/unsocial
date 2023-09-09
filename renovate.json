@@ -6,11 +6,12 @@
   "platformAutomerge": true,
   "packageRules": [
     {
-      "matchDatasources": ["node-version"],
+      "matchDatasources": ["node-version", "docker"],
+      "matchDepNames": ["node"],
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
-      "matchPackagePatterns": ["next"],
+      "matchPackageNames": ["next"],
       "followTag": "canary"
     },
     {
