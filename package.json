@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@8.7.4",
   "engines": {
-    "node": "20.x"
+    "node": "18.x"
   },
   "scripts": {
     "all": "run-s -s lint:fix test",
