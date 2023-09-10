@@ -19,7 +19,7 @@ export async function UserCard({ userId }: Props) {
   if (!user) {
     notFound();
   }
-  const { followersCount, followeesCount } = await followService.count(userId);
+  const { followersCount, followeesCount } = await followService.count(user.id);
   const canFollow = session?.user && session.user.id !== user.id;
   return (
     <section className="mb-4 rounded bg-primary-light p-4 pb-6 shadow">
@@ -34,8 +34,9 @@ export async function UserCard({ userId }: Props) {
       </div>
       <div className="flex items-center gap-2">
         <Link
-          href={`/@${user.preferredUsername}/following`}
+          href={`/@${user.preferredUsername}/followees`}
           className="hover:underline"
+          data-testid="user-followees"
         >
           <span className="font-bold">{followeesCount}</span>
           <span className="ml-1">フォロー</span>
@@ -43,6 +44,7 @@ export async function UserCard({ userId }: Props) {
         <Link
           href={`/@${user.preferredUsername}/followers`}
           className="hover:underline"
+          data-testid="user-followers"
         >
           <span className="font-bold">{followersCount}</span>
           <span className="ml-1">フォロワー</span>

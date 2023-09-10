@@ -10,6 +10,7 @@ const config = {
   timeoutMS: 30000,
   maxTestRunnerReuse: 20,
   ignoreStatic: true,
+  cleanTempDir: "always",
   mutate: [
     "src/**/*.ts",
     "src/app/.well-known/**/*.ts",
