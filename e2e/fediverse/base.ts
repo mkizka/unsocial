@@ -72,6 +72,8 @@ export abstract class FediverseHandler {
 
   abstract expectFollowing(user: string): Promise<void>;
 
+  abstract expectNotFollowing(user: string): Promise<void>;
+
   abstract expectFollowed(user: string): Promise<void>;
 
   abstract expectNotFollowed(user: string): Promise<void>;

@@ -88,6 +88,10 @@ const runTest = async ({ from, to }: RunTestParams) => {
       `${from.domain}: フォロー解除されたことを確認`,
       () => from.expectNotFollowed(to.user),
     ],
+    [
+      `${to.domain}: フォロー解除できたことを確認`,
+      () => to.expectNotFollowing(to.user),
+    ],
   ];
   for (const [label, action] of steps) {
     await test.step(label, action);
