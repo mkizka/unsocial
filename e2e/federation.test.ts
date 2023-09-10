@@ -90,7 +90,7 @@ const runTest = async ({ from, to }: RunTestParams) => {
     ],
     [
       `${to.domain}: フォロー解除できたことを確認`,
-      () => to.expectNotFollowing(to.user),
+      () => to.expectNotFollowing(from.user),
     ],
   ];
   for (const [label, action] of steps) {
