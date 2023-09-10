@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { env } from "@/utils/env";
+import { fullUsername } from "@/utils/fullUsername";
 import { getUser } from "@/utils/getServerSession";
 
 import { noteRepository } from "../repository";
@@ -13,10 +13,8 @@ const format = (note: noteRepository.NoteCard, userId?: string) => {
     url: `/notes/${note.id}`,
     user: {
       ...note.user,
-      displayUsername: `@${note.user.preferredUsername}@${note.user.host}`,
-      url:
-        `/@${note.user.preferredUsername}` +
-        (note.user.host !== env.HOST ? `@${note.user.host}` : ""),
+      displayUsername: fullUsername(note.user),
+      url: `/${fullUsername(note.user)}`,
     },
   };
 };

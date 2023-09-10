@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { followService, userService } from "@/server/service";
 import { env } from "@/utils/env";
+import { fullUsername } from "@/utils/fullUsername";
 import { getServerSession } from "@/utils/getServerSession";
 
 import { UserIcon } from "../UserIcon";
@@ -27,14 +28,12 @@ export async function UserCard({ userId }: Props) {
         <UserIcon user={user} width={64} height={64} className="rounded-full" />
         <div className="ml-4">
           <h1 className="text-2xl font-bold">{user.name}</h1>
-          <div className="text-gray">
-            @{user.preferredUsername}@{user.host}
-          </div>
+          <div className="text-gray">{fullUsername(user)}</div>
         </div>
       </div>
       <div className="flex items-center gap-2">
         <Link
-          href={`/@${user.preferredUsername}/followees`}
+          href={`/${fullUsername(user)}/followees`}
           className="hover:underline"
           data-testid="user-followees"
         >
@@ -42,7 +41,7 @@ export async function UserCard({ userId }: Props) {
           <span className="ml-1">フォロー</span>
         </Link>
         <Link
-          href={`/@${user.preferredUsername}/followers`}
+          href={`/${fullUsername(user)}/followers`}
           className="hover:underline"
           data-testid="user-followers"
         >
