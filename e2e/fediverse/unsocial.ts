@@ -85,11 +85,19 @@ export class MyhostUnsocialHandler extends FediverseHandler {
   }
 
   async expectFollowed(user: string) {
-    // TODO: フォロワー一覧を実装したら実装
+    await this.goto(`/${this.user}/followers`);
+    await expect(this.page.getByTestId("user-followers")).toHaveText(
+      "1フォロワー",
+    );
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async expectNotFollowed(user: string) {
-    // TODO: フォロワー一覧を実装したら実装
+    await this.goto(`/${this.user}/followers`);
+    await expect(this.page.getByTestId("user-followers")).toHaveText(
+      "0フォロワー",
+    );
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 }
 

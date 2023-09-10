@@ -9,7 +9,7 @@ export type Props = {
 
 export async function UserItem({ user }: Props) {
   return (
-    <article className="mb-4 rounded bg-primary-light p-4 shadow">
+    <article className="mb-4 rounded bg-primary-light p-2 pl-4 shadow">
       <div className="mb-2 flex w-full items-center">
         <UserIcon user={user} width={32} height={32} className="rounded-full" />
         <a
