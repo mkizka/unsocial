@@ -97,7 +97,7 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await expect(this.page.getByTestId("user-followers")).toHaveText(
       "0フォロワー",
     );
-    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 }
 
