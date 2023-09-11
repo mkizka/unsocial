@@ -159,3 +159,26 @@ export const findUserByActorId = async (actorId: URL) => {
   }
   return userRepository.findFirstWithCredentials({ id: userId });
 };
+
+type FindOrFetchUserParams =
+  | {
+      actorUrl: URL;
+    }
+  | {
+      id: string;
+    }
+  | {
+      preferredUsername: string;
+      host: string;
+    };
+
+// TODO: リファクタリングして一つの関数にまとめる
+export const findOrFetchUser = (params: FindOrFetchUserParams) => {
+  if ("actorUrl" in params) {
+    return findOrFetchUserByActorId(params.actorUrl);
+  }
+  if ("id" in params) {
+    return findOrFetchUserByParams({ userId: params.id });
+  }
+  return findOrFetchUserByWebfinger(params);
+};
