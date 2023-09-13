@@ -78,7 +78,7 @@
     "shellcheck": "2.2.0",
     "tailwindcss": "3.3.3",
     "ts-node": "10.9.1",
-    "tsx": "3.12.9",
+    "tsx": "3.12.10",
     "typescript": "5.2.2"
   }
 }
