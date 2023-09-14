@@ -10,8 +10,8 @@ export type Props = {
 };
 
 const findUsers = async ({ userId, listBy }: Props) => {
-  const user = await userService.findOrFetchUserByParams({ userId });
-  if (!user) {
+  const user = await userService.findOrFetchUser({ id: userId });
+  if (user instanceof Error) {
     notFound();
   }
   switch (listBy) {

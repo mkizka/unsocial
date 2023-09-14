@@ -16,8 +16,8 @@ export type Props = {
 
 export async function UserCard({ userId }: Props) {
   const session = await getServerSession();
-  const user = await userService.findOrFetchUserByParams({ userId });
-  if (!user) {
+  const user = await userService.findOrFetchUser({ id: userId });
+  if (user instanceof Error) {
     notFound();
   }
   const { followersCount, followeesCount } = await followService.count(user.id);

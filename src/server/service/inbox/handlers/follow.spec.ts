@@ -10,6 +10,7 @@ const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
 
 const dummyLocalUser = {
   id: "dummyidlocal",
+  host: "myhost.example.com",
   credentials: {
     privateKey: "privateKey",
   },

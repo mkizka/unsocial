@@ -7,7 +7,7 @@ import { createLogger } from "@/utils/logger";
 const logger = createLogger("seed");
 
 const main = async () => {
-  const existingUser = await userRepository.findFirst({
+  const existingUser = await userRepository.findUnique({
     preferredUsername: "test",
     host: env.HOST,
   });

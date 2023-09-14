@@ -4,6 +4,7 @@ import { handle } from "./undo";
 
 const dummyLocalUser = {
   id: "dummyidlocal",
+  host: "myhost.example.com",
 };
 
 const dummyRemoteUser = {
