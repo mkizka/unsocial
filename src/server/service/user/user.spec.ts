@@ -10,7 +10,7 @@ import {
   findOrFetchUserByActorId,
   findOrFetchUserByParams,
   findUserByActorId,
-} from "./user";
+} from "./service";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
 

@@ -1,15 +1,14 @@
 import type { User } from "@prisma/client";
 import { cache } from "react";
 
+import { apRepository, userRepository } from "@/server/repository";
+import { inboxPersonSchema } from "@/server/schema/person";
+import { webFingerSchema } from "@/server/schema/webFinger";
 import { env } from "@/utils/env";
 import { FetchError } from "@/utils/fetchJson";
 import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
 import { safeUrl } from "@/utils/safeUrl";
-
-import { apRepository, userRepository } from "../repository";
-import { inboxPersonSchema } from "../schema/person";
-import { webFingerSchema } from "../schema/webFinger";
 
 const logger = createLogger("userService");
 
