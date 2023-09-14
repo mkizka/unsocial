@@ -8,8 +8,8 @@ export async function GET(
   request: Request,
   { params }: { params: { userId: string } },
 ) {
-  const user = await userService.findOrFetchUserByParams(params);
-  if (!user) {
+  const user = await userService.findOrFetchUser({ id: params.userId });
+  if (user instanceof Error) {
     notFound();
   }
   if (request.headers.get("accept")?.includes("text/html")) {

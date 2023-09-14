@@ -10,8 +10,8 @@ export async function GET(
   _: Request,
   { params }: { params: { userId: string } },
 ) {
-  const user = await userService.findOrFetchUserByParams(params);
-  if (!user) {
+  const user = await userService.findOrFetchUser({ id: params.userId });
+  if (user instanceof Error) {
     notFound();
   }
   const notes = await prisma.note.findMany({

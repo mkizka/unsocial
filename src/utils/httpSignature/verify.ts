@@ -54,8 +54,10 @@ const createVerify = (textToSign: string) => {
 const findOrFetchPublicKeyByKeyId = async (keyId: string) => {
   const actorId = new URL(keyId);
   actorId.hash = "";
-  const user = await userService.findOrFetchUserByActorId(actorId);
-  if (!user) {
+  const user = await userService.findOrFetchUser({
+    actorUrl: actorId.toString(),
+  });
+  if (user instanceof Error) {
     return null;
   }
   return user.publicKey;

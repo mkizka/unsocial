@@ -28,14 +28,15 @@ describe("inboxFollowService", () => {
       actor: "https://remote.example.com/u/dummy_remote",
       object: "https://myhost.example.com/users/dummyidlocal/activity",
     };
-    mockedPrisma.user.findFirst.mockResolvedValueOnce(dummyLocalUser as never);
+    mockedPrisma.user.findUnique.mockResolvedValueOnce(dummyLocalUser as never);
     mockedPrisma.follow.create.mockResolvedValue({} as Follow);
     // act
     const error = await handle(activity, dummyRemoteUser as never);
     // assert
-    expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
-      where: { id: "dummyidlocal" },
-      include: { credential: true },
+    expect(mockedPrisma.user.findUnique).toHaveBeenCalledWith({
+      where: {
+        actorUrl: "https://myhost.example.com/users/dummyidlocal/activity",
+      },
     });
     expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
       data: {

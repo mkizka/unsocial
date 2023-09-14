@@ -6,9 +6,7 @@ import { userService } from "@/server/service";
 import { GET } from "./route";
 
 jest.mock("@/server/service");
-const mockedFindOrFetchUserByParams = jest.mocked(
-  userService.findOrFetchUserByParams,
-);
+const mockedFindOrFetchUserByParams = jest.mocked(userService.findOrFetchUser);
 
 describe("/users/[userId]/collections/featured", () => {
   test("GET", async () => {

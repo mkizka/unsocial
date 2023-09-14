@@ -22,13 +22,14 @@ describe("inboxUndoService", () => {
         object: "https://myhost.example.com/users/dummyidlocal",
       },
     };
-    mockedPrisma.user.findFirst.mockResolvedValueOnce(dummyLocalUser as never);
+    mockedPrisma.user.findUnique.mockResolvedValueOnce(dummyLocalUser as never);
     // act
     const error = await handle(activity, dummyRemoteUser as never);
     // assert
-    expect(mockedPrisma.user.findFirst).toHaveBeenCalledWith({
-      where: { id: "dummyidlocal" },
-      include: { credential: true },
+    expect(mockedPrisma.user.findUnique).toHaveBeenCalledWith({
+      where: {
+        actorUrl: "https://myhost.example.com/users/dummyidlocal",
+      },
     });
     expect(mockedPrisma.follow.delete).toHaveBeenCalledWith({
       where: {

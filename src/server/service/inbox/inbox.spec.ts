@@ -30,7 +30,7 @@ const dummyUser = {} as User;
 
 jest.mock("..");
 const mockedUserService = jest.mocked(userService);
-mockedUserService.findOrFetchUserByActorId.mockResolvedValue(dummyUser);
+mockedUserService.findOrFetchUser.mockResolvedValue(dummyUser);
 
 jest.mock("@/utils/httpSignature/verify");
 const mockedVerifyActivity = jest.mocked(verifyActivity);

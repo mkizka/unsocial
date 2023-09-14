@@ -22,7 +22,7 @@ describe("inboxAcceptService", () => {
         object: "https://remote.example.com/u/dummy_remote",
       },
     };
-    mockedPrisma.user.findFirst.mockResolvedValue(dummyLocalUser);
+    mockedPrisma.user.findUnique.mockResolvedValue(dummyLocalUser);
     // act
     const error = await handle(activity, dummyRemoteUser);
     // assert

@@ -4,8 +4,8 @@ import { safeUrl } from "@/utils/safeUrl";
 
 const logger = createLogger("apRepository");
 
-export const fetchActor = (actorId: URL) => {
-  return fetchJson(actorId, {
+export const fetchActor = (actorUrl: string) => {
+  return fetchJson(actorUrl, {
     next: {
       revalidate: 0,
     },
@@ -15,19 +15,21 @@ export const fetchActor = (actorId: URL) => {
   });
 };
 
-export const fetchWebFinger = (params: {
+export type FetchWebFingerParams = {
   preferredUsername: string;
   host: string;
-}) => {
-  const remoteUrl = safeUrl(`https://${params.host}`);
+};
+
+export const fetchWebFinger = (user: FetchWebFingerParams) => {
+  const remoteUrl = safeUrl(`https://${user.host}`);
   if (!remoteUrl) {
-    logger.info(`https://${params.host}がURLとして不正でした`);
+    logger.info(`https://${user.host}がURLとして不正でした`);
     return null;
   }
   const webFingerUrl = new URL("/.well-known/webfinger", remoteUrl);
   webFingerUrl.searchParams.append(
     "resource",
-    `acct:${params.preferredUsername}@${params.host}`,
+    `acct:${user.preferredUsername}@${user.host}`,
   );
   return fetchJson(webFingerUrl, {
     next: {

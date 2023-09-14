@@ -6,9 +6,7 @@ import { userService } from "@/server/service";
 import { GET } from "./route";
 
 jest.mock("@/server/service");
-const mockedFindOrFetchUserByParams = jest.mocked(
-  userService.findOrFetchUserByParams,
-);
+const mockedFindOrFetchUserByParams = jest.mocked(userService.findOrFetchUser);
 
 describe("/users/[userId]/activity", () => {
   test("GET", async () => {
@@ -23,7 +21,7 @@ describe("/users/[userId]/activity", () => {
     // act
     const response = await GET(mockedRequest, { params: dummyParams });
     // assert
-    expect(mockedFindOrFetchUserByParams).toHaveBeenCalledWith(dummyParams);
+    expect(mockedFindOrFetchUserByParams).toHaveBeenCalledWith({ id: "__id" });
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe(
       "application/activity+json",

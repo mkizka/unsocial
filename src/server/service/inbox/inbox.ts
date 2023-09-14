@@ -60,10 +60,11 @@ export const perform = async ({
   }
 
   // 3. actorで指定されたユーザーを取得する
-  const actorUser = await userService.findOrFetchUserByActorId(
-    new URL(parsedActivity.data.actor),
-  );
-  if (!actorUser) {
+  const actorUser = await userService.findOrFetchUser({
+    actorUrl: parsedActivity.data.actor,
+  });
+  // TODO actorUserのエラーを使ってログを出す
+  if (actorUser instanceof Error) {
     return new BadActivityRequestError(
       "actorで指定されたユーザーが見つかりませんでした",
       activity,
