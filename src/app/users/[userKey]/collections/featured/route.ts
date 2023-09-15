@@ -1,8 +1,7 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
 import { userService } from "@/server/service";
-import { RedirectError } from "@/server/service/user/errors";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { prisma } from "@/utils/prisma";
@@ -12,9 +11,6 @@ export async function GET(
   { params }: { params: { userKey: string } },
 ) {
   const user = await userService.findOrFetchUserByKey(params.userKey);
-  if (user instanceof RedirectError) {
-    redirect(user.url);
-  }
   if (user instanceof Error) {
     notFound();
   }

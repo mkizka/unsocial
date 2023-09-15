@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { followService, userService } from "@/server/service";
-import { RedirectError } from "@/server/service/user/errors";
 import { env } from "@/utils/env";
 import { fullUsername } from "@/utils/fullUsername";
 import { getServerSession } from "@/utils/getServerSession";
@@ -18,9 +17,6 @@ export type Props = {
 export async function UserCard({ userKey }: Props) {
   const session = await getServerSession();
   const user = await userService.findOrFetchUserByKey(userKey);
-  if (user instanceof RedirectError) {
-    redirect(user.url);
-  }
   if (user instanceof Error) {
     notFound();
   }

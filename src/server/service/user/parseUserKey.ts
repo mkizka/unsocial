@@ -1,7 +1,6 @@
 import { env } from "@/utils/env";
 
 import type { UserServiceError } from "./errors";
-import { RedirectError, UserNotFoundError } from "./errors";
 
 type ParsedKey =
   | {
@@ -20,14 +19,9 @@ export const parseUserKey = (key: string): ParsedKey | UserServiceError => {
     };
   }
   const [preferredUsername, host] = decodedKey.split("@").slice(1);
-  if (!preferredUsername) {
-    return new UserNotFoundError();
-  }
-  if (host === env.HOST) {
-    return new RedirectError(`/@${preferredUsername}`);
-  }
   return {
-    preferredUsername,
+    // startsWith("@")でチェックしているのでundefinedにはならない
+    preferredUsername: preferredUsername as string,
     host: host ?? env.HOST,
   };
 };

@@ -1,6 +1,5 @@
 import type { User } from "@prisma/client";
 
-import { RedirectError } from "./errors";
 import {
   findOrFetchUserById,
   findOrFetchUserByWebFinger,
@@ -34,11 +33,5 @@ describe("findOrFetchUserByKey", () => {
       preferredUsername: "foo",
       host: "remote.example.com",
     });
-  });
-  test("パースでエラー(リダイレクトなど)が返された場合はそのまま返す", async () => {
-    // act
-    const user = await findOrFetchUserByKey("@foo@myhost.example.com");
-    // assert
-    expect(user).toBeInstanceOf(RedirectError);
   });
 });

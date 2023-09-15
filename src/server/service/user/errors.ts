@@ -11,10 +11,3 @@ export class WebfingerFailError extends UserServiceError {
 export class ActorFailError extends UserServiceError {
   name = "ActorFailError";
 }
-
-export class RedirectError extends UserServiceError {
-  name = "RedirectError";
-  constructor(public url: string) {
-    super();
-  }
-}
