@@ -1,6 +1,7 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { followService, userService } from "@/server/service";
+import { RedirectError } from "@/server/service/user/errors";
 
 import { UserItem } from "./UserItem";
 
@@ -11,6 +12,9 @@ export type Props = {
 
 const findUsers = async ({ userKey, listBy }: Props) => {
   const user = await userService.findOrFetchUserByKey(userKey);
+  if (user instanceof RedirectError) {
+    redirect(user.url);
+  }
   if (user instanceof Error) {
     notFound();
   }
