@@ -24,10 +24,16 @@ const dummyUser = {
   inboxUrl: "https://remote.example.com/u/dummyUser/inbox",
 };
 
-const dummyNewUser = {
+const dummyCreatedUser = {
   ...dummyUser,
   name: "新しいダミーユーザー",
   lastFetchedAt: mockedNow, // 新規作成した
+};
+
+const dummyUpdatedUser = {
+  ...dummyUser,
+  name: "更新したダミーユーザー",
+  lastFetchedAt: mockedNow, // 更新した
 };
 
 const dummyRecentUser = {
@@ -42,12 +48,12 @@ const dummyOldUser = {
   lastFetchedAt: new Date("2023-01-01T00:00:00Z"), // 12時間前に取得した
 };
 
-const { id: _id, ...expectedDataForPrismaCreateOrUpdate } = dummyNewUser;
+const { id: _id, ...expectedDataForPrismaCreateOrUpdate } = dummyCreatedUser;
 
 const dummyPerson = {
   type: "Person",
   id: dummyUser.actorUrl,
-  name: dummyNewUser.name,
+  name: dummyCreatedUser.name,
   preferredUsername: dummyUser.preferredUsername,
   inbox: `${dummyUser.actorUrl}/inbox`,
   publicKey: {
@@ -114,7 +120,7 @@ const mockUser = (user: User | null) => {
         data: expectedDataForPrismaCreateOrUpdate,
       }),
     )
-    .mockResolvedValueOnce(dummyNewUser as unknown as User);
+    .mockResolvedValueOnce(dummyCreatedUser as unknown as User);
   mockedPrisma.user.update
     .calledWith(
       expect.objectContaining({
@@ -122,7 +128,7 @@ const mockUser = (user: User | null) => {
         data: expectedDataForPrismaCreateOrUpdate,
       }),
     )
-    .mockResolvedValueOnce(dummyNewUser as unknown as User);
+    .mockResolvedValueOnce(dummyUpdatedUser as unknown as User);
 };
 
 const 引数がID = () => ({ id: dummyUser.id });
@@ -180,16 +186,16 @@ describe("findOrFetchUser", () => {
     argsCondition                    | dbCondition                           | serverCondition                         | expected
     ${引数がID}                      | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
     ${引数がactorUrl}                | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
-    ${引数がactorUrl}                | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyNewUser}
+    ${引数がactorUrl}                | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
     ${引数がactorUrl}                | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
-    ${引数がactorUrl}                | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyNewUser}
+    ${引数がactorUrl}                | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
     ${引数がactorUrl}                | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
     ${引数がpreferredUsernameとhost} | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${WebfingerFailError}
     ${引数がpreferredUsernameとhost} | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
-    ${引数がpreferredUsernameとhost} | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyNewUser}
+    ${引数がpreferredUsernameとhost} | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
     ${引数がpreferredUsernameとhost} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerとの通信に失敗した}          | ${dummyOldUser}
     ${引数がpreferredUsernameとhost} | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
-    ${引数がpreferredUsernameとhost} | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyNewUser}
+    ${引数がpreferredUsernameとhost} | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
     ${引数がpreferredUsernameとhost} | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
   `(
     "$argsCondition.name、$dbCondition.name、$serverCondition.nameとき、$expected.nameを返す",
@@ -202,8 +208,7 @@ describe("findOrFetchUser", () => {
       const user = await findOrFetchUser(args);
       // assert
       if (typeof expected === "function") {
-        // toBeInstanceOf使えなかった
-        expect(user.name).toBe(new expected().name);
+        expect(user).toBeInstanceOf(expected);
       } else {
         expect(user).toEqual(expected);
       }
