@@ -21,9 +21,9 @@ export const handle: InboxHandler = async (activity, actorUser) => {
   if (!parsedFollow.success) {
     return new ActivitySchemaValidationError(parsedFollow.error, activity);
   }
-  const followee = await userService.findOrFetchUser({
-    actorUrl: parsedFollow.data.object,
-  });
+  const followee = await userService.findOrFetchUserByActor(
+    parsedFollow.data.object,
+  );
   if (followee instanceof Error) {
     return new BadActivityRequestError(
       "フォローリクエストで指定されたフォロイーが存在しませんでした",

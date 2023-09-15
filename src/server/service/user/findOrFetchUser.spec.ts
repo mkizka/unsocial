@@ -8,8 +8,12 @@ import {
   ActorFailError,
   UserNotFoundError,
   WebfingerFailError,
-} from "./errorts";
-import { findOrFetchUser } from "./findOrFetchUser";
+} from "./errors";
+import {
+  findOrFetchUserByActor,
+  findOrFetchUserById,
+  findOrFetchUserByWebFinger,
+} from "./findOrFetchUser";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
 
@@ -131,14 +135,15 @@ const mockUser = (user: User | null) => {
     .mockResolvedValueOnce(dummyUpdatedUser as unknown as User);
 };
 
-const 引数がID = () => ({ id: dummyUser.id });
+const ById = () => findOrFetchUserById(dummyUser.id);
 
-const 引数がactorUrl = () => ({ actorUrl: dummyUser.actorUrl });
+const ByActor = () => findOrFetchUserByActor(dummyUser.actorUrl);
 
-const 引数がpreferredUsernameとhost = () => ({
-  preferredUsername: dummyUser.preferredUsername,
-  host: dummyUser.host,
-});
+const ByWebFinger = () =>
+  findOrFetchUserByWebFinger({
+    preferredUsername: dummyUser.preferredUsername,
+    host: dummyUser.host,
+  });
 
 const 情報の新しいユーザーがDBに存在する = () =>
   mockUser(dummyRecentUser as unknown as User);
@@ -183,31 +188,30 @@ describe("findOrFetchUser", () => {
     jest.setSystemTime(mockedNow);
   });
   test.each`
-    argsCondition                    | dbCondition                           | serverCondition                         | expected
-    ${引数がID}                      | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
-    ${引数がID}                      | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
-    ${引数がID}                      | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
-    ${引数がactorUrl}                | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
-    ${引数がactorUrl}                | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
-    ${引数がactorUrl}                | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
-    ${引数がactorUrl}                | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
-    ${引数がactorUrl}                | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
-    ${引数がpreferredUsernameとhost} | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${WebfingerFailError}
-    ${引数がpreferredUsernameとhost} | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
-    ${引数がpreferredUsernameとhost} | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
-    ${引数がpreferredUsernameとhost} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerとの通信に失敗した}          | ${dummyOldUser}
-    ${引数がpreferredUsernameとhost} | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
-    ${引数がpreferredUsernameとhost} | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
-    ${引数がpreferredUsernameとhost} | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
+    sut            | dbCondition                           | serverCondition                         | expected
+    ${ById}        | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
+    ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
+    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
+    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
+    ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
+    ${ByActor}     | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${WebfingerFailError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
+    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerとの通信に失敗した}          | ${dummyOldUser}
+    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
+    ${ByWebFinger} | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
   `(
-    "$argsCondition.name、$dbCondition.name、$serverCondition.nameとき、$expected.nameを返す",
-    async ({ argsCondition, dbCondition, serverCondition, expected }) => {
+    "findOrFetchUser$sut.name: $dbCondition.name、$serverCondition.nameとき、$expected.nameを返す",
+    async ({ sut, dbCondition, serverCondition, expected }) => {
       // arrange
       dbCondition();
       serverCondition();
-      const args = argsCondition();
       // act
-      const user = await findOrFetchUser(args);
+      const user = await sut();
       // assert
       if (typeof expected === "function") {
         expect(user).toBeInstanceOf(expected);

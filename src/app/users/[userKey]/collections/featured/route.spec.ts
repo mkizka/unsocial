@@ -6,12 +6,14 @@ import { userService } from "@/server/service";
 import { GET } from "./route";
 
 jest.mock("@/server/service");
-const mockedFindOrFetchUserByParams = jest.mocked(userService.findOrFetchUser);
+const mockedFindOrFetchUserByKey = jest.mocked(
+  userService.findOrFetchUserByKey,
+);
 
 describe("/users/[userId]/collections/featured", () => {
   test("GET", async () => {
     // arrange
-    mockedFindOrFetchUserByParams.mockResolvedValueOnce({
+    mockedFindOrFetchUserByKey.mockResolvedValueOnce({
       id: "__user__id",
     } as User);
     mockedPrisma.note.findMany.mockResolvedValueOnce([
@@ -23,7 +25,7 @@ describe("/users/[userId]/collections/featured", () => {
       } as Note,
     ]);
     // act
-    const response = await GET({} as Request, { params: { userId: "foo" } });
+    const response = await GET({} as Request, { params: { userKey: "foo" } });
     // assert
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toBe(

@@ -18,9 +18,9 @@ type UndoInboxHandler = (
 ) => Promise<InboxError | void>;
 
 const undoFollow: UndoInboxHandler = async (activity, actorUser) => {
-  const followee = await userService.findOrFetchUser({
-    actorUrl: activity.object.object,
-  });
+  const followee = await userService.findOrFetchUserByActor(
+    activity.object.object,
+  );
   if (followee instanceof Error) {
     return new BadActivityRequestError(
       "アンフォローリクエストで指定されたフォロイーが存在しませんでした",

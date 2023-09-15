@@ -1,4 +1,5 @@
-import { parseKeyOrRedirect } from "./parseKey";
+import { RedirectError, UserNotFoundError } from "./errors";
+import { parseUserKey } from "./parseUserKey";
 
 describe("parseKey", () => {
   test.each`
@@ -6,16 +7,16 @@ describe("parseKey", () => {
     ${"%40foo"}                  | ${{ preferredUsername: "foo", host: "myhost.example.com" }}
     ${"@foo"}                    | ${{ preferredUsername: "foo", host: "myhost.example.com" }}
     ${"@foo@remote.example.com"} | ${{ preferredUsername: "foo", host: "remote.example.com" }}
-    ${"foo"}                     | ${{ userId: "foo" }}
+    ${"foo"}                     | ${{ id: "foo" }}
   `("parseKey($key) returns $expected", ({ key, expected }) => {
-    expect(parseKeyOrRedirect(key)).toEqual(expected);
+    expect(parseUserKey(key)).toEqual(expected);
   });
   test("入力が@のみならnotFound", () => {
-    expect(() => parseKeyOrRedirect("@")).toThrowError("NEXT_NOT_FOUND");
+    expect(parseUserKey("@")).toBeInstanceOf(UserNotFoundError);
   });
   test("env.HOSTと一致する場合はhostを消してリダイレクト", () => {
-    expect(() => parseKeyOrRedirect("@foo@myhost.example.com")).toThrowError(
-      "NEXT_REDIRECT",
-    );
+    const error = parseUserKey("@foo@myhost.example.com");
+    expect(error).toBeInstanceOf(RedirectError);
+    expect((error as RedirectError).url).toBe("/@foo");
   });
 });

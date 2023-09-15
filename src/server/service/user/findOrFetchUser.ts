@@ -1,7 +1,6 @@
 import type { User } from "@prisma/client";
 
 import { apRepository, userRepository } from "@/server/repository";
-import type { FindUniqueParams } from "@/server/repository/user";
 import { inboxPersonSchema } from "@/server/schema/person";
 import { webFingerSchema } from "@/server/schema/webFinger";
 import { env } from "@/utils/env";
@@ -9,12 +8,12 @@ import { FetchError } from "@/utils/fetchJson";
 import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
 
-import type { FindOrFetchUserError } from "./errorts";
+import type { UserServiceError } from "./errors";
 import {
   ActorFailError,
   UserNotFoundError,
   WebfingerFailError,
-} from "./errorts";
+} from "./errors";
 
 const logger = createLogger("findOrFetchUser");
 
@@ -60,9 +59,9 @@ const fetchPersonByActorUrl = async (actorUrl: string) => {
   return parsed.data;
 };
 
-const findOrFetchUserById = async (
+export const findOrFetchUserById = async (
   id: string,
-): Promise<User | FindOrFetchUserError> => {
+): Promise<User | UserServiceError> => {
   const existingUser = await userRepository.findUnique({ id });
   if (!existingUser) {
     // id指定で見つからなかった場合はこれ以上できることないのでエラーを返す
@@ -79,9 +78,9 @@ const findOrFetchUserById = async (
   return existingUser;
 };
 
-const findOrFetchUserByActor = async (
+export const findOrFetchUserByActor = async (
   actorUrl: string,
-): Promise<User | FindOrFetchUserError> => {
+): Promise<User | UserServiceError> => {
   const existingUser = await userRepository.findUnique({ actorUrl });
   if (!existingUser || shouldReFetch(existingUser)) {
     const person = await fetchPersonByActorUrl(actorUrl);
@@ -94,9 +93,9 @@ const findOrFetchUserByActor = async (
   return existingUser;
 };
 
-const findOrFetchUserByWebFinger = async (
+export const findOrFetchUserByWebFinger = async (
   user: apRepository.FetchWebFingerParams,
-): Promise<User | FindOrFetchUserError> => {
+): Promise<User | UserServiceError> => {
   const existingUser = await userRepository.findUnique(user);
   if (!existingUser || shouldReFetch(existingUser)) {
     // actorUrlが分からないのでWebFingerで取得
@@ -112,14 +111,4 @@ const findOrFetchUserByWebFinger = async (
     return userRepository.createOrUpdateUser(person, existingUser?.id);
   }
   return existingUser;
-};
-
-export const findOrFetchUser = async (params: FindUniqueParams) => {
-  if ("id" in params) {
-    return findOrFetchUserById(params.id);
-  }
-  if ("actorUrl" in params) {
-    return findOrFetchUserByActor(params.actorUrl);
-  }
-  return findOrFetchUserByWebFinger(params);
 };

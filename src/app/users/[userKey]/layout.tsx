@@ -17,7 +17,7 @@ export default function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { userId: string };
+  params: { userKey: string };
 }) {
-  return <UserPageLayout userId={params.userId}>{children}</UserPageLayout>;
+  return <UserPageLayout userKey={params.userKey}>{children}</UserPageLayout>;
 }

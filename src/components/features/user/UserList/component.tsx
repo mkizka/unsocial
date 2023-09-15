@@ -5,12 +5,12 @@ import { followService, userService } from "@/server/service";
 import { UserItem } from "./UserItem";
 
 export type Props = {
-  userId: string;
+  userKey: string;
   listBy: "followees" | "followers";
 };
 
-const findUsers = async ({ userId, listBy }: Props) => {
-  const user = await userService.findOrFetchUser({ id: userId });
+const findUsers = async ({ userKey, listBy }: Props) => {
+  const user = await userService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();
   }

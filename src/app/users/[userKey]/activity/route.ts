@@ -6,9 +6,9 @@ import { activityStreams } from "@/utils/activitypub";
 
 export async function GET(
   request: Request,
-  { params }: { params: { userId: string } },
+  { params }: { params: { userKey: string } },
 ) {
-  const user = await userService.findOrFetchUser({ id: params.userId });
+  const user = await userService.findOrFetchUserByKey(params.userKey);
   if (user instanceof Error) {
     notFound();
   }

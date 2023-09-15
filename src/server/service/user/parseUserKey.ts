@@ -1,29 +1,30 @@
-import { notFound, redirect } from "next/navigation";
-
 import { env } from "@/utils/env";
+
+import type { UserServiceError } from "./errors";
+import { RedirectError, UserNotFoundError } from "./errors";
 
 type ParsedKey =
   | {
-      userId: string;
+      id: string;
     }
   | {
       preferredUsername: string;
       host: string;
     };
 
-export const parseKeyOrRedirect = (key: string): ParsedKey => {
+export const parseUserKey = (key: string): ParsedKey | UserServiceError => {
   const decodedKey = decodeURIComponent(key);
   if (!decodedKey.startsWith("@")) {
     return {
-      userId: decodedKey,
+      id: decodedKey,
     };
   }
   const [preferredUsername, host] = decodedKey.split("@").slice(1);
   if (!preferredUsername) {
-    notFound();
+    return new UserNotFoundError();
   }
   if (host === env.HOST) {
-    redirect(`/@${preferredUsername}`);
+    return new RedirectError(`/@${preferredUsername}`);
   }
   return {
     preferredUsername,
