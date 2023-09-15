@@ -185,6 +185,8 @@ describe("findOrFetchUser", () => {
   test.each`
     argsCondition                    | dbCondition                           | serverCondition                         | expected
     ${引数がID}                      | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
+    ${引数がID}                      | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${引数がID}                      | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
     ${引数がactorUrl}                | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
     ${引数がactorUrl}                | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
     ${引数がactorUrl}                | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}

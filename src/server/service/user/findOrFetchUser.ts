@@ -69,11 +69,8 @@ const findOrFetchUserById = async (
     return new UserNotFoundError();
   }
   if (shouldReFetch(existingUser)) {
-    const actorUrl = await fetchActorUrlByWebFinger(existingUser);
-    if (!actorUrl) {
-      return existingUser;
-    }
-    const person = await fetchPersonByActorUrl(actorUrl);
+    // リモートユーザーならactorUrlを持っているはずなので型エラーを無視
+    const person = await fetchPersonByActorUrl(existingUser.actorUrl!);
     if (!person) {
       return existingUser;
     }
@@ -102,6 +99,7 @@ const findOrFetchUserByWebFinger = async (
 ): Promise<User | FindOrFetchUserError> => {
   const existingUser = await userRepository.findUnique(user);
   if (!existingUser || shouldReFetch(existingUser)) {
+    // actorUrlが分からないのでWebFingerで取得
     const actorUrl = await fetchActorUrlByWebFinger(user);
     if (!actorUrl) {
       return existingUser || new WebfingerFailError();

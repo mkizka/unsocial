@@ -8,6 +8,7 @@ const dummyRemoteUser = {
 
 const dummyLocalUser = {
   id: "dummy_local",
+  host: "myhost.example.com",
 } as never;
 
 describe("inboxAcceptService", () => {
