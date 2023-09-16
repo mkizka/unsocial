@@ -4,7 +4,6 @@ import { apRepository, userRepository } from "@/server/repository";
 import { inboxPersonSchema } from "@/server/schema/person";
 import { webFingerSchema } from "@/server/schema/webFinger";
 import { env } from "@/utils/env";
-import { FetchError } from "@/utils/fetchJson";
 import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
 
@@ -32,7 +31,7 @@ const fetchActorUrlByWebFinger = async (
   user: apRepository.FetchWebFingerParams,
 ) => {
   const response = await apRepository.fetchWebFinger(user);
-  if (response instanceof FetchError) {
+  if (response instanceof Error) {
     return null;
   }
   const parsed = webFingerSchema.safeParse(response);
@@ -48,7 +47,7 @@ const fetchActorUrlByWebFinger = async (
 
 const fetchPersonByActorUrl = async (actorUrl: string) => {
   const response = await apRepository.fetchActor(actorUrl);
-  if (response instanceof FetchError) {
+  if (response instanceof Error) {
     return null;
   }
   const parsed = inboxPersonSchema.safeParse(response);

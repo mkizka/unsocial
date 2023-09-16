@@ -54,17 +54,6 @@ const dummyOldUser = {
 
 const { id: _id, ...expectedDataForPrismaCreateOrUpdate } = dummyCreatedUser;
 
-const dummyPerson = {
-  type: "Person",
-  id: dummyUser.actorUrl,
-  name: dummyCreatedUser.name,
-  preferredUsername: dummyUser.preferredUsername,
-  inbox: `${dummyUser.actorUrl}/inbox`,
-  publicKey: {
-    publicKeyPem: dummyUser.publicKey,
-  },
-};
-
 const dummyWebfingerUrl = "https://remote.example.com/.well-known/webfinger";
 
 const restSuccessWebfinger = rest.get(dummyWebfingerUrl, (req, res, ctx) => {
@@ -85,6 +74,37 @@ const restSuccessWebfinger = rest.get(dummyWebfingerUrl, (req, res, ctx) => {
     }),
   );
 });
+
+const restInvalidWebfinger = rest.get(dummyWebfingerUrl, (_, res, ctx) =>
+  res(ctx.json({ links: [{ foo: "bar" }] })),
+);
+
+const rest404Webgfinger = rest.get(dummyWebfingerUrl, (_, res, ctx) =>
+  res(ctx.status(404)),
+);
+
+const restSuccessActor = rest.get(dummyUser.actorUrl, (_, res, ctx) =>
+  res(
+    ctx.json({
+      type: "Person",
+      id: dummyUser.actorUrl,
+      name: dummyCreatedUser.name,
+      preferredUsername: dummyUser.preferredUsername,
+      inbox: `${dummyUser.actorUrl}/inbox`,
+      publicKey: {
+        publicKeyPem: dummyUser.publicKey,
+      },
+    }),
+  ),
+);
+
+const restInvalidActor = rest.get(dummyUser.actorUrl, (_, res, ctx) =>
+  res(ctx.json({ type: "Invalid" })),
+);
+
+const rest404Actor = rest.get(dummyUser.actorUrl, (_, res, ctx) =>
+  res(ctx.status(404)),
+);
 
 const mockUser = (user: User | null) => {
   if (user?.actorUrl) {
@@ -157,30 +177,27 @@ const 情報の古いユーザーがDBに存在する = () =>
 const ユーザーがDBに存在しない = () => mockUser(null);
 
 const 他サーバーからユーザー取得に成功した = () => {
-  server.use(
-    restSuccessWebfinger,
-    rest.get(dummyUser.actorUrl, (_, res, ctx) => res(ctx.json(dummyPerson))),
-  );
+  server.use(restSuccessWebfinger, restSuccessActor);
 };
 
 const WebFingerとの通信に失敗した = () => {
-  server.use(
-    rest.get(dummyWebfingerUrl, (_, res, ctx) => res(ctx.status(404))),
-  );
+  server.use(rest404Webgfinger, restSuccessActor);
+};
+
+const WebFingerのレスポンスが不正 = () => {
+  server.use(restInvalidWebfinger, restSuccessActor);
 };
 
 const ActorURLとの通信に失敗した = () => {
-  server.use(
-    restSuccessWebfinger,
-    rest.get(dummyUser.actorUrl, (_, res, ctx) => res(ctx.status(404))),
-  );
+  server.use(restSuccessWebfinger, rest404Actor);
+};
+
+const ActorURLのレスポンスが不正 = () => {
+  server.use(restSuccessWebfinger, restInvalidActor);
 };
 
 const 通信しない = () => {
-  server.use(
-    rest.get(dummyWebfingerUrl, (_, res, ctx) => res(ctx.status(404))),
-    rest.get(dummyUser.actorUrl, (_, res, ctx) => res(ctx.status(404))),
-  );
+  server.use(rest404Webgfinger, rest404Actor);
 };
 
 describe("findOrFetchUser", () => {
@@ -192,17 +209,24 @@ describe("findOrFetchUser", () => {
     sut            | dbCondition                           | serverCondition                         | expected
     ${ById}        | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
     ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
     ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
     ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
+    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorFailError}
     ${ByActor}     | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
     ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
     ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
     ${ByActor}     | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
     ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${WebfingerFailError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerのレスポンスが不正}          | ${WebfingerFailError}
     ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorFailError}
     ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
     ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerとの通信に失敗した}          | ${dummyOldUser}
+    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerのレスポンスが不正}          | ${dummyOldUser}
     ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
     ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
     ${ByWebFinger} | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
   `(
