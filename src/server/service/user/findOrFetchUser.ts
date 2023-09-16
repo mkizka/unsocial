@@ -4,6 +4,7 @@ import { apRepository, userRepository } from "@/server/repository";
 import { inboxPersonSchema } from "@/server/schema/person";
 import { webFingerSchema } from "@/server/schema/webFinger";
 import { env } from "@/utils/env";
+import { FetchError } from "@/utils/fetchJson";
 import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
 
@@ -11,7 +12,7 @@ import type { UserServiceError } from "./errors";
 import {
   ActorFailError,
   UserNotFoundError,
-  WebfingerFailError,
+  WebfingerValidationError,
 } from "./errors";
 
 const logger = createLogger("findOrFetchUser");
@@ -29,16 +30,17 @@ const shouldReFetch = (user: User) => {
 
 const fetchActorUrlByWebFinger = async (
   user: apRepository.FetchWebFingerParams,
-) => {
+): Promise<string | FetchError | UserServiceError> => {
   const response = await apRepository.fetchWebFinger(user);
-  if (response instanceof Error) {
-    return null;
+  if (response instanceof FetchError) {
+    logger.info("Webfinger取得失敗");
+    return response;
   }
   const parsed = webFingerSchema.safeParse(response);
   if (!parsed.success) {
     // TODO: テスト追加
     logger.info("検証失敗: " + formatZodError(parsed.error));
-    return null;
+    return new WebfingerValidationError();
   }
   const link = parsed.data.links.find((link) => link.rel === "self");
   // TODO: テスト追加
@@ -118,8 +120,8 @@ export const findOrFetchUserByWebFinger = async (
   if (!existingUser || shouldReFetch(existingUser)) {
     // actorUrlが分からないのでWebFingerで取得
     const actorUrl = await fetchActorUrlByWebFinger(user);
-    if (!actorUrl) {
-      return existingUser || new WebfingerFailError();
+    if (actorUrl instanceof Error) {
+      return existingUser || actorUrl;
     }
     const person = await fetchPersonByActorUrl(actorUrl);
     if (!person) {

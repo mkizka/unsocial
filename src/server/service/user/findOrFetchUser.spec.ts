@@ -3,11 +3,12 @@ import { rest } from "msw";
 
 import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
+import { NotOKError } from "@/utils/fetchJson";
 
 import {
   ActorFailError,
   UserNotFoundError,
-  WebfingerFailError,
+  WebfingerValidationError,
 } from "./errors";
 import {
   findOrFetchUserByActor,
@@ -218,8 +219,8 @@ describe("findOrFetchUser", () => {
     ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
     ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
     ${ByActor}     | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
-    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${WebfingerFailError}
-    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerのレスポンスが不正}          | ${WebfingerFailError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${NotOKError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerのレスポンスが不正}          | ${WebfingerValidationError}
     ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
     ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorFailError}
     ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
