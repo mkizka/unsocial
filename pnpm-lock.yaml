@@ -68,8 +68,8 @@ devDependencies:
     specifier: 0.5.1
     version: 0.5.1
   '@types/bcryptjs':
-    specifier: 2.4.3
-    version: 2.4.3
+    specifier: 2.4.4
+    version: 2.4.4
   '@types/jest':
     specifier: 29.5.5
     version: 29.5.5
@@ -1630,8 +1630,8 @@ packages:
       '@babel/types': 7.22.5
     dev: true
 
-  /@types/bcryptjs@2.4.3:
-    resolution: {integrity: sha512-XTnH9E/rp51aKGsiMtQCHV/owDLW2E9QAxI7ItpWWm6Gi6XO1e4o3VuEYDma0lbitj1vNOBj05Qk8l2BYoiN4A==}
+  /@types/bcryptjs@2.4.4:
+    resolution: {integrity: sha512-9wlJI7k5gRyJEC4yrV7DubzNQFTPiykYxUA6lBtsk5NlOfW9oWLJ1HdIA4YtE+6C3i3mTpDQQEosJ2rVZfBWnw==}
     dev: true
 
   /@types/cookie@0.4.1:
