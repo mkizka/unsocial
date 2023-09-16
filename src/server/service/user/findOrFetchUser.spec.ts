@@ -6,7 +6,7 @@ import { server } from "@/mocks/server";
 import { NotOKError } from "@/utils/fetchJson";
 
 import {
-  ActorFailError,
+  ActorValidationError,
   UserNotFoundError,
   WebfingerValidationError,
 } from "./errors";
@@ -212,8 +212,8 @@ describe("findOrFetchUser", () => {
     ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
     ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
     ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
-    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
-    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorFailError}
+    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${NotOKError}
+    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorValidationError}
     ${ByActor}     | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
     ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
     ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
@@ -221,8 +221,8 @@ describe("findOrFetchUser", () => {
     ${ByActor}     | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
     ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${NotOKError}
     ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerのレスポンスが不正}          | ${WebfingerValidationError}
-    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
-    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorFailError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${NotOKError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorValidationError}
     ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
     ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerとの通信に失敗した}          | ${dummyOldUser}
     ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerのレスポンスが不正}          | ${dummyOldUser}

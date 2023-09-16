@@ -1,6 +1,7 @@
 import type { User } from "@prisma/client";
 
 import { apRepository, userRepository } from "@/server/repository";
+import type { PersonActivity } from "@/server/schema/person";
 import { inboxPersonSchema } from "@/server/schema/person";
 import { webFingerSchema } from "@/server/schema/webFinger";
 import { env } from "@/utils/env";
@@ -10,7 +11,7 @@ import { createLogger } from "@/utils/logger";
 
 import type { UserServiceError } from "./errors";
 import {
-  ActorFailError,
+  ActorValidationError,
   UserNotFoundError,
   WebfingerValidationError,
 } from "./errors";
@@ -47,15 +48,18 @@ const fetchActorUrlByWebFinger = async (
   return link!.href!;
 };
 
-const fetchPersonByActorUrl = async (actorUrl: string) => {
+const fetchPersonByActorUrl = async (
+  actorUrl: string,
+): Promise<PersonActivity | FetchError | UserServiceError> => {
   const response = await apRepository.fetchActor(actorUrl);
   if (response instanceof Error) {
-    return null;
+    logger.info("Actor取得失敗");
+    return response;
   }
   const parsed = inboxPersonSchema.safeParse(response);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));
-    return null;
+    return new ActorValidationError();
   }
   return parsed.data;
 };
@@ -71,7 +75,7 @@ export const findOrFetchUserById = async (
   if (shouldReFetch(existingUser)) {
     // リモートユーザーならactorUrlを持っているはずなので型エラーを無視
     const person = await fetchPersonByActorUrl(existingUser.actorUrl!);
-    if (!person) {
+    if (person instanceof Error) {
       return existingUser;
     }
     return userRepository.createOrUpdateUser(person, existingUser.id);
@@ -104,8 +108,8 @@ export const findOrFetchUserByActor = async (
   const existingUser = await userRepository.findUnique({ actorUrl });
   if (!existingUser || shouldReFetch(existingUser)) {
     const person = await fetchPersonByActorUrl(actorUrl);
-    if (!person) {
-      return existingUser || new ActorFailError();
+    if (person instanceof Error) {
+      return existingUser || person;
     }
     // DBにあったら更新、なかったら作成
     return userRepository.createOrUpdateUser(person, existingUser?.id);
@@ -124,8 +128,8 @@ export const findOrFetchUserByWebFinger = async (
       return existingUser || actorUrl;
     }
     const person = await fetchPersonByActorUrl(actorUrl);
-    if (!person) {
-      return existingUser || new ActorFailError();
+    if (person instanceof Error) {
+      return existingUser || person;
     }
     // DBにあったら更新、なかったら作成
     return userRepository.createOrUpdateUser(person, existingUser?.id);
