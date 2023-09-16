@@ -18,7 +18,8 @@ import {
 
 const logger = createLogger("findOrFetchUser");
 
-const shouldReFetch = (user: User) => {
+// この関数のみテスト用にexport
+export const shouldReFetch = (user: User) => {
   if (user.host === env.HOST) {
     return false;
   }
@@ -34,7 +35,7 @@ const fetchActorUrlByWebFinger = async (
 ): Promise<string | FetchError | UserServiceError> => {
   const response = await apRepository.fetchWebFinger(user);
   if (response instanceof FetchError) {
-    logger.info("Webfinger取得失敗");
+    logger.info("Webfingerの取得に失敗しました");
     return response;
   }
   const parsed = webFingerSchema.safeParse(response);
@@ -44,8 +45,11 @@ const fetchActorUrlByWebFinger = async (
     return new WebfingerValidationError();
   }
   const link = parsed.data.links.find((link) => link.rel === "self");
-  // TODO: テスト追加
-  return link!.href!;
+  if (link?.href) {
+    return link.href;
+  }
+  logger.info("actorUrlがWebFingerから見つかりませんでした");
+  return new WebfingerValidationError();
 };
 
 const fetchPersonByActorUrl = async (
@@ -53,7 +57,7 @@ const fetchPersonByActorUrl = async (
 ): Promise<PersonActivity | FetchError | UserServiceError> => {
   const response = await apRepository.fetchActor(actorUrl);
   if (response instanceof Error) {
-    logger.info("Actor取得失敗");
+    logger.info("Actorの取得に失敗しました");
     return response;
   }
   const parsed = inboxPersonSchema.safeParse(response);

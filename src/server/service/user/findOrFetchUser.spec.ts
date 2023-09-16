@@ -14,6 +14,7 @@ import {
   findOrFetchUserByActor,
   findOrFetchUserById,
   findOrFetchUserByWebFinger,
+  shouldReFetch,
 } from "./findOrFetchUser";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
@@ -29,28 +30,33 @@ const dummyUser = {
   inboxUrl: "https://remote.example.com/u/dummyUser/inbox",
 };
 
+const dummyRefetchUser = {
+  ...dummyUser,
+  name: "lastFetchedAtがnullのユーザー",
+};
+
 const dummyCreatedUser = {
   ...dummyUser,
-  name: "新しいダミーユーザー",
+  name: "新しいユーザー",
   lastFetchedAt: mockedNow, // 新規作成した
 };
 
 const dummyUpdatedUser = {
   ...dummyUser,
-  name: "更新したダミーユーザー",
+  name: "更新したユーザー",
   lastFetchedAt: mockedNow, // 更新した
 };
 
 const dummyRecentUser = {
   ...dummyUser,
-  name: "最近のダミーユーザー",
+  name: "最近のユーザー",
   lastFetchedAt: new Date("2023-01-01T11:00:00Z"), // 1時間前に取得した
 };
 
 const dummyOldUser = {
   ...dummyUser,
-  name: "古いダミーユーザー",
-  lastFetchedAt: new Date("2023-01-01T00:00:00Z"), // 12時間前に取得した
+  name: "古いユーザー",
+  lastFetchedAt: new Date("2023-01-01T09:00:00Z"), // 3時間前に取得した
 };
 
 const { id: _id, ...expectedDataForPrismaCreateOrUpdate } = dummyCreatedUser;
@@ -206,6 +212,17 @@ describe("findOrFetchUser", () => {
     jest.useFakeTimers();
     jest.setSystemTime(mockedNow);
   });
+  test.each`
+    user                | expected
+    ${dummyRefetchUser} | ${true}
+    ${dummyOldUser}     | ${true}
+    ${dummyRecentUser}  | ${false}
+  `(
+    "shouldReFetch: $user.nameのとき、$expectedを返す",
+    ({ user, expected }) => {
+      expect(shouldReFetch(user)).toBe(expected);
+    },
+  );
   test.each`
     sut            | dbCondition                           | serverCondition                         | expected
     ${ById}        | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
