@@ -3,14 +3,14 @@ import type { ReactNode } from "react";
 import { UserCard } from "@/components/features/user/UserCard";
 
 type Props = {
-  userId: string;
+  userKey: string;
   children: ReactNode;
 };
 
-export async function UserPageLayout({ userId, children }: Props) {
+export async function UserPageLayout({ userKey, children }: Props) {
   return (
     <>
-      <UserCard userId={userId} />
+      <UserCard userKey={userKey} />
       {children}
     </>
   );

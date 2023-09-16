@@ -8,10 +8,10 @@ import { prisma } from "@/utils/prisma";
 
 export async function GET(
   _: Request,
-  { params }: { params: { userId: string } },
+  { params }: { params: { userKey: string } },
 ) {
-  const user = await userService.findOrFetchUserByParams(params);
-  if (!user) {
+  const user = await userService.findOrFetchUserByKey(params.userKey);
+  if (user instanceof Error) {
     notFound();
   }
   const notes = await prisma.note.findMany({

@@ -1,0 +1,246 @@
+import type { User } from "@prisma/client";
+import { rest } from "msw";
+
+import { mockedPrisma } from "@/mocks/prisma";
+import { server } from "@/mocks/server";
+
+import {
+  ActorFailError,
+  UserNotFoundError,
+  WebfingerFailError,
+} from "./errors";
+import {
+  findOrFetchUserByActor,
+  findOrFetchUserById,
+  findOrFetchUserByWebFinger,
+} from "./findOrFetchUser";
+
+const mockedNow = new Date("2023-01-01T12:00:00Z");
+
+const dummyUser = {
+  id: "dummyId",
+  preferredUsername: "dummy",
+  host: "remote.example.com",
+  icon: null,
+  name: null,
+  publicKey: "dummyPublicKey",
+  actorUrl: "https://remote.example.com/u/dummyUser",
+  inboxUrl: "https://remote.example.com/u/dummyUser/inbox",
+};
+
+const dummyCreatedUser = {
+  ...dummyUser,
+  name: "新しいダミーユーザー",
+  lastFetchedAt: mockedNow, // 新規作成した
+};
+
+const dummyUpdatedUser = {
+  ...dummyUser,
+  name: "更新したダミーユーザー",
+  lastFetchedAt: mockedNow, // 更新した
+};
+
+const dummyRecentUser = {
+  ...dummyUser,
+  name: "最近のダミーユーザー",
+  lastFetchedAt: new Date("2023-01-01T11:00:00Z"), // 1時間前に取得した
+};
+
+const dummyOldUser = {
+  ...dummyUser,
+  name: "古いダミーユーザー",
+  lastFetchedAt: new Date("2023-01-01T00:00:00Z"), // 12時間前に取得した
+};
+
+const { id: _id, ...expectedDataForPrismaCreateOrUpdate } = dummyCreatedUser;
+
+const dummyPerson = {
+  type: "Person",
+  id: dummyUser.actorUrl,
+  name: dummyCreatedUser.name,
+  preferredUsername: dummyUser.preferredUsername,
+  inbox: `${dummyUser.actorUrl}/inbox`,
+  publicKey: {
+    publicKeyPem: dummyUser.publicKey,
+  },
+};
+
+const dummyWebfingerUrl = "https://remote.example.com/.well-known/webfinger";
+
+const restSuccessWebfinger = rest.get(dummyWebfingerUrl, (req, res, ctx) => {
+  if (
+    req.url.searchParams.get("resource") !== "acct:dummy@remote.example.com"
+  ) {
+    return res(ctx.status(404));
+  }
+  return res(
+    ctx.json({
+      links: [
+        { rel: "dummy", href: "https://example.com" },
+        {
+          rel: "self",
+          href: "https://remote.example.com/u/dummyUser",
+        },
+      ],
+    }),
+  );
+});
+
+const mockUser = (user: User | null) => {
+  if (user?.actorUrl) {
+    mockedPrisma.user.findUnique
+      .calledWith(
+        expect.objectContaining({
+          where: {
+            actorUrl: user.actorUrl,
+          },
+        }),
+      )
+      .mockResolvedValue(user);
+  }
+  if (user) {
+    mockedPrisma.user.findUnique
+      .calledWith(
+        expect.objectContaining({
+          where: {
+            id: user.id,
+          },
+        }),
+      )
+      .mockResolvedValue(user);
+    mockedPrisma.user.findUnique
+      .calledWith(
+        expect.objectContaining({
+          where: {
+            preferredUsername_host: {
+              preferredUsername: user.preferredUsername,
+              host: user.host,
+            },
+          },
+        }),
+      )
+      .mockResolvedValue(user);
+  }
+  mockedPrisma.user.create
+    .calledWith(
+      expect.objectContaining({
+        data: expectedDataForPrismaCreateOrUpdate,
+      }),
+    )
+    .mockResolvedValueOnce(dummyCreatedUser as unknown as User);
+  mockedPrisma.user.update
+    .calledWith(
+      expect.objectContaining({
+        where: { id: dummyUser.id },
+        data: expectedDataForPrismaCreateOrUpdate,
+      }),
+    )
+    .mockResolvedValueOnce(dummyUpdatedUser as unknown as User);
+};
+
+const ById = () => findOrFetchUserById(dummyUser.id);
+
+const ByActor = () => findOrFetchUserByActor(dummyUser.actorUrl);
+
+const ByWebFinger = () =>
+  findOrFetchUserByWebFinger({
+    preferredUsername: dummyUser.preferredUsername,
+    host: dummyUser.host,
+  });
+
+const 情報の新しいユーザーがDBに存在する = () =>
+  mockUser(dummyRecentUser as unknown as User);
+
+const 情報の古いユーザーがDBに存在する = () =>
+  mockUser(dummyOldUser as unknown as User);
+
+const ユーザーがDBに存在しない = () => mockUser(null);
+
+const 他サーバーからユーザー取得に成功した = () => {
+  server.use(
+    restSuccessWebfinger,
+    rest.get(dummyUser.actorUrl, (_, res, ctx) => res(ctx.json(dummyPerson))),
+  );
+};
+
+const WebFingerとの通信に失敗した = () => {
+  server.use(
+    rest.get(dummyWebfingerUrl, (_, res, ctx) => res(ctx.status(404))),
+  );
+};
+
+const ActorURLとの通信に失敗した = () => {
+  server.use(
+    restSuccessWebfinger,
+    rest.get(dummyUser.actorUrl, (_, res, ctx) => res(ctx.status(404))),
+  );
+};
+
+const 通信しない = () => {
+  server.use(
+    rest.get(dummyWebfingerUrl, (_, res, ctx) => res(ctx.status(404))),
+    rest.get(dummyUser.actorUrl, (_, res, ctx) => res(ctx.status(404))),
+  );
+};
+
+describe("findOrFetchUser", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(mockedNow);
+  });
+  test.each`
+    sut            | dbCondition                           | serverCondition                         | expected
+    ${ById}        | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
+    ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
+    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
+    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
+    ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
+    ${ByActor}     | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${WebfingerFailError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${ActorFailError}
+    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
+    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerとの通信に失敗した}          | ${dummyOldUser}
+    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
+    ${ByWebFinger} | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
+  `(
+    "findOrFetchUser$sut.name: $dbCondition.name、$serverCondition.nameとき、$expected.nameを返す",
+    async ({ sut, dbCondition, serverCondition, expected }) => {
+      // arrange
+      dbCondition();
+      serverCondition();
+      // act
+      const user = await sut();
+      // assert
+      if (typeof expected === "function") {
+        expect(user).toBeInstanceOf(expected);
+      } else {
+        expect(user).toEqual(expected);
+      }
+    },
+  );
+  test("findOrFetchUserByActor: 引数のドメインが自ホストの場合は、IDをパースしてユーザーを返す", async () => {
+    // arrange
+    const dummyLocalUser = {
+      id: "dummyLocalId",
+      host: "myhost.example.com",
+      actorUrl: "https://myhost.example.com/users/dummyLocalId/activity",
+    };
+    mockUser(dummyLocalUser as unknown as User);
+    // ローカルユーザーなのに自ホストのアドレスを叩かないようにする
+    const localServerHandler = jest.fn();
+    server.use(
+      rest.get(/https:\/\/myhost\.example\.com\/.*/, (_, res, ctx) => {
+        localServerHandler();
+        return res(ctx.status(404));
+      }),
+    );
+    // act
+    const result = await findOrFetchUserByActor(dummyLocalUser.actorUrl);
+    // assert
+    expect(result).toEqual(dummyLocalUser);
+    expect(localServerHandler).not.toHaveBeenCalled();
+  });
+});

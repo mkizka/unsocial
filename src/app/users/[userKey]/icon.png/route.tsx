@@ -1,17 +1,15 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
+import { userService } from "@/server/service";
 import { env } from "@/utils/env";
-import { prisma } from "@/utils/prisma";
 
 export async function GET(
   _: Request,
-  { params }: { params: { userId: string } },
+  { params }: { params: { userKey: string } },
 ) {
-  const user = await prisma.user.findUnique({
-    where: { id: params.userId },
-  });
-  if (!user) {
+  const user = await userService.findOrFetchUserByKey(params.userKey);
+  if (user instanceof Error) {
     notFound();
   }
   const url =

@@ -11,13 +11,13 @@ import { FollowButton } from "./FollowButton";
 import { RefetchButton } from "./RefetchButton";
 
 export type Props = {
-  userId: string;
+  userKey: string;
 };
 
-export async function UserCard({ userId }: Props) {
+export async function UserCard({ userKey }: Props) {
   const session = await getServerSession();
-  const user = await userService.findOrFetchUserByParams({ userId });
-  if (!user) {
+  const user = await userService.findOrFetchUserByKey(userKey);
+  if (user instanceof Error) {
     notFound();
   }
   const { followersCount, followeesCount } = await followService.count(user.id);

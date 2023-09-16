@@ -1,12 +1,12 @@
 import { UserTab } from "@/components/features/user/UserTab";
 
 type Props = {
-  userId: string;
+  userKey: string;
   currentTab: string;
 };
 
-export async function UserPage({ userId, currentTab }: Props) {
-  const rootPath = `/${decodeURIComponent(userId)}`;
+export async function UserPage({ userKey, currentTab }: Props) {
+  const rootPath = `/${decodeURIComponent(userKey)}`;
   return (
     <UserTab
       current={currentTab}

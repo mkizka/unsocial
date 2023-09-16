@@ -33,7 +33,7 @@ describe("verifyActivity", () => {
     ${unSupportedAlgorithmHeader} | ${mockedKeys.publickKey} | ${false} | ${'Invalid literal value, expected "rsa-sha256"'} | ${"アルゴリズムはrsa-sha256以外は未サポート"}
   `("$description", async ({ header, publicKey, isValid, reason }) => {
     // arrange
-    mockedPrisma.user.findFirst.mockResolvedValue({
+    mockedPrisma.user.findUnique.mockResolvedValue({
       host: "myhost.example.com", // webfingerに通信しないようにテストでは全てローカルユーザーとして扱う
       publicKey,
     } as User);

@@ -8,6 +8,7 @@ const dummyRemoteUser = {
 
 const dummyLocalUser = {
   id: "dummy_local",
+  host: "myhost.example.com",
 } as never;
 
 describe("inboxAcceptService", () => {
@@ -22,7 +23,7 @@ describe("inboxAcceptService", () => {
         object: "https://remote.example.com/u/dummy_remote",
       },
     };
-    mockedPrisma.user.findFirst.mockResolvedValue(dummyLocalUser);
+    mockedPrisma.user.findUnique.mockResolvedValue(dummyLocalUser);
     // act
     const error = await handle(activity, dummyRemoteUser);
     // assert
