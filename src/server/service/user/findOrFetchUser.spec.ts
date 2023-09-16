@@ -14,7 +14,7 @@ import {
   findOrFetchUserByActor,
   findOrFetchUserById,
   findOrFetchUserByWebFinger,
-  shouldReFetch,
+  shouldRefetch,
 } from "./findOrFetchUser";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
@@ -219,9 +219,9 @@ describe("findOrFetchUser", () => {
     ${dummyOldUser}     | ${true}
     ${dummyRecentUser}  | ${false}
   `(
-    "shouldReFetch: $user.nameのとき、$expectedを返す",
+    "shouldRefetch: $user.nameのとき、$expectedを返す",
     ({ user, expected }) => {
-      expect(shouldReFetch(user)).toBe(expected);
+      expect(shouldRefetch(user)).toBe(expected);
     },
   );
   test.each`

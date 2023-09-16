@@ -19,7 +19,7 @@ import {
 const logger = createLogger("findOrFetchUser");
 
 // この関数のみテスト用にexport
-export const shouldReFetch = (user: User) => {
+export const shouldRefetch = (user: User) => {
   if (user.host === env.HOST) {
     return false;
   }
@@ -76,7 +76,7 @@ export const findOrFetchUserById = async (
     // id指定で見つからなかった場合はこれ以上できることないのでエラーを返す
     return new UserNotFoundError();
   }
-  if (shouldReFetch(existingUser)) {
+  if (shouldRefetch(existingUser)) {
     // リモートユーザーならactorUrlを持っているはずなので型エラーを無視
     const person = await fetchPersonByActorUrl(existingUser.actorUrl!);
     if (person instanceof Error) {
@@ -110,7 +110,7 @@ export const findOrFetchUserByActor = async (
     return findOrFetchUserById(localUserId);
   }
   const existingUser = await userRepository.findUnique({ actorUrl });
-  if (!existingUser || shouldReFetch(existingUser)) {
+  if (!existingUser || shouldRefetch(existingUser)) {
     const person = await fetchPersonByActorUrl(actorUrl);
     if (person instanceof Error) {
       return existingUser || person;
@@ -125,7 +125,7 @@ export const findOrFetchUserByWebFinger = async (
   user: apRepository.FetchWebFingerParams,
 ): Promise<User | UserServiceError> => {
   const existingUser = await userRepository.findUnique(user);
-  if (!existingUser || shouldReFetch(existingUser)) {
+  if (!existingUser || shouldRefetch(existingUser)) {
     // actorUrlが分からないのでWebFingerで取得
     const actorUrl = await fetchActorUrlByWebFinger(user);
     if (actorUrl instanceof Error) {
