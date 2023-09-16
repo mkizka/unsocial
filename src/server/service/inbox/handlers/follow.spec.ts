@@ -36,7 +36,7 @@ describe("inboxFollowService", () => {
     // assert
     expect(mockedPrisma.user.findUnique).toHaveBeenCalledWith({
       where: {
-        actorUrl: "https://myhost.example.com/users/dummyidlocal/activity",
+        id: "dummyidlocal",
       },
     });
     expect(mockedPrisma.follow.create).toHaveBeenCalledWith({

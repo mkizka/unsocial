@@ -78,9 +78,28 @@ export const findOrFetchUserById = async (
   return existingUser;
 };
 
+const getLocalUserId = (actorUrl: string) => {
+  const url = new URL(actorUrl);
+  if (url.host !== env.HOST) {
+    return null;
+  }
+  // https://myhost.example.com/users/[userId]/activity
+  const [_, prefixPath, userId, lastPath] = url.pathname.split("/");
+  if (prefixPath === "users" && lastPath === "activity") {
+    return userId;
+  }
+  return null;
+};
+
 export const findOrFetchUserByActor = async (
   actorUrl: string,
 ): Promise<User | UserServiceError> => {
+  // 自ホストのユーザーはactorUrlがnullになっているため、
+  // idをURLから取り出してDBから取得する
+  const localUserId = getLocalUserId(actorUrl);
+  if (localUserId) {
+    return findOrFetchUserById(localUserId);
+  }
   const existingUser = await userRepository.findUnique({ actorUrl });
   if (!existingUser || shouldReFetch(existingUser)) {
     const person = await fetchPersonByActorUrl(actorUrl);

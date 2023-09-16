@@ -65,59 +65,62 @@ const dummyPerson = {
   },
 };
 
-const restSuccessWebfinger = rest.get(
-  "https://remote.example.com/.well-known/webfinger",
-  (req, res, ctx) => {
-    if (
-      req.url.searchParams.get("resource") !== "acct:dummy@remote.example.com"
-    ) {
-      return res(ctx.status(404));
-    }
-    return res(
-      ctx.json({
-        links: [
-          { rel: "dummy", href: "https://example.com" },
-          {
-            rel: "self",
-            href: "https://remote.example.com/u/dummyUser",
-          },
-        ],
-      }),
-    );
-  },
-);
+const dummyWebfingerUrl = "https://remote.example.com/.well-known/webfinger";
+
+const restSuccessWebfinger = rest.get(dummyWebfingerUrl, (req, res, ctx) => {
+  if (
+    req.url.searchParams.get("resource") !== "acct:dummy@remote.example.com"
+  ) {
+    return res(ctx.status(404));
+  }
+  return res(
+    ctx.json({
+      links: [
+        { rel: "dummy", href: "https://example.com" },
+        {
+          rel: "self",
+          href: "https://remote.example.com/u/dummyUser",
+        },
+      ],
+    }),
+  );
+});
 
 const mockUser = (user: User | null) => {
-  mockedPrisma.user.findUnique
-    .calledWith(
-      expect.objectContaining({
-        where: {
-          actorUrl: dummyUser.actorUrl,
-        },
-      }),
-    )
-    .mockResolvedValue(user);
-  mockedPrisma.user.findUnique
-    .calledWith(
-      expect.objectContaining({
-        where: {
-          id: dummyUser.id,
-        },
-      }),
-    )
-    .mockResolvedValue(user);
-  mockedPrisma.user.findUnique
-    .calledWith(
-      expect.objectContaining({
-        where: {
-          preferredUsername_host: {
-            preferredUsername: dummyUser.preferredUsername,
-            host: dummyUser.host,
+  if (user?.actorUrl) {
+    mockedPrisma.user.findUnique
+      .calledWith(
+        expect.objectContaining({
+          where: {
+            actorUrl: user.actorUrl,
           },
-        },
-      }),
-    )
-    .mockResolvedValue(user);
+        }),
+      )
+      .mockResolvedValue(user);
+  }
+  if (user) {
+    mockedPrisma.user.findUnique
+      .calledWith(
+        expect.objectContaining({
+          where: {
+            id: user.id,
+          },
+        }),
+      )
+      .mockResolvedValue(user);
+    mockedPrisma.user.findUnique
+      .calledWith(
+        expect.objectContaining({
+          where: {
+            preferredUsername_host: {
+              preferredUsername: user.preferredUsername,
+              host: user.host,
+            },
+          },
+        }),
+      )
+      .mockResolvedValue(user);
+  }
   mockedPrisma.user.create
     .calledWith(
       expect.objectContaining({
@@ -156,31 +159,29 @@ const ユーザーがDBに存在しない = () => mockUser(null);
 const 他サーバーからユーザー取得に成功した = () => {
   server.use(
     restSuccessWebfinger,
-    rest.get("https://remote.example.com/u/dummyUser", (_, res, ctx) =>
-      res(ctx.json(dummyPerson)),
-    ),
+    rest.get(dummyUser.actorUrl, (_, res, ctx) => res(ctx.json(dummyPerson))),
   );
 };
 
 const WebFingerとの通信に失敗した = () => {
   server.use(
-    rest.get(
-      "https://remote.example.com/.well-known/webfinger",
-      (_, res, ctx) => res(ctx.status(404)),
-    ),
+    rest.get(dummyWebfingerUrl, (_, res, ctx) => res(ctx.status(404))),
   );
 };
 
 const ActorURLとの通信に失敗した = () => {
   server.use(
     restSuccessWebfinger,
-    rest.get("https://remote.example.com/u/dummyUser", (_, res, ctx) =>
-      res(ctx.status(404)),
-    ),
+    rest.get(dummyUser.actorUrl, (_, res, ctx) => res(ctx.status(404))),
   );
 };
 
-const 通信しない = () => {};
+const 通信しない = () => {
+  server.use(
+    rest.get(dummyWebfingerUrl, (_, res, ctx) => res(ctx.status(404))),
+    rest.get(dummyUser.actorUrl, (_, res, ctx) => res(ctx.status(404))),
+  );
+};
 
 describe("findOrFetchUser", () => {
   beforeEach(() => {
@@ -220,4 +221,26 @@ describe("findOrFetchUser", () => {
       }
     },
   );
+  test("findOrFetchUserByActor: 引数のドメインが自ホストの場合は、IDをパースしてユーザーを返す", async () => {
+    // arrange
+    const dummyLocalUser = {
+      id: "dummyLocalId",
+      host: "myhost.example.com",
+      actorUrl: "https://myhost.example.com/users/dummyLocalId/activity",
+    };
+    mockUser(dummyLocalUser as unknown as User);
+    // ローカルユーザーなのに自ホストのアドレスを叩かないようにする
+    const localServerHandler = jest.fn();
+    server.use(
+      rest.get(/https:\/\/myhost\.example\.com\/.*/, (_, res, ctx) => {
+        localServerHandler();
+        return res(ctx.status(404));
+      }),
+    );
+    // act
+    const result = await findOrFetchUserByActor(dummyLocalUser.actorUrl);
+    // assert
+    expect(result).toEqual(dummyLocalUser);
+    expect(localServerHandler).not.toHaveBeenCalled();
+  });
 });
