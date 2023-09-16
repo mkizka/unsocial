@@ -30,11 +30,6 @@ const dummyUser = {
   inboxUrl: "https://remote.example.com/u/dummyUser/inbox",
 };
 
-const dummyRefetchUser = {
-  ...dummyUser,
-  name: "lastFetchedAtがnullのユーザー",
-};
-
 const dummyCreatedUser = {
   ...dummyUser,
   name: "新しいユーザー",
@@ -50,13 +45,19 @@ const dummyUpdatedUser = {
 const dummyRecentUser = {
   ...dummyUser,
   name: "最近のユーザー",
-  lastFetchedAt: new Date("2023-01-01T11:00:00Z"), // 1時間前に取得した
+  lastFetchedAt: new Date("2023-01-01T09:01:00Z"), // 2時間59分前に取得した
 };
 
 const dummyOldUser = {
   ...dummyUser,
   name: "古いユーザー",
   lastFetchedAt: new Date("2023-01-01T09:00:00Z"), // 3時間前に取得した
+};
+
+const dummyRefetchUser = {
+  ...dummyUser,
+  name: "fetch要求があったユーザー",
+  lastFetchedAt: null,
 };
 
 const { id: _id, ...expectedDataForPrismaCreateOrUpdate } = dummyCreatedUser;
