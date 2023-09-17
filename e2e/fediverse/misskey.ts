@@ -118,8 +118,13 @@ export class MisskeyHandler extends FediverseHandler {
   }
 
   async expectFollowing(user: string) {
-    await this.goto(`/@e2e//following`);
+    await this.goto(`/@e2e/following`);
     await expect(this.page.locator(`text=${user}`)).toBeVisible();
+  }
+
+  async expectNotFollowing(user: string) {
+    await this.goto(`/@e2e/following`);
+    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 
   async expectFollowed(user: string) {

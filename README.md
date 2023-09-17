@@ -33,4 +33,4 @@ https://mastodon.localhost を開く
 ## サポートしたい実装
 
 - ✅ Misskey
-- Mastodon
+- ✅ Mastodon

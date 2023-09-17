@@ -10,24 +10,18 @@ export const findByActorId = cache((actorId: URL) => {
   });
 });
 
-export type FindFirstParams =
+export type FindUniqueParams =
   | {
       preferredUsername: string;
       host: string;
     }
-  | { id: string };
+  | { id: string }
+  | { actorUrl: string };
 
-export const findFirst = cache((where: FindFirstParams) => {
-  return prisma.user.findFirst({ where });
-});
-
-export const findFirstWithCredentials = cache((where: FindFirstParams) => {
-  return prisma.user.findFirst({
-    where,
-    include: {
-      credential: true,
-    },
-  });
+export const findUnique = cache((params: FindUniqueParams) => {
+  const where =
+    "preferredUsername" in params ? { preferredUsername_host: params } : params;
+  return prisma.user.findUnique({ where });
 });
 
 export const createOrUpdateUser = (

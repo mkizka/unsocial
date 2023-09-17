@@ -28,7 +28,7 @@ const convertUser = (
     type: "Person",
     inbox: new URL(`${userAddress}/inbox`),
     outbox: new URL(`${userAddress}/outbox`),
-    following: new URL(`${userAddress}/following`),
+    following: new URL(`${userAddress}/followees`),
     followers: new URL(`${userAddress}/followers`),
     featured: new URL(`${userAddress}/collections/featured`),
     preferredUsername: user.preferredUsername,

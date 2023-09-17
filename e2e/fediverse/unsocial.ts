@@ -78,18 +78,35 @@ export class MyhostUnsocialHandler extends FediverseHandler {
   }
 
   async expectFollowing(user: string) {
-    await this.goto(`/${user}`);
-    await expect(this.page.getByTestId("follow-button")).toHaveText(
-      "フォロー中",
+    await this.goto(`/${this.user}/followees`);
+    await expect(this.page.getByTestId("user-followees")).toHaveText(
+      "1フォロー",
     );
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+  }
+
+  async expectNotFollowing(user: string) {
+    await this.goto(`/${this.user}/followees`);
+    await expect(this.page.getByTestId("user-followees")).toHaveText(
+      "0フォロー",
+    );
+    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 
   async expectFollowed(user: string) {
-    // TODO: フォロワー一覧を実装したら実装
+    await this.goto(`/${this.user}/followers`);
+    await expect(this.page.getByTestId("user-followers")).toHaveText(
+      "1フォロワー",
+    );
+    await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async expectNotFollowed(user: string) {
-    // TODO: フォロワー一覧を実装したら実装
+    await this.goto(`/${this.user}/followers`);
+    await expect(this.page.getByTestId("user-followers")).toHaveText(
+      "0フォロワー",
+    );
+    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 }
 

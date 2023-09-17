@@ -13,10 +13,10 @@ export const handle: InboxHandler = async (activity, followee) => {
   if (!parsedAccept.success) {
     return new ActivitySchemaValidationError(parsedAccept.error, activity);
   }
-  const follower = await userService.findUserByActorId(
-    new URL(parsedAccept.data.object.actor),
+  const follower = await userService.findOrFetchUserByActor(
+    parsedAccept.data.object.actor,
   );
-  if (!follower) {
+  if (follower instanceof Error) {
     return new BadActivityRequestError(
       "Acceptされたフォロワーが存在しませんでした",
       activity,

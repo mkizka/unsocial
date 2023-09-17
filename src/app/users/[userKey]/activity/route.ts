@@ -6,10 +6,10 @@ import { activityStreams } from "@/utils/activitypub";
 
 export async function GET(
   request: Request,
-  { params }: { params: { userId: string } },
+  { params }: { params: { userKey: string } },
 ) {
-  const user = await userService.findOrFetchUserByParams(params);
-  if (!user) {
+  const user = await userService.findOrFetchUserByKey(params.userKey);
+  if (user instanceof Error) {
     notFound();
   }
   if (request.headers.get("accept")?.includes("text/html")) {

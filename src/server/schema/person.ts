@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const inboxPersonSchema = z.object({
+  type: z.literal("Person"),
   id: z.string().url(),
   name: z.string().nullable(),
   preferredUsername: z.string().min(1),

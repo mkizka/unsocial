@@ -74,6 +74,10 @@ export const fetchJson = (
       }
       return jsonOrError;
     })
+    .catch((error) => {
+      logger.warn(`fetchエラー(${init.method} ${input}): ${error}`);
+      return new UnexpectedError();
+    })
     .finally(() => {
       clearTimeout(timeoutId);
     });
