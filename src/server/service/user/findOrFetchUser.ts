@@ -40,16 +40,11 @@ const fetchActorUrlByWebFinger = async (
   }
   const parsed = webFingerSchema.safeParse(response);
   if (!parsed.success) {
-    // TODO: テスト追加
     logger.info("検証失敗: " + formatZodError(parsed.error));
     return new WebfingerValidationError();
   }
-  const link = parsed.data.links.find((link) => link.rel === "self");
-  if (link?.href) {
-    return link.href;
-  }
-  logger.info("actorUrlがWebFingerから見つかりませんでした");
-  return new WebfingerValidationError();
+  // webFingerSchemaで要素が一つ以上あることが保証されているので型エラーを無視する
+  return parsed.data.links[0]!.href;
 };
 
 const fetchPersonByActorUrl = async (

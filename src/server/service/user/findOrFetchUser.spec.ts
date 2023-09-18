@@ -73,7 +73,7 @@ const restSuccessWebfinger = rest.get(dummyWebfingerUrl, (req, res, ctx) => {
   return res(
     ctx.json({
       links: [
-        { rel: "dummy", href: "https://example.com" },
+        { rel: "dummy" },
         {
           rel: "self",
           href: "https://remote.example.com/u/dummyUser",
