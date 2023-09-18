@@ -1,7 +1,8 @@
 import { z } from "zod";
 
 export const inboxPersonSchema = z.object({
-  type: z.literal("Person"),
+  // MisskeyではServiceが使われることもある
+  type: z.union([z.literal("Person"), z.literal("Service")]),
   id: z.string().url(),
   name: z.string().nullable(),
   preferredUsername: z.string().min(1),
