@@ -22,7 +22,7 @@ jobs:
           node-version-file: .node-version
           cache: pnpm
       - run: pnpm i
-      - run: pnpm mutation-test:run-only --fileLogLevel trace
+      - run: pnpm mutation-test:run-only --fileLogLevel trace --force
       - name: upload-reports
         run: |
           mv stryker.log reports/mutation/
