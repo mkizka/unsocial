@@ -33,7 +33,7 @@
     "nodemailer": "6.9.5",
     "react": "18.3.0-canary-d6dcad6a8-20230914",
     "react-dom": "18.3.0-canary-d6dcad6a8-20230914",
-    "sharp": "0.32.5",
+    "sharp": "0.32.6",
     "superjson": "1.13.1",
     "swr": "2.2.2",
     "winston": "3.10.0",
