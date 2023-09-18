@@ -89,12 +89,13 @@ export const findOrFetchUserById = async (
 
 const getLocalUserId = (actorUrl: string) => {
   const url = new URL(actorUrl);
-  if (url.host !== env.HOST) {
-    return null;
-  }
   // https://myhost.example.com/users/[userId]/activity
   const [_, prefixPath, userId, lastPath] = url.pathname.split("/");
-  if (prefixPath === "users" && lastPath === "activity") {
+  if (
+    url.host === env.HOST &&
+    prefixPath === "users" &&
+    lastPath === "activity"
+  ) {
     return userId;
   }
   return null;
