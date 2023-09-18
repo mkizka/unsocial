@@ -58,9 +58,6 @@ devDependencies:
   '@stryker-mutator/jest-runner':
     specifier: 7.1.1
     version: 7.1.1(@stryker-mutator/core@7.1.1)
-  '@stryker-mutator/typescript-checker':
-    specifier: 7.1.1
-    version: 7.1.1(@stryker-mutator/core@7.1.1)(typescript@5.2.2)
   '@tailwindcss/forms':
     specifier: 0.5.6
     version: 0.5.6(tailwindcss@3.3.3)
@@ -1554,20 +1551,6 @@ packages:
       '@stryker-mutator/util': 7.1.1
       semver: 7.5.4
       tslib: 2.6.0
-    dev: true
-
-  /@stryker-mutator/typescript-checker@7.1.1(@stryker-mutator/core@7.1.1)(typescript@5.2.2):
-    resolution: {integrity: sha512-BJbcFZY9HSB0EcvzMb9pHdOOEXjAaYykTQAbkE+3Zt+kAxufBRa8TLHdKCb+LB47qnOF07Diuv+ODIpr9FJ8nw==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      '@stryker-mutator/core': ~7.1.0
-      typescript: '>=3.6'
-    dependencies:
-      '@stryker-mutator/api': 7.1.1
-      '@stryker-mutator/core': 7.1.1
-      '@stryker-mutator/util': 7.1.1
-      semver: 7.5.4
-      typescript: 5.2.2
     dev: true
 
   /@stryker-mutator/util@7.1.1:
