@@ -4,10 +4,14 @@ export class UserNotFoundError extends UserServiceError {
   name = "UserNotFoundError";
 }
 
-export class WebfingerFailError extends UserServiceError {
-  name = "WebfingerFailError";
+export class WebfingerValidationError extends UserServiceError {
+  name = "WebfingerValidationError";
 }
 
-export class ActorFailError extends UserServiceError {
-  name = "ActorFailError";
+export class ActorValidationError extends UserServiceError {
+  name = "ActorValidationError";
+}
+
+export class NoActorInWebFingerError extends UserServiceError {
+  name = "NoActorInWebFingerError";
 }
