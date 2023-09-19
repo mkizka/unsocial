@@ -86,7 +86,7 @@ services:
       mastodon:
         condition: service_healthy
   db:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     ports:
       - 5432:5432
     volumes:
@@ -95,10 +95,10 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD", "test", "-e", "/tmp/db_initialized"]
       interval: 2s
       timeout: 2s
-      retries: 5
+      retries: 10
   redis:
     image: redis:7-alpine
     volumes:

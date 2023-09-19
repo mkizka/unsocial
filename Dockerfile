@@ -1,7 +1,6 @@
 # 参考
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
-# https://pnpm.io/docker
-FROM node:20.5-slim AS base
+FROM node:18.17.1-slim AS base
 WORKDIR /app
 RUN apt-get update && apt-get install -y openssl \
   && apt-get clean \

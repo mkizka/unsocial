@@ -52,10 +52,10 @@ const createVerify = (textToSign: string) => {
 };
 
 const findOrFetchPublicKeyByKeyId = async (keyId: string) => {
-  const actorId = new URL(keyId);
-  actorId.hash = "";
-  const user = await userService.findOrFetchUserByActorId(actorId);
-  if (!user) {
+  const actorUrl = new URL(keyId);
+  actorUrl.hash = "";
+  const user = await userService.findOrFetchUserByActor(actorUrl.toString());
+  if (user instanceof Error) {
     return null;
   }
   return user.publicKey;

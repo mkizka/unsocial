@@ -21,7 +21,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # https://zenn.dev/kshida/articles/auto-generate-release-pr-with-github-actions
       - name: Check PR
         id: check-pr
