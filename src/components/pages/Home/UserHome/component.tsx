@@ -2,8 +2,7 @@ import type { Session } from "next-auth";
 
 import { NoteForm } from "@/components/features/note/NoteForm";
 import { Timeline } from "@/components/features/note/Timeline";
-
-import { SignOutButton } from "../LoginButton";
+import { SignOutButton } from "@/components/pages/Home/LoginButton";
 
 type Props = {
   user: NonNullable<Session["user"]>;

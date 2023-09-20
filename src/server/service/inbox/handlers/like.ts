@@ -1,11 +1,11 @@
 import { likeRepository } from "@/server/repository";
 import { inboxLikeSchema } from "@/server/schema/like";
-import { createLogger } from "@/utils/logger";
-
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "../errors";
+} from "@/server/service/inbox/errors";
+import { createLogger } from "@/utils/logger";
+
 import { type InboxHandler, resolveNoteId } from "./shared";
 
 const logger = createLogger("inboxLikeService");

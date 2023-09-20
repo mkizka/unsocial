@@ -40,6 +40,7 @@
     "zod": "3.22.2"
   },
   "devDependencies": {
+    "@dword-design/eslint-plugin-import-alias": "4.0.8",
     "@playwright/test": "1.38.0",
     "@stryker-mutator/api": "7.1.1",
     "@stryker-mutator/core": "7.1.1",

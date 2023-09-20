@@ -1,8 +1,8 @@
 import { noteRepository } from "@/server/repository";
 import { inboxCreateSchema } from "@/server/schema/create";
+import { ActivitySchemaValidationError } from "@/server/service/inbox/errors";
 import { createLogger } from "@/utils/logger";
 
-import { ActivitySchemaValidationError } from "../errors";
 import { type InboxHandler } from "./shared";
 
 const logger = createLogger("inboxCreateService");

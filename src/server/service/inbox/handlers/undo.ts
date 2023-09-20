@@ -2,13 +2,13 @@ import type { User } from "@prisma/client";
 
 import { followRepository, likeRepository } from "@/server/repository";
 import { inboxUndoSchema, type UndoActivity } from "@/server/schema/undo";
-
-import { userService } from "../..";
-import type { InboxError } from "../errors";
+import { userService } from "@/server/service";
+import type { InboxError } from "@/server/service/inbox/errors";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "../errors";
+} from "@/server/service/inbox/errors";
+
 import type { InboxHandler } from "./shared";
 import { resolveNoteId } from "./shared";
 

@@ -3,15 +3,15 @@ import crypto from "crypto";
 import { followRepository } from "@/server/repository";
 import { inboxFollowSchema } from "@/server/schema/follow";
 import { userService } from "@/server/service";
-import { env } from "@/utils/env";
-import { createLogger } from "@/utils/logger";
-import { relayActivityToInboxUrl } from "@/utils/relayActivity";
-
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
   UnexpectedActivityRequestError,
-} from "../errors";
+} from "@/server/service/inbox/errors";
+import { env } from "@/utils/env";
+import { createLogger } from "@/utils/logger";
+import { relayActivityToInboxUrl } from "@/utils/relayActivity";
+
 import { type InboxHandler } from "./shared";
 
 const logger = createLogger("inboxFollowService");

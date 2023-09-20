@@ -1,7 +1,7 @@
 import { noteRepository } from "@/server/repository";
 import { inboxDeleteSchema } from "@/server/schema/delete";
+import { ActivitySchemaValidationError } from "@/server/service/inbox/errors";
 
-import { ActivitySchemaValidationError } from "../errors";
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity) => {
