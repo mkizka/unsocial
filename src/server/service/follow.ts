@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { followRepository } from "../repository";
+import { followRepository } from "@/server/repository";
 
 export const findFollowers = cache((userId: string) => {
   return followRepository.findFollowers(userId);

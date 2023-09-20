@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { UserIcon } from "@/components/features/user/UserIcon";
 import { followService, userService } from "@/server/service";
 import { env } from "@/utils/env";
 import { fullUsername } from "@/utils/fullUsername";
 import { getServerSession } from "@/utils/getServerSession";
 
-import { UserIcon } from "../UserIcon";
 import { FollowButton } from "./FollowButton";
 import { RefetchButton } from "./RefetchButton";
 

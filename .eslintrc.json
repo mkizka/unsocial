@@ -7,7 +7,8 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
-    "plugin:eqeqeq-fix/recommended"
+    "plugin:eqeqeq-fix/recommended",
+    "plugin:@dword-design/import-alias/recommended"
   ],
   "rules": {
     // @typescript-eslint
@@ -20,6 +21,15 @@
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     // unused-imports
-    "unused-imports/no-unused-imports": "error"
+    "unused-imports/no-unused-imports": "error",
+    // @dword-design/import-alias
+    "@dword-design/import-alias/prefer-alias": [
+      "error",
+      {
+        "alias": {
+          "@": "./src/"
+        }
+      }
+    ]
   }
 }

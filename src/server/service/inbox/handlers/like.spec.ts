@@ -1,10 +1,10 @@
 import { mockedLogger } from "@/mocks/logger";
 import { mockedPrisma } from "@/mocks/prisma";
-
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "../errors";
+} from "@/server/service/inbox/errors";
+
 import { handle } from "./like";
 
 const dummyRemoteUser = {

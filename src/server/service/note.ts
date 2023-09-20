@@ -1,9 +1,8 @@
 import { cache } from "react";
 
+import { noteRepository } from "@/server/repository";
 import { fullUsername } from "@/utils/fullUsername";
 import { getUser } from "@/utils/getServerSession";
-
-import { noteRepository } from "../repository";
 
 const format = (note: noteRepository.NoteCard, userId?: string) => {
   return {

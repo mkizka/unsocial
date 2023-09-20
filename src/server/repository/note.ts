@@ -1,9 +1,8 @@
 import { cache } from "react";
 
+import type { DeleteActivity } from "@/server/schema/delete";
+import type { NoteActivity } from "@/server/schema/note";
 import { prisma } from "@/utils/prisma";
-
-import type { DeleteActivity } from "../schema/delete";
-import type { NoteActivity } from "../schema/note";
 
 const includeForNoteCard = {
   user: true,
