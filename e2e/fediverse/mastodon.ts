@@ -92,21 +92,29 @@ export class MastodonHandler extends FediverseHandler {
 
   async expectFollowing(user: string) {
     await this.goto(`/@e2e/following`);
-    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+    await expect(
+      this.page.locator(".display-name__account", { hasText: user }),
+    ).toBeVisible();
   }
 
   async expectNotFollowing(user: string) {
     await this.goto(`/@e2e/following`);
-    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
+    await expect(
+      this.page.locator(".display-name__account", { hasText: user }),
+    ).toBeVisible();
   }
 
   async expectFollowed(user: string) {
     await this.goto(`/@e2e/followers`);
-    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+    await expect(
+      this.page.locator(".display-name__account", { hasText: user }),
+    ).toBeVisible();
   }
 
   async expectNotFollowed(user: string) {
     await this.goto(`/@e2e/followers`);
-    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
+    await expect(
+      this.page.locator(".display-name__account", { hasText: user }),
+    ).not.toBeVisible();
   }
 }
