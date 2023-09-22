@@ -1,4 +1,4 @@
-import { TextInput } from "../TextInput";
+import { TextInput } from "@/components/features/auth/AuthForm/TextInput";
 
 type Props = {
   action: "signUp" | "signIn";

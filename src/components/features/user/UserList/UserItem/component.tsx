@@ -1,9 +1,8 @@
 import type { User } from "@prisma/client";
 
+import type { UserIconProps } from "@/components/features/user/UserIcon";
+import { UserIcon } from "@/components/features/user/UserIcon";
 import { fullUsername } from "@/utils/fullUsername";
-
-import type { UserIconProps } from "../../UserIcon";
-import { UserIcon } from "../../UserIcon";
 
 export type Props = {
   user: UserIconProps["user"] & Pick<User, "name" | "host">;

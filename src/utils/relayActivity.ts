@@ -1,8 +1,8 @@
 import { credentialService } from "@/server/service";
-import type { SignActivityParams } from "@/utils/httpSignature/sign";
-import { signActivity } from "@/utils/httpSignature/sign";
 
 import { fetchJson } from "./fetchJson";
+import type { SignActivityParams } from "./httpSignature/sign";
+import { signActivity } from "./httpSignature/sign";
 import { createLogger } from "./logger";
 import { prisma } from "./prisma";
 

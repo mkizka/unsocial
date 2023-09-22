@@ -1,7 +1,8 @@
 import type { AP } from "activitypub-core-types";
 import crypto from "crypto";
 
-import { env } from "../env";
+import { env } from "@/utils/env";
+
 import { textOf } from "./utils";
 
 const createDigest = (activity: object) => {

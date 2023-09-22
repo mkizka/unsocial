@@ -1,8 +1,7 @@
 import { cache } from "react";
 
+import type { PersonActivity } from "@/server/schema/person";
 import { prisma } from "@/utils/prisma";
-
-import type { PersonActivity } from "../schema/person";
 
 export const findByActorId = cache((actorId: URL) => {
   return prisma.user.findFirst({

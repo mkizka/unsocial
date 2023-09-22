@@ -1,11 +1,11 @@
 import { followRepository } from "@/server/repository";
 import { inboxAcceptSchema } from "@/server/schema/accept";
-
-import { userService } from "../..";
+import { userService } from "@/server/service";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "../errors";
+} from "@/server/service/inbox/errors";
+
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, followee) => {
