@@ -18,7 +18,9 @@ export class MastodonHandler extends FediverseHandler {
     await this.goto("/");
     await this.page.locator(".search__input").fill(user);
     await this.page.locator(".search__input").press("Enter");
-    await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
+    await expect(
+      this.page.locator(".display-name__account", { hasText: user }),
+    ).toBeVisible();
   }
 
   getNote(content: string) {
@@ -86,25 +88,38 @@ export class MastodonHandler extends FediverseHandler {
   async unfollow(user: string) {
     await this.goto(`/${user}`);
     await this.page.locator("button", { hasText: "フォロー解除" }).click();
+    await this.page
+      .locator(".confirmation-modal__action-bar button", {
+        hasText: "フォロー解除",
+      })
+      .click();
   }
 
   async expectFollowing(user: string) {
     await this.goto(`/@e2e/following`);
-    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+    await expect(
+      this.page.locator(".display-name__account", { hasText: user }),
+    ).toBeVisible();
   }
 
   async expectNotFollowing(user: string) {
     await this.goto(`/@e2e/following`);
-    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
+    await expect(
+      this.page.locator(".display-name__account", { hasText: user }),
+    ).not.toBeVisible();
   }
 
   async expectFollowed(user: string) {
     await this.goto(`/@e2e/followers`);
-    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+    await expect(
+      this.page.locator(".display-name__account", { hasText: user }),
+    ).toBeVisible();
   }
 
   async expectNotFollowed(user: string) {
     await this.goto(`/@e2e/followers`);
-    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
+    await expect(
+      this.page.locator(".display-name__account", { hasText: user }),
+    ).not.toBeVisible();
   }
 }
