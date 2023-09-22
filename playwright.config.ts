@@ -4,7 +4,7 @@ import { defineConfig, devices } from "@playwright/test";
 const config: PlaywrightTestConfig = {
   testDir: "e2e",
   outputDir: "reports/.e2e",
-  timeout: 60000,
+  timeout: 90000,
   reporter: [["html", { open: "never", outputFolder: "reports/e2e" }]],
   projects: [
     {
