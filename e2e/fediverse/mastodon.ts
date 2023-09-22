@@ -19,8 +19,7 @@ export class MastodonHandler extends FediverseHandler {
     await this.page.locator(".search__input").fill(user);
     await this.page.locator(".search__input").press("Enter");
     await expect(
-      // v4.2から@とそれ以降の文字列が別タグで表示されるようになったので、sliceで@を削除する
-      this.page.locator(`text=${user.slice(1)}`).first(),
+      this.page.locator(".display-name__account", { hasText: user }),
     ).toBeVisible();
   }
 
