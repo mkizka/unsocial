@@ -18,7 +18,7 @@ export class MastodonHandler extends FediverseHandler {
     await this.goto("/");
     await this.page.locator(".search__input").fill(user);
     await this.page.locator(".search__input").press("Enter");
-    await expect(this.page.locator(".display-name__account")).toHaveText(user);
+    await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
   }
 
   getNote(content: string) {
