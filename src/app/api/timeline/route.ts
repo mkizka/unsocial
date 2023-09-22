@@ -26,6 +26,7 @@ const handler =
 
 export const GET = handler(
   z.object({
+    userId: z.string().optional(),
     since: z.coerce.date().optional(),
     until: z.coerce.date().optional(),
     count: z.coerce.number().default(10),

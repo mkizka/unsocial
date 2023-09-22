@@ -2,7 +2,11 @@ import { noteService } from "@/server/service";
 
 import { ClientComponent } from "./client";
 
-export async function Timeline() {
-  const notes = await noteService.findManyNoteCards({ count: 10 });
+type Props = {
+  userId?: string;
+};
+
+export async function Timeline({ userId }: Props) {
+  const notes = await noteService.findManyNoteCards({ userId, count: 10 });
   return <ClientComponent firstLoadedNotes={notes} />;
 }
