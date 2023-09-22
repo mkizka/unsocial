@@ -1,6 +1,6 @@
 "use client";
 import superjson from "superjson";
-import useSWRInfinite, { unstable_serialize } from "swr/infinite";
+import useSWRInfinite from "swr/infinite";
 
 import type { TimelineResponse } from "@/app/api/timeline/route";
 import { SubmitButton } from "@/components/clients/SubmitButton";
@@ -27,11 +27,10 @@ const fetcher = (url: string) =>
   });
 
 type Props = {
-  firstLoadedNotes: TimelineResponse;
   userId?: string;
 };
 
-export function ClientComponent({ firstLoadedNotes, userId }: Props) {
+export function TimelineLoader({ userId }: Props) {
   const getKey = createGetKey(userId);
   const {
     data: notes,
@@ -43,9 +42,6 @@ export function ClientComponent({ firstLoadedNotes, userId }: Props) {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateFirstPage: false,
-    fallback: {
-      [unstable_serialize(getKey)]: [firstLoadedNotes],
-    },
   });
 
   if (error) return <div>failed to load</div>;

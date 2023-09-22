@@ -1,12 +1,20 @@
-import { noteService } from "@/server/service";
+import { notFound } from "next/navigation";
 
-import { ClientComponent } from "./client";
+import { userService } from "@/server/service";
+
+import { TimelineLoader } from "./TimelineLoader";
 
 type Props = {
-  userId?: string;
+  userKey?: string;
 };
 
-export async function Timeline({ userId }: Props) {
-  const notes = await noteService.findManyNoteCards({ userId, count: 10 });
-  return <ClientComponent firstLoadedNotes={notes} />;
+export async function Timeline({ userKey }: Props) {
+  if (!userKey) {
+    return <TimelineLoader />;
+  }
+  const user = await userService.findOrFetchUserByKey(userKey);
+  if (user instanceof Error) {
+    notFound();
+  }
+  return <TimelineLoader userId={user.id} />;
 }
