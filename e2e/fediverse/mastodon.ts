@@ -106,7 +106,7 @@ export class MastodonHandler extends FediverseHandler {
     await this.goto(`/@e2e/following`);
     await expect(
       this.page.locator(".display-name__account", { hasText: user }),
-    ).toBeVisible();
+    ).not.toBeVisible();
   }
 
   async expectFollowed(user: string) {
