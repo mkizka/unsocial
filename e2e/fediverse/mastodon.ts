@@ -15,12 +15,10 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async expectedUser(user: string) {
-    await expect(async () => {
-      await this.goto("/");
-      await this.page.locator(".search__input").fill(user);
-      await this.page.locator(".search__input").press("Enter");
-      await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
-    }).toPass();
+    await this.goto("/");
+    await this.page.locator(".search__input").fill(user);
+    await this.page.locator(".search__input").press("Enter");
+    await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
   }
 
   getNote(content: string) {
