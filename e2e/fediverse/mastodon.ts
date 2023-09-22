@@ -88,6 +88,11 @@ export class MastodonHandler extends FediverseHandler {
   async unfollow(user: string) {
     await this.goto(`/${user}`);
     await this.page.locator("button", { hasText: "フォロー解除" }).click();
+    await this.page
+      .locator(".confirmation-modal__action-bar button", {
+        hasText: "フォロー解除",
+      })
+      .click();
   }
 
   async expectFollowing(user: string) {
