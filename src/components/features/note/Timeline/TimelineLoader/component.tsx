@@ -1,27 +1,26 @@
 "use client";
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 
+import { timelineAtom } from "@/components/atoms/timeline";
 import { SubmitButton } from "@/components/clients/SubmitButton";
 import { NoteCard } from "@/components/features/note/NoteCard";
-import type { noteService } from "@/server/service";
 
 import { action } from "./action";
 
 export function TimelineLoader() {
-  const [notes, setNotes] = useState<noteService.NoteCard[][] | null>(null);
+  const [timeline, setTimeline] = useAtom(timelineAtom);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(notes);
-
   const loadMoreNotes = async () => {
-    if (!notes) {
+    if (!timeline) {
       const notes = await action();
-      setNotes([notes]);
+      setTimeline([notes]);
     } else {
-      const lastNote = notes.flat().at(-1);
+      const lastNote = timeline.flat().at(-1);
       if (!lastNote) return;
       const newNotes = await action(lastNote.publishedAt);
-      setNotes([...notes, newNotes]);
+      setTimeline([...timeline, newNotes]);
     }
   };
 
@@ -30,15 +29,15 @@ export function TimelineLoader() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!notes) return <div>loading...</div>;
-  if (notes.length === 0) return <div>ノートがありません</div>;
+  if (!timeline) return <div>loading...</div>;
+  if (timeline.length === 0) return <div>ノートがありません</div>;
 
   return (
     <div>
-      {notes.flat().map((note) => (
+      {timeline.flat().map((note) => (
         <NoteCard key={note.id} note={note} />
       ))}
-      {notes.at(-1)?.length !== 0 && (
+      {timeline.at(-1)?.length !== 0 && (
         <SubmitButton
           loading={isLoading}
           onClick={async () => {
