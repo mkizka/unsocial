@@ -1,6 +1,6 @@
 "use client";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { timelineAtom } from "@/components/atoms/timeline";
 import { SubmitButton } from "@/components/clients/SubmitButton";
@@ -16,22 +16,28 @@ export function TimelineLoader({ userId }: Props) {
   const [timeline, setTimeline] = useAtom(timelineAtom);
   const [isLoading, setIsLoading] = useState(false);
 
+  const loadFisrtNotes = useCallback(async () => {
+    const notes = await action({ userId });
+    setTimeline([notes]);
+  }, [setTimeline, userId]);
+
   const loadMoreNotes = async () => {
     if (!timeline) {
-      const notes = await action({ userId });
-      setTimeline([notes]);
-    } else {
-      const lastNote = timeline.at(-1)?.at(-1);
-      if (!lastNote) return;
-      const newNotes = await action({ userId, until: lastNote.publishedAt });
-      setTimeline([...timeline, newNotes]);
+      await loadFisrtNotes();
+      return;
     }
+    const lastNote = timeline.at(-1)?.at(-1);
+    if (!lastNote) {
+      return;
+    }
+    const newNotes = await action({ userId, until: lastNote.publishedAt });
+    setTimeline((prev) => [...(prev ?? []), newNotes]);
   };
 
   useEffect(() => {
-    loadMoreNotes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    loadFisrtNotes();
+    // userIdが変わるたびにtimelineをリセットする
+  }, [loadFisrtNotes]);
 
   if (!timeline) return <div>loading...</div>;
   if (timeline.flat().length === 0) return <div>ノートがありません</div>;
