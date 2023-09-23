@@ -1,5 +1,7 @@
 import "./globals.css";
 
+import { Providers } from "./providers";
+
 export const metadata = {
   title: "Unsocial",
   description: "ActivityPubおためし実装",
@@ -13,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="flex justify-center bg-primary text-dark">
-        <div className="w-full max-w-xl">{children}</div>
+        <div className="w-full max-w-xl">
+          <Providers>{children}</Providers>
+        </div>
       </body>
     </html>
   );
