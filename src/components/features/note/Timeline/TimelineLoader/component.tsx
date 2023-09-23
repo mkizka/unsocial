@@ -17,7 +17,7 @@ export function TimelineLoader() {
       const notes = await action();
       setTimeline([notes]);
     } else {
-      const lastNote = timeline.flat().at(-1);
+      const lastNote = timeline.at(-1)?.at(-1);
       if (!lastNote) return;
       const newNotes = await action(lastNote.publishedAt);
       setTimeline([...timeline, newNotes]);

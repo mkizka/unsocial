@@ -23,12 +23,12 @@ const main = async () => {
   });
   await Promise.all(
     Array.from({ length: 100 }).map(async (_, i) => {
-      const published = new Date("2023-01-01T00:00:00Z");
-      published.setSeconds(published.getSeconds() + i);
+      const publishedAt = new Date("2023-01-01T00:00:00Z");
+      publishedAt.setSeconds(publishedAt.getSeconds() + i);
       await noteRepository.create({
         userId: user.id,
-        content: "テスト " + published.toISOString(),
-        published,
+        content: "テスト " + publishedAt.toISOString(),
+        publishedAt,
       });
     }),
   );
