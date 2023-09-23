@@ -5,6 +5,10 @@ import { Providers } from "./providers";
 export const metadata = {
   title: "Unsocial",
   description: "ActivityPubおためし実装",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({
