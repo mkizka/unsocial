@@ -7,6 +7,7 @@ coverage/
 .next/
 next-env.d.ts
 .env
+.swc
 
 # stryker
 .stryker-tmp
