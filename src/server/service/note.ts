@@ -48,3 +48,9 @@ export const findManyNoteCardsByUserId = cache(async (userId: string) => {
   const user = await getUser();
   return notes.map((note) => format(note, user?.id));
 });
+
+export const create = async (params: noteRepository.CreateParams) => {
+  const note = await noteRepository.create(params);
+  const user = await getUser();
+  return format(note, user?.id);
+};

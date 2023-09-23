@@ -1,6 +1,6 @@
+import { noteService } from "@/server/service";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
-import { prisma } from "@/utils/prisma";
 import { relayActivityToFollowers } from "@/utils/relayActivity";
 
 export async function action(formData: FormData) {
@@ -13,15 +13,14 @@ export async function action(formData: FormData) {
   if (typeof content !== "string") {
     return { error: "入力したデータが不正です" };
   }
-  const note = await prisma.note.create({
-    data: {
-      userId: session.user.id,
-      content,
-      publishedAt: new Date(),
-    },
+  const note = await noteService.create({
+    userId: session.user.id,
+    content,
+    publishedAt: new Date(),
   });
   await relayActivityToFollowers({
     userId: session.user.id,
     activity: activityStreams.create(note),
   });
+  return note;
 }

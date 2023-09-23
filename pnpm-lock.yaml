@@ -14,6 +14,9 @@ dependencies:
   bcryptjs:
     specifier: 2.4.3
     version: 2.4.3
+  jotai:
+    specifier: 2.4.2
+    version: 2.4.2(@types/react@18.2.22)(react@18.3.0-canary-d6dcad6a8-20230914)
   next:
     specifier: 13.5.3-canary.1
     version: 13.5.3-canary.1(@babel/core@7.22.1)(react-dom@18.3.0-canary-d6dcad6a8-20230914)(react@18.3.0-canary-d6dcad6a8-20230914)
@@ -35,9 +38,6 @@ dependencies:
   superjson:
     specifier: 1.13.1
     version: 1.13.1
-  swr:
-    specifier: 2.2.2
-    version: 2.2.2(react@18.3.0-canary-d6dcad6a8-20230914)
   winston:
     specifier: 3.10.0
     version: 3.10.0
@@ -64,6 +64,9 @@ devDependencies:
   '@stryker-mutator/typescript-checker':
     specifier: 7.1.1
     version: 7.1.1(@stryker-mutator/core@7.1.1)(typescript@5.2.2)
+  '@swc-jotai/react-refresh':
+    specifier: 0.1.0
+    version: 0.1.0
   '@tailwindcss/forms':
     specifier: 0.5.6
     version: 0.5.6(tailwindcss@3.3.3)
@@ -1606,6 +1609,10 @@ packages:
       lodash.flatmap: 4.5.0
     dev: true
 
+  /@swc-jotai/react-refresh@0.1.0:
+    resolution: {integrity: sha512-CWV4W06GdfQo3cW3CoUM2fp7avH4Z/suR7SvECNJnQbr6Sa9U3p7o10nXjNv2zT6z09bbNUPM55HBw5Nwd24Iw==}
+    dev: true
+
   /@swc/helpers@0.5.2:
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
     dependencies:
@@ -1739,7 +1746,6 @@ packages:
 
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: true
 
   /@types/react-dom@18.2.7:
     resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}
@@ -1753,11 +1759,9 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
-    dev: true
 
   /@types/scheduler@0.16.3:
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
-    dev: true
 
   /@types/semver@7.5.0:
     resolution: {integrity: sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==}
@@ -2917,7 +2921,6 @@ packages:
 
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
-    dev: true
 
   /d@1.0.1:
     resolution: {integrity: sha512-m62ShEObQ39CfralilEQRjH6oAMtNCV1xJyEx5LpRYUVN+EviphDgUc/F3hnYbADmkiNs67Y+3ylmlG7Lnu+FA==}
@@ -5263,6 +5266,22 @@ packages:
     resolution: {integrity: sha512-YPM9Q+dmsna4CGWNn5+oHFsuXJdxvKAOVoNjpe2nje3odSoX5Xz4s71rP50vM8uUKJyQtMnEGPmbVCVR+G4W5g==}
     dev: false
 
+  /jotai@2.4.2(@types/react@18.2.22)(react@18.3.0-canary-d6dcad6a8-20230914):
+    resolution: {integrity: sha512-90jXVOd9h6gi5JXk558M+wnJfaaVN2WegcNOCfiFbWboNaDl6DkRgiY/K1oeqTfYJmq8yM7XPsL99LAvcOPqhw==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      '@types/react': 18.2.22
+      react: 18.3.0-canary-d6dcad6a8-20230914
+    dev: false
+
   /js-levenshtein@1.1.6:
     resolution: {integrity: sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==}
     engines: {node: '>=0.10.0'}
@@ -7426,16 +7445,6 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /swr@2.2.2(react@18.3.0-canary-d6dcad6a8-20230914):
-    resolution: {integrity: sha512-CbR41AoMD4TQBQw9ic3GTXspgfM9Y8Mdhb5Ob4uIKXhWqnRLItwA5fpGvB7SmSw3+zEjb0PdhiEumtUvYoQ+bQ==}
-    peerDependencies:
-      react: ^16.11.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      client-only: 0.0.1
-      react: 18.3.0-canary-d6dcad6a8-20230914
-      use-sync-external-store: 1.2.0(react@18.3.0-canary-d6dcad6a8-20230914)
-    dev: false
-
   /synckit@0.8.5:
     resolution: {integrity: sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -7875,14 +7884,6 @@ packages:
     dependencies:
       punycode: 2.3.0
     dev: true
-
-  /use-sync-external-store@1.2.0(react@18.3.0-canary-d6dcad6a8-20230914):
-    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.3.0-canary-d6dcad6a8-20230914
-    dev: false
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
