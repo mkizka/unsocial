@@ -1,3 +1,4 @@
+import { Timeline } from "@/components/features/note/Timeline";
 import { UserTab } from "@/components/features/user/UserTab";
 
 type Props = {
@@ -14,7 +15,7 @@ export async function UserPage({ userKey, currentTab }: Props) {
         root: {
           name: "投稿",
           href: rootPath,
-          render: () => <p>未実装</p>,
+          render: () => <Timeline userKey={userKey} />,
         },
         likes: {
           name: "いいね",

@@ -26,6 +26,7 @@ export type NoteCard = NonNullable<
 
 export type FindManyParams = {
   count: number;
+  userId?: string;
   since?: Date;
   until?: Date;
 };
@@ -33,6 +34,7 @@ export type FindManyParams = {
 export const findManyNoteCards = cache((params: FindManyParams) => {
   return prisma.note.findMany({
     where: {
+      userId: params.userId,
       publishedAt: {
         gt: params.since,
         lt: params.until,

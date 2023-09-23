@@ -8,18 +8,22 @@ import { NoteCard } from "@/components/features/note/NoteCard";
 
 import { action } from "./action";
 
-export function TimelineLoader() {
+type Props = {
+  userId?: string;
+};
+
+export function TimelineLoader({ userId }: Props) {
   const [timeline, setTimeline] = useAtom(timelineAtom);
   const [isLoading, setIsLoading] = useState(false);
 
   const loadMoreNotes = async () => {
     if (!timeline) {
-      const notes = await action();
+      const notes = await action({ userId });
       setTimeline([notes]);
     } else {
       const lastNote = timeline.at(-1)?.at(-1);
       if (!lastNote) return;
-      const newNotes = await action(lastNote.publishedAt);
+      const newNotes = await action({ userId, until: lastNote.publishedAt });
       setTimeline([...timeline, newNotes]);
     }
   };
@@ -30,7 +34,7 @@ export function TimelineLoader() {
   }, []);
 
   if (!timeline) return <div>loading...</div>;
-  if (timeline.length === 0) return <div>ノートがありません</div>;
+  if (timeline.flat().length === 0) return <div>ノートがありません</div>;
 
   return (
     <div>
