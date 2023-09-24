@@ -1,3 +1,4 @@
+import { captor } from "jest-mock-extended";
 import { rest } from "msw";
 
 import { mockedLogger } from "@/mocks/logger";
@@ -12,10 +13,15 @@ import {
 
 const dummyUrl = "https://remote.example.com/api";
 
+jest.mock("@/../package.json", () => ({
+  version: "1.2.3",
+}));
+
 describe("fetchJson", () => {
   test("正常系", async () => {
     // arrange
     const headerFn = jest.fn();
+    const headerCaptor = captor();
     server.use(
       rest.get(dummyUrl, async (req, res, ctx) => {
         headerFn(req.headers.all());
@@ -25,6 +31,10 @@ describe("fetchJson", () => {
     // act
     const response = await fetchJson(dummyUrl);
     // assert
+    expect(headerFn).toBeCalledWith(headerCaptor);
+    expect(headerCaptor.value).toEqual({
+      "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
+    });
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       1,
       `fetch(GET ${dummyUrl}): 開始`,
@@ -58,7 +68,9 @@ describe("fetchJson", () => {
   test("POST", async () => {
     // arrange
     const headerFn = jest.fn();
+    const headerCaptor = captor();
     const bodyFn = jest.fn();
+    const bodyCaptor = captor();
     server.use(
       rest.post(dummyUrl, async (req, res, ctx) => {
         headerFn(req.headers.all());
@@ -75,6 +87,14 @@ describe("fetchJson", () => {
       },
     });
     // assert
+    expect(headerFn).toHaveBeenCalledWith(headerCaptor);
+    expect(headerCaptor.value).toEqual({
+      bar: "baz",
+      "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
+      "content-type": "application/json",
+    });
+    expect(bodyFn).toHaveBeenCalledWith(bodyCaptor);
+    expect(bodyCaptor.value).toEqual({ foo: "bar" });
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       1,
       `fetch(POST ${dummyUrl}): 開始`,
@@ -83,11 +103,6 @@ describe("fetchJson", () => {
       2,
       `fetch(POST ${dummyUrl}): {"success":true}`,
     );
-    expect(headerFn.mock.calls[0][0]).toEqual({
-      bar: "baz",
-      "content-type": "application/json",
-    });
-    expect(bodyFn.mock.calls[0][0]).toEqual({ foo: "bar" });
     expect(response).toEqual({ success: true });
   });
   test("HTTPエラー", async () => {

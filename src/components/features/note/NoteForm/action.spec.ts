@@ -25,22 +25,24 @@ describe("NoteForm/action", () => {
       id: "__noteId",
       userId: "__note__userId",
       content: "テスト",
-    } as Note);
+      user: {
+        host: "myhost.example.com",
+        preferredUsername: "test",
+      },
+      likes: [],
+    } as unknown as Note);
     // act
     const form = new FormData();
     form.append("content", "テスト");
     const response = await action(form);
     // assert
-    expect(mockedPrisma.note.create.mock.lastCall?.[0]).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "content": "テスト",
-          "publishedAt": 2023-01-01T00:00:00.000Z,
-          "userId": "__session__user__id",
-        },
-      }
-    `);
-    expect(response).toBeUndefined();
+    expect(response).toEqual(
+      expect.objectContaining({
+        id: "__noteId",
+        userId: "__note__userId",
+        content: "テスト",
+      }),
+    );
     expect(mockedRelayActivityToFollowers).toHaveBeenCalledWith({
       userId: dummySession.user.id,
       activity: expect.objectContaining({ type: "Create" }),

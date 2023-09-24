@@ -1,3 +1,5 @@
+import pkg from "@/../package.json";
+
 import { env } from "./env";
 import { createLogger } from "./logger";
 
@@ -21,25 +23,35 @@ export class UnexpectedError extends FetchError {
   name = "UnexpectedError";
 }
 
-const defaultOptions = {
-  method: "GET",
-  timeout: env.NODE_ENV === "test" ? 100 : 5000,
+type Options = RequestInit & {
+  timeout?: number;
 };
 
-export const fetchJson = (
-  input: Parameters<typeof fetch>[0],
-  options?: Parameters<typeof fetch>[1] & { timeout?: number },
-) => {
+const defaultOptions = {
+  method: "GET",
+  headers: {
+    "User-Agent": `Unsocial/${pkg.version} (${env.HOST})`,
+  },
+  timeout: env.NODE_ENV === "test" ? 100 : 5000,
+} satisfies Options;
+
+const createHeaders = (options?: Options) => {
+  const headers = new Headers({
+    ...options?.headers,
+    ...defaultOptions.headers,
+  });
+  if (options?.method === "POST") {
+    headers.set("Content-Type", "application/json");
+  }
+  return headers;
+};
+
+export const fetchJson = (input: URL | string, options?: Options) => {
   const { timeout, ...init } = {
     ...defaultOptions,
     ...options,
+    headers: createHeaders(options),
   };
-  if (init.method === "POST") {
-    init.headers = {
-      ...init.headers,
-      "Content-Type": "application/json",
-    };
-  }
   let timeoutId: ReturnType<typeof setTimeout>;
   logger.info(`fetch(${init.method} ${input}): 開始`);
   return Promise.race([

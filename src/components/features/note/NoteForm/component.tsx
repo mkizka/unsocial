@@ -1,21 +1,21 @@
-import { revalidatePath } from "next/cache";
+"use client";
+import { useAtom } from "jotai";
 
-import { action as _action } from "./action";
+import { timelineAtom } from "@/components/atoms/timeline";
+
+import { action } from "./action.server";
 import { SubmitButton } from "./parts/SubmitButton";
 
-// "use server"を書いたファイルをテストすると
-// Cannot find module 'private-next-rsc-action-client-wrapper' というエラーが出るため、
-// ここで再定義する
-export async function action(formData: FormData) {
-  "use server";
-  await _action(formData);
-  revalidatePath("/");
-}
-
 export function NoteForm() {
+  const [_, setTimeline] = useAtom(timelineAtom);
+
   return (
     <form
-      action={action}
+      action={async (formData: FormData) => {
+        const note = await action(formData);
+        if ("error" in note) return;
+        setTimeline((timeline) => [[note], ...(timeline ?? [])]);
+      }}
       className="mx-auto mb-4 w-full rounded bg-primary-light px-8 pb-4 pt-6 shadow"
     >
       <textarea
