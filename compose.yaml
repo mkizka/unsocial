@@ -46,7 +46,7 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 6' || false"]
   misskey:
-    image: misskey/misskey:13.14
+    image: misskey/misskey:2023.9
     volumes:
       - ./docker/misskey/files:/misskey/files
       - ./docker/misskey/.config:/misskey/.config:ro
