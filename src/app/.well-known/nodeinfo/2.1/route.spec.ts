@@ -2,6 +2,10 @@ import { mockedPrisma } from "@/mocks/prisma";
 
 import { GET } from "./route";
 
+jest.mock("@/../package.json", () => ({
+  version: "1.2.3",
+}));
+
 describe("/.well-known/nodeinfo", () => {
   test("GET", async () => {
     // arrange
@@ -27,7 +31,7 @@ describe("/.well-known/nodeinfo", () => {
           "homepage": "https://github.com/mkizka/unsocial",
           "name": "unsocial",
           "repository": "https://github.com/mkizka/unsocial.git",
-          "version": "0.1.0",
+          "version": "1.2.3",
         },
         "usage": {
           "localComments": 0,

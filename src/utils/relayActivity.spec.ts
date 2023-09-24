@@ -1,4 +1,5 @@
 import type { Credential } from "@prisma/client";
+import { captor } from "jest-mock-extended";
 import { rest } from "msw";
 
 import { mockedPrisma } from "@/mocks/prisma";
@@ -13,6 +14,10 @@ import {
 jest.useFakeTimers();
 jest.setSystemTime(new Date("2020-01-01T00:00:00Z"));
 
+jest.mock("@/../package.json", () => ({
+  version: "1.2.3",
+}));
+
 describe("relayActivity", () => {
   describe("relayActivityToInboxUrl", () => {
     test("正常系", async () => {
@@ -22,7 +27,9 @@ describe("relayActivity", () => {
         privateKey: mockedKeys.privateKey,
       } as Credential);
       const headerFn = jest.fn();
+      const headerCaptor = captor();
       const bodyFn = jest.fn();
+      const bodyCaptor = captor();
       server.use(
         rest.post("https://remote.example.com/inbox", async (req, res, ctx) => {
           headerFn(req.headers.all());
@@ -38,8 +45,10 @@ describe("relayActivity", () => {
         activity: { type: "Dummy" },
       });
       // assert
-      expect(headerFn.mock.calls[0][0]).toMatchSnapshot();
-      expect(bodyFn.mock.calls[0][0]).toEqual({ type: "Dummy" });
+      expect(headerFn).toHaveBeenCalledWith(headerCaptor);
+      expect(headerCaptor.value).toMatchSnapshot();
+      expect(bodyFn).toHaveBeenCalledWith(bodyCaptor);
+      expect(bodyCaptor.value).toEqual({ type: "Dummy" });
     });
   });
 
@@ -63,7 +72,9 @@ describe("relayActivity", () => {
         privateKey: mockedKeys.privateKey,
       } as Credential);
       const headerFn = jest.fn();
+      const headerCaptors = [captor(), captor()];
       const bodyFn = jest.fn();
+      const bodyCaptors = [captor(), captor()];
       const inbox1 = rest.post(
         "https://remote1.example.com/users/foo/inbox",
         async (req, res, ctx) => {
@@ -88,10 +99,14 @@ describe("relayActivity", () => {
         activity: { type: "Dummy" },
       });
       // assert
-      expect(headerFn.mock.calls[0][0]).toMatchSnapshot();
-      expect(headerFn.mock.calls[1][0]).toMatchSnapshot();
-      expect(bodyFn.mock.calls[0][0]).toEqual({ type: "Dummy" });
-      expect(bodyFn.mock.calls[1][0]).toEqual({ type: "Dummy" });
+      expect(headerFn).toHaveBeenNthCalledWith(1, headerCaptors[0]);
+      expect(headerCaptors[0]!.value).toMatchSnapshot();
+      expect(headerFn).toHaveBeenNthCalledWith(2, headerCaptors[1]);
+      expect(headerCaptors[1]!.value).toMatchSnapshot();
+      expect(bodyFn).toHaveBeenCalledWith(bodyCaptors[0]);
+      expect(bodyCaptors[0]!.value).toEqual({ type: "Dummy" });
+      expect(bodyFn).toHaveBeenCalledWith(bodyCaptors[1]);
+      expect(bodyCaptors[1]!.value).toEqual({ type: "Dummy" });
     });
   });
 });
