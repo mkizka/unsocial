@@ -1,10 +1,10 @@
 "use client";
-import { useAtom } from "jotai";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { timelineAtom } from "@/components/atoms/timeline";
+import { useTimelineReloader } from "@/components/atoms/timeline";
 import { SubmitButton } from "@/components/clients/SubmitButton";
 import { NoteCard } from "@/components/features/note/NoteCard";
+import type { noteService } from "@/server/service";
 
 import { action } from "./action";
 
@@ -13,13 +13,14 @@ type Props = {
 };
 
 export function TimelineLoader({ userId }: Props) {
-  const [timeline, setTimeline] = useAtom(timelineAtom);
+  const reloader = useTimelineReloader();
+  const [timeline, setTimeline] = useState<noteService.NoteCard[][]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const loadFisrtNotes = useCallback(async () => {
+  const loadFisrtNotes = async () => {
     const notes = await action({ userId });
     setTimeline([notes]);
-  }, [setTimeline, userId]);
+  };
 
   const loadMoreNotes = async () => {
     if (!timeline) {
@@ -36,8 +37,8 @@ export function TimelineLoader({ userId }: Props) {
 
   useEffect(() => {
     loadFisrtNotes();
-    // userIdが変わるたびにtimelineをリセットする
-  }, [loadFisrtNotes]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reloader.counter]);
 
   if (!timeline) return <div>loading...</div>;
   if (timeline.flat().length === 0) return <div>ノートがありません</div>;

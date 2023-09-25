@@ -1,20 +1,18 @@
 "use client";
-import { useAtom } from "jotai";
 
-import { timelineAtom } from "@/components/atoms/timeline";
+import { useTimelineReloader } from "@/components/atoms/timeline";
 
 import { action } from "./action.server";
 import { SubmitButton } from "./parts/SubmitButton";
 
 export function NoteForm() {
-  const [_, setTimeline] = useAtom(timelineAtom);
-
+  const reloader = useTimelineReloader();
   return (
     <form
       action={async (formData: FormData) => {
         const note = await action(formData);
         if ("error" in note) return;
-        setTimeline((timeline) => [[note], ...(timeline ?? [])]);
+        reloader.reload();
       }}
       className="mx-auto mb-4 w-full rounded bg-primary-light px-8 pb-4 pt-6 shadow"
     >
