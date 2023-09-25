@@ -8,13 +8,22 @@ type Props = {
   userKey?: string;
 };
 
-export async function Timeline({ userKey }: Props) {
+const getUserId = async (userKey?: string) => {
   if (!userKey) {
-    return <TimelineLoader />;
+    return undefined;
   }
   const user = await userService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();
   }
-  return <TimelineLoader userId={user.id} />;
+  return user.id;
+};
+
+export async function Timeline({ userKey }: Props) {
+  const userId = await getUserId(userKey);
+  return (
+    <section className="flex w-full justify-center">
+      <TimelineLoader userId={userId} />
+    </section>
+  );
 }

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 
 import { useTimelineReloader } from "@/components/atoms/timeline";
+import { Spinner } from "@/components/clients/Spinner";
 import { SubmitButton } from "@/components/clients/SubmitButton";
 import { NoteCard } from "@/components/features/note/NoteCard";
 import type { noteService } from "@/server/service";
@@ -14,7 +15,9 @@ type Props = {
 
 export function TimelineLoader({ userId }: Props) {
   const reloader = useTimelineReloader();
-  const [timeline, setTimeline] = useState<noteService.NoteCard[][]>([]);
+  const [timeline, setTimeline] = useState<noteService.NoteCard[][] | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const loadFisrtNotes = async () => {
@@ -40,26 +43,35 @@ export function TimelineLoader({ userId }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reloader.counter]);
 
-  if (!timeline) return <div>loading...</div>;
+  if (!timeline)
+    return (
+      <div className="mt-4 h-8 w-8">
+        <Spinner />
+      </div>
+    );
   if (timeline.flat().length === 0) return <div>ノートがありません</div>;
 
   return (
-    <div>
+    <ul className="w-full">
       {timeline.flat().map((note) => (
-        <NoteCard key={note.id} note={note} />
+        <li key={note.id}>
+          <NoteCard note={note} />
+        </li>
       ))}
       {timeline.at(-1)?.length !== 0 && (
-        <SubmitButton
-          loading={isLoading}
-          onClick={async () => {
-            setIsLoading(true);
-            await loadMoreNotes();
-            setIsLoading(false);
-          }}
-        >
-          もっと見る
-        </SubmitButton>
+        <li>
+          <SubmitButton
+            loading={isLoading}
+            onClick={async () => {
+              setIsLoading(true);
+              await loadMoreNotes();
+              setIsLoading(false);
+            }}
+          >
+            もっと見る
+          </SubmitButton>
+        </li>
       )}
-    </div>
+    </ul>
   );
 }
