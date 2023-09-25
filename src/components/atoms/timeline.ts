@@ -1,5 +1,13 @@
-import { atom } from "jotai";
+import { atom, useAtom } from "jotai";
 
-import type { NoteCard } from "@/server/service/note";
+const timelineReloadCounterAtom = atom(0);
 
-export const timelineAtom = atom<NoteCard[][] | null>(null);
+export const useTimelineReloader = () => {
+  const [counter, setTimelineReloadCounter] = useAtom(
+    timelineReloadCounterAtom,
+  );
+  const reload = () => {
+    setTimelineReloadCounter((prev) => (prev ? prev + 1 : 1));
+  };
+  return { counter, reload };
+};
