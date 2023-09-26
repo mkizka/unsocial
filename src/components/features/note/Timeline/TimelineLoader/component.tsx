@@ -1,4 +1,5 @@
 "use client";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useTimelineReloader } from "@/components/atoms/timeline";
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export function TimelineLoader({ userId }: Props) {
+  const pathname = usePathname();
   const reloader = useTimelineReloader();
   const [timeline, setTimeline] = useState<noteService.NoteCard[][] | null>(
     null,
@@ -41,7 +43,7 @@ export function TimelineLoader({ userId }: Props) {
   useEffect(() => {
     loadFisrtNotes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reloader.counter]);
+  }, [reloader.counter, pathname]);
 
   if (!timeline)
     return (
