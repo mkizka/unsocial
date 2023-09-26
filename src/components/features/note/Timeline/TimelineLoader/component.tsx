@@ -43,13 +43,17 @@ export function TimelineLoader({ userId }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reloader.counter]);
 
-  if (!timeline)
+  if (!timeline) {
     return (
       <div className="mt-4 h-8 w-8">
         <Spinner />
       </div>
     );
-  if (timeline.flat().length === 0) return <div>ノートがありません</div>;
+  }
+
+  if (timeline.flat().length === 0) {
+    return <div className="mt-4">ノートがありません</div>;
+  }
 
   return (
     <ul className="w-full">
