@@ -176,6 +176,12 @@ const ByWebFinger = () =>
     host: dummyUser.host,
   });
 
+const ByWebFinger__hostが自ホスト = () =>
+  findOrFetchUserByWebFinger({
+    preferredUsername: dummyUser.preferredUsername,
+    host: "myhost.example.com",
+  });
+
 const 情報の新しいユーザーがDBに存在する = () =>
   mockUser(dummyRecentUser as unknown as User);
 
@@ -225,29 +231,30 @@ describe("findOrFetchUser", () => {
     },
   );
   test.each`
-    sut            | dbCondition                           | serverCondition                         | expected
-    ${ById}        | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
-    ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
-    ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
-    ${ById}        | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
-    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${NotOKError}
-    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorValidationError}
-    ${ByActor}     | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
-    ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
-    ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
-    ${ByActor}     | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
-    ${ByActor}     | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
-    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${NotOKError}
-    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${WebFingerのレスポンスが不正}          | ${WebfingerValidationError}
-    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${NotOKError}
-    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorValidationError}
-    ${ByWebFinger} | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
-    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerとの通信に失敗した}          | ${dummyOldUser}
-    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${WebFingerのレスポンスが不正}          | ${dummyOldUser}
-    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
-    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
-    ${ByWebFinger} | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
-    ${ByWebFinger} | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
+    sut                            | dbCondition                           | serverCondition                         | expected
+    ${ById}                        | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
+    ${ById}                        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ById}                        | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
+    ${ById}                        | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
+    ${ByActor}                     | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${NotOKError}
+    ${ByActor}                     | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorValidationError}
+    ${ByActor}                     | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
+    ${ByActor}                     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ByActor}                     | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
+    ${ByActor}                     | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
+    ${ByActor}                     | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
+    ${ByWebFinger}                 | ${ユーザーがDBに存在しない}           | ${WebFingerとの通信に失敗した}          | ${NotOKError}
+    ${ByWebFinger}                 | ${ユーザーがDBに存在しない}           | ${WebFingerのレスポンスが不正}          | ${WebfingerValidationError}
+    ${ByWebFinger}                 | ${ユーザーがDBに存在しない}           | ${ActorURLとの通信に失敗した}           | ${NotOKError}
+    ${ByWebFinger}                 | ${ユーザーがDBに存在しない}           | ${ActorURLのレスポンスが不正}           | ${ActorValidationError}
+    ${ByWebFinger}                 | ${ユーザーがDBに存在しない}           | ${他サーバーからユーザー取得に成功した} | ${dummyCreatedUser}
+    ${ByWebFinger}                 | ${情報の古いユーザーがDBに存在する}   | ${WebFingerとの通信に失敗した}          | ${dummyOldUser}
+    ${ByWebFinger}                 | ${情報の古いユーザーがDBに存在する}   | ${WebFingerのレスポンスが不正}          | ${dummyOldUser}
+    ${ByWebFinger}                 | ${情報の古いユーザーがDBに存在する}   | ${ActorURLとの通信に失敗した}           | ${dummyOldUser}
+    ${ByWebFinger}                 | ${情報の古いユーザーがDBに存在する}   | ${ActorURLのレスポンスが不正}           | ${dummyOldUser}
+    ${ByWebFinger}                 | ${情報の古いユーザーがDBに存在する}   | ${他サーバーからユーザー取得に成功した} | ${dummyUpdatedUser}
+    ${ByWebFinger}                 | ${情報の新しいユーザーがDBに存在する} | ${通信しない}                           | ${dummyRecentUser}
+    ${ByWebFinger__hostが自ホスト} | ${ユーザーがDBに存在しない}           | ${通信しない}                           | ${UserNotFoundError}
   `(
     "findOrFetchUser$sut.name: $dbCondition.name、$serverCondition.nameとき、$expected.nameを返す",
     async ({ sut, dbCondition, serverCondition, expected }) => {

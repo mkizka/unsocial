@@ -121,6 +121,11 @@ export const findOrFetchUserByWebFinger = async (
   user: apRepository.FetchWebFingerParams,
 ): Promise<User | UserServiceError> => {
   const existingUser = await userRepository.findUnique(user);
+  // 自ホストのユーザーは自サーバーのWebFingerを自分で叩くことになるため、
+  // 通信せずにエラーを返す
+  if (!existingUser && user.host === env.HOST) {
+    return new UserNotFoundError();
+  }
   if (!existingUser || shouldRefetch(existingUser)) {
     // actorUrlが分からないのでWebFingerで取得
     const actorUrl = await fetchActorUrlByWebFinger(user);
