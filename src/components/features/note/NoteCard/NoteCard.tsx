@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Ref } from "react";
 import { forwardRef } from "react";
 
@@ -20,19 +21,19 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
       className="text-prmary relative mb-2 flex rounded bg-primary-light pb-5 pl-3 pr-4 pt-3 shadow"
     >
       <div className="w-full pl-[48px]">
-        <a className="absolute left-3" href={note.user.url}>
+        <Link className="absolute left-3" href={note.user.url}>
           <UserIcon
             user={note.user}
             className="rounded-full"
             width={36}
             height={36}
           />
-        </a>
+        </Link>
         <div className="flex">
-          <a href={note.user.url} className="block truncate hover:underline">
+          <Link href={note.user.url} className="block truncate hover:underline">
             {note.user.name && <span className="mr-1">{note.user.name}</span>}
             <span className="text-gray">{note.user.displayUsername}</span>
-          </a>
+          </Link>
           <div className="ml-auto flex items-center gap-1 pl-1">
             {note.isMine && <DeleteButton noteId={note.id} />}
             <LikeButton noteId={note.id} isLiked={note.isLiked} />

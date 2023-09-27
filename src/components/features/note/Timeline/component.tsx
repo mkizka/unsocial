@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { userService } from "@/server/service";
+import { noteService, userService } from "@/server/service";
 
 import { TimelineLoader } from "./TimelineLoader";
 
@@ -8,7 +8,7 @@ type Props = {
   userKey?: string;
 };
 
-const getUserId = async (userKey?: string) => {
+const getUserIdOrUndefined = async (userKey?: string) => {
   if (!userKey) {
     return undefined;
   }
@@ -20,10 +20,14 @@ const getUserId = async (userKey?: string) => {
 };
 
 export async function Timeline({ userKey }: Props) {
-  const userId = await getUserId(userKey);
+  const userId = await getUserIdOrUndefined(userKey);
+  const firstLoadedNotes = await noteService.findManyNoteCards({
+    userId,
+    count: 10,
+  });
   return (
     <section className="flex w-full justify-center">
-      <TimelineLoader userId={userId} />
+      <TimelineLoader firstLoadedNotes={firstLoadedNotes} userId={userId} />
     </section>
   );
 }
