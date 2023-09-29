@@ -54,7 +54,9 @@ export const perform = async ({
   const validation = await verifyActivity({
     pathname,
     headers,
-    activity: parsedActivity.data,
+    // parsedActivity.dataはキーの順序が変わっていてDigestの検証を通らないため、
+    // 検証前の値を使う
+    activity: activity as { actor: string },
   });
   if (!validation.isValid) {
     return new BadActivityRequestError(
