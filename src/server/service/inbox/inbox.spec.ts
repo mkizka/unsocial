@@ -56,7 +56,10 @@ describe("ユーザーinbox", () => {
       actor: "https://remote.example.com/u/dummy_remote",
     };
     // act
-    const error = await perform({ activity, ...params });
+    const error = await perform({
+      activityRaw: JSON.stringify(activity),
+      ...params,
+    });
     // assert
     expect(error).toBeUndefined();
     expect(fn).toBeCalledWith(activity, dummyUser);
@@ -68,7 +71,10 @@ describe("ユーザーinbox", () => {
       actor: "https://remote.example.com/u/dummy_remote",
     };
     // act
-    const error = await perform({ activity, ...params });
+    const error = await perform({
+      activityRaw: JSON.stringify(activity),
+      ...params,
+    });
     // assert
     expect(error).toBeInstanceOf(ActivitySchemaValidationError);
   });
@@ -79,7 +85,10 @@ describe("ユーザーinbox", () => {
       actor: "https://remote.example.com/u/dummy_remote",
     };
     // act
-    const error = await perform({ activity, ...params });
+    const error = await perform({
+      activityRaw: JSON.stringify(activity),
+      ...params,
+    });
     // assert
     expect(error).toBeInstanceOf(ActivitySchemaValidationError);
   });

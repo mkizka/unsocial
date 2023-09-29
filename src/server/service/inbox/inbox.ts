@@ -34,16 +34,18 @@ const anyActivitySchema = z
   .passthrough();
 
 type PerformParams = {
-  activity: unknown;
+  activityRaw: string;
   pathname: string;
   headers: Headers;
 };
 
 export const perform = async ({
-  activity,
+  activityRaw,
   pathname,
   headers,
 }: PerformParams) => {
+  const activity = JSON.parse(activityRaw);
+
   // 1. Activityのスキーマを検証する
   const parsedActivity = anyActivitySchema.safeParse(activity);
   if (!parsedActivity.success) {
@@ -52,11 +54,9 @@ export const perform = async ({
 
   // 2. ヘッダーの署名を検証する
   const validation = await verifyActivity({
+    activityRaw,
     pathname,
     headers,
-    // parsedActivity.dataはキーの順序が変わっていてDigestの検証を通らないため、
-    // 検証前の値を使う
-    activity: activity as { actor: string },
   });
   if (!validation.isValid) {
     return new BadActivityRequestError(

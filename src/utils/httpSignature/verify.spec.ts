@@ -62,7 +62,7 @@ describe("verifyActivity", () => {
       const actual = await verifyActivity({
         pathname: "/inbox",
         headers: new Headers(header),
-        activity,
+        activityRaw: JSON.stringify(activity),
       });
       // assert
       expect(actual).toEqual({ isValid, reason });
