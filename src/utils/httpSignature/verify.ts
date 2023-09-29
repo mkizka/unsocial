@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { userService } from "@/server/service";
 
-import { textOf } from "./utils";
+import { createDigest, textOf } from "./utils";
 
 const signatureSchema = z.object({
   keyId: z.string().url(),
@@ -80,11 +80,17 @@ type VerifyResult =
       reason: string;
     };
 
-// TODO: digestがActivityと一致するかを検証する
-export const verifyActivity = async (
-  pathname: string,
-  headers: Request["headers"],
-): Promise<VerifyResult> => {
+type VerifyActivityParams = {
+  pathname: string;
+  headers: Request["headers"];
+  activity: unknown;
+};
+
+export const verifyActivity = async ({
+  pathname,
+  headers,
+  activity,
+}: VerifyActivityParams): Promise<VerifyResult> => {
   const parsedHeaders = headersSchema.safeParse(Object.fromEntries(headers));
   if (!parsedHeaders.success) {
     return {
@@ -94,10 +100,19 @@ export const verifyActivity = async (
         "リクエストヘッダーが不正でした",
     };
   }
+  if (parsedHeaders.data.digest !== `SHA-256=${createDigest(activity)}`) {
+    return {
+      isValid: false,
+      reason: "ActivityがDigestと一致しませんでした",
+    };
+  }
   const { keyId, signature, headers: order } = parsedHeaders.data.signature;
   const publicKey = await findOrFetchPublicKeyByKeyId(keyId);
   if (!publicKey) {
-    return { isValid: false, reason: "keyIdから公開鍵が取得できませんでした" };
+    return {
+      isValid: false,
+      reason: "keyIdから公開鍵が取得できませんでした",
+    };
   }
   const text = textOf({
     pathname,
@@ -106,7 +121,10 @@ export const verifyActivity = async (
   });
   const isValid = createVerify(text).verify(publicKey, signature, "base64");
   if (!isValid) {
-    return { isValid, reason: "検証の結果不正と判断されました" };
+    return {
+      isValid,
+      reason: "検証の結果不正と判断されました",
+    };
   }
   return { isValid };
 };

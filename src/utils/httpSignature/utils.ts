@@ -20,7 +20,7 @@ export const textOf = ({ pathname, headers, order }: Params) => {
     .join("\n");
 };
 
-export const createDigest = (activity: object) => {
+export const createDigest = (activity: unknown) => {
   return crypto
     .createHash("sha256")
     .update(JSON.stringify(activity)!)
