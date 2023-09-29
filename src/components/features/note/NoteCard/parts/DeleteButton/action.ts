@@ -1,3 +1,6 @@
+"use server";
+import { redirect } from "next/navigation";
+
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
 import { prisma } from "@/utils/prisma";
@@ -7,7 +10,7 @@ export async function action(noteId: string) {
   const session = await getServerSession();
   if (!session?.user) {
     // TODO: エラーを返す方法が実装されたら修正
-    return { error: "ログインが必要です" };
+    return;
   }
   // TODO: 自分のじゃなかったらエラー吐く
   await prisma.note.delete({ where: { id: noteId } });
@@ -18,4 +21,5 @@ export async function action(noteId: string) {
       userId: session.user.id,
     }),
   });
+  redirect("/");
 }

@@ -3,7 +3,7 @@ import { HeartIcon as UnLikedIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as LikedIcon } from "@heroicons/react/24/solid";
 import { experimental_useOptimistic as useOptimistic } from "react";
 
-import { action } from "./action.server";
+import { action } from "./action";
 
 type Props = {
   noteId: string;
@@ -21,7 +21,7 @@ export function LikeButton({ noteId, isLiked }: Props) {
       data-testid="like-button"
       onClick={async () => {
         toggleOptimisticIsLike(!optimisticIsLiked);
-        await action(noteId);
+        await action({ noteId, content: "👍" });
       }}
       className="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark"
     >

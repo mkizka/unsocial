@@ -1,3 +1,4 @@
+"use server";
 import { noteService } from "@/server/service";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";

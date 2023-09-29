@@ -4,7 +4,7 @@ import { useTransition } from "react";
 
 import { Spinner } from "@/components/clients/Spinner";
 
-import { action } from "./action.server";
+import { action } from "./action";
 
 type FollowButtonProps = {
   followeeId: string;
@@ -26,7 +26,7 @@ export function FollowButton({ followeeId, followStatus }: FollowButtonProps) {
     <button
       className="ml-auto block h-9 w-24 whitespace-nowrap rounded bg-secondary  px-4 py-2 text-sm text-light shadow"
       data-testid="follow-button"
-      onClick={() => startTransition(() => action(followeeId))}
+      onClick={() => startTransition(() => action({ followeeId }))}
     >
       <InnerText isLoading={isPending} followStatus={followStatus} />
     </button>

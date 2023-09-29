@@ -1,4 +1,5 @@
 import type { Follow } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import type { Session } from "next-auth";
 
 import { mockedPrisma } from "@/mocks/prisma";
@@ -12,6 +13,9 @@ const mockedGetServerSession = jest.mocked(getServerSession);
 
 jest.mock("@/utils/relayActivity");
 const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
+
+jest.mock("next/cache");
+const mockedRevalidatePath = jest.mocked(revalidatePath);
 
 const dummyRemoteUser = {
   id: "dummy_remote",
@@ -72,6 +76,7 @@ describe("FollowButton/action", () => {
         type: "Follow",
       }),
     });
+    expect(mockedRevalidatePath).toHaveBeenCalledWith("/users/dummy_remote");
   });
   test("ローカルユーザー", async () => {
     // arrange
@@ -107,6 +112,7 @@ describe("FollowButton/action", () => {
       where: { id: "followId" },
     });
     expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
+    expect(mockedRevalidatePath).toHaveBeenCalledWith("/users/dummy_local");
   });
   test("リモートユーザー(解除)", async () => {
     // arrange
@@ -154,6 +160,7 @@ describe("FollowButton/action", () => {
         type: "Undo",
       }),
     });
+    expect(mockedRevalidatePath).toHaveBeenCalledWith("/users/dummy_remote");
   });
   test("ローカルユーザー(解除)", async () => {
     // arrange
@@ -187,5 +194,6 @@ describe("FollowButton/action", () => {
       },
     });
     expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
+    expect(mockedRevalidatePath).toHaveBeenCalledWith("/users/dummy_local");
   });
 });
