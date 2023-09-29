@@ -24,7 +24,5 @@ export async function GET({ nextUrl }: NextRequest) {
       width: 100,
       height: 100,
     },
-    // v13.4.20-canary.23でAPI Routeのレスポンス型を検証するようになったので対応
-    // TODO: next側で修正されたら削除
-  ) as Response;
+  );
 }
