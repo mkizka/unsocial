@@ -41,6 +41,16 @@ const headersSchema = z
       }
       return parsed.data;
     }),
+    digest: z.string().transform((val, ctx) => {
+      if (!val.startsWith("SHA-256=")) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "digestのアルゴリズムがSHA-256ではありません",
+        });
+        return z.NEVER;
+      }
+      return val;
+    }),
   })
   .passthrough();
 

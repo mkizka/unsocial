@@ -3,14 +3,7 @@ import crypto from "crypto";
 
 import { env } from "@/utils/env";
 
-import { textOf } from "./utils";
-
-const createDigest = (activity: object) => {
-  return crypto
-    .createHash("sha256")
-    .update(JSON.stringify(activity)!)
-    .digest("base64");
-};
+import { createDigest, textOf } from "./utils";
 
 const getSignature = (textToSign: string, privateKey: string) => {
   const sig = crypto.createSign("sha256").update(textToSign).end();
