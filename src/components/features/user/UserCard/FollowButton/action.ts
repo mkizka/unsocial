@@ -1,3 +1,4 @@
+"use server";
 import { revalidatePath } from "next/cache";
 import type { Session } from "next-auth";
 
