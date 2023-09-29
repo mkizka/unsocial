@@ -61,14 +61,14 @@ const createVerify = (textToSign: string) => {
   return verify;
 };
 
-const findOrFetchPublicKeyByKeyId = async (keyId: string) => {
+const findOrFetchUserByKeyId = async (keyId: string) => {
   const actorUrl = new URL(keyId);
   actorUrl.hash = "";
   const user = await userService.findOrFetchUserByActor(actorUrl.toString());
   if (user instanceof Error) {
     return null;
   }
-  return user.publicKey;
+  return user;
 };
 
 type VerifyResult =
@@ -83,7 +83,7 @@ type VerifyResult =
 type VerifyActivityParams = {
   pathname: string;
   headers: Request["headers"];
-  activity: unknown;
+  activity: { actor: string };
 };
 
 export const verifyActivity = async ({
@@ -107,11 +107,17 @@ export const verifyActivity = async ({
     };
   }
   const { keyId, signature, headers: order } = parsedHeaders.data.signature;
-  const publicKey = await findOrFetchPublicKeyByKeyId(keyId);
-  if (!publicKey) {
+  const keyIdUser = await findOrFetchUserByKeyId(keyId);
+  if (!keyIdUser?.publicKey) {
     return {
       isValid: false,
       reason: "keyIdから公開鍵が取得できませんでした",
+    };
+  }
+  if (keyIdUser.actorUrl !== activity.actor) {
+    return {
+      isValid: false,
+      reason: "keyIdに基づくユーザーとactorが一致しませんでした",
     };
   }
   const text = textOf({
@@ -119,7 +125,11 @@ export const verifyActivity = async ({
     headers: parsedHeaders.data,
     order: order.split(" "),
   });
-  const isValid = createVerify(text).verify(publicKey, signature, "base64");
+  const isValid = createVerify(text).verify(
+    keyIdUser.publicKey,
+    signature,
+    "base64",
+  );
   if (!isValid) {
     return {
       isValid,

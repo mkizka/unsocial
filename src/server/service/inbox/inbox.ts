@@ -51,7 +51,11 @@ export const perform = async ({
   }
 
   // 2. ヘッダーの署名を検証する
-  const validation = await verifyActivity({ pathname, headers, activity });
+  const validation = await verifyActivity({
+    pathname,
+    headers,
+    activity: parsedActivity.data,
+  });
   if (!validation.isValid) {
     return new BadActivityRequestError(
       "リクエストヘッダの署名が不正でした: " + validation.reason,
