@@ -20,6 +20,9 @@ export const textOf = ({ pathname, headers, order }: Params) => {
     .join("\n");
 };
 
-export const createDigest = (text: string) => {
-  return crypto.createHash("sha256").update(text).digest("base64");
+export const createDigest = (activity: unknown) => {
+  return crypto
+    .createHash("sha256")
+    .update(JSON.stringify(activity)!)
+    .digest("base64");
 };

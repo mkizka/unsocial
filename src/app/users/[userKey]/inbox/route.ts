@@ -8,8 +8,9 @@ import { postDicord } from "@/utils/postDiscord";
 const logger = createLogger("/users/[userId]/inbox");
 
 export async function POST(request: NextRequest) {
+  const body = await request.json();
   const error = await inboxService.perform({
-    activityRaw: await request.text(),
+    activity: body,
     pathname: request.nextUrl.pathname,
     headers: request.headers,
   });

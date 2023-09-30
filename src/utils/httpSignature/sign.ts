@@ -22,7 +22,7 @@ export const signActivity = (params: SignActivityParams) => {
   const headers = {
     host: params.inboxUrl.host,
     date: new Date().toUTCString(),
-    digest: `SHA-256=${createDigest(JSON.stringify(params.activity))}`,
+    digest: `SHA-256=${createDigest(params.activity)}`,
   };
   const textToSign = textOf({
     pathname: params.inboxUrl.pathname,

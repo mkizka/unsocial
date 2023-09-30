@@ -81,15 +81,15 @@ type VerifyResult =
     };
 
 type VerifyActivityParams = {
-  activityRaw: string;
   pathname: string;
   headers: Request["headers"];
+  activity: { actor: string };
 };
 
 export const verifyActivity = async ({
-  activityRaw,
   pathname,
   headers,
+  activity,
 }: VerifyActivityParams): Promise<VerifyResult> => {
   const parsedHeaders = headersSchema.safeParse(Object.fromEntries(headers));
   if (!parsedHeaders.success) {
@@ -100,7 +100,7 @@ export const verifyActivity = async ({
         "リクエストヘッダーが不正でした",
     };
   }
-  if (parsedHeaders.data.digest !== `SHA-256=${createDigest(activityRaw)}`) {
+  if (parsedHeaders.data.digest !== `SHA-256=${createDigest(activity)}`) {
     return {
       isValid: false,
       reason: "ActivityがDigestと一致しませんでした",
@@ -114,8 +114,7 @@ export const verifyActivity = async ({
       reason: "keyIdから公開鍵が取得できませんでした",
     };
   }
-  // @ts-ignore
-  if (keyIdUser.actorUrl !== JSON.parse(activityRaw).actor) {
+  if (keyIdUser.actorUrl !== activity.actor) {
     return {
       isValid: false,
       reason: "keyIdに基づくユーザーとactorが一致しませんでした",
