@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 type Params = {
   pathname: string;
   headers: { [key: string]: unknown };
@@ -16,4 +18,8 @@ export const textOf = ({ pathname, headers, order }: Params) => {
     .filter((key): key is keyof typeof headerToSign => key in headerToSign)
     .map((key) => `${key}: ${headerToSign[key]}`)
     .join("\n");
+};
+
+export const createDigest = (body: string) => {
+  return crypto.createHash("sha256").update(body).digest("base64");
 };

@@ -8,12 +8,7 @@ import { postDicord } from "@/utils/postDiscord";
 const logger = createLogger("/users/[userId]/inbox");
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const error = await inboxService.perform({
-    activity: body,
-    pathname: request.nextUrl.pathname,
-    headers: request.headers,
-  });
+  const error = await inboxService.perform(request);
   if (error) {
     logger[error.level](error.message);
     await postDicord(error.messageFormatted);

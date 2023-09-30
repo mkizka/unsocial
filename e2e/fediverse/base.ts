@@ -6,8 +6,13 @@ export abstract class FediverseHandler {
 
   constructor(public page: Page) {}
 
-  async goto(to: string) {
-    await this.page.goto(new URL(to, `https://${this.domain}`).toString());
+  async goto(url: string) {
+    const nextUrl = new URL(url, `https://${this.domain}`).toString();
+    if (this.page.url() === nextUrl) {
+      await this.page.reload();
+    } else {
+      await this.page.goto(nextUrl);
+    }
   }
 
   async waitForFederation() {
