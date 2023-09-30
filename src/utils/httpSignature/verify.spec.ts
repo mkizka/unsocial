@@ -37,21 +37,21 @@ const otherUserActivity = {
 describe("verifyActivity", () => {
   test.each`
     header                        | publicKey                | activity             | isValid  | reason                                                | description
-    ${expectedHeader}             | ${mockedKeys.publickKey} | ${dummyActivity}     | ${true}  | ${undefined}                                          | ${"署名されたActivityを検証する"}
-    ${otherSignedHeader}          | ${mockedKeys.publickKey} | ${otherUserActivity} | ${false} | ${"keyIdに基づくユーザーとactorが一致しませんでした"} | ${"actorとkeyIdの持ち主(署名者が異なる場合、検証結果は不正"}
-    ${expectedHeader}             | ${mockedKeys.publickKey} | ${invalidActivity}   | ${false} | ${"ActivityがDigestと一致しませんでした"}             | ${"ActivityがDigestと異なる場合、検証結果は不正"}
-    ${noKeyIdHeader}              | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"Required"}                                         | ${"検証に必要なkeyIdがない場合、検証結果は不正"}
-    ${noAlgorithmHeader}          | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${'Invalid literal value, expected "rsa-sha256"'}     | ${"検証に必要なアルゴリズム名がない場合、検証結果は不正"}
-    ${noHeadersHeader}            | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"Required"}                                         | ${"検証に必要なヘッダー順指定がない場合、検証結果は不正"}
-    ${noSignatureHeader}          | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"Required"}                                         | ${"検証に必要なシグネチャーがない場合、検証結果は不正"}
-    ${expectedHeader}             | ${null}                  | ${dummyActivity}     | ${false} | ${"keyIdから公開鍵が取得できませんでした"}            | ${"公開鍵がない場合、検証結果は不正"}
-    ${invalidDateHeader}          | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"検証の結果不正と判断されました"}                   | ${"Dateが異なればsignatureも異なる"}
-    ${invalidHostHeader}          | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"検証の結果不正と判断されました"}                   | ${"Hostが異なればsignatureも異なる"}
-    ${invalidSignatureHeader}     | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"検証の結果不正と判断されました"}                   | ${"Signatureが異なればsignatureも異なる"}
-    ${unSupportedAlgorithmHeader} | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${'Invalid literal value, expected "rsa-sha256"'}     | ${"アルゴリズムはrsa-sha256以外は未サポート"}
-    ${unSupportedDigestHeader}    | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"digestのアルゴリズムがSHA-256ではありません"}      | ${"DigestがSHA-256=で始まらない場合、検証結果は不正"}
+    ${expectedHeader}             | ${mockedKeys.publickKey} | ${dummyActivity}     | ${true}  | ${undefined}                                          | ${"ヘッダーが正しく署名されていた"}
+    ${otherSignedHeader}          | ${mockedKeys.publickKey} | ${otherUserActivity} | ${false} | ${"keyIdに基づくユーザーとactorが一致しませんでした"} | ${"actorとkeyIdの持ち主が一致しない(他人が署名した)"}
+    ${expectedHeader}             | ${mockedKeys.publickKey} | ${invalidActivity}   | ${false} | ${"ActivityがDigestと一致しませんでした"}             | ${"ActivityがDigestと異なる(Activityが改ざんされている)"}
+    ${noKeyIdHeader}              | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"Required"}                                         | ${"検証必要なkeyIdがない"}
+    ${noAlgorithmHeader}          | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${'Invalid literal value, expected "rsa-sha256"'}     | ${"検証に必要なアルゴリズム名がない"}
+    ${noHeadersHeader}            | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"Required"}                                         | ${"検証に必要なヘッダー順指定がない"}
+    ${noSignatureHeader}          | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"Required"}                                         | ${"検証に必要なシグネチャーがない"}
+    ${expectedHeader}             | ${null}                  | ${dummyActivity}     | ${false} | ${"keyIdから公開鍵が取得できませんでした"}            | ${"keyIdから公開鍵が取れない"}
+    ${invalidDateHeader}          | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"検証の結果不正と判断されました"}                   | ${"Dateが改ざんされている"}
+    ${invalidHostHeader}          | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"検証の結果不正と判断されました"}                   | ${"Hostが改ざんされている"}
+    ${invalidSignatureHeader}     | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"検証の結果不正と判断されました"}                   | ${"Signatureが改ざんされている"}
+    ${unSupportedAlgorithmHeader} | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${'Invalid literal value, expected "rsa-sha256"'}     | ${"アルゴリズムはrsa-sha256でない"}
+    ${unSupportedDigestHeader}    | ${mockedKeys.publickKey} | ${dummyActivity}     | ${false} | ${"digestのアルゴリズムがSHA-256ではありません"}      | ${"DigestがSHA-256でない"}
   `(
-    "$description",
+    "$descriptionとき、$isValidを返す",
     async ({ header, publicKey, activity, isValid, reason }) => {
       // arrange
       mockedPrisma.user.findUnique.mockResolvedValue({
@@ -62,16 +62,9 @@ describe("verifyActivity", () => {
       const dummyRequest = {
         headers: new Headers(header),
         nextUrl: new URL("https://myhost.example.com/inbox"),
-        clone() {
-          return {
-            async json() {
-              return activity;
-            },
-            async text() {
-              return JSON.stringify(activity);
-            },
-          };
-        },
+        json: async () => activity,
+        text: async () => JSON.stringify(activity),
+        clone: () => dummyRequest,
       } as unknown as NextRequest;
       // act
       const actual = await verifyRequest(dummyRequest);
