@@ -1,6 +1,6 @@
 "use client";
 
-import { action } from "./action.server";
+import { action } from "./action";
 import { SubmitButton } from "./parts/SubmitButton";
 
 export function NoteForm() {

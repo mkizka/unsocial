@@ -1,6 +1,7 @@
 import type { User } from "@prisma/client";
+import type { NextRequest } from "next/server";
 
-import { verifyActivity } from "@/utils/httpSignature/verify";
+import { verifyRequest } from "@/utils/httpSignature/verify";
 
 import { userService } from "..";
 import { ActivitySchemaValidationError } from "./errors";
@@ -33,13 +34,8 @@ const mockedUserService = jest.mocked(userService);
 mockedUserService.findOrFetchUserByActor.mockResolvedValue(dummyUser);
 
 jest.mock("@/utils/httpSignature/verify");
-const mockedVerifyActivity = jest.mocked(verifyActivity);
+const mockedVerifyActivity = jest.mocked(verifyRequest);
 mockedVerifyActivity.mockResolvedValue({ isValid: true });
-
-const params = {
-  pathname: "/users/dummy/inbox",
-  headers: new Headers(),
-};
 
 describe("ユーザーinbox", () => {
   test.each`
@@ -55,8 +51,13 @@ describe("ユーザーinbox", () => {
       type,
       actor: "https://remote.example.com/u/dummy_remote",
     };
+    const dummyRequest = {
+      headers: new Headers(),
+      clone: () => dummyRequest,
+      json: () => activity,
+    } as unknown as NextRequest;
     // act
-    const error = await perform({ activity, ...params });
+    const error = await perform(dummyRequest);
     // assert
     expect(error).toBeUndefined();
     expect(fn).toBeCalledWith(activity, dummyUser);
@@ -67,8 +68,13 @@ describe("ユーザーinbox", () => {
       type: "NotImplemented",
       actor: "https://remote.example.com/u/dummy_remote",
     };
+    const dummyRequest = {
+      headers: new Headers(),
+      clone: () => dummyRequest,
+      json: () => activity,
+    } as unknown as NextRequest;
     // act
-    const error = await perform({ activity, ...params });
+    const error = await perform(dummyRequest);
     // assert
     expect(error).toBeInstanceOf(ActivitySchemaValidationError);
   });
@@ -78,8 +84,13 @@ describe("ユーザーinbox", () => {
       invalid: "value",
       actor: "https://remote.example.com/u/dummy_remote",
     };
+    const dummyRequest = {
+      headers: new Headers(),
+      clone: () => dummyRequest,
+      json: () => activity,
+    } as unknown as NextRequest;
     // act
-    const error = await perform({ activity, ...params });
+    const error = await perform(dummyRequest);
     // assert
     expect(error).toBeInstanceOf(ActivitySchemaValidationError);
   });

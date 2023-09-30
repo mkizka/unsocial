@@ -1,4 +1,6 @@
+"use server";
 import type { Like, Note, User } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import type { Session } from "next-auth";
 
 import { activityStreams } from "@/utils/activitypub";
@@ -93,4 +95,5 @@ export async function action(data: { noteId: string; content: string }) {
   } else {
     await like(session.user, data);
   }
+  revalidatePath(`/notes/${data.noteId}`);
 }

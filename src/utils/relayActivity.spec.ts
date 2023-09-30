@@ -1,4 +1,5 @@
 import type { Credential } from "@prisma/client";
+import type { AP } from "activitypub-core-types";
 import { captor } from "jest-mock-extended";
 import { rest } from "msw";
 
@@ -41,14 +42,19 @@ describe("relayActivity", () => {
       await relayActivityToInboxUrl({
         userId: dummyUserId,
         inboxUrl: new URL("https://remote.example.com/inbox"),
-        // @ts-ignore
-        activity: { type: "Dummy" },
+        activity: {
+          type: "Dummy",
+          actor: "https://myhost.example.com/users/dummy_other_userId/activity",
+        } as unknown as AP.Activity,
       });
       // assert
       expect(headerFn).toHaveBeenCalledWith(headerCaptor);
       expect(headerCaptor.value).toMatchSnapshot();
       expect(bodyFn).toHaveBeenCalledWith(bodyCaptor);
-      expect(bodyCaptor.value).toEqual({ type: "Dummy" });
+      expect(bodyCaptor.value).toEqual({
+        type: "Dummy",
+        actor: "https://myhost.example.com/users/dummy_other_userId/activity",
+      });
     });
   });
 

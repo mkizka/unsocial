@@ -1,3 +1,6 @@
+"use server";
+import { revalidatePath } from "next/cache";
+
 import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
 
@@ -17,4 +20,5 @@ export async function action(userId: string) {
   if (count === 0) {
     logger.info("ユーザー情報の再取得が行われませんでした");
   }
+  revalidatePath(`/users/${userId}`);
 }

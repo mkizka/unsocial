@@ -1,105 +1,119 @@
+// relayActivity.spec.tsからコピー
 export const expectedHeader = {
-  date: "Sun, 01 Jan 2023 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=ySrhIrb8czKTX2m+5iuJSdbLugtcILvQdV2rXGCxls8=",
   host: "remote.example.com",
-  signature:
-    `keyId="https://myhost.example.com/example#main-key",` +
-    `algorithm="rsa-sha256",` +
-    `headers="(request-target) host date digest",` +
-    `signature="CKZWtohqnHXjkIu3SEH20luhWcj6JdyBcPlPVoyeNJhRm9b7gJpIjUpCfCf7KsOR5r56tYHoMF2TG6ixJYOQ5NlCSRTBpOhmFfPL9ly2TS2O1wgm29qn6xFwqd4kTZn2NHxwR5BsMDjFfPD18sbxyhlkCSm8KbIExMJTIL+10FT8pQYgQXGZP6oGKQLQjgAp2SqvTEMrhUKZ5/2yFR5lDKp66RCarePhem78RDFePUh7QZSmlvK25G2IUlKs40KUmot4ZQD3yyEcteMXNJXXJ3PwfBTkqJshMbm/P9mYqOCfkUcmjEIT1qdP286qM/2Ewrac/6UCIQ5j0igGgg=="`,
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
+};
+
+export const otherSignedHeader = {
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=Gwtaf2C1j/hnbwtC6f37u2T6SiitMcs15298sjIcR5w=",
+  host: "remote.example.com",
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="jKd5MWWaxNkuXfLrV+hnhs2xOJ0DOI7rcQFjOa9eTKw0UI83AKLn+AfMAEWGZjO97jYP5OvTk2gjOeJZ2imo3E4KnfrfUH1MG2GwhJQjhpjeAu6oluzZZ1Ct8Qjz1kf25ZvlMAO8qbpoMcvwedOAw9wpDgZagddm/y/xCMCaCOYb3P4n4Zinv/k+EcAnVWjPFm+i3optmghZ9gQST8D4LG3Trzv/JsWhhwFTs9BhVH8MaXM33ELn1KPw2ECX7bx4YMG105uaRmLDM1tmxMDPjQZb43fX0TQEbtK0ohQ56upOpGCds/B2F0iGsx+zMsUzObxQVS3E9HPAC76xpQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
 export const noKeyIdHeader = {
-  date: "Sun, 01 Jan 2023 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=ySrhIrb8czKTX2m+5iuJSdbLugtcILvQdV2rXGCxls8=",
   host: "remote.example.com",
-  signature:
-    `algorithm="rsa-sha256",` +
-    `headers="(request-target) host date digest",` +
-    `signature="CKZWtohqnHXjkIu3SEH20luhWcj6JdyBcPlPVoyeNJhRm9b7gJpIjUpCfCf7KsOR5r56tYHoMF2TG6ixJYOQ5NlCSRTBpOhmFfPL9ly2TS2O1wgm29qn6xFwqd4kTZn2NHxwR5BsMDjFfPD18sbxyhlkCSm8KbIExMJTIL+10FT8pQYgQXGZP6oGKQLQjgAp2SqvTEMrhUKZ5/2yFR5lDKp66RCarePhem78RDFePUh7QZSmlvK25G2IUlKs40KUmot4ZQD3yyEcteMXNJXXJ3PwfBTkqJshMbm/P9mYqOCfkUcmjEIT1qdP286qM/2Ewrac/6UCIQ5j0igGgg=="`,
+  signature: `algorithm="rsa-sha256",headers="(request-target) host date digest",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
 export const noAlgorithmHeader = {
-  date: "Sun, 01 Jan 2023 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=ySrhIrb8czKTX2m+5iuJSdbLugtcILvQdV2rXGCxls8=",
   host: "remote.example.com",
-  signature:
-    `keyId="https://myhost.example.com/example#main-key",` +
-    `headers="(request-target) host date digest",` +
-    `signature="CKZWtohqnHXjkIu3SEH20luhWcj6JdyBcPlPVoyeNJhRm9b7gJpIjUpCfCf7KsOR5r56tYHoMF2TG6ixJYOQ5NlCSRTBpOhmFfPL9ly2TS2O1wgm29qn6xFwqd4kTZn2NHxwR5BsMDjFfPD18sbxyhlkCSm8KbIExMJTIL+10FT8pQYgQXGZP6oGKQLQjgAp2SqvTEMrhUKZ5/2yFR5lDKp66RCarePhem78RDFePUh7QZSmlvK25G2IUlKs40KUmot4ZQD3yyEcteMXNJXXJ3PwfBTkqJshMbm/P9mYqOCfkUcmjEIT1qdP286qM/2Ewrac/6UCIQ5j0igGgg=="`,
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",headers="(request-target) host date digest",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
 export const noHeadersHeader = {
-  date: "Sun, 01 Jan 2023 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=ySrhIrb8czKTX2m+5iuJSdbLugtcILvQdV2rXGCxls8=",
   host: "remote.example.com",
-  signature:
-    `keyId="https://myhost.example.com/example#main-key",` +
-    `algorithm="rsa-sha256",` +
-    `signature="CKZWtohqnHXjkIu3SEH20luhWcj6JdyBcPlPVoyeNJhRm9b7gJpIjUpCfCf7KsOR5r56tYHoMF2TG6ixJYOQ5NlCSRTBpOhmFfPL9ly2TS2O1wgm29qn6xFwqd4kTZn2NHxwR5BsMDjFfPD18sbxyhlkCSm8KbIExMJTIL+10FT8pQYgQXGZP6oGKQLQjgAp2SqvTEMrhUKZ5/2yFR5lDKp66RCarePhem78RDFePUh7QZSmlvK25G2IUlKs40KUmot4ZQD3yyEcteMXNJXXJ3PwfBTkqJshMbm/P9mYqOCfkUcmjEIT1qdP286qM/2Ewrac/6UCIQ5j0igGgg=="`,
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
 export const noSignatureHeader = {
-  date: "Sun, 01 Jan 2023 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=ySrhIrb8czKTX2m+5iuJSdbLugtcILvQdV2rXGCxls8=",
   host: "remote.example.com",
-  signature:
-    `keyId="https://myhost.example.com/example#main-key",` +
-    `algorithm="rsa-sha256",` +
-    `headers="(request-target) host date digest",`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
+};
+
+export const unSupportedDigestHeader = {
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-512=GJpn7Z0rhlxi7/yIwjEeQln6ix6FqsnOBpzQ156l7mM=",
+  host: "remote.example.com",
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
 export const invalidDateHeader = {
-  date: "Sun, 01 Jan 2024 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:01 GMT",
+  digest: "SHA-256=ySrhIrb8czKTX2m+5iuJSdbLugtcILvQdV2rXGCxls8=",
   host: "remote.example.com",
-  signature:
-    `keyId="https://myhost.example.com/example#main-key",` +
-    `algorithm="rsa-sha256",` +
-    `headers="(request-target) host date digest",` +
-    `signature="CKZWtohqnHXjkIu3SEH20luhWcj6JdyBcPlPVoyeNJhRm9b7gJpIjUpCfCf7KsOR5r56tYHoMF2TG6ixJYOQ5NlCSRTBpOhmFfPL9ly2TS2O1wgm29qn6xFwqd4kTZn2NHxwR5BsMDjFfPD18sbxyhlkCSm8KbIExMJTIL+10FT8pQYgQXGZP6oGKQLQjgAp2SqvTEMrhUKZ5/2yFR5lDKp66RCarePhem78RDFePUh7QZSmlvK25G2IUlKs40KUmot4ZQD3yyEcteMXNJXXJ3PwfBTkqJshMbm/P9mYqOCfkUcmjEIT1qdP286qM/2Ewrac/6UCIQ5j0igGgg=="`,
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
 export const invalidDigestHeader = {
-  date: "Sun, 01 Jan 2023 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=invalid",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=GJpn7Z0rhlxi7/yIwjEeQln6ix6FqsnOBpzQ156l7mM=__invalid__",
   host: "remote.example.com",
-  signature:
-    `keyId="https://myhost.example.com/example#main-key",` +
-    `algorithm="rsa-sha256",` +
-    `headers="(request-target) host date digest",` +
-    `signature="CKZWtohqnHXjkIu3SEH20luhWcj6JdyBcPlPVoyeNJhRm9b7gJpIjUpCfCf7KsOR5r56tYHoMF2TG6ixJYOQ5NlCSRTBpOhmFfPL9ly2TS2O1wgm29qn6xFwqd4kTZn2NHxwR5BsMDjFfPD18sbxyhlkCSm8KbIExMJTIL+10FT8pQYgQXGZP6oGKQLQjgAp2SqvTEMrhUKZ5/2yFR5lDKp66RCarePhem78RDFePUh7QZSmlvK25G2IUlKs40KUmot4ZQD3yyEcteMXNJXXJ3PwfBTkqJshMbm/P9mYqOCfkUcmjEIT1qdP286qM/2Ewrac/6UCIQ5j0igGgg=="`,
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
 export const invalidHostHeader = {
-  date: "Sun, 01 Jan 2023 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=ySrhIrb8czKTX2m+5iuJSdbLugtcILvQdV2rXGCxls8=",
   host: "invalid.example.com",
-  signature:
-    `keyId="https://myhost.example.com/example#main-key",` +
-    `algorithm="rsa-sha256",` +
-    `headers="(request-target) host date digest",` +
-    `signature="CKZWtohqnHXjkIu3SEH20luhWcj6JdyBcPlPVoyeNJhRm9b7gJpIjUpCfCf7KsOR5r56tYHoMF2TG6ixJYOQ5NlCSRTBpOhmFfPL9ly2TS2O1wgm29qn6xFwqd4kTZn2NHxwR5BsMDjFfPD18sbxyhlkCSm8KbIExMJTIL+10FT8pQYgQXGZP6oGKQLQjgAp2SqvTEMrhUKZ5/2yFR5lDKp66RCarePhem78RDFePUh7QZSmlvK25G2IUlKs40KUmot4ZQD3yyEcteMXNJXXJ3PwfBTkqJshMbm/P9mYqOCfkUcmjEIT1qdP286qM/2Ewrac/6UCIQ5j0igGgg=="`,
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
 export const invalidSignatureHeader = {
-  date: "Sun, 01 Jan 2023 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=ySrhIrb8czKTX2m+5iuJSdbLugtcILvQdV2rXGCxls8=",
   host: "remote.example.com",
-  signature:
-    `keyId="https://myhost.example.com/example#main-key",` +
-    `algorithm="rsa-sha256",` +
-    `headers="(request-target) date host digest",` +
-    `signature="CKZWtohqnHXjkIu3SEH20luhWcj6JdyBcPlPVoyeNJhRm9b7gJpIjUpCfCf7KsOR5r56tYHoMF2TG6ixJYOQ5NlCSRTBpOhmFfPL9ly2TS2O1wgm29qn6xFwqd4kTZn2NHxwR5BsMDjFfPD18sbxyhlkCSm8KbIExMJTIL+10FT8pQYgQXGZP6oGKQLQjgAp2SqvTEMrhUKZ5/2yFR5lDKp66RCarePhem78RDFePUh7QZSmlvK25G2IUlKs40KUmot4ZQD3yyEcteMXNJXXJ3PwfBTkqJshMbm/P9mYqOCfkUcmjEIT1qdP286qM/2Ewrac/6UCIQ5j0igGgg=="`,
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="__invalid__"`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
 export const unSupportedAlgorithmHeader = {
-  date: "Sun, 01 Jan 2023 00:00:00 GMT",
-  digest: "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
+  accept: "application/activity+json",
+  "content-type": "application/json",
+  date: "Wed, 01 Jan 2020 00:00:00 GMT",
+  digest: "SHA-256=ySrhIrb8czKTX2m+5iuJSdbLugtcILvQdV2rXGCxls8=",
   host: "remote.example.com",
-  signature:
-    `keyId="https://myhost.example.com/example#main-key",` +
-    `algorithm="unsupported",` +
-    `headers="(request-target) host date digest",` +
-    `signature="CKZWtohqnHXjkIu3SEH20luhWcj6JdyBcPlPVoyeNJhRm9b7gJpIjUpCfCf7KsOR5r56tYHoMF2TG6ixJYOQ5NlCSRTBpOhmFfPL9ly2TS2O1wgm29qn6xFwqd4kTZn2NHxwR5BsMDjFfPD18sbxyhlkCSm8KbIExMJTIL+10FT8pQYgQXGZP6oGKQLQjgAp2SqvTEMrhUKZ5/2yFR5lDKp66RCarePhem78RDFePUh7QZSmlvK25G2IUlKs40KUmot4ZQD3yyEcteMXNJXXJ3PwfBTkqJshMbm/P9mYqOCfkUcmjEIT1qdP286qM/2Ewrac/6UCIQ5j0igGgg=="`,
+  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha512",headers="(request-target) host date digest",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
+  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };

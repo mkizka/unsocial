@@ -1,3 +1,5 @@
+"use server";
+import { revalidatePath } from "next/cache";
 import type { Session } from "next-auth";
 
 import { activityStreams } from "@/utils/activitypub";
@@ -79,7 +81,7 @@ export async function action({ followeeId }: { followeeId: string }) {
   const session = await getServerSession();
   if (!session?.user) {
     // TODO: エラーを返す方法が実装されたら修正
-    return { error: "ログインが必要です" };
+    return;
   }
   const existingFollow = await prisma.follow.findFirst({
     where: {
@@ -92,4 +94,5 @@ export async function action({ followeeId }: { followeeId: string }) {
   } else {
     await follow(session.user, followeeId);
   }
+  revalidatePath(`/users/${followeeId}`);
 }

@@ -4,7 +4,7 @@ import { useTransition } from "react";
 
 import { Spinner } from "@/components/clients/Spinner";
 
-import { action } from "./action.server";
+import { action } from "./action";
 
 type Props = {
   userId: string;
