@@ -1,5 +1,5 @@
 import { mockedKeys } from "./__fixtures__/keys";
-import { signActivity } from "./sign";
+import { signHeaders } from "./sign";
 
 afterAll(() => {
   jest.useRealTimers();
@@ -19,10 +19,12 @@ describe("signActivity", () => {
       // arrange
       jest.useFakeTimers().setSystemTime(new Date(date));
       // act
-      const headers = signActivity({
-        userId: "userId",
-        privateKey: mockedKeys.privateKey,
-        activity,
+      const headers = signHeaders({
+        signer: {
+          id: "userId",
+          privateKey: mockedKeys.privateKey,
+        },
+        body: JSON.stringify(activity),
         inboxUrl,
       });
       // assert

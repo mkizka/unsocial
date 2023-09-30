@@ -1,6 +1,7 @@
+import type { NextRequest } from "next/server";
 import { z } from "zod";
 
-import { verifyActivity } from "@/utils/httpSignature/verify";
+import { verifyRequest } from "@/utils/httpSignature/verify";
 
 import { userService } from "..";
 import {
@@ -39,30 +40,22 @@ type PerformParams = {
   headers: Headers;
 };
 
-export const perform = async ({
-  activity,
-  pathname,
-  headers,
-}: PerformParams) => {
-  // 1. Activityのスキーマを検証する
-  const parsedActivity = anyActivitySchema.safeParse(activity);
-  if (!parsedActivity.success) {
-    return new ActivitySchemaValidationError(parsedActivity.error, activity);
-  }
+export const perform = async (request: NextRequest) => {
+  const activity = await request.clone().json();
 
-  // 2. ヘッダーの署名を検証する
-  const validation = await verifyActivity({
-    pathname,
-    headers,
-    // parsedActivity.dataはキーの順序が変わっていてDigestの検証を通らないため、
-    // 検証前の値を使う
-    activity: activity as { actor: string },
-  });
+  // 1. ヘッダーの署名を検証する
+  const validation = await verifyRequest(request);
   if (!validation.isValid) {
     return new BadActivityRequestError(
       "リクエストヘッダの署名が不正でした: " + validation.reason,
-      { activity, headers: Object.fromEntries(headers) },
+      { activity, headers: Object.fromEntries(request.headers) },
     );
+  }
+
+  // 2. Activityのスキーマを検証する
+  const parsedActivity = anyActivitySchema.safeParse(activity);
+  if (!parsedActivity.success) {
+    return new ActivitySchemaValidationError(parsedActivity.error, activity);
   }
 
   // 3. actorで指定されたユーザーを取得する

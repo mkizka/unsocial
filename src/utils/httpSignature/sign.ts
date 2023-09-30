@@ -1,4 +1,3 @@
-import type { AP } from "activitypub-core-types";
 import crypto from "crypto";
 
 import { env } from "@/utils/env";
@@ -11,29 +10,31 @@ const getSignature = (textToSign: string, privateKey: string) => {
 };
 
 export type SignActivityParams = {
-  userId: string;
-  privateKey: string;
-  activity: AP.Activity;
+  signer: {
+    id: string;
+    privateKey: string;
+  };
+  body: string;
   inboxUrl: URL;
 };
 
-export const signActivity = (params: SignActivityParams) => {
+export const signHeaders = ({ signer, body, inboxUrl }: SignActivityParams) => {
   const order = ["(request-target)", "host", "date", "digest"];
   const headers = {
-    host: params.inboxUrl.host,
+    host: inboxUrl.host,
     date: new Date().toUTCString(),
-    digest: `SHA-256=${createDigest(params.activity)}`,
+    digest: `SHA-256=${createDigest(body)}`,
   };
   const textToSign = textOf({
-    pathname: params.inboxUrl.pathname,
+    pathname: inboxUrl.pathname,
     headers,
     order,
   });
-  const signature = getSignature(textToSign, params.privateKey);
+  const signature = getSignature(textToSign, signer.privateKey);
   return {
     ...headers,
     signature:
-      `keyId="https://${env.HOST}/users/${params.userId}/activity#main-key",` +
+      `keyId="https://${env.HOST}/users/${signer.id}/activity#main-key",` +
       `algorithm="rsa-sha256",` +
       `headers="${order.join(" ")}",` +
       `signature="${signature}"`,

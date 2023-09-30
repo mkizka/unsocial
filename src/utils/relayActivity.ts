@@ -2,11 +2,8 @@ import { credentialService } from "@/server/service";
 
 import { fetchJson } from "./fetchJson";
 import type { SignActivityParams } from "./httpSignature/sign";
-import { signActivity } from "./httpSignature/sign";
-import { createLogger } from "./logger";
+import { signHeaders } from "./httpSignature/sign";
 import { prisma } from "./prisma";
-
-const logger = createLogger("relayActivity");
 
 const isNotNull = <T>(value: T): value is NonNullable<T> => value !== null;
 
@@ -23,31 +20,40 @@ const getUniqueInboxUrls = async (userId: string) => {
 };
 
 const relayActivity = async (params: SignActivityParams) => {
-  const signedHeaders = signActivity(params);
-  logger.info(`Activity送信: ${JSON.stringify(params.activity)}`);
-  const response = await fetchJson(params.inboxUrl, {
+  const signedHeaders = signHeaders(params);
+  await fetchJson(params.inboxUrl, {
     method: "POST",
-    body: JSON.stringify(params.activity),
+    body: params.body,
     headers: {
       Accept: "application/activity+json",
       ...signedHeaders,
     },
   });
-  logger.info(`${params.inboxUrl}: ${response}`);
 };
 
-export const relayActivityToInboxUrl = async (
-  params: Omit<SignActivityParams, "privateKey">,
-) => {
+type RelayActivityParams = {
+  userId: string;
+  activity: object;
+  inboxUrl: URL;
+};
+
+export const relayActivityToInboxUrl = async (params: RelayActivityParams) => {
   const privateKey = await credentialService.findUnique(params.userId);
   if (!privateKey) {
     throw new Error(`配送に必要な秘密鍵がありませんでした: ${params.userId}`);
   }
-  await relayActivity({ ...params, privateKey });
+  await relayActivity({
+    signer: {
+      id: params.userId,
+      privateKey,
+    },
+    body: JSON.stringify(params.activity),
+    inboxUrl: params.inboxUrl,
+  });
 };
 
 export const relayActivityToFollowers = async (
-  params: Omit<SignActivityParams, "privateKey" | "inboxUrl">,
+  params: Omit<RelayActivityParams, "inboxUrl">,
 ) => {
   const privateKey = await credentialService.findUnique(params.userId);
   if (!privateKey) {
@@ -55,7 +61,14 @@ export const relayActivityToFollowers = async (
   }
   const inboxUrls = await getUniqueInboxUrls(params.userId);
   const promises = inboxUrls.map((inboxUrl) =>
-    relayActivity({ ...params, privateKey, inboxUrl }),
+    relayActivity({
+      signer: {
+        id: params.userId,
+        privateKey,
+      },
+      body: JSON.stringify(params.activity),
+      inboxUrl,
+    }),
   );
   await Promise.all(promises);
 };

@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import type { NextRequest } from "next/server";
 import { z } from "zod";
 
 import { userService } from "@/server/service";
@@ -71,6 +72,18 @@ const findOrFetchUserByKeyId = async (keyId: string) => {
   return user;
 };
 
+const getActor = async (request: NextRequest) => {
+  const parsedActivity = z
+    .object({
+      actor: z.string().url(),
+    })
+    .safeParse(await request.clone().json());
+  if (!parsedActivity.success) {
+    return null;
+  }
+  return parsedActivity.data.actor;
+};
+
 type VerifyResult =
   | {
       isValid: true;
@@ -80,18 +93,12 @@ type VerifyResult =
       reason: string;
     };
 
-type VerifyActivityParams = {
-  pathname: string;
-  headers: Request["headers"];
-  activity: { actor: string };
-};
-
-export const verifyActivity = async ({
-  pathname,
-  headers,
-  activity,
-}: VerifyActivityParams): Promise<VerifyResult> => {
-  const parsedHeaders = headersSchema.safeParse(Object.fromEntries(headers));
+export const verifyRequest = async (
+  request: NextRequest,
+): Promise<VerifyResult> => {
+  const parsedHeaders = headersSchema.safeParse(
+    Object.fromEntries(request.headers),
+  );
   if (!parsedHeaders.success) {
     return {
       isValid: false,
@@ -100,7 +107,8 @@ export const verifyActivity = async ({
         "リクエストヘッダーが不正でした",
     };
   }
-  if (parsedHeaders.data.digest !== `SHA-256=${createDigest(activity)}`) {
+  const requestBody = await request.clone().text();
+  if (parsedHeaders.data.digest !== `SHA-256=${createDigest(requestBody)}`) {
     return {
       isValid: false,
       reason: "ActivityがDigestと一致しませんでした",
@@ -114,14 +122,23 @@ export const verifyActivity = async ({
       reason: "keyIdから公開鍵が取得できませんでした",
     };
   }
-  if (keyIdUser.actorUrl !== activity.actor) {
+  if (!keyIdUser.actorUrl) {
+    // keyIdはリモートユーザーなのでありえない動作だが、
+    // keyIdとactorの比較で null === null とならないようにするためチェック
+    return {
+      isValid: false,
+      reason: "keyIdからactorが取得できませんでした",
+    };
+  }
+  const requestActor = await getActor(request);
+  if (keyIdUser.actorUrl !== requestActor) {
     return {
       isValid: false,
       reason: "keyIdに基づくユーザーとactorが一致しませんでした",
     };
   }
   const text = textOf({
-    pathname,
+    pathname: request.nextUrl.pathname,
     headers: parsedHeaders.data,
     order: order.split(" "),
   });

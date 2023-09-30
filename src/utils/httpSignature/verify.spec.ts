@@ -1,4 +1,5 @@
 import type { User } from "@prisma/client";
+import type { NextRequest } from "next/server";
 
 import { mockedPrisma } from "@/mocks/prisma";
 
@@ -16,7 +17,7 @@ import {
   unSupportedDigestHeader,
 } from "./__fixtures__/headers";
 import { mockedKeys } from "./__fixtures__/keys";
-import { verifyActivity } from "./verify";
+import { verifyRequest } from "./verify";
 
 const dummyActivity = {
   type: "Dummy",
@@ -58,12 +59,22 @@ describe("verifyActivity", () => {
         actorUrl: "https://myhost.example.com/users/dummy_userId/activity",
         publicKey,
       } as User);
-      // act
-      const actual = await verifyActivity({
-        pathname: "/inbox",
+      const dummyRequest = {
         headers: new Headers(header),
-        activity,
-      });
+        nextUrl: new URL("https://myhost.example.com/inbox"),
+        clone() {
+          return {
+            async json() {
+              return activity;
+            },
+            async text() {
+              return JSON.stringify(activity);
+            },
+          };
+        },
+      } as unknown as NextRequest;
+      // act
+      const actual = await verifyRequest(dummyRequest);
       // assert
       expect(actual).toEqual({ isValid, reason });
     },
