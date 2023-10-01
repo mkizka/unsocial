@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@heroicons/react':
     specifier: 2.0.18
-    version: 2.0.18(react@18.3.0-canary-d6dcad6a8-20230914)
+    version: 2.0.18(react@18.3.0-canary-d900fadbf-20230929)
   '@prisma/client':
     specifier: 5.3.1
     version: 5.3.1(prisma@5.3.1)
@@ -16,22 +16,22 @@ dependencies:
     version: 2.4.3
   jotai:
     specifier: 2.4.3
-    version: 2.4.3(@types/react@18.2.23)(react@18.3.0-canary-d6dcad6a8-20230914)
+    version: 2.4.3(@types/react@18.2.24)(react@18.3.0-canary-d900fadbf-20230929)
   next:
     specifier: 13.5.4-canary.8
-    version: 13.5.4-canary.8(@babel/core@7.22.1)(react-dom@18.3.0-canary-d6dcad6a8-20230914)(react@18.3.0-canary-d6dcad6a8-20230914)
+    version: 13.5.4-canary.8(@babel/core@7.22.1)(react-dom@18.3.0-canary-d900fadbf-20230929)(react@18.3.0-canary-d900fadbf-20230929)
   next-auth:
     specifier: 4.23.1
-    version: 4.23.1(next@13.5.4-canary.8)(nodemailer@6.9.5)(react-dom@18.3.0-canary-d6dcad6a8-20230914)(react@18.3.0-canary-d6dcad6a8-20230914)
+    version: 4.23.1(next@13.5.4-canary.8)(nodemailer@6.9.5)(react-dom@18.3.0-canary-d900fadbf-20230929)(react@18.3.0-canary-d900fadbf-20230929)
   nodemailer:
     specifier: 6.9.5
     version: 6.9.5
   react:
-    specifier: 18.3.0-canary-d6dcad6a8-20230914
-    version: 18.3.0-canary-d6dcad6a8-20230914
+    specifier: 18.3.0-canary-d900fadbf-20230929
+    version: 18.3.0-canary-d900fadbf-20230929
   react-dom:
-    specifier: 18.3.0-canary-d6dcad6a8-20230914
-    version: 18.3.0-canary-d6dcad6a8-20230914(react@18.3.0-canary-d6dcad6a8-20230914)
+    specifier: 18.3.0-canary-d900fadbf-20230929
+    version: 18.3.0-canary-d900fadbf-20230929(react@18.3.0-canary-d900fadbf-20230929)
   sharp:
     specifier: 0.32.6
     version: 0.32.6
@@ -83,8 +83,8 @@ devDependencies:
     specifier: 18.18.1
     version: 18.18.1
   '@types/react':
-    specifier: 18.2.23
-    version: 18.2.23
+    specifier: 18.2.24
+    version: 18.2.24
   '@types/react-dom':
     specifier: 18.2.8
     version: 18.2.8
@@ -960,12 +960,12 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@heroicons/react@2.0.18(react@18.3.0-canary-d6dcad6a8-20230914):
+  /@heroicons/react@2.0.18(react@18.3.0-canary-d900fadbf-20230929):
     resolution: {integrity: sha512-7TyMjRrZZMBPa+/5Y8lN0iyvUU/01PeMGX2+RE7cQWpEUIcb4QotzUObFkJDejj/HUH4qjP/eQ0gzzKs2f+6Yw==}
     peerDependencies:
       react: '>= 16'
     dependencies:
-      react: 18.3.0-canary-d6dcad6a8-20230914
+      react: 18.3.0-canary-d900fadbf-20230929
     dev: false
 
   /@humanwhocodes/config-array@0.11.11:
@@ -1729,11 +1729,11 @@ packages:
   /@types/react-dom@18.2.8:
     resolution: {integrity: sha512-bAIvO5lN/U8sPGvs1Xm61rlRHHaq5rp5N3kp9C+NJ/Q41P8iqjkXSu0+/qu8POsjH9pNWb0OYabFez7taP7omw==}
     dependencies:
-      '@types/react': 18.2.23
+      '@types/react': 18.2.24
     dev: true
 
-  /@types/react@18.2.23:
-    resolution: {integrity: sha512-qHLW6n1q2+7KyBEYnrZpcsAmU/iiCh9WGCKgXvMxx89+TYdJWRjZohVIo9XTcoLhfX3+/hP0Pbulu3bCZQ9PSA==}
+  /@types/react@18.2.24:
+    resolution: {integrity: sha512-Ee0Jt4sbJxMu1iDcetZEIKQr99J1Zfb6D4F3qfUWoR1JpInkY1Wdg4WwCyBjL257D0+jGqSl1twBjV8iCaC0Aw==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
@@ -5249,7 +5249,7 @@ packages:
     resolution: {integrity: sha512-YPM9Q+dmsna4CGWNn5+oHFsuXJdxvKAOVoNjpe2nje3odSoX5Xz4s71rP50vM8uUKJyQtMnEGPmbVCVR+G4W5g==}
     dev: false
 
-  /jotai@2.4.3(@types/react@18.2.23)(react@18.3.0-canary-d6dcad6a8-20230914):
+  /jotai@2.4.3(@types/react@18.2.24)(react@18.3.0-canary-d900fadbf-20230929):
     resolution: {integrity: sha512-CSAHX9LqWG5WCrU8OgBoZbBJ+Bo9rQU0mPusEF4e0CZ/SNFgurG26vb3UpgvCSJZgYVcUQNiUBM5q86PA8rstQ==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
@@ -5261,8 +5261,8 @@ packages:
       react:
         optional: true
     dependencies:
-      '@types/react': 18.2.23
-      react: 18.3.0-canary-d6dcad6a8-20230914
+      '@types/react': 18.2.24
+      react: 18.3.0-canary-d900fadbf-20230929
     dev: false
 
   /js-levenshtein@1.1.6:
@@ -5760,7 +5760,7 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-auth@4.23.1(next@13.5.4-canary.8)(nodemailer@6.9.5)(react-dom@18.3.0-canary-d6dcad6a8-20230914)(react@18.3.0-canary-d6dcad6a8-20230914):
+  /next-auth@4.23.1(next@13.5.4-canary.8)(nodemailer@6.9.5)(react-dom@18.3.0-canary-d900fadbf-20230929)(react@18.3.0-canary-d900fadbf-20230929):
     resolution: {integrity: sha512-mL083z8KgRtlrIV6CDca2H1kduWJuK/3pTS0Fe2og15KOm4v2kkLGdSDfc2g+019aEBrJUT0pPW2Xx42ImN1WA==}
     peerDependencies:
       next: ^12.2.5 || ^13
@@ -5775,14 +5775,14 @@ packages:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.14.3
-      next: 13.5.4-canary.8(@babel/core@7.22.1)(react-dom@18.3.0-canary-d6dcad6a8-20230914)(react@18.3.0-canary-d6dcad6a8-20230914)
+      next: 13.5.4-canary.8(@babel/core@7.22.1)(react-dom@18.3.0-canary-d900fadbf-20230929)(react@18.3.0-canary-d900fadbf-20230929)
       nodemailer: 6.9.5
       oauth: 0.9.15
       openid-client: 5.4.2
       preact: 10.13.2
       preact-render-to-string: 5.2.6(preact@10.13.2)
-      react: 18.3.0-canary-d6dcad6a8-20230914
-      react-dom: 18.3.0-canary-d6dcad6a8-20230914(react@18.3.0-canary-d6dcad6a8-20230914)
+      react: 18.3.0-canary-d900fadbf-20230929
+      react-dom: 18.3.0-canary-d900fadbf-20230929(react@18.3.0-canary-d900fadbf-20230929)
       uuid: 8.3.2
     dev: false
 
@@ -5790,7 +5790,7 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /next@13.5.4-canary.8(@babel/core@7.22.1)(react-dom@18.3.0-canary-d6dcad6a8-20230914)(react@18.3.0-canary-d6dcad6a8-20230914):
+  /next@13.5.4-canary.8(@babel/core@7.22.1)(react-dom@18.3.0-canary-d900fadbf-20230929)(react@18.3.0-canary-d900fadbf-20230929):
     resolution: {integrity: sha512-fAQV8yr2jywHu7gE7Wz6xEz03W2Lmr6437ajJcDGhhMwbN/rLLM1UsZGYV9+qC1Rriy734RGaHbWbrvGpLbrjA==}
     engines: {node: '>=16.14.0'}
     hasBin: true
@@ -5810,9 +5810,9 @@ packages:
       busboy: 1.6.0
       caniuse-lite: 1.0.30001538
       postcss: 8.4.31
-      react: 18.3.0-canary-d6dcad6a8-20230914
-      react-dom: 18.3.0-canary-d6dcad6a8-20230914(react@18.3.0-canary-d6dcad6a8-20230914)
-      styled-jsx: 5.1.1(@babel/core@7.22.1)(react@18.3.0-canary-d6dcad6a8-20230914)
+      react: 18.3.0-canary-d900fadbf-20230929
+      react-dom: 18.3.0-canary-d900fadbf-20230929(react@18.3.0-canary-d900fadbf-20230929)
+      styled-jsx: 5.1.1(@babel/core@7.22.1)(react@18.3.0-canary-d900fadbf-20230929)
       watchpack: 2.4.0
     optionalDependencies:
       '@next/swc-darwin-arm64': 13.5.4-canary.8
@@ -6640,14 +6640,14 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
-  /react-dom@18.3.0-canary-d6dcad6a8-20230914(react@18.3.0-canary-d6dcad6a8-20230914):
-    resolution: {integrity: sha512-KzS+Jy/WXC6I9bi9PtBU0+iMPHPNvNLdyIDJqgX91AiBP9IDDMjaDbgW0QKphi1qIOesYMeJz0uZkajhlfS8lg==}
+  /react-dom@18.3.0-canary-d900fadbf-20230929(react@18.3.0-canary-d900fadbf-20230929):
+    resolution: {integrity: sha512-XygtMLIfrmyvs8AqXZ0jafG48Lnna3hov52NbaJ0ra2e0boAnG6Ae266AMSeDQHRNTnMzOsn0oyjH3qHEiP6rg==}
     peerDependencies:
-      react: 18.3.0-canary-d6dcad6a8-20230914
+      react: 18.3.0-canary-d900fadbf-20230929
     dependencies:
       loose-envify: 1.4.0
-      react: 18.3.0-canary-d6dcad6a8-20230914
-      scheduler: 0.24.0-canary-d6dcad6a8-20230914
+      react: 18.3.0-canary-d900fadbf-20230929
+      scheduler: 0.24.0-canary-d900fadbf-20230929
     dev: false
 
   /react-is@16.13.1:
@@ -6658,8 +6658,8 @@ packages:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
 
-  /react@18.3.0-canary-d6dcad6a8-20230914:
-    resolution: {integrity: sha512-suE/MZ/N2HFo+QIKsc4F4TrphCwZ1rAZZZ0c+dREb61CDNlBK7eO36JsFzS/bf3D0N554AkWWXIT08NW0+ygFQ==}
+  /react@18.3.0-canary-d900fadbf-20230929:
+    resolution: {integrity: sha512-wZmxUlj5Z4W9f3rMB1XxhtrLiBjEriztjvTkuBoC+EOsRvM1r7+2j306WEV5p0ARS05kCYJWj7PSz9ZngDjEHw==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
@@ -6908,8 +6908,8 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
-  /scheduler@0.24.0-canary-d6dcad6a8-20230914:
-    resolution: {integrity: sha512-tC/9jHWGULTtIk39bb16jrDYyqwz0BHlQlNa3kZYyyFx8JsxioqzT/WoaInIrbkwRaY/zjYzm8IUzE3zH2wKqg==}
+  /scheduler@0.24.0-canary-d900fadbf-20230929:
+    resolution: {integrity: sha512-OIVnJmdCFy9O+qxqgLISdvXx3T2Lxe2x6JzOu3a76tkYVsDHCZQ/nBVt/ljmOduY2E6HwArwPz2EyQS75RZHCg==}
     dependencies:
       loose-envify: 1.4.0
     dev: false
@@ -7345,7 +7345,7 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /styled-jsx@5.1.1(@babel/core@7.22.1)(react@18.3.0-canary-d6dcad6a8-20230914):
+  /styled-jsx@5.1.1(@babel/core@7.22.1)(react@18.3.0-canary-d900fadbf-20230929):
     resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -7360,7 +7360,7 @@ packages:
     dependencies:
       '@babel/core': 7.22.1
       client-only: 0.0.1
-      react: 18.3.0-canary-d6dcad6a8-20230914
+      react: 18.3.0-canary-d900fadbf-20230929
     dev: false
 
   /sucrase@3.32.0:
