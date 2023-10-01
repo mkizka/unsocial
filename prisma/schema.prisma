@@ -66,6 +66,17 @@ model Note {
   publishedAt DateTime
   createdAt   DateTime @default(now())
   likes       Like[]
+  attachments Document[]
+}
+
+model Document {
+  id        String   @id @default(nanoid(8))
+  noteId    String
+  note      Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  mediaType String
+  url       String
+  width     Int
+  height    Int
 }
 
 enum FollowStatus {

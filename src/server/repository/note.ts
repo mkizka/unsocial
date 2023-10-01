@@ -84,6 +84,14 @@ export const createFromActivity = cache(
         url: activity.id,
         content: activity.content,
         publishedAt: activity.published,
+        attachments: {
+          create: activity.attachment?.map((attachment) => ({
+            url: attachment.url,
+            mediaType: attachment.mediaType,
+            width: attachment.width,
+            height: attachment.height,
+          })),
+        },
       },
     });
   },
