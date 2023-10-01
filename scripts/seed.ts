@@ -29,6 +29,15 @@ const main = async () => {
         userId: user.id,
         content: "テスト " + publishedAt.toISOString(),
         publishedAt,
+        attachments:
+          i === 99
+            ? [
+                {
+                  url: "https://via.placeholder.com/800x400",
+                  mediaType: "image/png",
+                },
+              ]
+            : [],
       });
     }),
   );

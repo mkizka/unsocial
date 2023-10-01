@@ -64,11 +64,21 @@ export type CreateParams = {
   userId: string;
   content: string;
   publishedAt: Date;
+  attachments: {
+    url: string;
+    mediaType: string;
+  }[];
 };
 
 export const create = (params: CreateParams) => {
+  const { attachments, ...data } = params;
   return prisma.note.create({
-    data: params,
+    data: {
+      ...data,
+      attachments: {
+        create: attachments,
+      },
+    },
     include: includeForNoteCard,
   });
 };

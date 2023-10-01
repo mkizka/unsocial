@@ -18,6 +18,7 @@ export async function action(formData: FormData) {
     userId: session.user.id,
     content,
     publishedAt: new Date(),
+    attachments: [],
   });
   await relayActivityToFollowers({
     userId: session.user.id,
