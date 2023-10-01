@@ -75,8 +75,6 @@ model Document {
   note      Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
   mediaType String
   url       String
-  width     Int
-  height    Int
 }
 
 enum FollowStatus {
