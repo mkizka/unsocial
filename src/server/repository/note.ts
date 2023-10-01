@@ -5,7 +5,7 @@ import type { DeleteActivity } from "@/server/schema/delete";
 import type { NoteActivity } from "@/server/schema/note";
 import { prisma } from "@/utils/prisma";
 
-const includeForNoteCard: Prisma.NoteInclude = {
+const includeForNoteCard = {
   user: true,
   attachments: true,
   likes: {
@@ -13,7 +13,7 @@ const includeForNoteCard: Prisma.NoteInclude = {
       user: true,
     },
   },
-};
+} satisfies Prisma.NoteInclude;
 
 export const findUniqueNoteCard = cache((id: string) => {
   return prisma.note.findUnique({
