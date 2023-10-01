@@ -17,6 +17,7 @@ const dummyNote = {
     preferredUsername: "preferredUsername",
     host: "remote.example.com",
   },
+  attachments: [],
   likes: [
     { id: "likeId", userId: "userId" },
     { id: "likeId2", userId: "userId2" },
