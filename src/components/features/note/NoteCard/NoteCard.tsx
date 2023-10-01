@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Ref } from "react";
 import { forwardRef } from "react";
@@ -41,6 +42,18 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
           </div>
         </div>
         <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
+        {/* TODO: 複数枚画像に対応する */}
+        {note.attachmentUrl && (
+          <Link href={note.attachmentUrl} target="_blank">
+            <Image
+              className="block h-auto w-full"
+              src={note.attachmentUrl}
+              alt=""
+              width={400}
+              height={300}
+            />
+          </Link>
+        )}
       </div>
     </article>
   );

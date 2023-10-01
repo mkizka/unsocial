@@ -23,8 +23,15 @@ describe("inboxCreateService", () => {
         published: "2023-01-01T00:00:00.000Z",
         to: ["https://www.w3.org/ns/activitystreams#Public"],
         cc: ["https://remote.example.com/u/remote_user/followers"],
+        attachment: [
+          {
+            type: "Document",
+            mediaType: "image/png",
+            url: "https://remote.example.com/image.png",
+          },
+        ],
       },
-    };
+    } as const;
     mockedPrisma.note.create.mockResolvedValueOnce({} as Note);
     // act
     const error = await handle(activity, dummyRemoteUser as never);
@@ -35,6 +42,14 @@ describe("inboxCreateService", () => {
         userId: dummyRemoteUser.id,
         content: activity.object.content,
         publishedAt: activity.object.published,
+        attachments: {
+          create: [
+            {
+              url: activity.object.attachment[0].url,
+              mediaType: activity.object.attachment[0].mediaType,
+            },
+          ],
+        },
       },
     });
     expect(error).toBeUndefined();
@@ -52,8 +67,15 @@ describe("inboxCreateService", () => {
         published: "2023-01-01T00:00:00.000Z",
         to: ["https://www.w3.org/ns/activitystreams#Public"],
         cc: ["https://remote.example.com/u/remote_user/followers"],
+        attachment: [
+          {
+            type: "Document",
+            mediaType: "image/png",
+            url: "https://remote.example.com/image.png",
+          },
+        ],
       },
-    };
+    } as const;
     mockedPrisma.note.create.mockRejectedValueOnce({
       code: "P2002",
     });
@@ -69,6 +91,14 @@ describe("inboxCreateService", () => {
         userId: dummyRemoteUser.id,
         content: activity.object.content,
         publishedAt: activity.object.published,
+        attachments: {
+          create: [
+            {
+              url: activity.object.attachment[0].url,
+              mediaType: activity.object.attachment[0].mediaType,
+            },
+          ],
+        },
       },
     });
     expect(error).toBeUndefined();

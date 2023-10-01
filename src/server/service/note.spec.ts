@@ -17,6 +17,7 @@ const dummyNote = {
     preferredUsername: "preferredUsername",
     host: "remote.example.com",
   },
+  attachments: [],
   likes: [
     { id: "likeId", userId: "userId" },
     { id: "likeId2", userId: "userId2" },
@@ -40,6 +41,7 @@ const expectNote = (note: NoteCard | null) => {
 
 const include = {
   user: true,
+  attachments: true,
   likes: {
     include: {
       user: true,

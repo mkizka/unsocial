@@ -29,6 +29,7 @@ describe("NoteForm/action", () => {
         host: "myhost.example.com",
         preferredUsername: "test",
       },
+      attachments: [],
       likes: [],
     } as unknown as Note);
     // act
