@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
 import { documentService } from "@/server/service";
+import { createLogger } from "@/utils/logger";
+
+const logger = createLogger("/document/[documentId]/image.png");
 
 export async function GET(
   _: Request,
@@ -11,6 +14,7 @@ export async function GET(
   if (!document) {
     notFound();
   }
+  logger.info("画像fetch: " + document.url);
   const image = await fetch(document.url);
   return new NextResponse(await image.arrayBuffer(), {
     headers: {
