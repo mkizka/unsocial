@@ -40,6 +40,7 @@ const expectNote = (note: NoteCard | null) => {
 
 const include = {
   user: true,
+  attachments: true,
   likes: {
     include: {
       user: true,

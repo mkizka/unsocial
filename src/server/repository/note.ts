@@ -1,11 +1,13 @@
+import type { Prisma } from "@prisma/client";
 import { cache } from "react";
 
 import type { DeleteActivity } from "@/server/schema/delete";
 import type { NoteActivity } from "@/server/schema/note";
 import { prisma } from "@/utils/prisma";
 
-const includeForNoteCard = {
+const includeForNoteCard: Prisma.NoteInclude = {
   user: true,
+  attachments: true,
   likes: {
     include: {
       user: true,
