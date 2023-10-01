@@ -134,8 +134,8 @@ devDependencies:
     specifier: 14.0.1
     version: 14.0.1
   msw:
-    specifier: 1.3.1
-    version: 1.3.1(typescript@5.2.2)
+    specifier: 1.3.2
+    version: 1.3.2(typescript@5.2.2)
   npm-run-all:
     specifier: 4.1.5
     version: 4.1.5
@@ -4256,8 +4256,8 @@ packages:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
     dev: true
 
-  /graphql@16.6.0:
-    resolution: {integrity: sha512-KPIBPDlW7NxrbT/eh4qPXz5FiFdL5UbaA0XUNz2Rp3Z3hqBSkbj0GVjwFDztsWVauZUWsbKHgMg++sk8UX0bkw==}
+  /graphql@16.8.1:
+    resolution: {integrity: sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
     dev: true
 
@@ -5676,8 +5676,8 @@ packages:
   /ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  /msw@1.3.1(typescript@5.2.2):
-    resolution: {integrity: sha512-GhP5lHSTXNlZb9EaKgPRJ01YAnVXwzkvnTzRn4W8fxU2DXuJrRO+Nb6OHdYqB4fCkwSNpIJH9JkON5Y6rHqJMQ==}
+  /msw@1.3.2(typescript@5.2.2):
+    resolution: {integrity: sha512-wKLhFPR+NitYTkQl5047pia0reNGgf0P6a1eTnA5aNlripmiz0sabMvvHcicE8kQ3/gZcI0YiPFWmYfowfm3lA==}
     engines: {node: '>=14'}
     hasBin: true
     requiresBuild: true
@@ -5695,7 +5695,7 @@ packages:
       chalk: 4.1.2
       chokidar: 3.5.3
       cookie: 0.4.2
-      graphql: 16.6.0
+      graphql: 16.8.1
       headers-polyfill: 3.2.5
       inquirer: 8.2.5
       is-node-process: 1.2.0
