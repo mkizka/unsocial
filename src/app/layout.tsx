@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="flex justify-center bg-primary text-dark">
-        <div className="w-full max-w-xl">
+        <div className="w-full max-w-[600px]">
           <Providers>{children}</Providers>
         </div>
       </body>

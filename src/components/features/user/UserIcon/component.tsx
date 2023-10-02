@@ -1,21 +1,26 @@
 import type { User } from "@prisma/client";
-import Image from "next/image";
 import type { ComponentProps } from "react";
 
 export type UserIconProps = Omit<
-  ComponentProps<typeof Image>,
-  "src" | "alt"
+  ComponentProps<"img">,
+  "src" | "alt" | "width" | "height"
 > & {
   user: Pick<User, "id" | "preferredUsername" | "lastFetchedAt">;
+  size: number;
 };
 
-export function UserIcon({ user, ...props }: UserIconProps) {
+export function UserIcon({ user, size, ...props }: UserIconProps) {
+  const params = new URLSearchParams();
+  params.set("size", size.toString());
   const key = user.lastFetchedAt?.getTime();
+  if (key) {
+    params.set("key", key.toString());
+  }
   return (
-    <Image
+    <img
       {...props}
       className={"hover:opacity-80 " + props.className}
-      src={`/users/${user.id}/icon.png${key ? `?${key}` : ""}`}
+      src={`/users/${user.id}/icon.png?${params.toString()}`}
       alt={`@${user.preferredUsername}のアイコン`}
     />
   );

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
+import sharp from "sharp";
 
 import { documentService } from "@/server/service";
 import { createLogger } from "@/utils/logger";
@@ -15,12 +16,16 @@ export async function GET(
     notFound();
   }
   logger.info("画像fetch: " + document.url);
-  const image = await fetch(document.url);
-  return new NextResponse(await image.arrayBuffer(), {
+  const response = await fetch(document.url);
+  const image = await sharp(await response.arrayBuffer())
+    // 600px - 16px * 2(横幅パディング) - 48px(左側のアイコン幅) = 520px
+    .resize(520, null, { fit: "inside" })
+    .toBuffer();
+  return new NextResponse(image, {
     headers: {
       "Content-Type": document.mediaType,
       // https://vercel.com/docs/concepts/functions/edge-functions/edge-caching#recommended-cache-control
-      "Cache-Control": `max-age=0, s-maxage=${60 * 60 * 3}`,
+      "Cache-Control": `max-age=0, s-maxage=31536000`, // 1年
     },
   });
 }
