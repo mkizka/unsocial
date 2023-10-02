@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Ref } from "react";
 import { forwardRef } from "react";
@@ -19,7 +18,7 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
     <article
       ref={ref}
       data-testid="note-card"
-      className="text-prmary relative mb-2 flex rounded bg-primary-light pb-5 pl-3 pr-4 pt-3 shadow"
+      className="text-prmary relative mb-2 flex rounded bg-primary-light p-4 shadow"
     >
       <div className="w-full pl-[48px]">
         <Link className="absolute left-3" href={note.user.url}>
@@ -45,16 +44,11 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
         {/* TODO: 複数枚画像に対応する */}
         {note.attachmentUrl && (
           <Link
-            className="relative block aspect-video"
+            className="mt-2 block aspect-video"
             href={note.attachmentUrl}
             target="_blank"
           >
-            <Image
-              className="object-cover"
-              src={note.attachmentUrl}
-              fill
-              alt=""
-            />
+            <img className="object-cover" src={note.attachmentUrl} alt="" />
           </Link>
         )}
       </div>

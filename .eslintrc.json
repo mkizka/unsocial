@@ -11,6 +11,8 @@
     "plugin:@dword-design/import-alias/recommended"
   ],
   "rules": {
+    // next
+    "@next/next/no-img-element": "off",
     // @typescript-eslint
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
