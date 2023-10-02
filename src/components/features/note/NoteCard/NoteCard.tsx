@@ -38,13 +38,13 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
         <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
         {/* TODO: 複数枚画像に対応する */}
         {note.attachmentUrl && (
-          <Link
+          <a
             className="mt-2 block aspect-video"
             href={note.attachmentUrl}
             target="_blank"
           >
             <img className="object-cover" src={note.attachmentUrl} alt="" />
-          </Link>
+          </a>
         )}
       </div>
     </article>
