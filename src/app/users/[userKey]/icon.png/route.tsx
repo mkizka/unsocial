@@ -13,7 +13,7 @@ const allowedSizes = [36, 64];
 const headers = {
   "Content-Type": "image/png",
   // https://vercel.com/docs/concepts/functions/edge-functions/edge-caching#recommended-cache-control
-  "Cache-Control": `max-age=0, s-maxage=31536000`, // 1年
+  "Cache-Control": `public, max-age=0, s-maxage=31536000`, // 1年
 };
 
 const textImageResponse = (text: string, size: number) => {

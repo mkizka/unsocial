@@ -25,7 +25,7 @@ export async function GET(
     headers: {
       "Content-Type": document.mediaType,
       // https://vercel.com/docs/concepts/functions/edge-functions/edge-caching#recommended-cache-control
-      "Cache-Control": `max-age=0, s-maxage=31536000`, // 1年
+      "Cache-Control": `public, max-age=0, s-maxage=31536000`, // 1年
     },
   });
 }
