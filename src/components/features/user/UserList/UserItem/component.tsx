@@ -12,7 +12,7 @@ export async function UserItem({ user }: Props) {
   return (
     <article className="mb-4 rounded bg-primary-light p-2 shadow">
       <div className="flex w-full items-center">
-        <UserIcon user={user} width={32} height={32} className="rounded-full" />
+        <UserIcon user={user} size={36} className="rounded-full" />
         <a
           href={`/${fullUsername(user)}`}
           className="ml-2 flex hover:underline"

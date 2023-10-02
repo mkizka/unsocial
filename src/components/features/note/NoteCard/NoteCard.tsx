@@ -22,12 +22,7 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
     >
       <div className="w-full pl-[48px]">
         <Link className="absolute left-3" href={note.user.url}>
-          <UserIcon
-            user={note.user}
-            className="rounded-full"
-            width={36}
-            height={36}
-          />
+          <UserIcon user={note.user} className="rounded-full" size={36} />
         </Link>
         <div className="flex">
           <Link href={note.user.url} className="block truncate hover:underline">

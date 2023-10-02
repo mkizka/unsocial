@@ -25,7 +25,7 @@ export async function UserCard({ userKey }: Props) {
   return (
     <section className="mb-2 rounded bg-primary-light p-4 pb-6 shadow">
       <div className="mb-2 flex w-full items-center">
-        <UserIcon user={user} width={64} height={64} className="rounded-full" />
+        <UserIcon user={user} size={64} className="rounded-full" />
         <div className="ml-4">
           <h1 className="text-2xl font-bold">{user.name}</h1>
           <div className="text-gray">{fullUsername(user)}</div>
