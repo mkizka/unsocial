@@ -10,6 +10,12 @@ const logger = createLogger("/users/[userKey]/icon.png");
 
 const allowedSizes = [36, 64];
 
+const headers = {
+  "Content-Type": "image/png",
+  // https://vercel.com/docs/concepts/functions/edge-functions/edge-caching#recommended-cache-control
+  "Cache-Control": `max-age=0, s-maxage=31536000`, // 1年
+};
+
 const textImageResponse = (text: string, size: number) => {
   return new ImageResponse(
     (
@@ -29,6 +35,7 @@ const textImageResponse = (text: string, size: number) => {
     {
       width: size,
       height: size,
+      headers,
     },
   );
 };
@@ -38,14 +45,9 @@ const iconImageResponse = async (url: string, size: number) => {
   const response = await fetch(url);
   const image = await sharp(await response.arrayBuffer())
     .resize(size, size)
+    .png()
     .toBuffer();
-  return new NextResponse(image, {
-    headers: {
-      "Content-Type": response.headers.get("Content-Type") ?? "image/png",
-      // https://vercel.com/docs/concepts/functions/edge-functions/edge-caching#recommended-cache-control
-      "Cache-Control": `max-age=0, s-maxage=31536000`, // 1年
-    },
-  });
+  return new NextResponse(image, { headers });
 };
 
 export async function GET(
