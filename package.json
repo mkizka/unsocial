@@ -37,7 +37,7 @@
     "sharp": "0.32.6",
     "superjson": "1.13.3",
     "winston": "3.10.0",
-    "zod": "3.22.2"
+    "zod": "3.22.3"
   },
   "devDependencies": {
     "@dword-design/eslint-plugin-import-alias": "4.0.8",
