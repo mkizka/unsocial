@@ -8,20 +8,15 @@ const logger = createLogger("fetcher");
 export class FetchError extends Error {}
 
 export class TimeoutError extends FetchError {
-  name = "TimeoutError";
+  constructor() {
+    super();
+    this.name = "TimeoutError";
+  }
 }
 
-export class NotOKError extends FetchError {
-  name = "NotOKError";
-}
+export class NotOKError extends FetchError {}
 
-export class JSONParseError extends FetchError {
-  name = "JSONParseError";
-}
-
-export class UnexpectedError extends FetchError {
-  name = "UnexpectedError";
-}
+export class UnexpectedError extends FetchError {}
 
 type Options = RequestInit & {
   timeout?: number;
@@ -81,7 +76,7 @@ export const fetcher = (input: URL | string, options?: Options) => {
       return response;
     })
     .catch((error) => {
-      logger.warn(`fetchエラー(${init.method} ${input}): ${error}`);
+      logger.warn(`fetchエラー(${init.method} ${input}): ${error.message}`);
       return new UnexpectedError();
     })
     .finally(() => {

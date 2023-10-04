@@ -100,6 +100,24 @@ describe("fetcher", () => {
     );
     expect(response).toBeInstanceOf(NotOKError);
   });
+  test("ネットワークエラー", async () => {
+    // arrange
+    // net::ERR_FAILEDのログが出るので抑制する
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    server.use(
+      rest.get(dummyUrl, (_, res) => {
+        return res.networkError("Failed to connect");
+      }),
+    );
+    // act
+    const response = await fetcher(dummyUrl);
+    // assert
+    expect(mockedLogger.warn).toBeCalledWith(
+      `fetchエラー(GET ${dummyUrl}): Failed to fetch`,
+    );
+    expect(response).toBeInstanceOf(Error);
+    jest.resetAllMocks();
+  });
   test("タイムアウト", async () => {
     // arrange
     server.use(
