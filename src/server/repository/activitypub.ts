@@ -1,11 +1,11 @@
-import { fetchJson } from "@/utils/fetchJson";
+import { fetcher } from "@/utils/fetcher";
 import { createLogger } from "@/utils/logger";
 import { safeUrl } from "@/utils/safeUrl";
 
 const logger = createLogger("apRepository");
 
 export const fetchActor = (actorUrl: string) => {
-  return fetchJson(actorUrl, {
+  return fetcher(actorUrl, {
     next: {
       revalidate: 0,
     },
@@ -31,7 +31,7 @@ export const fetchWebFinger = (user: FetchWebFingerParams) => {
     "resource",
     `acct:${user.preferredUsername}@${user.host}`,
   );
-  return fetchJson(webFingerUrl, {
+  return fetcher(webFingerUrl, {
     next: {
       revalidate: 0,
     },

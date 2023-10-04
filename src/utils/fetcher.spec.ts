@@ -4,12 +4,7 @@ import { rest } from "msw";
 import { mockedLogger } from "@/mocks/logger";
 import { server } from "@/mocks/server";
 
-import {
-  fetchJson,
-  JSONParseError,
-  NotOKError,
-  TimeoutError,
-} from "./fetchJson";
+import { fetcher, JSONParseError, NotOKError, TimeoutError } from "./fetcher";
 
 const dummyUrl = "https://remote.example.com/api";
 
@@ -17,7 +12,7 @@ jest.mock("@/../package.json", () => ({
   version: "1.2.3",
 }));
 
-describe("fetchJson", () => {
+describe("fetcher", () => {
   test("正常系", async () => {
     // arrange
     const headerFn = jest.fn();
@@ -29,7 +24,7 @@ describe("fetchJson", () => {
       }),
     );
     // act
-    const response = await fetchJson(dummyUrl);
+    const response = await fetcher(dummyUrl);
     // assert
     expect(headerFn).toBeCalledWith(headerCaptor);
     expect(headerCaptor.value).toEqual({
@@ -53,7 +48,7 @@ describe("fetchJson", () => {
       }),
     );
     // act
-    const response = await fetchJson(dummyUrl);
+    const response = await fetcher(dummyUrl);
     // assert
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       1,
@@ -79,7 +74,7 @@ describe("fetchJson", () => {
       }),
     );
     // act
-    const response = await fetchJson(dummyUrl, {
+    const response = await fetcher(dummyUrl, {
       method: "POST",
       body: JSON.stringify({ foo: "bar" }),
       headers: {
@@ -113,7 +108,7 @@ describe("fetchJson", () => {
       }),
     );
     // act
-    const response = await fetchJson(dummyUrl);
+    const response = await fetcher(dummyUrl);
     // assert
     expect(mockedLogger.warn).toBeCalledWith(
       `fetchエラー(GET ${dummyUrl}): NotOKError`,
@@ -128,7 +123,7 @@ describe("fetchJson", () => {
       }),
     );
     // act
-    const response = await fetchJson(dummyUrl, { timeout: 1 });
+    const response = await fetcher(dummyUrl, { timeout: 1 });
     // assert
     expect(mockedLogger.warn).toBeCalledWith(
       `fetchエラー(GET ${dummyUrl}): TimeoutError`,

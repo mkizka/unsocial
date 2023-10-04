@@ -3,7 +3,7 @@ import pkg from "@/../package.json";
 import { env } from "./env";
 import { createLogger } from "./logger";
 
-const logger = createLogger("fetchJson");
+const logger = createLogger("fetcher");
 
 export class FetchError extends Error {}
 
@@ -46,7 +46,7 @@ const createHeaders = (options?: Options) => {
   return headers;
 };
 
-export const fetchJson = (input: URL | string, options?: Options) => {
+export const fetcher = (input: URL | string, options?: Options) => {
   const { timeout, ...init } = {
     ...defaultOptions,
     ...options,

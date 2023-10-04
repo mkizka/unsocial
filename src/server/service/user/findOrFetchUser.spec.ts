@@ -3,7 +3,7 @@ import { rest } from "msw";
 
 import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
-import { NotOKError } from "@/utils/fetchJson";
+import { NotOKError } from "@/utils/fetcher";
 
 import {
   ActorValidationError,
