@@ -3,25 +3,20 @@ import pkg from "@/../package.json";
 import { env } from "./env";
 import { createLogger } from "./logger";
 
-const logger = createLogger("fetchJson");
+const logger = createLogger("fetcher");
 
 export class FetchError extends Error {}
 
 export class TimeoutError extends FetchError {
-  name = "TimeoutError";
+  constructor() {
+    super();
+    this.name = "TimeoutError";
+  }
 }
 
-export class NotOKError extends FetchError {
-  name = "NotOKError";
-}
+export class NotOKError extends FetchError {}
 
-export class JSONParseError extends FetchError {
-  name = "JSONParseError";
-}
-
-export class UnexpectedError extends FetchError {
-  name = "UnexpectedError";
-}
+export class UnexpectedError extends FetchError {}
 
 type Options = RequestInit & {
   timeout?: number;
@@ -46,7 +41,7 @@ const createHeaders = (options?: Options) => {
   return headers;
 };
 
-export const fetchJson = (input: URL | string, options?: Options) => {
+export const fetcher = (input: URL | string, options?: Options) => {
   const { timeout, ...init } = {
     ...defaultOptions,
     ...options,
@@ -61,33 +56,27 @@ export const fetchJson = (input: URL | string, options?: Options) => {
       init,
     ).then(async (response) => {
       logger.info(
-        `fetch(${init.method} ${input}): ${await response.clone().text()}`,
+        `fetch(${init.method} ${input}): ${response.status} ${response.statusText}`,
       );
       if (!response.ok) {
         return new NotOKError();
       }
-      try {
-        return await response.json();
-      } catch {
-        return new JSONParseError();
-      }
+      return response;
     }),
-    new Promise((resolve) => {
+    new Promise<TimeoutError>((resolve) => {
       timeoutId = setTimeout(() => {
         resolve(new TimeoutError());
       }, timeout);
     }),
   ])
-    .then((jsonOrError) => {
-      if (jsonOrError instanceof FetchError) {
-        logger.warn(
-          `fetchエラー(${init.method} ${input}): ${jsonOrError.name}`,
-        );
+    .then((response) => {
+      if (response instanceof FetchError) {
+        logger.warn(`fetchエラー(${init.method} ${input}): ${response.name}`);
       }
-      return jsonOrError;
+      return response;
     })
     .catch((error) => {
-      logger.warn(`fetchエラー(${init.method} ${input}): ${error}`);
+      logger.warn(`fetchエラー(${init.method} ${input}): ${error.message}`);
       return new UnexpectedError();
     })
     .finally(() => {

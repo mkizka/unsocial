@@ -1,6 +1,6 @@
 import { credentialService } from "@/server/service";
 
-import { fetchJson } from "./fetchJson";
+import { fetcher } from "./fetcher";
 import type { SignActivityParams } from "./httpSignature/sign";
 import { signHeaders } from "./httpSignature/sign";
 import { prisma } from "./prisma";
@@ -21,7 +21,7 @@ const getUniqueInboxUrls = async (userId: string) => {
 
 const relayActivity = async (params: SignActivityParams) => {
   const signedHeaders = signHeaders(params);
-  await fetchJson(params.inboxUrl, {
+  await fetcher(params.inboxUrl, {
     method: "POST",
     body: params.body,
     headers: {

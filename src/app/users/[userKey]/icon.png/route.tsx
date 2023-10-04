@@ -4,9 +4,7 @@ import { ImageResponse, NextResponse } from "next/server";
 import sharp from "sharp";
 
 import { userService } from "@/server/service";
-import { createLogger } from "@/utils/logger";
-
-const logger = createLogger("/users/[userKey]/icon.png");
+import { fetcher } from "@/utils/fetcher";
 
 const allowedSizes = [36, 64];
 
@@ -40,8 +38,10 @@ const textImageResponse = (text: string, size: number) => {
 };
 
 const iconImageResponse = async (url: string, size: number) => {
-  logger.info("アイコンfetch: " + url);
-  const response = await fetch(url);
+  const response = await fetcher(url);
+  if (response instanceof Error) {
+    notFound();
+  }
   const image = await sharp(await response.arrayBuffer())
     .resize(size, size)
     .png()

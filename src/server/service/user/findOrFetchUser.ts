@@ -5,7 +5,7 @@ import type { PersonActivity } from "@/server/schema/person";
 import { inboxPersonSchema } from "@/server/schema/person";
 import { webFingerSchema } from "@/server/schema/webFinger";
 import { env } from "@/utils/env";
-import { FetchError } from "@/utils/fetchJson";
+import { FetchError } from "@/utils/fetcher";
 import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
 

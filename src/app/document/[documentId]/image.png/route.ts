@@ -3,9 +3,7 @@ import { NextResponse } from "next/server";
 import sharp from "sharp";
 
 import { documentService } from "@/server/service";
-import { createLogger } from "@/utils/logger";
-
-const logger = createLogger("/document/[documentId]/image.png");
+import { fetcher } from "@/utils/fetcher";
 
 export async function GET(
   _: Request,
@@ -15,8 +13,10 @@ export async function GET(
   if (!document) {
     notFound();
   }
-  logger.info("画像fetch: " + document.url);
-  const response = await fetch(document.url);
+  const response = await fetcher(document.url);
+  if (response instanceof Error) {
+    notFound();
+  }
   const image = await sharp(await response.arrayBuffer())
     // 600px - 16px * 2(横幅パディング) - 48px(左側のアイコン幅) = 520px
     .resize(520, null, { fit: "inside" })
