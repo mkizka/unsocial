@@ -4,7 +4,7 @@ import { rest } from "msw";
 import { mockedLogger } from "@/mocks/logger";
 import { server } from "@/mocks/server";
 
-import { fetcher, JSONParseError, NotOKError, TimeoutError } from "./fetcher";
+import { fetcher, NotOKError, TimeoutError } from "./fetcher";
 
 const dummyUrl = "https://remote.example.com/api";
 
@@ -24,7 +24,7 @@ describe("fetcher", () => {
       }),
     );
     // act
-    const response = await fetcher(dummyUrl);
+    const response = (await fetcher(dummyUrl)) as Response;
     // assert
     expect(headerFn).toBeCalledWith(headerCaptor);
     expect(headerCaptor.value).toEqual({
@@ -36,29 +36,9 @@ describe("fetcher", () => {
     );
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       2,
-      `fetch(GET ${dummyUrl}): {"success":true}`,
+      `fetch(GET ${dummyUrl}): 200 OK`,
     );
-    expect(response).toEqual({ success: true });
-  });
-  test("レスポンスがテキストだったとき", async () => {
-    // arrange
-    server.use(
-      rest.get(dummyUrl, (req, res, ctx) => {
-        return res.once(ctx.text("OK"));
-      }),
-    );
-    // act
-    const response = await fetcher(dummyUrl);
-    // assert
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      1,
-      `fetch(GET ${dummyUrl}): 開始`,
-    );
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      2,
-      `fetch(GET ${dummyUrl}): OK`,
-    );
-    expect(response).toBeInstanceOf(JSONParseError);
+    expect(await response.json()).toEqual({ success: true });
   });
   test("POST", async () => {
     // arrange
@@ -74,13 +54,13 @@ describe("fetcher", () => {
       }),
     );
     // act
-    const response = await fetcher(dummyUrl, {
+    const response = (await fetcher(dummyUrl, {
       method: "POST",
       body: JSON.stringify({ foo: "bar" }),
       headers: {
         bar: "baz",
       },
-    });
+    })) as Response;
     // assert
     expect(headerFn).toHaveBeenCalledWith(headerCaptor);
     expect(headerCaptor.value).toEqual({
@@ -96,9 +76,9 @@ describe("fetcher", () => {
     );
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       2,
-      `fetch(POST ${dummyUrl}): {"success":true}`,
+      `fetch(POST ${dummyUrl}): 200 OK`,
     );
-    expect(response).toEqual({ success: true });
+    expect(await response.json()).toEqual({ success: true });
   });
   test("HTTPエラー", async () => {
     // arrange
@@ -110,8 +90,13 @@ describe("fetcher", () => {
     // act
     const response = await fetcher(dummyUrl);
     // assert
-    expect(mockedLogger.warn).toBeCalledWith(
-      `fetchエラー(GET ${dummyUrl}): NotOKError`,
+    expect(mockedLogger.info).toHaveBeenNthCalledWith(
+      1,
+      `fetch(GET ${dummyUrl}): 開始`,
+    );
+    expect(mockedLogger.info).toHaveBeenNthCalledWith(
+      2,
+      `fetch(GET ${dummyUrl}): 400 Bad Request`,
     );
     expect(response).toBeInstanceOf(NotOKError);
   });

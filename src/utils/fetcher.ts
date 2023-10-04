@@ -61,30 +61,24 @@ export const fetcher = (input: URL | string, options?: Options) => {
       init,
     ).then(async (response) => {
       logger.info(
-        `fetch(${init.method} ${input}): ${await response.clone().text()}`,
+        `fetch(${init.method} ${input}): ${response.status} ${response.statusText}`,
       );
       if (!response.ok) {
         return new NotOKError();
       }
-      try {
-        return await response.json();
-      } catch {
-        return new JSONParseError();
-      }
+      return response;
     }),
-    new Promise((resolve) => {
+    new Promise<TimeoutError>((resolve) => {
       timeoutId = setTimeout(() => {
         resolve(new TimeoutError());
       }, timeout);
     }),
   ])
-    .then((jsonOrError) => {
-      if (jsonOrError instanceof FetchError) {
-        logger.warn(
-          `fetchエラー(${init.method} ${input}): ${jsonOrError.name}`,
-        );
+    .then((response) => {
+      if (response instanceof FetchError) {
+        logger.warn(`fetchエラー(${init.method} ${input}): ${response.name}`);
       }
-      return jsonOrError;
+      return response;
     })
     .catch((error) => {
       logger.warn(`fetchエラー(${init.method} ${input}): ${error}`);
