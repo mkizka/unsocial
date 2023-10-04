@@ -26,6 +26,7 @@ model User {
   email             String?     @unique
   emailVerified     DateTime?
   icon              String?
+  iconHash          String?
   image             String?
   publicKey         String?
   actorUrl          String?     @unique
@@ -58,21 +59,21 @@ model VerificationToken {
 }
 
 model Note {
-  id          String   @id @default(nanoid(8))
-  url         String?  @unique
+  id          String     @id @default(nanoid(8))
+  url         String?    @unique
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   content     String
   publishedAt DateTime
-  createdAt   DateTime @default(now())
+  createdAt   DateTime   @default(now())
   likes       Like[]
   attachments Document[]
 }
 
 model Document {
-  id        String   @id @default(nanoid(8))
+  id        String @id @default(nanoid(8))
   noteId    String
-  note      Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  note      Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
   mediaType String
   url       String
 }

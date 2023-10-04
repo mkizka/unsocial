@@ -1,6 +1,8 @@
 import { cache } from "react";
 
 import type { PersonActivity } from "@/server/schema/person";
+import { fetcher } from "@/utils/fetcher";
+import { createDigest } from "@/utils/httpSignature/utils";
 import { prisma } from "@/utils/prisma";
 
 export const findByActorId = cache((actorId: URL) => {
@@ -23,7 +25,16 @@ export const findUnique = cache((params: FindUniqueParams) => {
   return prisma.user.findUnique({ where });
 });
 
-export const createOrUpdateUser = (
+const fetchImageHash = async (url: string) => {
+  const response = await fetcher(url);
+  if (response instanceof Error) {
+    return null;
+  }
+  const buffer = await response.arrayBuffer();
+  return createDigest(new Uint8Array(buffer).toString());
+};
+
+export const createOrUpdateUser = async (
   person: PersonActivity,
   userIdForUpdate?: string,
 ) => {
@@ -32,6 +43,7 @@ export const createOrUpdateUser = (
     preferredUsername: person.preferredUsername,
     host: new URL(person.id).host,
     icon: person.icon?.url ?? null,
+    iconHash: person.icon?.url ? await fetchImageHash(person.icon.url) : null,
     actorUrl: person.id,
     inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
     publicKey: person.publicKey.publicKeyPem,

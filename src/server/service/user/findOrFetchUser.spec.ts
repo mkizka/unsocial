@@ -24,6 +24,7 @@ const dummyUser = {
   preferredUsername: "dummy",
   host: "remote.example.com",
   icon: null,
+  iconHash: null,
   name: null,
   publicKey: "dummyPublicKey",
   actorUrl: "https://remote.example.com/u/dummyUser",
