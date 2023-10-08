@@ -35,11 +35,7 @@ const generateTextImage = async (text: string, size: number) => {
 };
 
 const fetchIconImage = async (url: string, size: number) => {
-  const response = await fetcher(url, {
-    next: {
-      revalidate: 3600,
-    },
-  });
+  const response = await fetcher(url);
   if (response instanceof Error) {
     notFound();
   }
