@@ -6,13 +6,13 @@ import sharp from "sharp";
 import { documentService } from "@/server/service";
 import { fetcher } from "@/utils/fetcher";
 
-const resize = (buffer: ArrayBuffer) => {
-  return (
-    sharp(buffer)
-      // 600px - 16px * 2(横幅パディング) - 48px(左側のアイコン幅) = 520px
-      .resize(520, null, { fit: "inside" })
-      .toBuffer()
-  );
+const convertWebp = (buffer: ArrayBuffer, options: { resize: boolean }) => {
+  const image = sharp(buffer);
+  if (options.resize) {
+    // 600px - 16px * 2(横幅パディング) - 48px(左側のアイコン幅) = 520px
+    return image.resize(520, null, { fit: "inside" }).webp().toBuffer();
+  }
+  return image.webp().toBuffer();
 };
 
 export async function GET(
@@ -28,10 +28,9 @@ export async function GET(
     notFound();
   }
   const buffer = await response.arrayBuffer();
-  const image =
-    request.nextUrl.searchParams.get("format") === "original"
-      ? buffer
-      : await resize(buffer);
+  const image = await convertWebp(buffer, {
+    resize: request.nextUrl.searchParams.get("format") !== "original",
+  });
   return new NextResponse(image, {
     headers: {
       "Content-Type": document.mediaType,
