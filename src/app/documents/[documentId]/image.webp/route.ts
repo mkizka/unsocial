@@ -23,7 +23,11 @@ export async function GET(
   if (!document) {
     notFound();
   }
-  const response = await fetcher(document.url);
+  const response = await fetcher(document.url, {
+    next: {
+      revalidate: 3600,
+    },
+  });
   if (response instanceof Error) {
     notFound();
   }
