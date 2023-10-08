@@ -14,26 +14,28 @@ export class TimeoutError extends FetchError {
   }
 }
 
-export class NotOKError extends FetchError {}
+export class NotOKError extends FetchError {
+  constructor() {
+    super();
+    this.name = "NotOKError";
+  }
+}
 
-export class UnexpectedError extends FetchError {}
+export class UnexpectedError extends FetchError {
+  constructor() {
+    super();
+    this.name = "UnexpectedError";
+  }
+}
 
 type Options = RequestInit & {
   timeout?: number;
 };
 
-const defaultOptions = {
-  method: "GET",
-  headers: {
-    "User-Agent": `Unsocial/${pkg.version} (${env.HOST})`,
-  },
-  timeout: env.NODE_ENV === "test" ? 100 : 5000,
-} satisfies Options;
-
 const createHeaders = (options?: Options) => {
   const headers = new Headers({
+    "User-Agent": `Unsocial/${pkg.version} (${env.HOST})`,
     ...options?.headers,
-    ...defaultOptions.headers,
   });
   if (options?.method === "POST") {
     headers.set("Content-Type", "application/json");
@@ -41,11 +43,20 @@ const createHeaders = (options?: Options) => {
   return headers;
 };
 
+const createNext = (options?: Options) => {
+  return {
+    revalidate: options?.method === "POST" ? 0 : 3600,
+    ...options?.next,
+  };
+};
+
 export const fetcher = (input: URL | string, options?: Options) => {
   const { timeout, ...init } = {
-    ...defaultOptions,
+    method: "GET",
+    timeout: env.NODE_ENV === "test" ? 100 : 5000,
     ...options,
     headers: createHeaders(options),
+    next: createNext(options),
   };
   const startTime = performance.now();
   let timeoutId: ReturnType<typeof setTimeout>;
