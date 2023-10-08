@@ -16,6 +16,7 @@ export function AttachmentImages({ url }: Props) {
         height="292.5"
         src={url}
         alt=""
+        loading="lazy"
         onClick={() => setIsViewerOpen(true)}
       />
       {isViewerOpen && (
