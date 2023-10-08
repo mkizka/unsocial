@@ -11,7 +11,9 @@ export function AttachmentImages({ url }: Props) {
   return (
     <>
       <img
-        className="mt-2 block aspect-video cursor-pointer object-cover"
+        className="mt-2 block aspect-video w-full cursor-pointer bg-primary-dark object-cover"
+        width="520"
+        height="292.5"
         src={url}
         alt=""
         onClick={() => setIsViewerOpen(true)}
