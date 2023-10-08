@@ -32,6 +32,9 @@ dependencies:
   react-dom:
     specifier: 18.3.0-canary-d6dcad6a8-20230914
     version: 18.3.0-canary-d6dcad6a8-20230914(react@18.3.0-canary-d6dcad6a8-20230914)
+  react-simple-image-viewer:
+    specifier: 1.2.2
+    version: 1.2.2(react-dom@18.3.0-canary-d6dcad6a8-20230914)(react@18.3.0-canary-d6dcad6a8-20230914)
   sharp:
     specifier: 0.32.6
     version: 0.32.6
@@ -6667,6 +6670,16 @@ packages:
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
+
+  /react-simple-image-viewer@1.2.2(react-dom@18.3.0-canary-d6dcad6a8-20230914)(react@18.3.0-canary-d6dcad6a8-20230914):
+    resolution: {integrity: sha512-Vk9p6Glm7uE4cSEBGkqZPGC3qoZcAwd48nq5/JN13NKd9rUrUIWZWFEmRzO+FVwl6c0UdjSDkthGoaoiYeWVjg==}
+    peerDependencies:
+      react: ^18.1.0
+      react-dom: ^18.1.0
+    dependencies:
+      react: 18.3.0-canary-d6dcad6a8-20230914
+      react-dom: 18.3.0-canary-d6dcad6a8-20230914(react@18.3.0-canary-d6dcad6a8-20230914)
+    dev: false
 
   /react@18.3.0-canary-d6dcad6a8-20230914:
     resolution: {integrity: sha512-suE/MZ/N2HFo+QIKsc4F4TrphCwZ1rAZZZ0c+dREb61CDNlBK7eO36JsFzS/bf3D0N554AkWWXIT08NW0+ygFQ==}

@@ -5,6 +5,7 @@ import { forwardRef } from "react";
 import { UserIcon } from "@/components/features/user/UserIcon";
 import type { noteService } from "@/server/service";
 
+import { AttachmentImages } from "./parts/AttachmentImages";
 import { DeleteButton } from "./parts/DeleteButton";
 import { LikeButton } from "./parts/LikeButton";
 import { PublishedAt } from "./parts/PublishedAt";
@@ -37,15 +38,7 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
         </div>
         <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
         {/* TODO: 複数枚画像に対応する */}
-        {note.attachmentUrl && (
-          <a
-            className="mt-2 block aspect-video"
-            href={note.attachmentUrl}
-            target="_blank"
-          >
-            <img className="object-cover" src={note.attachmentUrl} alt="" />
-          </a>
-        )}
+        {note.attachmentUrl && <AttachmentImages url={note.attachmentUrl} />}
       </div>
     </article>
   );
