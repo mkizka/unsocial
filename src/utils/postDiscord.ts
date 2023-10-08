@@ -1,5 +1,5 @@
 import { env } from "./env";
-import { fetchJson } from "./fetchJson";
+import { fetcher } from "./fetcher";
 import { createLogger } from "./logger";
 
 const logger = createLogger("postDiscord");
@@ -25,7 +25,7 @@ export const postDicord = async (text: string) => {
   }
   const contents = sliceText(text, 1990);
   for (const content of contents) {
-    await fetchJson(env.DISCORD_WEBHOOK_URL, {
+    await fetcher(env.DISCORD_WEBHOOK_URL, {
       method: "POST",
       body: JSON.stringify({ content: `\`\`\`\n${content}\n\`\`\`` }),
     })

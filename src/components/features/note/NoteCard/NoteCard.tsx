@@ -5,6 +5,7 @@ import { forwardRef } from "react";
 import { UserIcon } from "@/components/features/user/UserIcon";
 import type { noteService } from "@/server/service";
 
+import { AttachmentImages } from "./parts/AttachmentImages";
 import { DeleteButton } from "./parts/DeleteButton";
 import { LikeButton } from "./parts/LikeButton";
 import { PublishedAt } from "./parts/PublishedAt";
@@ -18,16 +19,11 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
     <article
       ref={ref}
       data-testid="note-card"
-      className="text-prmary relative mb-2 flex rounded bg-primary-light pb-5 pl-3 pr-4 pt-3 shadow"
+      className="text-prmary relative mb-2 flex rounded bg-primary-light p-4 shadow"
     >
       <div className="w-full pl-[48px]">
         <Link className="absolute left-3" href={note.user.url}>
-          <UserIcon
-            user={note.user}
-            className="rounded-full"
-            width={36}
-            height={36}
-          />
+          <UserIcon user={note.user} className="rounded-full" size={36} />
         </Link>
         <div className="flex">
           <Link href={note.user.url} className="block truncate hover:underline">
@@ -41,6 +37,8 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
           </div>
         </div>
         <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
+        {/* TODO: 複数枚画像に対応する */}
+        {note.attachmentUrl && <AttachmentImages url={note.attachmentUrl} />}
       </div>
     </article>
   );

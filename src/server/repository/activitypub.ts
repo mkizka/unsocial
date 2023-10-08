@@ -1,11 +1,11 @@
-import { fetchJson } from "@/utils/fetchJson";
+import { fetcher } from "@/utils/fetcher";
 import { createLogger } from "@/utils/logger";
 import { safeUrl } from "@/utils/safeUrl";
 
 const logger = createLogger("apRepository");
 
-export const fetchActor = (actorUrl: string) => {
-  return fetchJson(actorUrl, {
+export const fetchActor = async (actorUrl: string) => {
+  const response = await fetcher(actorUrl, {
     next: {
       revalidate: 0,
     },
@@ -13,6 +13,7 @@ export const fetchActor = (actorUrl: string) => {
       accept: "application/activity+json",
     },
   });
+  return response instanceof Error ? response : response.json();
 };
 
 export type FetchWebFingerParams = {
@@ -20,7 +21,7 @@ export type FetchWebFingerParams = {
   host: string;
 };
 
-export const fetchWebFinger = (user: FetchWebFingerParams) => {
+export const fetchWebFinger = async (user: FetchWebFingerParams) => {
   const remoteUrl = safeUrl(`https://${user.host}`);
   if (!remoteUrl) {
     logger.info(`https://${user.host}がURLとして不正でした`);
@@ -31,9 +32,10 @@ export const fetchWebFinger = (user: FetchWebFingerParams) => {
     "resource",
     `acct:${user.preferredUsername}@${user.host}`,
   );
-  return fetchJson(webFingerUrl, {
+  const response = await fetcher(webFingerUrl, {
     next: {
       revalidate: 0,
     },
   });
+  return response instanceof Error ? response : response.json();
 };

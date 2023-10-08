@@ -1,26 +1,69 @@
 import { notFound } from "next/navigation";
-import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { ImageResponse, NextResponse } from "next/server";
+import sharp from "sharp";
 
 import { userService } from "@/server/service";
-import { env } from "@/utils/env";
+import { fetcher } from "@/utils/fetcher";
+
+const allowedSizes = [36, 64];
+
+const headers = {
+  "Content-Type": "image/png",
+  "Cache-Control": "public, max-age=31536000, immutable", // 1年
+};
+
+const textImageResponse = (text: string, size: number) => {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: Math.floor(size * 0.7),
+        }}
+      >
+        {text.slice(0, 2)}
+      </div>
+    ),
+    {
+      width: size,
+      height: size,
+      headers,
+    },
+  );
+};
+
+const iconImageResponse = async (url: string, size: number) => {
+  const response = await fetcher(url);
+  if (response instanceof Error) {
+    notFound();
+  }
+  const image = await sharp(await response.arrayBuffer())
+    .resize(size, size)
+    .png()
+    .toBuffer();
+  return new NextResponse(image, { headers });
+};
 
 export async function GET(
-  _: Request,
+  request: NextRequest,
   { params }: { params: { userKey: string } },
 ) {
+  const size =
+    Number(request.nextUrl.searchParams.get("size")) ?? allowedSizes[0];
+  if (!allowedSizes.includes(size)) {
+    notFound();
+  }
   const user = await userService.findOrFetchUserByKey(params.userKey);
   if (user instanceof Error) {
     notFound();
   }
-  const url =
-    user.icon ??
-    `https://${env.HOST}/users/_/icon.edge.png?text=${user.preferredUsername}`;
-  const image = await fetch(url);
-  return new NextResponse(await image.arrayBuffer(), {
-    headers: {
-      "Content-Type": image.headers.get("Content-Type") ?? "image/png",
-      // https://vercel.com/docs/concepts/functions/edge-functions/edge-caching#recommended-cache-control
-      "Cache-Control": `max-age=0, s-maxage=${60 * 60 * 3}`,
-    },
-  });
+  if (user.icon) {
+    return iconImageResponse(user.icon, size);
+  }
+  return textImageResponse(user.preferredUsername || "", size);
 }

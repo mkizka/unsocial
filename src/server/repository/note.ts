@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import { cache } from "react";
 
 import type { DeleteActivity } from "@/server/schema/delete";
@@ -6,12 +7,13 @@ import { prisma } from "@/utils/prisma";
 
 const includeForNoteCard = {
   user: true,
+  attachments: true,
   likes: {
     include: {
       user: true,
     },
   },
-};
+} satisfies Prisma.NoteInclude;
 
 export const findUniqueNoteCard = cache((id: string) => {
   return prisma.note.findUnique({
@@ -62,11 +64,21 @@ export type CreateParams = {
   userId: string;
   content: string;
   publishedAt: Date;
+  attachments: {
+    url: string;
+    mediaType: string;
+  }[];
 };
 
 export const create = (params: CreateParams) => {
+  const { attachments, ...data } = params;
   return prisma.note.create({
-    data: params,
+    data: {
+      ...data,
+      attachments: {
+        create: attachments,
+      },
+    },
     include: includeForNoteCard,
   });
 };
@@ -84,6 +96,12 @@ export const createFromActivity = cache(
         url: activity.id,
         content: activity.content,
         publishedAt: activity.published,
+        attachments: {
+          create: activity.attachment?.map((attachment) => ({
+            url: attachment.url,
+            mediaType: attachment.mediaType,
+          })),
+        },
       },
     });
   },

@@ -4,12 +4,7 @@ import { rest } from "msw";
 import { mockedLogger } from "@/mocks/logger";
 import { server } from "@/mocks/server";
 
-import {
-  fetchJson,
-  JSONParseError,
-  NotOKError,
-  TimeoutError,
-} from "./fetchJson";
+import { fetcher, NotOKError, TimeoutError } from "./fetcher";
 
 const dummyUrl = "https://remote.example.com/api";
 
@@ -17,7 +12,7 @@ jest.mock("@/../package.json", () => ({
   version: "1.2.3",
 }));
 
-describe("fetchJson", () => {
+describe("fetcher", () => {
   test("正常系", async () => {
     // arrange
     const headerFn = jest.fn();
@@ -29,7 +24,7 @@ describe("fetchJson", () => {
       }),
     );
     // act
-    const response = await fetchJson(dummyUrl);
+    const response = (await fetcher(dummyUrl)) as Response;
     // assert
     expect(headerFn).toBeCalledWith(headerCaptor);
     expect(headerCaptor.value).toEqual({
@@ -41,29 +36,9 @@ describe("fetchJson", () => {
     );
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       2,
-      `fetch(GET ${dummyUrl}): {"success":true}`,
+      `fetch(GET ${dummyUrl}): 200 OK`,
     );
-    expect(response).toEqual({ success: true });
-  });
-  test("レスポンスがテキストだったとき", async () => {
-    // arrange
-    server.use(
-      rest.get(dummyUrl, (req, res, ctx) => {
-        return res.once(ctx.text("OK"));
-      }),
-    );
-    // act
-    const response = await fetchJson(dummyUrl);
-    // assert
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      1,
-      `fetch(GET ${dummyUrl}): 開始`,
-    );
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      2,
-      `fetch(GET ${dummyUrl}): OK`,
-    );
-    expect(response).toBeInstanceOf(JSONParseError);
+    expect(await response.json()).toEqual({ success: true });
   });
   test("POST", async () => {
     // arrange
@@ -79,13 +54,13 @@ describe("fetchJson", () => {
       }),
     );
     // act
-    const response = await fetchJson(dummyUrl, {
+    const response = (await fetcher(dummyUrl, {
       method: "POST",
       body: JSON.stringify({ foo: "bar" }),
       headers: {
         bar: "baz",
       },
-    });
+    })) as Response;
     // assert
     expect(headerFn).toHaveBeenCalledWith(headerCaptor);
     expect(headerCaptor.value).toEqual({
@@ -101,9 +76,9 @@ describe("fetchJson", () => {
     );
     expect(mockedLogger.info).toHaveBeenNthCalledWith(
       2,
-      `fetch(POST ${dummyUrl}): {"success":true}`,
+      `fetch(POST ${dummyUrl}): 200 OK`,
     );
-    expect(response).toEqual({ success: true });
+    expect(await response.json()).toEqual({ success: true });
   });
   test("HTTPエラー", async () => {
     // arrange
@@ -113,12 +88,35 @@ describe("fetchJson", () => {
       }),
     );
     // act
-    const response = await fetchJson(dummyUrl);
+    const response = await fetcher(dummyUrl);
     // assert
-    expect(mockedLogger.warn).toBeCalledWith(
-      `fetchエラー(GET ${dummyUrl}): NotOKError`,
+    expect(mockedLogger.info).toHaveBeenNthCalledWith(
+      1,
+      `fetch(GET ${dummyUrl}): 開始`,
+    );
+    expect(mockedLogger.info).toHaveBeenNthCalledWith(
+      2,
+      `fetch(GET ${dummyUrl}): 400 Bad Request`,
     );
     expect(response).toBeInstanceOf(NotOKError);
+  });
+  test("ネットワークエラー", async () => {
+    // arrange
+    // net::ERR_FAILEDのログが出るので抑制する
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    server.use(
+      rest.get(dummyUrl, (_, res) => {
+        return res.networkError("Failed to connect");
+      }),
+    );
+    // act
+    const response = await fetcher(dummyUrl);
+    // assert
+    expect(mockedLogger.warn).toBeCalledWith(
+      `fetchエラー(GET ${dummyUrl}): Failed to fetch`,
+    );
+    expect(response).toBeInstanceOf(Error);
+    jest.resetAllMocks();
   });
   test("タイムアウト", async () => {
     // arrange
@@ -128,7 +126,7 @@ describe("fetchJson", () => {
       }),
     );
     // act
-    const response = await fetchJson(dummyUrl, { timeout: 1 });
+    const response = await fetcher(dummyUrl, { timeout: 1 });
     // assert
     expect(mockedLogger.warn).toBeCalledWith(
       `fetchエラー(GET ${dummyUrl}): TimeoutError`,
