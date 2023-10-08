@@ -8,13 +8,8 @@ import { fetcher } from "@/utils/fetcher";
 
 const allowedSizes = [36, 64];
 
-const headers = {
-  "Content-Type": "image/png",
-  "Cache-Control": "public, max-age=31536000, immutable", // 1年
-};
-
-const textImageResponse = (text: string, size: number) => {
-  return new ImageResponse(
+const generateTextImage = async (text: string, size: number) => {
+  const response = new ImageResponse(
     (
       <div
         style={{
@@ -32,21 +27,22 @@ const textImageResponse = (text: string, size: number) => {
     {
       width: size,
       height: size,
-      headers,
     },
   );
+  return sharp(await response.arrayBuffer())
+    .webp()
+    .toBuffer();
 };
 
-const iconImageResponse = async (url: string, size: number) => {
+const fetchIconImage = async (url: string, size: number) => {
   const response = await fetcher(url);
   if (response instanceof Error) {
     notFound();
   }
-  const image = await sharp(await response.arrayBuffer())
+  return sharp(await response.arrayBuffer())
     .resize(size, size)
-    .png()
+    .webp()
     .toBuffer();
-  return new NextResponse(image, { headers });
 };
 
 export async function GET(
@@ -62,8 +58,13 @@ export async function GET(
   if (user instanceof Error) {
     notFound();
   }
-  if (user.icon) {
-    return iconImageResponse(user.icon, size);
-  }
-  return textImageResponse(user.preferredUsername || "", size);
+  const image = user.icon
+    ? await fetchIconImage(user.icon, size)
+    : await generateTextImage(user.preferredUsername || "", size);
+  return new NextResponse(image, {
+    headers: {
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable", // 1年
+    },
+  });
 }

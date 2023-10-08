@@ -33,7 +33,7 @@ export async function GET(
   });
   return new NextResponse(image, {
     headers: {
-      "Content-Type": document.mediaType,
+      "Content-Type": "image/webp",
       "Cache-Control": "public, max-age=31536000, immutable", // 1年
     },
   });

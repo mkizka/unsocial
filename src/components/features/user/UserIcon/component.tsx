@@ -20,7 +20,9 @@ export function UserIcon({ user, size, ...props }: UserIconProps) {
     <img
       {...props}
       className={"hover:opacity-80 " + props.className}
-      src={`/users/${user.id}/icon.png?${params.toString()}`}
+      width={size}
+      height={size}
+      src={`/users/${user.id}/icon.webp?${params.toString()}`}
       alt={`@${user.preferredUsername}のアイコン`}
     />
   );
