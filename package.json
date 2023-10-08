@@ -34,6 +34,7 @@
     "nodemailer": "6.9.5",
     "react": "18.3.0-canary-d6dcad6a8-20230914",
     "react-dom": "18.3.0-canary-d6dcad6a8-20230914",
+    "react-simple-image-viewer": "1.2.2",
     "sharp": "0.32.6",
     "superjson": "1.13.3",
     "winston": "3.10.0",
