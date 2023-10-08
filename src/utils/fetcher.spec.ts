@@ -1,4 +1,4 @@
-import { captor } from "jest-mock-extended";
+import { captor, mockDeep } from "jest-mock-extended";
 import { rest } from "msw";
 
 import { mockedLogger } from "@/mocks/logger";
@@ -11,6 +11,10 @@ const dummyUrl = "https://remote.example.com/api";
 jest.mock("@/../package.json", () => ({
   version: "1.2.3",
 }));
+
+const mockedPerformance = mockDeep<typeof performance>();
+mockedPerformance.now.mockReturnValue(0);
+performance = mockedPerformance;
 
 describe("fetcher", () => {
   test("正常系", async () => {
@@ -30,13 +34,9 @@ describe("fetcher", () => {
     expect(headerCaptor.value).toEqual({
       "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
     });
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      1,
-      `fetch(GET ${dummyUrl}): 開始`,
-    );
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      2,
-      `fetch(GET ${dummyUrl}): 200 OK`,
+    expect(mockedLogger.info).toHaveBeenCalledTimes(1);
+    expect(mockedLogger.info).toHaveBeenCalledWith(
+      `fetch(GET ${dummyUrl}): 200 OK (0ms)`,
     );
     expect(await response.json()).toEqual({ success: true });
   });
@@ -70,13 +70,9 @@ describe("fetcher", () => {
     });
     expect(bodyFn).toHaveBeenCalledWith(bodyCaptor);
     expect(bodyCaptor.value).toEqual({ foo: "bar" });
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      1,
-      `fetch(POST ${dummyUrl}): 開始`,
-    );
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      2,
-      `fetch(POST ${dummyUrl}): 200 OK`,
+    expect(mockedLogger.info).toHaveBeenCalledTimes(1);
+    expect(mockedLogger.info).toHaveBeenCalledWith(
+      `fetch(POST ${dummyUrl}): 200 OK (0ms)`,
     );
     expect(await response.json()).toEqual({ success: true });
   });
@@ -90,13 +86,9 @@ describe("fetcher", () => {
     // act
     const response = await fetcher(dummyUrl);
     // assert
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      1,
-      `fetch(GET ${dummyUrl}): 開始`,
-    );
-    expect(mockedLogger.info).toHaveBeenNthCalledWith(
-      2,
-      `fetch(GET ${dummyUrl}): 400 Bad Request`,
+    expect(mockedLogger.info).toHaveBeenCalledTimes(1);
+    expect(mockedLogger.info).toHaveBeenCalledWith(
+      `fetch(GET ${dummyUrl}): 400 Bad Request (0ms)`,
     );
     expect(response).toBeInstanceOf(NotOKError);
   });

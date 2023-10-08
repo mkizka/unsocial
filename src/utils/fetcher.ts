@@ -47,16 +47,17 @@ export const fetcher = (input: URL | string, options?: Options) => {
     ...options,
     headers: createHeaders(options),
   };
+  const startTime = performance.now();
   let timeoutId: ReturnType<typeof setTimeout>;
-  logger.info(`fetch(${init.method} ${input}): 開始`);
   return Promise.race([
     fetch(
       // なぜかmswがエラーになるのでURLインスタンスが来ても文字列になるようにしておく
       input.toString(),
       init,
     ).then(async (response) => {
+      const elapsedTime = Math.floor(performance.now() - startTime);
       logger.info(
-        `fetch(${init.method} ${input}): ${response.status} ${response.statusText}`,
+        `fetch(${init.method} ${input}): ${response.status} ${response.statusText} (${elapsedTime}ms)`,
       );
       if (!response.ok) {
         return new NotOKError();
