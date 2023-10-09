@@ -31,7 +31,7 @@
     "jotai": "2.4.3",
     "next": "13.5.5-canary.4",
     "next-auth": "4.23.2",
-    "nodemailer": "6.9.5",
+    "nodemailer": "6.9.6",
     "react": "18.3.0-canary-dddfe6882-20231005",
     "react-dom": "18.3.0-canary-dddfe6882-20231005",
     "react-simple-image-viewer": "1.2.2",
