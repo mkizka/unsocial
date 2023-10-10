@@ -23,7 +23,7 @@ export async function Timeline({ userKey }: Props) {
   const userId = await getUserIdOrUndefined(userKey);
   const firstLoadedNotes = await noteService.findManyNoteCards({
     userId,
-    count: 10,
+    count: 30,
   });
   return (
     <section className="flex w-full justify-center">

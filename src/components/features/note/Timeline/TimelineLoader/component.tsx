@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-import { SubmitButton } from "@/components/clients/SubmitButton";
+import { Spinner } from "@/components/clients/Spinner";
 import { NoteCard } from "@/components/features/note/NoteCard";
 import type { noteService } from "@/server/service";
 
 import { action } from "./action";
+import { useIntersection } from "./useIntersection";
 
 type Props = {
   firstLoadedNotes: noteService.NoteCard[];
@@ -17,6 +18,19 @@ export function TimelineLoader({ firstLoadedNotes, userId }: Props) {
     firstLoadedNotes,
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const timelineLoaderRef = useRef<HTMLDivElement>(null);
+
+  useIntersection({
+    ref: timelineLoaderRef,
+    onIntersect: async () => {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
+      await loadMoreNotes();
+      setIsLoading(false);
+    },
+  });
 
   const loadMoreNotes = async () => {
     const lastNote = timeline.at(-1)?.at(-1);
@@ -39,18 +53,9 @@ export function TimelineLoader({ firstLoadedNotes, userId }: Props) {
         </li>
       ))}
       {timeline.at(-1)?.length !== 0 && (
-        <li>
-          <SubmitButton
-            loading={isLoading}
-            onClick={async () => {
-              setIsLoading(true);
-              await loadMoreNotes();
-              setIsLoading(false);
-            }}
-          >
-            もっと見る
-          </SubmitButton>
-        </li>
+        <div ref={timelineLoaderRef} className="h-32 w-full pb-20 pt-4">
+          <Spinner />
+        </div>
       )}
     </ul>
   );
