@@ -6,7 +6,7 @@ import { setTimeout } from "timers/promises";
 import { mockedLogger } from "@/mocks/logger";
 import { server } from "@/mocks/server";
 
-import { fetcher, NotOKError, UnexpectedError } from "./fetcher";
+import { fetcher, FetcherError, NotOKError } from "./fetcher";
 
 const dummyUrl = "https://remote.example.com/api";
 
@@ -130,7 +130,7 @@ describe("fetcher", () => {
     expect(mockedLogger.warn).toBeCalledWith(
       `fetchエラー(GET http://localhost:3001): This operation was aborted`,
     );
-    expect(response).toBeInstanceOf(UnexpectedError);
+    expect(response).toBeInstanceOf(FetcherError);
     await new Promise<void>((resolve) => {
       server.close(() => resolve());
     });
