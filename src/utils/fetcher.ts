@@ -5,26 +5,17 @@ import { createLogger } from "./logger";
 
 const logger = createLogger("fetcher");
 
-export class FetchError extends Error {}
-
-export class TimeoutError extends FetchError {
+export class FetcherError extends Error {
   constructor() {
     super();
-    this.name = "TimeoutError";
+    this.name = "FetchError";
   }
 }
 
-export class NotOKError extends FetchError {
+export class NotOKError extends Error {
   constructor() {
     super();
     this.name = "NotOKError";
-  }
-}
-
-export class UnexpectedError extends FetchError {
-  constructor() {
-    super();
-    this.name = "UnexpectedError";
   }
 }
 
@@ -51,21 +42,25 @@ const createNext = (options?: Options) => {
 };
 
 export const fetcher = (input: URL | string, options?: Options) => {
+  const controller = new AbortController();
   const { timeout, ...init } = {
     method: "GET",
     timeout: env.NODE_ENV === "test" ? 100 : 5000,
+    signal: controller.signal,
     ...options,
     headers: createHeaders(options),
     next: createNext(options),
   };
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeout);
   const startTime = performance.now();
-  let timeoutId: ReturnType<typeof setTimeout>;
-  return Promise.race([
-    fetch(
-      // なぜかmswがエラーになるのでURLインスタンスが来ても文字列になるようにしておく
-      input.toString(),
-      init,
-    ).then(async (response) => {
+  return fetch(
+    // なぜかmswがエラーになるのでURLインスタンスが来ても文字列になるようにしておく
+    input.toString(),
+    init,
+  )
+    .then(async (response) => {
       const elapsedTime = Math.floor(performance.now() - startTime);
       logger.info(
         `fetch(${init.method} ${input}): ${response.status} ${response.statusText} (${elapsedTime}ms)`,
@@ -74,22 +69,16 @@ export const fetcher = (input: URL | string, options?: Options) => {
         return new NotOKError();
       }
       return response;
-    }),
-    new Promise<TimeoutError>((resolve) => {
-      timeoutId = setTimeout(() => {
-        resolve(new TimeoutError());
-      }, timeout);
-    }),
-  ])
+    })
     .then((response) => {
-      if (response instanceof FetchError) {
+      if (response instanceof Error) {
         logger.warn(`fetchエラー(${init.method} ${input}): ${response.name}`);
       }
       return response;
     })
     .catch((error) => {
       logger.warn(`fetchエラー(${init.method} ${input}): ${error.message}`);
-      return new UnexpectedError();
+      return new FetcherError();
     })
     .finally(() => {
       clearTimeout(timeoutId);
