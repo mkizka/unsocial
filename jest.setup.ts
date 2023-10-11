@@ -2,16 +2,12 @@ import { server } from "./src/mocks/server";
 
 beforeAll(() =>
   server.listen({
-    onUnhandledRequest: (req) => {
-      const url = req.url.toString();
+    onUnhandledRequest: (req, print) => {
       // utils/fetcher.ts のタイムアウトテストで使用
-      if (url === "http://localhost:3001/") {
+      if (req.url.toString() === "http://localhost:3001/") {
         return;
       }
-      console.error(
-        "mswでモックされていないURLへのリクエストが行われました: " + url,
-      );
-      throw new Error();
+      print.error();
     },
   }),
 );
