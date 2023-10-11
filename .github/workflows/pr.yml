@@ -16,3 +16,9 @@ jobs:
     secrets: inherit
     permissions:
       pull-requests: write
+  nodejs-test-pr:
+    runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'renovate/node-')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/rtx-action@v1
