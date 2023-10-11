@@ -3,6 +3,7 @@
 const config = {
   reactStrictMode: true,
   output: "standalone",
+  distDir: process.env.E2E_DIST_DIR,
   experimental: {
     instrumentationHook: true,
     serverActions: true,

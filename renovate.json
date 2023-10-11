@@ -7,7 +7,7 @@
   "packageRules": [
     {
       "matchDatasources": ["node-version"],
-      "matchPackageNames": ["nodejs/node"],
+      "matchPackageNames": ["node"],
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
