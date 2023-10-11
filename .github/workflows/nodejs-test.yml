@@ -2,6 +2,8 @@ name: nodejs-test
 
 on:
   pull_request:
+    branches:
+      - renovate/node-18.x
 
 jobs:
   nodejs-test:
