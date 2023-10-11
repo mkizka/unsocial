@@ -1,8 +1,14 @@
-import { server } from "@/mocks/server";
+import { server } from "./src/mocks/server";
 
 beforeAll(() =>
   server.listen({
-    onUnhandledRequest: "error",
+    onUnhandledRequest: (req, print) => {
+      // utils/fetcher.ts のタイムアウトテストで使用
+      if (req.url.toString() === "http://localhost:3001/") {
+        return;
+      }
+      print.error();
+    },
   }),
 );
 

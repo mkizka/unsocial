@@ -12,7 +12,7 @@ const getAttachmentUrl = (attachments: Document[]) => {
   const [_, ext] = attachments[0]!.mediaType.split("/");
   // png以外をサポートするなら修正
   if (ext === "png") {
-    return `/document/${attachments[0]!.id}/image.png`;
+    return `/documents/${attachments[0]!.id}/image.webp`;
   }
   return null;
 };

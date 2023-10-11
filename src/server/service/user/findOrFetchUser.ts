@@ -5,7 +5,6 @@ import type { PersonActivity } from "@/server/schema/person";
 import { inboxPersonSchema } from "@/server/schema/person";
 import { webFingerSchema } from "@/server/schema/webFinger";
 import { env } from "@/utils/env";
-import { FetchError } from "@/utils/fetcher";
 import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
 
@@ -32,9 +31,9 @@ export const shouldRefetch = (user: User) => {
 
 const fetchActorUrlByWebFinger = async (
   user: apRepository.FetchWebFingerParams,
-): Promise<string | FetchError | UserServiceError> => {
+): Promise<string | Error> => {
   const response = await apRepository.fetchWebFinger(user);
-  if (response instanceof FetchError) {
+  if (response instanceof Error) {
     logger.info("Webfingerの取得に失敗しました");
     return response;
   }
@@ -49,7 +48,7 @@ const fetchActorUrlByWebFinger = async (
 
 const fetchPersonByActorUrl = async (
   actorUrl: string,
-): Promise<PersonActivity | FetchError | UserServiceError> => {
+): Promise<PersonActivity | Error> => {
   const response = await apRepository.fetchActor(actorUrl);
   if (response instanceof Error) {
     logger.info("Actorの取得に失敗しました");

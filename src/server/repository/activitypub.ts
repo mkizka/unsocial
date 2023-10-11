@@ -7,7 +7,7 @@ const logger = createLogger("apRepository");
 export const fetchActor = async (actorUrl: string) => {
   const response = await fetcher(actorUrl, {
     next: {
-      revalidate: 0,
+      revalidate: 60,
     },
     headers: {
       accept: "application/activity+json",
@@ -34,7 +34,7 @@ export const fetchWebFinger = async (user: FetchWebFingerParams) => {
   );
   const response = await fetcher(webFingerUrl, {
     next: {
-      revalidate: 0,
+      revalidate: 60,
     },
   });
   return response instanceof Error ? response : response.json();
