@@ -36,7 +36,7 @@
     "react-dom": "18.3.0-canary-dddfe6882-20231005",
     "react-simple-image-viewer": "1.2.2",
     "sharp": "0.32.6",
-    "superjson": "1.13.3",
+    "superjson": "2.0.0",
     "winston": "3.11.0",
     "zod": "3.22.4"
   },
