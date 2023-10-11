@@ -1,0 +1,11 @@
+name: nodejs-test
+
+on:
+  pull_request:
+
+jobs:
+  nodejs-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: jdx/rtx-action@v1
