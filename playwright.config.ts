@@ -5,7 +5,10 @@ const config: PlaywrightTestConfig = {
   testDir: "e2e",
   outputDir: "reports/.e2e",
   timeout: 90000,
-  reporter: [["html", { open: "never", outputFolder: "reports/e2e" }]],
+  reporter: [
+    ["list", { printSteps: true }],
+    ["html", { open: "never", outputFolder: "reports/e2e" }],
+  ],
   projects: [
     {
       name: "chromium",

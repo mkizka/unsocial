@@ -37,6 +37,7 @@ const fetchActorUrlByWebFinger = async (
     logger.info("Webfingerの取得に失敗しました");
     return response;
   }
+  logger.info(JSON.stringify(response));
   const parsed = webFingerSchema.safeParse(response);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));
@@ -54,6 +55,7 @@ const fetchPersonByActorUrl = async (
     logger.info("Actorの取得に失敗しました");
     return response;
   }
+  logger.info(JSON.stringify(response));
   const parsed = inboxPersonSchema.safeParse(response);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));

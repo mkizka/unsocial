@@ -99,7 +99,7 @@ const runTest = async ({ from, to }: RunTestParams) => {
 };
 
 test.describe("Federation", () => {
-  test("Unsocial → Unsocial", async ({ page }) => {
+  test.only("Unsocial → Unsocial", async ({ page }) => {
     await runTest({
       from: new MyhostUnsocialHandler(page),
       to: new RemoteUnsocialHandler(page),
