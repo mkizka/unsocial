@@ -11,7 +11,7 @@ services:
   nginx-unsocial:
     image: nginx:1-alpine
     volumes:
-      - ./docker/nginx/mastodon:/etc/nginx/conf.d
+      - ./docker/nginx/unsocial:/etc/nginx/conf.d
       - ./docker/nginx/confs:/etc/nginx/confs
       - ./docker/nginx/certs:/etc/nginx/certs
     ports:
