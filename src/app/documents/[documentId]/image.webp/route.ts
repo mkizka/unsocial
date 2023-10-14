@@ -6,6 +6,8 @@ import sharp from "sharp";
 import { documentService } from "@/server/service";
 import { fetcher } from "@/utils/fetcher";
 
+sharp.cache(false);
+
 const convertWebp = (buffer: ArrayBuffer, options: { resize: boolean }) => {
   const image = sharp(buffer);
   if (options.resize) {

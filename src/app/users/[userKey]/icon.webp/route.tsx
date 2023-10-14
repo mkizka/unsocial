@@ -6,6 +6,8 @@ import sharp from "sharp";
 import { userService } from "@/server/service";
 import { fetcher } from "@/utils/fetcher";
 
+sharp.cache(false);
+
 const allowedSizes = [36, 64];
 
 const generateTextImage = async (text: string, size: number) => {
