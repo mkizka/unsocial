@@ -19,6 +19,9 @@ services:
       - 443:443
     extra_hosts:
       - host.docker.internal:host-gateway
+    depends_on:
+      db:
+        condition: service_healthy
     profiles:
       - unsocial
   ############
