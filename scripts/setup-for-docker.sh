@@ -20,7 +20,7 @@ function create_cert() {
   CERTS_DIR="./docker/nginx/certs"
   echo "Generte cert files to $CERTS_DIR"
   mkdir -p $CERTS_DIR
-  mkcert -cert-file $CERTS_DIR/$1.crt -key-file $CERTS_DIR/$1.key $1.localhost 2> /dev/null
+  mkcert -cert-file "$CERTS_DIR/$1.crt" -key-file "$CERTS_DIR/$1.key" "$1.localhost" 2> /dev/null
 }
 create_cert misskey
 create_cert mastodon
