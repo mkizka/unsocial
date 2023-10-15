@@ -5,17 +5,17 @@ on:
 
 jobs:
   unsocial:
-    uses: ./.github/workflows/_e2e-test.yml
+    uses: ./.github/workflows/_e2e-federation.yml
     secrets: inherit
     with:
       target: unsocial
   mastodon:
-    uses: ./.github/workflows/_e2e-test.yml
+    uses: ./.github/workflows/_e2e-federation.yml
     secrets: inherit
     with:
       target: mastodon
   misskey:
-    uses: ./.github/workflows/_e2e-test.yml
+    uses: ./.github/workflows/_e2e-federation.yml
     secrets: inherit
     with:
       target: misskey
