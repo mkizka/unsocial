@@ -6,24 +6,24 @@ on:
       - main
 
 jobs:
-  unit-test-prod:
+  unit-test:
     uses: ./.github/workflows/_unit-test.yml
-  e2e-test-unsocial-prod:
+  e2e-unsocial:
     uses: ./.github/workflows/_e2e-test.yml
     secrets: inherit
     with:
       target: unsocial
-  e2e-test-mastodon-prod:
+  e2e-mastodon:
     uses: ./.github/workflows/_e2e-test.yml
     secrets: inherit
     with:
       target: mastodon
-  e2e-test-misskey-prod:
+  e2e-misskey:
     uses: ./.github/workflows/_e2e-test.yml
     secrets: inherit
     with:
       target: misskey
-  mutation-test-prod:
+  mutation-test:
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
   create-renovate-pr:
