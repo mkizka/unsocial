@@ -8,8 +8,21 @@ on:
 jobs:
   unit-test-prod:
     uses: ./.github/workflows/_unit-test.yml
-  e2e-test-prod:
+  e2e-test-unsocial-prod:
     uses: ./.github/workflows/_e2e-test.yml
+    secrets: inherit
+    with:
+      target: unsocial
+  e2e-test-mastodon-prod:
+    uses: ./.github/workflows/_e2e-test.yml
+    secrets: inherit
+    with:
+      target: mastodon
+  e2e-test-misskey-prod:
+    uses: ./.github/workflows/_e2e-test.yml
+    secrets: inherit
+    with:
+      target: misskey
   mutation-test-prod:
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
