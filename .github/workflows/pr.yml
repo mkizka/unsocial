@@ -9,21 +9,9 @@ permissions:
 jobs:
   unit-test:
     uses: ./.github/workflows/_unit-test.yml
-  e2e-unsocial:
+  e2e-test:
     uses: ./.github/workflows/_e2e-test.yml
     secrets: inherit
-    with:
-      target: unsocial
-  e2e-mastodon:
-    uses: ./.github/workflows/_e2e-test.yml
-    secrets: inherit
-    with:
-      target: mastodon
-  e2e-misskey:
-    uses: ./.github/workflows/_e2e-test.yml
-    secrets: inherit
-    with:
-      target: misskey
   mutation-test:
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
