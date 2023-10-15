@@ -5,7 +5,7 @@ import { userService } from "@/server/service/user";
 
 import { GET } from "./route";
 
-jest.mock("@/server/service");
+jest.mock("@/server/service/user");
 const mockedFindOrFetchUserByKey = jest.mocked(
   userService.findOrFetchUserByKey,
 );

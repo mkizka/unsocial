@@ -29,7 +29,7 @@ const mockedCreate = jest.mocked(create);
 
 const dummyUser = {} as User;
 
-jest.mock("..");
+jest.mock("@/server/service/user");
 const mockedUserService = jest.mocked(userService);
 mockedUserService.findOrFetchUserByActor.mockResolvedValue(dummyUser);
 
