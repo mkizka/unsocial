@@ -3,6 +3,9 @@ name: pr
 on:
   pull_request:
 
+permissions:
+  pull-requests: write
+
 jobs:
   unit-test-pr:
     uses: ./.github/workflows/_unit-test.yml
