@@ -6,11 +6,12 @@ on:
       - main
 
 jobs:
-  unit-test-prod:
+  unit-test:
     uses: ./.github/workflows/_unit-test.yml
-  e2e-test-prod:
+  e2e-test:
     uses: ./.github/workflows/_e2e-test.yml
-  mutation-test-prod:
+    secrets: inherit
+  mutation-test:
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
   create-renovate-pr:

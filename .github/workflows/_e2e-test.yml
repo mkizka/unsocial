@@ -3,62 +3,19 @@ name: _e2e-test
 on:
   workflow_call:
 
-env:
-  UPLOAD_DIR: unsocial-gha/e2e-test
-  ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_DEFAULT_REGION: ap-northeast-1
-
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      # https://nextjs.org/docs/pages/building-your-application/deploying/ci-build-caching#github-actions
-      - uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/.next/cache
-          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
-      - uses: pnpm/action-setup@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .tool-versions
-          cache: pnpm
-      - run: pnpm i
-      # https://github.com/FiloSottile/mkcert#linux
-      - name: Install mkcert
-        run: |
-          sudo apt install -y libnss3-tools
-          curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
-          chmod +x mkcert-v*-linux-amd64
-          sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
-      - name: Setup e2e
-        run: |
-          ./scripts/setup-for-docker.sh
-          ./scripts/setup-for-e2e.sh
-      - run: pnpm playwright install --with-deps chromium
-      - run: pnpm e2e
-      - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/e2e "s3://${{ env.UPLOAD_DIR }}/${{ github.event.pull_request.head.sha }}" --recursive
-        if: (success() || failure()) && github.event_name == 'pull_request'
-      - uses: gh640/command-result-action@v1
-        if: (success() || failure()) && github.event_name == 'pull_request'
-        id: e2e-report
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          E2E_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
-        with:
-          command: ./scripts/e2e-report.ts
-      - uses: thollander/actions-comment-pull-request@v2
-        if: (success() || failure()) && github.event_name == 'pull_request'
-        with:
-          message: ${{ steps.e2e-report.outputs.stdout }}
-          comment_tag: e2e-report
-      - uses: actions/upload-artifact@v3
-        if: (success() || failure()) && github.event_name != 'pull_request'
-        with:
-          name: e2e-${{ github.sha }}
-          path: reports/e2e
-          retention-days: 1
-          if-no-files-found: ignore
+  unsocial:
+    uses: ./.github/workflows/_e2e-federation.yml
+    secrets: inherit
+    with:
+      target: unsocial
+  mastodon:
+    uses: ./.github/workflows/_e2e-federation.yml
+    secrets: inherit
+    with:
+      target: mastodon
+  misskey:
+    uses: ./.github/workflows/_e2e-federation.yml
+    secrets: inherit
+    with:
+      target: misskey

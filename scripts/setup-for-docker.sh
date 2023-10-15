@@ -16,13 +16,16 @@ mkdir -p docker/mkcert 2> /dev/null
 cp "$(mkcert -CAROOT)"/rootCA.pem ./docker/mkcert/
 echo "Done"
 
-CERTS_DIR="./docker/nginx/certs"
-echo "Generte cert files to $CERTS_DIR"
-mkdir -p $CERTS_DIR
-mkcert -cert-file $CERTS_DIR/misskey.crt -key-file $CERTS_DIR/misskey.key misskey.localhost 2> /dev/null
-mkcert -cert-file $CERTS_DIR/mastodon.crt -key-file $CERTS_DIR/mastodon.key mastodon.localhost 2> /dev/null
-mkcert -cert-file $CERTS_DIR/unsocial.crt -key-file $CERTS_DIR/unsocial.key unsocial.localhost 2> /dev/null
-mkcert -cert-file $CERTS_DIR/remote.crt -key-file $CERTS_DIR/remote.key remote.localhost 2> /dev/null
+function create_cert() {
+  CERTS_DIR="./docker/nginx/certs"
+  echo "Generte cert files to $CERTS_DIR"
+  mkdir -p $CERTS_DIR
+  mkcert -cert-file "$CERTS_DIR/$1.crt" -key-file "$CERTS_DIR/$1.key" "$1.localhost" 2> /dev/null
+}
+create_cert misskey
+create_cert mastodon
+create_cert unsocial
+create_cert remote
 echo "Done"
 
 if has wslpath; then

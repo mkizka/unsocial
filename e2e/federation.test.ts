@@ -99,35 +99,35 @@ const runTest = async ({ from, to }: RunTestParams) => {
 };
 
 test.describe("Federation", () => {
-  test("Unsocial → Unsocial", async ({ page }) => {
+  test("Unsocial", async ({ page }) => {
     await runTest({
       from: new MyhostUnsocialHandler(page),
       to: new RemoteUnsocialHandler(page),
     });
   });
 
-  test("Unsocial → Misskey", async ({ page }) => {
+  test("Misskey_1", async ({ page }) => {
     await runTest({
       from: new MyhostUnsocialHandler(page),
       to: new MisskeyHandler(page),
     });
   });
 
-  test("Misskey → Unsocial", async ({ page }) => {
+  test("Misskey_2", async ({ page }) => {
     await runTest({
       from: new MisskeyHandler(page),
       to: new MyhostUnsocialHandler(page),
     });
   });
 
-  test("Unsocial → Mastodon", async ({ page }) => {
+  test("Mastodon_1", async ({ page }) => {
     await runTest({
       from: new MyhostUnsocialHandler(page),
       to: new MastodonHandler(page),
     });
   });
 
-  test("Mastodon → Unsocial", async ({ page }) => {
+  test("Mastodon_2", async ({ page }) => {
     await runTest({
       from: new MastodonHandler(page),
       to: new MyhostUnsocialHandler(page),
