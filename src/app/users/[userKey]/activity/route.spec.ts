@@ -1,7 +1,7 @@
 import type { User } from "@prisma/client";
 import { mockDeep } from "jest-mock-extended";
 
-import { userService } from "@/server/service";
+import { userService } from "@/server/service/user";
 
 import { GET } from "./route";
 

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
-import { userService } from "@/server/service";
+import { userService } from "@/server/service/user";
 import { activityStreams } from "@/utils/activitypub";
 import { env } from "@/utils/env";
 import { prisma } from "@/utils/prisma";

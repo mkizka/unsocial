@@ -1,9 +1,9 @@
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 
+import { userService } from "@/server/service/user";
 import { verifyRequest } from "@/utils/httpSignature/verify";
 
-import { userService } from "..";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,

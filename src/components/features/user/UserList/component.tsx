@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { followService, userService } from "@/server/service";
+import { followService } from "@/server/service";
+import { userService } from "@/server/service/user";
 
 import { UserItem } from "./UserItem";
 

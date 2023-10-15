@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { noteService, userService } from "@/server/service";
+import { noteService } from "@/server/service";
+import { userService } from "@/server/service/user";
 
 import { TimelineLoader } from "./TimelineLoader";
 

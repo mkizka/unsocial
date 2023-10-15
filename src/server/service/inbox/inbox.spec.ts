@@ -1,9 +1,9 @@
 import type { User } from "@prisma/client";
 import type { NextRequest } from "next/server";
 
+import { userService } from "@/server/service/user";
 import { verifyRequest } from "@/utils/httpSignature/verify";
 
-import { userService } from "..";
 import { ActivitySchemaValidationError } from "./errors";
 import { handle as accept } from "./handlers/accept";
 import { handle as create } from "./handlers/create";
