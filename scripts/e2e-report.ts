@@ -13,8 +13,12 @@ const { commits } = JSON.parse(stdout.toString()) as {
 const comment = ["| commit | 結果 |", "| --- | --- |"];
 
 for (const commit of commits) {
-  const link = `:performing_arts: [playwright-report](${process.env.E2E_TEST_S3_BASEURL}/${commit.oid}/index.html)`;
-  comment.push(`| ${commit.messageHeadline} (${commit.oid}) | ${link}`);
+  const unsocial = `:performing_arts: [unsocial](${process.env.E2E_TEST_S3_BASEURL}/${commit.oid}/unsocial/index.html)`;
+  const mastodon = `:elephant: [mastodon](${process.env.E2E_TEST_S3_BASEURL}/${commit.oid}/mastodon/index.html)`;
+  const misskey = `:m: [misskey](${process.env.E2E_TEST_S3_BASEURL}/${commit.oid}/misskey/index.html)`;
+  comment.push(
+    `| ${commit.messageHeadline} (${commit.oid}) | ${unsocial} ${mastodon} ${misskey} |`,
+  );
 }
 
 console.log(comment.join("\n"));

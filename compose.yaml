@@ -5,6 +5,50 @@ volumes:
   redis_data:
 
 services:
+  ############
+  # Unsocial
+  ############
+  nginx-unsocial:
+    image: nginx:1-alpine
+    volumes:
+      - ./docker/nginx/unsocial:/etc/nginx/conf.d
+      - ./docker/nginx/confs:/etc/nginx/confs
+      - ./docker/nginx/certs:/etc/nginx/certs
+    ports:
+      - 80:80
+      - 443:443
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+      - unsocial
+  ############
+  # Mastodon
+  ############
+  nginx-mastodon:
+    image: nginx:1-alpine
+    volumes:
+      - ./docker/nginx/mastodon:/etc/nginx/conf.d
+      - ./docker/nginx/confs:/etc/nginx/confs
+      - ./docker/nginx/certs:/etc/nginx/certs
+    ports:
+      - 80:80
+      - 443:443
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      default:
+        aliases:
+          - unsocial.localhost
+    depends_on:
+      mastodon-streaming:
+        condition: service_healthy
+      mastodon-sidekiq:
+        condition: service_healthy
+    profiles:
+      - mastodon
   mastodon:
     image: tootsuite/mastodon:v4.2
     env_file: ./docker/mastodon/.env.production
@@ -23,6 +67,8 @@ services:
     volumes:
       - ./docker/mkcert:/mkcert
       - ./docker/mastodon/public/system:/mastodon/public/system
+    profiles:
+      - mastodon
   mastodon-streaming:
     image: tootsuite/mastodon:v4.2
     env_file: ./docker/mastodon/.env.production
@@ -33,6 +79,8 @@ services:
     depends_on:
       mastodon:
         condition: service_healthy
+    profiles:
+      - mastodon
   mastodon-sidekiq:
     image: tootsuite/mastodon:v4.2
     env_file: ./docker/mastodon/.env.production
@@ -45,6 +93,31 @@ services:
       - ./docker/mastodon/public/system:/mastodon/public/system
     healthcheck:
       test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 6' || false"]
+    profiles:
+      - mastodon
+  ############
+  # Misskey
+  ############
+  nginx-misskey:
+    image: nginx:1-alpine
+    volumes:
+      - ./docker/nginx/misskey:/etc/nginx/conf.d
+      - ./docker/nginx/confs:/etc/nginx/confs
+      - ./docker/nginx/certs:/etc/nginx/certs
+    ports:
+      - 80:80
+      - 443:443
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      default:
+        aliases:
+          - unsocial.localhost
+    depends_on:
+      misskey:
+        condition: service_healthy
+    profiles:
+      - misskey
   misskey:
     image: misskey/misskey:2023.10
     volumes:
@@ -64,27 +137,11 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
-  nginx:
-    image: nginx:1-alpine
-    volumes:
-      - ./docker/nginx:/etc/nginx/conf.d
-    ports:
-      - 80:80
-      - 443:443
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    networks:
-      default:
-        aliases:
-          - unsocial.localhost
-          - remote.localhost
-          - misskey.localhost
-          - mastodon.localhost
-    depends_on:
-      misskey:
-        condition: service_healthy
-      mastodon:
-        condition: service_healthy
+    profiles:
+      - misskey
+  ############
+  # Others
+  ############
   db:
     image: postgres:16-alpine
     ports:
@@ -103,7 +160,10 @@ services:
     image: redis:7-alpine
     volumes:
       - redis_data:/data
-  mail:
-    image: mailhog/mailhog:v1.0.1
-    ports:
-      - 8025:8025
+    profiles:
+      - mastodon
+      - misskey
+  # mail:
+  #   image: mailhog/mailhog:v1.0.1
+  #   ports:
+  #     - 8025:8025
