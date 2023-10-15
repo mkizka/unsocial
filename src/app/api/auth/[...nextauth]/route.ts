@@ -1,9 +1,9 @@
 import bcryptjs from "bcryptjs";
-import crypto from "crypto";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 
+import { userRepository } from "@/server/repository";
 import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";
@@ -18,20 +18,6 @@ const credentialsSchema = z.object({
   preferredUsername: z.string().min(1, "ユーザーIDは必須です"),
   password: z.string().min(8, "パスワードは8文字以上にしてください"),
 });
-
-const createKeys = () => {
-  return crypto.generateKeyPairSync("rsa", {
-    modulusLength: 2048,
-    publicKeyEncoding: {
-      type: "spki",
-      format: "pem",
-    },
-    privateKeyEncoding: {
-      type: "pkcs8",
-      format: "pem",
-    },
-  });
-};
 
 const signIn = async (credentials: z.infer<typeof credentialsSchema>) => {
   const user = await prisma.user.findUnique({
@@ -61,24 +47,7 @@ const signIn = async (credentials: z.infer<typeof credentialsSchema>) => {
 };
 
 const signUp = async (credentials: z.infer<typeof credentialsSchema>) => {
-  const keys = createKeys();
-  const newUser = await prisma.user.create({
-    data: {
-      name: credentials.name ?? null,
-      preferredUsername: credentials.preferredUsername,
-      host: env.HOST,
-      publicKey: keys.publicKey,
-      credential: {
-        create: {
-          hashedPassword: bcryptjs.hashSync(credentials.password),
-          privateKey: keys.privateKey,
-        },
-      },
-    },
-    include: {
-      credential: true,
-    },
-  });
+  const newUser = await userRepository.create(credentials);
   return { id: newUser.id };
 };
 

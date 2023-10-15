@@ -58,9 +58,6 @@ describe("authorize", () => {
           },
         },
       },
-      include: {
-        credential: true,
-      },
     });
     expect(result).toEqual({ id: "userId" });
   });
