@@ -14,11 +14,12 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ap-northeast-1
 
+permissions:
+  pull-requests: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       # https://nextjs.org/docs/pages/building-your-application/deploying/ci-build-caching#github-actions
