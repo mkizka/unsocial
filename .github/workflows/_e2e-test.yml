@@ -61,10 +61,3 @@ jobs:
         with:
           message: ${{ steps.e2e-report.outputs.stdout }}
           comment_tag: e2e-report
-      - uses: actions/upload-artifact@v3
-        if: (success() || failure()) && github.event_name != 'pull_request'
-        with:
-          name: e2e-${{ github.sha }}
-          path: reports/e2e
-          retention-days: 1
-          if-no-files-found: ignore
