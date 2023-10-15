@@ -1,11 +1,11 @@
 import type { Note, User } from "@prisma/client";
 
 import { mockedPrisma } from "@/mocks/prisma";
-import { userService } from "@/server/service";
+import { userService } from "@/server/service/user";
 
 import { GET } from "./route";
 
-jest.mock("@/server/service");
+jest.mock("@/server/service/user");
 const mockedFindOrFetchUserByKey = jest.mocked(
   userService.findOrFetchUserByKey,
 );

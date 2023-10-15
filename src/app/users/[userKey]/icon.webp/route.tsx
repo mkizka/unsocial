@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { ImageResponse, NextResponse } from "next/server";
 import sharp from "sharp";
 
-import { userService } from "@/server/service";
+import { userService } from "@/server/service/user";
 import { fetcher } from "@/utils/fetcher";
 
 sharp.cache(false);

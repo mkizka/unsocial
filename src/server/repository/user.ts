@@ -1,6 +1,9 @@
+import bcryptjs from "bcryptjs";
+import crypto from "crypto";
 import { cache } from "react";
 
 import type { PersonActivity } from "@/server/schema/person";
+import { env } from "@/utils/env";
 import { prisma } from "@/utils/prisma";
 
 export const findByActorId = cache((actorId: URL) => {
@@ -20,7 +23,7 @@ export type FindUniqueParams =
 export const findUnique = cache((params: FindUniqueParams) => {
   const where =
     "preferredUsername" in params ? { preferredUsername_host: params } : params;
-  return prisma.user.findUnique({ where });
+  return prisma.user.findUnique({ where, include: { credential: true } });
 });
 
 export const createOrUpdateUser = (
@@ -40,4 +43,42 @@ export const createOrUpdateUser = (
   return userIdForUpdate
     ? prisma.user.update({ where: { id: userIdForUpdate }, data })
     : prisma.user.create({ data });
+};
+
+const createKeys = () => {
+  return crypto.generateKeyPairSync("rsa", {
+    modulusLength: 2048,
+    publicKeyEncoding: {
+      type: "spki",
+      format: "pem",
+    },
+    privateKeyEncoding: {
+      type: "pkcs8",
+      format: "pem",
+    },
+  });
+};
+
+export type CreateParams = {
+  name?: string;
+  preferredUsername: string;
+  password: string;
+};
+
+export const create = ({ name, preferredUsername, password }: CreateParams) => {
+  const keys = createKeys();
+  return prisma.user.create({
+    data: {
+      name,
+      preferredUsername,
+      host: env.HOST,
+      publicKey: keys.publicKey,
+      credential: {
+        create: {
+          hashedPassword: bcryptjs.hashSync(password),
+          privateKey: keys.privateKey,
+        },
+      },
+    },
+  });
 };

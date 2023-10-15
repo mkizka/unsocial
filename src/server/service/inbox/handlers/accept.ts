@@ -1,10 +1,10 @@
 import { followRepository } from "@/server/repository";
 import { inboxAcceptSchema } from "@/server/schema/accept";
-import { userService } from "@/server/service";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
 } from "@/server/service/inbox/errors";
+import { userService } from "@/server/service/user";
 
 import type { InboxHandler } from "./shared";
 

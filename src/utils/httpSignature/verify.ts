@@ -2,7 +2,7 @@ import crypto from "crypto";
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 
-import { userService } from "@/server/service";
+import { userService } from "@/server/service/user";
 
 import { createDigest, textOf } from "./utils";
 

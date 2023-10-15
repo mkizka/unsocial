@@ -1,6 +1,6 @@
 #!/usr/bin/env -S pnpm tsx
-import { authorize } from "@/app/api/auth/[...nextauth]/route";
 import { noteRepository, userRepository } from "@/server/repository";
+import { userService } from "@/server/service/user";
 import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
 
@@ -15,7 +15,7 @@ const main = async () => {
     logger.info("シード作成をスキップ");
     return;
   }
-  const user = await authorize({
+  const user = await userService.authorize({
     action: "signUp",
     name: "テスト",
     preferredUsername: "test",
