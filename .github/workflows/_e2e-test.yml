@@ -17,6 +17,8 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       # https://nextjs.org/docs/pages/building-your-application/deploying/ci-build-caching#github-actions

@@ -9,29 +9,21 @@ jobs:
   e2e-test-unsocial-pr:
     uses: ./.github/workflows/_e2e-test.yml
     secrets: inherit
-    permissions:
-      pull-requests: write
     with:
       target: unsocial
   e2e-test-mastodon-pr:
     uses: ./.github/workflows/_e2e-test.yml
     secrets: inherit
-    permissions:
-      pull-requests: write
     with:
       target: mastodon
   e2e-test-misskey-pr:
     uses: ./.github/workflows/_e2e-test.yml
     secrets: inherit
-    permissions:
-      pull-requests: write
     with:
       target: misskey
   mutation-test-pr:
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
-    permissions:
-      pull-requests: write
   nodejs-test-pr:
     runs-on: ubuntu-latest
     if: startsWith(github.head_ref, 'renovate/node-')
