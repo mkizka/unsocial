@@ -23,7 +23,7 @@ export type FindUniqueParams =
 export const findUnique = cache((params: FindUniqueParams) => {
   const where =
     "preferredUsername" in params ? { preferredUsername_host: params } : params;
-  return prisma.user.findUnique({ where });
+  return prisma.user.findUnique({ where, include: { credential: true } });
 });
 
 export const createOrUpdateUser = (
@@ -59,7 +59,7 @@ const createKeys = () => {
   });
 };
 
-type CreateParams = {
+export type CreateParams = {
   name?: string;
   preferredUsername: string;
   password: string;

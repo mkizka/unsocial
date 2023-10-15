@@ -31,6 +31,9 @@ describe("inboxUndoService", () => {
       where: {
         actorUrl: "https://myhost.example.com/users/dummyidlocal",
       },
+      include: {
+        credential: true,
+      },
     });
     expect(mockedPrisma.follow.delete).toHaveBeenCalledWith({
       where: {

@@ -38,6 +38,9 @@ describe("inboxFollowService", () => {
       where: {
         id: "dummyidlocal",
       },
+      include: {
+        credential: true,
+      },
     });
     expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
       data: {
