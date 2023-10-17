@@ -1,4 +1,4 @@
-import { findOrCreateSystemUser } from "@/server/service/user/user";
+import { systemUserService } from "@/server/service/systemUser";
 import { fetcher } from "@/utils/fetcher";
 import { createLogger } from "@/utils/logger";
 import { safeUrl } from "@/utils/safeUrl";
@@ -13,7 +13,7 @@ export const fetchActor = async (actorUrl: string) => {
     headers: {
       accept: "application/activity+json",
     },
-    signer: await findOrCreateSystemUser(),
+    signer: await systemUserService.findOrCreateSystemUser(),
   });
   return response instanceof Error ? response : response.json();
 };
