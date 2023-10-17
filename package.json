@@ -10,6 +10,8 @@
     "all": "run-s -s lint:fix test",
     "build": "./scripts/build.sh",
     "dev": "./scripts/dev.sh",
+    "dev:mastodon": "./scripts/dev.sh mastodon",
+    "dev:misskey": "./scripts/dev.sh misskey",
     "e2e": "playwright test",
     "e2e:server": "NODE_EXTRA_CA_CERTS=./docker/mkcert/rootCA.pem run-p -l e2e:server:*",
     "e2e:server:myhost": "dotenv -e e2e/.env.myhost -- next start",
