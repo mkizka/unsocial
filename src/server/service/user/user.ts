@@ -1,4 +1,6 @@
+import assert from "assert";
 import bcryptjs from "bcryptjs";
+import crypto from "crypto";
 import { cache } from "react";
 import { z } from "zod";
 
@@ -74,4 +76,25 @@ export const authorize = async (credentials: unknown) => {
     return signIn(parsedCredentials.data);
   }
   return signUp(parsedCredentials.data);
+};
+
+export const findOrCreateSystemUser = async () => {
+  const systemUser = await userRepository.findUnique({
+    preferredUsername: env.HOST,
+    host: env.HOST,
+  });
+  if (systemUser) {
+    assert(
+      systemUser.credential?.privateKey,
+      "システムユーザーの秘密鍵がありませんでした",
+    );
+    return {
+      id: systemUser.id,
+      privateKey: systemUser.credential.privateKey,
+    };
+  }
+  return userRepository.create({
+    preferredUsername: env.HOST,
+    password: crypto.randomUUID(),
+  });
 };

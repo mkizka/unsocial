@@ -1,3 +1,4 @@
+import { findOrCreateSystemUser } from "@/server/service/user/user";
 import { fetcher } from "@/utils/fetcher";
 import { createLogger } from "@/utils/logger";
 import { safeUrl } from "@/utils/safeUrl";
@@ -12,6 +13,7 @@ export const fetchActor = async (actorUrl: string) => {
     headers: {
       accept: "application/activity+json",
     },
+    signer: await findOrCreateSystemUser(),
   });
   return response instanceof Error ? response : response.json();
 };
@@ -36,6 +38,7 @@ export const fetchWebFinger = async (user: FetchWebFingerParams) => {
     next: {
       revalidate: 60,
     },
+    signer: await findOrCreateSystemUser(),
   });
   return response instanceof Error ? response : response.json();
 };
