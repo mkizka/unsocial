@@ -38,7 +38,6 @@ export const fetchWebFinger = async (user: FetchWebFingerParams) => {
     next: {
       revalidate: 60,
     },
-    signer: await findOrCreateSystemUser(),
   });
   return response instanceof Error ? response : response.json();
 };
