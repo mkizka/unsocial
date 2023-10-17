@@ -1,9 +1,10 @@
 import type { User } from "@prisma/client";
 
-import { apRepository, userRepository } from "@/server/repository";
+import { userRepository } from "@/server/repository";
 import type { PersonActivity } from "@/server/schema/person";
 import { inboxPersonSchema } from "@/server/schema/person";
 import { webFingerSchema } from "@/server/schema/webFinger";
+import { activitypubService } from "@/server/service/activitypub";
 import { env } from "@/utils/env";
 import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
@@ -30,9 +31,9 @@ export const shouldRefetch = (user: User) => {
 };
 
 const fetchActorUrlByWebFinger = async (
-  user: apRepository.FetchWebFingerParams,
+  user: activitypubService.FetchWebFingerParams,
 ): Promise<string | Error> => {
-  const response = await apRepository.fetchWebFinger(user);
+  const response = await activitypubService.fetchWebFinger(user);
   if (response instanceof Error) {
     logger.info("Webfingerの取得に失敗しました");
     return response;
@@ -49,7 +50,7 @@ const fetchActorUrlByWebFinger = async (
 const fetchPersonByActorUrl = async (
   actorUrl: string,
 ): Promise<PersonActivity | Error> => {
-  const response = await apRepository.fetchActor(actorUrl);
+  const response = await activitypubService.fetchActor(actorUrl);
   if (response instanceof Error) {
     logger.info("Actorの取得に失敗しました");
     return response;
@@ -117,7 +118,7 @@ export const findOrFetchUserByActor = async (
 };
 
 export const findOrFetchUserByWebFinger = async (
-  user: apRepository.FetchWebFingerParams,
+  user: activitypubService.FetchWebFingerParams,
 ): Promise<User | UserServiceError> => {
   const existingUser = await userRepository.findUnique(user);
   // 自ホストのユーザーは自サーバーのWebFingerを自分で叩くことになるため、
