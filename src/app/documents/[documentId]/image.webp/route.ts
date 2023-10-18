@@ -11,8 +11,7 @@ sharp.cache(false);
 const convertWebp = (buffer: ArrayBuffer, options: { resize: boolean }) => {
   const image = sharp(buffer);
   if (options.resize) {
-    // 600px - 16px * 2(横幅パディング) - 48px(左側のアイコン幅) = 520px
-    return image.resize(520, null, { fit: "inside" }).webp().toBuffer();
+    return image.resize(400, null, { fit: "inside" }).webp().toBuffer();
   }
   return image.webp().toBuffer();
 };

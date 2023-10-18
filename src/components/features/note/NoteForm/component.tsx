@@ -10,7 +10,7 @@ export function NoteForm() {
         await action(formData);
         location.reload();
       }}
-      className="mx-auto mb-4 w-full rounded bg-primary-light px-8 pb-4 pt-6 shadow"
+      className="mx-auto mb-1 w-full rounded bg-primary-light px-8 pb-4 pt-6 shadow"
     >
       <textarea
         data-testid="note-form__textarea"
