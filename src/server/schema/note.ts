@@ -4,6 +4,7 @@ export const inboxNoteSchema = z.object({
   type: z.literal("Note"),
   id: z.string().url(),
   content: z.string(),
+  inReplyTo: z.string().url().optional(),
   attachment: z
     .array(
       z.object({
