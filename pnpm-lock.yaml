@@ -15,8 +15,8 @@ dependencies:
     specifier: 2.4.3
     version: 2.4.3
   jotai:
-    specifier: 2.4.3
-    version: 2.4.3(@types/react@18.2.31)(react@18.3.0-canary-d803f519e-20231020)
+    specifier: 2.5.0
+    version: 2.5.0(@types/react@18.2.31)(react@18.3.0-canary-d803f519e-20231020)
   next:
     specifier: 13.5.7-canary.16
     version: 13.5.7-canary.16(@babel/core@7.23.0)(react-dom@18.3.0-canary-d803f519e-20231020)(react@18.3.0-canary-d803f519e-20231020)
@@ -5177,8 +5177,8 @@ packages:
     resolution: {integrity: sha512-YPM9Q+dmsna4CGWNn5+oHFsuXJdxvKAOVoNjpe2nje3odSoX5Xz4s71rP50vM8uUKJyQtMnEGPmbVCVR+G4W5g==}
     dev: false
 
-  /jotai@2.4.3(@types/react@18.2.31)(react@18.3.0-canary-d803f519e-20231020):
-    resolution: {integrity: sha512-CSAHX9LqWG5WCrU8OgBoZbBJ+Bo9rQU0mPusEF4e0CZ/SNFgurG26vb3UpgvCSJZgYVcUQNiUBM5q86PA8rstQ==}
+  /jotai@2.5.0(@types/react@18.2.31)(react@18.3.0-canary-d803f519e-20231020):
+    resolution: {integrity: sha512-iPJDFrhNw3KU4o4SSAESeZoW+nM1L/76VULXZWF23qmivBEcbAQjiF5n1W4Hn5dXAol4tmtEYe4HH7d9emEz0Q==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=17.0.0'
