@@ -281,9 +281,9 @@ describe("findOrFetchUser", () => {
     // ローカルユーザーなのに自ホストのアドレスを叩かないようにする
     const localServerHandler = jest.fn();
     server.use(
-      http.get(/https:\/\/myhost\.example\.com\/.*/, (_, res, ctx) => {
+      http.get(/https:\/\/myhost\.example\.com\/.*/, () => {
         localServerHandler();
-        return res(ctx.status(404));
+        return new HttpResponse(null, { status: 404 });
       }),
     );
     // act
