@@ -1,7 +1,7 @@
 import type { Credential } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 import { captor } from "jest-mock-extended";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 
 import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
@@ -32,10 +32,10 @@ describe("relayActivity", () => {
       const bodyFn = jest.fn();
       const bodyCaptor = captor();
       server.use(
-        rest.post("https://remote.example.com/inbox", async (req, res, ctx) => {
-          headerFn(req.headers.all());
-          bodyFn(await req.json());
-          return res.once(ctx.status(202));
+        http.post("https://remote.example.com/inbox", async ({ request }) => {
+          headerFn(Object.fromEntries(request.headers));
+          bodyFn(await request.json());
+          return new HttpResponse(null, { status: 202 });
         }),
       );
       // act
@@ -81,20 +81,20 @@ describe("relayActivity", () => {
       const headerCaptors = [captor(), captor()];
       const bodyFn = jest.fn();
       const bodyCaptors = [captor(), captor()];
-      const inbox1 = rest.post(
+      const inbox1 = http.post(
         "https://remote1.example.com/users/foo/inbox",
-        async (req, res, ctx) => {
-          headerFn(req.headers.all());
-          bodyFn(await req.json());
-          return res.once(ctx.status(202));
+        async ({ request }) => {
+          headerFn(Object.fromEntries(request.headers));
+          bodyFn(await request.json());
+          return new HttpResponse(null, { status: 202 });
         },
       );
-      const inbox2 = rest.post(
+      const inbox2 = http.post(
         "https://remote2.example.com/inbox",
-        async (req, res, ctx) => {
-          headerFn(req.headers.all());
-          bodyFn(await req.json());
-          return res.once(ctx.status(202));
+        async ({ request }) => {
+          headerFn(Object.fromEntries(request.headers));
+          bodyFn(await request.json());
+          return new HttpResponse(null, { status: 202 });
         },
       );
       server.use(inbox1, inbox2);

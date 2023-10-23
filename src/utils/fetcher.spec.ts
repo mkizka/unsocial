@@ -1,6 +1,6 @@
-import http from "http";
+import { createServer } from "http";
 import { captor, mockDeep } from "jest-mock-extended";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 import { setTimeout } from "timers/promises";
 
 import { mockedLogger } from "@/mocks/logger";
@@ -24,9 +24,9 @@ describe("fetcher", () => {
     const headerFn = jest.fn();
     const headerCaptor = captor();
     server.use(
-      rest.get(dummyUrl, async (req, res, ctx) => {
-        headerFn(req.headers.all());
-        return res.once(ctx.json({ success: true }));
+      http.get(dummyUrl, async ({ request }) => {
+        headerFn(Object.fromEntries(request.headers));
+        return HttpResponse.json({ success: true });
       }),
     );
     // act
@@ -49,10 +49,10 @@ describe("fetcher", () => {
     const bodyFn = jest.fn();
     const bodyCaptor = captor();
     server.use(
-      rest.post(dummyUrl, async (req, res, ctx) => {
-        headerFn(req.headers.all());
-        bodyFn(await req.json());
-        return res.once(ctx.json({ success: true }));
+      http.post(dummyUrl, async ({ request }) => {
+        headerFn(Object.fromEntries(request.headers));
+        bodyFn(await request.json());
+        return HttpResponse.json({ success: true });
       }),
     );
     // act
@@ -81,9 +81,7 @@ describe("fetcher", () => {
   test("HTTPエラー", async () => {
     // arrange
     server.use(
-      rest.get(dummyUrl, (req, res, ctx) => {
-        return res.once(ctx.status(400));
-      }),
+      http.get(dummyUrl, () => new HttpResponse(null, { status: 400 })),
     );
     // act
     const response = await fetcher(dummyUrl);
@@ -100,11 +98,7 @@ describe("fetcher", () => {
     const mockedConsoleError = jest
       .spyOn(console, "error")
       .mockImplementation();
-    server.use(
-      rest.get(dummyUrl, (_, res) => {
-        return res.networkError("Failed to connect");
-      }),
-    );
+    server.use(http.get(dummyUrl, () => HttpResponse.error()));
     // act
     const response = await fetcher(dummyUrl);
     // assert
@@ -117,7 +111,7 @@ describe("fetcher", () => {
   test("タイムアウト", async () => {
     // arrange
     // mswではなぜかモック出来なかった
-    const server = http.createServer(async (_, res) => {
+    const server = createServer(async (_, res) => {
       await setTimeout(3000);
       res.end();
     });
