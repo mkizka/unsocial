@@ -1,5 +1,5 @@
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
-FROM node:18.18.2-slim AS base
+FROM node:20.8.1-slim AS base
 WORKDIR /app
 RUN apt-get update && apt-get install -y openssl \
   && apt-get clean \
