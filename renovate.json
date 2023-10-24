@@ -6,19 +6,14 @@
   "platformAutomerge": true,
   "packageRules": [
     {
-      "matchDatasources": ["node-version"],
-      "matchPackageNames": ["node"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchPackageNames": ["node", "nodejs/node", "@types/node"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     },
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["node"],
       "allowedVersions": "/^18\\.[0-9]+\\.[0-9]+\\-slim$/"
-    },
-    {
-      "matchDatasources": ["npm"],
-      "matchPackageNames": ["@types/node"],
-      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "matchDatasources": ["npm"],

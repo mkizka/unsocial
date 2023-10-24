@@ -4,13 +4,16 @@
 
 ## 開発手順
 
-pnpm, mkcert, docker が必要
+nodejs, mkcert, docker が必要
 
-```
+```sh
 ./scripts/setup-for-docker.sh
 cp -f .env.example .env
+corepack enable pnpm
 pnpm i
 pnpm dev
+# または pnpm dev:misskey で Misskey も起動
+# または pnpm dev:mastodon で Mastodon も起動
 ```
 
 https://unsocial.localhost  
