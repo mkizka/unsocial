@@ -4,7 +4,22 @@
   "baseBranches": ["renovate-pr"],
   "automerge": true,
   "platformAutomerge": true,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^*Dockerfile$"],
+      "matchStrings": ["FROM node:(?<currentValue>.*?)-.*\\n"],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "node",
+      "versioningTemplate": "node"
+    }
+  ],
   "packageRules": [
+    {
+      "matchPackageNames": ["node"],
+      "matchManagers": ["dockerfile"],
+      "enabled": false
+    },
     {
       "matchDatasources": ["npm"],
       "matchPackageNames": ["next"],
