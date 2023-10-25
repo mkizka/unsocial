@@ -4,23 +4,26 @@
   "baseBranches": ["renovate-pr"],
   "automerge": true,
   "platformAutomerge": true,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^*Dockerfile$"],
+      "matchStrings": ["FROM node:(?<currentValue>.*?)-.*\\n"],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "node",
+      "versioningTemplate": "node"
+    }
+  ],
   "packageRules": [
     {
       "matchPackageNames": ["node", "nodejs/node", "@types/node"],
       "allowedVersions": "/^20\\.[0-9]+\\.[0-9]+$/"
     },
     {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["node"],
-      "allowedVersions": "/^20\\.[0-9]+\\.[0-9]+\\-slim$/"
-    },
-    {
-      "matchDatasources": ["npm"],
       "matchPackageNames": ["next"],
       "followTag": "canary"
     },
     {
-      "matchDatasources": ["npm"],
       "matchPackageNames": ["react", "react-dom"],
       "followTag": "canary",
       "extends": ["schedule:weekly"]
