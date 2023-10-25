@@ -1,6 +1,4 @@
 import Link from "next/link";
-import type { Ref } from "react";
-import { forwardRef } from "react";
 
 import { UserIcon } from "@/components/features/user/UserIcon";
 import type { noteService } from "@/server/service";
@@ -14,12 +12,11 @@ export type Props = {
   note: noteService.NoteCard;
 };
 
-function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
+export function NoteCard({ note }: Props) {
   return (
     <article
-      ref={ref}
       data-testid="note-card"
-      className="text-prmary relative mb-2 flex rounded bg-primary-light p-4 shadow"
+      className="text-prmary relative mb-1 flex rounded bg-primary-light p-4 shadow"
     >
       <div className="w-full pl-[48px]">
         <Link className="absolute left-3" href={note.user.url}>
@@ -43,5 +40,3 @@ function _NoteCard({ note }: Props, ref: Ref<HTMLDivElement>) {
     </article>
   );
 }
-
-export const NoteCard = forwardRef(_NoteCard);

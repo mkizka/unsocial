@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
+import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
-import { ImageResponse, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import sharp from "sharp";
 
 import { userService } from "@/server/service/user";

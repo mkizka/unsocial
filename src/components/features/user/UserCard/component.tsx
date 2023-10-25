@@ -24,7 +24,7 @@ export async function UserCard({ userKey }: Props) {
   const { followersCount, followeesCount } = await followService.count(user.id);
   const canFollow = session?.user && session.user.id !== user.id;
   return (
-    <section className="mb-2 rounded bg-primary-light p-4 pb-6 shadow">
+    <section className="mb-1 rounded bg-primary-light p-4 pb-6 shadow">
       <div className="mb-2 flex w-full items-center">
         <UserIcon user={user} size={64} className="rounded-full" />
         <div className="ml-4">

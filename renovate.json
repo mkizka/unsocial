@@ -4,21 +4,21 @@
   "baseBranches": ["renovate-pr"],
   "automerge": true,
   "platformAutomerge": true,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": ["FROM node:(?<currentValue>.*?)-.*\\n"],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "node",
+      "versioningTemplate": "node"
+    }
+  ],
   "packageRules": [
     {
-      "matchDatasources": ["node-version"],
       "matchPackageNames": ["node"],
-      "matchUpdateTypes": ["minor", "patch"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["node"],
-      "allowedVersions": "/^18\\.[0-9]+\\.[0-9]+\\-slim$/"
-    },
-    {
-      "matchDatasources": ["npm"],
-      "matchPackageNames": ["@types/node"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchManagers": ["dockerfile"],
+      "enabled": false
     },
     {
       "matchDatasources": ["npm"],

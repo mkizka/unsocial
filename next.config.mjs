@@ -9,12 +9,8 @@ const config = {
   },
   experimental: {
     instrumentationHook: true,
-    serverActions: true,
     // https://jotai.org/docs/tools/swc
     swcPlugins: [["@swc-jotai/react-refresh", {}]],
-    logging: {
-      level: "verbose",
-    },
   },
   async rewrites() {
     return [

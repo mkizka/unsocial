@@ -70,11 +70,7 @@ export const fetcher = (input: URL | string, options?: Options) => {
     controller.abort();
   }, timeout);
   const startTime = performance.now();
-  return fetch(
-    // なぜかmswがエラーになるのでURLインスタンスが来ても文字列になるようにしておく
-    input.toString(),
-    init,
-  )
+  return fetch(input, init)
     .then(async (response) => {
       const elapsedTime = Math.floor(performance.now() - startTime);
       logger.info(
