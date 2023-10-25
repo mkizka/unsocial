@@ -32,12 +32,14 @@ export const signHeaders = ({
     "date",
     method === "POST" ? "digest" : "accept",
   ];
-  const headers = {
+  const headers: Record<string, string> = {
     host: inboxUrl.host,
     date: new Date().toUTCString(),
     digest: `SHA-256=${createDigest(body)}`,
-    accept: "application/activity+json",
   };
+  if (method === "GET") {
+    headers.accept = "application/activity+json";
+  }
   const textToSign = textOf({
     method,
     pathname: inboxUrl.pathname,
