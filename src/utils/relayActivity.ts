@@ -18,7 +18,7 @@ const getUniqueInboxUrls = async (userId: string) => {
   return [...new Set(followerInboxes)].map((inboxUrl) => new URL(inboxUrl));
 };
 
-const relayActivity = async (params: SignActivityParams) => {
+const relayActivity = async (params: Omit<SignActivityParams, "method">) => {
   await fetcher(params.inboxUrl, {
     method: "POST",
     body: params.body,

@@ -16,16 +16,30 @@ export type SignActivityParams = {
   };
   body: string;
   inboxUrl: URL;
+  method: string;
 };
 
-export const signHeaders = ({ signer, body, inboxUrl }: SignActivityParams) => {
-  const order = ["(request-target)", "host", "date", "digest"];
+// TODO: Requestオブジェクトを受け取るようにする
+export const signHeaders = ({
+  signer,
+  body,
+  inboxUrl,
+  method,
+}: SignActivityParams) => {
+  const order = [
+    "(request-target)",
+    "host",
+    "date",
+    method === "POST" ? "digest" : "accept",
+  ];
   const headers = {
     host: inboxUrl.host,
     date: new Date().toUTCString(),
     digest: `SHA-256=${createDigest(body)}`,
+    accept: "application/activity+json",
   };
   const textToSign = textOf({
+    method,
     pathname: inboxUrl.pathname,
     headers,
     order,

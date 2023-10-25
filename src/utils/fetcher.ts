@@ -35,6 +35,7 @@ const createHeaders = (url: URL, options?: Options) => {
         signer: options.signer,
         inboxUrl: url,
         body: options.body ?? "",
+        method: options.method ?? "GET",
       })
     : {};
   const headers = new Headers({
