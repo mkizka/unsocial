@@ -141,6 +141,7 @@ export const verifyRequest = async (
     pathname: request.nextUrl.pathname,
     headers: parsedHeaders.data,
     order: order.split(" "),
+    method: request.method,
   });
   const isValid = createVerify(text).verify(
     keyIdUser.publicKey,

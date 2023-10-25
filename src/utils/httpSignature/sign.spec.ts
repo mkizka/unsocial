@@ -26,6 +26,7 @@ describe("signActivity", () => {
         },
         body: JSON.stringify(activity),
         inboxUrl,
+        method: "POST",
       });
       // assert
       expect(headers).toMatchSnapshot();

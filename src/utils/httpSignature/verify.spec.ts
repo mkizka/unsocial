@@ -60,6 +60,7 @@ describe("verifyActivity", () => {
         publicKey,
       } as User);
       const dummyRequest = {
+        method: "POST",
         headers: new Headers(header),
         nextUrl: new URL("https://myhost.example.com/inbox"),
         json: async () => activity,

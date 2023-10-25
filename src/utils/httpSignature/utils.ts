@@ -4,14 +4,15 @@ type Params = {
   pathname: string;
   headers: { [key: string]: unknown };
   order: string[];
+  method: string;
 };
 
 /**
  * order(リクエストヘッダーのSignatureをパースして取得したheadersの値) の順で文字列を作る
  */
-export const textOf = ({ pathname, headers, order }: Params) => {
+export const textOf = ({ pathname, headers, order, method }: Params) => {
   const headerToSign = {
-    "(request-target)": `post ${pathname}`,
+    "(request-target)": `${method.toLowerCase()} ${pathname}`,
     ...headers,
   };
   return order
