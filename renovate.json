@@ -6,7 +6,7 @@
   "platformAutomerge": true,
   "packageRules": [
     {
-      "matchPackageNames": ["node", "nodejs/node", "@types/node"],
+      "matchDepNames": ["node", "@types/node"],
       "allowedVersions": "/^20\\.[0-9]+\\.[0-9]+$/"
     },
     {
