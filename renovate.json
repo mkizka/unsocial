@@ -10,11 +10,6 @@
       "allowedVersions": "/^20\\.[0-9]+\\.[0-9]+$/"
     },
     {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["node"],
-      "allowedVersions": "/^20\\.[0-9]+\\.[0-9]+\\-slim$/"
-    },
-    {
       "matchDatasources": ["npm"],
       "matchPackageNames": ["next"],
       "followTag": "canary"
