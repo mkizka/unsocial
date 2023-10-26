@@ -1,5 +1,6 @@
 "use client";
 
+import { Header } from "@/components/clients/Header";
 import { useSearchModal } from "@/components/clients/SearchModal/hooks";
 import { cn } from "@/utils/cn";
 
@@ -11,7 +12,8 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
         "overflow-hidden": isOpen,
       })}
     >
-      <div className="w-full max-w-[600px]">{children}</div>
+      <Header />
+      <main className="w-full max-w-[600px] pt-[54px]">{children}</main>
     </body>
   );
 }
