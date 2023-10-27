@@ -45,7 +45,8 @@ export function AuthForm({ action }: Props) {
       alert(response.error ?? texts[action].error);
       setLoading(false);
     } else {
-      router.push("/");
+      router.replace("/");
+      router.refresh();
     }
   };
 
