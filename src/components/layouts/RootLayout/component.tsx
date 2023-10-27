@@ -1,19 +1,12 @@
-"use client";
-
 import { Header } from "@/components/clients/Header";
-import { useSearchModal } from "@/components/clients/SearchModal/hooks";
-import { cn } from "@/utils/cn";
+
+import { Body } from "./Body";
 
 export function RootLayout({ children }: { children: React.ReactNode }) {
-  const { isOpen } = useSearchModal();
   return (
-    <body
-      className={cn("flex justify-center bg-primary text-dark", {
-        "overflow-hidden": isOpen,
-      })}
-    >
+    <Body>
       <Header />
-      <main className="w-full max-w-[600px] pt-[54px]">{children}</main>
-    </body>
+      <main className="w-full max-w-[600px] pt-[58px]">{children}</main>
+    </Body>
   );
 }

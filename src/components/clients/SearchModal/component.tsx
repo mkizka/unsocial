@@ -21,7 +21,7 @@ export function SearchModal() {
             searchModal.close();
           }}
         >
-          <div className="h-16 w-[500px] bg-primary shadow-2xl">
+          <div className="h-16 w-[500px] rounded-md bg-primary shadow-2xl">
             <form
               action={(formData) => {
                 const input = formData.get("input");
