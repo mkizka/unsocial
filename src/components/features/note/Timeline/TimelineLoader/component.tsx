@@ -1,8 +1,8 @@
 "use client";
 import { useRef, useState } from "react";
 
-import { Spinner } from "@/components/clients/Spinner";
 import { NoteCard } from "@/components/features/note/NoteCard";
+import { Spinner } from "@/components/ui/Spinner";
 import type { noteService } from "@/server/service";
 
 import { action } from "./action";
