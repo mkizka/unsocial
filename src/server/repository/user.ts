@@ -65,9 +65,13 @@ export type CreateParams = {
   password: string;
 };
 
-export const create = ({ name, preferredUsername, password }: CreateParams) => {
+export const create = async ({
+  name,
+  preferredUsername,
+  password,
+}: CreateParams) => {
   const keys = createKeys();
-  return prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       name,
       preferredUsername,
@@ -81,4 +85,8 @@ export const create = ({ name, preferredUsername, password }: CreateParams) => {
       },
     },
   });
+  return {
+    id: user.id,
+    privateKey: keys.privateKey,
+  };
 };

@@ -1,4 +1,3 @@
-export * as apRepository from "./activitypub";
 export * as credentialRepository from "./credential";
 export * as documentRepository from "./document";
 export * as followRepository from "./follow";

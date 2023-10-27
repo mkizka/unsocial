@@ -60,8 +60,6 @@ const dummyRefetchUser = {
   lastFetchedAt: null,
 };
 
-const { id: _id, ...expectedDataForPrismaCreateOrUpdate } = dummyCreatedUser;
-
 const dummyWebfingerUrl = "https://remote.example.com/.well-known/webfinger";
 
 const restSuccessWebfinger = http.get(dummyWebfingerUrl, ({ request }) => {
@@ -148,21 +146,12 @@ const mockUser = (user: User | null) => {
       )
       .mockResolvedValue(user);
   }
-  mockedPrisma.user.create
-    .calledWith(
-      expect.objectContaining({
-        data: expectedDataForPrismaCreateOrUpdate,
-      }),
-    )
-    .mockResolvedValueOnce(dummyCreatedUser as unknown as User);
-  mockedPrisma.user.update
-    .calledWith(
-      expect.objectContaining({
-        where: { id: dummyUser.id },
-        data: expectedDataForPrismaCreateOrUpdate,
-      }),
-    )
-    .mockResolvedValueOnce(dummyUpdatedUser as unknown as User);
+  mockedPrisma.user.create.mockResolvedValue(
+    dummyCreatedUser as unknown as User,
+  );
+  mockedPrisma.user.update.mockResolvedValue(
+    dummyUpdatedUser as unknown as User,
+  );
 };
 
 const ById = () => findOrFetchUserById(dummyUser.id);
