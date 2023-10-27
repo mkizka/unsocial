@@ -1,4 +1,4 @@
-import { Header } from "@/components/clients/Header";
+import { Header } from "@/components/ui/Header";
 
 import { Body } from "./Body";
 
