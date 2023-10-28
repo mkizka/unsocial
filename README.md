@@ -2,6 +2,18 @@
 
 無料～5ドルくらいで運用可能な個人向けActivityPubサーバー(を目指す)
 
+Demo: https://unsocial.dev
+
+## デプロイ手順
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/Zw0SlL?referralCode=mveF9L)
+
+1. ↑ の Deploy on Railway をクリック
+1. Deploy Now をクリック
+1. Deploy をクリック
+1. デプロイ完了まで待つ
+1. `https://${自動生成されたサブドメイン}.up.railway.app` を開いてアクセス
+
 ## 開発手順
 
 nodejs, mkcert, docker が必要

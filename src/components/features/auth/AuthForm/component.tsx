@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import type { ReactEventHandler } from "react";
 import { useRef, useState } from "react";
 
-import { SubmitButton } from "@/components/clients/SubmitButton";
+import { SubmitButton } from "@/components/ui/SubmitButton";
 
 import { PasswordInputField } from "./PasswordInputField";
 import { TextInputField } from "./TextInputField";
@@ -45,7 +45,8 @@ export function AuthForm({ action }: Props) {
       alert(response.error ?? texts[action].error);
       setLoading(false);
     } else {
-      router.push("/");
+      router.replace("/");
+      router.refresh();
     }
   };
 
