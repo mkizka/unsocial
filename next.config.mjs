@@ -4,6 +4,11 @@ const config = {
   reactStrictMode: true,
   output: "standalone",
   distDir: process.env.E2E_DIST_DIR,
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   images: {
     unoptimized: true,
   },
