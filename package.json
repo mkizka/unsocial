@@ -30,6 +30,7 @@
     "@heroicons/react": "2.0.18",
     "@prisma/client": "5.5.2",
     "bcryptjs": "2.4.3",
+    "clsx": "2.0.0",
     "jotai": "2.5.0",
     "next": "14.0.1-canary.3",
     "next-auth": "4.24.4",
@@ -38,6 +39,7 @@
     "react-dom": "18.3.0-canary-d803f519e-20231020",
     "react-simple-image-viewer": "1.2.2",
     "sharp": "0.32.6",
+    "tailwind-merge": "1.14.0",
     "winston": "3.11.0",
     "zod": "3.22.4"
   },

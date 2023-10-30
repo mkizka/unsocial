@@ -13,7 +13,6 @@ const config = {
     unoptimized: true,
   },
   experimental: {
-    instrumentationHook: true,
     // https://jotai.org/docs/tools/swc
     swcPlugins: [["@swc-jotai/react-refresh", {}]],
   },

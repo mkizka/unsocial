@@ -2,6 +2,8 @@ import "./globals.css";
 
 import { M_PLUS_1_Code } from "next/font/google";
 
+import { RootLayout } from "@/components/layouts/RootLayout";
+
 import { Providers } from "./providers";
 
 const font = M_PLUS_1_Code({
@@ -18,18 +20,12 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" className={font.className}>
-      <body className="flex justify-center bg-primary text-dark">
-        <div className="w-full max-w-[600px]">
-          <Providers>{children}</Providers>
-        </div>
-      </body>
+      <Providers>
+        <RootLayout>{children}</RootLayout>
+      </Providers>
     </html>
   );
 }

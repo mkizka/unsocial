@@ -2,7 +2,7 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useTransition } from "react";
 
-import { Spinner } from "@/components/clients/Spinner";
+import { Spinner } from "@/components/ui/Spinner";
 
 import { action } from "./action";
 
