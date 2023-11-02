@@ -19,7 +19,7 @@ dependencies:
     version: 2.0.0
   jotai:
     specifier: 2.5.0
-    version: 2.5.0(@types/react@18.2.33)(react@18.3.0-canary-d803f519e-20231020)
+    version: 2.5.0(@types/react@18.2.34)(react@18.3.0-canary-d803f519e-20231020)
   next:
     specifier: 14.0.2-canary.3
     version: 14.0.2-canary.3(@babel/core@7.23.0)(react-dom@18.3.0-canary-d803f519e-20231020)(react@18.3.0-canary-d803f519e-20231020)
@@ -89,8 +89,8 @@ devDependencies:
     specifier: 20.8.10
     version: 20.8.10
   '@types/react':
-    specifier: 18.2.33
-    version: 18.2.33
+    specifier: 18.2.34
+    version: 18.2.34
   '@types/react-dom':
     specifier: 18.2.14
     version: 18.2.14
@@ -1836,11 +1836,11 @@ packages:
   /@types/react-dom@18.2.14:
     resolution: {integrity: sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==}
     dependencies:
-      '@types/react': 18.2.33
+      '@types/react': 18.2.34
     dev: true
 
-  /@types/react@18.2.33:
-    resolution: {integrity: sha512-v+I7S+hu3PIBoVkKGpSYYpiBT1ijqEzWpzQD62/jm4K74hPpSP7FF9BnKG6+fg2+62weJYkkBWDJlZt5JO/9hg==}
+  /@types/react@18.2.34:
+    resolution: {integrity: sha512-U6eW/alrRk37FU/MS2RYMjx0Va2JGIVXELTODaTIYgvWGCV4Y4TfTUzG8DdmpDNIT0Xpj/R7GfyHOJJrDttcvg==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
@@ -5202,7 +5202,7 @@ packages:
     resolution: {integrity: sha512-YPM9Q+dmsna4CGWNn5+oHFsuXJdxvKAOVoNjpe2nje3odSoX5Xz4s71rP50vM8uUKJyQtMnEGPmbVCVR+G4W5g==}
     dev: false
 
-  /jotai@2.5.0(@types/react@18.2.33)(react@18.3.0-canary-d803f519e-20231020):
+  /jotai@2.5.0(@types/react@18.2.34)(react@18.3.0-canary-d803f519e-20231020):
     resolution: {integrity: sha512-iPJDFrhNw3KU4o4SSAESeZoW+nM1L/76VULXZWF23qmivBEcbAQjiF5n1W4Hn5dXAol4tmtEYe4HH7d9emEz0Q==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
@@ -5214,7 +5214,7 @@ packages:
       react:
         optional: true
     dependencies:
-      '@types/react': 18.2.33
+      '@types/react': 18.2.34
       react: 18.3.0-canary-d803f519e-20231020
     dev: false
 
