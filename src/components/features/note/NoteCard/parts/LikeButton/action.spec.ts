@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import type { Session } from "next-auth";
 
 import { mockedPrisma } from "@/mocks/prisma";
@@ -12,9 +11,6 @@ const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
 
 jest.mock("@/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
-
-jest.mock("next/cache");
-const mockedRevalidatePath = jest.mocked(revalidatePath);
 
 const dummyLocalUser = {
   id: "dummy_local",
@@ -57,7 +53,6 @@ describe("LikeButton/action", () => {
       }
     `);
     expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
-    expect(mockedRevalidatePath).toHaveBeenCalledWith("/notes/noteId");
   });
 
   test("リモートユーザーのNote", async () => {
@@ -105,7 +100,6 @@ describe("LikeButton/action", () => {
         type: "Like",
       }),
     });
-    expect(mockedRevalidatePath).toHaveBeenCalledWith("/notes/noteId");
   });
 
   test("ローカルユーザーのNote(いいね済みの場合)", async () => {
@@ -138,7 +132,6 @@ describe("LikeButton/action", () => {
       },
     });
     expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
-    expect(mockedRevalidatePath).toHaveBeenCalledWith("/notes/noteId");
   });
 
   test("リモートユーザーのNote(いいね済みの場合)", async () => {
@@ -175,6 +168,5 @@ describe("LikeButton/action", () => {
       inboxUrl: new URL("https://remote.example.com/inbox"),
       activity: expect.objectContaining({ type: "Undo" }),
     });
-    expect(mockedRevalidatePath).toHaveBeenCalledWith("/notes/noteId");
   });
 });

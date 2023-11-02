@@ -1,6 +1,5 @@
 "use server";
 import type { Like, Note, User } from "@prisma/client";
-import { revalidatePath } from "next/cache";
 import type { Session } from "next-auth";
 
 import { activityStreams } from "@/utils/activitypub";
@@ -81,7 +80,7 @@ export async function action(data: { noteId: string; content: string }) {
   const session = await getServerSession();
   if (!session?.user) {
     // TODO: エラーを返す方法が実装されたら修正
-    return { error: "ログインが必要です" };
+    return;
   }
   const existingLike = await prisma.like.findFirst({
     where: {
@@ -95,5 +94,4 @@ export async function action(data: { noteId: string; content: string }) {
   } else {
     await like(session.user, data);
   }
-  revalidatePath(`/notes/${data.noteId}`);
 }
