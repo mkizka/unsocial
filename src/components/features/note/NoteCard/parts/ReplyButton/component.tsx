@@ -6,6 +6,6 @@ type Props = {
 
 export function ReplyButton({ noteId }: Props) {
   return (
-    <ChatBubbleLeftIcon className="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark" />
+    <ChatBubbleLeftIcon className="h-5 w-5 text-dark transition-colors hover:text-gray" />
   );
 }
