@@ -1,7 +1,7 @@
 "use client";
 import { HeartIcon as UnLikedIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as LikedIcon } from "@heroicons/react/24/solid";
-import { useOptimistic } from "react";
+import { useState } from "react";
 
 import { action } from "./action";
 
@@ -10,22 +10,20 @@ type Props = {
   isLiked: boolean;
 };
 
-export function LikeButton({ noteId, isLiked }: Props) {
-  // TODO: 期待通りの動作か確認
-  const [optimisticIsLiked, toggleOptimisticIsLike] = useOptimistic(
-    isLiked,
-    (state) => !state,
-  );
+export function LikeButton({ noteId, isLiked: initialState }: Props) {
+  // 表示上は即時反映させる
+  const [isLiked, setIsLiked] = useState(initialState);
   return (
     <button
       data-testid="like-button"
-      onClick={async () => {
-        toggleOptimisticIsLike(!optimisticIsLiked);
-        await action({ noteId, content: "👍" });
+      type="button"
+      onClick={() => {
+        setIsLiked((prev) => !prev);
+        action({ noteId, content: "👍" });
       }}
       className="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark"
     >
-      {optimisticIsLiked ? <LikedIcon /> : <UnLikedIcon />}
+      {isLiked ? <LikedIcon /> : <UnLikedIcon />}
     </button>
   );
 }
