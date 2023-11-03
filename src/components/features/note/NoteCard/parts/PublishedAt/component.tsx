@@ -29,7 +29,7 @@ export function PublishedAt({ href, publishedAt }: Props) {
     <Link
       data-testid="note-card__link"
       href={href}
-      className="w-fit whitespace-nowrap hover:underline"
+      className="ml-auto whitespace-nowrap hover:underline"
     >
       {text}
     </Link>
