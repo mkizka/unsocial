@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { UserIcon } from "@/components/features/user/UserIcon";
+import { Card } from "@/components/ui/Card";
 import type { noteService } from "@/server/service";
 
 import { AttachmentImages } from "./parts/AttachmentImages";
@@ -15,9 +16,10 @@ export type Props = {
 
 export function NoteCard({ note }: Props) {
   return (
-    <article
+    <Card
+      as="article"
       data-testid="note-card"
-      className="text-prmary relative mb-1 flex rounded bg-primary-light p-4 shadow"
+      className="text-prmary relative mb-1 flex p-4 "
     >
       <div className="w-full pl-[48px]">
         <Link className="absolute left-3" href={note.user.url}>
@@ -39,6 +41,6 @@ export function NoteCard({ note }: Props) {
           {note.isMine && <DeleteButton noteId={note.id} />}
         </div>
       </div>
-    </article>
+    </Card>
   );
 }

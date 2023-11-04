@@ -1,16 +1,19 @@
 "use client";
 
+import { Card } from "@/components/ui/Card";
+
 import { action } from "./action";
 import { SubmitButton } from "./parts/SubmitButton";
 
 export function NoteForm() {
   return (
-    <form
+    <Card
+      as="form"
       action={async (formData: FormData) => {
         await action(formData);
         location.reload();
       }}
-      className="mx-auto mb-1 w-full rounded bg-primary-light px-8 pb-4 pt-6 shadow"
+      className="mb-1 px-8 pb-4 pt-6"
     >
       <textarea
         data-testid="note-form__textarea"
@@ -21,6 +24,6 @@ export function NoteForm() {
       <div className="flex justify-end">
         <SubmitButton />
       </div>
-    </form>
+    </Card>
   );
 }
