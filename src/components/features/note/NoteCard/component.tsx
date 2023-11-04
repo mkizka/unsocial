@@ -4,11 +4,9 @@ import { UserIcon } from "@/components/features/user/UserIcon";
 import { Card } from "@/components/ui/Card";
 import type { noteService } from "@/server/service";
 
-import { AttachmentImages } from "./parts/AttachmentImages";
-import { DeleteButton } from "./parts/DeleteButton";
-import { LikeButton } from "./parts/LikeButton";
-import { PublishedAt } from "./parts/PublishedAt";
-import { ReplyButton } from "./parts/ReplyButton";
+import { AttachmentImages } from "./AttachmentImages";
+import { Footer } from "./Footer";
+import { PublishedAt } from "./PublishedAt";
 
 export type Props = {
   note: noteService.NoteCard;
@@ -35,11 +33,7 @@ export function NoteCard({ note }: Props) {
         <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
         {/* TODO: 複数枚画像に対応する */}
         {note.attachmentUrl && <AttachmentImages url={note.attachmentUrl} />}
-        <div className="mt-3 flex gap-10">
-          <ReplyButton noteId={note.id} />
-          <LikeButton noteId={note.id} isLiked={note.isLiked} />
-          {note.isMine && <DeleteButton noteId={note.id} />}
-        </div>
+        <Footer note={note} />
       </div>
     </Card>
   );

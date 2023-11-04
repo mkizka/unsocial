@@ -5,7 +5,11 @@ import { Card } from "@/components/ui/Card";
 import { action } from "./action";
 import { SubmitButton } from "./parts/SubmitButton";
 
-export function NoteForm() {
+type Props = {
+  replyToId?: string;
+};
+
+export function NoteForm({ replyToId }: Props) {
   return (
     <Card
       as="form"
@@ -15,6 +19,7 @@ export function NoteForm() {
       }}
       className="mb-1 px-8 pb-4 pt-6"
     >
+      <input type="hidden" name="replyToId" value={replyToId} />
       <textarea
         data-testid="note-form__textarea"
         name="content"
