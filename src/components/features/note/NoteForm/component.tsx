@@ -1,7 +1,5 @@
 "use client";
 
-import { Card } from "@/components/ui/Card";
-
 import { action } from "./action";
 import { SubmitButton } from "./parts/SubmitButton";
 
@@ -11,8 +9,7 @@ type Props = {
 
 export function NoteForm({ replyToId }: Props) {
   return (
-    <Card
-      as="form"
+    <form
       action={async (formData: FormData) => {
         await action(formData);
         location.reload();
@@ -29,6 +26,6 @@ export function NoteForm({ replyToId }: Props) {
       <div className="flex justify-end">
         <SubmitButton />
       </div>
-    </Card>
+    </form>
   );
 }

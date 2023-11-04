@@ -11,7 +11,7 @@ export function AttachmentImages({ url }: Props) {
   return (
     <>
       <img
-        className="mt-3 block aspect-square cursor-pointer rounded bg-primary-dark object-cover"
+        className="block aspect-square cursor-pointer rounded bg-primary-dark object-cover"
         width="200"
         height="200"
         src={url}

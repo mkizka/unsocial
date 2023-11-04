@@ -1,11 +1,13 @@
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 
 type Props = {
-  noteId: string;
+  onClick: () => void;
 };
 
-export function ReplyButton({ noteId }: Props) {
+export function ReplyButton({ onClick }: Props) {
   return (
-    <ChatBubbleLeftIcon className="h-5 w-5 text-dark transition-colors hover:text-gray" />
+    <button onClick={onClick}>
+      <ChatBubbleLeftIcon className="h-5 w-5 text-dark transition-colors hover:text-gray" />
+    </button>
   );
 }
