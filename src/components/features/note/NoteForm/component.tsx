@@ -20,7 +20,7 @@ export function NoteForm({ replyToId, autoFocus }: Props) {
       }}
       className="mb-1 px-8 pb-4 pt-6"
     >
-      <input type="hidden" name="replyToId" value={replyToId} />
+      {replyToId && <input type="hidden" name="replyToId" value={replyToId} />}
       <textarea
         data-testid="note-form__textarea"
         name="content"

@@ -8,7 +8,7 @@ import { relayActivityToFollowers } from "@/utils/relayActivity";
 
 const formSchame = z.object({
   content: z.string().min(1).max(280),
-  replyToId: z.string().transform((val) => (val === "" ? null : val)),
+  replyToId: z.string().optional(),
 });
 
 export async function action(formData: FormData) {
