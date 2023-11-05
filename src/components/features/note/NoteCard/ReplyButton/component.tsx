@@ -1,12 +1,18 @@
 "use client";
-import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 
-import { useReplyForm } from "@/components/features/note/NoteCard/useReplyForm";
-export function ReplyButton() {
-  const replyForm = useReplyForm();
+import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+type Props = {
+  url: string;
+};
+
+export function ReplyButton({ url }: Props) {
+  const pathname = usePathname();
   return (
-    <button onClick={replyForm.toggle}>
+    <Link href={pathname.startsWith("/notes/") ? "" : url + "?reply"}>
       <ChatBubbleLeftIcon className="h-5 w-5 text-dark transition-colors hover:text-gray" />
-    </button>
+    </Link>
   );
 }

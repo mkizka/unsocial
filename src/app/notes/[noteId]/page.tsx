@@ -1,22 +1,16 @@
-import { notFound } from "next/navigation";
+import { NotePage } from "@/components/pages/NotePage";
 
-import { NoteCard } from "@/components/features/note/NoteCard";
-import { UserList } from "@/components/ui/UserList";
-import { noteService } from "@/server/service";
-
-export default async function NotePage({
+export default function Page({
   params,
+  searchParams,
 }: {
   params: { noteId: string };
+  searchParams: { reply?: string };
 }) {
-  const note = await noteService.findUniqueNoteCard(params.noteId);
-  if (!note) {
-    return notFound();
-  }
   return (
-    <main className="pt-5">
-      <NoteCard note={note} />
-      <UserList users={note.likes.map((like) => like.user)} />
-    </main>
+    <NotePage
+      noteId={params.noteId}
+      shouldFocusToReplyForm={"reply" in searchParams}
+    />
   );
 }

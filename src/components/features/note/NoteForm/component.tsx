@@ -1,15 +1,19 @@
 "use client";
 
+import { Card } from "@/components/ui/Card";
+
 import { action } from "./action";
 import { SubmitButton } from "./parts/SubmitButton";
 
 type Props = {
   replyToId?: string;
+  autoFocus?: boolean;
 };
 
-export function NoteForm({ replyToId }: Props) {
+export function NoteForm({ replyToId, autoFocus }: Props) {
   return (
-    <form
+    <Card
+      as="form"
       action={async (formData: FormData) => {
         await action(formData);
         location.reload();
@@ -22,10 +26,11 @@ export function NoteForm({ replyToId }: Props) {
         name="content"
         placeholder="ここにテキストを入力"
         className="h-32 w-full resize-none rounded border-primary-dark p-4 outline-none"
+        autoFocus={autoFocus}
       ></textarea>
       <div className="flex justify-end">
         <SubmitButton />
       </div>
-    </form>
+    </Card>
   );
 }

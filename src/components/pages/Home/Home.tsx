@@ -1,6 +1,5 @@
 import { NoteForm } from "@/components/features/note/NoteForm";
 import { Timeline } from "@/components/features/note/Timeline";
-import { Card } from "@/components/ui/Card";
 import { getServerSession } from "@/utils/getServerSession";
 
 export async function Home() {
@@ -9,9 +8,7 @@ export async function Home() {
   if (session?.user) {
     return (
       <>
-        <Card>
-          <NoteForm />
-        </Card>
+        <NoteForm />
         <Timeline />
       </>
     );
