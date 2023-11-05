@@ -31,7 +31,7 @@
     "@prisma/client": "5.5.2",
     "bcryptjs": "2.4.3",
     "clsx": "2.0.0",
-    "jotai": "2.5.0",
+    "jotai": "2.5.1",
     "next": "14.0.2-canary.12",
     "next-auth": "4.24.4",
     "nodemailer": "6.9.7",
