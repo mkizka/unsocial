@@ -64,6 +64,7 @@ export type CreateParams = {
   userId: string;
   content: string;
   publishedAt: Date;
+  replyToId?: string;
   attachments: {
     url: string;
     mediaType: string;
