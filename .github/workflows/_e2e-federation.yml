@@ -28,6 +28,9 @@ jobs:
         with:
           path: ${{ github.workspace }}/.next/e2e/remote/cache
           key: nextjs-remote-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: |
+          rm -rf .next/e2e/myhost/cache/fetch-cache
+          rm -rf .next/e2e/remote/cache/fetch-cache
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
