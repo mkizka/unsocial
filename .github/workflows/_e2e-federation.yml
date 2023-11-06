@@ -23,11 +23,11 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/.next/e2e/myhost/cache
-          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
+          key: nextjs-myhost-${{ hashFiles('pnpm-lock.yaml') }}
       - uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/.next/e2e/remote/cache
-          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
+          key: nextjs-remote-${{ hashFiles('pnpm-lock.yaml') }}
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
