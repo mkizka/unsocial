@@ -90,7 +90,7 @@ export const create = (params: CreateParams) => {
   });
 };
 
-export type CreateFromActivityParams = {
+type CreateFromActivityParams = {
   activity: NoteActivity;
   userId: string;
   replyToId?: string;

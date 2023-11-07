@@ -20,5 +20,6 @@ export const handle: InboxHandler = async (activity) => {
         logger.info("すでに存在するノートを受信したのでスキップします");
         return;
       }
+      return error;
     });
 };
