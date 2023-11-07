@@ -41,3 +41,15 @@ export const fetchWebFinger = async (user: FetchWebFingerParams) => {
   });
   return response instanceof Error ? response : response.json();
 };
+
+export const fetchNote = async (noteUrl: string) => {
+  const response = await fetcher(noteUrl, {
+    next: {
+      revalidate: 60,
+    },
+    headers: {
+      accept: "application/activity+json",
+    },
+  });
+  return response instanceof Error ? response : response.json();
+};
