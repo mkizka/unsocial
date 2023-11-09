@@ -1,2 +1,2 @@
-[variables]
-NIXPACKS_DEBIAN="1"
+# https://github.com/railwayapp/nixpacks/issues/401
+buildImage = "debian:slim"
