@@ -1,2 +1,2 @@
 # https://github.com/railwayapp/nixpacks/issues/401
-buildImage = "debian:slim"
+buildImage = "debian:12.2-slim"
