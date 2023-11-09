@@ -24,7 +24,7 @@
     "postinstall": "prisma generate",
     "prepare": "husky install",
     "seed": "NODE_ENV=development dotenv -- ./scripts/seed.ts",
-    "start": "next start",
+    "start": "prisma db push --skip-generate && next start",
     "test": "jest"
   },
   "dependencies": {
