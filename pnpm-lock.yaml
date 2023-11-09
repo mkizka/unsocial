@@ -51,11 +51,6 @@ dependencies:
     specifier: 3.22.4
     version: 3.22.4
 
-optionalDependencies:
-  node-canvas:
-    specifier: '*'
-    version: 2.9.0
-
 devDependencies:
   '@dword-design/eslint-plugin-import-alias':
     specifier: 4.0.8
@@ -5783,13 +5778,6 @@ packages:
   /node-addon-api@6.1.0:
     resolution: {integrity: sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==}
     dev: false
-
-  /node-canvas@2.9.0:
-    resolution: {integrity: sha512-QYqBq9vm+hWrPyqRUyIRYlrWCWL8IysaDuvM79ZLx694ojctbpHQ4Iu45SZZYSBgiGtSuP2oil9ae1xQloeC9Q==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}

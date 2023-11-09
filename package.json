@@ -44,9 +44,6 @@
     "winston": "3.11.0",
     "zod": "3.22.4"
   },
-  "optionalDependencies": {
-    "node-canvas": "*"
-  },
   "devDependencies": {
     "@dword-design/eslint-plugin-import-alias": "4.0.8",
     "@playwright/test": "1.39.0",
