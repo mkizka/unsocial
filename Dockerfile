@@ -1,7 +1,7 @@
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 FROM node:20.9.0-slim AS base
 WORKDIR /app
-RUN apt-get update && apt-get install -y openssl \
+RUN apt-get update && apt-get install -y openssl jq \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 RUN corepack enable pnpm
@@ -20,9 +20,11 @@ RUN pnpm build
 
 FROM base AS runner
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/start.sh ./
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
 ARG RAILWAY_STATIC_URL
 ENV NEXTAUTH_URL=https://$RAILWAY_STATIC_URL
-CMD npx prisma db push --skip-generate && node server.js
+CMD ["./start.sh"]
