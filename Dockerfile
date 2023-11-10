@@ -19,10 +19,10 @@ RUN pnpm build
 FROM base AS runner
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/start.sh ./
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/scripts/start.sh ./scripts/start.sh
 
 ARG RAILWAY_STATIC_URL
 ENV NEXTAUTH_URL=https://$RAILWAY_STATIC_URL
-CMD ["./start.sh"]
+CMD ["./scripts/start.sh"]
