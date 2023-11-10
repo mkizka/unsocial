@@ -14,8 +14,6 @@ RUN pnpm i --frozen-lockfile
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ARG DATABASE_URL
-ENV DATABASE_URL=$DATABASE_URL
 RUN pnpm build
 
 FROM base AS runner
