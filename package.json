@@ -9,6 +9,7 @@
   "scripts": {
     "all": "run-s -s lint:fix test",
     "build": "SKIP_ENV_VALIDATION=1 next build",
+    "build-storybook": "storybook build",
     "dev": "./scripts/dev.sh",
     "dev:mastodon": "./scripts/dev.sh mastodon",
     "dev:misskey": "./scripts/dev.sh misskey",
@@ -24,6 +25,7 @@
     "postinstall": "prisma generate",
     "prepare": "husky install",
     "seed": "NODE_ENV=development dotenv -- ./scripts/seed.ts",
+    "storybook": "storybook dev -p 6006",
     "test": "jest"
   },
   "dependencies": {
@@ -46,6 +48,14 @@
   "devDependencies": {
     "@dword-design/eslint-plugin-import-alias": "4.0.8",
     "@playwright/test": "1.39.0",
+    "@storybook/addon-essentials": "^7.5.3",
+    "@storybook/addon-interactions": "^7.5.3",
+    "@storybook/addon-links": "^7.5.3",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.5.3",
+    "@storybook/nextjs": "^7.5.3",
+    "@storybook/react": "^7.5.3",
+    "@storybook/testing-library": "^0.2.2",
     "@stryker-mutator/api": "7.3.0",
     "@stryker-mutator/core": "7.3.0",
     "@stryker-mutator/jest-runner": "7.3.0",
@@ -68,6 +78,7 @@
     "eslint-config-next": "14.0.1",
     "eslint-plugin-eqeqeq-fix": "1.0.3",
     "eslint-plugin-simple-import-sort": "10.0.0",
+    "eslint-plugin-storybook": "0.6.15",
     "eslint-plugin-unused-imports": "3.0.0",
     "husky": "8.0.3",
     "jest": "29.7.0",
@@ -81,6 +92,7 @@
     "prettier-plugin-sh": "0.13.1",
     "prettier-plugin-tailwindcss": "0.5.6",
     "prisma": "5.5.2",
+    "storybook": "^7.5.3",
     "tailwindcss": "3.3.5",
     "ts-node": "10.9.1",
     "tsx": "3.14.0",
