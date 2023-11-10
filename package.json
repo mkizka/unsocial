@@ -8,7 +8,7 @@
   },
   "scripts": {
     "all": "run-s -s lint:fix test",
-    "build": "./scripts/build.sh",
+    "build": "SKIP_ENV_VALIDATION=1 next build",
     "dev": "./scripts/dev.sh",
     "dev:mastodon": "./scripts/dev.sh mastodon",
     "dev:misskey": "./scripts/dev.sh misskey",

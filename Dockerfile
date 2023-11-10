@@ -1,7 +1,7 @@
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 FROM node:20.9.0-slim AS base
 WORKDIR /app
-RUN apt-get update && apt-get install -y openssl \
+RUN apt-get update && apt-get install -y openssl jq \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 RUN corepack enable pnpm
@@ -14,15 +14,15 @@ RUN pnpm i --frozen-lockfile
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ARG DATABASE_URL
-ENV DATABASE_URL=$DATABASE_URL
 RUN pnpm build
 
 FROM base AS runner
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/scripts/start.sh ./scripts/start.sh
 
 ARG RAILWAY_STATIC_URL
 ENV NEXTAUTH_URL=https://$RAILWAY_STATIC_URL
-CMD ["node", "server.js"]
+CMD ["./scripts/start.sh"]
