@@ -16,3 +16,5 @@ jobs:
       - run: pnpm i
       - run: pnpm lint
       - run: pnpm test
+      - run: pnpm playwright install --with-deps chromium
+      - run: pnpm test-storybook
