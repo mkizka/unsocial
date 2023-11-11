@@ -7,6 +7,15 @@ const preview: Preview = {
     nextjs: {
       appDirectory: true,
     },
+    backgrounds: {
+      default: "primary",
+      values: [
+        {
+          name: "primary",
+          value: "#d1d5db",
+        },
+      ],
+    },
   },
 };
 
