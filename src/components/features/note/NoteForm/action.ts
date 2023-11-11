@@ -12,7 +12,6 @@ const formSchame = z.object({
 });
 
 export async function action(formData: FormData) {
-  console.log(Object.fromEntries(formData.entries()));
   const session = await getServerSession();
   if (!session?.user) {
     // TODO: エラーを返す方法が実装されたら修正

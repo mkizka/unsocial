@@ -11,6 +11,7 @@
     "plugin:@dword-design/import-alias/recommended"
   ],
   "rules": {
+    "no-console": "error",
     // next
     "@next/next/no-img-element": "off",
     // @typescript-eslint
