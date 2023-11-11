@@ -27,9 +27,9 @@
     "seed": "NODE_ENV=development dotenv -- ./scripts/seed.ts",
     "storybook": "storybook dev -p 6006 --quiet --no-open",
     "test": "jest",
-    "test-storybook": "run-p -slr test-storybook:*",
-    "test-storybook:run": "TARGET_URL=http://127.0.0.1:9009 bash -c 'wait-on $TARGET_URL && test-storybook'",
-    "test-storybook:server": "storybook dev -p 9009 --quiet --no-open"
+    "test-storybook": "run-p -sr test-storybook:*",
+    "test-storybook:run": "TARGET_URL=http://127.0.0.1:9009 bash -c 'wait-on $TARGET_URL && test-storybook -u'",
+    "test-storybook:server": "storybook dev -p 9009 --no-open > /dev/null 2>&1"
   },
   "dependencies": {
     "@heroicons/react": "2.0.18",
