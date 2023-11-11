@@ -1,5 +1,5 @@
 import { inboxCreateSchema } from "@/server/schema/create";
-import { noteService } from "@/server/service";
+import { createNoteActivityService } from "@/server/service/creacteNoteFromActivityService";
 import { ActivitySchemaValidationError } from "@/server/service/inbox/errors";
 import { createLogger } from "@/utils/logger";
 
@@ -12,8 +12,8 @@ export const handle: InboxHandler = async (activity) => {
   if (!parsedNote.success) {
     return new ActivitySchemaValidationError(parsedNote.error, activity);
   }
-  await noteService
-    .createFromActivity(parsedNote.data.object)
+  await createNoteActivityService
+    .create(parsedNote.data.object)
     .catch((error) => {
       // https://www.prisma.io/docs/reference/api-reference/error-reference#p2002
       if (error.code === "P2002") {
