@@ -2,7 +2,7 @@ import { expect, jest } from "@storybook/jest";
 import type { Meta, StoryObj } from "@storybook/react";
 import { userEvent, within } from "@storybook/testing-library";
 
-import { SearchModal } from "./component";
+import { SearchModal } from ".";
 
 const meta: Meta<typeof SearchModal> = {
   component: SearchModal,
