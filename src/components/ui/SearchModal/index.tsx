@@ -9,7 +9,7 @@ export function SearchModal() {
   const router = useRouter();
   return (
     <>
-      <button onClick={searchModal.open}>
+      <button onClick={searchModal.open} data-testid="search-modal__button">
         <MagnifyingGlassIcon className="h-7 w-7 text-dark hover:opacity-70" />
       </button>
       {searchModal.isOpen && (
@@ -40,8 +40,13 @@ export function SearchModal() {
                 className="h-full w-full bg-transparent text-dark focus:outline-none"
                 placeholder="@name@example.com"
                 autoFocus
+                data-testid="search-modal__input"
               />
-              <button type="submit" className="h-7 w-7 text-dark">
+              <button
+                type="submit"
+                className="h-7 w-7 text-dark"
+                data-testid="search-modal__submit"
+              >
                 <MagnifyingGlassIcon className="h-7 w-7 text-dark hover:opacity-70" />
               </button>
             </form>

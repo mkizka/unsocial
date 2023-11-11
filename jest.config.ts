@@ -13,6 +13,7 @@ const customJestConfig: Config = {
   roots: ["<rootDir>/src"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   clearMocks: true,
+  modulePathIgnorePatterns: ["<rootDir>/.next"],
   moduleNameMapper: {
     // tsconfig.json の paths と同じように書くため
     "^@/(.*)$": "<rootDir>/src/$1",
