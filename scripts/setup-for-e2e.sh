@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+set -eu
 
 docker compose --profile "$1" up -d
 
