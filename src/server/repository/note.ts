@@ -60,9 +60,17 @@ export const findManyNoteCardsByUserId = cache((userId: string) => {
   });
 });
 
-export const findByUrl = (url: string) => {
+type FindUniqueParams =
+  | {
+      url: string;
+    }
+  | {
+      id: string;
+    };
+
+export const findUnique = (params: FindUniqueParams) => {
   return prisma.note.findUnique({
-    where: { url },
+    where: params,
   });
 };
 

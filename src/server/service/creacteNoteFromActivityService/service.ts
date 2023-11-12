@@ -5,32 +5,38 @@ import type { NoteActivity } from "@/server/schema/note";
 import { inboxNoteSchema } from "@/server/schema/note";
 import { activitypubService } from "@/server/service/activitypub";
 import { userService } from "@/server/service/user";
+import { env } from "@/utils/env";
 
-export const create = async (activity: NoteActivity) => {
-  const replyTo = activity.inReplyTo
-    ? await findOrCreateByUrl(activity.inReplyTo)
-    : null;
-  if (replyTo instanceof Error) {
-    return replyTo;
+const getLocalNoteId = (noteUrl: string) => {
+  const url = new URL(noteUrl);
+  // https://myhost.example.com/notes/[noteId]/activity
+  const [_, prefixPath, noteId, lastPath] = url.pathname.split("/");
+  if (
+    url.host === env.HOST &&
+    prefixPath === "notes" &&
+    lastPath === "activity"
+  ) {
+    return noteId;
   }
-  const noteUser = await userService.findOrFetchUserByActor(
-    activity.attributedTo,
-  );
-  if (noteUser instanceof Error) {
-    return noteUser;
+  return null;
+};
+
+const findByNoteUrl = (noteUrl: string) => {
+  const localNoteId = getLocalNoteId(noteUrl);
+  if (localNoteId) {
+    return noteRepository.findUnique({
+      id: localNoteId,
+    });
   }
-  const note = await noteRepository.createFromActivity({
-    activity,
-    userId: noteUser.id,
-    replyToId: replyTo?.id,
+  return noteRepository.findUnique({
+    url: noteUrl,
   });
-  return note;
 };
 
 const findOrCreateByUrl = cache(async (url: string) => {
-  const note = await noteRepository.findByUrl(url);
-  if (note) {
-    return note;
+  const localNote = await findByNoteUrl(url);
+  if (localNote) {
+    return localNote;
   }
   const fetchedNote = await activitypubService.fetchNote(url);
   if (fetchedNote instanceof Error) {
@@ -54,3 +60,24 @@ const findOrCreateByUrl = cache(async (url: string) => {
   });
   return newNote;
 });
+
+export const create = async (activity: NoteActivity) => {
+  const replyTo = activity.inReplyTo
+    ? await findOrCreateByUrl(activity.inReplyTo)
+    : null;
+  if (replyTo instanceof Error) {
+    return replyTo;
+  }
+  const noteUser = await userService.findOrFetchUserByActor(
+    activity.attributedTo,
+  );
+  if (noteUser instanceof Error) {
+    return noteUser;
+  }
+  const note = await noteRepository.createFromActivity({
+    activity,
+    userId: noteUser.id,
+    replyToId: replyTo?.id,
+  });
+  return note;
+};
