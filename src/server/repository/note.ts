@@ -60,6 +60,20 @@ export const findManyNoteCardsByUserId = cache((userId: string) => {
   });
 });
 
+type FindUniqueParams =
+  | {
+      url: string;
+    }
+  | {
+      id: string;
+    };
+
+export const findUnique = (params: FindUniqueParams) => {
+  return prisma.note.findUnique({
+    where: params,
+  });
+};
+
 export type CreateParams = {
   userId: string;
   content: string;
@@ -87,16 +101,18 @@ export const create = (params: CreateParams) => {
 type CreateFromActivityParams = {
   activity: NoteActivity;
   userId: string;
+  replyToId?: string;
 };
 
 export const createFromActivity = cache(
-  ({ activity, userId }: CreateFromActivityParams) => {
+  ({ activity, userId, replyToId }: CreateFromActivityParams) => {
     return prisma.note.create({
       data: {
         userId,
         url: activity.id,
         content: activity.content,
         publishedAt: activity.published,
+        replyToId,
         attachments: {
           create: activity.attachment?.map((attachment) => ({
             url: attachment.url,
