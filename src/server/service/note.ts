@@ -1,4 +1,4 @@
-import type { Document } from "@prisma/client";
+import type { Document, Note } from "@prisma/client";
 import { cache } from "react";
 
 import { noteRepository } from "@/server/repository";
@@ -17,7 +17,10 @@ const getAttachmentUrl = (attachments: Document[]) => {
   return null;
 };
 
-const format = (note: noteRepository.NoteCard, userId?: string) => {
+const formatWithoutReplies = (
+  note: Omit<noteRepository.NoteCard, "replies">,
+  userId?: string,
+) => {
   return {
     ...note,
     attachmentUrl: getAttachmentUrl(note.attachments),
@@ -32,7 +35,27 @@ const format = (note: noteRepository.NoteCard, userId?: string) => {
   };
 };
 
-export type NoteCard = NonNullable<Awaited<ReturnType<typeof format>>>;
+type FormattedNoteCardWithoutReplies = ReturnType<typeof formatWithoutReplies>;
+
+// 投稿(NoteCard) -> リプライ1(NoteCard) -> リプライ2(Note)までしか遡れない型
+export type FormattedNoteCard = FormattedNoteCardWithoutReplies & {
+  replies: (FormattedNoteCardWithoutReplies & {
+    replies: Note[];
+  })[];
+};
+
+const format = (
+  note: noteRepository.NoteCard,
+  userId?: string,
+): FormattedNoteCard => {
+  return {
+    ...formatWithoutReplies(note, userId),
+    replies: note.replies.map((reply) => ({
+      ...formatWithoutReplies(reply, userId),
+      replies: reply.replies,
+    })),
+  };
+};
 
 export const findUniqueNoteCard = cache(async (id: string) => {
   const note = await noteRepository.findUniqueNoteCard(id);
@@ -50,21 +73,12 @@ export const findManyNoteCards = cache(
       return [];
     }
     const user = await getUser();
-    return notes.map((note) => format(note, user?.id));
+    return notes.map((note) => formatWithoutReplies(note, user?.id));
   },
 );
-
-export const findManyNoteCardsByUserId = cache(async (userId: string) => {
-  const notes = await noteRepository.findManyNoteCardsByUserId(userId);
-  if (notes.length === 0) {
-    return [];
-  }
-  const user = await getUser();
-  return notes.map((note) => format(note, user?.id));
-});
 
 export const create = async (params: noteRepository.CreateParams) => {
   const note = await noteRepository.create(params);
   const user = await getUser();
-  return format(note, user?.id);
+  return formatWithoutReplies(note, user?.id);
 };

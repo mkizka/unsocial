@@ -8,6 +8,18 @@ import { prisma } from "@/utils/prisma";
 const includeForNoteCard = {
   user: true,
   attachments: true,
+  replies: {
+    include: {
+      user: true,
+      attachments: true,
+      replies: true,
+      likes: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  },
   likes: {
     include: {
       user: true,
@@ -46,16 +58,6 @@ export const findManyNoteCards = cache((params: FindManyParams) => {
     take: params.count,
     orderBy: {
       publishedAt: "desc",
-    },
-  });
-});
-
-export const findManyNoteCardsByUserId = cache((userId: string) => {
-  return prisma.note.findMany({
-    where: { userId },
-    include: includeForNoteCard,
-    orderBy: {
-      createdAt: "desc",
     },
   });
 });
