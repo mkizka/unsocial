@@ -1,5 +1,12 @@
-reports/
-.next/
+# pnpm
 pnpm-lock.yaml
-.stryker-tmp
-e2e/state.json
+
+# next
+.next/
+
+# stryker
+reports/
+.stryker-tmp/
+
+# husky
+.husky/_/
