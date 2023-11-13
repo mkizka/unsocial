@@ -35,11 +35,11 @@ const formatNote = (
   };
 };
 
-export type FormattedNoteCard = ReturnType<typeof formatNote>;
+export type NoteCard = ReturnType<typeof formatNote>;
 
 // 投稿(NoteCard) -> リプライ1(NoteCard) -> リプライ2(Note)までしか遡れない型
-export type FormattedNoteCardWithReplies = FormattedNoteCard & {
-  replies: (FormattedNoteCard & {
+export type NoteCardWithReplies = NoteCard & {
+  replies: (NoteCard & {
     replies: Note[];
   })[];
 };
@@ -47,7 +47,7 @@ export type FormattedNoteCardWithReplies = FormattedNoteCard & {
 const formatNoteWithReplies = (
   note: noteRepository.NoteCard,
   userId?: string,
-): FormattedNoteCardWithReplies => {
+): NoteCardWithReplies => {
   return {
     ...formatNote(note, userId),
     replies: note.replies.map((reply) => ({

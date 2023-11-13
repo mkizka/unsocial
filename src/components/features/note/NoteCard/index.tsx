@@ -11,7 +11,7 @@ import { PublishedAt } from "./PublishedAt";
 import { ReplyButton } from "./ReplyButton";
 
 export type Props = {
-  note: noteService.FormattedNoteCard;
+  note: noteService.NoteCard;
 };
 
 export function NoteCard({ note }: Props) {

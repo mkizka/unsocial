@@ -9,12 +9,12 @@ import { action } from "./action";
 import { useIntersection } from "./useIntersection";
 
 type Props = {
-  firstLoadedNotes: noteService.FormattedNoteCard[];
+  firstLoadedNotes: noteService.NoteCard[];
   userId?: string;
 };
 
 export function TimelineLoader({ firstLoadedNotes, userId }: Props) {
-  const [timeline, setTimeline] = useState<noteService.FormattedNoteCard[][]>([
+  const [timeline, setTimeline] = useState<noteService.NoteCard[][]>([
     firstLoadedNotes,
   ]);
   const [isLoading, setIsLoading] = useState(false);

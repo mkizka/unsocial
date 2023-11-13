@@ -3,7 +3,7 @@ import type { Note } from "@prisma/client";
 import { mockedPrisma } from "@/mocks/prisma";
 import { mockedGetUser } from "@/mocks/session";
 
-import type { FormattedNoteCard } from "./note";
+import type { NoteCard } from "./note";
 import { findManyNoteCards, findUniqueNoteCard } from "./note";
 
 const dummyNote = {
@@ -24,7 +24,7 @@ const dummyNote = {
 const dummySince = new Date("2023-01-01T00:00:00.000Z");
 const dummyUntil = new Date("2023-01-01T00:00:00.000Z");
 
-const expectNote = (note: FormattedNoteCard | null) => {
+const expectNote = (note: NoteCard | null) => {
   expect(note).toMatchObject(dummyNote);
   expect(note?.isMine).toBe(true);
   expect(note?.isLiked).toBe(true);
