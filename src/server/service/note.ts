@@ -17,7 +17,7 @@ const getAttachmentUrl = (attachments: Document[]) => {
   return null;
 };
 
-const formatWithoutReplies = (
+const formatNote = (
   note: Omit<noteRepository.NoteCard, "replies">,
   userId?: string,
 ) => {
@@ -35,23 +35,23 @@ const formatWithoutReplies = (
   };
 };
 
-type FormattedNoteCardWithoutReplies = ReturnType<typeof formatWithoutReplies>;
+export type FormattedNoteCard = ReturnType<typeof formatNote>;
 
 // 投稿(NoteCard) -> リプライ1(NoteCard) -> リプライ2(Note)までしか遡れない型
-export type FormattedNoteCard = FormattedNoteCardWithoutReplies & {
-  replies: (FormattedNoteCardWithoutReplies & {
+export type FormattedNoteCardWithReplies = FormattedNoteCard & {
+  replies: (FormattedNoteCard & {
     replies: Note[];
   })[];
 };
 
-const format = (
+const formatNoteWithReplies = (
   note: noteRepository.NoteCard,
   userId?: string,
-): FormattedNoteCard => {
+): FormattedNoteCardWithReplies => {
   return {
-    ...formatWithoutReplies(note, userId),
+    ...formatNote(note, userId),
     replies: note.replies.map((reply) => ({
-      ...formatWithoutReplies(reply, userId),
+      ...formatNote(reply, userId),
       replies: reply.replies,
     })),
   };
@@ -63,7 +63,7 @@ export const findUniqueNoteCard = cache(async (id: string) => {
     return null;
   }
   const user = await getUser();
-  return format(note, user?.id);
+  return formatNoteWithReplies(note, user?.id);
 });
 
 export const findManyNoteCards = cache(
@@ -73,12 +73,12 @@ export const findManyNoteCards = cache(
       return [];
     }
     const user = await getUser();
-    return notes.map((note) => formatWithoutReplies(note, user?.id));
+    return notes.map((note) => formatNote(note, user?.id));
   },
 );
 
 export const create = async (params: noteRepository.CreateParams) => {
   const note = await noteRepository.create(params);
   const user = await getUser();
-  return formatWithoutReplies(note, user?.id);
+  return formatNote(note, user?.id);
 };
