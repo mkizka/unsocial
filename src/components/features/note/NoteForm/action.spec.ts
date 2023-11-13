@@ -35,15 +35,22 @@ describe("NoteForm/action", () => {
     // act
     const form = new FormData();
     form.append("content", "テスト");
+    form.append("replyToId", "__replyToId");
     const response = await action(form);
     // assert
-    expect(response).toEqual(
-      expect.objectContaining({
-        id: "__noteId",
-        userId: "__note__userId",
+    expect(response).toBeUndefined();
+    expect(mockedPrisma.note.create).toHaveBeenCalledWith({
+      data: {
+        attachments: {
+          create: [],
+        },
         content: "テスト",
-      }),
-    );
+        publishedAt: new Date("2023-01-01T00:00:00.000Z"),
+        replyToId: "__replyToId",
+        userId: "__session__user__id",
+      },
+      include: expect.any(Object),
+    });
     expect(mockedRelayActivityToFollowers).toHaveBeenCalledWith({
       userId: dummySession.user.id,
       activity: expect.objectContaining({ type: "Create" }),
@@ -66,6 +73,6 @@ describe("NoteForm/action", () => {
     const form = new FormData();
     const response = await action(form);
     // assert
-    expect(response).toEqual({ error: "入力したデータが不正です" });
+    expect(response).toEqual({ error: "フォームの内容が不正です" });
   });
 });

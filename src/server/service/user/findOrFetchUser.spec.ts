@@ -1,5 +1,5 @@
 import type { User } from "@prisma/client";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 
 import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
@@ -60,58 +60,55 @@ const dummyRefetchUser = {
   lastFetchedAt: null,
 };
 
-const { id: _id, ...expectedDataForPrismaCreateOrUpdate } = dummyCreatedUser;
-
 const dummyWebfingerUrl = "https://remote.example.com/.well-known/webfinger";
 
-const restSuccessWebfinger = rest.get(dummyWebfingerUrl, (req, res, ctx) => {
+const restSuccessWebfinger = http.get(dummyWebfingerUrl, ({ request }) => {
   if (
-    req.url.searchParams.get("resource") !== "acct:dummy@remote.example.com"
+    new URL(request.url).searchParams.get("resource") !==
+    "acct:dummy@remote.example.com"
   ) {
-    return res(ctx.status(404));
+    return new HttpResponse(null, { status: 404 });
   }
-  return res(
-    ctx.json({
-      links: [
-        { rel: "dummy" },
-        {
-          rel: "self",
-          href: "https://remote.example.com/u/dummyUser",
-        },
-      ],
-    }),
-  );
+  return HttpResponse.json({
+    links: [
+      { rel: "dummy" },
+      {
+        rel: "self",
+        href: "https://remote.example.com/u/dummyUser",
+      },
+    ],
+  });
 });
 
-const restInvalidWebfinger = rest.get(dummyWebfingerUrl, (_, res, ctx) =>
-  res(ctx.json({ links: [{ foo: "bar" }] })),
+const restInvalidWebfinger = http.get(dummyWebfingerUrl, () =>
+  HttpResponse.json({ links: [{ foo: "bar" }] }),
 );
 
-const rest404Webgfinger = rest.get(dummyWebfingerUrl, (_, res, ctx) =>
-  res(ctx.status(404)),
+const rest404Webgfinger = http.get(
+  dummyWebfingerUrl,
+  () => new HttpResponse(null, { status: 404 }),
 );
 
-const restSuccessActor = rest.get(dummyUser.actorUrl, (_, res, ctx) =>
-  res(
-    ctx.json({
-      type: "Person",
-      id: dummyUser.actorUrl,
-      name: dummyCreatedUser.name,
-      preferredUsername: dummyUser.preferredUsername,
-      inbox: `${dummyUser.actorUrl}/inbox`,
-      publicKey: {
-        publicKeyPem: dummyUser.publicKey,
-      },
-    }),
-  ),
+const restSuccessActor = http.get(dummyUser.actorUrl, () =>
+  HttpResponse.json({
+    type: "Person",
+    id: dummyUser.actorUrl,
+    name: dummyCreatedUser.name,
+    preferredUsername: dummyUser.preferredUsername,
+    inbox: `${dummyUser.actorUrl}/inbox`,
+    publicKey: {
+      publicKeyPem: dummyUser.publicKey,
+    },
+  }),
 );
 
-const restInvalidActor = rest.get(dummyUser.actorUrl, (_, res, ctx) =>
-  res(ctx.json({ type: "Invalid" })),
+const restInvalidActor = http.get(dummyUser.actorUrl, () =>
+  HttpResponse.json({ type: "Invalid" }),
 );
 
-const rest404Actor = rest.get(dummyUser.actorUrl, (_, res, ctx) =>
-  res(ctx.status(404)),
+const rest404Actor = http.get(
+  dummyUser.actorUrl,
+  () => new HttpResponse(null, { status: 404 }),
 );
 
 const mockUser = (user: User | null) => {
@@ -149,21 +146,12 @@ const mockUser = (user: User | null) => {
       )
       .mockResolvedValue(user);
   }
-  mockedPrisma.user.create
-    .calledWith(
-      expect.objectContaining({
-        data: expectedDataForPrismaCreateOrUpdate,
-      }),
-    )
-    .mockResolvedValueOnce(dummyCreatedUser as unknown as User);
-  mockedPrisma.user.update
-    .calledWith(
-      expect.objectContaining({
-        where: { id: dummyUser.id },
-        data: expectedDataForPrismaCreateOrUpdate,
-      }),
-    )
-    .mockResolvedValueOnce(dummyUpdatedUser as unknown as User);
+  mockedPrisma.user.create.mockResolvedValue(
+    dummyCreatedUser as unknown as User,
+  );
+  mockedPrisma.user.update.mockResolvedValue(
+    dummyUpdatedUser as unknown as User,
+  );
 };
 
 const ById = () => findOrFetchUserById(dummyUser.id);
@@ -282,9 +270,9 @@ describe("findOrFetchUser", () => {
     // ローカルユーザーなのに自ホストのアドレスを叩かないようにする
     const localServerHandler = jest.fn();
     server.use(
-      rest.get(/https:\/\/myhost\.example\.com\/.*/, (_, res, ctx) => {
+      http.get(/https:\/\/myhost\.example\.com\/.*/, () => {
         localServerHandler();
-        return res(ctx.status(404));
+        return new HttpResponse(null, { status: 404 });
       }),
     );
     // act

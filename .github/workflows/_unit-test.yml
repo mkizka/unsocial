@@ -9,10 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: .tool-versions
           cache: pnpm
       - run: pnpm i
       - run: pnpm lint
       - run: pnpm test
+      - run: pnpm playwright install --with-deps chromium
+      - run: pnpm test-storybook

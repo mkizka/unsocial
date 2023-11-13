@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { userService } from "@/server/service/user";
 import { verifyRequest } from "@/utils/httpSignature/verify";
+import { createLogger } from "@/utils/logger";
 
 import {
   ActivitySchemaValidationError,
@@ -34,14 +35,11 @@ const anyActivitySchema = z
   })
   .passthrough();
 
-type PerformParams = {
-  activity: unknown;
-  pathname: string;
-  headers: Headers;
-};
+const logger = createLogger("inboxService");
 
 export const perform = async (request: NextRequest) => {
   const activity = await request.clone().json();
+  logger.debug("Activityを受信: " + JSON.stringify(activity));
 
   // 1. ヘッダーの署名を検証する
   const validation = await verifyRequest(request);

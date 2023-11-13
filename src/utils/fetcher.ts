@@ -1,6 +1,7 @@
 import pkg from "@/../package.json";
 
 import { env } from "./env";
+import { signHeaders } from "./httpSignature/sign";
 import { createLogger } from "./logger";
 
 const logger = createLogger("fetcher");
@@ -19,14 +20,28 @@ export class NotOKError extends Error {
   }
 }
 
-type Options = RequestInit & {
+type Options = Omit<RequestInit, "body"> & {
+  body?: string;
   timeout?: number;
+  signer?: {
+    id: string;
+    privateKey: string;
+  };
 };
 
-const createHeaders = (options?: Options) => {
+const createHeaders = (url: URL, options?: Options) => {
+  const signedHeaders = options?.signer
+    ? signHeaders({
+        signer: options.signer,
+        inboxUrl: url,
+        body: options.body ?? "",
+        method: options.method ?? "GET",
+      })
+    : {};
   const headers = new Headers({
     "User-Agent": `Unsocial/${pkg.version} (${env.HOST})`,
     ...options?.headers,
+    ...signedHeaders,
   });
   if (options?.method === "POST") {
     headers.set("Content-Type", "application/json");
@@ -48,18 +63,14 @@ export const fetcher = (input: URL | string, options?: Options) => {
     timeout: env.NODE_ENV === "test" ? 100 : 5000,
     signal: controller.signal,
     ...options,
-    headers: createHeaders(options),
+    headers: createHeaders(new URL(input), options),
     next: createNext(options),
   };
   const timeoutId = setTimeout(() => {
     controller.abort();
   }, timeout);
   const startTime = performance.now();
-  return fetch(
-    // なぜかmswがエラーになるのでURLインスタンスが来ても文字列になるようにしておく
-    input.toString(),
-    init,
-  )
+  return fetch(input, init)
     .then(async (response) => {
       const elapsedTime = Math.floor(performance.now() - startTime);
       logger.info(

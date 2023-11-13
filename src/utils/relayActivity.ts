@@ -2,7 +2,6 @@ import { credentialService } from "@/server/service";
 
 import { fetcher } from "./fetcher";
 import type { SignActivityParams } from "./httpSignature/sign";
-import { signHeaders } from "./httpSignature/sign";
 import { prisma } from "./prisma";
 
 const isNotNull = <T>(value: T): value is NonNullable<T> => value !== null;
@@ -19,15 +18,14 @@ const getUniqueInboxUrls = async (userId: string) => {
   return [...new Set(followerInboxes)].map((inboxUrl) => new URL(inboxUrl));
 };
 
-const relayActivity = async (params: SignActivityParams) => {
-  const signedHeaders = signHeaders(params);
+const relayActivity = async (params: Omit<SignActivityParams, "method">) => {
   await fetcher(params.inboxUrl, {
     method: "POST",
     body: params.body,
     headers: {
       Accept: "application/activity+json",
-      ...signedHeaders,
     },
+    signer: params.signer,
   });
 };
 
