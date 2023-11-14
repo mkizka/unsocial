@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@heroicons/react": "2.0.18",
-    "@prisma/client": "5.5.2",
+    "@prisma/client": "5.6.0",
     "bcryptjs": "2.4.3",
     "clsx": "2.0.0",
     "jotai": "2.5.1",
@@ -93,7 +93,7 @@
     "prettier-plugin-pkg": "0.18.0",
     "prettier-plugin-sh": "0.13.1",
     "prettier-plugin-tailwindcss": "0.5.7",
-    "prisma": "5.5.2",
+    "prisma": "5.6.0",
     "storybook": "7.5.3",
     "tailwindcss": "3.3.5",
     "ts-node": "10.9.1",
