@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Fragment } from "react";
 
 import { NoteCard } from "@/components/features/note/NoteCard";
 import { NoteForm } from "@/components/features/note/NoteForm";
@@ -23,9 +24,9 @@ export async function NotePage({ noteId, shouldShowReplyForm }: Props) {
       <NoteCard note={note} showDetail />
       <UserList users={note.likes.map((like) => like.user)} />
       {shouldShowReplyForm && <NoteForm replyToId={note.id} autoFocus />}
-      {note.replies.map((reply) => (
-        <>
-          <NoteCard key={reply.id} note={reply} />
+      {note.replies.map((reply) => {
+        <Fragment key={reply.id}>
+          <NoteCard note={reply} />
           {reply.replies.length > 0 && (
             <Link href={`/notes/${reply.replies[0]!.id}`}>
               <Card className="py-2 pl-6 text-gray hover:underline">
@@ -33,8 +34,8 @@ export async function NotePage({ noteId, shouldShowReplyForm }: Props) {
               </Card>
             </Link>
           )}
-        </>
-      ))}
+        </Fragment>;
+      })}
     </>
   );
 }
