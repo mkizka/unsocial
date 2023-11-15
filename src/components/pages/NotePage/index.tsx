@@ -19,6 +19,7 @@ export async function NotePage({ noteId, shouldShowReplyForm }: Props) {
   }
   return (
     <>
+      {note.replyTo && <NoteCard note={note.replyTo} />}
       <NoteCard note={note} showDetail />
       <UserList users={note.likes.map((like) => like.user)} />
       {shouldShowReplyForm && <NoteForm replyToId={note.id} autoFocus />}

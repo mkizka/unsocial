@@ -18,7 +18,7 @@ const getAttachmentUrl = (attachments: Document[]) => {
 };
 
 const formatNote = (
-  note: Omit<noteRepository.NoteCard, "replies">,
+  note: Omit<noteRepository.NoteCard, "replies" | "replyTo">,
   userId?: string,
 ) => {
   return {
@@ -39,6 +39,7 @@ export type NoteCard = ReturnType<typeof formatNote>;
 
 // 投稿(NoteCard) -> リプライ1(NoteCard) -> リプライ2(Note)までしか遡れない型
 export type NoteCardWithReplies = NoteCard & {
+  replyTo: NoteCard | null;
   replies: (NoteCard & {
     replies: Note[];
   })[];
@@ -50,6 +51,7 @@ const formatNoteWithReplies = (
 ): NoteCardWithReplies => {
   return {
     ...formatNote(note, userId),
+    replyTo: note.replyTo && formatNote(note.replyTo, userId),
     replies: note.replies.map((reply) => ({
       ...formatNote(reply, userId),
       replies: reply.replies,
@@ -73,12 +75,12 @@ export const findManyNoteCards = cache(
       return [];
     }
     const user = await getUser();
-    return notes.map((note) => formatNote(note, user?.id));
+    return notes.map((note) => formatNoteWithReplies(note, user?.id));
   },
 );
 
 export const create = async (params: noteRepository.CreateParams) => {
   const note = await noteRepository.create(params);
   const user = await getUser();
-  return formatNote(note, user?.id);
+  return formatNoteWithReplies(note, user?.id);
 };

@@ -8,6 +8,17 @@ import { prisma } from "@/utils/prisma";
 const includeForNoteCard = {
   user: true,
   attachments: true,
+  replyTo: {
+    include: {
+      user: true,
+      attachments: true,
+      likes: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  },
   replies: {
     include: {
       user: true,
