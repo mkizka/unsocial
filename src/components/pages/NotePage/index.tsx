@@ -24,7 +24,7 @@ export async function NotePage({ noteId, shouldShowReplyForm }: Props) {
       <NoteCard note={note} showDetail />
       <UserList users={note.likes.map((like) => like.user)} />
       {shouldShowReplyForm && <NoteForm replyToId={note.id} autoFocus />}
-      {note.replies.map((reply) => {
+      {note.replies.map((reply) => (
         <Fragment key={reply.id}>
           <NoteCard note={reply} />
           {reply.replies.length > 0 && (
@@ -34,8 +34,8 @@ export async function NotePage({ noteId, shouldShowReplyForm }: Props) {
               </Card>
             </Link>
           )}
-        </Fragment>;
-      })}
+        </Fragment>
+      ))}
     </>
   );
 }
