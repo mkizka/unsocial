@@ -10,7 +10,7 @@ export default function Page({
   return (
     <NotePage
       noteId={params.noteId}
-      shouldFocusToReplyForm={"reply" in searchParams}
+      shouldShowReplyForm={"reply" in searchParams}
     />
   );
 }

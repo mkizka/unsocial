@@ -2,17 +2,30 @@
 
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 type Props = {
   url: string;
 };
 
-export function ReplyButton({ url }: Props) {
-  const pathname = usePathname();
+function ReplyIcon() {
   return (
-    <Link href={pathname.startsWith("/notes/") ? "" : url + "?reply"}>
-      <ChatBubbleLeftIcon className="h-5 w-5 text-dark transition-colors hover:text-gray" />
+    <ChatBubbleLeftIcon className="h-5 w-5 text-dark transition-colors hover:text-gray" />
+  );
+}
+
+export function ReplyButton({ url }: Props) {
+  const searchParams = useSearchParams();
+  if (searchParams.has("reply")) {
+    return (
+      <button type="button">
+        <ReplyIcon />
+      </button>
+    );
+  }
+  return (
+    <Link href={url + "?reply"}>
+      <ReplyIcon />
     </Link>
   );
 }
