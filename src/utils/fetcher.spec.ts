@@ -111,23 +111,22 @@ describe("fetcher", () => {
   test("タイムアウト", async () => {
     // arrange
     // mswではなぜかモック出来なかった
-    const port = 3001;
     const server = createServer(async (_, res) => {
       await setTimeout(3000);
       res.end();
     });
     await new Promise<void>((resolve) => {
-      server.listen(port, () => resolve());
+      server.listen(3001, () => resolve());
     });
     // act
-    const response = await fetcher(`http://localhost:${port}`, { timeout: 1 });
+    const response = await fetcher("http://localhost:3001", { timeout: 1 });
+    // assert
+    expect(mockedLogger.warn).toBeCalledWith(
+      `fetchエラー(GET http://localhost:3001): This operation was aborted`,
+    );
+    expect(response).toBeInstanceOf(FetcherError);
     await new Promise<void>((resolve) => {
       server.close(() => resolve());
     });
-    // assert
-    expect(mockedLogger.warn).toHaveBeenCalledWith(
-      `fetchエラー(GET http://localhost:${port}): This operation was aborted`,
-    );
-    expect(response).toBeInstanceOf(FetcherError);
   });
 });
