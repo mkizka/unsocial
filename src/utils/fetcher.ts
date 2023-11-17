@@ -56,13 +56,23 @@ const createNext = (options?: Options) => {
   };
 };
 
+const createTimeout = (options?: Options) => {
+  if (options?.timeout) {
+    return options.timeout;
+  }
+  if (options?.method === "POST") {
+    return 30000;
+  }
+  return 5000;
+};
+
 export const fetcher = (input: URL | string, options?: Options) => {
   const controller = new AbortController();
   const { timeout, ...init } = {
     method: "GET",
-    timeout: env.NODE_ENV === "test" ? 100 : 5000,
     signal: controller.signal,
     ...options,
+    timeout: createTimeout(options),
     headers: createHeaders(new URL(input), options),
     next: createNext(options),
   };
