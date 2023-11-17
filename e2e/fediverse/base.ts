@@ -9,7 +9,6 @@ export abstract class FediverseHandler {
   async goto(url: string) {
     const nextUrl = new URL(url, `https://${this.domain}`).toString();
     if (this.page.url() === nextUrl) {
-      console.log("reloaded");
       await this.page.reload();
     } else {
       await this.page.goto(nextUrl);
