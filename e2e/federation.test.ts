@@ -30,67 +30,67 @@ const runTest = async ({ from, to }: RunTestParams) => {
     ],
     [
       `${from.domain}: ユーザーを確認`, //
-      () => from.expectedUser(to.user),
+      () => from.waitForUser(to.user),
     ],
     [
       `${to.domain}: ユーザーを確認`, //
-      () => to.expectedUser(from.user),
+      () => to.waitForUser(from.user),
     ],
     [
       `${to.domain}: ${from.user}をフォロー`, //
-      () => to.followAndWait(from.user),
+      () => to.follow(from.user),
     ],
     [
       `${from.domain}: フォローされたことを確認`,
-      () => from.expectFollowed(to.user),
+      () => from.waitForFollowed(to.user),
     ],
     [
       `${to.domain}: フォローできたことを確認`,
-      () => to.expectFollowing(from.user),
+      () => to.waitForFollowing(from.user),
     ],
     [
       `${from.domain}: 投稿`, //
-      () => from.postNoteAndWait(content),
+      () => from.postNote(content),
     ],
     [
       `${to.domain}: 投稿が連合されたことを確認`, //
-      () => to.expectPosted(content),
+      () => to.waitForPosted(content),
     ],
     [
       `${to.domain}: いいね`, //
-      () => to.likeAndWait(content),
+      () => to.like(content),
     ],
     [
       `${from.domain}: いいねされたことを確認`,
-      () => from.expectLiked(content, to.user),
+      () => from.waitForLiked(content, to.user),
     ],
     [
       `${to.domain}: いいね削除`, //
-      () => to.unlikeAndWait(content),
+      () => to.unlike(content),
     ],
     [
       `${from.domain}: いいねが削除されたことを確認`,
-      () => from.expectNotLiked(content, to.user),
+      () => from.waitForNotLiked(content, to.user),
     ],
     [
       `${from.domain}: 投稿を削除`, //
-      () => from.deleteAndWait(content),
+      () => from.delete(content),
     ],
     [
       `${to.domain}: 投稿が削除されたことを確認`, //
-      () => to.expectDeleted(content),
+      () => to.waitForDeleted(content),
     ],
     [
       `${to.domain}: フォロー解除`, //
-      () => to.unfollowAndWait(from.user),
+      () => to.unfollow(from.user),
     ],
     [
       `${from.domain}: フォロー解除されたことを確認`,
-      () => from.expectNotFollowed(to.user),
+      () => from.waitForNotFollowed(to.user),
     ],
     [
       `${to.domain}: フォロー解除できたことを確認`,
-      () => to.expectNotFollowing(from.user),
+      () => to.waitForNotFollowing(from.user),
     ],
   ];
   for (const [label, action] of steps) {
