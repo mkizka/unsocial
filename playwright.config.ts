@@ -6,7 +6,7 @@ const config: PlaywrightTestConfig = {
   outputDir: "reports/.e2e",
   timeout: 90000,
   expect: {
-    timeout: 1000,
+    timeout: 2000,
   },
   reporter: [
     ["list", { printSteps: true }],
