@@ -85,6 +85,8 @@ export abstract class FediverseHandler {
   protected abstract expectNotFollowed(user: string): Promise<void>;
 
   async waitForNotFollowed(user: string) {
+    // なぜかtoPassを使うとpage.gotoが何も言わずに死ぬので
+    this.page.waitForTimeout(5000);
     await this.expectNotFollowed(user);
   }
 }
