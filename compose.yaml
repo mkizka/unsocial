@@ -119,7 +119,7 @@ services:
     profiles:
       - misskey
   misskey:
-    image: misskey/misskey:2023.10.0
+    image: misskey/misskey:2023.11.0
     volumes:
       - ./docker/misskey/files:/misskey/files
       - ./docker/misskey/.config:/misskey/.config:ro
