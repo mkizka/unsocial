@@ -13,7 +13,7 @@
     "dev": "./scripts/dev.sh",
     "dev:mastodon": "./scripts/dev.sh mastodon",
     "dev:misskey": "./scripts/dev.sh misskey",
-    "e2e": "playwright test",
+    "e2e": "DEBUG=pw:api playwright test",
     "e2e:server": "NODE_EXTRA_CA_CERTS=./docker/mkcert/rootCA.pem run-p -l e2e:server:*",
     "e2e:server:myhost": "dotenv -e e2e/.env.myhost -- next start",
     "e2e:server:remote": "dotenv -e e2e/.env.remote -- next start -p 3001 || exit 0",
