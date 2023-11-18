@@ -24,6 +24,10 @@ export function AttachmentImages({ urls }: Props) {
     setIsViewerOpen(false);
   }, []);
 
+  if (urls.length === 0) {
+    return null;
+  }
+
   return (
     <div className="flex gap-2 overflow-scroll">
       {urls.map((url, i) => (
