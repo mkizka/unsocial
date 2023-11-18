@@ -2,6 +2,8 @@
 import { useCallback, useMemo, useState } from "react";
 import ImageViewer from "react-simple-image-viewer";
 
+import { SwiperWrapper } from "./SwiperWrapper";
+
 type Props = {
   urls: string[];
 };
@@ -29,19 +31,21 @@ export function AttachmentImages({ urls }: Props) {
   }
 
   return (
-    <div className="flex gap-2 overflow-scroll">
-      {urls.map((url, i) => (
-        <img
-          key={url}
-          className="block aspect-square cursor-pointer rounded bg-primary-dark object-cover"
-          width="200"
-          height="200"
-          src={url}
-          alt=""
-          loading="lazy"
-          onClick={() => openImageViewer(i)}
-        />
-      ))}
+    <>
+      <SwiperWrapper
+        slides={urls.map((url, i) => (
+          <img
+            key={url}
+            className="block aspect-square cursor-pointer rounded bg-primary-dark object-cover"
+            width="200"
+            height="200"
+            src={url}
+            alt=""
+            loading="lazy"
+            onClick={() => openImageViewer(i)}
+          />
+        ))}
+      />
       {isViewerOpen && (
         <ImageViewer
           src={memorizedUrls}
@@ -55,6 +59,6 @@ export function AttachmentImages({ urls }: Props) {
           onClose={closeImageViewer}
         />
       )}
-    </div>
+    </>
   );
 }
