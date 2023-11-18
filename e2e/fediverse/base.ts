@@ -11,7 +11,7 @@ export abstract class FediverseHandler {
     if (this.page.url() === nextUrl) {
       await this.page.reload();
     } else {
-      await this.page.goto(nextUrl);
+      await this.page.goto(nextUrl, { timeout: 5000 });
     }
   }
 
