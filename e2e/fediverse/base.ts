@@ -85,6 +85,6 @@ export abstract class FediverseHandler {
   protected abstract expectNotFollowed(user: string): Promise<void>;
 
   async waitForNotFollowed(user: string) {
-    await expect(() => this.expectNotFollowed(user)).toPass();
+    await this.expectNotFollowed(user);
   }
 }
