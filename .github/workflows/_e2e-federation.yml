@@ -51,7 +51,7 @@ jobs:
           ./scripts/setup-for-docker.sh
           ./scripts/setup-for-e2e.sh ${{ inputs.target }}
       - run: pnpm playwright install --with-deps chromium
-      - run: pnpm e2e -g ${{ inputs.target }}
+      - run: DEBUG=pw:api pnpm e2e -g ${{ inputs.target }}
       - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/e2e "s3://${{ env.UPLOAD_DIR }}/${{ github.event.pull_request.head.sha }}/${{ inputs.target }}" --recursive
         if: (success() || failure()) && github.event_name == 'pull_request'
       - uses: gh640/command-result-action@v1
