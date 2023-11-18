@@ -82,7 +82,10 @@ const runTest = async ({ from, to }: RunTestParams) => {
     ],
     [
       `${to.domain}: フォロー解除`, //
-      () => to.unfollow(from.user),
+      async () => {
+        await to.unfollow(from.user);
+        await to.page.waitForTimeout(5000);
+      },
     ],
     [
       `${from.domain}: フォロー解除されたことを確認`,
