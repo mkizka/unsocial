@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@dword-design/eslint-plugin-import-alias": "4.0.9",
-    "@playwright/test": "1.39.0",
+    "@playwright/test": "1.40.0",
     "@storybook/addon-essentials": "7.5.3",
     "@storybook/addon-interactions": "7.5.3",
     "@storybook/jest": "0.2.3",
