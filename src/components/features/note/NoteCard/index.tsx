@@ -36,8 +36,7 @@ export function NoteCard({ note }: Props) {
             <PublishedAt href={note.url} publishedAt={note.publishedAt} />
           </div>
           <div dangerouslySetInnerHTML={{ __html: note.content }}></div>
-          {/* TODO: 複数枚画像に対応する */}
-          {note.attachmentUrl && <AttachmentImages url={note.attachmentUrl} />}
+          <AttachmentImages urls={note.attachmentUrls} />
         </div>
       </div>
       <footer className="mt-3 flex gap-10 pl-[48px]">

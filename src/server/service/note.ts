@@ -1,26 +1,15 @@
-import type { Document } from "@prisma/client";
 import { cache } from "react";
 
 import { noteRepository } from "@/server/repository";
 import { fullUsername } from "@/utils/fullUsername";
 import { getUser } from "@/utils/getServerSession";
 
-const getAttachmentUrl = (attachments: Document[]) => {
-  if (attachments.length === 0) {
-    return null;
-  }
-  const [_, ext] = attachments[0]!.mediaType.split("/");
-  // png以外をサポートするなら修正
-  if (ext === "png") {
-    return `/documents/${attachments[0]!.id}/image.webp`;
-  }
-  return null;
-};
-
 const format = (note: noteRepository.NoteCard, userId?: string) => {
   return {
     ...note,
-    attachmentUrl: getAttachmentUrl(note.attachments),
+    attachmentUrls: note.attachments.map(
+      (attachment) => `/documents/${attachment.id}/image.webp`,
+    ),
     isMine: userId === note.userId,
     isLiked: note.likes.some((like) => like.userId === userId),
     url: `/notes/${note.id}`,
