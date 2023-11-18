@@ -10,15 +10,44 @@ const { commits } = JSON.parse(stdout.toString()) as {
   }[];
 };
 
-const comment = ["| commit | 結果 |", "| --- | --- |"];
+const table = ["| commit | 結果 | ログ |", "| --- | --- | --- |"];
+
+const emojis = {
+  unsocial: ":performing_arts:",
+  mastodon: ":elephant:",
+  misskey: ":m:",
+} as const;
+
+const link = (
+  service: keyof typeof emojis,
+  commitId: string,
+  filename: string,
+) => {
+  return `${emojis[service]} [${service}](${process.env.E2E_TEST_S3_BASEURL}/${commitId}/${service}/${filename})`;
+};
+
+const column = (
+  services: (keyof typeof emojis)[],
+  commitId: string,
+  filename: string,
+) => {
+  return services
+    .map((service) => link(service, commitId, filename))
+    .join("<br>");
+};
 
 for (const commit of commits) {
-  const unsocial = `:performing_arts: [unsocial](${process.env.E2E_TEST_S3_BASEURL}/${commit.oid}/unsocial/index.html)`;
-  const mastodon = `:elephant: [mastodon](${process.env.E2E_TEST_S3_BASEURL}/${commit.oid}/mastodon/index.html)`;
-  const misskey = `:m: [misskey](${process.env.E2E_TEST_S3_BASEURL}/${commit.oid}/misskey/index.html)`;
-  comment.push(
-    `| ${commit.messageHeadline} (${commit.oid}) | ${unsocial} ${mastodon} ${misskey} |`,
+  table.push(
+    [
+      "",
+      `${commit.messageHeadline} (${commit.oid})`,
+      column(["unsocial", "mastodon", "misskey"], commit.oid, "index.html"),
+      column(["mastodon", "misskey"], commit.oid, "docker.txt"),
+      "",
+    ]
+      .join(" | ")
+      .trim(),
   );
 }
 
-console.log(comment.join("\n"));
+console.log(table.join("\n"));
