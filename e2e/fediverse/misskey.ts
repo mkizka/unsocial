@@ -38,9 +38,7 @@ export class MisskeyHandler extends FediverseHandler {
 
   async expectedUser(user: string) {
     await this.goto(`/${user}`);
-    await expect(this.page.locator(`text=${user}`).first()).toBeVisible({
-      timeout: 15000,
-    });
+    await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
   }
 
   getNote(content: string) {
