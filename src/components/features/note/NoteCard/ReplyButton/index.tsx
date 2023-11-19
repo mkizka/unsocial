@@ -9,7 +9,7 @@ type Props = {
 
 export function ReplyButton({ url }: Props) {
   return (
-    <Link href={url + "?reply"}>
+    <Link href={url + "?reply"} data-testid="note-card__reply">
       <ChatBubbleLeftIcon className="h-5 w-5 text-dark transition-colors hover:text-gray" />
     </Link>
   );

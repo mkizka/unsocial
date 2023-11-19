@@ -39,6 +39,16 @@ export class MastodonHandler extends FediverseHandler {
     await expect(this.getNote(content)).toBeVisible();
   }
 
+  async postReply(content: string, replyTo: string) {
+    await this.goto("/");
+    await this.getNote(replyTo)
+      .locator("button", { has: this.page.locator(".fa-reply") })
+      .click();
+    await this.page.locator(".autosuggest-textarea__textarea").fill(content);
+    await this.page.locator("button[type=submit]").click();
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
   async delete(content: string) {
     await this.goto("/");
     await this.getNote(content)

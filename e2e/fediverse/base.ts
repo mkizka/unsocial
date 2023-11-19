@@ -33,6 +33,8 @@ export abstract class FediverseHandler {
     await expect(() => this.expectPosted(content)).toPass();
   }
 
+  abstract postReply(content: string, replyTo: string): Promise<void>;
+
   abstract delete(content: string): Promise<void>;
 
   protected abstract expectDeleted(content: string): Promise<void>;
