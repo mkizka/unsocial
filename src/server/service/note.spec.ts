@@ -4,11 +4,7 @@ import { mockedPrisma } from "@/mocks/prisma";
 import { mockedGetUser } from "@/mocks/session";
 
 import type { NoteCard } from "./note";
-import {
-  findManyNoteCards,
-  findManyNoteCardsByUserId,
-  findUniqueNoteCard,
-} from "./note";
+import { findManyNoteCards, findUniqueNoteCard } from "./note";
 
 const dummyNote = {
   id: "noteId",
@@ -22,6 +18,7 @@ const dummyNote = {
     { id: "likeId", userId: "userId" },
     { id: "likeId2", userId: "userId2" },
   ],
+  replies: [],
 };
 
 const dummySince = new Date("2023-01-01T00:00:00.000Z");
@@ -42,6 +39,29 @@ const expectNote = (note: NoteCard | null) => {
 const include = {
   user: true,
   attachments: true,
+  replyTo: {
+    include: {
+      user: true,
+      attachments: true,
+      likes: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  },
+  replies: {
+    include: {
+      user: true,
+      attachments: true,
+      replies: true,
+      likes: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  },
   likes: {
     include: {
       user: true,
@@ -162,35 +182,6 @@ describe("noteService", () => {
         until: dummyUntil,
         count: 10,
       });
-      // assert
-      expect(mockedGetUser).not.toBeCalled();
-      expect(notes).toEqual([]);
-    });
-  });
-  describe("findManyNoteCardsByUserId", () => {
-    test("正常系", async () => {
-      // arrange
-      mockedPrisma.note.findMany.mockResolvedValueOnce([
-        dummyNote,
-      ] as unknown as Note[]);
-      mockedGetUser.mockResolvedValueOnce({
-        id: "userId",
-      });
-      // act
-      const [note] = await findManyNoteCardsByUserId("noteId");
-      // assert
-      expectNote(note!);
-      expect(mockedPrisma.note.findMany).toBeCalledWith({
-        where: { userId: "noteId" },
-        include,
-        orderBy: { createdAt: "desc" },
-      });
-    });
-    test("ノートが無かった場合はgetUserを呼ばない", async () => {
-      // arrange
-      mockedPrisma.note.findMany.mockResolvedValueOnce([]);
-      // act
-      const notes = await findManyNoteCardsByUserId("noteId");
       // assert
       expect(mockedGetUser).not.toBeCalled();
       expect(notes).toEqual([]);
