@@ -7,17 +7,15 @@ export class MisskeyHandler extends FediverseHandler {
   user = "@e2e@misskey.localhost";
 
   async goto(to: string) {
-    await expect(async () => {
-      await super.goto(to);
-      // 最初に表示されるスプラッシュ(ローディング)画面が消えるまで待つ
-      await expect(this.page.locator("#misskey_app")).toBeVisible();
-      // 表示された画面がエラー画面でない
-      await expect(
-        this.page.locator("text=An error has occurred!"),
-      ).not.toBeVisible();
-      // 表示された画面に再試行ボタンがない
-      await expect(this.page.locator("text=再試行")).not.toBeVisible();
-    }).toPass();
+    await super.goto(to);
+    // 最初に表示されるスプラッシュ(ローディング)画面が消えるまで待つ
+    await expect(this.page.locator("#misskey_app")).toBeVisible();
+    // 表示された画面がエラー画面でない
+    await expect(
+      this.page.locator("text=An error has occurred!"),
+    ).not.toBeVisible();
+    // 表示された画面に再試行ボタンがない
+    await expect(this.page.locator("text=再試行")).not.toBeVisible();
   }
 
   async gotoGTL() {
@@ -39,12 +37,8 @@ export class MisskeyHandler extends FediverseHandler {
   }
 
   async expectedUser(user: string) {
-    await expect(async () => {
-      await this.goto(`/${user}`);
-      await expect(this.page.locator(`text=${user}`).first()).toBeVisible({
-        timeout: 15000,
-      });
-    }).toPass();
+    await this.goto(`/${user}`);
+    await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
   }
 
   getNote(content: string) {

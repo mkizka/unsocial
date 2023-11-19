@@ -36,6 +36,18 @@ const main = async () => {
                   url: "https://via.placeholder.com/800x400",
                   mediaType: "image/png",
                 },
+                {
+                  url: "https://via.placeholder.com/300x600",
+                  mediaType: "image/png",
+                },
+                {
+                  url: "https://via.placeholder.com/1000x500",
+                  mediaType: "image/png",
+                },
+                {
+                  url: "https://via.placeholder.com/600x1200",
+                  mediaType: "image/png",
+                },
               ]
             : [],
       });

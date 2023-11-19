@@ -1,34 +1,62 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import ImageViewer from "react-simple-image-viewer";
 
+import { SwiperWrapper } from "./SwiperWrapper";
+
 type Props = {
-  url: string;
+  urls: string[];
 };
 
-export function AttachmentImages({ url }: Props) {
+export function AttachmentImages({ urls }: Props) {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+  const memorizedUrls = useMemo(
+    () => urls.map((url) => url + "?format=original"),
+    [urls],
+  );
+
+  const openImageViewer = useCallback((i: number) => {
+    setIndex(i);
+    setIsViewerOpen(true);
+  }, []);
+
+  const closeImageViewer = useCallback(() => {
+    setIndex(0);
+    setIsViewerOpen(false);
+  }, []);
+
+  if (urls.length === 0) {
+    return null;
+  }
+
   return (
     <>
-      <img
-        className="block aspect-square cursor-pointer rounded bg-primary-dark object-cover"
-        width="200"
-        height="200"
-        src={url}
-        alt=""
-        loading="lazy"
-        onClick={() => setIsViewerOpen(true)}
+      <SwiperWrapper
+        slides={urls.map((url, i) => (
+          <img
+            key={url}
+            className="block aspect-square cursor-pointer rounded bg-primary-dark object-cover"
+            width="200"
+            height="200"
+            src={url}
+            alt=""
+            loading="lazy"
+            onClick={() => openImageViewer(i)}
+          />
+        ))}
       />
       {isViewerOpen && (
         <ImageViewer
-          src={[url + "?format=original"]}
-          currentIndex={0}
+          src={memorizedUrls}
+          currentIndex={index}
           disableScroll
           closeOnClickOutside
           backgroundStyle={{
+            zIndex: 100,
             backgroundColor: "rgb(0 0 0 / 0.9)",
           }}
-          onClose={() => setIsViewerOpen(false)}
+          onClose={closeImageViewer}
         />
       )}
     </>

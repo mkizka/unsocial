@@ -1,4 +1,4 @@
-import type { Locator, Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 export abstract class FediverseHandler {
   abstract domain: string;
@@ -11,75 +11,80 @@ export abstract class FediverseHandler {
     if (this.page.url() === nextUrl) {
       await this.page.reload();
     } else {
-      await this.page.goto(nextUrl);
+      await this.page.goto(nextUrl, { timeout: 2000 });
     }
-  }
-
-  async waitForFederation() {
-    await this.page.waitForTimeout(2000);
   }
 
   abstract getNote(content: string): Locator;
 
   abstract login(): Promise<void>;
 
-  abstract expectedUser(user: string): Promise<void>;
+  protected abstract expectedUser(user: string): Promise<void>;
 
-  protected abstract postNote(content: string): Promise<void>;
-
-  async postNoteAndWait(content: string) {
-    await this.postNote(content);
-    await this.waitForFederation();
+  async waitForUser(user: string) {
+    await expect(() => this.expectedUser(user)).toPass();
   }
 
-  abstract expectPosted(content: string): Promise<void>;
+  abstract postNote(content: string): Promise<void>;
 
-  protected abstract delete(content: string): Promise<void>;
+  protected abstract expectPosted(content: string): Promise<void>;
 
-  async deleteAndWait(content: string) {
-    await this.delete(content);
-    await this.waitForFederation();
+  async waitForPosted(content: string) {
+    await expect(() => this.expectPosted(content)).toPass();
   }
 
-  abstract expectDeleted(content: string): Promise<void>;
+  abstract delete(content: string): Promise<void>;
 
-  protected abstract like(content: string): Promise<void>;
+  protected abstract expectDeleted(content: string): Promise<void>;
 
-  protected abstract unlike(content: string): Promise<void>;
-
-  async likeAndWait(content: string) {
-    await this.like(content);
-    await this.waitForFederation();
+  async waitForDeleted(content: string) {
+    await expect(() => this.expectDeleted(content)).toPass();
   }
 
-  async unlikeAndWait(content: string) {
-    await this.unlike(content);
-    await this.waitForFederation();
+  abstract like(content: string): Promise<void>;
+
+  abstract unlike(content: string): Promise<void>;
+
+  protected abstract expectLiked(content: string, user: string): Promise<void>;
+
+  async waitForLiked(content: string, user: string) {
+    await expect(() => this.expectLiked(content, user)).toPass();
   }
 
-  abstract expectLiked(content: string, user: string): Promise<void>;
+  protected abstract expectNotLiked(
+    content: string,
+    user: string,
+  ): Promise<void>;
 
-  abstract expectNotLiked(content: string, user: string): Promise<void>;
-
-  protected abstract follow(user: string): Promise<void>;
-
-  async followAndWait(user: string) {
-    await this.follow(user);
-    await this.waitForFederation();
+  async waitForNotLiked(content: string, user: string) {
+    await expect(() => this.expectNotLiked(content, user)).toPass();
   }
 
-  protected abstract unfollow(user: string): Promise<void>;
+  abstract follow(user: string): Promise<void>;
 
-  async unfollowAndWait(user: string) {
-    await this.unfollow(user);
-    await this.waitForFederation();
+  abstract unfollow(user: string): Promise<void>;
+
+  protected abstract expectFollowing(user: string): Promise<void>;
+
+  async waitForFollowing(user: string) {
+    await expect(() => this.expectFollowing(user)).toPass();
   }
 
-  abstract expectFollowing(user: string): Promise<void>;
+  protected abstract expectNotFollowing(user: string): Promise<void>;
 
-  abstract expectNotFollowing(user: string): Promise<void>;
+  async waitForNotFollowing(user: string) {
+    await expect(() => this.expectNotFollowing(user)).toPass();
+  }
 
-  abstract expectFollowed(user: string): Promise<void>;
+  protected abstract expectFollowed(user: string): Promise<void>;
 
-  abstract expectNotFollowed(user: string): Promise<void>;
+  async waitForFollowed(user: string) {
+    await expect(() => this.expectFollowed(user)).toPass();
+  }
+
+  protected abstract expectNotFollowed(user: string): Promise<void>;
+
+  async waitForNotFollowed(user: string) {
+    await expect(() => this.expectNotFollowed(user)).toPass();
+  }
 }
