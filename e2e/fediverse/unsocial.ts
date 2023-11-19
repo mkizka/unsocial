@@ -38,6 +38,7 @@ export class MyhostUnsocialHandler extends FediverseHandler {
   async postReply(content: string, replyTo: string) {
     await this.goto("/");
     await this.getNote(replyTo).getByTestId("note-card__reply").click();
+    await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
     await this.page.getByTestId("note-form__textarea").fill(content);
     await this.page.getByTestId("note-form__button").click();
     await expect(this.getNote(content)).toBeVisible();
