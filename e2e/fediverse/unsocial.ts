@@ -67,7 +67,9 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await this.goto("/");
     await this.getNote(content).getByTestId("note-card__link").click();
     await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
-    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+    await expect(
+      this.page.locator("[data-testid=like-user]", { hasText: user }),
+    ).toBeVisible();
   }
 
   async expectNotLiked(content: string, user: string) {
