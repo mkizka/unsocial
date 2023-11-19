@@ -14,14 +14,15 @@ import { ReplyButton } from "./ReplyButton";
 export type Props = {
   note: noteService.NoteCard;
   showDetail?: boolean;
+  withReplyLink?: boolean;
 };
 
-export function NoteCard({ note, showDetail }: Props) {
+export function NoteCard({ note, showDetail, withReplyLink }: Props) {
   return (
     <Card
       as="article"
       data-testid="note-card"
-      className={cn("text-prmary relative mb-1 space-y-2 p-4", {
+      className={cn("text-prmary relative space-y-2 p-4", {
         "space-y-4": showDetail,
       })}
     >
@@ -46,10 +47,20 @@ export function NoteCard({ note, showDetail }: Props) {
           <AttachmentImages urls={note.attachmentUrls} />
         </div>
       </div>
-      <footer className="mt-3 flex gap-10 pl-[48px]">
-        <ReplyButton url={note.url} />
-        <LikeButton noteId={note.id} isLiked={note.isLiked} />
-        {note.isMine && <DeleteButton noteId={note.id} />}
+      <footer className="mt-3 space-y-2 pl-[48px]">
+        <div className="flex gap-10">
+          <ReplyButton url={note.url} />
+          <LikeButton noteId={note.id} isLiked={note.isLiked} />
+          {note.isMine && <DeleteButton noteId={note.id} />}
+        </div>
+        {withReplyLink && (
+          <Link
+            className="block text-gray hover:underline"
+            href={`/notes/${note.id}`}
+          >
+            返信を表示
+          </Link>
+        )}
       </footer>
     </Card>
   );

@@ -10,3 +10,6 @@ reports/
 
 # husky
 .husky/_/
+
+# docker
+docker/misskey/files/
