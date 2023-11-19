@@ -55,6 +55,7 @@ export function AttachmentImages({ urls }: Props) {
           backgroundStyle={{
             zIndex: 100,
             backgroundColor: "rgb(0 0 0 / 0.9)",
+            marginTop: "0px", // 親のspace-y-2を打ち消す
           }}
           onClose={closeImageViewer}
         />
