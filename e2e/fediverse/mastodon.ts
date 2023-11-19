@@ -66,12 +66,29 @@ export class MastodonHandler extends FediverseHandler {
   async like(content: string) {
     await this.goto("/");
     await this.getNote(content)
-      .locator("button", { has: this.page.locator(".fa-star") })
+      .locator("button", {
+        has: this.page.locator(".fa-star"),
+      })
       .click();
+    await this.getNote(content)
+      .locator(".activate", {
+        has: this.page.locator(".fa-star"),
+      })
+      .waitFor();
   }
 
   async unlike(content: string) {
-    await this.like(content);
+    await this.goto("/");
+    await this.getNote(content)
+      .locator("button", {
+        has: this.page.locator(".fa-star"),
+      })
+      .click();
+    await this.getNote(content)
+      .locator(".deactivate", {
+        has: this.page.locator(".fa-star"),
+      })
+      .waitFor();
   }
 
   async expectLiked(content: string) {
