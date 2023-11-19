@@ -2,5 +2,6 @@
 set -eu
 
 PRISMA_VERSION=$(jq -r '.devDependencies.prisma' package.json)
-npx "prisma@$PRISMA_VERSION" db push --skip-generate
+corepack enable pnpm
+pnpm -s dlx "prisma@$PRISMA_VERSION" db push --skip-generate
 node server.js
