@@ -47,23 +47,46 @@ const convertUser = (
   };
 };
 
-const convertNote = (
-  note: Pick<Note, "id" | "userId" | "content" | "createdAt">,
-): AP.Note => {
+type Reply = Pick<Note, "id" | "url"> & {
+  user: Pick<User, "actorUrl">;
+};
+
+type NoteWithReply = Pick<Note, "id" | "userId" | "content" | "createdAt"> & {
+  replyTo: Reply | null;
+};
+
+const convertNote = (note: NoteWithReply): AP.Note => {
   const userAddress = `https://${env.HOST}/users/${note.userId}`;
+  const inReplyTo = (() => {
+    if (note.replyTo) {
+      if (note.replyTo.url) return new URL(note.replyTo.url);
+      return new URL(`https://${env.HOST}/notes/${note.replyTo.id}/activity`);
+    }
+    return undefined;
+  })();
+  const cc = (() => {
+    if (note.replyTo?.user.actorUrl) {
+      return [
+        new URL(`${userAddress}/followers`),
+        new URL(note.replyTo.user.actorUrl),
+      ];
+    }
+    return [new URL(`${userAddress}/followers`)];
+  })();
   return {
     ...contexts,
     id: new URL(`https://${env.HOST}/notes/${note.id}/activity`),
     type: "Note",
+    inReplyTo,
     content: note.content,
     attributedTo: new URL(`${userAddress}/activity`),
     published: note.createdAt,
     to: [new URL("https://www.w3.org/ns/activitystreams#Public")],
-    cc: [new URL(`${userAddress}/followers`)],
+    cc,
   };
 };
 
-const convertCreate = (note: Note): AP.Create => {
+const convertCreate = (note: NoteWithReply): AP.Create => {
   const object = convertNote(note);
   return {
     ...contexts,

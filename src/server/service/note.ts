@@ -69,8 +69,6 @@ export const findManyNoteCards = cache(
   },
 );
 
-export const create = async (params: noteRepository.CreateParams) => {
-  const note = await noteRepository.create(params);
-  const user = await getUser();
-  return formatNoteWithReplies(note, user?.id);
+export const create = (params: noteRepository.CreateParams) => {
+  return noteRepository.create(params);
 };

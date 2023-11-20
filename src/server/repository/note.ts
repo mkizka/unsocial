@@ -107,7 +107,13 @@ export const create = (params: CreateParams) => {
         create: attachments,
       },
     },
-    include: includeForNoteCard,
+    include: {
+      replyTo: {
+        include: {
+          user: true,
+        },
+      },
+    },
   });
 };
 
