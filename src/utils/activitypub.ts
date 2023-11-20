@@ -52,7 +52,8 @@ type Reply = Pick<Note, "id" | "url"> & {
 };
 
 type NoteWithReply = Pick<Note, "id" | "userId" | "content" | "createdAt"> & {
-  replyTo: Reply | null;
+  // TODO: users/[userKey]/collections/featured を修正する時にオプショナルを外す
+  replyTo?: Reply | null;
 };
 
 const convertNote = (note: NoteWithReply): AP.Note => {
