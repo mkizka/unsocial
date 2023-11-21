@@ -24,13 +24,27 @@ cp -f .env.example .env
 corepack enable pnpm
 pnpm i
 pnpm dev
-# または pnpm dev:misskey で Misskey も起動
-# または pnpm dev:mastodon で Mastodon も起動
+# または pnpm dev misskey で Misskey も起動
+# または pnpm dev mastodon で Mastodon も起動
 ```
 
 https://unsocial.localhost  
 https://misskey.localhost  
 https://mastodon.localhost を開く
+
+## 開発用コマンド
+
+```sh
+pnpm all            # lint & test
+pnpm build          # ビルド
+pnpm dev            # 開発サーバー起動
+pnpm e2e            # E2Eテスト実行(事前にセットアップが必要)
+pnpm lint           # 型チェックやlint実行
+pnpm storybook      # stroybook起動
+pnpm test           # jest実行
+pnpm test:mutation  # stryker実行
+pnpm test:storybook # test-storybook実行
+```
 
 ## 実装したい機能
 
