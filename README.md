@@ -35,12 +35,12 @@ https://mastodon.localhost を開く
 ## 開発用コマンド
 
 ```sh
-pnpm all            # CIのunit-testと同じ
+pnpm all            # lint & test
 pnpm build          # ビルド
-pnpm dev            # 開発サーバーを起動
-pnpm e2e            # E2Eテストを実行(事前にセットアップが必要)
-pnpm lint           # 型チェックやlint
-pnpm storybook      # stroybookを起動
+pnpm dev            # 開発サーバー起動
+pnpm e2e            # E2Eテスト実行(事前にセットアップが必要)
+pnpm lint           # 型チェックやlint実行
+pnpm storybook      # stroybook起動
 pnpm test           # jest実行
 pnpm test:mutation  # stryker実行
 pnpm test:storybook # test-storybook実行
