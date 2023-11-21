@@ -22,7 +22,6 @@
     "lint": "./scripts/lint.sh",
     "postinstall": "prisma generate",
     "prepare": "husky install",
-    "seed": "NODE_ENV=development dotenv -- ./scripts/seed.ts",
     "storybook": "storybook dev -p 6006 --quiet --no-open",
     "test": "jest",
     "test:mutation": "run-s _test:mutation:run _test:mutation:report",
