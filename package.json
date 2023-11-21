@@ -37,7 +37,7 @@
     "bcryptjs": "2.4.3",
     "clsx": "2.0.0",
     "jotai": "2.5.1",
-    "next": "14.0.4-canary.5",
+    "next": "14.0.4-canary.6",
     "next-auth": "4.24.5",
     "nodemailer": "6.9.7",
     "react": "18.3.0-canary-d803f519e-20231020",
