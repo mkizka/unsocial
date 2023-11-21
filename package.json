@@ -25,8 +25,8 @@
     "seed": "NODE_ENV=development dotenv -- ./scripts/seed.ts",
     "storybook": "storybook dev -p 6006 --quiet --no-open",
     "test": "jest",
-    "test:mutation": "run-s _mutation-test:run _mutation-test:report",
-    "test:storybook": "run-p -sr _test-storybook:*"
+    "test:mutation": "run-s _test:mutation:run _test:mutation:report",
+    "test:storybook": "run-p -sr _test:storybook:*"
   },
   "dependencies": {
     "@heroicons/react": "2.0.18",
