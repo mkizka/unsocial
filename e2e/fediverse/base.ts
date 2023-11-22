@@ -12,11 +12,13 @@ export abstract class FediverseHandler {
 
   async goto(url: string) {
     const nextUrl = new URL(url, `https://${this.domain}`).toString();
-    if (this.page.url() === nextUrl) {
-      await this.page.reload();
-    } else {
-      await this.page.goto(nextUrl, { timeout: 2000 });
-    }
+    await waitFor(async () => {
+      if (this.page.url() === nextUrl) {
+        await this.page.reload();
+      } else {
+        await this.page.goto(nextUrl, { timeout: 2000 });
+      }
+    });
   }
 
   abstract getNote(content: string): Locator;
