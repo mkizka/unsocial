@@ -63,7 +63,7 @@ const runTest = async ({ from, to }: RunTestParams) => {
     ],
     [
       `${from.domain}: リプライが連合されたことを確認`, //
-      () => from.waitForPosted(replyContent),
+      () => from.waitForReplied(replyContent, content),
     ],
     [
       `${to.domain}: いいね`, //

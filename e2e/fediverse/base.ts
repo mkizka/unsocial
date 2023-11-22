@@ -46,6 +46,10 @@ export abstract class FediverseHandler {
     replyTo: string,
   ): Promise<void>;
 
+  async waitForReplied(content: string, replyTo: string) {
+    await waitFor(() => this.expectReplied(content, replyTo));
+  }
+
   abstract delete(content: string): Promise<void>;
 
   protected abstract expectDeleted(content: string): Promise<void>;
