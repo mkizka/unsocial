@@ -70,6 +70,9 @@ export const fetcher = (input: URL | string, options?: Options) => {
     controller.abort();
   }, timeout);
   const startTime = performance.now();
+  if (init.method === "POST") {
+    logger.debug(`fetch(${init.method} ${input}): ${init.body}`);
+  }
   return fetch(input, init)
     .then(async (response) => {
       const elapsedTime = Math.floor(performance.now() - startTime);
