@@ -42,8 +42,8 @@ dependencies:
     specifier: 0.32.6
     version: 0.32.6
   swiper:
-    specifier: 11.0.4
-    version: 11.0.4
+    specifier: 11.0.5
+    version: 11.0.5
   tailwind-merge:
     specifier: 2.0.0
     version: 2.0.0
@@ -13689,8 +13689,8 @@ packages:
       webpack: 5.89.0(@swc/core@1.3.96)(esbuild@0.18.20)
     dev: true
 
-  /swiper@11.0.4:
-    resolution: {integrity: sha512-qtUxILrD4aD++rpKzGrkz3IAWL92f9uTrDwjb6HaNLmPvJhZCE/83DL+9w4kIgDDJeF6QKalV47rMBN77UOVYQ==}
+  /swiper@11.0.5:
+    resolution: {integrity: sha512-rhCwupqSyRnWrtNzWzemnBLMoyYuoDgGgspAm/8iBD3jCvAWycPLH4Z3TB0O5520DHLzMx94yUMH/B9Efpa48w==}
     engines: {node: '>= 4.7.0'}
     dev: false
 
