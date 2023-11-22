@@ -1,26 +1,19 @@
-import type { Document } from "@prisma/client";
+import type { Note } from "@prisma/client";
 import { cache } from "react";
 
 import { noteRepository } from "@/server/repository";
 import { fullUsername } from "@/utils/fullUsername";
 import { getUser } from "@/utils/getServerSession";
 
-const getAttachmentUrl = (attachments: Document[]) => {
-  if (attachments.length === 0) {
-    return null;
-  }
-  const [_, ext] = attachments[0]!.mediaType.split("/");
-  // png以外をサポートするなら修正
-  if (ext === "png") {
-    return `/documents/${attachments[0]!.id}/image.webp`;
-  }
-  return null;
-};
-
-const format = (note: noteRepository.NoteCard, userId?: string) => {
+const formatNote = (
+  note: Omit<noteRepository.NoteCard, "replies" | "replyTo">,
+  userId?: string,
+) => {
   return {
     ...note,
-    attachmentUrl: getAttachmentUrl(note.attachments),
+    attachmentUrls: note.attachments.map(
+      (attachment) => `/documents/${attachment.id}/image.webp`,
+    ),
     isMine: userId === note.userId,
     isLiked: note.likes.some((like) => like.userId === userId),
     url: `/notes/${note.id}`,
@@ -32,7 +25,29 @@ const format = (note: noteRepository.NoteCard, userId?: string) => {
   };
 };
 
-export type NoteCard = NonNullable<Awaited<ReturnType<typeof format>>>;
+export type NoteCard = ReturnType<typeof formatNote>;
+
+// 投稿(NoteCard) -> リプライ1(NoteCard) -> リプライ2(Note)までしか遡れない型
+export type NoteCardWithReplies = NoteCard & {
+  replyTo: NoteCard | null;
+  replies: (NoteCard & {
+    replies: Note[];
+  })[];
+};
+
+const formatNoteWithReplies = (
+  note: noteRepository.NoteCard,
+  userId?: string,
+): NoteCardWithReplies => {
+  return {
+    ...formatNote(note, userId),
+    replyTo: note.replyTo && formatNote(note.replyTo, userId),
+    replies: note.replies.map((reply) => ({
+      ...formatNote(reply, userId),
+      replies: reply.replies,
+    })),
+  };
+};
 
 export const findUniqueNoteCard = cache(async (id: string) => {
   const note = await noteRepository.findUniqueNoteCard(id);
@@ -40,7 +55,7 @@ export const findUniqueNoteCard = cache(async (id: string) => {
     return null;
   }
   const user = await getUser();
-  return format(note, user?.id);
+  return formatNoteWithReplies(note, user?.id);
 });
 
 export const findManyNoteCards = cache(
@@ -50,21 +65,10 @@ export const findManyNoteCards = cache(
       return [];
     }
     const user = await getUser();
-    return notes.map((note) => format(note, user?.id));
+    return notes.map((note) => formatNoteWithReplies(note, user?.id));
   },
 );
 
-export const findManyNoteCardsByUserId = cache(async (userId: string) => {
-  const notes = await noteRepository.findManyNoteCardsByUserId(userId);
-  if (notes.length === 0) {
-    return [];
-  }
-  const user = await getUser();
-  return notes.map((note) => format(note, user?.id));
-});
-
-export const create = async (params: noteRepository.CreateParams) => {
-  const note = await noteRepository.create(params);
-  const user = await getUser();
-  return format(note, user?.id);
+export const create = (params: noteRepository.CreateParams) => {
+  return noteRepository.create(params);
 };

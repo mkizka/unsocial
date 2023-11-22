@@ -25,6 +25,7 @@ describe("NoteForm/action", () => {
       id: "__noteId",
       userId: "__note__userId",
       content: "テスト",
+      replies: [],
       user: {
         host: "myhost.example.com",
         preferredUsername: "test",

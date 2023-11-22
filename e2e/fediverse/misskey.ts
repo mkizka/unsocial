@@ -38,9 +38,7 @@ export class MisskeyHandler extends FediverseHandler {
 
   async expectedUser(user: string) {
     await this.goto(`/${user}`);
-    await expect(this.page.locator(`text=${user}`).first()).toBeVisible({
-      timeout: 15000,
-    });
+    await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
   }
 
   getNote(content: string) {
@@ -57,6 +55,22 @@ export class MisskeyHandler extends FediverseHandler {
 
   async expectPosted(content: string) {
     await this.gotoGTL();
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
+  async postReply(content: string, replyTo: string) {
+    await this.gotoGTL();
+    await this.getNote(replyTo)
+      .locator("button", { has: this.page.locator(".ti-arrow-back-up") })
+      .click();
+    await this.page.locator("[data-cy-post-form-text]").fill(content);
+    await this.page.locator("[data-cy-open-post-form-submit]").click();
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
+  async expectReplied(content: string, replyTo: string) {
+    await this.gotoGTL();
+    await this.getNote(replyTo).locator("time").click();
     await expect(this.getNote(content)).toBeVisible();
   }
 
@@ -91,16 +105,12 @@ export class MisskeyHandler extends FediverseHandler {
 
   async expectLiked(content: string) {
     await this.gotoGTL();
-    await expect(
-      this.getNote(content).locator("button", { hasText: "1" }),
-    ).toBeVisible();
+    await expect(this.getNote(content).locator("[alt=👍]")).toBeVisible();
   }
 
   async expectNotLiked(content: string) {
     await this.gotoGTL();
-    await expect(
-      this.getNote(content).locator("button", { hasText: "1" }),
-    ).not.toBeVisible();
+    await expect(this.getNote(content).locator("[alt=👍]")).not.toBeVisible();
   }
 
   async follow(user: string) {

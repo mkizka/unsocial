@@ -46,7 +46,7 @@ export function TimelineLoader({ firstLoadedNotes, userId }: Props) {
   }
 
   return (
-    <ul className="w-full">
+    <ul className="w-full space-y-1">
       {timeline.flat().map((note) => (
         <li key={note.id}>
           <NoteCard note={note} />
