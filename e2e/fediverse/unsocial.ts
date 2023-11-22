@@ -44,6 +44,13 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await expect(this.getNote(content)).toBeVisible();
   }
 
+  protected async expectReplied(content: string, replyTo: string) {
+    await this.goto("/");
+    await this.getNote(replyTo).getByTestId("note-card__link").click();
+    await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
   async delete(content: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("delete-button").click();

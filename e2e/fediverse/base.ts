@@ -41,6 +41,11 @@ export abstract class FediverseHandler {
 
   abstract postReply(content: string, replyTo: string): Promise<void>;
 
+  protected abstract expectReplied(
+    content: string,
+    replyTo: string,
+  ): Promise<void>;
+
   abstract delete(content: string): Promise<void>;
 
   protected abstract expectDeleted(content: string): Promise<void>;

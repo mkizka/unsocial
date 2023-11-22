@@ -62,6 +62,10 @@ export class MisskeyHandler extends FediverseHandler {
     throw new Error("未実装");
   }
 
+  async expectReplied(content: string, replyTo: string): Promise<void> {
+    throw new Error("未実装");
+  }
+
   async delete(content: string) {
     await this.gotoGTL();
     await this.getNote(content)

@@ -49,6 +49,12 @@ export class MastodonHandler extends FediverseHandler {
     await expect(this.getNote(content)).toBeVisible();
   }
 
+  protected async expectReplied(content: string, replyTo: string) {
+    await this.goto("/");
+    await this.getNote(replyTo).locator(".status__relative-time").click();
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
   async delete(content: string) {
     await this.goto("/");
     await this.getNote(content)
