@@ -105,16 +105,12 @@ export class MisskeyHandler extends FediverseHandler {
 
   async expectLiked(content: string) {
     await this.gotoGTL();
-    await expect(
-      this.getNote(content).locator("button", { hasText: "1" }),
-    ).toBeVisible();
+    await expect(this.getNote(content).locator("[alt=👍]")).toBeVisible();
   }
 
   async expectNotLiked(content: string) {
     await this.gotoGTL();
-    await expect(
-      this.getNote(content).locator("button", { hasText: "1" }),
-    ).not.toBeVisible();
+    await expect(this.getNote(content).locator("[alt=👍]")).not.toBeVisible();
   }
 
   async follow(user: string) {
