@@ -35,6 +35,22 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await expect(this.getNote(content)).toBeVisible();
   }
 
+  async postReply(content: string, replyTo: string) {
+    await this.goto("/");
+    await this.getNote(replyTo).getByTestId("note-card__reply").click();
+    await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
+    await this.page.getByTestId("note-form__textarea").fill(content);
+    await this.page.getByTestId("note-form__button").click();
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
+  protected async expectReplied(content: string, replyTo: string) {
+    await this.goto("/");
+    await this.getNote(replyTo).getByTestId("note-card__link").click();
+    await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
   async delete(content: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("delete-button").click();
@@ -58,14 +74,18 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await this.goto("/");
     await this.getNote(content).getByTestId("note-card__link").click();
     await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
-    await expect(this.page.locator(`text=${user}`)).toBeVisible();
+    await expect(
+      this.page.locator("[data-testid=like-user]", { hasText: user }),
+    ).toBeVisible();
   }
 
   async expectNotLiked(content: string, user: string) {
     await this.goto("/");
     await this.getNote(content).getByTestId("note-card__link").click();
     await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
-    await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
+    await expect(
+      this.page.locator("[data-testid=like-user]", { hasText: user }),
+    ).not.toBeVisible();
   }
 
   async follow(user: string) {

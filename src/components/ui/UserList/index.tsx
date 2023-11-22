@@ -9,7 +9,9 @@ export function UserList({ users }: Props) {
   return (
     <div>
       {users.map((user) => (
-        <p key={user.id}>{fullUsername(user)}</p>
+        <p key={user.id} data-testid="like-user">
+          {fullUsername(user)}
+        </p>
       ))}
     </div>
   );

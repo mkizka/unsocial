@@ -19,6 +19,7 @@ type Step = [string, () => Promise<void>];
 // fromからtoへ投稿が連合するシナリオ
 const runTest = async ({ from, to }: RunTestParams) => {
   const content = crypto.randomUUID();
+  const replyContent = crypto.randomUUID();
   const steps: Step[] = [
     [
       `${from.domain}: ログイン`, //
@@ -55,6 +56,14 @@ const runTest = async ({ from, to }: RunTestParams) => {
     [
       `${to.domain}: 投稿が連合されたことを確認`, //
       () => to.waitForPosted(content),
+    ],
+    [
+      `${to.domain}: リプライ`, //
+      () => to.postReply(replyContent, content),
+    ],
+    [
+      `${from.domain}: リプライが連合されたことを確認`, //
+      () => from.waitForReplied(replyContent, content),
     ],
     [
       `${to.domain}: いいね`, //

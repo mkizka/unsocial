@@ -24,7 +24,7 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   getNote(content: string) {
-    return this.page.locator("article", { hasText: content });
+    return this.page.locator(".status", { hasText: content });
   }
 
   async postNote(content: string) {
@@ -36,6 +36,22 @@ export class MastodonHandler extends FediverseHandler {
 
   async expectPosted(content: string) {
     await this.goto("/");
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
+  async postReply(content: string, replyTo: string) {
+    await this.goto("/");
+    await this.getNote(replyTo)
+      .locator("button", { has: this.page.locator(".fa-reply") })
+      .click();
+    await this.page.locator(".autosuggest-textarea__textarea").fill(content);
+    await this.page.locator("button[type=submit]").click();
+    await expect(this.getNote(content)).toBeVisible();
+  }
+
+  protected async expectReplied(content: string, replyTo: string) {
+    await this.goto("/");
+    await this.getNote(replyTo).locator(".status__relative-time").click();
     await expect(this.getNote(content)).toBeVisible();
   }
 
