@@ -4,7 +4,10 @@ import { z } from "zod";
 import { noteService } from "@/server/service";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
-import { relayActivityToFollowers } from "@/utils/relayActivity";
+import {
+  relayActivityToFollowers,
+  relayActivityToInboxUrl,
+} from "@/utils/relayActivity";
 
 const formSchame = z.object({
   content: z.string().min(1).max(280),
@@ -30,6 +33,13 @@ export async function action(formData: FormData) {
     publishedAt: new Date(),
     attachments: [],
   });
+  if (note.replyTo?.user.inboxUrl) {
+    await relayActivityToInboxUrl({
+      userId: session.user.id,
+      activity: activityStreams.create(note),
+      inboxUrl: new URL(note.replyTo.user.inboxUrl),
+    });
+  }
   await relayActivityToFollowers({
     userId: session.user.id,
     activity: activityStreams.create(note),
