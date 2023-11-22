@@ -24,7 +24,7 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   getNote(content: string) {
-    return this.page.locator("article", { hasText: content });
+    return this.page.locator(".status", { hasText: content });
   }
 
   async postNote(content: string) {
