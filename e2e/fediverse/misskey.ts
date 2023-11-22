@@ -59,11 +59,19 @@ export class MisskeyHandler extends FediverseHandler {
   }
 
   async postReply(content: string, replyTo: string) {
-    throw new Error("未実装");
+    await this.gotoGTL();
+    await this.getNote(replyTo)
+      .locator("button", { has: this.page.locator(".ti-arrow-back-up") })
+      .click();
+    await this.page.locator("[data-cy-post-form-text]").fill(content);
+    await this.page.locator("[data-cy-open-post-form-submit]").click();
+    await expect(this.getNote(content)).toBeVisible();
   }
 
-  async expectReplied(content: string, replyTo: string): Promise<void> {
-    throw new Error("未実装");
+  async expectReplied(content: string, replyTo: string) {
+    await this.gotoGTL();
+    await this.getNote(replyTo).locator("time").click();
+    await expect(this.getNote(content)).toBeVisible();
   }
 
   async delete(content: string) {
