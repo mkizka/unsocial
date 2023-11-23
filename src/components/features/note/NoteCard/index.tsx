@@ -41,7 +41,7 @@ export function NoteCard({ note, showDetail, withReplyLink }: Props) {
             <PublishedAt href={note.url} publishedAt={note.publishedAt} />
           </div>
           <div
-            className={cn({ "text-xl": showDetail })}
+            className={cn("break-words", { "text-xl": showDetail })}
             dangerouslySetInnerHTML={{ __html: note.content }}
           ></div>
           <AttachmentImages urls={note.attachmentUrls} />
