@@ -181,9 +181,9 @@ services:
       - minio
     entrypoint: |
       sh -c "
-        mc alias set minio http://minio:9000 minio password;
-        mc mb --ignore-existing --region=ap-northeast-1 minio/unsocial;
-        mc policy set public minio/unsocial;
+        mc alias set myminio http://minio:9000 minio password;
+        mc mb myminio/unsocial;
+        mc anonymous set download myminio/unsocial;
       "
   # mail:
   #   image: mailhog/mailhog:v1.0.1
