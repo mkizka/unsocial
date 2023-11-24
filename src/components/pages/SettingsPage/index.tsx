@@ -5,7 +5,7 @@ export function SettingsPage() {
   return (
     <section className="space-y-1">
       <Card>
-        <h1 className="text-3xl">プロフィール設定</h1>
+        <h1 className="font-bold">プロフィール設定</h1>
       </Card>
       <IconSettingsForm />
     </section>
