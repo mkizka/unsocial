@@ -18,6 +18,9 @@ reports
 *.crt
 *.key
 
+# storybook
+public/mockServiceWorker.js
+
 # others
 .DS_Store
 *.log

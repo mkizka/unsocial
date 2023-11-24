@@ -8,6 +8,7 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
+  staticDirs: [path.resolve(__dirname, "../public")],
   // https://github.com/storybookjs/storybook/issues/3916#issuecomment-871283551
   webpackFinal(config) {
     config.resolve!.alias = {
