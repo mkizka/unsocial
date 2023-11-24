@@ -22,7 +22,7 @@ export function NoteCard({ note, showDetail, withReplyLink }: Props) {
     <Card
       as="article"
       data-testid="note-card"
-      className={cn("text-prmary relative space-y-2 p-4", {
+      className={cn("text-prmary relative space-y-2", {
         "space-y-4": showDetail,
       })}
     >
