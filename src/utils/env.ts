@@ -22,6 +22,10 @@ const serverEnvSchema = z.object({
       (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).host : str),
     z.string().min(1),
   ),
+  AWS_ENDPOINT: z.string().url(),
+  AWS_BUCKET: z.string().min(1),
+  AWS_ACCESS_KEY_ID: z.string().min(1),
+  AWS_SECRET_ACCESS_KEY: z.string().min(1),
   DISCORD_WEBHOOK_URL: z.string().url().optional(),
 });
 

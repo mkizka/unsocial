@@ -1,23 +1,27 @@
 import type { ComponentProps, ReactNode } from "react";
+import { useFormStatus } from "react-dom";
 
 import { Spinner } from "@/components/ui/Spinner";
+import { cn } from "@/utils/cn";
 
 type Props = ComponentProps<"button"> & {
-  loading: boolean;
   children?: ReactNode;
 };
 
-export function SubmitButton({ loading, children, ...props }: Props) {
+export function SubmitButton({ children, className, ...props }: Props) {
+  const status = useFormStatus();
   return (
     <button
-      className="block h-10 w-full rounded bg-secondary px-3 py-1.5 text-center
-    text-light shadow hover:bg-secondary-dark"
+      className={cn(
+        "block rounded bg-secondary px-3 py-1.5 text-center text-light shadow hover:bg-secondary-dark disabled:bg-secondary-dark",
+        className,
+      )}
       type="submit"
       data-testid="submit-button"
-      disabled={loading}
+      disabled={status.pending}
       {...props}
     >
-      {loading ? <Spinner /> : children}
+      {status.pending ? <Spinner /> : children}
     </button>
   );
 }

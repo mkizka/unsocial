@@ -90,3 +90,10 @@ export const create = async ({
     privateKey: keys.privateKey,
   };
 };
+
+export const updateIcon = async (userId: string, icon: string) => {
+  return prisma.user.update({
+    where: { id: userId },
+    data: { icon },
+  });
+};

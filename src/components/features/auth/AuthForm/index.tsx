@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import type { ReactEventHandler } from "react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import { SubmitButton } from "@/components/ui/SubmitButton";
 
@@ -27,12 +27,10 @@ const texts = {
 export function AuthForm({ action }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit: ReactEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     if (!ref.current) return;
-    setLoading(true);
     const form = new FormData(ref.current);
     const response = await signIn("credentials", {
       redirect: false,
@@ -43,7 +41,6 @@ export function AuthForm({ action }: Props) {
     });
     if (response?.error) {
       alert(response.error ?? texts[action].error);
-      setLoading(false);
     } else {
       router.replace("/");
       router.refresh();
@@ -70,7 +67,8 @@ export function AuthForm({ action }: Props) {
         autoComplete="username"
       />
       <PasswordInputField action={action} />
-      <SubmitButton loading={loading}>{texts[action].button}</SubmitButton>
+      {/* TODO:ローディングさせる */}
+      <SubmitButton>{texts[action].button}</SubmitButton>
     </form>
   );
 }
