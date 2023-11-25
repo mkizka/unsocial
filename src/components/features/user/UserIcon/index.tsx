@@ -1,6 +1,8 @@
 import type { User } from "@prisma/client";
 import type { ComponentProps } from "react";
 
+import { getIconPath } from "@/utils/icon";
+
 export type UserIconProps = Omit<
   ComponentProps<"img">,
   "src" | "alt" | "width" | "height"
@@ -16,7 +18,7 @@ export function UserIcon({ user, size, ...props }: UserIconProps) {
       className={"hover:opacity-80 " + props.className}
       width={size}
       height={size}
-      src={`/icons/${user.iconHash ?? "default"}.webp?size=${size}`}
+      src={getIconPath(user.iconHash, size)}
       alt={`@${user.preferredUsername}のアイコン`}
     />
   );

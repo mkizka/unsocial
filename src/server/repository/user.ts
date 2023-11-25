@@ -4,7 +4,7 @@ import { cache } from "react";
 
 import type { PersonActivity } from "@/server/schema/person";
 import { env } from "@/utils/env";
-import { getIconHash } from "@/utils/getIconHash";
+import { getIconHash } from "@/utils/icon";
 import { prisma } from "@/utils/prisma";
 
 export const findByActorId = cache((actorId: URL) => {

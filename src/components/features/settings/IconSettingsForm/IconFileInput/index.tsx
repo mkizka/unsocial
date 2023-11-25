@@ -6,11 +6,12 @@ import { useFormState } from "react-dom";
 import { Card } from "@/components/ui/Card";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { cn } from "@/utils/cn";
+import { getIconPath } from "@/utils/icon";
 
 import { action } from "./action";
 
 type Props = {
-  iconHash?: string | null;
+  iconHash: string | null;
 };
 
 export function IconFileInput({ iconHash }: Props) {
@@ -51,7 +52,7 @@ export function IconFileInput({ iconHash }: Props) {
               width={100}
               height={100}
               className="aspect-square object-cover"
-              src={`/icons/${iconHash ?? "default"}.webp?size=100`}
+              src={getIconPath(iconHash, 100)}
               alt=""
             ></img>
           </div>

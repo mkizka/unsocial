@@ -15,5 +15,5 @@ export async function IconSettingsForm() {
       id: loginUser.id,
     },
   });
-  return <IconFileInput iconHash={user?.iconHash} />;
+  return <IconFileInput iconHash={user?.iconHash ?? null} />;
 }

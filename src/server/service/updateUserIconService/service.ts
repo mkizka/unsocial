@@ -3,7 +3,7 @@ import sharp from "sharp";
 
 import { s3Repository, userRepository } from "@/server/repository";
 import { env } from "@/utils/env";
-import { getIconHash } from "@/utils/getIconHash";
+import { getIconHash } from "@/utils/icon";
 
 const convertToPng = async (file: File) => {
   const image = sharp(await file.arrayBuffer());
