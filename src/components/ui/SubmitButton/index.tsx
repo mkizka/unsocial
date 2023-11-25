@@ -13,7 +13,7 @@ export function SubmitButton({ children, className, ...props }: Props) {
   return (
     <button
       className={cn(
-        "block h-10 rounded bg-secondary px-3 py-1.5 text-center text-light shadow hover:bg-secondary-dark disabled:bg-secondary-dark",
+        "block rounded bg-secondary px-3 py-1.5 text-center text-light shadow hover:bg-secondary-dark disabled:bg-secondary-dark",
         className,
       )}
       type="submit"
