@@ -4,6 +4,7 @@ import { cache } from "react";
 
 import type { PersonActivity } from "@/server/schema/person";
 import { env } from "@/utils/env";
+import { getIconHash } from "@/utils/icon";
 import { prisma } from "@/utils/prisma";
 
 export const findByActorId = cache((actorId: URL) => {
@@ -35,6 +36,7 @@ export const createOrUpdateUser = (
     preferredUsername: person.preferredUsername,
     host: new URL(person.id).host,
     icon: person.icon?.url ?? null,
+    iconHash: person.icon?.url ? getIconHash(person.icon.url) : null,
     actorUrl: person.id,
     inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
     publicKey: person.publicKey.publicKeyPem,
@@ -91,9 +93,19 @@ export const create = async ({
   };
 };
 
-export const updateIcon = async (userId: string, icon: string) => {
+type UpdateIconParams = {
+  userId: string;
+  icon: string;
+  iconHash: string;
+};
+
+export const updateIcon = async ({
+  userId,
+  icon,
+  iconHash,
+}: UpdateIconParams) => {
   return prisma.user.update({
     where: { id: userId },
-    data: { icon },
+    data: { icon, iconHash },
   });
 };

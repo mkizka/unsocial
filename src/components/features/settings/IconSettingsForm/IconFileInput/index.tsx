@@ -1,21 +1,23 @@
 "use client";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 
 import { Card } from "@/components/ui/Card";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { cn } from "@/utils/cn";
+import { getIconPath } from "@/utils/icon";
 
 import { action } from "./action";
 
 type Props = {
-  userId: string;
+  iconHash: string | null;
 };
 
-export function IconFileInput({ userId }: Props) {
+export function IconFileInput({ iconHash }: Props) {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [state, dispatch] = useFormState(action, null);
+  const ref = useRef<HTMLInputElement>(null);
   return (
     <Card>
       <form
@@ -26,6 +28,8 @@ export function IconFileInput({ userId }: Props) {
             return;
           }
           dispatch(formData);
+          ref.current && (ref.current.value = "");
+          setUploadedImage(null);
         }}
       >
         <label className="block font-bold" htmlFor="icon">
@@ -36,6 +40,7 @@ export function IconFileInput({ userId }: Props) {
           name="icon"
           type="file"
           accept="image/*"
+          ref={ref}
           onChange={(e) => {
             setUploadedImage(e.target.files?.[0] ?? null);
           }}
@@ -47,7 +52,7 @@ export function IconFileInput({ userId }: Props) {
               width={100}
               height={100}
               className="aspect-square object-cover"
-              src={`/users/${userId}/icon.webp?size=100`}
+              src={getIconPath(iconHash, 100)}
               alt=""
             ></img>
           </div>
@@ -69,18 +74,20 @@ export function IconFileInput({ userId }: Props) {
             )}
           </div>
         </div>
-        <SubmitButton className="ml-auto">変更する</SubmitButton>
+        <div className="flex items-center">
+          {state && (
+            <p
+              className={cn({
+                "text-accent": state.type === "error",
+                "text-secondary": state.type === "success",
+              })}
+            >
+              {state.message}
+            </p>
+          )}
+          <SubmitButton className="ml-auto">変更する</SubmitButton>
+        </div>
       </form>
-      {state && (
-        <p
-          className={cn("mt-2", {
-            "text-accent": state.type === "error",
-            "text-secondary": state.type === "success",
-          })}
-        >
-          {state.message}
-        </p>
-      )}
     </Card>
   );
 }
