@@ -9,7 +9,11 @@ import { fetcher } from "@/utils/fetcher";
 
 sharp.cache(false);
 
-const allowedSizes = [36, 64];
+const allowedSizes = [
+  36, // タイムラインなど
+  64, // ユーザーページ
+  100, // 設定ページ
+];
 
 const generateTextImage = async (text: string, size: number) => {
   const response = new ImageResponse(
@@ -67,7 +71,7 @@ export async function GET(
   return new NextResponse(image, {
     headers: {
       "Content-Type": "image/webp",
-      "Cache-Control": "public, max-age=31536000, immutable", // 1年
+      "Cache-Control": "public, s-maxage=31536000, max-age=0", // 1年
     },
   });
 }

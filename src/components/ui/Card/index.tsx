@@ -18,7 +18,7 @@ export function Card<T extends React.ElementType = "div">({
   const TagName = as || "div";
   return (
     <TagName
-      className={cn("w-full rounded bg-primary-light shadow", className)}
+      className={cn("w-full rounded bg-primary-light p-4 shadow", className)}
       {...props}
     >
       {children}
