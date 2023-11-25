@@ -1,7 +1,9 @@
+import crypto from "crypto";
 import sharp from "sharp";
 
 import { s3Repository, userRepository } from "@/server/repository";
 import { env } from "@/utils/env";
+import { getIconHash } from "@/utils/getIconHash";
 
 const convertToPng = async (file: File) => {
   const image = sharp(await file.arrayBuffer());
@@ -18,5 +20,11 @@ export const update = async (userId: string, file: File) => {
     Key: key,
     Body: await convertToPng(file),
   });
-  await userRepository.updateIcon(userId, getIconUrl(key));
+  const icon = getIconUrl(key);
+  const iconHash = getIconHash(icon);
+  await userRepository.updateIcon({
+    userId,
+    icon,
+    iconHash,
+  });
 };
