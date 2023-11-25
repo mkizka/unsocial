@@ -11,6 +11,7 @@ const allowedSizes = [
   36, // タイムラインなど
   64, // ユーザーページ
   100, // 設定ページ
+  128, // Activity
 ];
 
 const defaultIconImage = async (size: number) => {

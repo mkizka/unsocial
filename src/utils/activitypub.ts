@@ -2,6 +2,7 @@ import type { Follow, Like, Note, User } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 
 import { env } from "./env";
+import { getIconPath } from "./icon";
 
 const required = <T>(value: T | null | undefined) => {
   if (value === null || value === undefined) throw new Error("値が必要です");
@@ -39,10 +40,9 @@ const convertUser = (
       owner: activityAddress,
       publicKeyPem: required(user.publicKey),
     },
-    // TODO: user.iconを追加する
     icon: {
       type: "Image",
-      url: new URL("https://github.com/mkizka.png"),
+      url: new URL(getIconPath(user.iconHash, 128), `https://${env.HOST}`),
     } as AP.Image, // なぜか型エラーになる,
   };
 };
