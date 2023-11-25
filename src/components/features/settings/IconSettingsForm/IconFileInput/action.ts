@@ -1,5 +1,4 @@
 "use server";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { updateUserIconService } from "@/server/service/updateUserIconService";
@@ -23,7 +22,6 @@ export const action = async (_: State, formData: FormData): Promise<State> => {
     redirect("/auth");
   }
   await updateUserIconService.update(user.id, icon);
-  revalidatePath("/settings");
   return {
     type: "success",
     message: "アイコンを変更しました",
