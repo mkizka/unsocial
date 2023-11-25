@@ -71,7 +71,7 @@ export async function GET(
   return new NextResponse(image, {
     headers: {
       "Content-Type": "image/webp",
-      "Cache-Control": "public, max-age=31536000, immutable", // 1年
+      "Cache-Control": "public, s-maxage=31536000, max-age=0", // 1年
     },
   });
 }

@@ -1,9 +1,11 @@
 "use client";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { useFormState } from "react-dom";
 
 import { Card } from "@/components/ui/Card";
 import { SubmitButton } from "@/components/ui/SubmitButton";
+import { cn } from "@/utils/cn";
 
 import { action } from "./action";
 
@@ -13,6 +15,7 @@ type Props = {
 
 export function IconFileInput({ userId }: Props) {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [state, dispatch] = useFormState(action, null);
   return (
     <Card>
       <form
@@ -22,7 +25,7 @@ export function IconFileInput({ userId }: Props) {
             alert("アイコンを選択してください");
             return;
           }
-          await action(formData);
+          dispatch(formData);
         }}
       >
         <div className="space-y-2">
@@ -31,6 +34,7 @@ export function IconFileInput({ userId }: Props) {
           </label>
           <input
             id="icon"
+            name="icon"
             type="file"
             accept="image/*"
             onChange={(e) => {
@@ -71,6 +75,16 @@ export function IconFileInput({ userId }: Props) {
           アイコンを変更する
         </SubmitButton>
       </form>
+      {state && (
+        <p
+          className={cn("mt-2", {
+            "text-accent": state.type === "error",
+            "text-secondary": state.type === "success",
+          })}
+        >
+          {state.message}
+        </p>
+      )}
     </Card>
   );
 }

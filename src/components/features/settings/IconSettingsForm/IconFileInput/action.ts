@@ -1,11 +1,31 @@
 "use server";
-import fs from "fs";
-import { setTimeout } from "timers/promises";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
-export const action = async (formData: FormData) => {
-  await setTimeout(3000);
-  console.log(fs.readdirSync(__dirname).length);
+import { updateUserIconService } from "@/server/service/updateUserIconService";
+import { getUser } from "@/utils/getServerSession";
+
+type State = {
+  type: "success" | "error";
+  message: string;
+} | null;
+
+export const action = async (_: State, formData: FormData): Promise<State> => {
+  const icon = formData.get("icon");
+  if (!icon || !(icon instanceof File)) {
+    return {
+      type: "error",
+      message: "アイコンが選択されていません",
+    };
+  }
+  const user = await getUser();
+  if (!user) {
+    redirect("/auth");
+  }
+  await updateUserIconService.update(user.id, icon);
+  revalidatePath("/settings");
   return {
-    foo: "bar",
+    type: "success",
+    message: "アイコンを変更しました",
   };
 };
