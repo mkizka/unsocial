@@ -1,4 +1,5 @@
 import Link from "next/link";
+import sanitizeHtml from "sanitize-html";
 
 import { UserIcon } from "@/components/features/user/UserIcon";
 import { Card } from "@/components/ui/Card";
@@ -42,7 +43,7 @@ export function NoteCard({ note, showDetail, withReplyLink }: Props) {
           </div>
           <div
             className={cn("break-words", { "text-xl": showDetail })}
-            dangerouslySetInnerHTML={{ __html: note.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(note.content) }}
           ></div>
           <AttachmentImages urls={note.attachmentUrls} />
         </div>
