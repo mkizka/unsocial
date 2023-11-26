@@ -69,6 +69,7 @@
     "@types/node": "20.9.1",
     "@types/react": "18.2.37",
     "@types/react-dom": "18.2.15",
+    "@types/sanitize-html": "2.9.5",
     "@typescript-eslint/eslint-plugin": "6.11.0",
     "@typescript-eslint/parser": "6.11.0",
     "activitypub-core-types": "0.3.2",
