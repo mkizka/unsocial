@@ -4,18 +4,17 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import sharp from "sharp";
 
-import { userService } from "@/server/service/user";
 import { fetcher } from "@/utils/fetcher";
-
-sharp.cache(false);
+import { prisma } from "@/utils/prisma";
 
 const allowedSizes = [
   36, // タイムラインなど
   64, // ユーザーページ
   100, // 設定ページ
+  128, // Activity
 ];
 
-const generateTextImage = async (text: string, size: number) => {
+const defaultIconImage = async (size: number) => {
   const response = new ImageResponse(
     (
       <div
@@ -28,7 +27,7 @@ const generateTextImage = async (text: string, size: number) => {
           fontSize: Math.floor(size * 0.7),
         }}
       >
-        {text.slice(0, 2)}
+        🙂
       </div>
     ),
     {
@@ -52,22 +51,35 @@ const fetchIconImage = async (url: string, size: number) => {
     .toBuffer();
 };
 
+const getIconImage = async (filename: string, size: number) => {
+  const [hash, ext] = filename.split(".");
+  if (ext !== "webp") {
+    notFound();
+  }
+  if (hash === "default") {
+    return defaultIconImage(size);
+  }
+  const user = await prisma.user.findFirst({
+    where: {
+      iconHash: hash,
+    },
+  });
+  if (!user || !user.icon) {
+    return defaultIconImage(size);
+  }
+  return fetchIconImage(user.icon, size);
+};
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userKey: string } },
+  { params }: { params: { filename: string } },
 ) {
   const size =
     Number(request.nextUrl.searchParams.get("size")) ?? allowedSizes[0];
   if (!allowedSizes.includes(size)) {
     notFound();
   }
-  const user = await userService.findOrFetchUserByKey(params.userKey);
-  if (user instanceof Error) {
-    notFound();
-  }
-  const image = user.icon
-    ? await fetchIconImage(user.icon, size)
-    : await generateTextImage(user.preferredUsername || "", size);
+  const image = await getIconImage(params.filename, size);
   return new NextResponse(image, {
     headers: {
       "Content-Type": "image/webp",
