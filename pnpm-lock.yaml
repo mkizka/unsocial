@@ -89,8 +89,8 @@ devDependencies:
     specifier: 0.2.2
     version: 0.2.2
   '@stryker-mutator/api':
-    specifier: 7.3.0
-    version: 7.3.0
+    specifier: 8.0.0
+    version: 8.0.0
   '@stryker-mutator/core':
     specifier: 7.3.0
     version: 7.3.0
@@ -5518,6 +5518,16 @@ packages:
     dependencies:
       mutation-testing-metrics: 2.0.3
       mutation-testing-report-schema: 2.0.3
+      tslib: 2.6.2
+      typed-inject: 4.0.0
+    dev: true
+
+  /@stryker-mutator/api@8.0.0:
+    resolution: {integrity: sha512-4R8yieczpgOrOBQYq1d1aRJLcgenltpMH9ugtIYPPVmENFUo+mWm9HmaahLe+TVHnJSb4OZ4lvI7dVIhoBaiSQ==}
+    engines: {node: '>=18.0.0'}
+    dependencies:
+      mutation-testing-metrics: 3.0.0
+      mutation-testing-report-schema: 3.0.0
       tslib: 2.6.2
       typed-inject: 4.0.0
     dev: true
@@ -12231,8 +12241,18 @@ packages:
       mutation-testing-report-schema: 2.0.3
     dev: true
 
+  /mutation-testing-metrics@3.0.0:
+    resolution: {integrity: sha512-WslGuCdpqT+6SpeIahMhLrJl5+YbutlOCFKxuULIkAkaHfsWBK8UCq6euE7PiDEx+R1pYZo//kqRbFIOFmdQug==}
+    dependencies:
+      mutation-testing-report-schema: 3.0.0
+    dev: true
+
   /mutation-testing-report-schema@2.0.3:
     resolution: {integrity: sha512-+x6ssyq4xVkUyHbbbbiU1pCla7QHO/VRaxfHsOb4JGCw+56EtCJ4w4wQuQ24J5DYTRCAZ5y2oBk7DwP8UXWbwg==}
+    dev: true
+
+  /mutation-testing-report-schema@3.0.0:
+    resolution: {integrity: sha512-70+ZPYoyedruSGiEcXQnFiTtIusBYlsL/2EMwfR+/HOqBGxBpmI798spqc86ZVYXPVCL5mt2rWjE1dTQwcjpmQ==}
     dev: true
 
   /mute-stream@0.0.8:
