@@ -11,7 +11,11 @@ export class MastodonHandler extends FediverseHandler {
     await this.page.locator("#user_email").fill("e2e@localhost");
     await this.page.locator("#user_password").fill("password");
     await this.page.locator("button").click();
-    await expect(this.page.locator("text=@e2e")).toBeVisible();
+    await expect(
+      this.page.locator(".navigation-bar__profile-account", {
+        hasText: "@e2e",
+      }),
+    ).toBeVisible();
   }
 
   async expectedUser(user: string) {
