@@ -1,4 +1,4 @@
-import { UserList } from "@/components/features/user/UserList";
+import { UserList } from "@/app/users/[userKey]/(follows)/_components/UserList";
 
 export default async function Page({
   params,
