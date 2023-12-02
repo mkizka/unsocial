@@ -1,3 +1,14 @@
-import { SettingsPage } from "@/components/pages/SettingsPage";
+import { Card } from "@/components/ui/Card";
 
-export default SettingsPage;
+import { IconSettingsForm } from "./_components/IconSettingsForm";
+
+export function SettingsPage() {
+  return (
+    <section className="space-y-1">
+      <Card>
+        <h1 className="font-bold">プロフィール設定</h1>
+      </Card>
+      <IconSettingsForm />
+    </section>
+  );
+}
