@@ -3,10 +3,10 @@ import "./globals.css";
 import { M_PLUS_1_Code } from "next/font/google";
 
 import { AuthLink } from "@/components/features/auth/AuthLink";
-import { SearchModal } from "@/components/ui/SearchModal";
 
 import { Body } from "./_components/Body";
 import { Providers } from "./_components/Providers";
+import { SearchModal } from "./_components/SearchModal";
 
 const font = M_PLUS_1_Code({
   weight: "400",
