@@ -1,4 +1,4 @@
-import { UserPageLayout } from "@/components/layouts/UserPageLayout";
+import { UserCard } from "./_components/UserCard";
 
 // TODO: https://github.com/vercel/next.js/issues/52126 が解決されたら追加
 
@@ -12,12 +12,17 @@ import { UserPageLayout } from "@/components/layouts/UserPageLayout";
 //   };
 // }
 
-export default function RootLayout({
+export default function Layout({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: { userKey: string };
 }) {
-  return <UserPageLayout userKey={params.userKey}>{children}</UserPageLayout>;
+  return (
+    <>
+      <UserCard userKey={params.userKey} />
+      {children}
+    </>
+  );
 }

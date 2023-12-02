@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 
-import { AuthForm } from "@/components/features/auth/AuthForm";
 import { getServerSession } from "@/utils/getServerSession";
 import { prisma } from "@/utils/prisma";
+
+import { AuthForm } from "./_components/AuthForm";
 
 export default async function SigninPage() {
   const session = await getServerSession();

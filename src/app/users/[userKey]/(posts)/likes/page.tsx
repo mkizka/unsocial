@@ -1,4 +1,4 @@
-import { UserPage } from "@/components/pages/UserPage";
+import { UserPage } from "@/app/users/[userKey]/(posts)/_components/UserPage";
 
 export default async function Page({
   params,

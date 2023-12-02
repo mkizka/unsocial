@@ -5,7 +5,7 @@ type Props = {
   users: NoteCard["likes"][0]["user"][];
 };
 
-export function UserList({ users }: Props) {
+export function LikeUserList({ users }: Props) {
   return (
     <div>
       {users.map((user) => (
