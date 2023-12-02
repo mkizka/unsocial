@@ -1,5 +1,6 @@
 import { Timeline } from "@/components/features/note/Timeline";
-import { UserTab } from "@/components/features/user/UserTab";
+
+import { UserTab } from "./UserTab";
 
 type Props = {
   userKey: string;
