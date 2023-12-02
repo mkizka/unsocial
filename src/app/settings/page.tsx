@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/Card";
 
 import { IconSettingsForm } from "./_components/IconSettingsForm";
 
-export function SettingsPage() {
+export default function Page() {
   return (
     <section className="space-y-1">
       <Card>
