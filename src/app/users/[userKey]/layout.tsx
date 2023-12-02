@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 import { UserCard } from "./_components/UserCard";
 
 // TODO: https://github.com/vercel/next.js/issues/52126 が解決されたら追加
@@ -14,15 +12,16 @@ import { UserCard } from "./_components/UserCard";
 //   };
 // }
 
-type Props = {
-  userKey: string;
-  children: ReactNode;
-};
-
-export async function UserPageLayout({ userKey, children }: Props) {
+export default function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { userKey: string };
+}) {
   return (
     <>
-      <UserCard userKey={userKey} />
+      <UserCard userKey={params.userKey} />
       {children}
     </>
   );
