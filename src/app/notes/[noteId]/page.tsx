@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { Fragment } from "react";
 
-import { NoteCard } from "@/components/features/note/NoteCard";
-import { NoteForm } from "@/components/features/note/NoteForm";
+import { NoteCard } from "@/app/_shared/components/note/NoteCard";
+import { NoteForm } from "@/app/_shared/components/note/NoteForm";
 import { noteService } from "@/server/service";
 
 import { LikeUserList } from "./_components/LikeUserList";

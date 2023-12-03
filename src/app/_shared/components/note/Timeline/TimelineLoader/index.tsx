@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 
-import { NoteCard } from "@/components/features/note/NoteCard";
+import { NoteCard } from "@/app/_shared/components/note/NoteCard";
 import { Spinner } from "@/components/ui/Spinner";
 import type { noteService } from "@/server/service";
 

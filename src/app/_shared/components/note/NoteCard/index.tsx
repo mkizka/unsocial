@@ -1,7 +1,7 @@
 import Link from "next/link";
 import sanitizeHtml from "sanitize-html";
 
-import { UserIcon } from "@/components/features/user/UserIcon";
+import { UserIcon } from "@/app/_shared/components/user/UserIcon";
 import { Card } from "@/components/ui/Card";
 import type { noteService } from "@/server/service";
 import { cn } from "@/utils/cn";
