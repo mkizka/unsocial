@@ -2,7 +2,7 @@
 
 import { useFormStatus } from "react-dom";
 
-import { Spinner } from "@/components/ui/Spinner";
+import { Spinner } from "@/app/_shared/components/ui/Spinner";
 
 export function SubmitButton() {
   const { pending } = useFormStatus();

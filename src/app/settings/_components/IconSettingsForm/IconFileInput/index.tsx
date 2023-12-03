@@ -3,8 +3,8 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 
-import { Card } from "@/components/ui/Card";
-import { SubmitButton } from "@/components/ui/SubmitButton";
+import { Card } from "@/app/_shared/components/ui/Card";
+import { SubmitButton } from "@/app/_shared/components/ui/SubmitButton";
 import { cn } from "@/utils/cn";
 import { getIconPath } from "@/utils/icon";
 
