@@ -120,7 +120,7 @@ services:
     profiles:
       - misskey
   misskey:
-    image: misskey/misskey:2023.12.0-beta.1
+    image: misskey/misskey:develop
     volumes:
       - ./docker/misskey/files:/misskey/files
       - ./docker/misskey/.config:/misskey/.config:ro
