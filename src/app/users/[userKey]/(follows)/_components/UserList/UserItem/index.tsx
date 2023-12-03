@@ -1,7 +1,7 @@
 import type { User } from "@prisma/client";
 
-import type { UserIconProps } from "@/components/features/user/UserIcon";
-import { UserIcon } from "@/components/features/user/UserIcon";
+import type { UserIconProps } from "@/app/_shared/components/user/UserIcon";
+import { UserIcon } from "@/app/_shared/components/user/UserIcon";
 import { fullUsername } from "@/utils/fullUsername";
 
 export type Props = {

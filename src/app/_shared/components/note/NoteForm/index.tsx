@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/app/_shared/components/ui/Card";
 
 import { action } from "./action";
 import { SubmitButton } from "./parts/SubmitButton";

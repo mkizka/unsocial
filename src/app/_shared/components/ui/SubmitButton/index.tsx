@@ -1,7 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 
-import { Spinner } from "@/components/ui/Spinner";
+import { Spinner } from "@/app/_shared/components/ui/Spinner";
 import { cn } from "@/utils/cn";
 
 type Props = ComponentProps<"button"> & {
