@@ -1,4 +1,4 @@
-import { env } from "@/utils/env";
+import { env } from "@/app/_shared/libs/util/env";
 
 import type { UserServiceError } from "./errors";
 

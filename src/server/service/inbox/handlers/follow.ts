@@ -1,5 +1,6 @@
 import crypto from "crypto";
 
+import { env } from "@/app/_shared/libs/util/env";
 import { followRepository } from "@/server/repository";
 import { inboxFollowSchema } from "@/server/schema/follow";
 import {
@@ -8,7 +9,6 @@ import {
   UnexpectedActivityRequestError,
 } from "@/server/service/inbox/errors";
 import { userService } from "@/server/service/user";
-import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 

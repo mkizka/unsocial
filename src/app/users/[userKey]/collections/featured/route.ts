@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
+import { env } from "@/app/_shared/libs/util/env";
 import { userService } from "@/server/service/user";
 import { activityStreams } from "@/utils/activitypub";
-import { env } from "@/utils/env";
 import { prisma } from "@/utils/prisma";
 
 export async function GET(

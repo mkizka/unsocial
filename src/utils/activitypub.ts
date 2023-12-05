@@ -1,7 +1,8 @@
 import type { Follow, Like, Note, User } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 
-import { env } from "./env";
+import { env } from "@/app/_shared/libs/util/env";
+
 import { getIconPath } from "./icon";
 
 const required = <T>(value: T | null | undefined) => {

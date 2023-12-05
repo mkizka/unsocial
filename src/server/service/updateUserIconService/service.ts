@@ -1,8 +1,8 @@
 import crypto from "crypto";
 import sharp from "sharp";
 
+import { env } from "@/app/_shared/libs/util/env";
 import { s3Repository, userRepository } from "@/server/repository";
-import { env } from "@/utils/env";
 import { getIconHash } from "@/utils/icon";
 
 const convertToPng = async (file: File) => {

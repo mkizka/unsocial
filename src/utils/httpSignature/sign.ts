@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import { env } from "@/utils/env";
+import { env } from "@/app/_shared/libs/util/env";
 
 import { createDigest, textOf } from "./utils";
 

@@ -2,8 +2,8 @@
 import type { Like, Note, User } from "@prisma/client";
 import type { Session } from "next-auth";
 
+import { env } from "@/app/_shared/libs/util/env";
 import { activityStreams } from "@/utils/activitypub";
-import { env } from "@/utils/env";
 import { getServerSession } from "@/utils/getServerSession";
 import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";

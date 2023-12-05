@@ -16,7 +16,7 @@ afterEach(() => server.resetHandlers());
 
 afterAll(() => server.close());
 
-jest.mock("@/utils/env", () => ({
+jest.mock("@/app/_shared/libs/util/env", () => ({
   env: {
     ...process.env,
     HOST: "myhost.example.com",

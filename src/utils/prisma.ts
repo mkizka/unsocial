@@ -1,7 +1,8 @@
 // Stryker disable all
 import { PrismaClient } from "@prisma/client";
 
-import { env } from "./env";
+import { env } from "@/app/_shared/libs/util/env";
+
 import { createLogger } from "./logger";
 
 const logger = createLogger("prisma");
