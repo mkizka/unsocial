@@ -2,8 +2,9 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { updateUserIconService } from "@/server/service/updateUserIconService";
 import { getUser } from "@/utils/getServerSession";
+
+import { updateUserIconService } from "./updateUserIconService";
 
 type State = {
   type: "success" | "error";
