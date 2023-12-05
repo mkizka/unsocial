@@ -1,6 +1,6 @@
 import type { User } from "@prisma/client";
 
-import { env } from "@/app/_shared/libs/util/env";
+import { env } from "./env";
 
 export const fullUsername = (
   user: Pick<User, "preferredUsername" | "host">,

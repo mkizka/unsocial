@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { env } from "@/app/_shared/libs/util/env";
+import { env } from "@/utils/env";
 
 export async function GET() {
   return NextResponse.json(

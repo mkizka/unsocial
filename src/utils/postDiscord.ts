@@ -1,5 +1,4 @@
-import { env } from "@/app/_shared/libs/util/env";
-
+import { env } from "./env";
 import { fetcher } from "./fetcher";
 import { createLogger } from "./logger";
 

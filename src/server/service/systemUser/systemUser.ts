@@ -1,8 +1,8 @@
 import assert from "assert";
 import crypto from "crypto";
 
-import { env } from "@/app/_shared/libs/util/env";
 import { userRepository } from "@/server/repository";
+import { env } from "@/utils/env";
 
 export const findOrCreateSystemUser = async () => {
   const systemUser = await userRepository.findUnique({

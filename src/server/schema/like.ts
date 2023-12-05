@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { env } from "@/app/_shared/libs/util/env";
+import { env } from "@/utils/env";
 
 export const inboxLikeSchema = z.object({
   type: z.literal("Like"),

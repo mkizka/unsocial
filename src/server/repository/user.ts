@@ -2,8 +2,8 @@ import bcryptjs from "bcryptjs";
 import crypto from "crypto";
 import { cache } from "react";
 
-import { env } from "@/app/_shared/libs/util/env";
 import type { PersonActivity } from "@/server/schema/person";
+import { env } from "@/utils/env";
 import { getIconHash } from "@/utils/icon";
 import { prisma } from "@/utils/prisma";
 

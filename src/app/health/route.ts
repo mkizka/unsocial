@@ -1,7 +1,7 @@
 // Stryker disable all
 import { NextResponse } from "next/server";
 
-import { env } from "@/app/_shared/libs/util/env";
+import { env } from "@/utils/env";
 
 export const dynamic = "force-dynamic";
 

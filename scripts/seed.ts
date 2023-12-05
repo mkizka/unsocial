@@ -1,7 +1,7 @@
 #!/usr/bin/env -S pnpm tsx
-import { env } from "@/app/_shared/libs/util/env";
 import { noteRepository, userRepository } from "@/server/repository";
 import { userService } from "@/server/service/user";
+import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
 
 const logger = createLogger("seed");

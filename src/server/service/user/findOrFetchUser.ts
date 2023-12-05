@@ -1,12 +1,12 @@
 import type { User } from "@prisma/client";
 
-import { env } from "@/app/_shared/libs/util/env";
-import { formatZodError } from "@/app/_shared/libs/util/formatZodError";
 import { userRepository } from "@/server/repository";
 import type { PersonActivity } from "@/server/schema/person";
 import { inboxPersonSchema } from "@/server/schema/person";
 import { webFingerSchema } from "@/server/schema/webFinger";
 import { activitypubService } from "@/server/service/activitypub";
+import { env } from "@/utils/env";
+import { formatZodError } from "@/utils/formatZodError";
 import { createLogger } from "@/utils/logger";
 
 import type { UserServiceError } from "./errors";

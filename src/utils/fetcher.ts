@@ -1,6 +1,6 @@
 import pkg from "@/../package.json";
-import { env } from "@/app/_shared/libs/util/env";
 
+import { env } from "./env";
 import { signHeaders } from "./httpSignature/sign";
 import { createLogger } from "./logger";
 

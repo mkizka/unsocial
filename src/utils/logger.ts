@@ -1,7 +1,7 @@
 // Stryker disable all
 import winston from "winston";
 
-import { env } from "@/app/_shared/libs/util/env";
+import { env } from "./env";
 
 const level = (() => {
   if (env.LOG_LEVEL) {

@@ -1,11 +1,11 @@
 import { cache } from "react";
 
-import { env } from "@/app/_shared/libs/util/env";
 import { noteRepository } from "@/server/repository";
 import type { NoteActivity } from "@/server/schema/note";
 import { inboxNoteSchema } from "@/server/schema/note";
 import { activitypubService } from "@/server/service/activitypub";
 import { userService } from "@/server/service/user";
+import { env } from "@/utils/env";
 
 const getLocalNoteId = (noteUrl: string) => {
   const url = new URL(noteUrl);

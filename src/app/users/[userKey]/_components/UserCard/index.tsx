@@ -2,9 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { UserIcon } from "@/app/_shared/components/user/UserIcon";
-import { env } from "@/app/_shared/libs/util/env";
 import { followService } from "@/server/service";
 import { userService } from "@/server/service/user";
+import { env } from "@/utils/env";
 import { fullUsername } from "@/utils/fullUsername";
 import { getServerSession } from "@/utils/getServerSession";
 
