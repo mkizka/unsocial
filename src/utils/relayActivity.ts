@@ -1,4 +1,4 @@
-import { credentialService } from "@/server/service";
+import { cache } from "react";
 
 import { fetcher } from "./fetcher";
 import type { SignActivityParams } from "./httpSignature/sign";
@@ -29,6 +29,15 @@ const relayActivity = async (params: Omit<SignActivityParams, "method">) => {
   });
 };
 
+const findPrivateKey = cache(async (userId: string) => {
+  const credential = await prisma.credential.findUnique({
+    where: {
+      userId,
+    },
+  });
+  return credential?.privateKey ?? null;
+});
+
 type RelayActivityParams = {
   userId: string;
   activity: object;
@@ -36,7 +45,7 @@ type RelayActivityParams = {
 };
 
 export const relayActivityToInboxUrl = async (params: RelayActivityParams) => {
-  const privateKey = await credentialService.findUnique(params.userId);
+  const privateKey = await findPrivateKey(params.userId);
   if (!privateKey) {
     throw new Error(`配送に必要な秘密鍵がありませんでした: ${params.userId}`);
   }
@@ -53,7 +62,7 @@ export const relayActivityToInboxUrl = async (params: RelayActivityParams) => {
 export const relayActivityToFollowers = async (
   params: Omit<RelayActivityParams, "inboxUrl">,
 ) => {
-  const privateKey = await credentialService.findUnique(params.userId);
+  const privateKey = await findPrivateKey(params.userId);
   if (!privateKey) {
     throw new Error(`配送に必要な秘密鍵がありませんでした: ${params.userId}`);
   }
