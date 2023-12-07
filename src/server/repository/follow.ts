@@ -1,29 +1,5 @@
 import { prisma } from "@/utils/prisma";
 
-export const findFollowers = async (userId: string) => {
-  const follows = await prisma.follow.findMany({
-    where: {
-      followeeId: userId,
-    },
-    include: {
-      follower: true,
-    },
-  });
-  return follows.map((follow) => follow.follower);
-};
-
-export const findFollowees = async (userId: string) => {
-  const follows = await prisma.follow.findMany({
-    where: {
-      followerId: userId,
-    },
-    include: {
-      followee: true,
-    },
-  });
-  return follows.map((follow) => follow.followee);
-};
-
 type UniqueParams = {
   followeeId: string;
   followerId: string;

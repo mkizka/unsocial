@@ -2,7 +2,7 @@ import type { Follow } from "@prisma/client";
 
 import { mockedPrisma } from "@/mocks/prisma";
 
-import * as followService from "./follow";
+import * as followFindService from "./service";
 
 describe("followService", () => {
   test("findFollowers", async () => {
@@ -18,7 +18,7 @@ describe("followService", () => {
       )
       .mockResolvedValueOnce([dummyFollow] as unknown as Follow[]);
     // act
-    const result = await followService.findFollowers(dummyUserId);
+    const result = await followFindService.followers(dummyUserId);
     // assert
     expect(result).toEqual([dummyFollow.follower]);
   });
@@ -35,7 +35,7 @@ describe("followService", () => {
       )
       .mockResolvedValueOnce([dummyFollow] as unknown as Follow[]);
     // act
-    const result = await followService.findFollowees(dummyUserId);
+    const result = await followFindService.followees(dummyUserId);
     // assert
     expect(result).toEqual([dummyFollow.followee]);
   });
