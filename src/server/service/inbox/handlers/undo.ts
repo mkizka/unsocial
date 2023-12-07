@@ -1,6 +1,6 @@
 import type { User } from "@prisma/client";
 
-import { followRepository, likeRepository } from "@/server/repository";
+import { likeRepository } from "@/server/repository";
 import { inboxUndoSchema, type UndoActivity } from "@/server/schema/undo";
 import type { InboxError } from "@/server/service/inbox/errors";
 import {
@@ -8,6 +8,7 @@ import {
   BadActivityRequestError,
 } from "@/server/service/inbox/errors";
 import { userService } from "@/server/service/user";
+import { prisma } from "@/utils/prisma";
 
 import type { InboxHandler } from "./shared";
 import { resolveNoteId } from "./shared";
@@ -27,9 +28,13 @@ const undoFollow: UndoInboxHandler = async (activity, actorUser) => {
       activity,
     );
   }
-  await followRepository.remove({
-    followeeId: followee.id,
-    followerId: actorUser.id,
+  await prisma.follow.delete({
+    where: {
+      followeeId_followerId: {
+        followeeId: followee.id,
+        followerId: actorUser.id,
+      },
+    },
   });
 };
 

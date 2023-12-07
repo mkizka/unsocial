@@ -1,10 +1,10 @@
-import { followRepository } from "@/server/repository";
 import { inboxAcceptSchema } from "@/server/schema/accept";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
 } from "@/server/service/inbox/errors";
 import { userService } from "@/server/service/user";
+import { prisma } from "@/utils/prisma";
 
 import type { InboxHandler } from "./shared";
 
@@ -22,8 +22,15 @@ export const handle: InboxHandler = async (activity, followee) => {
       activity,
     );
   }
-  await followRepository.accept({
-    followeeId: followee.id,
-    followerId: follower.id,
+  await prisma.follow.update({
+    where: {
+      followeeId_followerId: {
+        followeeId: followee.id,
+        followerId: follower.id,
+      },
+    },
+    data: {
+      status: "ACCEPTED",
+    },
   });
 };

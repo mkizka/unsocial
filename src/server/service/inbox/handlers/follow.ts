@@ -1,6 +1,5 @@
 import crypto from "crypto";
 
-import { followRepository } from "@/server/repository";
 import { inboxFollowSchema } from "@/server/schema/follow";
 import {
   ActivitySchemaValidationError,
@@ -10,6 +9,7 @@ import {
 import { userService } from "@/server/service/user";
 import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
+import { prisma } from "@/utils/prisma";
 import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { type InboxHandler } from "./shared";
@@ -37,12 +37,13 @@ export const handle: InboxHandler = async (activity, actorUser) => {
       activity,
     );
   }
-  await followRepository
-    .createAndAccept({
+  await prisma.follow.create({
+    data: {
       followeeId: followee.id,
       followerId: actorUser.id,
-    })
-    .catch((e) => logger.warn(e));
+      status: "ACCEPTED",
+    },
+  });
   await relayActivityToInboxUrl({
     userId: followee.id,
     inboxUrl: new URL(actorUser.inboxUrl),
