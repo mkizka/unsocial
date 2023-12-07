@@ -1,4 +1,3 @@
-import { mockedLogger } from "@/mocks/logger";
 import { mockedPrisma } from "@/mocks/prisma";
 import {
   ActivitySchemaValidationError,
@@ -56,20 +55,6 @@ describe("inboxLikeService", () => {
         content: "👍",
       },
     });
-    expect(error).toBeUndefined();
-  });
-  test("createに失敗したらログを出す", async () => {
-    // arrange
-    const activity = {
-      type: "Like",
-      actor: "https://remote.example.com/u/dummy_remote",
-      object: "https://myhost.example.com/notes/note_local",
-    };
-    mockedPrisma.like.create.mockRejectedValue(new Error());
-    // act
-    const error = await handle(activity, dummyRemoteUser as never);
-    // assert
-    expect(mockedLogger.warn).toHaveBeenCalledWith(expect.any(Error));
     expect(error).toBeUndefined();
   });
   test("不正なactivityならエラーを返す", async () => {

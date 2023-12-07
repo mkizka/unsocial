@@ -1,14 +1,11 @@
-import { likeRepository } from "@/server/repository";
 import { inboxLikeSchema } from "@/server/schema/like";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
 } from "@/server/service/inbox/errors";
-import { createLogger } from "@/utils/logger";
+import { prisma } from "@/utils/prisma";
 
 import { type InboxHandler, resolveNoteId } from "./shared";
-
-const logger = createLogger("inboxLikeService");
 
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedLike = inboxLikeSchema.safeParse(activity);
@@ -22,11 +19,11 @@ export const handle: InboxHandler = async (activity, actorUser) => {
       activity,
     );
   }
-  await likeRepository
-    .create({
+  await prisma.like.create({
+    data: {
       noteId,
       userId: actorUser.id,
       content: parsedLike.data.content ?? "👍",
-    })
-    .catch((e) => logger.warn(e));
+    },
+  });
 };

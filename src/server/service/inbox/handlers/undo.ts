@@ -1,6 +1,5 @@
 import type { User } from "@prisma/client";
 
-import { likeRepository } from "@/server/repository";
 import { inboxUndoSchema, type UndoActivity } from "@/server/schema/undo";
 import type { InboxError } from "@/server/service/inbox/errors";
 import {
@@ -46,9 +45,11 @@ const undoLike: UndoInboxHandler = async (activity, actorUser) => {
       activity,
     );
   }
-  await likeRepository.remove({
-    noteId,
-    userId: actorUser.id,
+  await prisma.like.deleteMany({
+    where: {
+      noteId,
+      userId: actorUser.id,
+    },
   });
 };
 
