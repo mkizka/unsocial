@@ -24,22 +24,6 @@ export const findFollowees = async (userId: string) => {
   return follows.map((follow) => follow.followee);
 };
 
-export const countFollowers = (userId: string) => {
-  return prisma.follow.count({
-    where: {
-      followeeId: userId,
-    },
-  });
-};
-
-export const countFollowees = (userId: string) => {
-  return prisma.follow.count({
-    where: {
-      followerId: userId,
-    },
-  });
-};
-
 type UniqueParams = {
   followeeId: string;
   followerId: string;

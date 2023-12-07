@@ -2,13 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { UserIcon } from "@/app/_shared/components/user/UserIcon";
-import { followService } from "@/server/service";
 import { userService } from "@/server/service/user";
 import { env } from "@/utils/env";
 import { fullUsername } from "@/utils/fullUsername";
 import { getServerSession } from "@/utils/getServerSession";
 
 import { FollowButton } from "./FollowButton";
+import { followCountService } from "./followCountService";
 import { RefetchButton } from "./RefetchButton";
 
 export type Props = {
@@ -21,7 +21,9 @@ export async function UserCard({ userKey }: Props) {
   if (user instanceof Error) {
     notFound();
   }
-  const { followersCount, followeesCount } = await followService.count(user.id);
+  const { followersCount, followeesCount } = await followCountService.count(
+    user.id,
+  );
   const canFollow = session?.user && session.user.id !== user.id;
   return (
     <section className="mb-1 rounded bg-primary-light p-4 pb-6 shadow">

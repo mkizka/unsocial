@@ -5,27 +5,6 @@ import { mockedPrisma } from "@/mocks/prisma";
 import * as followService from "./follow";
 
 describe("followService", () => {
-  test("count", async () => {
-    // arrange
-    const dummyUserId = "dummyUserId";
-    mockedPrisma.follow.count
-      .calledWith(
-        expect.objectContaining({ where: { followeeId: dummyUserId } }),
-      )
-      .mockResolvedValueOnce(1);
-    mockedPrisma.follow.count
-      .calledWith(
-        expect.objectContaining({ where: { followerId: dummyUserId } }),
-      )
-      .mockResolvedValueOnce(2);
-    // act
-    const result = await followService.count(dummyUserId);
-    // assert
-    expect(result).toEqual({
-      followersCount: 1,
-      followeesCount: 2,
-    });
-  });
   test("findFollowers", async () => {
     // arrange
     const dummyUserId = "dummyUserId";

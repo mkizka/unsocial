@@ -9,10 +9,3 @@ export const findFollowers = cache((userId: string) => {
 export const findFollowees = cache((userId: string) => {
   return followRepository.findFollowees(userId);
 });
-
-export const count = cache(async (userId: string) => {
-  return {
-    followersCount: await followRepository.countFollowers(userId),
-    followeesCount: await followRepository.countFollowees(userId),
-  };
-});
