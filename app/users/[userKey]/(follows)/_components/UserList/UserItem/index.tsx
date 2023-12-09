@@ -4,7 +4,7 @@ import type { UserIconProps } from "@/_shared/components/user/UserIcon";
 import { UserIcon } from "@/_shared/components/user/UserIcon";
 import { fullUsername } from "@/_shared/utils/fullUsername";
 
-export type Props = {
+type Props = {
   user: UserIconProps["user"] & Pick<User, "name" | "host">;
 };
 

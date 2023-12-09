@@ -8,4 +8,4 @@ export const inboxCreateSchema = z.object({
   object: inboxNoteSchema,
 });
 
-export type CreateActivity = z.infer<typeof inboxCreateSchema>;
+type CreateActivity = z.infer<typeof inboxCreateSchema>;
