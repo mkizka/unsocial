@@ -70,17 +70,3 @@ export const findManyNoteCards = cache((params: FindManyParams) => {
     },
   });
 });
-
-type FindUniqueParams =
-  | {
-      url: string;
-    }
-  | {
-      id: string;
-    };
-
-export const findUnique = (params: FindUniqueParams) => {
-  return prisma.note.findUnique({
-    where: params,
-  });
-};

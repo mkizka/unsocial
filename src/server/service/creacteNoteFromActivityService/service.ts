@@ -1,6 +1,5 @@
 import { cache } from "react";
 
-import { noteRepository } from "@/server/repository";
 import type { NoteActivity } from "@/server/schema/note";
 import { inboxNoteSchema } from "@/server/schema/note";
 import { activitypubService } from "@/server/service/activitypub";
@@ -25,12 +24,16 @@ const getLocalNoteId = (noteUrl: string) => {
 const findByNoteUrl = (noteUrl: string) => {
   const localNoteId = getLocalNoteId(noteUrl);
   if (localNoteId) {
-    return noteRepository.findUnique({
-      id: localNoteId,
+    return prisma.note.findUnique({
+      where: {
+        id: localNoteId,
+      },
     });
   }
-  return noteRepository.findUnique({
-    url: noteUrl,
+  return prisma.note.findUnique({
+    where: {
+      url: noteUrl,
+    },
   });
 };
 
