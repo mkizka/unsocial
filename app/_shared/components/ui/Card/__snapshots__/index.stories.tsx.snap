@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`app/_shared/components/ui/Card Default smoke-test 1`] = `
+exports[`_shared/components/ui/Card Default smoke-test 1`] = `
 <div class="rounded bg-primary-light p-4 shadow h-20 w-40">
 </div>
 `;
