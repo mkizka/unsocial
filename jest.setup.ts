@@ -1,4 +1,4 @@
-import { server } from "./src/mocks/server";
+import { server } from "./app/_mocks/server";
 
 beforeAll(() =>
   server.listen({
@@ -16,7 +16,7 @@ afterEach(() => server.resetHandlers());
 
 afterAll(() => server.close());
 
-jest.mock("@/utils/env", () => ({
+jest.mock("@/_shared/utils/env", () => ({
   env: {
     ...process.env,
     HOST: "myhost.example.com",

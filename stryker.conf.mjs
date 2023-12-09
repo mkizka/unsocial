@@ -12,12 +12,12 @@ const config = {
   ignoreStatic: true,
   cleanTempDir: "always",
   mutate: [
-    "src/**/*.ts",
-    "src/app/.well-known/**/*.ts",
-    "!src/**/*.d.ts",
-    "!src/**/*.spec.ts",
-    "!src/app/.well-known/**/*.spec.ts",
-    "!src/**/__fixtures__/**/*.ts",
+    "app/**/*.ts",
+    "app/.well-known/**/*.ts",
+    "!app/**/*.d.ts",
+    "!app/**/*.spec.ts",
+    "!app/.well-known/**/*.spec.ts",
+    "!app/**/__fixtures__/**/*.ts",
   ],
   // 権限エラーになることがあるため
   ignorePatterns: ["docker"],

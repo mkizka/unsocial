@@ -21,7 +21,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./app/*"]
     }
   },
   "include": [
@@ -29,7 +29,7 @@
     ".next/types/**/*.ts",
     ".storybook/*.ts",
     ".storybook/*.tsx",
-    "src/app/.well-known/**/*.ts",
+    "app/.well-known/**/*.ts",
     "**/*.js",
     "**/*.mjs",
     "**/*.ts",
