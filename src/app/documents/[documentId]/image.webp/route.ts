@@ -3,8 +3,8 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import sharp from "sharp";
 
-import { documentService } from "@/server/service";
-import { fetcher } from "@/utils/fetcher";
+import { fetcher } from "@/app/_shared/utils/fetcher";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 sharp.cache(false);
 
@@ -20,7 +20,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { documentId: string } },
 ) {
-  const document = await documentService.findUnique(params.documentId);
+  const document = await prisma.document.findUnique({
+    where: { id: params.documentId },
+  });
   if (!document) {
     notFound();
   }

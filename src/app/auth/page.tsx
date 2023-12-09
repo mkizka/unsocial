@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-import { getServerSession } from "@/utils/getServerSession";
-import { prisma } from "@/utils/prisma";
+import { getServerSession } from "@/app/_shared/utils/getServerSession";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 import { AuthForm } from "./_components/AuthForm";
 

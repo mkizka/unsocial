@@ -1,10 +1,10 @@
 "use server";
 import { redirect } from "next/navigation";
 
-import { activityStreams } from "@/utils/activitypub";
-import { getServerSession } from "@/utils/getServerSession";
-import { prisma } from "@/utils/prisma";
-import { relayActivityToFollowers } from "@/utils/relayActivity";
+import { activityStreams } from "@/app/_shared/utils/activitypub";
+import { getServerSession } from "@/app/_shared/utils/getServerSession";
+import { prisma } from "@/app/_shared/utils/prisma";
+import { relayActivityToFollowers } from "@/app/_shared/utils/relayActivity";
 
 export async function action(noteId: string) {
   const session = await getServerSession();

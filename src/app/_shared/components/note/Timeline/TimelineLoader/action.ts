@@ -1,5 +1,5 @@
 "use server";
-import { noteService } from "@/server/service";
+import { noteService } from "@/app/_shared/service";
 
 type Params = {
   userId?: string;

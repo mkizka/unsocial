@@ -1,8 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { createLogger } from "@/utils/logger";
-import { prisma } from "@/utils/prisma";
+import { createLogger } from "@/app/_shared/utils/logger";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 const logger = createLogger("RefetchButton");
 

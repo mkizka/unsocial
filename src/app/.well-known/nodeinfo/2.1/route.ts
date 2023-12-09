@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import pkg from "@/../package.json";
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 export const dynamic = "force-dynamic";
 

@@ -2,12 +2,12 @@
 import { revalidatePath } from "next/cache";
 import type { Session } from "next-auth";
 
-import { activityStreams } from "@/utils/activitypub";
-import { env } from "@/utils/env";
-import { getServerSession } from "@/utils/getServerSession";
-import { createLogger } from "@/utils/logger";
-import { prisma } from "@/utils/prisma";
-import { relayActivityToInboxUrl } from "@/utils/relayActivity";
+import { activityStreams } from "@/app/_shared/utils/activitypub";
+import { env } from "@/app/_shared/utils/env";
+import { getServerSession } from "@/app/_shared/utils/getServerSession";
+import { createLogger } from "@/app/_shared/utils/logger";
+import { prisma } from "@/app/_shared/utils/prisma";
+import { relayActivityToInboxUrl } from "@/app/_shared/utils/relayActivity";
 
 const logger = createLogger("FollowButton");
 

@@ -1,7 +1,7 @@
 import type { User } from "@prisma/client";
 import type { ComponentProps } from "react";
 
-import { getIconPath } from "@/utils/icon";
+import { getIconPath } from "@/app/_shared/utils/icon";
 
 export type UserIconProps = Omit<
   ComponentProps<"img">,

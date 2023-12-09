@@ -1,6 +1,6 @@
 "use client";
 import { useSearchModal } from "@/app/_components/SearchModal/hooks";
-import { cn } from "@/utils/cn";
+import { cn } from "@/app/_shared/utils/cn";
 
 export function Body({ children }: { children: React.ReactNode }) {
   const { isOpen } = useSearchModal();

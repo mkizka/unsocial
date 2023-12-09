@@ -1,4 +1,4 @@
-import { cn } from "@/utils/cn";
+import { cn } from "@/app/_shared/utils/cn";
 
 // https://zenn.dev/andynuma/articles/c7f6d6587c116d
 type CardProps<T extends React.ElementType> = {

@@ -1,15 +1,18 @@
 #!/usr/bin/env -S pnpm tsx
-import { noteRepository, userRepository } from "@/server/repository";
-import { userService } from "@/server/service/user";
-import { env } from "@/utils/env";
-import { createLogger } from "@/utils/logger";
+import { noteService } from "@/app/_shared/service";
+import { userService } from "@/app/_shared/service/user";
+import { env } from "@/app/_shared/utils/env";
+import { createLogger } from "@/app/_shared/utils/logger";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 const logger = createLogger("seed");
 
 const main = async () => {
-  const existingUser = await userRepository.findUnique({
-    preferredUsername: "test",
-    host: env.HOST,
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      preferredUsername: "test",
+      host: env.HOST,
+    },
   });
   if (existingUser) {
     logger.info("シード作成をスキップ");
@@ -25,7 +28,7 @@ const main = async () => {
     Array.from({ length: 100 }).map(async (_, i) => {
       const publishedAt = new Date("2023-01-01T00:00:00Z");
       publishedAt.setSeconds(publishedAt.getSeconds() + i);
-      await noteRepository.create({
+      await noteService.create({
         userId: user.id,
         content: "テスト " + publishedAt.toISOString(),
         publishedAt,

@@ -2,7 +2,7 @@ import type { User } from "@prisma/client";
 
 import type { UserIconProps } from "@/app/_shared/components/user/UserIcon";
 import { UserIcon } from "@/app/_shared/components/user/UserIcon";
-import { fullUsername } from "@/utils/fullUsername";
+import { fullUsername } from "@/app/_shared/utils/fullUsername";
 
 export type Props = {
   user: UserIconProps["user"] & Pick<User, "name" | "host">;

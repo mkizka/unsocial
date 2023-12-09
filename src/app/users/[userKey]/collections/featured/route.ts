@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
-import { userService } from "@/server/service/user";
-import { activityStreams } from "@/utils/activitypub";
-import { env } from "@/utils/env";
-import { prisma } from "@/utils/prisma";
+import { userService } from "@/app/_shared/service/user";
+import { activityStreams } from "@/app/_shared/utils/activitypub";
+import { env } from "@/app/_shared/utils/env";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 export async function GET(
   _: Request,

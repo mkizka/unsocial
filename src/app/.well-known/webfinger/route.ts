@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import type { NextRequest } from "next/server";
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 import { NextResponse } from "next/server";
 
-import { env } from "@/utils/env";
+import { env } from "@/app/_shared/utils/env";
 
 export async function GET({ nextUrl }: NextRequest) {
   const resource = nextUrl.searchParams.get("resource");

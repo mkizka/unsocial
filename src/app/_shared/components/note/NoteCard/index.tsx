@@ -3,8 +3,8 @@ import sanitizeHtml from "sanitize-html";
 
 import { Card } from "@/app/_shared/components/ui/Card";
 import { UserIcon } from "@/app/_shared/components/user/UserIcon";
-import type { noteService } from "@/server/service";
-import { cn } from "@/utils/cn";
+import type { noteService } from "@/app/_shared/service";
+import { cn } from "@/app/_shared/utils/cn";
 
 import { AttachmentImages } from "./AttachmentImages";
 import { DeleteButton } from "./DeleteButton";
