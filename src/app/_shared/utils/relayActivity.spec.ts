@@ -3,8 +3,8 @@ import type { AP } from "activitypub-core-types";
 import { captor } from "jest-mock-extended";
 import { http, HttpResponse } from "msw";
 
-import { mockedPrisma } from "@/mocks/prisma";
-import { server } from "@/mocks/server";
+import { mockedPrisma } from "@/app/_mocks/prisma";
+import { server } from "@/app/_mocks/server";
 
 import { mockedKeys } from "./httpSignature/__fixtures__/keys";
 import {

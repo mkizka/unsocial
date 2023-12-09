@@ -2,9 +2,9 @@ import type { Follow } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import type { Session } from "next-auth";
 
+import { mockedPrisma } from "@/app/_mocks/prisma";
 import { getServerSession } from "@/app/_shared/utils/getServerSession";
 import { relayActivityToInboxUrl } from "@/app/_shared/utils/relayActivity";
-import { mockedPrisma } from "@/mocks/prisma";
 
 import { action } from "./action";
 
