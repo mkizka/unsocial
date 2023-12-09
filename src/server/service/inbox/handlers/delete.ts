@@ -1,4 +1,4 @@
-import { inboxDeleteSchema } from "@/server/schema/delete";
+import { inboxDeleteSchema } from "@/app/_shared/schema/delete";
 import { ActivitySchemaValidationError } from "@/server/service/inbox/errors";
 import { prisma } from "@/utils/prisma";
 

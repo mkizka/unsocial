@@ -1,4 +1,4 @@
-import { inboxAcceptSchema } from "@/server/schema/accept";
+import { inboxAcceptSchema } from "@/app/_shared/schema/accept";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,

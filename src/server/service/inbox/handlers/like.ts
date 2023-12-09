@@ -1,4 +1,4 @@
-import { inboxLikeSchema } from "@/server/schema/like";
+import { inboxLikeSchema } from "@/app/_shared/schema/like";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,

@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import { inboxFollowSchema } from "@/server/schema/follow";
+import { inboxFollowSchema } from "@/app/_shared/schema/follow";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,

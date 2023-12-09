@@ -1,4 +1,4 @@
-import { inboxCreateSchema } from "@/server/schema/create";
+import { inboxCreateSchema } from "@/app/_shared/schema/create";
 import { createNoteActivityService } from "@/server/service/creacteNoteFromActivityService";
 import { ActivitySchemaValidationError } from "@/server/service/inbox/errors";
 import { createLogger } from "@/utils/logger";

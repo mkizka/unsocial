@@ -1,6 +1,6 @@
 import type { User } from "@prisma/client";
 
-import { inboxUndoSchema, type UndoActivity } from "@/server/schema/undo";
+import { inboxUndoSchema, type UndoActivity } from "@/app/_shared/schema/undo";
 import type { InboxError } from "@/server/service/inbox/errors";
 import {
   ActivitySchemaValidationError,

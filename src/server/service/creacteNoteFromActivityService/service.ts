@@ -1,7 +1,7 @@
 import { cache } from "react";
 
-import type { NoteActivity } from "@/server/schema/note";
-import { inboxNoteSchema } from "@/server/schema/note";
+import type { NoteActivity } from "@/app/_shared/schema/note";
+import { inboxNoteSchema } from "@/app/_shared/schema/note";
 import { activitypubService } from "@/server/service/activitypub";
 import { userService } from "@/server/service/user";
 import { env } from "@/utils/env";

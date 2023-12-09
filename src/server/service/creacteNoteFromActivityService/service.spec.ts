@@ -1,9 +1,9 @@
 import type { Note, User } from "@prisma/client";
 import { http, HttpResponse } from "msw";
 
+import type { NoteActivity } from "@/app/_shared/schema/note";
 import { mockedPrisma } from "@/mocks/prisma";
 import { server } from "@/mocks/server";
-import type { NoteActivity } from "@/server/schema/note";
 import { userService } from "@/server/service/user";
 
 import { createNoteActivityService } from ".";
