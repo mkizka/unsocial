@@ -4,6 +4,7 @@ import { cache } from "react";
 import { noteRepository } from "@/server/repository";
 import { fullUsername } from "@/utils/fullUsername";
 import { getUser } from "@/utils/getServerSession";
+import { prisma } from "@/utils/prisma";
 
 const formatNote = (
   note: Omit<noteRepository.NoteCard, "replies" | "replyTo">,
@@ -69,6 +70,32 @@ export const findManyNoteCards = cache(
   },
 );
 
-export const create = (params: noteRepository.CreateParams) => {
-  return noteRepository.create(params);
+export type CreateParams = {
+  userId: string;
+  content: string;
+  publishedAt: Date;
+  replyToId?: string;
+  attachments: {
+    url: string;
+    mediaType: string;
+  }[];
+};
+
+export const create = (params: CreateParams) => {
+  const { attachments, ...data } = params;
+  return prisma.note.create({
+    data: {
+      ...data,
+      attachments: {
+        create: attachments,
+      },
+    },
+    include: {
+      replyTo: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  });
 };

@@ -1,5 +1,5 @@
 #!/usr/bin/env -S pnpm tsx
-import { noteRepository } from "@/server/repository";
+import { noteService } from "@/server/service";
 import { userService } from "@/server/service/user";
 import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
@@ -28,7 +28,7 @@ const main = async () => {
     Array.from({ length: 100 }).map(async (_, i) => {
       const publishedAt = new Date("2023-01-01T00:00:00Z");
       publishedAt.setSeconds(publishedAt.getSeconds() + i);
-      await noteRepository.create({
+      await noteService.create({
         userId: user.id,
         content: "テスト " + publishedAt.toISOString(),
         publishedAt,

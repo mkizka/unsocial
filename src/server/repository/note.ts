@@ -84,33 +84,3 @@ export const findUnique = (params: FindUniqueParams) => {
     where: params,
   });
 };
-
-export type CreateParams = {
-  userId: string;
-  content: string;
-  publishedAt: Date;
-  replyToId?: string;
-  attachments: {
-    url: string;
-    mediaType: string;
-  }[];
-};
-
-export const create = (params: CreateParams) => {
-  const { attachments, ...data } = params;
-  return prisma.note.create({
-    data: {
-      ...data,
-      attachments: {
-        create: attachments,
-      },
-    },
-    include: {
-      replyTo: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  });
-};
