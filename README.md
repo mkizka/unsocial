@@ -1,6 +1,8 @@
 # Unsocial
 
-![](screenshot.png)
+![](screenshot_1.png)
+
+![](screenshot_2.png)
 
 Demo: https://unsocial.dev
 
