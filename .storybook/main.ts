@@ -2,7 +2,7 @@ import type { StorybookConfig } from "@storybook/nextjs";
 import path from "path";
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.stories.@(ts|tsx)"],
+  stories: ["../app/**/*.stories.@(ts|tsx)"],
   addons: ["@storybook/addon-essentials", "@storybook/addon-interactions"],
   framework: {
     name: "@storybook/nextjs",
@@ -12,7 +12,7 @@ const config: StorybookConfig = {
   webpackFinal(config) {
     config.resolve!.alias = {
       ...config.resolve!.alias,
-      "@": path.resolve(__dirname, "../src"),
+      "@": path.resolve(__dirname, "../app"),
     };
     return config;
   },

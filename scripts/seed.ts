@@ -1,9 +1,9 @@
 #!/usr/bin/env -S pnpm tsx
-import { noteService } from "@/app/_shared/service";
-import { userService } from "@/app/_shared/service/user";
-import { env } from "@/app/_shared/utils/env";
-import { createLogger } from "@/app/_shared/utils/logger";
-import { prisma } from "@/app/_shared/utils/prisma";
+import { noteService } from "@/_shared/service";
+import { userService } from "@/_shared/service/user";
+import { env } from "@/_shared/utils/env";
+import { createLogger } from "@/_shared/utils/logger";
+import { prisma } from "@/_shared/utils/prisma";
 
 const logger = createLogger("seed");
 

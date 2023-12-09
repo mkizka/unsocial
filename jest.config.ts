@@ -10,13 +10,13 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig: Config = {
-  roots: ["<rootDir>/src"],
+  roots: ["<rootDir>/app"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   clearMocks: true,
   modulePathIgnorePatterns: ["<rootDir>/.next"],
   moduleNameMapper: {
     // tsconfig.json の paths と同じように書くため
-    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@/(.*)$": "<rootDir>/app/$1",
   },
 };
 
