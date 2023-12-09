@@ -1,7 +1,7 @@
 import type { Follow } from "@prisma/client";
 
+import { mockedPrisma } from "@/app/_mocks/prisma";
 import { relayActivityToInboxUrl } from "@/app/_shared/utils/relayActivity";
-import { mockedPrisma } from "@/mocks/prisma";
 
 import { handle } from "./follow";
 

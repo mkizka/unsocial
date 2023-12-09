@@ -1,7 +1,7 @@
 import type { Note, User } from "@prisma/client";
 
-import { mockedLogger } from "@/mocks/logger";
-import { mockedPrisma } from "@/mocks/prisma";
+import { mockedLogger } from "@/app/_mocks/logger";
+import { mockedPrisma } from "@/app/_mocks/prisma";
 
 import { handle } from "./create";
 

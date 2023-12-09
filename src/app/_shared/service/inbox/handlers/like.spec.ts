@@ -1,8 +1,8 @@
+import { mockedPrisma } from "@/app/_mocks/prisma";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
 } from "@/app/_shared/service/inbox/errors";
-import { mockedPrisma } from "@/mocks/prisma";
 
 import { handle } from "./like";
 

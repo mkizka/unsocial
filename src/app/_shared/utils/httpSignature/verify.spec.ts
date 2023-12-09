@@ -1,7 +1,7 @@
 import type { User } from "@prisma/client";
 import type { NextRequest } from "next/server";
 
-import { mockedPrisma } from "@/mocks/prisma";
+import { mockedPrisma } from "@/app/_mocks/prisma";
 
 import {
   expectedHeader,

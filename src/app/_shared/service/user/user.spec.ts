@@ -1,7 +1,7 @@
 import type { User } from "@prisma/client";
 import bcryptjs from "bcryptjs";
 
-import { mockedPrisma } from "@/mocks/prisma";
+import { mockedPrisma } from "@/app/_mocks/prisma";
 
 import {
   findOrFetchUserById,

@@ -3,8 +3,8 @@ import { captor, mockDeep } from "jest-mock-extended";
 import { http, HttpResponse } from "msw";
 import { setTimeout } from "timers/promises";
 
-import { mockedLogger } from "@/mocks/logger";
-import { server } from "@/mocks/server";
+import { mockedLogger } from "@/app/_mocks/logger";
+import { server } from "@/app/_mocks/server";
 
 import { fetcher, FetcherError, NotOKError } from "./fetcher";
 

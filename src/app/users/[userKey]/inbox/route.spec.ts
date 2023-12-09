@@ -1,9 +1,9 @@
 import { mockDeep } from "jest-mock-extended";
 import type { NextRequest } from "next/server";
 
+import { mockedLogger } from "@/app/_mocks/logger";
 import { inboxService } from "@/app/_shared/service/inbox";
 import { BadActivityRequestError } from "@/app/_shared/service/inbox/errors";
-import { mockedLogger } from "@/mocks/logger";
 
 import { POST } from "./route";
 

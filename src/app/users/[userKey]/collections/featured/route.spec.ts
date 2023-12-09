@@ -1,7 +1,7 @@
 import type { Note, User } from "@prisma/client";
 
+import { mockedPrisma } from "@/app/_mocks/prisma";
 import { userService } from "@/app/_shared/service/user";
-import { mockedPrisma } from "@/mocks/prisma";
 
 import { GET } from "./route";
 
