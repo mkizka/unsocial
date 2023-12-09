@@ -6,6 +6,7 @@ import { inboxNoteSchema } from "@/server/schema/note";
 import { activitypubService } from "@/server/service/activitypub";
 import { userService } from "@/server/service/user";
 import { env } from "@/utils/env";
+import { prisma } from "@/utils/prisma";
 
 const getLocalNoteId = (noteUrl: string) => {
   const url = new URL(noteUrl);
@@ -33,6 +34,34 @@ const findByNoteUrl = (noteUrl: string) => {
   });
 };
 
+type CreateFromActivityParams = {
+  activity: NoteActivity;
+  userId: string;
+  replyToId?: string;
+};
+
+const createFromActivity = ({
+  activity,
+  userId,
+  replyToId,
+}: CreateFromActivityParams) => {
+  return prisma.note.create({
+    data: {
+      userId,
+      url: activity.id,
+      content: activity.content,
+      publishedAt: activity.published,
+      replyToId,
+      attachments: {
+        create: activity.attachment?.map((attachment) => ({
+          url: attachment.url,
+          mediaType: attachment.mediaType,
+        })),
+      },
+    },
+  });
+};
+
 const findOrCreateByUrl = cache(async (url: string) => {
   const localNote = await findByNoteUrl(url);
   if (localNote) {
@@ -54,7 +83,7 @@ const findOrCreateByUrl = cache(async (url: string) => {
   if (noteUser instanceof Error) {
     return noteUser;
   }
-  const newNote = await noteRepository.createFromActivity({
+  const newNote = await createFromActivity({
     activity: parsedNote.data,
     userId: noteUser.id,
   });
@@ -74,7 +103,7 @@ export const create = async (activity: NoteActivity) => {
   if (noteUser instanceof Error) {
     return noteUser;
   }
-  const note = await noteRepository.createFromActivity({
+  const note = await createFromActivity({
     activity,
     userId: noteUser.id,
     replyToId: replyTo?.id,

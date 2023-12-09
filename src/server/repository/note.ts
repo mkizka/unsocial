@@ -1,7 +1,6 @@
 import type { Prisma } from "@prisma/client";
 import { cache } from "react";
 
-import type { NoteActivity } from "@/server/schema/note";
 import { prisma } from "@/utils/prisma";
 
 const includeForNoteCard = {
@@ -115,29 +114,3 @@ export const create = (params: CreateParams) => {
     },
   });
 };
-
-type CreateFromActivityParams = {
-  activity: NoteActivity;
-  userId: string;
-  replyToId?: string;
-};
-
-export const createFromActivity = cache(
-  ({ activity, userId, replyToId }: CreateFromActivityParams) => {
-    return prisma.note.create({
-      data: {
-        userId,
-        url: activity.id,
-        content: activity.content,
-        publishedAt: activity.published,
-        replyToId,
-        attachments: {
-          create: activity.attachment?.map((attachment) => ({
-            url: attachment.url,
-            mediaType: attachment.mediaType,
-          })),
-        },
-      },
-    });
-  },
-);
