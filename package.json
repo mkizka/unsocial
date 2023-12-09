@@ -15,7 +15,7 @@
     "_test:mutation:run": "./scripts/mutation-test.sh",
     "_test:storybook:run": "wait-on tcp:9009 && test-storybook --url http://127.0.0.1:9009",
     "_test:storybook:server": "storybook dev -p 9009 --no-open > /dev/null 2>&1",
-    "all": "run-s -s _lint:fix test:u test:storybook:u",
+    "all": "run-s -s _lint:fix test-u test:storybook-u",
     "build": "SKIP_ENV_VALIDATION=1 next build",
     "dev": "./scripts/dev.sh",
     "e2e": "playwright test",
