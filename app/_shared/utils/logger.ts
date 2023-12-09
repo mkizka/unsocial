@@ -13,7 +13,7 @@ const level = (() => {
   return "info";
 })();
 
-export const logger = winston.createLogger({
+const logger = winston.createLogger({
   level,
   silent: env.NODE_ENV === "test",
   transports: new winston.transports.Console(),
