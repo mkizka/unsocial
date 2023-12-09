@@ -1,9 +1,9 @@
 import type { User } from "@prisma/client";
 import { http, HttpResponse } from "msw";
 
+import { mockedPrisma } from "@/app/_mocks/prisma";
+import { server } from "@/app/_mocks/server";
 import { NotOKError } from "@/app/_shared/utils/fetcher";
-import { mockedPrisma } from "@/mocks/prisma";
-import { server } from "@/mocks/server";
 
 import {
   ActorValidationError,
