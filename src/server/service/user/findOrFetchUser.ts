@@ -1,6 +1,5 @@
 import type { User } from "@prisma/client";
 
-import { userRepository } from "@/server/repository";
 import type { PersonActivity } from "@/server/schema/person";
 import { inboxPersonSchema } from "@/server/schema/person";
 import { webFingerSchema } from "@/server/schema/webFinger";
@@ -88,7 +87,7 @@ const createOrUpdateUser = (
 export const findOrFetchUserById = async (
   id: string,
 ): Promise<User | UserServiceError> => {
-  const existingUser = await userRepository.findUnique({ id });
+  const existingUser = await prisma.user.findUnique({ where: { id } });
   if (!existingUser) {
     // id指定で見つからなかった場合はこれ以上できることないのでエラーを返す
     return new UserNotFoundError();
@@ -127,7 +126,7 @@ export const findOrFetchUserByActor = async (
   if (localUserId) {
     return findOrFetchUserById(localUserId);
   }
-  const existingUser = await userRepository.findUnique({ actorUrl });
+  const existingUser = await prisma.user.findUnique({ where: { actorUrl } });
   if (!existingUser || shouldRefetch(existingUser)) {
     const person = await fetchPersonByActorUrl(actorUrl);
     if (person instanceof Error) {
@@ -142,7 +141,14 @@ export const findOrFetchUserByActor = async (
 export const findOrFetchUserByWebFinger = async (
   user: activitypubService.FetchWebFingerParams,
 ): Promise<User | UserServiceError> => {
-  const existingUser = await userRepository.findUnique(user);
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      preferredUsername_host: {
+        preferredUsername: user.preferredUsername,
+        host: user.host,
+      },
+    },
+  });
   // 自ホストのユーザーは自サーバーのWebFingerを自分で叩くことになるため、
   // 通信せずにエラーを返す
   if (!existingUser && user.host === env.HOST) {

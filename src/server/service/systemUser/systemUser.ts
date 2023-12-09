@@ -1,14 +1,19 @@
 import assert from "assert";
 import crypto from "crypto";
 
-import { userRepository } from "@/server/repository";
 import { signUpUser } from "@/server/service/user/signUpUser";
 import { env } from "@/utils/env";
+import { prisma } from "@/utils/prisma";
 
 export const findOrCreateSystemUser = async () => {
-  const systemUser = await userRepository.findUnique({
-    preferredUsername: env.HOST,
-    host: env.HOST,
+  const systemUser = await prisma.user.findUnique({
+    where: {
+      preferredUsername_host: {
+        preferredUsername: env.HOST,
+        host: env.HOST,
+      },
+    },
+    include: { credential: true },
   });
   if (systemUser) {
     assert(

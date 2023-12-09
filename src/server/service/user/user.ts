@@ -2,9 +2,9 @@ import bcryptjs from "bcryptjs";
 import { cache } from "react";
 import { z } from "zod";
 
-import { userRepository } from "@/server/repository";
 import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
+import { prisma } from "@/utils/prisma";
 
 import {
   findOrFetchUserById,
@@ -36,9 +36,14 @@ type SignInParams = {
 };
 
 const signIn = async ({ preferredUsername, password }: SignInParams) => {
-  const user = await userRepository.findUnique({
-    preferredUsername,
-    host: env.HOST,
+  const user = await prisma.user.findUnique({
+    where: {
+      preferredUsername_host: {
+        preferredUsername,
+        host: env.HOST,
+      },
+    },
+    include: { credential: true },
   });
   if (!user) {
     throw new Error("ユーザーが見つかりません");

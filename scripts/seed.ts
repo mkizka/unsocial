@@ -1,15 +1,18 @@
 #!/usr/bin/env -S pnpm tsx
-import { noteRepository, userRepository } from "@/server/repository";
+import { noteRepository } from "@/server/repository";
 import { userService } from "@/server/service/user";
 import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
+import { prisma } from "@/utils/prisma";
 
 const logger = createLogger("seed");
 
 const main = async () => {
-  const existingUser = await userRepository.findUnique({
-    preferredUsername: "test",
-    host: env.HOST,
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      preferredUsername: "test",
+      host: env.HOST,
+    },
   });
   if (existingUser) {
     logger.info("シード作成をスキップ");
