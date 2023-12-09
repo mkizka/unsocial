@@ -7,7 +7,9 @@ import { webFingerSchema } from "@/server/schema/webFinger";
 import { activitypubService } from "@/server/service/activitypub";
 import { env } from "@/utils/env";
 import { formatZodError } from "@/utils/formatZodError";
+import { getIconHash } from "@/utils/icon";
 import { createLogger } from "@/utils/logger";
+import { prisma } from "@/utils/prisma";
 
 import type { UserServiceError } from "./errors";
 import {
@@ -63,6 +65,26 @@ const fetchPersonByActorUrl = async (
   return parsed.data;
 };
 
+const createOrUpdateUser = (
+  person: PersonActivity,
+  userIdForUpdate?: string,
+) => {
+  const data = {
+    name: person.name,
+    preferredUsername: person.preferredUsername,
+    host: new URL(person.id).host,
+    icon: person.icon?.url ?? null,
+    iconHash: person.icon?.url ? getIconHash(person.icon.url) : null,
+    actorUrl: person.id,
+    inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
+    publicKey: person.publicKey.publicKeyPem,
+    lastFetchedAt: new Date(),
+  };
+  return userIdForUpdate
+    ? prisma.user.update({ where: { id: userIdForUpdate }, data })
+    : prisma.user.create({ data });
+};
+
 export const findOrFetchUserById = async (
   id: string,
 ): Promise<User | UserServiceError> => {
@@ -77,7 +99,7 @@ export const findOrFetchUserById = async (
     if (person instanceof Error) {
       return existingUser;
     }
-    return userRepository.createOrUpdateUser(person, existingUser.id);
+    return createOrUpdateUser(person, existingUser.id);
   }
   return existingUser;
 };
@@ -112,7 +134,7 @@ export const findOrFetchUserByActor = async (
       return existingUser || person;
     }
     // DBにあったら更新、なかったら作成
-    return userRepository.createOrUpdateUser(person, existingUser?.id);
+    return createOrUpdateUser(person, existingUser?.id);
   }
   return existingUser;
 };
@@ -137,7 +159,7 @@ export const findOrFetchUserByWebFinger = async (
       return existingUser || person;
     }
     // DBにあったら更新、なかったら作成
-    return userRepository.createOrUpdateUser(person, existingUser?.id);
+    return createOrUpdateUser(person, existingUser?.id);
   }
   return existingUser;
 };
