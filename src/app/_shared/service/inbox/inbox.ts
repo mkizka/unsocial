@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 
-import { userService } from "@/server/service/user";
+import { userService } from "@/app/_shared/service/user";
 import { verifyRequest } from "@/utils/httpSignature/verify";
 import { createLogger } from "@/utils/logger";
 

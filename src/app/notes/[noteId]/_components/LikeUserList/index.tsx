@@ -1,4 +1,4 @@
-import type { NoteCard } from "@/server/service/note";
+import type { NoteCard } from "@/app/_shared/service/note";
 import { fullUsername } from "@/utils/fullUsername";
 
 type Props = {

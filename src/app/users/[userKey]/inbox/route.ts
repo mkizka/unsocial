@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { inboxService } from "@/server/service/inbox";
+import { inboxService } from "@/app/_shared/service/inbox";
 import { createLogger } from "@/utils/logger";
 import { postDicord } from "@/utils/postDiscord";
 

@@ -1,7 +1,7 @@
 import assert from "assert";
 import crypto from "crypto";
 
-import { signUpUser } from "@/server/service/user/signUpUser";
+import { signUpUser } from "@/app/_shared/service/user/signUpUser";
 import { env } from "@/utils/env";
 import { prisma } from "@/utils/prisma";
 

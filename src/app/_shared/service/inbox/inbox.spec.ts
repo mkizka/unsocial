@@ -1,7 +1,7 @@
 import type { User } from "@prisma/client";
 import type { NextRequest } from "next/server";
 
-import { userService } from "@/server/service/user";
+import { userService } from "@/app/_shared/service/user";
 import { verifyRequest } from "@/utils/httpSignature/verify";
 
 import { ActivitySchemaValidationError } from "./errors";
@@ -29,7 +29,7 @@ const mockedCreate = jest.mocked(create);
 
 const dummyUser = {} as User;
 
-jest.mock("@/server/service/user");
+jest.mock("@/app/_shared/service/user");
 const mockedUserService = jest.mocked(userService);
 mockedUserService.findOrFetchUserByActor.mockResolvedValue(dummyUser);
 

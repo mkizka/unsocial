@@ -2,7 +2,7 @@ import { inboxLikeSchema } from "@/app/_shared/schema/like";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "@/server/service/inbox/errors";
+} from "@/app/_shared/service/inbox/errors";
 import { prisma } from "@/utils/prisma";
 
 import { type InboxHandler, resolveNoteId } from "./shared";

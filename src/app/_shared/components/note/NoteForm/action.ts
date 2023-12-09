@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 
-import { noteService } from "@/server/service";
+import { noteService } from "@/app/_shared/service";
 import { activityStreams } from "@/utils/activitypub";
 import { getServerSession } from "@/utils/getServerSession";
 import {

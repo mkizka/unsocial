@@ -1,13 +1,13 @@
 import { mockDeep } from "jest-mock-extended";
 import type { NextRequest } from "next/server";
 
+import { inboxService } from "@/app/_shared/service/inbox";
+import { BadActivityRequestError } from "@/app/_shared/service/inbox/errors";
 import { mockedLogger } from "@/mocks/logger";
-import { inboxService } from "@/server/service/inbox";
-import { BadActivityRequestError } from "@/server/service/inbox/errors";
 
 import { POST } from "./route";
 
-jest.mock("@/server/service/inbox");
+jest.mock("@/app/_shared/service/inbox");
 const mockedInboxService = jest.mocked(inboxService);
 
 const createMockedRequest = (body: Record<string, string>) => {

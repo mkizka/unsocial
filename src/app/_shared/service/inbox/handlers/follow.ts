@@ -5,8 +5,8 @@ import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
   UnexpectedActivityRequestError,
-} from "@/server/service/inbox/errors";
-import { userService } from "@/server/service/user";
+} from "@/app/_shared/service/inbox/errors";
+import { userService } from "@/app/_shared/service/user";
 import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";

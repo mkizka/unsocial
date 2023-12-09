@@ -3,7 +3,7 @@ import type { User } from "@prisma/client";
 import type { PersonActivity } from "@/app/_shared/schema/person";
 import { inboxPersonSchema } from "@/app/_shared/schema/person";
 import { webFingerSchema } from "@/app/_shared/schema/webFinger";
-import { activitypubService } from "@/server/service/activitypub";
+import { activitypubService } from "@/app/_shared/service/activitypub";
 import { env } from "@/utils/env";
 import { formatZodError } from "@/utils/formatZodError";
 import { getIconHash } from "@/utils/icon";

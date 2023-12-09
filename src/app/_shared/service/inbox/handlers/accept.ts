@@ -2,8 +2,8 @@ import { inboxAcceptSchema } from "@/app/_shared/schema/accept";
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "@/server/service/inbox/errors";
-import { userService } from "@/server/service/user";
+} from "@/app/_shared/service/inbox/errors";
+import { userService } from "@/app/_shared/service/user";
 import { prisma } from "@/utils/prisma";
 
 import type { InboxHandler } from "./shared";

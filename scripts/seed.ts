@@ -1,6 +1,6 @@
 #!/usr/bin/env -S pnpm tsx
-import { noteService } from "@/server/service";
-import { userService } from "@/server/service/user";
+import { noteService } from "@/app/_shared/service";
+import { userService } from "@/app/_shared/service/user";
 import { env } from "@/utils/env";
 import { createLogger } from "@/utils/logger";
 import { prisma } from "@/utils/prisma";

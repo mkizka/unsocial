@@ -3,7 +3,7 @@ import { Fragment } from "react";
 
 import { NoteCard } from "@/app/_shared/components/note/NoteCard";
 import { NoteForm } from "@/app/_shared/components/note/NoteForm";
-import { noteService } from "@/server/service";
+import { noteService } from "@/app/_shared/service";
 
 import { LikeUserList } from "./_components/LikeUserList";
 

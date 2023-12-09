@@ -4,7 +4,7 @@ import NextAuth, { getServerSession as _getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cache } from "react";
 
-import { userService } from "@/server/service/user";
+import { userService } from "@/app/_shared/service/user";
 
 import { createLogger } from "./logger";
 
