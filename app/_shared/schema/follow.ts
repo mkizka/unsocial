@@ -13,4 +13,4 @@ export const inboxFollowSchema = z.object({
     }),
 });
 
-export type FollowActivity = z.infer<typeof inboxFollowSchema>;
+type FollowActivity = z.infer<typeof inboxFollowSchema>;

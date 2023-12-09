@@ -78,16 +78,6 @@ export const invalidDateHeader = {
   "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
 };
 
-export const invalidDigestHeader = {
-  accept: "application/activity+json",
-  "content-type": "application/json",
-  date: "Wed, 01 Jan 2020 00:00:00 GMT",
-  digest: "SHA-256=GJpn7Z0rhlxi7/yIwjEeQln6ix6FqsnOBpzQ156l7mM=__invalid__",
-  host: "remote.example.com",
-  signature: `keyId="https://myhost.example.com/users/dummy_userId/activity#main-key",algorithm="rsa-sha256",headers="(request-target) host date digest",signature="DJ1f8IMyMucicl6MbEMUIMX59omtgeHNyRhNY4sO+3kN9PXdoyjkCiDRf6nrOr2gBRYwGaLlFsGx8B30vBnR62ScOd3pBsAOcxZftDA8ssySQFJpXt9yEQa8aX1Q4TqAG7dH4YHmIRd8RSt4NkcE/USIxis8AsALREQBUfC/QMI1c0EH/KkzFQAHdyET9xc/8+ORVxoIKWORZSxl9FP+7VF04tasu2U35IebrK8uclvICbjFEJoqRlXZ8PkfXltzwY9cqdlHdtZg14mmuO5lZmf1yzhilQdW0hnq7NPfKaGuxGXaQ9aJ1hY33wrH7T69H4fAJNVXIJoZHGLVwQ=="`,
-  "user-agent": "Unsocial/1.2.3 (myhost.example.com)",
-};
-
 export const invalidHostHeader = {
   accept: "application/activity+json",
   "content-type": "application/json",

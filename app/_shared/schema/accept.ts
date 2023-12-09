@@ -9,4 +9,4 @@ export const inboxAcceptSchema = z.object({
   }),
 });
 
-export type AcceptActivity = z.infer<typeof inboxAcceptSchema>;
+type AcceptActivity = z.infer<typeof inboxAcceptSchema>;

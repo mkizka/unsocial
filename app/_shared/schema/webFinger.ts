@@ -19,4 +19,4 @@ export const webFingerSchema = z.object({
     .transform((links) => links.filter(isSelfLink)),
 });
 
-export type WebFinger = z.infer<typeof webFingerSchema>;
+type WebFinger = z.infer<typeof webFingerSchema>;
