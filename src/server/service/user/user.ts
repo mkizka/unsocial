@@ -12,6 +12,8 @@ import {
 } from "./findOrFetchUser";
 import { findOrFetchUserByActor as _findOrFetchUserByActor } from "./findOrFetchUser";
 import { parseUserKey } from "./parseUserKey";
+import type { SignUpUserParams } from "./signUpUser";
+import { signUpUser } from "./signUpUser";
 
 const logger = createLogger("userService");
 
@@ -51,8 +53,8 @@ const signIn = async ({ preferredUsername, password }: SignInParams) => {
   return { id: user.id };
 };
 
-const signUp = async (params: userRepository.CreateParams) => {
-  const newUser = await userRepository.create(params);
+const signUp = async (params: SignUpUserParams) => {
+  const newUser = await signUpUser(params);
   return { id: newUser.id };
 };
 

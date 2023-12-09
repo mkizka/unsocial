@@ -2,6 +2,7 @@ import assert from "assert";
 import crypto from "crypto";
 
 import { userRepository } from "@/server/repository";
+import { signUpUser } from "@/server/service/user/signUpUser";
 import { env } from "@/utils/env";
 
 export const findOrCreateSystemUser = async () => {
@@ -19,7 +20,7 @@ export const findOrCreateSystemUser = async () => {
       privateKey: systemUser.credential.privateKey,
     };
   }
-  return userRepository.create({
+  return signUpUser({
     preferredUsername: env.HOST,
     password: crypto.randomUUID(),
   });
