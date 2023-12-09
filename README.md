@@ -1,8 +1,6 @@
 # Unsocial
 
-![](screenshot_1.png)
-
-![](screenshot_2.png)
+<img src="screenshot1.png" width="45%" />　<img src="screenshot2.png" width="45%" />
 
 Demo: https://unsocial.dev
 
