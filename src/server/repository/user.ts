@@ -64,20 +64,3 @@ export const create = async ({
     privateKey: keys.privateKey,
   };
 };
-
-type UpdateIconParams = {
-  userId: string;
-  icon: string;
-  iconHash: string;
-};
-
-export const updateIcon = async ({
-  userId,
-  icon,
-  iconHash,
-}: UpdateIconParams) => {
-  return prisma.user.update({
-    where: { id: userId },
-    data: { icon, iconHash },
-  });
-};

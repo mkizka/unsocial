@@ -1,9 +1,9 @@
 import crypto from "crypto";
 import sharp from "sharp";
 
-import { userRepository } from "@/server/repository";
 import { env } from "@/utils/env";
 import { getIconHash } from "@/utils/icon";
+import { prisma } from "@/utils/prisma";
 
 import * as s3 from "./s3";
 
@@ -16,6 +16,12 @@ const getIconUrl = (key: string) => {
   return `${env.AWS_ENDPOINT}/${env.AWS_BUCKET}/${key}`;
 };
 
+type UpdateIconParams = {
+  userId: string;
+  icon: string;
+  iconHash: string;
+};
+
 export const update = async (userId: string, file: File) => {
   const key = `icons/${crypto.randomUUID()}.png`;
   await s3.putObject({
@@ -24,9 +30,8 @@ export const update = async (userId: string, file: File) => {
   });
   const icon = getIconUrl(key);
   const iconHash = getIconHash(icon);
-  await userRepository.updateIcon({
-    userId,
-    icon,
-    iconHash,
+  await prisma.user.update({
+    where: { id: userId },
+    data: { icon, iconHash },
   });
 };
