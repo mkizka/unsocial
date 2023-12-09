@@ -7,10 +7,10 @@ import {
   UnexpectedActivityRequestError,
 } from "@/app/_shared/service/inbox/errors";
 import { userService } from "@/app/_shared/service/user";
-import { env } from "@/utils/env";
-import { createLogger } from "@/utils/logger";
-import { prisma } from "@/utils/prisma";
-import { relayActivityToInboxUrl } from "@/utils/relayActivity";
+import { env } from "@/app/_shared/utils/env";
+import { createLogger } from "@/app/_shared/utils/logger";
+import { prisma } from "@/app/_shared/utils/prisma";
+import { relayActivityToInboxUrl } from "@/app/_shared/utils/relayActivity";
 
 import { type InboxHandler } from "./shared";
 

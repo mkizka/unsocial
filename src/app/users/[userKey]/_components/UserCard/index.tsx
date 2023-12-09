@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 
 import { UserIcon } from "@/app/_shared/components/user/UserIcon";
 import { userService } from "@/app/_shared/service/user";
-import { env } from "@/utils/env";
-import { fullUsername } from "@/utils/fullUsername";
-import { getServerSession } from "@/utils/getServerSession";
+import { env } from "@/app/_shared/utils/env";
+import { fullUsername } from "@/app/_shared/utils/fullUsername";
+import { getServerSession } from "@/app/_shared/utils/getServerSession";
 
 import { FollowButton } from "./FollowButton";
 import { followCountService } from "./followCountService";

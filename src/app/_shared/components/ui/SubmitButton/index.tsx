@@ -2,7 +2,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 
 import { Spinner } from "@/app/_shared/components/ui/Spinner";
-import { cn } from "@/utils/cn";
+import { cn } from "@/app/_shared/utils/cn";
 
 type Props = ComponentProps<"button"> & {
   children?: ReactNode;

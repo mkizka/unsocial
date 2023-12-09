@@ -3,8 +3,8 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import sharp from "sharp";
 
-import { fetcher } from "@/utils/fetcher";
-import { prisma } from "@/utils/prisma";
+import { fetcher } from "@/app/_shared/utils/fetcher";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 sharp.cache(false);
 

@@ -2,9 +2,9 @@ import bcryptjs from "bcryptjs";
 import { cache } from "react";
 import { z } from "zod";
 
-import { env } from "@/utils/env";
-import { createLogger } from "@/utils/logger";
-import { prisma } from "@/utils/prisma";
+import { env } from "@/app/_shared/utils/env";
+import { createLogger } from "@/app/_shared/utils/logger";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 import {
   findOrFetchUserById,

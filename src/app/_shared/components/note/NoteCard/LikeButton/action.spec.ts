@@ -1,15 +1,15 @@
 import type { Session } from "next-auth";
 
+import { getServerSession } from "@/app/_shared/utils/getServerSession";
+import { relayActivityToInboxUrl } from "@/app/_shared/utils/relayActivity";
 import { mockedPrisma } from "@/mocks/prisma";
-import { getServerSession } from "@/utils/getServerSession";
-import { relayActivityToInboxUrl } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
-jest.mock("@/utils/relayActivity");
+jest.mock("@/app/_shared/utils/relayActivity");
 const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
 
-jest.mock("@/utils/getServerSession");
+jest.mock("@/app/_shared/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
 
 const dummyLocalUser = {

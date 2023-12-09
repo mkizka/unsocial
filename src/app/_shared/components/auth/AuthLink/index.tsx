@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { getServerSession } from "@/utils/getServerSession";
+import { getServerSession } from "@/app/_shared/utils/getServerSession";
 
 import { SignOutButton } from "./SignOutButton";
 

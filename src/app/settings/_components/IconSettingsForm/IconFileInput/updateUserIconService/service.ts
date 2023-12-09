@@ -1,9 +1,9 @@
 import crypto from "crypto";
 import sharp from "sharp";
 
-import { env } from "@/utils/env";
-import { getIconHash } from "@/utils/icon";
-import { prisma } from "@/utils/prisma";
+import { env } from "@/app/_shared/utils/env";
+import { getIconHash } from "@/app/_shared/utils/icon";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 import * as s3 from "./s3";
 

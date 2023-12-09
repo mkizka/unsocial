@@ -4,11 +4,11 @@ import type { PersonActivity } from "@/app/_shared/schema/person";
 import { inboxPersonSchema } from "@/app/_shared/schema/person";
 import { webFingerSchema } from "@/app/_shared/schema/webFinger";
 import { activitypubService } from "@/app/_shared/service/activitypub";
-import { env } from "@/utils/env";
-import { formatZodError } from "@/utils/formatZodError";
-import { getIconHash } from "@/utils/icon";
-import { createLogger } from "@/utils/logger";
-import { prisma } from "@/utils/prisma";
+import { env } from "@/app/_shared/utils/env";
+import { formatZodError } from "@/app/_shared/utils/formatZodError";
+import { getIconHash } from "@/app/_shared/utils/icon";
+import { createLogger } from "@/app/_shared/utils/logger";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 import type { UserServiceError } from "./errors";
 import {

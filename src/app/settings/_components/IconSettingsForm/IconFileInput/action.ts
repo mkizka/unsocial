@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { getUser } from "@/utils/getServerSession";
+import { getUser } from "@/app/_shared/utils/getServerSession";
 
 import { updateUserIconService } from "./updateUserIconService";
 

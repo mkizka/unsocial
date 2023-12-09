@@ -2,7 +2,7 @@ import type { User } from "@prisma/client";
 import type { NextRequest } from "next/server";
 
 import { userService } from "@/app/_shared/service/user";
-import { verifyRequest } from "@/utils/httpSignature/verify";
+import { verifyRequest } from "@/app/_shared/utils/httpSignature/verify";
 
 import { ActivitySchemaValidationError } from "./errors";
 import { handle as accept } from "./handlers/accept";
@@ -33,7 +33,7 @@ jest.mock("@/app/_shared/service/user");
 const mockedUserService = jest.mocked(userService);
 mockedUserService.findOrFetchUserByActor.mockResolvedValue(dummyUser);
 
-jest.mock("@/utils/httpSignature/verify");
+jest.mock("@/app/_shared/utils/httpSignature/verify");
 const mockedVerifyActivity = jest.mocked(verifyRequest);
 mockedVerifyActivity.mockResolvedValue({ isValid: true });
 

@@ -1,8 +1,8 @@
 import bcryptjs from "bcryptjs";
 import crypto from "crypto";
 
-import { env } from "@/utils/env";
-import { prisma } from "@/utils/prisma";
+import { env } from "@/app/_shared/utils/env";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 const createKeys = () => {
   return crypto.generateKeyPairSync("rsa", {

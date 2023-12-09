@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-import { getUser } from "@/utils/getServerSession";
-import { prisma } from "@/utils/prisma";
+import { getUser } from "@/app/_shared/utils/getServerSession";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 import { IconFileInput } from "./IconFileInput";
 

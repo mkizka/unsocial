@@ -7,7 +7,7 @@ import {
   BadActivityRequestError,
 } from "@/app/_shared/service/inbox/errors";
 import { userService } from "@/app/_shared/service/user";
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 import type { InboxHandler } from "./shared";
 import { resolveNoteId } from "./shared";

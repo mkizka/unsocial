@@ -1,5 +1,5 @@
 import type { NoteCard } from "@/app/_shared/service/note";
-import { fullUsername } from "@/utils/fullUsername";
+import { fullUsername } from "@/app/_shared/utils/fullUsername";
 
 type Props = {
   users: NoteCard["likes"][0]["user"][];

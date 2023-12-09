@@ -2,8 +2,8 @@ import assert from "assert";
 import crypto from "crypto";
 
 import { signUpUser } from "@/app/_shared/service/user/signUpUser";
-import { env } from "@/utils/env";
-import { prisma } from "@/utils/prisma";
+import { env } from "@/app/_shared/utils/env";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 export const findOrCreateSystemUser = async () => {
   const systemUser = await prisma.user.findUnique({

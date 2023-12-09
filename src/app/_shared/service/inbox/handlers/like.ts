@@ -3,7 +3,7 @@ import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
 } from "@/app/_shared/service/inbox/errors";
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 import { type InboxHandler, resolveNoteId } from "./shared";
 

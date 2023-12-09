@@ -1,7 +1,7 @@
 import { systemUserService } from "@/app/_shared/service/systemUser";
-import { fetcher } from "@/utils/fetcher";
-import { createLogger } from "@/utils/logger";
-import { safeUrl } from "@/utils/safeUrl";
+import { fetcher } from "@/app/_shared/utils/fetcher";
+import { createLogger } from "@/app/_shared/utils/logger";
+import { safeUrl } from "@/app/_shared/utils/safeUrl";
 
 const logger = createLogger("apRepository");
 

@@ -1,19 +1,19 @@
 import type { Note } from "@prisma/client";
 import type { Session } from "next-auth";
 
+import { getServerSession } from "@/app/_shared/utils/getServerSession";
+import { relayActivityToFollowers } from "@/app/_shared/utils/relayActivity";
 import { mockedPrisma } from "@/mocks/prisma";
-import { getServerSession } from "@/utils/getServerSession";
-import { relayActivityToFollowers } from "@/utils/relayActivity";
 
 import { action } from "./action";
 
 jest.useFakeTimers();
 jest.setSystemTime(new Date("2023-01-01T00:00:00Z"));
 
-jest.mock("@/utils/getServerSession");
+jest.mock("@/app/_shared/utils/getServerSession");
 const mockedGetServerSession = jest.mocked(getServerSession);
 
-jest.mock("@/utils/relayActivity");
+jest.mock("@/app/_shared/utils/relayActivity");
 const mockedRelayActivityToFollowers = jest.mocked(relayActivityToFollowers);
 
 describe("NoteForm/action", () => {

@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 export const followers = cache(async (userId: string) => {
   const follows = await prisma.follow.findMany({

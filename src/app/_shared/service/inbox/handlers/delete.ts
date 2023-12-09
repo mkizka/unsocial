@@ -1,6 +1,6 @@
 import { inboxDeleteSchema } from "@/app/_shared/schema/delete";
 import { ActivitySchemaValidationError } from "@/app/_shared/service/inbox/errors";
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 import type { InboxHandler } from "./shared";
 

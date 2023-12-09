@@ -1,7 +1,7 @@
 import type { PutObjectCommandInput } from "@aws-sdk/client-s3";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
-import { env } from "@/utils/env";
+import { env } from "@/app/_shared/utils/env";
 
 const client = new S3Client({
   region: "ap-northeast-1",

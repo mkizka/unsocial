@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import { cache } from "react";
 
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 const includeForNoteCard = {
   user: true,

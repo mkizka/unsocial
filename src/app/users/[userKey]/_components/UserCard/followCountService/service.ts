@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { prisma } from "@/utils/prisma";
+import { prisma } from "@/app/_shared/utils/prisma";
 
 const countFollowers = (userId: string) => {
   return prisma.follow.count({

@@ -2,12 +2,12 @@
 import { z } from "zod";
 
 import { noteService } from "@/app/_shared/service";
-import { activityStreams } from "@/utils/activitypub";
-import { getServerSession } from "@/utils/getServerSession";
+import { activityStreams } from "@/app/_shared/utils/activitypub";
+import { getServerSession } from "@/app/_shared/utils/getServerSession";
 import {
   relayActivityToFollowers,
   relayActivityToInboxUrl,
-} from "@/utils/relayActivity";
+} from "@/app/_shared/utils/relayActivity";
 
 const formSchame = z.object({
   content: z.string().min(1).max(280),

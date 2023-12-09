@@ -1,7 +1,7 @@
 import { inboxCreateSchema } from "@/app/_shared/schema/create";
 import { createNoteActivityService } from "@/app/_shared/service/creacteNoteFromActivityService";
 import { ActivitySchemaValidationError } from "@/app/_shared/service/inbox/errors";
-import { createLogger } from "@/utils/logger";
+import { createLogger } from "@/app/_shared/utils/logger";
 
 import { type InboxHandler } from "./shared";
 

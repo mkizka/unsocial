@@ -5,8 +5,8 @@ import { useFormState } from "react-dom";
 
 import { Card } from "@/app/_shared/components/ui/Card";
 import { SubmitButton } from "@/app/_shared/components/ui/SubmitButton";
-import { cn } from "@/utils/cn";
-import { getIconPath } from "@/utils/icon";
+import { cn } from "@/app/_shared/utils/cn";
+import { getIconPath } from "@/app/_shared/utils/icon";
 
 import { action } from "./action";
 
