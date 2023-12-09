@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`app/_components/SearchModal Default play-test 1`] = `
+exports[`_components/SearchModal Default play-test 1`] = `
 <button data-testid="search-modal__button">
   <svg xmlns="http://www.w3.org/2000/svg"
        fill="none"
@@ -19,7 +19,7 @@ exports[`app/_components/SearchModal Default play-test 1`] = `
 </button>
 `;
 
-exports[`app/_components/SearchModal InvalidInput play-test 1`] = `
+exports[`_components/SearchModal InvalidInput play-test 1`] = `
 <button data-testid="search-modal__button">
   <svg xmlns="http://www.w3.org/2000/svg"
        fill="none"
