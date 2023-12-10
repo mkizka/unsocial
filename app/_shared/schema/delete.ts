@@ -9,4 +9,4 @@ export const inboxDeleteSchema = z.object({
   }),
 });
 
-export type DeleteActivity = z.infer<typeof inboxDeleteSchema>;
+type DeleteActivity = z.infer<typeof inboxDeleteSchema>;

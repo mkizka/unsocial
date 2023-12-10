@@ -14,4 +14,4 @@ export const inboxLikeSchema = z.object({
   content: z.string().optional(),
 });
 
-export type LikeActivity = z.infer<typeof inboxLikeSchema>;
+type LikeActivity = z.infer<typeof inboxLikeSchema>;

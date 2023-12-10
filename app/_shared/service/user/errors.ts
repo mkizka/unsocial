@@ -11,7 +11,3 @@ export class WebfingerValidationError extends UserServiceError {
 export class ActorValidationError extends UserServiceError {
   name = "ActorValidationError";
 }
-
-export class NoActorInWebFingerError extends UserServiceError {
-  name = "NoActorInWebFingerError";
-}

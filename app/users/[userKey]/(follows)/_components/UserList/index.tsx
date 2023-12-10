@@ -5,7 +5,7 @@ import { userService } from "@/_shared/service/user";
 import { followFindService } from "./findFollowService";
 import { UserItem } from "./UserItem";
 
-export type Props = {
+type Props = {
   userKey: string;
   listBy: "followees" | "followers";
 };

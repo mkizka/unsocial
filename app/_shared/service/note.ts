@@ -30,7 +30,7 @@ const formatNote = (
 export type NoteCard = ReturnType<typeof formatNote>;
 
 // 投稿(NoteCard) -> リプライ1(NoteCard) -> リプライ2(Note)までしか遡れない型
-export type NoteCardWithReplies = NoteCard & {
+type NoteCardWithReplies = NoteCard & {
   replyTo: NoteCard | null;
   replies: (NoteCard & {
     replies: Note[];
@@ -71,7 +71,7 @@ export const findManyNoteCards = cache(
   },
 );
 
-export type CreateParams = {
+type CreateParams = {
   userId: string;
   content: string;
   publishedAt: Date;

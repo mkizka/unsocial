@@ -12,7 +12,7 @@ import { LikeButton } from "./LikeButton";
 import { PublishedAt } from "./PublishedAt";
 import { ReplyButton } from "./ReplyButton";
 
-export type Props = {
+type Props = {
   note: noteService.NoteCard;
   showDetail?: boolean;
   withReplyLink?: boolean;

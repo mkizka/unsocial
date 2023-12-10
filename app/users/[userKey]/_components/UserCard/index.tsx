@@ -11,7 +11,7 @@ import { FollowButton } from "./FollowButton";
 import { followCountService } from "./followCountService";
 import { RefetchButton } from "./RefetchButton";
 
-export type Props = {
+type Props = {
   userKey: string;
 };
 
