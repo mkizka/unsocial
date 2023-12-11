@@ -140,8 +140,8 @@ devDependencies:
     specifier: 10.4.16
     version: 10.4.16(postcss@8.4.32)
   cli-markdown:
-    specifier: 3.0.5
-    version: 3.0.5
+    specifier: 3.1.0
+    version: 3.1.0
   dotenv-cli:
     specifier: 7.3.0
     version: 7.3.0
@@ -4063,8 +4063,8 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
-  /@sindresorhus/is@3.1.2:
-    resolution: {integrity: sha512-JiX9vxoKMmu8Y3Zr2RVathBL1Cdu4Nt4MuNWemt1Nc06A0RAin9c5FArkhGsyMBWfCu4zj+9b+GxtjAnE4qqLQ==}
+  /@sindresorhus/is@4.6.0:
+    resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
     engines: {node: '>=10'}
     dev: true
 
@@ -6088,8 +6088,11 @@ packages:
     resolution: {integrity: sha512-y9euML0cim1JrykNxADLfaG0FgD1g/yTHwUs/Jg9ZIU7WKj2/4IW9Lbb1WZbvck78W/lfGXFfe+u2EGfIJXdLQ==}
     dev: true
 
-  /@types/marked@5.0.0:
-    resolution: {integrity: sha512-YcZe50jhltsCq7rc9MNZC/4QB/OnA2Pd6hrOSTOFajtabN+38slqgDDCeE/0F83SjkKBQcsZUj7VLWR0H5cKRA==}
+  /@types/marked@6.0.0:
+    resolution: {integrity: sha512-jmjpa4BwUsmhxcfsgUit/7A9KbrC48Q0q8KvnY107ogcjGgTFDlIL3RpihNpx2Mu1hM4mdFQjoVc4O6JoGKHsA==}
+    deprecated: This is a stub types definition. marked provides its own type definitions, so you do not need this installed.
+    dependencies:
+      marked: 11.0.1
     dev: true
 
   /@types/mdx@2.0.10:
@@ -7543,24 +7546,16 @@ packages:
   /caniuse-lite@1.0.30001561:
     resolution: {integrity: sha512-NTt0DNoKe958Q0BE0j0c1V9jbUzhBxHIEJy7asmGrpE0yG63KTV7PLHPnK2E1O9RsQrQ081I3NLuXGS6zht3cw==}
 
-  /capital-case@1.0.4:
-    resolution: {integrity: sha512-ds37W8CytHgwnhGGTi88pcPyR15qoNkOpYwmMMfnWqqWgESapLqvDx6huFjQ5vqWSn2Z06173XNA7LtMOeUh1A==}
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.6.2
-      upper-case-first: 2.0.2
-    dev: true
-
   /case-sensitive-paths-webpack-plugin@2.4.0:
     resolution: {integrity: sha512-roIFONhcxog0JSSWbvVAh3OocukmSgpqOH6YpMkCvav/ySIV3JKg4Dc8vYtQjYi/UxpNE36r/9v+VqTQqgkYmw==}
     engines: {node: '>=4'}
     dev: true
 
-  /chalk-string@2.0.0:
-    resolution: {integrity: sha512-uK1/l1PUB1YgDob9l5iKsnAKKtYOXhXhHfAhXu86VCtl14URFLrIBKy/eN1Nm/L5phPpoUaokrkvXAL4nGBnbw==}
-    engines: {node: '>=16.17.0'}
+  /chalk-string@3.0.0:
+    resolution: {integrity: sha512-ns9W/LjL7t0NmExYCGwDNHsTt4DovG5YahWayBX8G1+bWUiVs88qgElNfHB4D0EGnuc5dTKNqE91Lge+vVseQQ==}
+    engines: {node: '>=18.18.0'}
     dependencies:
-      colors-option: 5.0.0
+      colors-option: 6.0.0
       is-plain-obj: 4.1.0
     dev: true
 
@@ -7593,21 +7588,8 @@ packages:
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: true
 
-  /change-case@4.1.2:
-    resolution: {integrity: sha512-bSxY2ws9OtviILG1EiY5K7NNxkqg/JnRnFxLtKQ96JaviiIxi7djMrSd0ECT9AC+lttClmYwKw53BWpOMblo7A==}
-    dependencies:
-      camel-case: 4.1.2
-      capital-case: 1.0.4
-      constant-case: 3.0.4
-      dot-case: 3.0.4
-      header-case: 2.0.4
-      no-case: 3.0.4
-      param-case: 3.0.4
-      pascal-case: 3.1.2
-      path-case: 3.0.4
-      sentence-case: 3.0.4
-      snake-case: 3.0.4
-      tslib: 2.6.2
+  /change-case@5.3.0:
+    resolution: {integrity: sha512-Eykca0fGS/xYlx2fG5NqnGSnsWauhSGiSXYhB1kO6E909GUfo8S54u4UZNS7lMJmgZumZ2SUpWaoLgAcfQRICg==}
     dev: true
 
   /char-regex@1.0.2:
@@ -7716,17 +7698,17 @@ packages:
       yargs: 16.2.0
     dev: true
 
-  /cli-html@4.0.1:
-    resolution: {integrity: sha512-Jpu3UhIuMtoFCks8sldoSm1eAeh1hEctBq8KaG3pBrJJI2G2mNmP8Zpc/Un4k6SDg2T9mUDER4ZTAV/QJ+TiWQ==}
-    engines: {node: '>=16', npm: '>=8'}
+  /cli-html@4.0.3:
+    resolution: {integrity: sha512-H60k4r/w54UIvShzLuhhDEO67cQ6B8jzjN4nXGgvKNN9GJ/pQXdeJ+I+dB3ajDylixhhnl3SsAKcrqOMP0Cu0g==}
+    engines: {node: '>=18', npm: '>=8'}
     hasBin: true
     dependencies:
       ansi-align: 3.0.1
       ansi-escapes: 6.2.0
       boxen: 7.1.1
       chalk: 5.3.0
-      chalk-string: 2.0.0
-      change-case: 4.1.2
+      chalk-string: 3.0.0
+      change-case: 5.3.0
       cli-highlight: 2.1.11
       cli-table3: 0.6.3
       color-namer: 1.4.0
@@ -7734,7 +7716,7 @@ packages:
       concat-stream: 2.0.0
       env-paths: 3.0.0
       he: 1.2.0
-      inline-style-parser: 0.1.1
+      inline-style-parser: 0.2.2
       languages-aliases: 3.0.0
       longest-line: 0.0.3
       normalize-html-whitespace: 1.0.0
@@ -7742,22 +7724,24 @@ packages:
       parse5: 7.1.2
       romanize: 1.1.1
       supports-hyperlinks: 3.0.0
-      term-size: 3.0.2
-      wrap-ansi: 8.1.0
+      term-size: 4.0.0
+      wrap-ansi: 9.0.0
       yaml: 2.3.4
     dev: true
 
-  /cli-markdown@3.0.5:
-    resolution: {integrity: sha512-30mmC6J8Sku62jd8gOr2x0IxwyymD3Pr9u60yC60Vur3kS6l07ukaBe/HhWa1iDDNsLuHvYS9z34mRDSrNJPpg==}
+  /cli-markdown@3.1.0:
+    resolution: {integrity: sha512-hCi47y3SRP+q4AVFKn1eFu9sYXWzW8IWHJp5me5NXVZGWcmU34nK2zOQK6y2UZw1whGo6Xd9qUwGb6oJU+gU5Q==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     hasBin: true
     dependencies:
-      '@types/marked': 5.0.0
-      cli-html: 4.0.1
+      '@types/marked': 6.0.0
+      cli-html: 4.0.3
       concat-stream: 2.0.0
-      marked: 5.1.0
-      marked-extended-tables: 1.0.6(marked@5.1.0)
-      node-emoji: 2.1.0
+      marked: 11.0.1
+      marked-alert: 2.0.1(marked@11.0.1)
+      marked-extended-tables: 1.0.8(marked@11.0.1)
+      marked-footnote: 1.2.0(marked@11.0.1)
+      node-emoji: 2.1.3
     dev: true
 
   /cli-spinners@2.8.0:
@@ -7897,9 +7881,9 @@ packages:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
     dev: true
 
-  /colors-option@5.0.0:
-    resolution: {integrity: sha512-tlLwb40JtYBb/KmJBz72l1tLKYGhuj2/lHKbHceRrCnLtvvmdiZwliiCNrIS3gpvUKnWkUyk/Q0OqmMKkyF7fA==}
-    engines: {node: '>=16.17.0'}
+  /colors-option@6.0.0:
+    resolution: {integrity: sha512-HBOITH+ixtQMY0D0mFLkHHbSlYdoN9KGu8vS6bLSYkaJm/bb6JbCNWdHKw71jhYNNf2IVlIe9K0TdACq+8Ztrw==}
+    engines: {node: '>=18.18.0'}
     dependencies:
       chalk: 5.3.0
       is-plain-obj: 4.1.0
@@ -8019,14 +8003,6 @@ packages:
 
   /console-browserify@1.2.0:
     resolution: {integrity: sha512-ZMkYO/LkF17QvCPqM0gxw8yUzigAOZOSWSHg91FH6orS7vcEj5dVZTidN2fQ14yBSdg97RqhSNwLUXInd52OTA==}
-    dev: true
-
-  /constant-case@3.0.4:
-    resolution: {integrity: sha512-I2hSBi7Vvs7BEuJDr5dDHfzb/Ruj3FyvFyh7KLilAjNQw3Be+xgqUBA2W6scVEcL0hL1dwPRtIqEPVUCKkSsyQ==}
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.6.2
-      upper-case: 2.0.2
     dev: true
 
   /constants-browserify@1.0.0:
@@ -10369,13 +10345,6 @@ packages:
     hasBin: true
     dev: true
 
-  /header-case@2.0.4:
-    resolution: {integrity: sha512-H/vuk5TEEVZwrR0lp2zed9OCo1uAILMlx0JEMgC26rzyJJ3N1v6XkwHHXJQdR2doSjcGPM6OKPYoJgf0plJ11Q==}
-    dependencies:
-      capital-case: 1.0.4
-      tslib: 2.6.2
-    dev: true
-
   /headers-polyfill@4.0.2:
     resolution: {integrity: sha512-EWGTfnTqAO2L/j5HZgoM/3z82L7necsJ0pO9Tp0X1wil3PDLrkypTBRgVO2ExehEEvUycejZD3FuRaXpZZc3kw==}
     dev: true
@@ -10627,8 +10596,8 @@ packages:
   /ini@1.3.8:
     resolution: {integrity: sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==}
 
-  /inline-style-parser@0.1.1:
-    resolution: {integrity: sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==}
+  /inline-style-parser@0.2.2:
+    resolution: {integrity: sha512-EcKzdTHVe8wFVOGEYXiW9WmJXPjqi1T+234YpJr98RiFYKHV3cdy1+3mkTE+KHTHxFFLH51SfaGOoUdW+v7ViQ==}
     dev: true
 
   /inquirer@8.2.5:
@@ -12247,16 +12216,32 @@ packages:
       react: 18.3.0-canary-d803f519e-20231020
     dev: true
 
-  /marked-extended-tables@1.0.6(marked@5.1.0):
-    resolution: {integrity: sha512-l3bgWsVHxJLaZhDGYdg3tREoUt+Jzq05fGAoKfeORAyz149N/jxDOimcg4wYV27G2M/6meZR28jVgtV+qTXD1g==}
+  /marked-alert@2.0.1(marked@11.0.1):
+    resolution: {integrity: sha512-dREhBjpPEN87b5AdlpETVoEpYiROQJ2M01sqjvQetKqpfi92BQRfSFKPIEkm90RnMpv5CFLNpWfGO6bx+tnayQ==}
     peerDependencies:
-      marked: ^3.0.0 || ^4.0.0 || ^5.0.0
+      marked: '>=7.0.0'
     dependencies:
-      marked: 5.1.0
+      marked: 11.0.1
     dev: true
 
-  /marked@5.1.0:
-    resolution: {integrity: sha512-z3/nBe7aTI8JDszlYLk7dDVNpngjw0o1ZJtrA9kIfkkHcIF+xH7mO23aISl4WxP83elU+MFROgahqdpd05lMEQ==}
+  /marked-extended-tables@1.0.8(marked@11.0.1):
+    resolution: {integrity: sha512-GcVQP7EnfQ98o09ooqM4t4M0qfpKdKuk7/z4qZfgkLyXTXsIyFS1eeBmfC36o1NbR6aSq8ynL/LeTz3w4RS27Q==}
+    peerDependencies:
+      marked: '>=3 <12'
+    dependencies:
+      marked: 11.0.1
+    dev: true
+
+  /marked-footnote@1.2.0(marked@11.0.1):
+    resolution: {integrity: sha512-hDlQLGRzfTGTrOL1t4S0Vzn3agukkYI0oslebqW6YgIawYqL2r5i1hOsDJGnpYTCW9S/36Vy2Ha21siQavlanw==}
+    peerDependencies:
+      marked: '>=7.0.0'
+    dependencies:
+      marked: 11.0.1
+    dev: true
+
+  /marked@11.0.1:
+    resolution: {integrity: sha512-P4kDhFEMlvLePBPRwOcMOv6+lYUbhfbSxJFs3Jb4Qx7v6K7l+k8Dxh9CEGfRvK71tL+qIFz5y7Pe4uzt4+/A3A==}
     engines: {node: '>= 18'}
     hasBin: true
     dev: true
@@ -12691,10 +12676,11 @@ packages:
       minimatch: 3.1.2
     dev: true
 
-  /node-emoji@2.1.0:
-    resolution: {integrity: sha512-tcsBm9C6FmPN5Wo7OjFi9lgMyJjvkAeirmjR/ax8Ttfqy4N8PoFic26uqFTIgayHPNI5FH4ltUvfh9kHzwcK9A==}
+  /node-emoji@2.1.3:
+    resolution: {integrity: sha512-E2WEOVsgs7O16zsURJ/eH8BqhF029wGpEOnv7Urwdo2wmQanOACwJQh0devF9D9RhoZru0+9JXIS0dBXIAz+lA==}
+    engines: {node: '>=18'}
     dependencies:
-      '@sindresorhus/is': 3.1.2
+      '@sindresorhus/is': 4.6.0
       char-regex: 1.0.2
       emojilib: 2.4.0
       skin-tone: 2.0.0
@@ -13335,13 +13321,6 @@ packages:
 
   /path-browserify@1.0.1:
     resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
-    dev: true
-
-  /path-case@3.0.4:
-    resolution: {integrity: sha512-qO4qCFjXqVTrcbPt/hQfhTQ+VhFsqNKOPtytgNKkKxSoEp3XPUQ8ObFuePylOIok5gjn69ry8XiULxCwot3Wfg==}
-    dependencies:
-      dot-case: 3.0.4
-      tslib: 2.6.2
     dev: true
 
   /path-exists@3.0.0:
@@ -14758,14 +14737,6 @@ packages:
       - supports-color
     dev: true
 
-  /sentence-case@3.0.4:
-    resolution: {integrity: sha512-8LS0JInaQMCRoQ7YUytAo/xUu5W2XnQxV2HI/6uM6U7CITS1RqPElr30V6uIqyMKM9lJGRVFy5/4CuzcixNYSg==}
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.6.2
-      upper-case-first: 2.0.2
-    dev: true
-
   /serialize-javascript@6.0.1:
     resolution: {integrity: sha512-owoXEFjWRllis8/M1Q+Cw5k8ZH40e3zhp/ovX+Xr/vi1qj6QesbyXXViFbpNvWvPNAD62SutwEXavefrLJWj7w==}
     dependencies:
@@ -14931,13 +14902,6 @@ packages:
     dependencies:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 5.0.0
-    dev: true
-
-  /snake-case@3.0.4:
-    resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
-    dependencies:
-      dot-case: 3.0.4
-      tslib: 2.6.2
     dev: true
 
   /source-map-js@1.0.2:
@@ -15515,9 +15479,10 @@ packages:
       unique-string: 2.0.0
     dev: true
 
-  /term-size@3.0.2:
-    resolution: {integrity: sha512-YfE8KwjrumviCxmeOS1r1hAwqUcd/AnhrG/Pol/Gry91EyUCS+jQH0qFUZOUkpGQ5rXsKMK6S6kjne53ytYS/w==}
+  /term-size@4.0.0:
+    resolution: {integrity: sha512-105zga8eUjLH0I+ffu2UXZLCHCEu6fbgpeKRnBmScUQuMbEXtR77DQkUS9XoaJhvxko6W/4ZiwcPETtzYUgYrw==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    deprecated: Renamed to terminal-size
     dev: true
 
   /terser-webpack-plugin@5.3.9(@swc/core@1.3.96)(esbuild@0.18.20)(webpack@5.89.0):
@@ -16096,18 +16061,6 @@ packages:
       browserslist: 4.22.1
       escalade: 3.1.1
       picocolors: 1.0.0
-
-  /upper-case-first@2.0.2:
-    resolution: {integrity: sha512-514ppYHBaKwfJRK/pNC6c/OxfGa0obSnAl106u97Ed0I625Nin96KAjttZF6ZL3e1XLtphxnqrOi9iWgm+u+bg==}
-    dependencies:
-      tslib: 2.6.2
-    dev: true
-
-  /upper-case@2.0.2:
-    resolution: {integrity: sha512-KgdgDGJt2TpuwBUIjgG6lzw2GWFRCW9Qkfkiv0DxqHHLYJHmtmdUIKcZd8rHgFSjopVTlw6ggzCm1b8MFQwikg==}
-    dependencies:
-      tslib: 2.6.2
-    dev: true
 
   /uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
