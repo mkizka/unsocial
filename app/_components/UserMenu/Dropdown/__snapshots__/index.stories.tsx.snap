@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`_components/UserMenu/Dropdown Default play-test 1`] = `
+<div class="rounded bg-primary-light p-4 shadow flex w-64 justify-end">
+  <div class="relative h-9 w-9"
+       data-testid="user-menu"
+  >
+    <button class="hover:opacity-70"
+            data-testid="user-menu__button"
+    >
+      <img class="rounded-full"
+           src="https://via.placeholder.com/36x36"
+           alt="アイコン"
+           width="36"
+           height="36"
+      >
+    </button>
+  </div>
+</div>
+`;
