@@ -11,7 +11,7 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await this.page.getByTestId("text-input-preferredUsername").fill("test");
     await this.page.getByTestId("password-input").fill("testtest");
     await this.page.getByTestId("submit-button").click();
-    await expect(this.page.getByTestId("is-logged-in")).toBeVisible();
+    await expect(this.page.getByTestId("user-menu")).toBeVisible();
   }
 
   async expectedUser(user: string) {
