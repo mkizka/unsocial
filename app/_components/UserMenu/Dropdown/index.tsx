@@ -13,7 +13,7 @@ type Props = {
 export function Dropdown({ iconUrl, iconAlt }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="relative h-9 w-9">
+    <div className="relative h-9 w-9" data-testid="user-menu">
       <button
         className="hover:opacity-70"
         onClick={() => setIsOpen((prev) => !prev)}
