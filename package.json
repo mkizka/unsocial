@@ -22,7 +22,7 @@
     "lint": "./scripts/lint.sh",
     "postinstall": "prisma generate",
     "prepare": "husky install",
-    "storybook": "storybook dev -p 6006 --quiet --no-open",
+    "storybook": "storybook dev -p 6006 --quiet",
     "test": "jest",
     "test-u": "jest --updateSnapshot",
     "test:mutation": "run-s _test:mutation:run _test:mutation:report",
