@@ -20,6 +20,15 @@ module.exports = {
         gray: colors.gray["400"],
         light: colors.gray["100"], // 背景が暗い文字
       },
+      animation: {
+        fade: "fadeIn .1s ease-in-out",
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+      },
     },
   },
   plugins: [
