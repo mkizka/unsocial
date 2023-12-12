@@ -13,12 +13,18 @@ type Props = {
 export function Dropdown({ iconUrl, iconAlt }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="relative h-8 w-8">
+    <div className="relative h-9 w-9">
       <button
         className="hover:opacity-70"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <img className="rounded-full" src={iconUrl} alt={iconAlt} />
+        <img
+          className="rounded-full"
+          src={iconUrl}
+          alt={iconAlt}
+          width={36}
+          height={36}
+        />
       </button>
       {isOpen && (
         <Card className="absolute right-0 z-10 w-56 animate-fade drop-shadow-xl">
