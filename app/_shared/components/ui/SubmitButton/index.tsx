@@ -13,7 +13,9 @@ export function SubmitButton({ children, className, ...props }: Props) {
   return (
     <button
       className={cn(
-        "block rounded bg-secondary px-3 py-1.5 text-center text-light shadow hover:bg-secondary-dark disabled:bg-secondary-dark",
+        "relative flex items-center justify-center",
+        "rounded bg-secondary px-3 py-1.5 text-light shadow",
+        "hover:bg-secondary-dark disabled:bg-secondary-dark",
         className,
       )}
       type="submit"
@@ -21,7 +23,14 @@ export function SubmitButton({ children, className, ...props }: Props) {
       disabled={status.pending}
       {...props}
     >
-      {status.pending ? <Spinner /> : children}
+      {status.pending && <Spinner className="absolute h-4/5" />}
+      <span
+        className={cn({
+          "opacity-0": status.pending,
+        })}
+      >
+        {children}
+      </span>
     </button>
   );
 }
