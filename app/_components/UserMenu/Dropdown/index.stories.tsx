@@ -17,6 +17,10 @@ function Component(args: ComponentProps<typeof Dropdown>) {
 const meta: Meta<typeof Dropdown> = {
   component: Component,
   args: {
+    user: {
+      name: "表示名",
+      preferredUsername: "preferredUsername",
+    },
     iconUrl: "https://via.placeholder.com/36x36",
     iconAlt: "アイコン",
   },

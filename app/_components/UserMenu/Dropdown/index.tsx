@@ -14,7 +14,6 @@ type Props = {
 
 export function Dropdown({ user, iconUrl, iconAlt }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-
   const items = [
     {
       label: "ホーム",
@@ -32,7 +31,6 @@ export function Dropdown({ user, iconUrl, iconAlt }: Props) {
       Icon: Cog8ToothIcon,
     },
   ];
-
   return (
     <div className="relative h-9 w-9" data-testid="user-menu">
       <button
@@ -58,11 +56,13 @@ export function Dropdown({ user, iconUrl, iconAlt }: Props) {
               <Link
                 key={label}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center hover:opacity-70"
+                className="flex gap-2 hover:opacity-70"
                 href={href}
               >
-                <Icon className="mr-2 h-5 w-5" />
-                {label}
+                <Icon className="h-5 w-5" />
+                <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                  {label}
+                </div>
               </Link>
             ))}
           </Card>
