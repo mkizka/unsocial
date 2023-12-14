@@ -1,5 +1,9 @@
 "use client";
-import { Cog8ToothIcon, HomeIcon, UserIcon } from "@heroicons/react/24/solid";
+import {
+  Cog8ToothIcon,
+  HomeIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/solid";
 import type { User } from "@prisma/client";
 import Link from "next/link";
 import { useState } from "react";
@@ -23,7 +27,7 @@ export function Dropdown({ user, iconUrl, iconAlt }: Props) {
     {
       label: `${user.name}(@${user.preferredUsername})`,
       href: `/@${user.preferredUsername}`,
-      Icon: UserIcon,
+      Icon: UserCircleIcon,
     },
     {
       label: "設定",
@@ -56,11 +60,13 @@ export function Dropdown({ user, iconUrl, iconAlt }: Props) {
               <Link
                 key={label}
                 onClick={() => setIsOpen(false)}
-                className="flex gap-2 hover:opacity-70"
+                className="flex items-center gap-2 hover:opacity-70"
                 href={href}
               >
-                <Icon className="h-5 w-5" />
-                <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                <div className="flex h-5 w-5 items-center justify-center">
+                  <Icon />
+                </div>
+                <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
                   {label}
                 </div>
               </Link>
