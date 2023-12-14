@@ -16,6 +16,7 @@ export async function UserMenu() {
     });
     return (
       <Dropdown
+        user={dbUser!}
         iconUrl={getIconPath(dbUser?.iconHash, 36)}
         iconAlt={`@${dbUser?.preferredUsername}のアイコン`}
       />

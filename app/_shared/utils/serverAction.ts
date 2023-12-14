@@ -1,4 +1,4 @@
-export type ServerActionState = {
+type ServerActionState = {
   type: "success" | "error";
   message: string;
 } | null;
