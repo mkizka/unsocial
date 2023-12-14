@@ -7,6 +7,9 @@ const preview: Preview = {
     nextjs: {
       appDirectory: true,
     },
+    actions: {
+      argTypesRegex: "^on[A-Z].*",
+    },
     backgrounds: {
       default: "primary",
       values: [

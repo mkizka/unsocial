@@ -34,6 +34,7 @@ const convertUser = (
     featured: new URL(`${userAddress}/collections/featured`),
     preferredUsername: user.preferredUsername,
     name: user.name || "",
+    summary: user.summary || "",
     url: new URL(userAddress),
     publicKey: {
       id: `${activityAddress}#main-key`,

@@ -26,14 +26,15 @@ export async function UserCard({ userKey }: Props) {
   );
   const canFollow = session?.user && session.user.id !== user.id;
   return (
-    <section className="mb-1 rounded bg-primary-light p-4 pb-6 shadow">
-      <div className="mb-2 flex w-full items-center">
+    <section className="mb-1 space-y-4 rounded bg-primary-light p-4 pb-6 shadow">
+      <div className="flex w-full items-center">
         <UserIcon user={user} size={64} className="rounded-full" />
         <div className="ml-4">
           <h1 className="text-2xl font-bold">{user.name}</h1>
           <div className="text-gray">{fullUsername(user)}</div>
         </div>
       </div>
+      <div>{user.summary}</div>
       <div className="flex items-center gap-2">
         <Link
           href={`/${fullUsername(user)}/followees`}

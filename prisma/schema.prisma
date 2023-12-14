@@ -23,6 +23,7 @@ model User {
   preferredUsername String
   host              String
   name              String?
+  summary           String?
   email             String?     @unique
   emailVerified     DateTime?
   icon              String?
