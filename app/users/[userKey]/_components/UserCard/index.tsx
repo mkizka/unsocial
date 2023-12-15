@@ -5,7 +5,7 @@ import { UserIcon } from "@/_shared/components/user/UserIcon";
 import { userService } from "@/_shared/service/user";
 import { env } from "@/_shared/utils/env";
 import { fullUsername } from "@/_shared/utils/fullUsername";
-import { getServerSession } from "@/_shared/utils/getServerSession";
+import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 
 import { FollowButton } from "./FollowButton";
 import { followCountService } from "./followCountService";
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export async function UserCard({ userKey }: Props) {
-  const session = await getServerSession();
+  const sessionUserId = await getSessionUserId();
   const user = await userService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();
@@ -24,7 +24,7 @@ export async function UserCard({ userKey }: Props) {
   const { followersCount, followeesCount } = await followCountService.count(
     user.id,
   );
-  const canFollow = session?.user && session.user.id !== user.id;
+  const canFollow = sessionUserId !== user.id;
   return (
     <section className="mb-1 space-y-4 rounded bg-primary-light p-4 pb-6 shadow">
       <div className="flex w-full items-center">
