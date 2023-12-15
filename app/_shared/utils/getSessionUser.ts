@@ -1,15 +1,16 @@
+import type { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
 import { getServerSession } from "./getServerSession";
 import { prisma } from "./prisma";
 
-export const getSessionUserIdOrNull = cache(async () => {
+const getSessionUserIdOrNull = cache(async () => {
   const session = await getServerSession();
   return session?.user?.id ?? null;
 });
 
-export const getSessionUserOrNull = cache(async () => {
+const getSessionUserOrNull = cache(async () => {
   const sessionUserId = await getSessionUserIdOrNull();
   if (!sessionUserId) {
     return null;
@@ -22,18 +23,22 @@ export const getSessionUserOrNull = cache(async () => {
   return sessionUser ?? null;
 });
 
-export const getSessionUserId = async () => {
+export const getSessionUserId = async <T extends boolean>(params?: {
+  redirect: T;
+}) => {
   const userId = await getSessionUserIdOrNull();
-  if (!userId) {
+  if (!userId && params?.redirect) {
     redirect("/auth");
   }
-  return userId;
+  return userId as T extends true ? string : string | null;
 };
 
-export const getSessionUser = async () => {
+export const getSessionUser = async <T extends boolean>(params?: {
+  redirect: T;
+}) => {
   const user = await getSessionUserOrNull();
-  if (!user) {
+  if (!user && params?.redirect) {
     redirect("/auth");
   }
-  return user;
+  return user as T extends true ? User : User | null;
 };

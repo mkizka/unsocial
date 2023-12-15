@@ -1,7 +1,7 @@
 import type { Note } from "@prisma/client";
 
 import { mockedPrisma } from "@/_mocks/prisma";
-import { mockedGetSessionUserIdOrNull } from "@/_mocks/session";
+import { mockedGetSessionUserId } from "@/_mocks/session";
 
 import type { NoteCard } from "./note";
 import { findManyNoteCards, findUniqueNoteCard } from "./note";
@@ -76,7 +76,7 @@ describe("noteService", () => {
       mockedPrisma.note.findUnique.mockResolvedValueOnce(
         dummyNote as unknown as Note,
       );
-      mockedGetSessionUserIdOrNull.mockResolvedValueOnce("userId");
+      mockedGetSessionUserId.mockResolvedValueOnce("userId");
       // act
       const note = await findUniqueNoteCard("noteId");
       // assert
@@ -91,7 +91,7 @@ describe("noteService", () => {
       mockedPrisma.note.findUnique.mockResolvedValueOnce(
         dummyNote as unknown as Note,
       );
-      mockedGetSessionUserIdOrNull.mockResolvedValueOnce("otherUserId");
+      mockedGetSessionUserId.mockResolvedValueOnce("otherUserId");
       // act
       const note = await findUniqueNoteCard("noteId");
       // assert
@@ -103,7 +103,7 @@ describe("noteService", () => {
         ...dummyNote,
         likes: [{ id: "likeId", userId: "otherUserId" }],
       } as unknown as Note);
-      mockedGetSessionUserIdOrNull.mockResolvedValueOnce("userId");
+      mockedGetSessionUserId.mockResolvedValueOnce("userId");
       // act
       const note = await findUniqueNoteCard("noteId");
       // assert
@@ -118,7 +118,7 @@ describe("noteService", () => {
           host: "myhost.example.com",
         },
       } as unknown as Note);
-      mockedGetSessionUserIdOrNull.mockResolvedValueOnce("userId");
+      mockedGetSessionUserId.mockResolvedValueOnce("userId");
       // act
       const note = await findUniqueNoteCard("noteId");
       // assert
@@ -130,7 +130,7 @@ describe("noteService", () => {
       // act
       const notes = await findUniqueNoteCard("noteId");
       // assert
-      expect(mockedGetSessionUserIdOrNull).not.toHaveBeenCalled();
+      expect(mockedGetSessionUserId).not.toHaveBeenCalled();
       expect(notes).toEqual(null);
     });
   });
@@ -140,7 +140,7 @@ describe("noteService", () => {
       mockedPrisma.note.findMany.mockResolvedValueOnce([
         dummyNote,
       ] as unknown as Note[]);
-      mockedGetSessionUserIdOrNull.mockResolvedValueOnce("userId");
+      mockedGetSessionUserId.mockResolvedValueOnce("userId");
       // act
       const [note] = await findManyNoteCards({
         since: dummySince,
@@ -173,7 +173,7 @@ describe("noteService", () => {
         count: 10,
       });
       // assert
-      expect(mockedGetSessionUserIdOrNull).not.toHaveBeenCalled();
+      expect(mockedGetSessionUserId).not.toHaveBeenCalled();
       expect(notes).toEqual([]);
     });
   });
