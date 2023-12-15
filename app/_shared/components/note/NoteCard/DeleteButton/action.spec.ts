@@ -1,34 +1,26 @@
 import type { Note } from "@prisma/client";
-import type { Session } from "next-auth";
 
 import { mockedPrisma } from "@/_mocks/prisma";
-import { getServerSession } from "@/_shared/utils/getServerSession";
+import { mockedGetSessionUserId } from "@/_mocks/session";
 import { relayActivityToFollowers } from "@/_shared/utils/relayActivity";
 
 import { action } from "./action";
 
-jest.mock("@/_shared/utils/getServerSession");
-const mockedGetServerSession = jest.mocked(getServerSession);
-
 jest.mock("@/_shared/utils/relayActivity");
 const mockedRelayActivityToFollowers = jest.mocked(relayActivityToFollowers);
 
-const dummySessionUser = {
-  id: "__id",
-};
+const dummySessionUserId = "__id";
 
 describe("DeleteButton/action", () => {
   test("正常系", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({
-      user: dummySessionUser,
-    } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
     mockedPrisma.note.delete.mockResolvedValue({ id: "__noteId" } as Note);
     // act
     await expect(() => action("__noteId")).rejects.toThrow("NEXT_REDIRECT");
     // assert
     expect(mockedRelayActivityToFollowers).toHaveBeenCalledWith({
-      userId: dummySessionUser.id,
+      userId: dummySessionUserId,
       activity: expect.objectContaining({ type: "Delete" }),
     });
   });

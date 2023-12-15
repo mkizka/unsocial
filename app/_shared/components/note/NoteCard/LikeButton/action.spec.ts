@@ -1,7 +1,5 @@
-import type { Session } from "next-auth";
-
 import { mockedPrisma } from "@/_mocks/prisma";
-import { getServerSession } from "@/_shared/utils/getServerSession";
+import { mockedGetSessionUserId } from "@/_mocks/session";
 import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
 
 import { action } from "./action";
@@ -9,19 +7,12 @@ import { action } from "./action";
 jest.mock("@/_shared/utils/relayActivity");
 const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
 
-jest.mock("@/_shared/utils/getServerSession");
-const mockedGetServerSession = jest.mocked(getServerSession);
-
-const dummyLocalUser = {
-  id: "dummy_local",
-};
+const dummyLocalUserId = "dummy_local";
 
 describe("LikeButton/action", () => {
   test("ローカルユーザーのNote", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({
-      user: dummyLocalUser,
-    } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
     mockedPrisma.like.create.mockResolvedValue({
       note: {
         // @ts-ignore
@@ -57,9 +48,7 @@ describe("LikeButton/action", () => {
 
   test("リモートユーザーのNote", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({
-      user: dummyLocalUser,
-    } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
     mockedPrisma.like.create.mockResolvedValue({
       id: "likeId",
       note: {
@@ -94,7 +83,7 @@ describe("LikeButton/action", () => {
       }
     `);
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummyLocalUser.id,
+      userId: dummyLocalUserId,
       inboxUrl: new URL("https://remote.example.com/inbox"),
       activity: expect.objectContaining({
         type: "Like",
@@ -104,9 +93,7 @@ describe("LikeButton/action", () => {
 
   test("ローカルユーザーのNote(いいね済みの場合)", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({
-      user: dummyLocalUser,
-    } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
     const dummyLike = {
       id: "likeId",
       noteId: "noteId",
@@ -136,9 +123,7 @@ describe("LikeButton/action", () => {
 
   test("リモートユーザーのNote(いいね済みの場合)", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({
-      user: dummyLocalUser,
-    } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
     const dummyLike = {
       id: "likeId",
       noteId: "noteId",
@@ -164,7 +149,7 @@ describe("LikeButton/action", () => {
       where: { id: "likeId" },
     });
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummyLocalUser.id,
+      userId: dummyLocalUserId,
       inboxUrl: new URL("https://remote.example.com/inbox"),
       activity: expect.objectContaining({ type: "Undo" }),
     });
