@@ -50,8 +50,3 @@ export { handler as GET, handler as POST };
 export const getServerSession = cache(async () => {
   return _getServerSession(authOptions);
 });
-
-export const getUser = async () => {
-  const session = await getServerSession();
-  return session?.user ?? null;
-};

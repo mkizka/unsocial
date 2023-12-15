@@ -1,24 +1,18 @@
 import Link from "next/link";
 
-import { getUser } from "@/_shared/utils/getServerSession";
+import { getSessionUser } from "@/_shared/utils/getSessionUser";
 import { getIconPath } from "@/_shared/utils/icon";
-import { prisma } from "@/_shared/utils/prisma";
 
 import { Dropdown } from "./Dropdown";
 
 export async function UserMenu() {
-  const user = await getUser();
+  const user = await getSessionUser();
   if (user) {
-    const dbUser = await prisma.user.findUnique({
-      where: {
-        id: user.id,
-      },
-    });
     return (
       <Dropdown
-        user={dbUser!}
-        iconUrl={getIconPath(dbUser?.iconHash, 36)}
-        iconAlt={`@${dbUser?.preferredUsername}のアイコン`}
+        user={user}
+        iconUrl={getIconPath(user.iconHash, 36)}
+        iconAlt={`@${user.preferredUsername}のアイコン`}
       />
     );
   }

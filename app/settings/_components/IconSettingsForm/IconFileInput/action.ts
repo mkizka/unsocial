@@ -1,8 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
-import { getUser } from "@/_shared/utils/getServerSession";
+import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 
 import { updateUserIconService } from "./updateUserIconService";
 
@@ -19,11 +18,8 @@ export const action = async (_: State, formData: FormData): Promise<State> => {
       message: "アイコンが選択されていません",
     };
   }
-  const user = await getUser();
-  if (!user) {
-    redirect("/auth");
-  }
-  await updateUserIconService.update(user.id, icon);
+  const userId = await getSessionUserId();
+  await updateUserIconService.update(userId, icon);
   revalidatePath("/settings");
   return {
     type: "success",
