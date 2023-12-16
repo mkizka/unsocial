@@ -48,7 +48,7 @@ const authOptions: NextAuthOptions = {
 export const handler = NextAuth(authOptions);
 
 const getSessionUserIdOrNull = cache(async () => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   return session?.user?.id ?? null;
 });
 
