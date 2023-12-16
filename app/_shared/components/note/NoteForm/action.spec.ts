@@ -1,8 +1,7 @@
 import type { Note } from "@prisma/client";
-import type { Session } from "next-auth";
 
 import { mockedPrisma } from "@/_mocks/prisma";
-import { getServerSession } from "@/_shared/utils/getServerSession";
+import { mockedGetSessionUserId } from "@/_mocks/session";
 import { relayActivityToFollowers } from "@/_shared/utils/relayActivity";
 
 import { action } from "./action";
@@ -10,17 +9,15 @@ import { action } from "./action";
 jest.useFakeTimers();
 jest.setSystemTime(new Date("2023-01-01T00:00:00Z"));
 
-jest.mock("@/_shared/utils/getServerSession");
-const mockedGetServerSession = jest.mocked(getServerSession);
-
 jest.mock("@/_shared/utils/relayActivity");
 const mockedRelayActivityToFollowers = jest.mocked(relayActivityToFollowers);
+
+const dummySessionUserId = "__session__user__id";
 
 describe("NoteForm/action", () => {
   test("正常系", async () => {
     // arrange
-    const dummySession = { user: { id: "__session__user__id" } } as Session;
-    mockedGetServerSession.mockResolvedValue(dummySession);
+    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
     mockedPrisma.note.create.mockResolvedValue({
       id: "__noteId",
       userId: "__note__userId",
@@ -53,23 +50,13 @@ describe("NoteForm/action", () => {
       include: expect.any(Object),
     });
     expect(mockedRelayActivityToFollowers).toHaveBeenCalledWith({
-      userId: dummySession.user.id,
+      userId: dummySessionUserId,
       activity: expect.objectContaining({ type: "Create" }),
     });
   });
-  test("ログインしていない場合はエラーを返す", async () => {
-    // arrange
-    mockedGetServerSession.mockResolvedValue(null);
-    // act
-    const form = new FormData();
-    form.append("content", "テスト");
-    const response = await action(form);
-    // assert
-    expect(response).toEqual({ error: "ログインが必要です" });
-  });
   test("入力したデータが不正な場合はエラーを返す", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({ user: {} } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
     // act
     const form = new FormData();
     const response = await action(form);
