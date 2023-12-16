@@ -1,4 +1,4 @@
-import { getSessionUser } from "@/_shared/utils/getSessionUser";
+import { getSessionUser } from "@/_shared/utils/session";
 
 import { IconFileInput } from "./IconFileInput";
 

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 import { prisma } from "@/_shared/utils/prisma";
+import { getSessionUserId } from "@/_shared/utils/session";
 
 import { AuthForm } from "./_components/AuthForm";
 
