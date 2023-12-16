@@ -78,7 +78,7 @@
     "autoprefixer": "10.4.16",
     "cli-markdown": "3.2.0",
     "dotenv-cli": "7.3.0",
-    "eslint": "8.55.0",
+    "eslint": "8.56.0",
     "eslint-config-next": "14.0.4",
     "eslint-plugin-eqeqeq-fix": "1.0.3",
     "eslint-plugin-simple-import-sort": "10.0.0",
