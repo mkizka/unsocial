@@ -1,15 +1,11 @@
 import type { Follow } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import type { Session } from "next-auth";
 
 import { mockedPrisma } from "@/_mocks/prisma";
-import { getServerSession } from "@/_shared/utils/getServerSession";
+import { mockedGetSessionUserId } from "@/_mocks/session";
 import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
 
 import { action } from "./action";
-
-jest.mock("@/_shared/utils/getServerSession");
-const mockedGetServerSession = jest.mocked(getServerSession);
 
 jest.mock("@/_shared/utils/relayActivity");
 const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
@@ -33,16 +29,12 @@ const dummyLocalUser = {
   host: "myhost.example.com",
 };
 
-const dummySessionUser = {
-  id: "dummy_session",
-};
+const dummySessionUserId = "dummy_session";
 
 describe("FollowButton/action", () => {
   test("リモートユーザー", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({
-      user: dummySessionUser,
-    } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
     mockedPrisma.follow.create.mockResolvedValue({
       id: "followId",
       followeeId: dummyRemoteUser.id,
@@ -52,7 +44,7 @@ describe("FollowButton/action", () => {
         actorUrl: dummyRemoteUser.actorUrl,
         inboxUrl: dummyRemoteUser.inboxUrl,
       },
-      followerId: dummySessionUser.id,
+      followerId: dummySessionUserId,
       status: "SENT",
       createdAt: new Date(),
     });
@@ -62,7 +54,7 @@ describe("FollowButton/action", () => {
     expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
       data: {
         followeeId: dummyRemoteUser.id,
-        followerId: dummySessionUser.id,
+        followerId: dummySessionUserId,
         status: "SENT",
       },
       include: {
@@ -70,7 +62,7 @@ describe("FollowButton/action", () => {
       },
     });
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummySessionUser.id,
+      userId: dummySessionUserId,
       inboxUrl: new URL(dummyRemoteUser.inboxUrl),
       activity: expect.objectContaining({
         type: "Follow",
@@ -80,9 +72,7 @@ describe("FollowButton/action", () => {
   });
   test("ローカルユーザー", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({
-      user: dummySessionUser,
-    } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
     mockedPrisma.follow.create.mockResolvedValue({
       id: "followId",
       followeeId: dummyLocalUser.id,
@@ -90,7 +80,7 @@ describe("FollowButton/action", () => {
         // @ts-ignore
         host: dummyLocalUser.host,
       },
-      followerId: dummySessionUser.id,
+      followerId: dummySessionUserId,
       status: "SENT",
       createdAt: new Date(),
     });
@@ -100,7 +90,7 @@ describe("FollowButton/action", () => {
     expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
       data: {
         followeeId: dummyLocalUser.id,
-        followerId: dummySessionUser.id,
+        followerId: dummySessionUserId,
         status: "SENT",
       },
       include: {
@@ -116,9 +106,7 @@ describe("FollowButton/action", () => {
   });
   test("リモートユーザー(解除)", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({
-      user: dummySessionUser,
-    } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
     mockedPrisma.follow.findFirst.mockResolvedValue({} as Follow);
     mockedPrisma.follow.delete.mockResolvedValue({
       id: "followId",
@@ -129,7 +117,7 @@ describe("FollowButton/action", () => {
         actorUrl: dummyRemoteUser.actorUrl,
         inboxUrl: dummyRemoteUser.inboxUrl,
       },
-      followerId: dummySessionUser.id,
+      followerId: dummySessionUserId,
       status: "SENT",
       createdAt: new Date(),
     });
@@ -139,14 +127,14 @@ describe("FollowButton/action", () => {
     expect(mockedPrisma.follow.findFirst).toHaveBeenCalledWith({
       where: {
         followeeId: dummyRemoteUser.id,
-        followerId: dummySessionUser.id,
+        followerId: dummySessionUserId,
       },
     });
     expect(mockedPrisma.follow.delete).toHaveBeenCalledWith({
       where: {
         followeeId_followerId: {
           followeeId: dummyRemoteUser.id,
-          followerId: dummySessionUser.id,
+          followerId: dummySessionUserId,
         },
       },
       include: {
@@ -154,7 +142,7 @@ describe("FollowButton/action", () => {
       },
     });
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummySessionUser.id,
+      userId: dummySessionUserId,
       inboxUrl: new URL(dummyRemoteUser.inboxUrl),
       activity: expect.objectContaining({
         type: "Undo",
@@ -164,9 +152,7 @@ describe("FollowButton/action", () => {
   });
   test("ローカルユーザー(解除)", async () => {
     // arrange
-    mockedGetServerSession.mockResolvedValue({
-      user: dummySessionUser,
-    } as Session);
+    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
     mockedPrisma.follow.findFirst.mockResolvedValue({} as never);
     mockedPrisma.follow.delete.mockResolvedValue({
       id: "followId",
@@ -175,7 +161,7 @@ describe("FollowButton/action", () => {
         // @ts-ignore
         host: dummyLocalUser.host,
       },
-      followerId: dummySessionUser.id,
+      followerId: dummySessionUserId,
       status: "SENT",
       createdAt: new Date(),
     });
@@ -186,7 +172,7 @@ describe("FollowButton/action", () => {
       where: {
         followeeId_followerId: {
           followeeId: dummyLocalUser.id,
-          followerId: dummySessionUser.id,
+          followerId: dummySessionUserId,
         },
       },
       include: {
