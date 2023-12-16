@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { getSessionUserId } from "@/_shared/utils/session";
+import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 
 import { updateUserIconService } from "./updateUserIconService";
 

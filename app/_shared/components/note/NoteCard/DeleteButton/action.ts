@@ -2,9 +2,9 @@
 import { redirect } from "next/navigation";
 
 import { activityStreams } from "@/_shared/utils/activitypub";
+import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 import { prisma } from "@/_shared/utils/prisma";
 import { relayActivityToFollowers } from "@/_shared/utils/relayActivity";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 export async function action(noteId: string) {
   const userId = await getSessionUserId({ redirect: true });

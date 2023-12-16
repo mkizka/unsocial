@@ -2,8 +2,8 @@ import type { Note } from "@prisma/client";
 import { cache } from "react";
 
 import { fullUsername } from "@/_shared/utils/fullUsername";
+import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 import { prisma } from "@/_shared/utils/prisma";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 import { noteCardService } from "./noteCard";
 

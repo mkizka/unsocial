@@ -3,11 +3,11 @@ import { z } from "zod";
 
 import { noteService } from "@/_shared/service";
 import { activityStreams } from "@/_shared/utils/activitypub";
+import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 import {
   relayActivityToFollowers,
   relayActivityToInboxUrl,
 } from "@/_shared/utils/relayActivity";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 const formSchame = z.object({
   content: z.string().min(1).max(280),

@@ -3,10 +3,10 @@ import type { Like, Note, User } from "@prisma/client";
 
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { env } from "@/_shared/utils/env";
+import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 const include = {
   note: {

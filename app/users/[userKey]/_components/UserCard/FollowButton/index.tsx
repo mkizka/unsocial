@@ -1,5 +1,5 @@
+import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 import { prisma } from "@/_shared/utils/prisma";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 import { FollowButton as Client } from "./client";
 

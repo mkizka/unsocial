@@ -1,4 +1,4 @@
-import { getSessionUser } from "@/_shared/utils/session";
+import { getSessionUser } from "@/_shared/utils/getSessionUser";
 
 import { action } from "./action";
 import { ProfileForm } from "./ProfileForm";
