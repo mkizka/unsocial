@@ -1,1 +1,1 @@
-export { handler as GET, handler as POST } from "@/_shared/utils/session";
+export { GET, POST } from "@/_shared/utils/getServerSession";
