@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { getSessionUser } from "@/_shared/utils/getSessionUser";
 import { getIconPath } from "@/_shared/utils/icon";
+import { getSessionUser } from "@/_shared/utils/session";
 
 import { Dropdown } from "./Dropdown";
 

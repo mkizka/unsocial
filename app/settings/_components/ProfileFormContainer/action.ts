@@ -1,9 +1,9 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { getSessionUserId } from "@/_shared/utils/getSessionUser";
 import { prisma } from "@/_shared/utils/prisma";
 import type { ServerAction } from "@/_shared/utils/serverAction";
+import { getSessionUserId } from "@/_shared/utils/session";
 
 export const action: ServerAction = async (_, formData) => {
   const name = formData.get("name");
