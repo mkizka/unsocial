@@ -5,11 +5,12 @@ import { FediverseHandler } from "./base";
 export class MastodonHandler extends FediverseHandler {
   domain = "mastodon.localhost";
   user = "@e2e@mastodon.localhost";
+  password = "password";
 
   async login() {
     await this.goto("/auth/sign_in");
     await this.page.locator("#user_email").fill("e2e@localhost");
-    await this.page.locator("#user_password").fill("password");
+    await this.page.locator("#user_password").fill(this.password);
     await this.page.locator("button").click();
     await expect(
       this.page.locator(".navigation-bar__profile-account", {
@@ -141,5 +142,11 @@ export class MastodonHandler extends FediverseHandler {
     await expect(
       this.page.locator(".display-name__account", { hasText: user }),
     ).not.toBeVisible();
+  }
+
+  async deleteAccount() {
+    await this.goto("/settings/delete");
+    await this.page.locator("#user_password").fill(this.password);
+    await this.page.locator("button").click();
   }
 }

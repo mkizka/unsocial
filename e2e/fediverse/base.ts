@@ -1,18 +1,18 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 
-const waitFor = async (fn: () => Promise<void>) => {
-  await expect(fn).toPass({ timeout: 4000 });
-};
-
 export abstract class FediverseHandler {
   abstract domain: string;
   abstract user: string;
 
   constructor(public page: Page) {}
 
+  async waitFor(fn: () => Promise<void>) {
+    await expect(fn).toPass({ timeout: 4000 });
+  }
+
   async goto(url: string) {
     const nextUrl = new URL(url, `https://${this.domain}`).toString();
-    await waitFor(async () => {
+    await this.waitFor(async () => {
       if (this.page.url() === nextUrl) {
         await this.page.reload();
       } else {
@@ -28,7 +28,7 @@ export abstract class FediverseHandler {
   protected abstract expectedUser(user: string): Promise<void>;
 
   async waitForUser(user: string) {
-    await waitFor(() => this.expectedUser(user));
+    await this.waitFor(() => this.expectedUser(user));
   }
 
   abstract postNote(content: string): Promise<void>;
@@ -36,7 +36,7 @@ export abstract class FediverseHandler {
   protected abstract expectPosted(content: string): Promise<void>;
 
   async waitForPosted(content: string) {
-    await waitFor(() => this.expectPosted(content));
+    await this.waitFor(() => this.expectPosted(content));
   }
 
   abstract postReply(content: string, replyTo: string): Promise<void>;
@@ -47,7 +47,7 @@ export abstract class FediverseHandler {
   ): Promise<void>;
 
   async waitForReplied(content: string, replyTo: string) {
-    await waitFor(() => this.expectReplied(content, replyTo));
+    await this.waitFor(() => this.expectReplied(content, replyTo));
   }
 
   abstract delete(content: string): Promise<void>;
@@ -55,7 +55,7 @@ export abstract class FediverseHandler {
   protected abstract expectDeleted(content: string): Promise<void>;
 
   async waitForDeleted(content: string) {
-    await waitFor(() => this.expectDeleted(content));
+    await this.waitFor(() => this.expectDeleted(content));
   }
 
   abstract like(content: string): Promise<void>;
@@ -65,7 +65,7 @@ export abstract class FediverseHandler {
   protected abstract expectLiked(content: string, user: string): Promise<void>;
 
   async waitForLiked(content: string, user: string) {
-    await waitFor(() => this.expectLiked(content, user));
+    await this.waitFor(() => this.expectLiked(content, user));
   }
 
   protected abstract expectNotLiked(
@@ -74,7 +74,7 @@ export abstract class FediverseHandler {
   ): Promise<void>;
 
   async waitForNotLiked(content: string, user: string) {
-    await waitFor(() => this.expectNotLiked(content, user));
+    await this.waitFor(() => this.expectNotLiked(content, user));
   }
 
   abstract follow(user: string): Promise<void>;
@@ -84,24 +84,24 @@ export abstract class FediverseHandler {
   protected abstract expectFollowing(user: string): Promise<void>;
 
   async waitForFollowing(user: string) {
-    await waitFor(() => this.expectFollowing(user));
+    await this.waitFor(() => this.expectFollowing(user));
   }
 
   protected abstract expectNotFollowing(user: string): Promise<void>;
 
   async waitForNotFollowing(user: string) {
-    await waitFor(() => this.expectNotFollowing(user));
+    await this.waitFor(() => this.expectNotFollowing(user));
   }
 
   protected abstract expectFollowed(user: string): Promise<void>;
 
   async waitForFollowed(user: string) {
-    await waitFor(() => this.expectFollowed(user));
+    await this.waitFor(() => this.expectFollowed(user));
   }
 
   protected abstract expectNotFollowed(user: string): Promise<void>;
 
   async waitForNotFollowed(user: string) {
-    await waitFor(() => this.expectNotFollowed(user));
+    await this.waitFor(() => this.expectNotFollowed(user));
   }
 }
