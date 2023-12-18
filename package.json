@@ -98,7 +98,7 @@
     "prettier-plugin-tailwindcss": "0.5.9",
     "prisma": "5.7.0",
     "storybook": "7.6.5",
-    "tailwindcss": "3.3.6",
+    "tailwindcss": "3.3.7",
     "ts-node": "10.9.2",
     "tsx": "4.6.2",
     "typescript": "5.3.3",
