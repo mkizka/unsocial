@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 
-import { TextInput } from "@/auth/_components/AuthForm/TextInput";
+import { TextInput } from "@/_shared/components/ui/TextInput";
 
 type Props = {
   name: string;

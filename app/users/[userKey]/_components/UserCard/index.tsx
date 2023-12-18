@@ -5,7 +5,7 @@ import { UserIcon } from "@/_shared/components/user/UserIcon";
 import { userService } from "@/_shared/service/user";
 import { env } from "@/_shared/utils/env";
 import { fullUsername } from "@/_shared/utils/fullUsername";
-import { getServerSession } from "@/_shared/utils/getServerSession";
+import { getSessionUserId } from "@/_shared/utils/session";
 
 import { FollowButton } from "./FollowButton";
 import { followCountService } from "./followCountService";
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export async function UserCard({ userKey }: Props) {
-  const session = await getServerSession();
+  const sessionUserId = await getSessionUserId();
   const user = await userService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();
@@ -24,16 +24,17 @@ export async function UserCard({ userKey }: Props) {
   const { followersCount, followeesCount } = await followCountService.count(
     user.id,
   );
-  const canFollow = session?.user && session.user.id !== user.id;
+  const canFollow = sessionUserId !== user.id;
   return (
-    <section className="mb-1 rounded bg-primary-light p-4 pb-6 shadow">
-      <div className="mb-2 flex w-full items-center">
+    <section className="mb-1 space-y-4 rounded bg-primary-light p-4 pb-6 shadow">
+      <div className="flex w-full items-center">
         <UserIcon user={user} size={64} className="rounded-full" />
         <div className="ml-4">
           <h1 className="text-2xl font-bold">{user.name}</h1>
           <div className="text-gray">{fullUsername(user)}</div>
         </div>
       </div>
+      <div>{user.summary}</div>
       <div className="flex items-center gap-2">
         <Link
           href={`/${fullUsername(user)}/followees`}

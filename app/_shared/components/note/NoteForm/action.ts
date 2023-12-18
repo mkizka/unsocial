@@ -3,11 +3,11 @@ import { z } from "zod";
 
 import { noteService } from "@/_shared/service";
 import { activityStreams } from "@/_shared/utils/activitypub";
-import { getServerSession } from "@/_shared/utils/getServerSession";
 import {
   relayActivityToFollowers,
   relayActivityToInboxUrl,
 } from "@/_shared/utils/relayActivity";
+import { getSessionUserId } from "@/_shared/utils/session";
 
 const formSchame = z.object({
   content: z.string().min(1).max(280),
@@ -15,11 +15,7 @@ const formSchame = z.object({
 });
 
 export async function action(formData: FormData) {
-  const session = await getServerSession();
-  if (!session?.user) {
-    // TODO: エラーを返す方法が実装されたら修正
-    return { error: "ログインが必要です" };
-  }
+  const userId = await getSessionUserId({ redirect: true });
   const parsedForm = formSchame.safeParse(
     Object.fromEntries(formData.entries()),
   );
@@ -27,7 +23,7 @@ export async function action(formData: FormData) {
     return { error: "フォームの内容が不正です" };
   }
   const note = await noteService.create({
-    userId: session.user.id,
+    userId,
     content: parsedForm.data.content,
     replyToId: parsedForm.data.replyToId,
     publishedAt: new Date(),
@@ -35,13 +31,13 @@ export async function action(formData: FormData) {
   });
   if (note.replyTo?.user.inboxUrl) {
     await relayActivityToInboxUrl({
-      userId: session.user.id,
+      userId,
       activity: activityStreams.create(note),
       inboxUrl: new URL(note.replyTo.user.inboxUrl),
     });
   }
   await relayActivityToFollowers({
-    userId: session.user.id,
+    userId,
     activity: activityStreams.create(note),
   });
 }

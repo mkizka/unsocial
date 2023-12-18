@@ -1,18 +1,14 @@
-import { getServerSession } from "@/_shared/utils/getServerSession";
 import { prisma } from "@/_shared/utils/prisma";
+import { getSessionUserId } from "@/_shared/utils/session";
 
 import { FollowButton as Client } from "./client";
 
 export async function FollowButton({ followeeId }: { followeeId: string }) {
-  const session = await getServerSession();
-  const sessionUserId = session?.user?.id;
-  if (!sessionUserId) {
-    return null;
-  }
+  const userId = await getSessionUserId({ redirect: true });
   const follow = await prisma.follow.findFirst({
     where: {
       followeeId,
-      followerId: sessionUserId,
+      followerId: userId,
     },
   });
   return <Client followeeId={followeeId} followStatus={follow?.status} />;

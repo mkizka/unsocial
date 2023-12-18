@@ -4,6 +4,7 @@
   "baseBranches": ["renovate-pr"],
   "automerge": true,
   "platformAutomerge": true,
+  "ignoreDeps": ["sharp"],
   "customManagers": [
     {
       "customType": "regex",

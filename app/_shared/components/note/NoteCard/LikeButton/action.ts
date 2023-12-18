@@ -1,15 +1,12 @@
 "use server";
 import type { Like, Note, User } from "@prisma/client";
-import type { Session } from "next-auth";
 
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { env } from "@/_shared/utils/env";
-import { getServerSession } from "@/_shared/utils/getServerSession";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
-
-type SessionUser = NonNullable<Session["user"]>;
+import { getSessionUserId } from "@/_shared/utils/session";
 
 const include = {
   note: {
@@ -21,10 +18,10 @@ const include = {
 
 const logger = createLogger("LikeButton");
 
-const like = async (user: SessionUser, input: unknown) => {
+const like = async (userId: string, input: unknown) => {
   const like = await prisma.like.create({
     data: {
-      userId: user.id,
+      userId,
       // @ts-expect-error
       ...input,
     },
@@ -40,7 +37,7 @@ const like = async (user: SessionUser, input: unknown) => {
       return;
     }
     await relayActivityToInboxUrl({
-      userId: user.id,
+      userId,
       inboxUrl: new URL(like.note.user.inboxUrl),
       activity: activityStreams.like(like, like.note.url),
     });
@@ -53,7 +50,7 @@ type LikeWithNote = Like & {
   };
 };
 
-const unlike = async (user: SessionUser, like: LikeWithNote) => {
+const unlike = async (userId: string, like: LikeWithNote) => {
   await prisma.like.delete({
     where: {
       id: like.id,
@@ -69,7 +66,7 @@ const unlike = async (user: SessionUser, like: LikeWithNote) => {
       return;
     }
     await relayActivityToInboxUrl({
-      userId: user.id,
+      userId,
       inboxUrl: new URL(like.note.user.inboxUrl),
       activity: activityStreams.undo(activityStreams.like(like, like.note.url)),
     });
@@ -77,21 +74,17 @@ const unlike = async (user: SessionUser, like: LikeWithNote) => {
 };
 
 export async function action(data: { noteId: string; content: string }) {
-  const session = await getServerSession();
-  if (!session?.user) {
-    // TODO: エラーを返す方法が実装されたら修正
-    return;
-  }
+  const userId = await getSessionUserId({ redirect: true });
   const existingLike = await prisma.like.findFirst({
     where: {
-      userId: session.user.id,
+      userId,
       ...data,
     },
     include,
   });
   if (existingLike) {
-    await unlike(session.user, existingLike);
+    await unlike(userId, existingLike);
   } else {
-    await like(session.user, data);
+    await like(userId, data);
   }
 }

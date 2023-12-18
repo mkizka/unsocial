@@ -5,7 +5,7 @@ import { M_PLUS_1_Code } from "next/font/google";
 import { Body } from "./_components/Body";
 import { Providers } from "./_components/Providers";
 import { SearchModal } from "./_components/SearchModal";
-import { AuthLink } from "./_shared/components/auth/AuthLink";
+import { UserMenu } from "./_components/UserMenu";
 
 const font = M_PLUS_1_Code({
   weight: "400",
@@ -28,7 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Body>
           <header className="fixed z-10 flex h-[54px] w-full items-center justify-between rounded-b-md bg-primary-light px-4 shadow-md">
             <SearchModal />
-            <AuthLink />
+            <UserMenu />
           </header>
           <main className="w-full max-w-[600px] pt-[58px]">{children}</main>
         </Body>
