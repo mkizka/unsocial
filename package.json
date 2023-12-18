@@ -32,7 +32,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "3.474.0",
     "@heroicons/react": "2.0.18",
-    "@prisma/client": "5.7.0",
+    "@prisma/client": "5.7.1",
     "bcryptjs": "2.4.3",
     "clsx": "2.0.0",
     "jotai": "2.6.0",
@@ -96,7 +96,7 @@
     "prettier-plugin-pkg": "0.18.0",
     "prettier-plugin-sh": "0.13.1",
     "prettier-plugin-tailwindcss": "0.5.9",
-    "prisma": "5.7.0",
+    "prisma": "5.7.1",
     "storybook": "7.6.5",
     "tailwindcss": "3.3.6",
     "ts-node": "10.9.2",
