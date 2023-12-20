@@ -7,7 +7,7 @@ export class MastodonHandler extends FediverseHandler {
   user = "@e2e@mastodon.localhost";
 
   async loginAs(email: string, password: string) {
-    await this.goto("/auth/sign_out");
+    await this.goto("/auth/sign_in");
     await this.page.locator("#user_email").fill(email);
     await this.page.locator("#user_password").fill(password);
     await this.page.locator("button").click();
