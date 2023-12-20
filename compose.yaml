@@ -185,7 +185,7 @@ services:
         mc mb myminio/unsocial;
         mc anonymous set download myminio/unsocial;
       "
-  # mail:
-  #   image: mailhog/mailhog:v1.0.1
-  #   ports:
-  #     - 8025:8025
+  mail:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - 8025:8025

@@ -5,18 +5,21 @@ import { FediverseHandler } from "./base";
 export class MastodonHandler extends FediverseHandler {
   domain = "mastodon.localhost";
   user = "@e2e@mastodon.localhost";
-  password = "password";
 
-  async login() {
-    await this.goto("/auth/sign_in");
-    await this.page.locator("#user_email").fill("e2e@localhost");
-    await this.page.locator("#user_password").fill(this.password);
+  async loginAs(email: string, password: string) {
+    await this.goto("/auth/sign_out");
+    await this.page.locator("#user_email").fill(email);
+    await this.page.locator("#user_password").fill(password);
     await this.page.locator("button").click();
     await expect(
       this.page.locator(".navigation-bar__profile-account", {
         hasText: "@e2e",
       }),
     ).toBeVisible();
+  }
+
+  async login() {
+    await this.loginAs("e2e@localhost", "password");
   }
 
   async expectedUser(user: string) {
@@ -145,10 +148,12 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async deleteAccount() {
+    await this.page.context().clearCookies();
+    await this.loginAs("delete@localhost", "password");
     await this.goto("/settings/delete");
     await this.page
       .locator("#form_delete_confirmation_password")
-      .fill(this.password);
+      .fill("password");
     await this.page
       .locator("#new_form_delete_confirmation")
       .locator("button")
