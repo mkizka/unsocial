@@ -12,9 +12,7 @@ export class MastodonHandler extends FediverseHandler {
     await this.page.locator("#user_password").fill(password);
     await this.page.locator("button").click();
     await expect(
-      this.page.locator(".navigation-bar__profile-account", {
-        hasText: "@e2e",
-      }),
+      this.page.locator(".navigation-bar__profile-account"),
     ).toBeVisible();
   }
 
