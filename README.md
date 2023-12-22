@@ -33,6 +33,7 @@ Start development:
 pnpm dev
 # or `pnpm dev misskey`
 # or `pnpm dev mastodon`
+# or `pnpm dev all`
 ```
 
 Open:
