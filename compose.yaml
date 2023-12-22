@@ -89,7 +89,7 @@ services:
       mastodon-streaming:
         condition: service_healthy
       mastodon-sidekiq:
-        condition: service_started
+        condition: service_healthy
     volumes:
       - ./docker/mkcert:/mkcert
       - ./docker/mastodon/public/system:/mastodon/public/system
