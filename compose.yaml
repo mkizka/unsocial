@@ -27,7 +27,9 @@ services:
           - mastodon.localhost
           - misskey.localhost
     depends_on:
-      mastodon:
+      mastodon-streaming:
+        condition: service_healthy
+      mastodon-sidekiq:
         condition: service_healthy
       misskey:
         condition: service_healthy
@@ -71,7 +73,9 @@ services:
         aliases:
           - unsocial.localhost
     depends_on:
-      mastodon:
+      mastodon-streaming:
+        condition: service_healthy
+      mastodon-sidekiq:
         condition: service_healthy
     profiles:
       - mastodon
@@ -86,10 +90,10 @@ services:
       timeout: 2s
       retries: 30
     depends_on:
-      mastodon-streaming:
+      db:
         condition: service_healthy
-      mastodon-sidekiq:
-        condition: service_healthy
+      redis:
+        condition: service_started
     volumes:
       - ./docker/mkcert:/mkcert
       - ./docker/mastodon/public/system:/mastodon/public/system
@@ -104,10 +108,8 @@ services:
       # prettier-ignore
       test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
     depends_on:
-      db:
+      mastodon:
         condition: service_healthy
-      redis:
-        condition: service_started
     profiles:
       - all
       - mastodon
@@ -116,10 +118,8 @@ services:
     env_file: ./docker/mastodon/.env.production
     command: bundle exec sidekiq
     depends_on:
-      db:
+      mastodon:
         condition: service_healthy
-      redis:
-        condition: service_started
     volumes:
       - ./docker/mkcert:/mkcert
       - ./docker/mastodon/public/system:/mastodon/public/system
