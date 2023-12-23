@@ -21,6 +21,7 @@ export const update = async (userId: string, file: File) => {
   await s3.putObject({
     Key: key,
     Body: await convertToPng(file),
+    ContentType: "image/png",
   });
   const icon = getIconUrl(key);
   const iconHash = getIconHash(icon);
