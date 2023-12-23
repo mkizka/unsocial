@@ -8,9 +8,9 @@ const serverEnvSchema = z.object({
   UNSOCIAL_DATABASE_URL: z.string().url(),
   UNSOCIAL_LOG_LEVEL: z
     .enum(["debug", "info", "warn", "error"])
-    .default("info"),
+    .default(process.env.NODE_ENV === "production" ? "info" : "debug"),
   UNSOCIAL_SECRET: z.preprocess(
-    (str) => (process.env.NODE_ENV !== "production" ? "secret" : str),
+    (str) => (process.env.NODE_ENV === "production" ? str : "secret"),
     z.string().min(1),
   ),
   UNSOCIAL_HOST: z.preprocess(

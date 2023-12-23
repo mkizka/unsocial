@@ -22,20 +22,10 @@ const logLevelsOrder = {
   error: 3,
 } satisfies Record<LogLevel, number>;
 
-const lowerLimitLogLevel = () => {
-  if (env.UNSOCIAL_LOG_LEVEL) {
-    return env.UNSOCIAL_LOG_LEVEL;
-  }
-  if (env.NODE_ENV === "development") {
-    return "debug";
-  }
-  return "info";
-};
-
 const railwayLog = (log: StructuredLog) => {
   if (
     env.NODE_ENV === "test" ||
-    logLevelsOrder[log.level] < logLevelsOrder[lowerLimitLogLevel()]
+    logLevelsOrder[log.level] < logLevelsOrder[env.UNSOCIAL_LOG_LEVEL]
   ) {
     return;
   }

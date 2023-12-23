@@ -1,17 +1,19 @@
+import { env } from "./env";
 import { createLogger } from "./logger";
 
 jest.mock("@/_shared/utils/env", () => ({
   env: {
     ...process.env,
     NODE_ENV: "development",
+    UNSOCIAL_LOG_LEVEL: "debug",
   },
 }));
 
 const spyConsole = {
-  debug: jest.spyOn(console, "debug"),
-  info: jest.spyOn(console, "info"),
-  warn: jest.spyOn(console, "warn"),
-  error: jest.spyOn(console, "error"),
+  debug: jest.spyOn(console, "debug").mockImplementation(() => {}),
+  info: jest.spyOn(console, "info").mockImplementation(() => {}),
+  warn: jest.spyOn(console, "warn").mockImplementation(() => {}),
+  error: jest.spyOn(console, "error").mockImplementation(() => {}),
 };
 
 const logger = createLogger("test");
@@ -39,4 +41,44 @@ describe("logger", () => {
       );
     },
   );
+  test("env.UNSOCIAL_LOG_LEVELが設定されている場合、その値を下回るログは出力されない", () => {
+    // arrange
+    env.UNSOCIAL_LOG_LEVEL = "warn";
+    // act
+    logger.debug("debug");
+    logger.info("info");
+    logger.warn("warn");
+    logger.error("error");
+    // assert
+    expect(spyConsole.debug).not.toHaveBeenCalled();
+    expect(spyConsole.info).not.toHaveBeenCalled();
+    expect(spyConsole.warn).toHaveBeenCalledWith(
+      JSON.stringify({
+        level: "warn",
+        message: "warn",
+        name: "test",
+      }),
+    );
+    expect(spyConsole.error).toHaveBeenCalledWith(
+      JSON.stringify({
+        level: "error",
+        message: "error",
+        name: "test",
+      }),
+    );
+  });
+  test("env.NODE_ENVがtestの場合、ログは出力されない", () => {
+    // arrange
+    env.NODE_ENV = "test";
+    // act
+    logger.debug("debug");
+    logger.info("info");
+    logger.warn("warn");
+    logger.error("error");
+    // assert
+    expect(spyConsole.debug).not.toHaveBeenCalled();
+    expect(spyConsole.info).not.toHaveBeenCalled();
+    expect(spyConsole.warn).not.toHaveBeenCalled();
+    expect(spyConsole.error).not.toHaveBeenCalled();
+  });
 });
