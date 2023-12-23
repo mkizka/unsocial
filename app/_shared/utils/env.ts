@@ -12,7 +12,7 @@ const serverEnvSchema = z.object({
     z.string().min(1),
   ),
   UNSOCIAL_HOST: z.preprocess(
-    (str) => process.env.RAILWAY_STATIC_URL ?? str,
+    (str) => process.env.RAILWAY_PUBLIC_DOMAIN ?? str,
     z.string().min(1),
   ),
   UNSOCIAL_AWS_ENDPOINT: z.string().url(),
