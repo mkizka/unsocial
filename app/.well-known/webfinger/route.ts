@@ -13,7 +13,7 @@ export async function GET({ nextUrl }: NextRequest) {
       resource &&
       resource.startsWith("acct:") &&
       // TODO: 自ホスト以外も返すべきなのか調べる
-      resource.endsWith(`@${env.UNSOCIAL_DOMAIN}`)
+      resource.endsWith(`@${env.UNSOCIAL_HOST}`)
     )
   ) {
     notFound();
@@ -25,7 +25,7 @@ export async function GET({ nextUrl }: NextRequest) {
     where: {
       preferredUsername_host: {
         preferredUsername,
-        host: env.UNSOCIAL_DOMAIN,
+        host: env.UNSOCIAL_HOST,
       },
     },
   });
@@ -39,7 +39,7 @@ export async function GET({ nextUrl }: NextRequest) {
         {
           rel: "self",
           type: "application/activity+json",
-          href: `https://${env.UNSOCIAL_DOMAIN}/users/${user.id}/activity`,
+          href: `https://${env.UNSOCIAL_HOST}/users/${user.id}/activity`,
         },
       ],
     },

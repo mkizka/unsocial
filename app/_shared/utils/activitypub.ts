@@ -21,7 +21,7 @@ const convertUser = (
 ): AP.Person & {
   featured?: AP.OrderedCollectionReference;
 } => {
-  const userAddress = `https://${env.UNSOCIAL_DOMAIN}/users/${user.id}`;
+  const userAddress = `https://${env.UNSOCIAL_HOST}/users/${user.id}`;
   const activityAddress = `${userAddress}/activity`;
   return {
     ...contexts,
@@ -45,7 +45,7 @@ const convertUser = (
       type: "Image",
       url: new URL(
         getIconPath(user.iconHash, 128),
-        `https://${env.UNSOCIAL_DOMAIN}`,
+        `https://${env.UNSOCIAL_HOST}`,
       ),
     } as AP.Image, // なぜか型エラーになる,
   };
@@ -61,12 +61,12 @@ type NoteWithReply = Pick<Note, "id" | "userId" | "content" | "createdAt"> & {
 };
 
 const convertNote = (note: NoteWithReply): AP.Note => {
-  const userAddress = `https://${env.UNSOCIAL_DOMAIN}/users/${note.userId}`;
+  const userAddress = `https://${env.UNSOCIAL_HOST}/users/${note.userId}`;
   const inReplyTo = (() => {
     if (note.replyTo) {
       if (note.replyTo.url) return new URL(note.replyTo.url);
       return new URL(
-        `https://${env.UNSOCIAL_DOMAIN}/notes/${note.replyTo.id}/activity`,
+        `https://${env.UNSOCIAL_HOST}/notes/${note.replyTo.id}/activity`,
       );
     }
     return undefined;
@@ -82,7 +82,7 @@ const convertNote = (note: NoteWithReply): AP.Note => {
   })();
   return {
     ...contexts,
-    id: new URL(`https://${env.UNSOCIAL_DOMAIN}/notes/${note.id}/activity`),
+    id: new URL(`https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`),
     type: "Note",
     inReplyTo,
     content: note.content,
@@ -98,10 +98,10 @@ const convertCreate = (note: NoteWithReply): AP.Create => {
   return {
     ...contexts,
     // TODO: エンドポイントつくる
-    id: new URL(`https://${env.UNSOCIAL_DOMAIN}/notes/${note.id}/activity`),
+    id: new URL(`https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`),
     type: "Create",
     actor: new URL(
-      `https://${env.UNSOCIAL_DOMAIN}/users/${note.userId}/activity`,
+      `https://${env.UNSOCIAL_HOST}/users/${note.userId}/activity`,
     ),
     published: object.published,
     to: object.to,
@@ -115,11 +115,11 @@ const convertDelete = (note: Pick<Note, "id" | "userId">): AP.Delete => {
     ...contexts,
     type: "Delete",
     actor: new URL(
-      `https://${env.UNSOCIAL_DOMAIN}/users/${note.userId}/activity`,
+      `https://${env.UNSOCIAL_HOST}/users/${note.userId}/activity`,
     ),
     object: {
       type: "Tombstone",
-      id: new URL(`https://${env.UNSOCIAL_DOMAIN}/notes/${note.id}/activity`),
+      id: new URL(`https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`),
     },
   };
 };
@@ -128,10 +128,10 @@ const convertFollow = (follow: Follow, followeeUrl: string): AP.Follow => {
   return {
     ...contexts,
     // TODO: エンドポイントつくる
-    id: new URL(`https://${env.UNSOCIAL_DOMAIN}/follows/${follow.id}`),
+    id: new URL(`https://${env.UNSOCIAL_HOST}/follows/${follow.id}`),
     type: "Follow",
     actor: new URL(
-      `https://${env.UNSOCIAL_DOMAIN}/users/${follow.followerId}/activity`,
+      `https://${env.UNSOCIAL_HOST}/users/${follow.followerId}/activity`,
     ),
     object: new URL(followeeUrl),
   };
@@ -142,9 +142,9 @@ const convertLike = (like: Like, noteUrl: string): AP.Like => {
     ...contexts,
     type: "Like",
     // TODO: エンドポイントつくる
-    id: new URL(`https://${env.UNSOCIAL_DOMAIN}/likes/${like.id}`),
+    id: new URL(`https://${env.UNSOCIAL_HOST}/likes/${like.id}`),
     actor: new URL(
-      `https://${env.UNSOCIAL_DOMAIN}/users/${like.userId}/activity`,
+      `https://${env.UNSOCIAL_HOST}/users/${like.userId}/activity`,
     ),
     object: new URL(noteUrl),
     content: "👍",

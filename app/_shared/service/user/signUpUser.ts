@@ -34,7 +34,7 @@ export const signUpUser = async ({
     data: {
       name,
       preferredUsername,
-      host: env.UNSOCIAL_DOMAIN,
+      host: env.UNSOCIAL_HOST,
       publicKey: keys.publicKey,
       credential: {
         create: {

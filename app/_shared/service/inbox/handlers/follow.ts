@@ -53,10 +53,10 @@ export const handle: InboxHandler = async (activity, actorUser) => {
         "https://w3id.org/security/v1",
       ],
       // TODO: いいの？
-      id: new URL(`https://${env.UNSOCIAL_DOMAIN}/${crypto.randomUUID()}`),
+      id: new URL(`https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`),
       type: "Accept",
       actor: new URL(
-        `https://${env.UNSOCIAL_DOMAIN}/users/${followee.id}/activity`,
+        `https://${env.UNSOCIAL_HOST}/users/${followee.id}/activity`,
       ),
       object: {
         ...parsedFollow.data,

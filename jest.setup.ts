@@ -19,6 +19,6 @@ afterAll(() => server.close());
 jest.mock("@/_shared/utils/env", () => ({
   env: {
     ...process.env,
-    UNSOCIAL_DOMAIN: "myhost.example.com",
+    UNSOCIAL_HOST: "myhost.example.com",
   },
 }));

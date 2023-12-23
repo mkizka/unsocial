@@ -10,7 +10,7 @@ export function GET() {
     status: "ok",
     env: {
       NODE_ENV: env.NODE_ENV,
-      HOST: env.UNSOCIAL_DOMAIN,
+      UNSOCIAL_HOST: env.UNSOCIAL_HOST,
     },
   });
 }

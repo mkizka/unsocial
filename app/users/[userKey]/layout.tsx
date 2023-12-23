@@ -8,7 +8,7 @@ import { UserCard } from "./_components/UserCard";
 //     notFound();
 //   }
 //   return {
-//     title: `${user.name} (@${user.preferredUsername}) - ${env.UNSOCIAL_DOMAIN}`,
+//     title: `${user.name} (@${user.preferredUsername}) - ${env.UNSOCIAL_HOST}`,
 //   };
 // }
 
