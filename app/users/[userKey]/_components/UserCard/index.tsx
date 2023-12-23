@@ -53,7 +53,9 @@ export async function UserCard({ userKey }: Props) {
           <span className="ml-1">フォロワー</span>
         </Link>
         {canFollow && <FollowButton followeeId={user.id} />}
-        {env.HOST !== user.host && <RefetchButton userId={user.id} />}
+        {env.UNSOCIAL_DOMAIN !== user.host && (
+          <RefetchButton userId={user.id} />
+        )}
       </div>
     </section>
   );

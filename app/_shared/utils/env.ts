@@ -11,8 +11,9 @@ const serverEnvSchema = z.object({
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
       : z.string().min(1).optional(),
-  HOST: z.preprocess(
-    (str) => process.env.HOST ?? process.env.VERCEL_URL ?? str,
+  UNSOCIAL_DOMAIN: z.preprocess(
+    // RailwayのPRデプロイの場合はRAILWAY_STATIC_URLを優先する
+    (str) => process.env.RAILWAY_STATIC_URL ?? str,
     z.string().min(1),
   ),
   AWS_ENDPOINT: z.string().url(),

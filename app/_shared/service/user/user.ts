@@ -40,7 +40,7 @@ const signIn = async ({ preferredUsername, password }: SignInParams) => {
     where: {
       preferredUsername_host: {
         preferredUsername,
-        host: env.HOST,
+        host: env.UNSOCIAL_DOMAIN,
       },
     },
     include: { credential: true },

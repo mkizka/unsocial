@@ -8,7 +8,7 @@ export async function GET() {
       links: [
         {
           rel: "http://nodeinfo.diaspora.software/ns/schema/2.1",
-          href: `https://${env.HOST}/.well-known/nodeinfo/2.1`,
+          href: `https://${env.UNSOCIAL_DOMAIN}/.well-known/nodeinfo/2.1`,
         },
       ],
     },

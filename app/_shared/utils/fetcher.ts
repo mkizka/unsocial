@@ -39,7 +39,7 @@ const createHeaders = (url: URL, options?: Options) => {
       })
     : {};
   const headers = new Headers({
-    "User-Agent": `Unsocial/${pkg.version} (${env.HOST})`,
+    "User-Agent": `Unsocial/${pkg.version} (${env.UNSOCIAL_DOMAIN})`,
     ...options?.headers,
     ...signedHeaders,
   });
