@@ -1,22 +1,50 @@
-// Stryker disable all
-import winston from "winston";
-
 import { env } from "./env";
 
-const level = (() => {
-  if (env.UNSOCIAL_LOG_LEVEL) {
-    return env.UNSOCIAL_LOG_LEVEL;
-  }
-  if (env.NODE_ENV === "development") {
-    return "debug";
-  }
-  return "info";
-})();
+type LogLevel = typeof env.UNSOCIAL_LOG_LEVEL;
 
-const logger = winston.createLogger({
-  level,
-  silent: env.NODE_ENV === "test",
-  transports: new winston.transports.Console(),
-});
+// https://docs.railway.app/guides/logs#structured-logs
+type StructuredLog = {
+  message: string;
+  level: LogLevel;
+  [key: string]: string | number | boolean | object | null;
+};
 
-export const createLogger = (name: string) => logger.child({ name });
+type LogFunction = (message: string, data?: object) => void;
+
+type Logger = {
+  [level in LogLevel]: LogFunction;
+};
+
+const logLevelsOrder = {
+  debug: 0,
+  info: 1,
+  warn: 2,
+  error: 3,
+} satisfies Record<LogLevel, number>;
+
+const railwayLog = (log: StructuredLog) => {
+  if (
+    env.NODE_ENV === "test" ||
+    logLevelsOrder[log.level] < logLevelsOrder[env.UNSOCIAL_LOG_LEVEL]
+  ) {
+    return;
+  }
+  console[log.level](JSON.stringify(log));
+};
+
+export const createLogger = (name: string): Logger => {
+  return {
+    debug(message, data) {
+      railwayLog({ level: "debug", message, name, ...data });
+    },
+    info(message, data) {
+      railwayLog({ level: "info", message, name, ...data });
+    },
+    warn(message, data) {
+      railwayLog({ level: "warn", message, name, ...data });
+    },
+    error(message, data) {
+      railwayLog({ level: "error", message, name, ...data });
+    },
+  };
+};

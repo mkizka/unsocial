@@ -6,9 +6,11 @@ import { formatZodError } from "./formatZodError";
 const serverEnvSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
   UNSOCIAL_DATABASE_URL: z.string().url(),
-  UNSOCIAL_LOG_LEVEL: z.string().optional(),
+  UNSOCIAL_LOG_LEVEL: z
+    .enum(["debug", "info", "warn", "error"])
+    .default(process.env.NODE_ENV === "production" ? "info" : "debug"),
   UNSOCIAL_SECRET: z.preprocess(
-    (str) => (process.env.NODE_ENV !== "production" ? "secret" : str),
+    (str) => (process.env.NODE_ENV === "production" ? str : "secret"),
     z.string().min(1),
   ),
   UNSOCIAL_HOST: z.preprocess(
