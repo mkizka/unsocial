@@ -11,15 +11,8 @@ const serverEnvSchema = z.object({
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
       : z.string().min(1).optional(),
-  NEXTAUTH_URL:
-    // next-authはVERCEL_URLがあればそれを使うので検証しない
-    // https://next-auth.js.org/configuration/options#nextauth_url
-    process.env.VERCEL_URL ? z.any() : z.string().url(),
   HOST: z.preprocess(
-    (str) =>
-      process.env.HOST ??
-      process.env.VERCEL_URL ??
-      (process.env.NEXTAUTH_URL ? new URL(process.env.NEXTAUTH_URL).host : str),
+    (str) => process.env.HOST ?? process.env.VERCEL_URL ?? str,
     z.string().min(1),
   ),
   AWS_ENDPOINT: z.string().url(),

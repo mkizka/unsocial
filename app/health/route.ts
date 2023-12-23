@@ -11,7 +11,6 @@ export function GET() {
     env: {
       NODE_ENV: env.NODE_ENV,
       HOST: env.HOST,
-      NEXTAUTH_URL: env.NEXTAUTH_URL,
     },
   });
 }
