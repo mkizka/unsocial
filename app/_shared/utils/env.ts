@@ -20,7 +20,7 @@ const serverEnvSchema = z.object({
   UNSOCIAL_AWS_BUCKET: z.string().min(1),
   UNSOCIAL_AWS_ACCESS_KEY_ID: z.string().min(1),
   UNSOCIAL_AWS_SECRET_ACCESS_KEY: z.string().min(1),
-  DISCORD_WEBHOOK_URL: z.string().url().optional(),
+  UNSOCIAL_DISCORD_WEBHOOK_URL: z.string().url().optional(),
 });
 
 export const env = (() => {
