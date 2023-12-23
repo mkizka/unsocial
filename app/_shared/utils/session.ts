@@ -7,12 +7,14 @@ import { cache } from "react";
 
 import { userService } from "@/_shared/service/user";
 
+import { env } from "./env";
 import { createLogger } from "./logger";
 import { prisma } from "./prisma";
 
 const logger = createLogger("next-auth");
 
 const authOptions: NextAuthOptions = {
+  secret: env.UNSOCIAL_SECRET,
   callbacks: {
     async session({ session, token }) {
       session.user = {
