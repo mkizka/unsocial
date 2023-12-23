@@ -13,7 +13,7 @@ const convertToPng = async (file: File) => {
 };
 
 const getIconUrl = (key: string) => {
-  return `${env.UNSOCIAL_S3_ENDPOINT}/${env.UNSOCIAL_S3_BUCKET}/${key}`;
+  return `${env.UNSOCIAL_AWS_ENDPOINT}/${env.UNSOCIAL_AWS_BUCKET}/${key}`;
 };
 
 export const update = async (userId: string, file: File) => {
