@@ -5,10 +5,10 @@ import { env } from "@/_shared/utils/env";
 
 const client = new S3Client({
   region: "ap-northeast-1",
-  endpoint: env.AWS_ENDPOINT,
+  endpoint: env.UNSOCIAL_S3_ENDPOINT,
   credentials: {
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: env.UNSOCIAL_S3_ACCESS_KEY_ID,
+    secretAccessKey: env.UNSOCIAL_S3_SECRET_ACCESS_KEY,
   },
   forcePathStyle: true,
 });
@@ -18,7 +18,7 @@ export const putObject = (
 ) => {
   return client.send(
     new PutObjectCommand({
-      Bucket: env.AWS_BUCKET,
+      Bucket: env.UNSOCIAL_S3_BUCKET,
       ...input,
     }),
   );

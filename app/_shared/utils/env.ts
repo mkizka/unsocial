@@ -16,10 +16,10 @@ const serverEnvSchema = z.object({
     (str) => process.env.RAILWAY_STATIC_URL ?? str,
     z.string().min(1),
   ),
-  AWS_ENDPOINT: z.string().url(),
-  AWS_BUCKET: z.string().min(1),
-  AWS_ACCESS_KEY_ID: z.string().min(1),
-  AWS_SECRET_ACCESS_KEY: z.string().min(1),
+  UNSOCIAL_S3_ENDPOINT: z.string().url(),
+  UNSOCIAL_S3_BUCKET: z.string().min(1),
+  UNSOCIAL_S3_ACCESS_KEY_ID: z.string().min(1),
+  UNSOCIAL_S3_SECRET_ACCESS_KEY: z.string().min(1),
   DISCORD_WEBHOOK_URL: z.string().url().optional(),
 });
 
