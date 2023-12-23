@@ -7,7 +7,7 @@
     "node": "20.x"
   },
   "scripts": {
-    "_e2e:server": "LOG_LEVEL=debug NODE_EXTRA_CA_CERTS=./docker/mkcert/rootCA.pem run-p -l _e2e:server:*",
+    "_e2e:server": "UNSOCIAL_LOG_LEVEL=debug NODE_EXTRA_CA_CERTS=./docker/mkcert/rootCA.pem run-p -l _e2e:server:*",
     "_e2e:server:myhost": "dotenv -e e2e/.env.myhost -- next start",
     "_e2e:server:remote": "dotenv -e e2e/.env.remote -- next start -p 3001 || exit 0",
     "_lint:fix": "./scripts/lint.sh --fix",
@@ -38,7 +38,6 @@
     "jotai": "2.6.0",
     "next": "14.0.5-canary.24",
     "next-auth": "4.24.5",
-    "nodemailer": "6.9.7",
     "react": "18.3.0-canary-d803f519e-20231020",
     "react-dom": "18.3.0-canary-d803f519e-20231020",
     "react-simple-image-viewer": "1.2.2",

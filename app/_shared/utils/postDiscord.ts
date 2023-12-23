@@ -19,13 +19,13 @@ export const postDicord = async (text: string) => {
   if (env.NODE_ENV === "test") {
     return;
   }
-  if (!env.DISCORD_WEBHOOK_URL) {
+  if (!env.UNSOCIAL_DISCORD_WEBHOOK_URL) {
     logger.info("$DISCORD_WEBHOOK_URLがないのでDiscordへの投稿をスキップ");
     return;
   }
   const contents = sliceText(text, 1990);
   for (const content of contents) {
-    await fetcher(env.DISCORD_WEBHOOK_URL, {
+    await fetcher(env.UNSOCIAL_DISCORD_WEBHOOK_URL, {
       method: "POST",
       body: JSON.stringify({ content: `\`\`\`\n${content}\n\`\`\`` }),
     })

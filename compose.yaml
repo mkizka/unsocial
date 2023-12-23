@@ -7,6 +7,35 @@ volumes:
 
 services:
   ############
+  # All
+  ############
+  nginx-all:
+    image: nginx:1-alpine
+    volumes:
+      - ./docker/nginx/all:/etc/nginx/conf.d
+      - ./docker/nginx/confs:/etc/nginx/confs
+      - ./docker/nginx/certs:/etc/nginx/certs
+    ports:
+      - 80:80
+      - 443:443
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks:
+      default:
+        aliases:
+          - unsocial.localhost
+          - mastodon.localhost
+          - misskey.localhost
+    depends_on:
+      mastodon-streaming:
+        condition: service_healthy
+      mastodon-sidekiq:
+        condition: service_healthy
+      misskey:
+        condition: service_healthy
+    profiles:
+      - all
+  ############
   # Unsocial
   ############
   nginx-unsocial:
@@ -69,6 +98,7 @@ services:
       - ./docker/mkcert:/mkcert
       - ./docker/mastodon/public/system:/mastodon/public/system
     profiles:
+      - all
       - mastodon
   mastodon-streaming:
     image: tootsuite/mastodon:v4.2.3
@@ -81,6 +111,7 @@ services:
       mastodon:
         condition: service_healthy
     profiles:
+      - all
       - mastodon
   mastodon-sidekiq:
     image: tootsuite/mastodon:v4.2.3
@@ -95,6 +126,7 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 6' || false"]
     profiles:
+      - all
       - mastodon
   ############
   # Misskey
@@ -139,6 +171,7 @@ services:
       redis:
         condition: service_started
     profiles:
+      - all
       - misskey
   ############
   # Others
@@ -161,9 +194,6 @@ services:
     image: redis:7-alpine
     volumes:
       - redis_data:/data
-    profiles:
-      - mastodon
-      - misskey
   minio:
     image: minio/minio:RELEASE.2023-11-20T22-40-07Z
     command: server /data --console-address :9090
@@ -185,7 +215,7 @@ services:
         mc mb myminio/unsocial;
         mc anonymous set download myminio/unsocial;
       "
-  # mail:
-  #   image: mailhog/mailhog:v1.0.1
-  #   ports:
-  #     - 8025:8025
+  mail:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - 8025:8025

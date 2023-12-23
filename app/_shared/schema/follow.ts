@@ -8,7 +8,7 @@ export const inboxFollowSchema = z.object({
   object: z
     .string()
     .url()
-    .refine((val) => new URL(val).host === env.HOST, {
+    .refine((val) => new URL(val).host === env.UNSOCIAL_HOST, {
       message: "フォロー先が自ホストではありません",
     }),
 });

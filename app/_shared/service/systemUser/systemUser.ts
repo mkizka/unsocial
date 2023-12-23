@@ -9,8 +9,8 @@ export const findOrCreateSystemUser = async () => {
   const systemUser = await prisma.user.findUnique({
     where: {
       preferredUsername_host: {
-        preferredUsername: env.HOST,
-        host: env.HOST,
+        preferredUsername: env.UNSOCIAL_HOST,
+        host: env.UNSOCIAL_HOST,
       },
     },
     include: { credential: true },
@@ -26,7 +26,7 @@ export const findOrCreateSystemUser = async () => {
     };
   }
   return signUpUser({
-    preferredUsername: env.HOST,
+    preferredUsername: env.UNSOCIAL_HOST,
     password: crypto.randomUUID(),
   });
 };

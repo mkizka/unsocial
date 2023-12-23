@@ -13,13 +13,7 @@ const convertToPng = async (file: File) => {
 };
 
 const getIconUrl = (key: string) => {
-  return `${env.AWS_ENDPOINT}/${env.AWS_BUCKET}/${key}`;
-};
-
-type UpdateIconParams = {
-  userId: string;
-  icon: string;
-  iconHash: string;
+  return `${env.UNSOCIAL_AWS_ENDPOINT}/${env.UNSOCIAL_AWS_BUCKET}/${key}`;
 };
 
 export const update = async (userId: string, file: File) => {

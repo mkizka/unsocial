@@ -22,6 +22,6 @@ export const parseUserKey = (key: string): ParsedKey | UserServiceError => {
   return {
     // startsWith("@")でチェックしているのでundefinedにはならない
     preferredUsername: preferredUsername as string,
-    host: host ?? env.HOST,
+    host: host ?? env.UNSOCIAL_HOST,
   };
 };

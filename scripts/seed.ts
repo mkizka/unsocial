@@ -11,7 +11,7 @@ const main = async () => {
   const existingUser = await prisma.user.findFirst({
     where: {
       preferredUsername: "test",
-      host: env.HOST,
+      host: env.UNSOCIAL_HOST,
     },
   });
   if (existingUser) {
