@@ -34,6 +34,8 @@ const authOptions: NextAuthOptions = {
       logger.error(`${code} ${JSON.stringify(message)}`);
     },
     warn(code) {
+      // CredentialsProviderのみ使用する場合はNEXTAUTH_URLは不要なので、警告は無視する
+      if (code === "NEXTAUTH_URL") return;
       logger.warn(code);
     },
   },
