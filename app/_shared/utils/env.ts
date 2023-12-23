@@ -4,8 +4,8 @@ import { z } from "zod";
 import { formatZodError } from "./formatZodError";
 
 const serverEnvSchema = z.object({
-  DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
+  UNSOCIAL_DATABASE_URL: z.string().url(),
   UNSOCIAL_LOG_LEVEL: z.string().optional(),
   UNSOCIAL_SECRET: z.preprocess(
     (str) => (process.env.NODE_ENV !== "production" ? "secret" : str),
