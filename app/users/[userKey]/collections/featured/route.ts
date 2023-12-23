@@ -24,7 +24,7 @@ export async function GET(
   return NextResponse.json(
     {
       "@context": ["https://www.w3.org/ns/activitystreams"],
-      id: `https://${env.HOST}/users/${user.id}/collections/featured`,
+      id: `https://${env.UNSOCIAL_DOMAIN}/users/${user.id}/collections/featured`,
       type: "OrderedCollection",
       totalItems: notes.length,
       orderedItems: notes.map(activityStreams.note),

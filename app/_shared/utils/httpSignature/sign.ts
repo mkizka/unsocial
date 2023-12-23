@@ -50,7 +50,7 @@ export const signHeaders = ({
   return {
     ...headers,
     signature:
-      `keyId="https://${env.HOST}/users/${signer.id}/activity#main-key",` +
+      `keyId="https://${env.UNSOCIAL_DOMAIN}/users/${signer.id}/activity#main-key",` +
       `algorithm="rsa-sha256",` +
       `headers="${order.join(" ")}",` +
       `signature="${signature}"`,

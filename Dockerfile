@@ -23,6 +23,4 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/scripts/start.sh ./scripts/start.sh
 
-ARG RAILWAY_STATIC_URL
-ENV NEXTAUTH_URL=https://$RAILWAY_STATIC_URL
 CMD ["./scripts/start.sh"]
