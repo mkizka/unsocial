@@ -14,10 +14,11 @@ const logLevel = (status: number) => {
 export function middleware(request: NextRequest) {
   const pathWithQuery = request.nextUrl.pathname + request.nextUrl.search;
   const response = NextResponse.next();
+  const level = logLevel(response.status);
   // https://docs.railway.app/guides/logs#structured-logs
-  console[logLevel(response.status)](
+  console[level](
     JSON.stringify({
-      level: "info",
+      level,
       message: `${request.method} ${response.status} ${pathWithQuery}`,
       url: request.nextUrl.pathname,
       searchParams: Object.fromEntries(request.nextUrl.searchParams),
