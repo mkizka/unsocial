@@ -4,8 +4,8 @@ import winston from "winston";
 import { env } from "./env";
 
 const level = (() => {
-  if (env.LOG_LEVEL) {
-    return env.LOG_LEVEL;
+  if (env.UNSOCIAL_LOG_LEVEL) {
+    return env.UNSOCIAL_LOG_LEVEL;
   }
   if (env.NODE_ENV === "development") {
     return "debug";
