@@ -28,6 +28,8 @@ jobs:
           cache: pnpm
       - run: pnpm i
       - uses: changesets/action@v1
+        with:
+          publish: pnpm changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   create-renovate-pr:
