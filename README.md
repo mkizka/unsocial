@@ -6,13 +6,14 @@ Demo: https://unsocial.dev
 
 ## Deployment Steps
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/Zw0SlL?referralCode=mveF9L)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/Du5yi-?referralCode=mveF9L)
 
 1. Click on Deploy on Railway
 2. Click "Deploy Now"
-3. Click "Deploy"
-4. Wait for the deployment to finish
-5. Access `https://${automatically_generated_subdomain}.up.railway.app`
+3. Configure and save config
+4. Click "Deploy"
+5. Wait for the deployment to finish
+6. Access `https://${automatically_generated_subdomain}.up.railway.app`
 
 ## Development Steps
 

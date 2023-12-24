@@ -13,9 +13,7 @@ const client = new S3Client({
   forcePathStyle: true,
 });
 
-export const putObject = (
-  input: Pick<PutObjectCommandInput, "Key" | "Body">,
-) => {
+export const putObject = (input: Omit<PutObjectCommandInput, "Bucket">) => {
   return client.send(
     new PutObjectCommand({
       Bucket: env.UNSOCIAL_AWS_BUCKET,
