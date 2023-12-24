@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.3
+
+### Patch Changes
+
+- 89d4abf: dockerイメージにバージョンタグがつかないのを修正
+
 ## 0.0.2
 
 ### Patch Changes
