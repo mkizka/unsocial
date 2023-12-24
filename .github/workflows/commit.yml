@@ -14,6 +14,19 @@ jobs:
   mutation-test:
     uses: ./.github/workflows/_mutation-test.yml
     secrets: inherit
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .tool-versions
+          cache: pnpm
+      - run: pnpm i
+      - uses: changesets/action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   create-renovate-pr:
     runs-on: ubuntu-latest
     permissions:
