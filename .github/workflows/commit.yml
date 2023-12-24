@@ -89,6 +89,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c renovate-pr
-          git commit --allow-empty -m "Renovate Updates"
+          cp -f .github/workflows/renovate-pr.md .changeset/
+          git add .
+          git commit -m "Renovate Updates"
           git push origin renovate-pr
           gh pr create -B main -H renovate-pr -t "Renovate Updates" -b ''
