@@ -46,7 +46,7 @@ jobs:
       IMAGE_NAME: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/login-action@v1
+      - uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
