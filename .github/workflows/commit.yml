@@ -21,6 +21,7 @@ jobs:
       pull-requests: write
     outputs:
       published: ${{ steps.changesets.outputs.published }}
+      publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -35,10 +36,14 @@ jobs:
           publish: pnpm changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  deply-ghcr:
+  deply-docker-image:
     runs-on: ubuntu-latest
     needs: bump-version
     if: needs.bump-version.outputs.published == 'true'
+    strategy:
+      matrix:
+        # https://github.com/changesets/changesets/discussions/1230#discussioncomment-7918696
+        package: ${{ fromJson(needs.bump-version.outputs.publishedPackages) }}
     permissions:
       packages: write
     env:
@@ -57,8 +62,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern={{version}}
-            type=ref,event=tag
+            type=semver,pattern={{version}},value=${{ matrix.package.version }}
             type=raw,value=latest
       - uses: docker/build-push-action@v2
         with:
