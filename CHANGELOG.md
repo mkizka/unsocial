@@ -1,5 +1,12 @@
 # unsocial
 
+## 0.0.4
+
+### Patch Changes
+
+- a599f14: /healthにversion追加
+- cbb4848: 依存関係の更新
+
 ## 0.0.3
 
 ### Patch Changes
