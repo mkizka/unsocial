@@ -101,7 +101,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c renovate-pr
-          cp -f .github/workflows/renovate-pr.md .changeset/
+          cp -f .github/workflows/renovate-pr.md .changeset/$(uuidgen).md
           git add .
           git commit -m "Renovate Updates"
           git push origin renovate-pr
