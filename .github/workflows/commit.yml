@@ -42,13 +42,8 @@ jobs:
           app-id: ${{ secrets.UNSOCIAL_BOT_APP_ID }}
           private-key: ${{ secrets.UNSOCIAL_BOT_PRIVATE_KEY }}
       - name: Merge PR
-        run: |
-          sleep 2
-          PR_NUMBER=$(gh pr list --search 'Version Packages in:title' --json number --jq '.[0].number')
-          echo $PR_NUMBER
-          if [ -n "$PR_NUMBER" ]; then
-            gh pr merge "$PR_NUMBER" --squash --delete-branch --admin
-          fi
+        if: steps.changesets.outputs.pullRequestNumber > 0
+        run: gh pr merge ${{ steps.changesets.outputs.pullRequestNumber }} --squash --delete-branch --admin
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
   deply-docker-image:
