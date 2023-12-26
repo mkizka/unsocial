@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.5
+
+### Patch Changes
+
+- 5057a8f: 空リリース
+
 ## 0.0.4
 
 ### Patch Changes
