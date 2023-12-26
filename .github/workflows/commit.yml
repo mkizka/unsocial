@@ -24,6 +24,8 @@ jobs:
       publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
@@ -33,7 +35,7 @@ jobs:
       - uses: changesets/action@v1
         id: changesets
         with:
-          publish: git fetch --tags && pnpm changeset tag
+          publish: pnpm changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/create-github-app-token@v1
