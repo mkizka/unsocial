@@ -92,7 +92,7 @@ jobs:
       # https://zenn.dev/kshida/articles/auto-generate-release-pr-with-github-actions
       - name: Check PR
         id: check-pr
-        run: echo "count=$(gh pr list -S 'Renovate Updates in:title' | wc -l)" >> "$GITHUB_OUTPUT"
+        run: echo "count=$(gh pr list --author 'github-actions[bot]' --search 'Renovate Updates' | wc -l)" >> "$GITHUB_OUTPUT"
       - name: Create PR
         if: steps.check-pr.outputs.count == 0
         run: |
