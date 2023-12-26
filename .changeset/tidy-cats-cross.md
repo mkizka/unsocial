@@ -1,0 +1,5 @@
+---
+"unsocial": patch
+---
+
+Pull Requestなしでリリースするように
