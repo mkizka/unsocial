@@ -36,6 +36,14 @@ jobs:
           publish: pnpm changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge PR
+        run: |
+          PR_NUMBER=$(gh pr list --search 'Version Packages in:title' --json number --jq '.[0].number')
+          if [ -n "$PR_NUMBER" ]; then
+            gh pr merge "$PR_NUMBER" --squash --delete-branch
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deply-docker-image:
     runs-on: ubuntu-latest
     needs: bump-version
