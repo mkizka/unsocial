@@ -36,6 +36,11 @@ jobs:
           publish: pnpm changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.UNSOCIAL_BOT_APP_ID }}
+          private-key: ${{ secrets.UNSOCIAL_BOT_PRIVATE_KEY }}
       - name: Merge PR
         run: |
           sleep 2
@@ -45,7 +50,7 @@ jobs:
             gh pr merge "$PR_NUMBER" --squash --delete-branch --admin
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
   deply-docker-image:
     runs-on: ubuntu-latest
     needs: bump-version
