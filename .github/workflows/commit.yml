@@ -33,7 +33,7 @@ jobs:
       - uses: changesets/action@v1
         id: changesets
         with:
-          publish: pnpm changeset tag
+          publish: git fetch --tags && pnpm changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/create-github-app-token@v1
