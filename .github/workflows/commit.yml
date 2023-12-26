@@ -42,7 +42,7 @@ jobs:
           PR_NUMBER=$(gh pr list --search 'Version Packages in:title' --json number --jq '.[0].number')
           echo $PR_NUMBER
           if [ -n "$PR_NUMBER" ]; then
-            gh pr merge "$PR_NUMBER" --squash --delete-branch --auto
+            gh pr merge "$PR_NUMBER" --squash --delete-branch
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
