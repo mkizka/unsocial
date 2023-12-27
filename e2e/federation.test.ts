@@ -1,5 +1,6 @@
 import { test } from "@playwright/test";
 import crypto from "crypto";
+import { setTimeout } from "timers/promises";
 
 import {
   MastodonHandler,
@@ -193,7 +194,9 @@ test.describe("Federation", () => {
       ],
       [
         "5. Mastodonから送られてきたRsaSignature2017を検証",
-        () => {
+        async () => {
+          await unsocial.waitForPosted(content);
+          await setTimeout(5000);
           throw new Error("Not implemented");
         },
       ],
