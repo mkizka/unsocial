@@ -21,3 +21,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/rtx-action@v1
+  create-renovate-pr:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: renovate-pr-test
+      PR_TITLE: Renovate Updates test
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.UNSOCIAL_BOT_APP_ID }}
+          private-key: ${{ secrets.UNSOCIAL_BOT_PRIVATE_KEY }}
+        # renovate-prブランチはRulesetによって保護されているので、
+        # Bypass listに追加しているbotでpush出来るようにtoken付きでcheckoutする
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+      - name: Check PR
+        id: check-pr
+        run: echo "count=$(gh pr list --author 'github-actions[bot]' --search '${{ env.PR_TITLE }}' | wc -l)" >> "$GITHUB_OUTPUT"
+      - name: Create PR
+        if: steps.check-pr.outputs.count == 0
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git switch -c ${{ env.BRANCH_NAME }}
+          cp -f .github/workflows/renovate-pr.md .changeset/$(uuidgen).md
+          git add .
+          git commit -m "${{ env.PR_TITLE }}"
+          git push origin ${{ env.BRANCH_NAME }}
+          gh pr create -B main -H ${{ env.BRANCH_NAME }} -t "${{ env.PR_TITLE }}" -b ''
