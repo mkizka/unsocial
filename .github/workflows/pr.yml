@@ -26,12 +26,15 @@ jobs:
     env:
       BRANCH_NAME: renovate-pr-test
       PR_TITLE: Renovate Updates test
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/create-github-app-token@v1
         id: app-token
         with:
           app-id: ${{ secrets.UNSOCIAL_BOT_APP_ID }}
           private-key: ${{ secrets.UNSOCIAL_BOT_PRIVATE_KEY }}
+        # renovate-prブランチはRulesetによって保護されているので、
+        # Bypass listに追加しているbotでpush出来るようにtoken付きでcheckoutする
       - uses: actions/checkout@v4
         with:
           token: ${{ steps.app-token.outputs.token }}
