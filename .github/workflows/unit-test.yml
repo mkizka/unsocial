@@ -1,7 +1,10 @@
-name: _unit-test
+name: unit-test
 
 on:
-  workflow_call:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   test:

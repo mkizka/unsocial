@@ -1,4 +1,4 @@
-name: _e2e-federation
+name: _e2e-test-workflow
 
 on:
   workflow_call:

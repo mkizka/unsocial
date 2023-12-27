@@ -1,0 +1,12 @@
+name: nodejs-test
+
+on:
+  pull_request:
+
+jobs:
+  nodejs-test:
+    runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'renovate/node-')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/rtx-action@v1
