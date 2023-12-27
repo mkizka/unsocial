@@ -15,9 +15,5 @@ if [ ! -f $CACHE_PATH ]; then
   echo "main のキャッシュファイルをダウンロード..."
   curl -f --progress-bar -o $CACHE_PATH https://minio-s3.paas.mkizka.dev/unsocial-gha/mutation-test/main/stryker-incremental.json
 fi
-if [ ! -f $CACHE_PATH ]; then
-  echo "キャッシュファイルが取得できませんでした"
-  exit 1
-fi
 
 pnpm stryker run "$@"
