@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.7
+
+### Patch Changes
+
+- ed9681f: リレー時のタイムアウト時間を調整
+
 ## 0.0.6
 
 ### Patch Changes
