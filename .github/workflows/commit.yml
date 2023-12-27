@@ -85,8 +85,8 @@ jobs:
   create-renovate-pr:
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: renovate-pr-test
-      PR_TITLE: Renovate Updates test
+      BRANCH_NAME: renovate-pr
+      PR_TITLE: Renovate Updates
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/create-github-app-token@v1
