@@ -142,4 +142,35 @@ test.describe("Federation", () => {
       to: new MyhostUnsocialHandler(page),
     });
   });
+
+  // Mastodon <- Misskey/Unsocial というフォロー関係の時に、
+  // Mastodonが配送して来るMisskeyのリプライをUnsocialが受け取れることをテストするシナリオ
+  test("All", async ({ page }) => {
+    const mastodon = new MastodonHandler(page);
+    const misskey = new MisskeyHandler(page);
+    const unsocial = new MyhostUnsocialHandler(page);
+    const content = crypto.randomUUID();
+    const replyContent = crypto.randomUUID();
+    await mastodon.login();
+    await misskey.login();
+    await unsocial.login();
+    // 1. UnsocialがMastodonをフォロー
+    await unsocial.waitForUser(mastodon.user);
+    await mastodon.waitForUser(unsocial.user);
+    await unsocial.follow(mastodon.user);
+    // 2. MisskeyがMastodonをフォロー
+    await misskey.waitForUser(mastodon.user);
+    await mastodon.waitForUser(misskey.user);
+    await misskey.follow(mastodon.user);
+    // 3. Mastodonが投稿、Misskey/Unsocialに配送
+    await mastodon.postNote(content);
+    await misskey.waitForPosted(content);
+    await unsocial.waitForPosted(content);
+    // 4. MisskeyがMastodonにリプライ
+    await misskey.postReply(replyContent, content);
+    await mastodon.waitForReplied(replyContent, content);
+    // 5. MastodonがMisskeyのリプライをUnsocialに配送
+    //   ↑ここでMastodonはMisskeyのリプライに署名できずRsaSignature2017の署名で送ってくる
+    throw new Error("Not implemented");
+  });
 });
