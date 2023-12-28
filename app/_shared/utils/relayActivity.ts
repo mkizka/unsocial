@@ -24,6 +24,7 @@ const relayActivity = async (params: Omit<SignActivityParams, "method">) => {
     body: params.body,
     headers: {
       Accept: "application/activity+json",
+      ContentType: "application/activity+json",
     },
     signer: params.signer,
     timeout: 30000,
