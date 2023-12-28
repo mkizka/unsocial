@@ -3,7 +3,7 @@
 exports[`relayActivity relayActivityToFollowers 正常系 1`] = `
 {
   "accept": "application/activity+json",
-  "content-type": "application/json",
+  "content-type": "application/activity+json",
   "date": "Wed, 01 Jan 2020 00:00:00 GMT",
   "digest": "SHA-256=GJpn7Z0rhlxi7/yIwjEeQln6ix6FqsnOBpzQ156l7mM=",
   "host": "remote1.example.com",
@@ -15,7 +15,7 @@ exports[`relayActivity relayActivityToFollowers 正常系 1`] = `
 exports[`relayActivity relayActivityToFollowers 正常系 2`] = `
 {
   "accept": "application/activity+json",
-  "content-type": "application/json",
+  "content-type": "application/activity+json",
   "date": "Wed, 01 Jan 2020 00:00:00 GMT",
   "digest": "SHA-256=GJpn7Z0rhlxi7/yIwjEeQln6ix6FqsnOBpzQ156l7mM=",
   "host": "remote2.example.com",
@@ -27,7 +27,7 @@ exports[`relayActivity relayActivityToFollowers 正常系 2`] = `
 exports[`relayActivity relayActivityToInboxUrl 正常系 1`] = `
 {
   "accept": "application/activity+json",
-  "content-type": "application/json",
+  "content-type": "application/activity+json",
   "date": "Wed, 01 Jan 2020 00:00:00 GMT",
   "digest": "SHA-256=Gwtaf2C1j/hnbwtC6f37u2T6SiitMcs15298sjIcR5w=",
   "host": "remote.example.com",

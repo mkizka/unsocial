@@ -6,16 +6,22 @@ export class MastodonHandler extends FediverseHandler {
   domain = "mastodon.localhost";
   user = "@e2e@mastodon.localhost";
 
-  async login() {
-    await this.goto("/auth/sign_in");
-    await this.page.locator("#user_email").fill("e2e@localhost");
-    await this.page.locator("#user_password").fill("password");
+  async loginAs(email: string, password: string) {
+    await this.goto("/");
+    await this.page
+      .locator(".sign-in-banner")
+      .locator("a", { hasText: "ログイン" })
+      .click();
+    await this.page.locator("#user_email").fill(email);
+    await this.page.locator("#user_password").fill(password);
     await this.page.locator("button").click();
     await expect(
-      this.page.locator(".navigation-bar__profile-account", {
-        hasText: "@e2e",
-      }),
+      this.page.locator(".navigation-bar__profile-account"),
     ).toBeVisible();
+  }
+
+  async login() {
+    await this.loginAs("e2e@localhost", "password");
   }
 
   async expectedUser(user: string) {
@@ -141,5 +147,22 @@ export class MastodonHandler extends FediverseHandler {
     await expect(
       this.page.locator(".display-name__account", { hasText: user }),
     ).not.toBeVisible();
+  }
+
+  async logout() {
+    await this.goto("/settings/profile");
+    await this.page.locator("#logout").locator("a").click();
+  }
+
+  async deleteAccount() {
+    await this.loginAs("delete@localhost", "password");
+    await this.goto("/settings/delete");
+    await this.page
+      .locator("#form_delete_confirmation_password")
+      .fill("password");
+    await this.page
+      .locator("#new_form_delete_confirmation")
+      .locator("button")
+      .click();
   }
 }
