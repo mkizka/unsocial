@@ -8,7 +8,10 @@ export class MastodonHandler extends FediverseHandler {
 
   async loginAs(email: string, password: string) {
     await this.goto("/");
-    await this.page.locator("a", { hasText: "ログイン" }).click();
+    await this.page
+      .locator(".sign-in-banner")
+      .locator("a", { hasText: "ログイン" })
+      .click();
     await this.page.locator("#user_email").fill(email);
     await this.page.locator("#user_password").fill(password);
     await this.page.locator("button").click();
