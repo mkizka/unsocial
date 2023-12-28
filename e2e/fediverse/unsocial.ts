@@ -24,9 +24,9 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     expect(response?.status()).toBe(404);
   }
 
-  async waitForUserNotFound(user: string) {
-    await this.waitFor(() => this.expectedUserNotFound(user));
-  }
+  // async waitForUserNotFound(user: string) {
+  //   await this.waitFor(() => this.expectedUserNotFound(user));
+  // }
 
   getNote(content: string) {
     return this.page.locator("[data-testid=note-card]", { hasText: content });
