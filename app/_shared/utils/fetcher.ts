@@ -30,23 +30,27 @@ type Options = Omit<RequestInit, "body"> & {
 };
 
 const createHeaders = (url: URL, options?: Options) => {
-  const signedHeaders = options?.signer
-    ? signHeaders({
+  const defaultHeaders: Record<string, string> = {
+    "user-agent": `Unsocial/${pkg.version} (${env.UNSOCIAL_HOST})`,
+  };
+  if (options?.method === "POST") {
+    defaultHeaders["content-type"] = "application/json";
+  }
+  if (options?.signer) {
+    Object.assign(
+      defaultHeaders,
+      signHeaders({
         signer: options.signer,
         inboxUrl: url,
         body: options.body ?? "",
         method: options.method ?? "GET",
-      })
-    : {};
-  const headers = new Headers({
-    "User-Agent": `Unsocial/${pkg.version} (${env.UNSOCIAL_HOST})`,
-    ...options?.headers,
-    ...signedHeaders,
-  });
-  if (options?.method === "POST") {
-    headers.set("Content-Type", "application/json");
+      }),
+    );
   }
-  return headers;
+  return new Headers({
+    ...defaultHeaders,
+    ...options?.headers,
+  });
 };
 
 const createNext = (options?: Options) => {
