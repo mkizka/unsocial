@@ -36,6 +36,7 @@ export const signHeaders = ({
     host: inboxUrl.host,
     date: new Date().toUTCString(),
     digest: `SHA-256=${createDigest(body)}`,
+    accept: "application/activity+json",
   };
   const textToSign = textOf({
     method,

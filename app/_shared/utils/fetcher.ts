@@ -31,10 +31,10 @@ type Options = Omit<RequestInit, "body"> & {
 
 const createHeaders = (url: URL, options?: Options) => {
   const defaultHeaders: Record<string, string> = {
-    "User-Agent": `Unsocial/${pkg.version} (${env.UNSOCIAL_HOST})`,
+    "user-agent": `Unsocial/${pkg.version} (${env.UNSOCIAL_HOST})`,
   };
   if (options?.method === "POST") {
-    defaultHeaders["Content-Type"] = "application/json";
+    defaultHeaders["content-type"] = "application/json";
   }
   if (options?.signer) {
     Object.assign(

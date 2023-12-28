@@ -2,6 +2,7 @@
 
 exports[`signActivity 署名されたヘッダーを返す: activity 1`] = `
 {
+  "accept": "application/activity+json",
   "date": "Sun, 01 Jan 2023 00:00:00 GMT",
   "digest": "SHA-256=JeE18werLvQnEoHViKDam+ZK1D8E27TBC2kIISI7pIY=",
   "host": "remote.example.com",
@@ -11,6 +12,7 @@ exports[`signActivity 署名されたヘッダーを返す: activity 1`] = `
 
 exports[`signActivity 署名されたヘッダーを返す: date 1`] = `
 {
+  "accept": "application/activity+json",
   "date": "Mon, 02 Jan 2023 00:00:00 GMT",
   "digest": "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
   "host": "remote.example.com",
@@ -20,6 +22,7 @@ exports[`signActivity 署名されたヘッダーを返す: date 1`] = `
 
 exports[`signActivity 署名されたヘッダーを返す: default 1`] = `
 {
+  "accept": "application/activity+json",
   "date": "Sun, 01 Jan 2023 00:00:00 GMT",
   "digest": "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
   "host": "remote.example.com",
@@ -29,6 +32,7 @@ exports[`signActivity 署名されたヘッダーを返す: default 1`] = `
 
 exports[`signActivity 署名されたヘッダーを返す: path 1`] = `
 {
+  "accept": "application/activity+json",
   "date": "Sun, 01 Jan 2023 00:00:00 GMT",
   "digest": "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
   "host": "remote.example.com",
@@ -38,6 +42,7 @@ exports[`signActivity 署名されたヘッダーを返す: path 1`] = `
 
 exports[`signActivity 署名されたヘッダーを返す: url 1`] = `
 {
+  "accept": "application/activity+json",
   "date": "Sun, 01 Jan 2023 00:00:00 GMT",
   "digest": "SHA-256=RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=",
   "host": "remote1.example.com",
