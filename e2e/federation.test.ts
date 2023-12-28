@@ -107,6 +107,10 @@ const runTest = async ({ from, to }: RunTestParams) => {
   if (from instanceof MyhostUnsocialHandler && to instanceof MastodonHandler) {
     steps.push(
       [
+        `${to.domain}: ログアウト`, //
+        () => to.logout(),
+      ],
+      [
         `${to.domain}: アカウントを削除`, //
         () => to.deleteAccount(),
       ],

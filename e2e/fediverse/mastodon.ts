@@ -145,9 +145,13 @@ export class MastodonHandler extends FediverseHandler {
     ).not.toBeVisible();
   }
 
-  async deleteAccount() {
+  async logout() {
     await this.goto("/settings/profile");
     await this.page.locator("#logout").locator("a").click();
+  }
+
+  async deleteAccount() {
+    await this.goto("/");
     await this.loginAs("delete@localhost", "password");
     await this.goto("/settings/delete");
     await this.page
