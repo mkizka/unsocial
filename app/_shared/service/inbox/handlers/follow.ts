@@ -48,10 +48,7 @@ export const handle: InboxHandler = async (activity, actorUser) => {
     userId: followee.id,
     inboxUrl: new URL(actorUser.inboxUrl),
     activity: {
-      "@context": [
-        "https://www.w3.org/ns/activitystreams",
-        "https://w3id.org/security/v1",
-      ],
+      "@context": "https://www.w3.org/ns/activitystreams",
       // TODO: いいの？
       id: new URL(`https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`),
       type: "Accept",
