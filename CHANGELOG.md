@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.8
+
+### Patch Changes
+
+- 0cf93ac: Activityの配送時にContent-Type: application/activity+jsonをつける
+
 ## 0.0.7
 
 ### Patch Changes
