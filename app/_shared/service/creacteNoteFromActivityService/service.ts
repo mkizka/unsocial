@@ -12,7 +12,7 @@ const getLocalNoteId = (noteUrl: string) => {
   // https://myhost.example.com/notes/[noteId]/activity
   const [_, prefixPath, noteId, lastPath] = url.pathname.split("/");
   if (
-    url.host === env.HOST &&
+    url.host === env.UNSOCIAL_HOST &&
     prefixPath === "notes" &&
     lastPath === "activity"
   ) {

@@ -21,7 +21,7 @@ const logger = createLogger("findOrFetchUser");
 
 // この関数のみテスト用にexport
 export const shouldRefetch = (user: User) => {
-  if (user.host === env.HOST) {
+  if (user.host === env.UNSOCIAL_HOST) {
     return false;
   }
   if (!user.lastFetchedAt) {
@@ -108,7 +108,7 @@ const getLocalUserId = (actorUrl: string) => {
   // https://myhost.example.com/users/[userId]/activity
   const [_, prefixPath, userId, lastPath] = url.pathname.split("/");
   if (
-    url.host === env.HOST &&
+    url.host === env.UNSOCIAL_HOST &&
     prefixPath === "users" &&
     lastPath === "activity"
   ) {
@@ -151,7 +151,7 @@ export const findOrFetchUserByWebFinger = async (
   });
   // 自ホストのユーザーは自サーバーのWebFingerを自分で叩くことになるため、
   // 通信せずにエラーを返す
-  if (!existingUser && user.host === env.HOST) {
+  if (!existingUser && user.host === env.UNSOCIAL_HOST) {
     return new UserNotFoundError();
   }
   if (!existingUser || shouldRefetch(existingUser)) {

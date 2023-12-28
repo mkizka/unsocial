@@ -7,12 +7,14 @@ import { cache } from "react";
 
 import { userService } from "@/_shared/service/user";
 
+import { env } from "./env";
 import { createLogger } from "./logger";
 import { prisma } from "./prisma";
 
 const logger = createLogger("next-auth");
 
 const authOptions: NextAuthOptions = {
+  secret: env.UNSOCIAL_SECRET,
   callbacks: {
     async session({ session, token }) {
       session.user = {
@@ -32,6 +34,8 @@ const authOptions: NextAuthOptions = {
       logger.error(`${code} ${JSON.stringify(message)}`);
     },
     warn(code) {
+      // CredentialsProviderのみ使用する場合はNEXTAUTH_URLは不要なので、警告は無視する
+      if (code === "NEXTAUTH_URL") return;
       logger.warn(code);
     },
   },
