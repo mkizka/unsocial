@@ -7,7 +7,8 @@ export class MastodonHandler extends FediverseHandler {
   user = "@e2e@mastodon.localhost";
 
   async loginAs(email: string, password: string) {
-    await this.goto("/auth/sign_in");
+    await this.goto("/");
+    await this.page.locator("a", { hasText: "ログイン" }).click();
     await this.page.locator("#user_email").fill(email);
     await this.page.locator("#user_password").fill(password);
     await this.page.locator("button").click();
@@ -151,7 +152,6 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async deleteAccount() {
-    await this.goto("/");
     await this.loginAs("delete@localhost", "password");
     await this.goto("/settings/delete");
     await this.page
