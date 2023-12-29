@@ -34,7 +34,7 @@
     "@heroicons/react": "2.1.1",
     "@prisma/client": "5.7.1",
     "bcryptjs": "2.4.3",
-    "clsx": "2.0.0",
+    "clsx": "2.1.0",
     "jotai": "2.6.1",
     "next": "14.0.5-canary.30",
     "next-auth": "4.24.5",
