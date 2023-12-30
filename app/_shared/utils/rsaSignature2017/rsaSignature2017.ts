@@ -1,4 +1,3 @@
-// @ts-nocheck
 // 参考:
 // https://github.com/transmute-industries/RsaSignature2017
 // https://github.com/misskey-dev/misskey/blob/30594dde181e9d151542c41c6f09e673fcbb3124/packages/backend/src/core/activitypub/LdSignatureService.ts
