@@ -5,21 +5,25 @@
 import crypto from "crypto";
 import jsonld from "jsonld";
 
-import { PREFETCHED_CONTEXTS } from "./contexts";
+import { CONTEXTS } from "./contexts";
+
+// https://github.com/digitalbazaar/jsonld.js/blob/5367858d28b6200aaf832d93eb666d4b819d5d4f/README.md#custom-document-loader
+const nodeDocumentLoader = jsonld.documentLoaders.node();
+
+const customLoader = async (url) => {
+  if (url in CONTEXTS) {
+    return {
+      contextUrl: null,
+      document: CONTEXTS[url],
+      documentUrl: url,
+    };
+  }
+  return nodeDocumentLoader(url);
+};
 
 const canonize = async (data: jsonld.JsonLdDocument) => {
   return jsonld.canonize(data, {
-    documentLoader: async (url) => {
-      const prefetchedDocument = PREFETCHED_CONTEXTS[url];
-      if (prefetchedDocument) {
-        return {
-          contextUrl: undefined,
-          documentUrl: url,
-          document: prefetchedDocument,
-        };
-      }
-      throw new Error("Document not found: " + url);
-    },
+    documentLoader: customLoader,
   });
 };
 

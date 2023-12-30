@@ -1,6 +1,6 @@
 import type { JsonLd } from "jsonld/jsonld-spec";
 
-export const PREFETCHED_CONTEXTS: Record<string, JsonLd> = {
+export const CONTEXTS: Record<string, JsonLd> = {
   "https://w3id.org/security/v1": {
     "@context": {
       id: "@id",
