@@ -1,3 +1,4 @@
+// Stryker disable all
 import type { JsonLd } from "jsonld/jsonld-spec";
 
 export const CONTEXTS: Record<string, JsonLd> = {
