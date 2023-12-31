@@ -21,7 +21,6 @@ export const metadata = {
   metadataBase: new URL(url),
   title: {
     default: siteName,
-    /** `next-seo`の`titleTemplate`に相当する機能 */
     template: `%s - ${siteName}`,
   },
   description,
