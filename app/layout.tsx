@@ -12,7 +12,7 @@ const siteName = env.UNSOCIAL_SITE_NAME ?? env.UNSOCIAL_HOST;
 const siteTitle = `${siteName} on Unsocial`;
 const siteDescription =
   env.UNSOCIAL_SITE_DESCRIPTION ??
-  `${env.UNSOCIAL_HOST}はUnsocialによって構築されたActivityPubサーバーです。`;
+  `${siteName}はUnsocialによって構築されたActivityPubサーバーです。`;
 
 export const metadata = {
   metadataBase: new URL(`https://${env.UNSOCIAL_HOST}`),
