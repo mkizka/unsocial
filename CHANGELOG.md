@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.9
+
+### Patch Changes
+
+- 20e4ea0: faviconとOGP画像設定を追加
+
 ## 0.0.8
 
 ### Patch Changes
