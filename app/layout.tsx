@@ -18,6 +18,7 @@ const description = "ActivityPubおためし実装";
 const url = `https://${env.UNSOCIAL_HOST}`;
 
 export const metadata = {
+  metadataBase: new URL(url),
   title: {
     default: siteName,
     /** `next-seo`の`titleTemplate`に相当する機能 */
