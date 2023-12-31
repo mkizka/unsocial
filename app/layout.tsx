@@ -6,15 +6,38 @@ import { Body } from "./_components/Body";
 import { Providers } from "./_components/Providers";
 import { SearchModal } from "./_components/SearchModal";
 import { UserMenu } from "./_components/UserMenu";
+import { env } from "./_shared/utils/env";
 
 const font = M_PLUS_1_Code({
   weight: "400",
   subsets: ["latin"],
 });
 
+const siteName = "Unsocial";
+const description = "ActivityPubおためし実装";
+const url = `https://${env.UNSOCIAL_HOST}`;
+
 export const metadata = {
-  title: "Unsocial",
-  description: "ActivityPubおためし実装",
+  title: {
+    default: siteName,
+    /** `next-seo`の`titleTemplate`に相当する機能 */
+    template: `%s - ${siteName}`,
+  },
+  description,
+  openGraph: {
+    title: siteName,
+    description,
+    url,
+    siteName,
+    locale: "ja_JP",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: siteName,
+    description,
+    site: "@mkizka",
+  },
   robots: {
     index: false,
     follow: false,
