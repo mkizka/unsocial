@@ -65,7 +65,7 @@ const createFromActivity = ({
   });
 };
 
-const findOrCreateByUrl = cache(async (url: string) => {
+export const findOrCreateByUrl = cache(async (url: string) => {
   const localNote = await findByNoteUrl(url);
   if (localNote) {
     return localNote;

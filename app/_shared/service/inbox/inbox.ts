@@ -10,6 +10,7 @@ import {
   BadActivityRequestError,
 } from "./errors";
 import * as inboxAcceptService from "./handlers/accept";
+import * as inboxAnnounceService from "./handlers/announce";
 import * as inboxCreateService from "./handlers/create";
 import * as inboxDeleteService from "./handlers/delete";
 import * as inboxFollowService from "./handlers/follow";
@@ -23,6 +24,7 @@ const inboxServices = {
   Undo: inboxUndoService,
   Create: inboxCreateService,
   Like: inboxLikeService,
+  Announce: inboxAnnounceService,
 } as const;
 
 const keysOf = <T extends object>(obj: T) =>
