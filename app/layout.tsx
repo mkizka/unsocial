@@ -25,14 +25,11 @@ export const metadata = {
     title: siteTitle,
     description: siteDescription,
     url: "/",
-    siteName,
-    type: "article",
   },
   twitter: {
     card: "summary",
     title: siteTitle,
     description: siteDescription,
-    site: "@mkizka",
   },
   robots: {
     index: false,
