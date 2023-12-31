@@ -8,34 +8,30 @@ import { SearchModal } from "./_components/SearchModal";
 import { UserMenu } from "./_components/UserMenu";
 import { env } from "./_shared/utils/env";
 
-const font = M_PLUS_1_Code({
-  weight: "400",
-  subsets: ["latin"],
-});
-
-const siteName = "Unsocial";
-const description = "ActivityPubおためし実装";
-const url = `https://${env.UNSOCIAL_HOST}`;
+const siteName = env.UNSOCIAL_SITE_NAME ?? env.UNSOCIAL_HOST;
+const siteTitle = `${siteName} on Unsocial`;
+const siteDescription =
+  env.UNSOCIAL_SITE_DESCRIPTION ??
+  `${env.UNSOCIAL_HOST}はUnsocialによって構築されたActivityPubサーバーです。`;
 
 export const metadata = {
-  metadataBase: new URL(url),
+  metadataBase: new URL(`https://${env.UNSOCIAL_HOST}`),
   title: {
-    default: siteName,
-    template: `%s - ${siteName}`,
+    default: siteTitle,
+    template: `%s - ${siteTitle}`,
   },
-  description,
+  description: siteDescription,
   openGraph: {
-    title: siteName,
-    description,
-    url,
+    title: siteTitle,
+    description: siteDescription,
+    url: "/",
     siteName,
-    locale: "ja_JP",
-    type: "website",
+    type: "article",
   },
   twitter: {
     card: "summary",
-    title: siteName,
-    description,
+    title: siteTitle,
+    description: siteDescription,
     site: "@mkizka",
   },
   robots: {
@@ -43,6 +39,11 @@ export const metadata = {
     follow: false,
   },
 };
+
+const font = M_PLUS_1_Code({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
