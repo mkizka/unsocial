@@ -12,7 +12,9 @@ export function SignOutForm() {
         onClick={() => {
           const ok = confirm("ログアウトしますか？");
           if (!ok) return;
-          signOut();
+          signOut({ redirect: false }).then(() => {
+            location.href = "/";
+          });
         }}
       >
         ログアウト
