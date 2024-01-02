@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.10
+
+### Patch Changes
+
+- ab15277: アクセスログは本番環境でのみ表示する
+
 ## 0.0.9
 
 ### Patch Changes
