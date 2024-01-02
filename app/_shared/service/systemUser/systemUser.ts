@@ -5,16 +5,20 @@ import { signUpUser } from "@/_shared/service/user/signUpUser";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
-export const findOrCreateSystemUser = async () => {
-  const systemUser = await prisma.user.findUnique({
+export const findSystemUser = async (options?: { withCredential: boolean }) => {
+  return prisma.user.findUnique({
     where: {
       preferredUsername_host: {
         preferredUsername: env.UNSOCIAL_HOST,
         host: env.UNSOCIAL_HOST,
       },
     },
-    include: { credential: true },
+    include: { credential: options?.withCredential ?? false },
   });
+};
+
+export const findOrCreateSystemUser = async () => {
+  const systemUser = await findSystemUser({ withCredential: true });
   if (systemUser) {
     assert(
       systemUser.credential?.privateKey,

@@ -4,7 +4,10 @@ import { getSessionUserId } from "@/_shared/utils/session";
 import { FollowButton as Client } from "./client";
 
 export async function FollowButton({ followeeId }: { followeeId: string }) {
-  const userId = await getSessionUserId({ redirect: true });
+  const userId = await getSessionUserId();
+  if (!userId) {
+    return null;
+  }
   const follow = await prisma.follow.findFirst({
     where: {
       followeeId,
