@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.12
+
+### Patch Changes
+
+- 26b6563: ログアウト時にlocalhost:3000にリダイレクトされるのを修正
+
 ## 0.0.11
 
 ### Patch Changes
