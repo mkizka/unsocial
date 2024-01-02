@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 
-import { NoteCard } from "@/_shared/components/note/NoteCard";
+import { NoteCardContainer } from "@/_shared/components/note/NoteCard";
 import { Spinner } from "@/_shared/components/ui/Spinner";
 import type { noteService } from "@/_shared/service";
 
@@ -49,7 +49,7 @@ export function TimelineLoader({ firstLoadedNotes, userId }: Props) {
     <ul className="w-full space-y-1">
       {timeline.flat().map((note) => (
         <li key={note.id}>
-          <NoteCard note={note} />
+          <NoteCardContainer note={note} />
         </li>
       ))}
       {timeline.at(-1)?.length !== 0 && (
