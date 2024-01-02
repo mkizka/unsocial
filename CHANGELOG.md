@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.11
+
+### Patch Changes
+
+- 16dbb45: リダイレクト判定の見直し
+
 ## 0.0.10
 
 ### Patch Changes
