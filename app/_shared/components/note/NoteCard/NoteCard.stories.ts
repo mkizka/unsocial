@@ -31,10 +31,3 @@ export default meta;
 type Story = StoryObj<typeof NoteCard>;
 
 export const Default: Story = {};
-
-export const IsRepost: Story = {
-  args: {
-    // TODO: 実装
-    // quote: {}
-  },
-};
