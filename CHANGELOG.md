@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.13
+
+### Patch Changes
+
+- 9bcd790: 受信したAnnounceアクティビティを保存するように
+
 ## 0.0.12
 
 ### Patch Changes
