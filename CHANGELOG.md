@@ -1,5 +1,35 @@
 # unsocial
 
+## 0.0.13
+
+### Patch Changes
+
+- 9bcd790: 受信したAnnounceアクティビティを保存するように
+
+## 0.0.12
+
+### Patch Changes
+
+- 26b6563: ログアウト時にlocalhost:3000にリダイレクトされるのを修正
+
+## 0.0.11
+
+### Patch Changes
+
+- 16dbb45: リダイレクト判定の見直し
+
+## 0.0.10
+
+### Patch Changes
+
+- ab15277: アクセスログは本番環境でのみ表示する
+
+## 0.0.9
+
+### Patch Changes
+
+- 20e4ea0: faviconとOGP画像設定を追加
+
 ## 0.0.8
 
 ### Patch Changes

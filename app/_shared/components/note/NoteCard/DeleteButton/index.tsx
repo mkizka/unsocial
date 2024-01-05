@@ -4,18 +4,16 @@ import { useTransition } from "react";
 
 import { Spinner } from "@/_shared/components/ui/Spinner";
 
-import { action } from "./action";
-
 type Props = {
-  noteId: string;
+  onClick: () => Promise<void>;
 };
 
-export function DeleteButton({ noteId }: Props) {
+export function DeleteButton({ onClick }: Props) {
   const [isPending, startTransition] = useTransition();
   return (
     <button
       data-testid="delete-button"
-      onClick={() => startTransition(() => action(noteId))}
+      onClick={() => startTransition(onClick)}
       className="h-5 w-5 text-accent transition-colors hover:text-accent-dark"
     >
       {isPending ? <Spinner /> : <XMarkIcon />}

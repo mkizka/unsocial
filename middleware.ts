@@ -1,12 +1,13 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+import { env } from "./app/_shared/utils/env";
 import { createLogger } from "./app/_shared/utils/logger";
 
 const logger = createLogger("middleware");
 
 export function middleware(request: NextRequest) {
-  if (!process.env.CI) {
+  if (!process.env.CI && env.NODE_ENV === "production") {
     logger.info(
       `${request.method} ${request.nextUrl.pathname + request.nextUrl.search}`,
       {

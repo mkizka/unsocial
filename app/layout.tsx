@@ -6,20 +6,41 @@ import { Body } from "./_components/Body";
 import { Providers } from "./_components/Providers";
 import { SearchModal } from "./_components/SearchModal";
 import { UserMenu } from "./_components/UserMenu";
+import { env } from "./_shared/utils/env";
 
-const font = M_PLUS_1_Code({
-  weight: "400",
-  subsets: ["latin"],
-});
+const siteName = env.UNSOCIAL_SITE_NAME ?? env.UNSOCIAL_HOST;
+const siteTitle = `${siteName} on Unsocial`;
+const siteDescription =
+  env.UNSOCIAL_SITE_DESCRIPTION ??
+  `${siteName}はUnsocialによって構築されたActivityPubサーバーです。`;
 
 export const metadata = {
-  title: "Unsocial",
-  description: "ActivityPubおためし実装",
+  metadataBase: new URL(`https://${env.UNSOCIAL_HOST}`),
+  title: {
+    default: siteTitle,
+    template: `%s - ${siteTitle}`,
+  },
+  description: siteDescription,
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    url: "/",
+  },
+  twitter: {
+    card: "summary",
+    title: siteTitle,
+    description: siteDescription,
+  },
   robots: {
     index: false,
     follow: false,
   },
 };
+
+const font = M_PLUS_1_Code({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

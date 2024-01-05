@@ -42,8 +42,7 @@ export function AuthForm({ action }: Props) {
     if (response?.error) {
       alert(response.error ?? texts[action].error);
     } else {
-      router.replace("/");
-      router.refresh();
+      location.href = "/";
     }
   };
 

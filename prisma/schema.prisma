@@ -65,12 +65,15 @@ model Note {
   userId      String
   user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   content     String
+  quoteId     String?
+  quote       Note?      @relation("Quote", fields: [quoteId], references: [id])
   publishedAt DateTime
   createdAt   DateTime   @default(now())
   replyToId   String?
   replyTo     Note?      @relation("ReplyTo", fields: [replyToId], references: [id])
   likes       Like[]
   attachments Document[]
+  quotes      Note[]     @relation("Quote")
   replies     Note[]     @relation("ReplyTo")
 }
 

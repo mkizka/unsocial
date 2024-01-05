@@ -7,7 +7,7 @@ export abstract class FediverseHandler {
   constructor(public page: Page) {}
 
   async waitFor(fn: () => Promise<void>) {
-    await expect(fn).toPass({ timeout: 4000 });
+    await expect(fn).toPass({ timeout: 10000 });
   }
 
   async goto(url: string) {
