@@ -20,4 +20,4 @@ jobs:
     if: startsWith(github.head_ref, 'renovate/node-')
     steps:
       - uses: actions/checkout@v4
-      - uses: jdx/mise-action@v1
+      - uses: jdx/mise-action@v2
