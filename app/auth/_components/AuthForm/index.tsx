@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import type { ReactEventHandler } from "react";
 import { useRef } from "react";
 
-import { SubmitButton } from "@/_shared/components/ui/SubmitButton";
+import { SubmitButton } from "@/_shared/ui/components/SubmitButton";
 
 import { PasswordInputField } from "./PasswordInputField";
 import { TextInputField } from "./TextInputField";

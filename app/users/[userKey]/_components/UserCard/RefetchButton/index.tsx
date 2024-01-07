@@ -2,7 +2,7 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { useTransition } from "react";
 
-import { Spinner } from "@/_shared/components/ui/Spinner";
+import { Spinner } from "@/_shared/ui/components/Spinner";
 
 import { action } from "./action";
 

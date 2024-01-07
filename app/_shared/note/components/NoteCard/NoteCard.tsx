@@ -1,9 +1,9 @@
 import Link from "next/link";
 import sanitizeHtml from "sanitize-html";
 
-import { Card } from "@/_shared/components/ui/Card";
-import { UserIcon } from "@/_shared/components/user/UserIcon";
 import type { noteService } from "@/_shared/service";
+import { Card } from "@/_shared/ui/components/Card";
+import { UserIcon } from "@/_shared/user/components/UserIcon";
 import { cn } from "@/_shared/utils/cn";
 
 import { AttachmentImages } from "./AttachmentImages";
