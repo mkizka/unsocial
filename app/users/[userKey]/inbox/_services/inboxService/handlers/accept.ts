@@ -1,4 +1,4 @@
-import { inboxAcceptSchema } from "@/_shared/schema/accept";
+import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userService } from "@/_shared/service/user";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -9,7 +9,7 @@ import {
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, followee) => {
-  const parsedAccept = inboxAcceptSchema.safeParse(activity);
+  const parsedAccept = apSchemaService.acceptSchema.safeParse(activity);
   if (!parsedAccept.success) {
     return new ActivitySchemaValidationError(parsedAccept.error, activity);
   }

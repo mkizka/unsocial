@@ -1,4 +1,4 @@
-import { inboxAnnounceSchema } from "@/_shared/schema/announce";
+import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { createNoteActivityService } from "@/_shared/service/creacteNoteFromActivityService";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -9,7 +9,7 @@ import {
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, actor) => {
-  const parsedAnnounce = inboxAnnounceSchema.safeParse(activity);
+  const parsedAnnounce = apSchemaService.announceSchema.safeParse(activity);
   if (!parsedAnnounce.success) {
     return new ActivitySchemaValidationError(parsedAnnounce.error, activity);
   }

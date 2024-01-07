@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import { inboxFollowSchema } from "@/_shared/schema/follow";
+import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userService } from "@/_shared/service/user";
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
@@ -17,7 +17,7 @@ import { type InboxHandler } from "./shared";
 const logger = createLogger("inboxFollowService");
 
 export const handle: InboxHandler = async (activity, actorUser) => {
-  const parsedFollow = inboxFollowSchema.safeParse(activity);
+  const parsedFollow = apSchemaService.followSchema.safeParse(activity);
   if (!parsedFollow.success) {
     return new ActivitySchemaValidationError(parsedFollow.error, activity);
   }

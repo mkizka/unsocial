@@ -1,4 +1,4 @@
-import { inboxLikeSchema } from "@/_shared/schema/like";
+import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { prisma } from "@/_shared/utils/prisma";
 
 import {
@@ -8,7 +8,7 @@ import {
 import { type InboxHandler, resolveNoteId } from "./shared";
 
 export const handle: InboxHandler = async (activity, actorUser) => {
-  const parsedLike = inboxLikeSchema.safeParse(activity);
+  const parsedLike = apSchemaService.likeSchema.safeParse(activity);
   if (!parsedLike.success) {
     return new ActivitySchemaValidationError(parsedLike.error, activity);
   }

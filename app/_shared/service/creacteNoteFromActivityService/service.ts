@@ -1,7 +1,6 @@
 import { cache } from "react";
 
-import type { NoteActivity } from "@/_shared/schema/note";
-import { inboxNoteSchema } from "@/_shared/schema/note";
+import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { activitypubService } from "@/_shared/service/activitypub";
 import { userService } from "@/_shared/service/user";
 import { env } from "@/_shared/utils/env";
@@ -38,7 +37,7 @@ const findByNoteUrl = (noteUrl: string) => {
 };
 
 type CreateFromActivityParams = {
-  activity: NoteActivity;
+  activity: apSchemaService.NoteActivity;
   userId: string;
   replyToId?: string;
 };
@@ -74,8 +73,7 @@ export const findOrCreateByUrl = cache(async (url: string) => {
   if (fetchedNote instanceof Error) {
     return fetchedNote;
   }
-  // TODO: inboxNoteSchema -> activitypubNoteSchemaにリネーム
-  const parsedNote = inboxNoteSchema.safeParse(fetchedNote);
+  const parsedNote = apSchemaService.noteSchema.safeParse(fetchedNote);
   if (!parsedNote.success) {
     // TODO: 修正
     return new Error("ノートの形式が不正です");
@@ -93,7 +91,7 @@ export const findOrCreateByUrl = cache(async (url: string) => {
   return newNote;
 });
 
-export const create = async (activity: NoteActivity) => {
+export const create = async (activity: apSchemaService.NoteActivity) => {
   const replyTo = activity.inReplyTo
     ? await findOrCreateByUrl(activity.inReplyTo)
     : null;

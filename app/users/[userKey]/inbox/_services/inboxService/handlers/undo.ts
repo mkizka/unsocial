@@ -1,6 +1,6 @@
 import type { User } from "@prisma/client";
 
-import { inboxUndoSchema, type UndoActivity } from "@/_shared/schema/undo";
+import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userService } from "@/_shared/service/user";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -13,7 +13,7 @@ import type { InboxHandler } from "./shared";
 import { resolveNoteId } from "./shared";
 
 type UndoInboxHandler = (
-  activity: UndoActivity,
+  activity: apSchemaService.UndoActivity,
   actorUser: User,
 ) => Promise<InboxError | void>;
 
@@ -59,7 +59,7 @@ const undoHandlers = {
 } as const;
 
 export const handle: InboxHandler = async (activity, actorUser) => {
-  const parsedUndo = inboxUndoSchema.safeParse(activity);
+  const parsedUndo = apSchemaService.undoSchema.safeParse(activity);
   if (!parsedUndo.success) {
     return new ActivitySchemaValidationError(parsedUndo.error, activity);
   }

@@ -1,8 +1,6 @@
 import type { User } from "@prisma/client";
 
-import type { PersonActivity } from "@/_shared/schema/person";
-import { inboxPersonSchema } from "@/_shared/schema/person";
-import { webFingerSchema } from "@/_shared/schema/webFinger";
+import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { activitypubService } from "@/_shared/service/activitypub";
 import { env } from "@/_shared/utils/env";
 import { formatZodError } from "@/_shared/utils/formatZodError";
@@ -39,7 +37,7 @@ const fetchActorUrlByWebFinger = async (
     logger.info("Webfingerの取得に失敗しました");
     return response;
   }
-  const parsed = webFingerSchema.safeParse(response);
+  const parsed = apSchemaService.webFingerSchema.safeParse(response);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));
     return new WebfingerValidationError();
@@ -50,13 +48,13 @@ const fetchActorUrlByWebFinger = async (
 
 const fetchPersonByActorUrl = async (
   actorUrl: string,
-): Promise<PersonActivity | Error> => {
+): Promise<apSchemaService.PersonActivity | Error> => {
   const response = await activitypubService.fetchActor(actorUrl);
   if (response instanceof Error) {
     logger.info("Actorの取得に失敗しました");
     return response;
   }
-  const parsed = inboxPersonSchema.safeParse(response);
+  const parsed = apSchemaService.personSchema.safeParse(response);
   if (!parsed.success) {
     logger.info("検証失敗: " + formatZodError(parsed.error));
     return new ActorValidationError();
@@ -65,7 +63,7 @@ const fetchPersonByActorUrl = async (
 };
 
 const createOrUpdateUser = (
-  person: PersonActivity,
+  person: apSchemaService.PersonActivity,
   userIdForUpdate?: string,
 ) => {
   const data = {

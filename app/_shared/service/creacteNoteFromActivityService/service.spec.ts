@@ -3,7 +3,7 @@ import { http, HttpResponse } from "msw";
 
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
-import type { NoteActivity } from "@/_shared/schema/note";
+import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userService } from "@/_shared/service/user";
 
 import { createNoteActivityService } from ".";
@@ -20,7 +20,7 @@ describe("createNoteFromActivityService", () => {
       inReplyTo: "https://myhost.example.com/notes/replyToId/activity",
       attributedTo: "https://remote.example.com/users/foo",
       published: "2023-01-01T00:00:00.000Z",
-    } satisfies NoteActivity;
+    } satisfies apSchemaService.NoteActivity;
     mockedPrisma.note.findUnique.mockResolvedValue({
       id: "dummyNoteId",
     } as Note);
@@ -50,7 +50,7 @@ describe("createNoteFromActivityService", () => {
       inReplyTo: "https://remote2.example.com/notes/dummyNoteId2",
       attributedTo: "https://remote1.example.com/users/dummyUserId1",
       published: "2023-01-01T00:00:00.000Z",
-    } satisfies NoteActivity;
+    } satisfies apSchemaService.NoteActivity;
     const replyToActivity = {
       type: "Note",
       id: "https://remote2.example.com/notes/dummyNoteId2",
@@ -58,7 +58,7 @@ describe("createNoteFromActivityService", () => {
       inReplyTo: null,
       attributedTo: "https://remote2.example.com/users/dummyUserId2",
       published: "2023-01-01T00:00:00.000Z",
-    } satisfies NoteActivity;
+    } satisfies apSchemaService.NoteActivity;
     server.use(
       http.get(replyToActivity.id, () => HttpResponse.json(replyToActivity)),
     );

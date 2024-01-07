@@ -1,4 +1,4 @@
-import { inboxCreateSchema } from "@/_shared/schema/create";
+import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { createNoteActivityService } from "@/_shared/service/creacteNoteFromActivityService";
 import { createLogger } from "@/_shared/utils/logger";
 
@@ -8,7 +8,7 @@ import { type InboxHandler } from "./shared";
 const logger = createLogger("inboxCreateService");
 
 export const handle: InboxHandler = async (activity) => {
-  const parsedNote = inboxCreateSchema.safeParse(activity);
+  const parsedNote = apSchemaService.createSchema.safeParse(activity);
   if (!parsedNote.success) {
     return new ActivitySchemaValidationError(parsedNote.error, activity);
   }
