@@ -1,7 +1,7 @@
 import { cache } from "react";
 
+import { apFetchService } from "@/_shared/activitypub/apFetchService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { activitypubService } from "@/_shared/service/activitypub";
 import { userService } from "@/_shared/service/user";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
@@ -69,7 +69,7 @@ export const findOrCreateByUrl = cache(async (url: string) => {
   if (localNote) {
     return localNote;
   }
-  const fetchedNote = await activitypubService.fetchNote(url);
+  const fetchedNote = await apFetchService.fetchActivity(url);
   if (fetchedNote instanceof Error) {
     return fetchedNote;
   }

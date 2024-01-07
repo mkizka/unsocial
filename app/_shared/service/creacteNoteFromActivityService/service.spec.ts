@@ -1,15 +1,37 @@
 import type { Note, User } from "@prisma/client";
+import crypto from "crypto";
 import { http, HttpResponse } from "msw";
 
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
+import { systemUserService } from "@/_shared/service/systemUser";
 import { userService } from "@/_shared/service/user";
 
 import { createNoteActivityService } from ".";
 
 jest.mock("../user");
 const mockedUserService = jest.mocked(userService);
+
+const generateRsaPrivateKey = () => {
+  return crypto.generateKeyPairSync("rsa", {
+    modulusLength: 2048,
+    publicKeyEncoding: {
+      type: "spki",
+      format: "pem",
+    },
+    privateKeyEncoding: {
+      type: "pkcs8",
+      format: "pem",
+    },
+  }).privateKey;
+};
+
+jest.mock("@/_shared/service/systemUser");
+jest.mocked(systemUserService).findOrCreateSystemUser.mockResolvedValue({
+  id: "dummySystemUserId",
+  privateKey: generateRsaPrivateKey(),
+});
 
 describe("createNoteFromActivityService", () => {
   test("正常系", async () => {

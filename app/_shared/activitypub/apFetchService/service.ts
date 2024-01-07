@@ -3,9 +3,9 @@ import { fetcher } from "@/_shared/utils/fetcher";
 import { createLogger } from "@/_shared/utils/logger";
 import { safeUrl } from "@/_shared/utils/safeUrl";
 
-const logger = createLogger("apRepository");
+const logger = createLogger("apFetchService");
 
-export const fetchActor = async (actorUrl: string) => {
+export const fetchActivity = async (actorUrl: string) => {
   const response = await fetcher(actorUrl, {
     next: {
       revalidate: 60,
@@ -37,18 +37,6 @@ export const fetchWebFinger = async (user: FetchWebFingerParams) => {
   const response = await fetcher(webFingerUrl, {
     next: {
       revalidate: 60,
-    },
-  });
-  return response instanceof Error ? response : response.json();
-};
-
-export const fetchNote = async (noteUrl: string) => {
-  const response = await fetcher(noteUrl, {
-    next: {
-      revalidate: 60,
-    },
-    headers: {
-      accept: "application/activity+json",
     },
   });
   return response instanceof Error ? response : response.json();
