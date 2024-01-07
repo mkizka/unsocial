@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`_shared/components/note/NoteCard Default smoke-test 1`] = `
+exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
 <article class="w-full rounded bg-primary-light p-4 shadow text-prmary relative space-y-2"
          data-testid="note-card"
 >

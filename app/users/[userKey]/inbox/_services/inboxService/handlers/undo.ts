@@ -1,14 +1,14 @@
 import type { User } from "@prisma/client";
 
 import { inboxUndoSchema, type UndoActivity } from "@/_shared/schema/undo";
-import type { InboxError } from "@/_shared/service/inbox/errors";
-import {
-  ActivitySchemaValidationError,
-  BadActivityRequestError,
-} from "@/_shared/service/inbox/errors";
 import { userService } from "@/_shared/service/user";
 import { prisma } from "@/_shared/utils/prisma";
 
+import type { InboxError } from "./errors";
+import {
+  ActivitySchemaValidationError,
+  BadActivityRequestError,
+} from "./errors";
 import type { InboxHandler } from "./shared";
 import { resolveNoteId } from "./shared";
 

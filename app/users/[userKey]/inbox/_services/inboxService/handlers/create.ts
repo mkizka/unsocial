@@ -1,8 +1,8 @@
 import { inboxCreateSchema } from "@/_shared/schema/create";
 import { createNoteActivityService } from "@/_shared/service/creacteNoteFromActivityService";
-import { ActivitySchemaValidationError } from "@/_shared/service/inbox/errors";
 import { createLogger } from "@/_shared/utils/logger";
 
+import { ActivitySchemaValidationError } from "./errors";
 import { type InboxHandler } from "./shared";
 
 const logger = createLogger("inboxCreateService");

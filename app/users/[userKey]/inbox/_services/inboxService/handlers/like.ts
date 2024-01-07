@@ -1,10 +1,10 @@
 import { inboxLikeSchema } from "@/_shared/schema/like";
+import { prisma } from "@/_shared/utils/prisma";
+
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
-} from "@/_shared/service/inbox/errors";
-import { prisma } from "@/_shared/utils/prisma";
-
+} from "./errors";
 import { type InboxHandler, resolveNoteId } from "./shared";
 
 export const handle: InboxHandler = async (activity, actorUser) => {

@@ -1,11 +1,11 @@
 import { inboxAcceptSchema } from "@/_shared/schema/accept";
-import {
-  ActivitySchemaValidationError,
-  BadActivityRequestError,
-} from "@/_shared/service/inbox/errors";
 import { userService } from "@/_shared/service/user";
 import { prisma } from "@/_shared/utils/prisma";
 
+import {
+  ActivitySchemaValidationError,
+  BadActivityRequestError,
+} from "./errors";
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, followee) => {

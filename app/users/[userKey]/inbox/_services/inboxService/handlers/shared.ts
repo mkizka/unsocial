@@ -1,6 +1,6 @@
 import type { User } from "@prisma/client";
 
-import type { InboxError } from "@/_shared/service/inbox/errors";
+import type { InboxError } from "./errors";
 
 export type InboxHandler = (
   activity: unknown,

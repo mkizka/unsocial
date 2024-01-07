@@ -5,14 +5,14 @@ import { userService } from "@/_shared/service/user";
 import { verifyRequest } from "@/_shared/utils/httpSignature/verify";
 import { createLogger } from "@/_shared/utils/logger";
 
-import {
-  ActivitySchemaValidationError,
-  BadActivityRequestError,
-} from "./errors";
 import * as inboxAcceptService from "./handlers/accept";
 import * as inboxAnnounceService from "./handlers/announce";
 import * as inboxCreateService from "./handlers/create";
 import * as inboxDeleteService from "./handlers/delete";
+import {
+  ActivitySchemaValidationError,
+  BadActivityRequestError,
+} from "./handlers/errors";
 import * as inboxFollowService from "./handlers/follow";
 import * as inboxLikeService from "./handlers/like";
 import * as inboxUndoService from "./handlers/undo";

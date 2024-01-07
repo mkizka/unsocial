@@ -1,7 +1,7 @@
 import { inboxDeleteSchema } from "@/_shared/schema/delete";
-import { ActivitySchemaValidationError } from "@/_shared/service/inbox/errors";
 import { prisma } from "@/_shared/utils/prisma";
 
+import { ActivitySchemaValidationError } from "./errors";
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity) => {

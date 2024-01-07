@@ -1,11 +1,11 @@
 import { inboxAnnounceSchema } from "@/_shared/schema/announce";
 import { createNoteActivityService } from "@/_shared/service/creacteNoteFromActivityService";
+import { prisma } from "@/_shared/utils/prisma";
+
 import {
   ActivitySchemaValidationError,
   UnexpectedActivityRequestError,
-} from "@/_shared/service/inbox/errors";
-import { prisma } from "@/_shared/utils/prisma";
-
+} from "./errors";
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, actor) => {

@@ -1,17 +1,17 @@
 import crypto from "crypto";
 
 import { inboxFollowSchema } from "@/_shared/schema/follow";
-import {
-  ActivitySchemaValidationError,
-  BadActivityRequestError,
-  UnexpectedActivityRequestError,
-} from "@/_shared/service/inbox/errors";
 import { userService } from "@/_shared/service/user";
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
 
+import {
+  ActivitySchemaValidationError,
+  BadActivityRequestError,
+  UnexpectedActivityRequestError,
+} from "./errors";
 import { type InboxHandler } from "./shared";
 
 const logger = createLogger("inboxFollowService");
