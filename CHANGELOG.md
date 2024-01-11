@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.14
+
+### Patch Changes
+
+- d591f21: 依存関係の更新
+
 ## 0.0.13
 
 ### Patch Changes
