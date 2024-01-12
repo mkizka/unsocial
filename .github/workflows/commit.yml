@@ -84,6 +84,8 @@ jobs:
           cache-to: type=gha,mode=max
   create-renovate-pr:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     env:
       BRANCH_NAME: renovate-pr
       PR_TITLE: Renovate Updates
