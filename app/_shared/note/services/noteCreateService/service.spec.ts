@@ -27,7 +27,7 @@ const generateRsaPrivateKey = () => {
   }).privateKey;
 };
 
-jest.mock("@/_shared/user/services/systemUser");
+jest.mock("@/_shared/user/services/systemUserService");
 jest.mocked(systemUserService).findOrCreateSystemUser.mockResolvedValue({
   id: "dummySystemUserId",
   privateKey: generateRsaPrivateKey(),
