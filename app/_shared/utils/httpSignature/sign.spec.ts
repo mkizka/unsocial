@@ -1,4 +1,4 @@
-import { mockedKeys } from "@/_mocks/keys";
+import { mockedKeys } from "@/_shared/mocks/keys";
 
 import { signHeaders } from "./sign";
 

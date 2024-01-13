@@ -1,5 +1,5 @@
-import { mockedPrisma } from "@/_mocks/prisma";
-import { mockedGetSessionUserId } from "@/_mocks/session";
+import { mockedPrisma } from "@/_shared/mocks/prisma";
+import { mockedGetSessionUserId } from "@/_shared/mocks/session";
 import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
 
 import { action } from "./action";

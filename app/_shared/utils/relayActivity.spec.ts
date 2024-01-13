@@ -3,9 +3,9 @@ import type { AP } from "activitypub-core-types";
 import { captor } from "jest-mock-extended";
 import { http, HttpResponse } from "msw";
 
-import { mockedKeys } from "@/_mocks/keys";
-import { mockedPrisma } from "@/_mocks/prisma";
-import { server } from "@/_mocks/server";
+import { mockedKeys } from "@/_shared/mocks/keys";
+import { mockedPrisma } from "@/_shared/mocks/prisma";
+import { server } from "@/_shared/mocks/server";
 
 import {
   relayActivityToFollowers,

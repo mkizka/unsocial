@@ -1,7 +1,7 @@
 import { mockDeep } from "jest-mock-extended";
 import type { NextRequest } from "next/server";
 
-import { mockedLogger } from "@/_mocks/logger";
+import { mockedLogger } from "@/_shared/mocks/logger";
 
 import { inboxService } from "./_services/inboxService";
 import { BadActivityRequestError } from "./_services/inboxService/handlers/errors";
