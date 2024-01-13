@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { userEvent, within } from "@storybook/testing-library";
 import type { ComponentProps } from "react";
 
-import { Card } from "@/_shared/components/ui/Card";
+import { Card } from "@/_shared/ui/components/Card";
 
 import { Dropdown } from ".";
 

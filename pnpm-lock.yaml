@@ -97,9 +97,6 @@ devDependencies:
   '@stryker-mutator/jest-runner':
     specifier: 8.0.0
     version: 8.0.0(@stryker-mutator/core@8.0.0)
-  '@stryker-mutator/typescript-checker':
-    specifier: 8.0.0
-    version: 8.0.0(@stryker-mutator/core@8.0.0)(typescript@5.3.3)
   '@swc-jotai/react-refresh':
     specifier: 0.1.0
     version: 0.1.0
@@ -6071,20 +6068,6 @@ packages:
       '@stryker-mutator/util': 8.0.0
       semver: 7.5.4
       tslib: 2.6.2
-    dev: true
-
-  /@stryker-mutator/typescript-checker@8.0.0(@stryker-mutator/core@8.0.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-8E6yci2yxsEYHy54xOpWSdBrLs2KDt/xl3tvxJc4hAwwIHY/Zni+scJ8kflpEZAashOB8W5Hn8f4aqF1TQ4ZKw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@stryker-mutator/core': ~8.0.0
-      typescript: '>=3.6'
-    dependencies:
-      '@stryker-mutator/api': 8.0.0
-      '@stryker-mutator/core': 8.0.0
-      '@stryker-mutator/util': 8.0.0
-      semver: 7.5.4
-      typescript: 5.3.3
     dev: true
 
   /@stryker-mutator/util@8.0.0:

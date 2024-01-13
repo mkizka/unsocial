@@ -5,7 +5,7 @@ import NextAuth, { getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cache } from "react";
 
-import { userService } from "@/_shared/service/user";
+import { userAuthService } from "@/_shared/user/services/userAuthService";
 
 import { env } from "./env";
 import { createLogger } from "./logger";
@@ -44,7 +44,7 @@ const authOptions: NextAuthOptions = {
       // authorizeの型エラーを解消するために必要
       // フォーム生成はしないので値は空にしておく
       credentials: {},
-      authorize: userService.authorize,
+      authorize: userAuthService.authorize,
     }),
   ],
 };

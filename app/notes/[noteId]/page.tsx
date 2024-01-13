@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { Fragment } from "react";
 
-import { NoteCardContainer } from "@/_shared/components/note/NoteCard";
-import { NoteForm } from "@/_shared/components/note/NoteForm";
-import { noteService } from "@/_shared/service";
+import { NoteCardContainer } from "@/_shared/note/components/NoteCard";
+import { NoteForm } from "@/_shared/note/components/NoteForm";
+import { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
 
 import { LikeUserList } from "./_components/LikeUserList";
 
@@ -14,7 +14,7 @@ export default async function Page({
   params: { noteId: string };
   searchParams: { reply?: string };
 }) {
-  const note = await noteService.findUniqueNoteCard(params.noteId);
+  const note = await noteCardFindService.findUniqueNoteCard(params.noteId);
   if (!note) {
     notFound();
   }

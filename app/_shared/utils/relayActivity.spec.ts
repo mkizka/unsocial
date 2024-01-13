@@ -3,10 +3,10 @@ import type { AP } from "activitypub-core-types";
 import { captor } from "jest-mock-extended";
 import { http, HttpResponse } from "msw";
 
+import { mockedKeys } from "@/_mocks/keys";
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
 
-import { mockedKeys } from "./httpSignature/__fixtures__/keys";
 import {
   relayActivityToFollowers,
   relayActivityToInboxUrl,

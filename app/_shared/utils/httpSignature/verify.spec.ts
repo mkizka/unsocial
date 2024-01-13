@@ -1,6 +1,7 @@
 import type { User } from "@prisma/client";
 import type { NextRequest } from "next/server";
 
+import { mockedKeys } from "@/_mocks/keys";
 import { mockedPrisma } from "@/_mocks/prisma";
 
 import {
@@ -16,7 +17,6 @@ import {
   unSupportedAlgorithmHeader,
   unSupportedDigestHeader,
 } from "./__fixtures__/headers";
-import { mockedKeys } from "./__fixtures__/keys";
 import { verifyRequest } from "./verify";
 
 const dummyActivity = {

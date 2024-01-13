@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/user/services/userFindService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
@@ -10,7 +10,7 @@ export async function GET(
   _: Request,
   { params }: { params: { userKey: string } },
 ) {
-  const user = await userService.findOrFetchUserByKey(params.userKey);
+  const user = await userFindService.findOrFetchUserByKey(params.userKey);
   if (user instanceof Error) {
     notFound();
   }

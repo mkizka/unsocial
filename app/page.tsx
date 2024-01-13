@@ -1,5 +1,5 @@
-import { NoteForm } from "./_shared/components/note/NoteForm";
-import { Timeline } from "./_shared/components/note/Timeline";
+import { NoteForm } from "./_shared/note/components/NoteForm";
+import { Timeline } from "./_shared/note/components/Timeline";
 import { getSessionUserId } from "./_shared/utils/session";
 
 export default async function Page() {
