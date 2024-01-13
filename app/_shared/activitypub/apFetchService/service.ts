@@ -1,4 +1,4 @@
-import { systemUserService } from "@/_shared/user/services/systemUser";
+import { systemUserService } from "@/_shared/user/services/systemUserService";
 import { fetcher } from "@/_shared/utils/fetcher";
 import { createLogger } from "@/_shared/utils/logger";
 import { safeUrl } from "@/_shared/utils/safeUrl";

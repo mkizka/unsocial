@@ -1,8 +1,7 @@
 import bcryptjs from "bcryptjs";
 import { z } from "zod";
 
-import type { SignUpUserParams } from "@/_shared/service/user/signUpUser";
-import { signUpUser } from "@/_shared/service/user/signUpUser";
+import { userSignUpService } from "@/_shared/user/services/userSignUpService";
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
@@ -37,8 +36,8 @@ const signIn = async ({ preferredUsername, password }: SignInParams) => {
   return { id: user.id };
 };
 
-const signUp = async (params: SignUpUserParams) => {
-  const newUser = await signUpUser(params);
+const signUp = async (params: userSignUpService.SignUpUserParams) => {
+  const newUser = await userSignUpService.signUpUser(params);
   return { id: newUser.id };
 };
 

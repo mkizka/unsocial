@@ -6,7 +6,7 @@ import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userService } from "@/_shared/service/user";
-import { systemUserService } from "@/_shared/user/services/systemUser";
+import { systemUserService } from "@/_shared/user/services/systemUserService";
 
 import { noteCreateService } from ".";
 

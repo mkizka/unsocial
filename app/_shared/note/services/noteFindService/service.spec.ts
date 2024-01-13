@@ -5,7 +5,7 @@ import { mockedKeys } from "@/_mocks/keys";
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
 import { userService } from "@/_shared/service/user";
-import { systemUserService } from "@/_shared/user/services/systemUser";
+import { systemUserService } from "@/_shared/user/services/systemUserService";
 import { NotOKError } from "@/_shared/utils/fetcher";
 
 import { noteFindService } from ".";

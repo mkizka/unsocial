@@ -1,7 +1,7 @@
 import assert from "assert";
 import crypto from "crypto";
 
-import { signUpUser } from "@/_shared/service/user/signUpUser";
+import { userSignUpService } from "@/_shared/user/services/userSignUpService";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -29,7 +29,7 @@ export const findOrCreateSystemUser = async () => {
       privateKey: systemUser.credential.privateKey,
     };
   }
-  return signUpUser({
+  return userSignUpService.signUpUser({
     preferredUsername: env.UNSOCIAL_HOST,
     password: crypto.randomUUID(),
   });
