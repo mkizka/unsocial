@@ -1,9 +1,9 @@
 import type { Note } from "@prisma/client";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { noteActivityService } from "@/_shared/note/services/noteActivityService";
 import { noteFindService } from "@/_shared/note/services/noteFindService";
 import { userService } from "@/_shared/service/user";
+import { prisma } from "@/_shared/utils/prisma";
 
 export const create = async (
   activity: apSchemaService.NoteActivity,
@@ -20,10 +20,20 @@ export const create = async (
   if (noteUser instanceof Error) {
     return noteUser;
   }
-  const note = await noteActivityService.create({
-    activity,
-    userId: noteUser.id,
-    replyToId: replyTo?.id,
+  const note = await prisma.note.create({
+    data: {
+      userId: noteUser.id,
+      url: activity.id,
+      content: activity.content,
+      publishedAt: activity.published,
+      replyToId: replyTo?.id,
+      attachments: {
+        create: activity.attachment?.map((attachment) => ({
+          url: attachment.url,
+          mediaType: attachment.mediaType,
+        })),
+      },
+    },
   });
   return note;
 };

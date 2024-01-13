@@ -4,7 +4,6 @@ import { http, HttpResponse } from "msw";
 import { mockedKeys } from "@/_mocks/keys";
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
-import { noteActivityService } from "@/_shared/note/services/noteActivityService";
 import { userService } from "@/_shared/service/user";
 import { systemUserService } from "@/_shared/user/services/systemUser";
 import { NotOKError } from "@/_shared/utils/fetcher";
@@ -87,11 +86,6 @@ jest.mocked(userService).findOrFetchUserByActor.mockResolvedValue({
   id: "dummyUserId",
 } as User);
 
-jest.mock("@/_shared/note/services/noteActivityService");
-jest
-  .mocked(noteActivityService)
-  .create.mockResolvedValue(dummyRemoteNote as Note);
-
 describe("noteFindService", () => {
   describe("findOrFetchNoteByUrl", () => {
     test.each`
@@ -108,6 +102,7 @@ describe("noteFindService", () => {
         // arrange
         dbCondition();
         serverCondition();
+        mockedPrisma.note.create.mockResolvedValue(dummyRemoteNote as Note);
         // act
         const note = await noteFindService.findOrFetchNoteByUrl(url);
         // assert
