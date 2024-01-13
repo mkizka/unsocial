@@ -21,26 +21,28 @@ const getLocalNoteId = (noteUrl: string) => {
   return null;
 };
 
-const findByNoteUrl = (noteUrl: string) => {
-  const localNoteId = getLocalNoteId(noteUrl);
-  if (localNoteId) {
-    return prisma.note.findUnique({
-      where: {
-        id: localNoteId,
-      },
-    });
+export class NotFoundError extends Error {
+  name = "NotFoundError";
+}
+
+const findNoteById = async (id: string) => {
+  const note = await prisma.note.findUnique({ where: { id } });
+  if (!note) {
+    return new NotFoundError();
   }
-  return prisma.note.findUnique({
-    where: {
-      url: noteUrl,
-    },
-  });
+  return note;
 };
 
 export const findOrFetchNoteByUrl = cache(async (url: string) => {
-  const localNote = await findByNoteUrl(url);
-  if (localNote) {
-    return localNote;
+  const localNoteId = getLocalNoteId(url);
+  if (localNoteId) {
+    return findNoteById(localNoteId);
+  }
+  const existingNote = await prisma.note.findUnique({ where: { url } });
+  if (existingNote) {
+    // ノートは一度作成された内容が更新されることを
+    // 今のところ想定しないため、 DBにあればそれを返す
+    return existingNote;
   }
   const fetchedNote = await apFetchService.fetchActivity(url);
   if (fetchedNote instanceof Error) {

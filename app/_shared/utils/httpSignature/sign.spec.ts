@@ -1,4 +1,5 @@
-import { mockedKeys } from "./__fixtures__/keys";
+import { mockedKeys } from "@/_mocks/keys";
+
 import { signHeaders } from "./sign";
 
 afterAll(() => {
