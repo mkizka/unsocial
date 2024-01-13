@@ -118,7 +118,7 @@ const main = async () => {
   
   :gun: [mutation.html (${branchName})](${mutationUrl})
   :gun: [mutation.html (main)](${baseUrl}/main/mutation.html)
-  :page_facing_up: [stryker.log](${baseUrl}/${branchName}/stryker.log)`;
+  :page_facing_up: [stryker.txt](${baseUrl}/${branchName}/stryker.txt)`;
 
   console.log(text);
 };
