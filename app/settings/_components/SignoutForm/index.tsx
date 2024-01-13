@@ -1,7 +1,7 @@
 "use client";
 import { signOut } from "next-auth/react";
 
-import { Card } from "@/_shared/ui/components/Card";
+import { Card } from "@/_shared/ui/Card";
 
 export function SignOutForm() {
   return (

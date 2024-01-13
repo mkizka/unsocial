@@ -2,7 +2,7 @@
 import type { FollowStatus } from "@prisma/client";
 import { useTransition } from "react";
 
-import { Spinner } from "@/_shared/ui/components/Spinner";
+import { Spinner } from "@/_shared/ui/Spinner";
 
 import { action } from "./action";
 

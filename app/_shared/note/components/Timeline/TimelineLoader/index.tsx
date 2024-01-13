@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 
 import { NoteCardContainer } from "@/_shared/note/components/NoteCard";
 import type { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
-import { Spinner } from "@/_shared/ui/components/Spinner";
+import { Spinner } from "@/_shared/ui/Spinner";
 
 import { action } from "./action";
 import { useIntersection } from "./useIntersection";
