@@ -16,6 +16,7 @@ const config = {
     "app/.well-known/**/*.ts",
     "!app/**/*.d.ts",
     "!app/**/*.spec.ts",
+    "!app/**/*.stories.ts",
     "!app/.well-known/**/*.spec.ts",
     "!app/**/__fixtures__/**/*.ts",
   ],
