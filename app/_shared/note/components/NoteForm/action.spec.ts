@@ -39,9 +39,6 @@ describe("NoteForm/action", () => {
     expect(response).toBeUndefined();
     expect(mockedPrisma.note.create).toHaveBeenCalledWith({
       data: {
-        attachments: {
-          create: [],
-        },
         content: "テスト",
         publishedAt: new Date("2023-01-01T00:00:00.000Z"),
         replyToId: "__replyToId",

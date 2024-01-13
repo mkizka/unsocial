@@ -2,19 +2,19 @@
 import { useRef, useState } from "react";
 
 import { NoteCardContainer } from "@/_shared/note/components/NoteCard";
-import type { noteService } from "@/_shared/service";
+import type { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
 import { Spinner } from "@/_shared/ui/components/Spinner";
 
 import { action } from "./action";
 import { useIntersection } from "./useIntersection";
 
 type Props = {
-  firstLoadedNotes: noteService.NoteCard[];
+  firstLoadedNotes: noteCardFindService.NoteCard[];
   userId?: string;
 };
 
 export function TimelineLoader({ firstLoadedNotes, userId }: Props) {
-  const [timeline, setTimeline] = useState<noteService.NoteCard[][]>([
+  const [timeline, setTimeline] = useState<noteCardFindService.NoteCard[][]>([
     firstLoadedNotes,
   ]);
   const [isLoading, setIsLoading] = useState(false);

@@ -1,10 +1,9 @@
 import type { Note } from "@prisma/client";
 import { cache } from "react";
 
+import { noteCardService } from "@/_shared/service/noteCard";
 import { fullUsername } from "@/_shared/utils/fullUsername";
 import { getSessionUserId } from "@/_shared/utils/session";
-
-import { noteCardService } from "./noteCard";
 
 const formatNote = (
   note: Omit<noteCardService.NoteCard, "replies" | "replyTo">,

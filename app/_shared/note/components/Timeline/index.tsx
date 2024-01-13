@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { noteService } from "@/_shared/service";
+import { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
 import { userService } from "@/_shared/service/user";
 
 import { TimelineLoader } from "./TimelineLoader";
@@ -22,7 +22,7 @@ const getUserIdOrUndefined = async (userKey?: string) => {
 
 export async function Timeline({ userKey }: Props) {
   const userId = await getUserIdOrUndefined(userKey);
-  const firstLoadedNotes = await noteService.findManyNoteCards({
+  const firstLoadedNotes = await noteCardFindService.findManyNoteCards({
     userId,
     count: 30,
   });

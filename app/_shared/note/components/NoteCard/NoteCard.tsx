@@ -1,7 +1,7 @@
 import Link from "next/link";
 import sanitizeHtml from "sanitize-html";
 
-import type { noteService } from "@/_shared/service";
+import type { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
 import { Card } from "@/_shared/ui/components/Card";
 import { UserIcon } from "@/_shared/user/components/UserIcon";
 import { cn } from "@/_shared/utils/cn";
@@ -13,7 +13,7 @@ import { PublishedAt } from "./PublishedAt";
 import { ReplyButton } from "./ReplyButton";
 
 export type NoteCardProps = {
-  note: noteService.NoteCard;
+  note: noteCardFindService.NoteCard;
   onLike: () => Promise<void>;
   onDelete: () => Promise<void>;
   showDetail?: boolean;
