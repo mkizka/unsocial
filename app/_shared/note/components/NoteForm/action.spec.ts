@@ -9,7 +9,7 @@ import { action } from "./action";
 jest.useFakeTimers();
 jest.setSystemTime(new Date("2023-01-01T00:00:00Z"));
 
-jest.mock("@/_shared/utils/relayActivity");
+jest.mock("@/_shared/activitypub/apRelayService");
 const mockedRelayActivityToFollowers = jest.mocked(
   apReplayService.relayActivityToFollowers,
 );

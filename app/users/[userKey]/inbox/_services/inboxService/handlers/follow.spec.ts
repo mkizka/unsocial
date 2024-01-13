@@ -5,7 +5,7 @@ import { mockedPrisma } from "@/_shared/mocks/prisma";
 
 import { handle } from "./follow";
 
-jest.mock("@/_shared/utils/relayActivity");
+jest.mock("@/_shared/activitypub/apRelayService");
 const mockedRelayActivityToInboxUrl = jest.mocked(
   apReplayService.relayActivityToInboxUrl,
 );

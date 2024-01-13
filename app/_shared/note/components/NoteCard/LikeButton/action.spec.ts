@@ -4,7 +4,7 @@ import { mockedGetSessionUserId } from "@/_shared/mocks/session";
 
 import { action } from "./action";
 
-jest.mock("@/_shared/utils/relayActivity");
+jest.mock("@/_shared/activitypub/apRelayService");
 const mockedRelayActivityToInboxUrl = jest.mocked(
   apReplayService.relayActivityToInboxUrl,
 );
