@@ -61,8 +61,8 @@ const table = async () => {
     ...new Set([...Object.keys(prScores), ...Object.keys(mainScores)]),
   ].sort();
   const comment = [
-    "| ファイル名 | PR | main | 変化 |",
-    "| --- | --- | --- | --- |",
+    "| ファイル名 | 変化 | :white_check_mark: |",
+    "| --- | --- | --- |",
   ];
   for (const filename of filenames) {
     const prText = `${prScores[filename] ?? "なし"}`;
@@ -72,8 +72,8 @@ const table = async () => {
     }
     const diffText =
       (prScores[filename] || 0) > (mainScores[filename] || 0)
-        ? ":green_circle:"
-        : ":warning:";
+        ? ":white_check_mark:"
+        : ":x:";
     comment.push(`| ${filename} | ${mainText} → ${prText} | ${diffText}`);
   }
   return comment.length > 2
