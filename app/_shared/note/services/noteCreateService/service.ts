@@ -1,9 +1,13 @@
+import type { Note } from "@prisma/client";
+
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { noteActivityService } from "@/_shared/note/services/noteActivityService";
 import { noteFindService } from "@/_shared/note/services/noteFindService";
 import { userService } from "@/_shared/service/user";
 
-export const create = async (activity: apSchemaService.NoteActivity) => {
+export const create = async (
+  activity: apSchemaService.NoteActivity,
+): Promise<Note | Error> => {
   const replyTo = activity.inReplyTo
     ? await noteFindService.findOrFetchNoteByUrl(activity.inReplyTo)
     : null;

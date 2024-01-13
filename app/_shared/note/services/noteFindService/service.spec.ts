@@ -76,7 +76,7 @@ const リモートのノート取得に成功した = () => {
   );
 };
 
-jest.mock("@/_shared/service/systemUser");
+jest.mock("@/_shared/user/services/systemUser");
 jest.mocked(systemUserService).findOrCreateSystemUser.mockResolvedValue({
   id: "dummySystemUser",
   privateKey: mockedKeys.privateKey,

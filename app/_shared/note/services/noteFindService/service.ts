@@ -2,8 +2,7 @@ import { cache } from "react";
 
 import { apFetchService } from "@/_shared/activitypub/apFetchService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { noteActivityService } from "@/_shared/note/services/noteActivityService";
-import { userService } from "@/_shared/service/user";
+import { noteCreateService } from "@/_shared/note/services/noteCreateService";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -56,15 +55,5 @@ export const findOrFetchNoteByUrl = cache(async (url: string) => {
   if (!parsedNote.success) {
     return new ActivityValidationError();
   }
-  const noteUser = await userService.findOrFetchUserByActor(
-    parsedNote.data.attributedTo,
-  );
-  if (noteUser instanceof Error) {
-    return noteUser;
-  }
-  const newNote = await noteActivityService.create({
-    activity: parsedNote.data,
-    userId: noteUser.id,
-  });
-  return newNote;
+  return noteCreateService.create(parsedNote.data);
 });
