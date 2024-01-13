@@ -4,7 +4,7 @@ import { http, HttpResponse } from "msw";
 import { mockedKeys } from "@/_mocks/keys";
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
 import { NotOKError } from "@/_shared/utils/fetcher";
 
@@ -82,7 +82,7 @@ jest.mocked(systemUserService).findOrCreateSystemUser.mockResolvedValue({
 });
 
 jest.mock("@/_shared/service/user");
-jest.mocked(userService).findOrFetchUserByActor.mockResolvedValue({
+jest.mocked(userFindService).findOrFetchUserByActor.mockResolvedValue({
   id: "dummyUserId",
 } as User);
 

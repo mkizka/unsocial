@@ -5,13 +5,13 @@ import { http, HttpResponse } from "msw";
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
 
 import { noteCreateService } from ".";
 
 jest.mock("@/_shared/service/user");
-const mockedUserService = jest.mocked(userService);
+const mockedUserService = jest.mocked(userFindService);
 
 const generateRsaPrivateKey = () => {
   return crypto.generateKeyPairSync("rsa", {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 import { UserIcon } from "@/_shared/user/components/UserIcon";
 import { env } from "@/_shared/utils/env";
 import { fullUsername } from "@/_shared/utils/fullUsername";
@@ -17,7 +17,7 @@ type Props = {
 
 export async function UserCard({ userKey }: Props) {
   const sessionUserId = await getSessionUserId();
-  const user = await userService.findOrFetchUserByKey(userKey);
+  const user = await userFindService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();
   }

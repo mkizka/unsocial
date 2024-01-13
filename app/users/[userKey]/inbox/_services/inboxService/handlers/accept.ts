@@ -1,5 +1,5 @@
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 import { prisma } from "@/_shared/utils/prisma";
 
 import {
@@ -13,7 +13,7 @@ export const handle: InboxHandler = async (activity, followee) => {
   if (!parsedAccept.success) {
     return new ActivitySchemaValidationError(parsedAccept.error, activity);
   }
-  const follower = await userService.findOrFetchUserByActor(
+  const follower = await userFindService.findOrFetchUserByActor(
     parsedAccept.data.object.actor,
   );
   if (follower instanceof Error) {

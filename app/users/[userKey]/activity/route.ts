@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 import { activityStreams } from "@/_shared/utils/activitypub";
 
 export async function GET(
   request: Request,
   { params }: { params: { userKey: string } },
 ) {
-  const user = await userService.findOrFetchUserByKey(params.userKey);
+  const user = await userFindService.findOrFetchUserByKey(params.userKey);
   if (user instanceof Error) {
     notFound();
   }

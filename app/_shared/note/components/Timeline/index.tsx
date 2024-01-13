@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 
 import { TimelineLoader } from "./TimelineLoader";
 
@@ -13,7 +13,7 @@ const getUserIdOrUndefined = async (userKey?: string) => {
   if (!userKey) {
     return undefined;
   }
-  const user = await userService.findOrFetchUserByKey(userKey);
+  const user = await userFindService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();
   }

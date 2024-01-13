@@ -1,7 +1,5 @@
 import { env } from "@/_shared/utils/env";
 
-import type { UserServiceError } from "./errors";
-
 type ParsedKey =
   | {
       id: string;
@@ -11,7 +9,7 @@ type ParsedKey =
       host: string;
     };
 
-export const parseUserKey = (key: string): ParsedKey | UserServiceError => {
+export const parseUserKey = (key: string): ParsedKey => {
   const decodedKey = decodeURIComponent(key);
   if (!decodedKey.startsWith("@")) {
     return {

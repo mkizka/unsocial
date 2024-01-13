@@ -5,7 +5,7 @@ import {
   findOrFetchUserByWebFinger,
 } from "./findOrFetchUser";
 import { findOrFetchUserByActor as _findOrFetchUserByActor } from "./findOrFetchUser";
-import { parseUserKey } from "./parseUserKey";
+import { parseUserKey } from "./utils";
 
 export const findOrFetchUserByActor = cache(_findOrFetchUserByActor);
 

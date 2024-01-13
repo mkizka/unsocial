@@ -2,7 +2,7 @@ import crypto from "crypto";
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 
 import { createDigest, textOf } from "./utils";
 
@@ -65,7 +65,9 @@ const createVerify = (textToSign: string) => {
 const findOrFetchUserByKeyId = async (keyId: string) => {
   const actorUrl = new URL(keyId);
   actorUrl.hash = "";
-  const user = await userService.findOrFetchUserByActor(actorUrl.toString());
+  const user = await userFindService.findOrFetchUserByActor(
+    actorUrl.toString(),
+  );
   if (user instanceof Error) {
     return null;
   }

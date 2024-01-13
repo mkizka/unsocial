@@ -1,7 +1,7 @@
 import type { User } from "@prisma/client";
 
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 import { prisma } from "@/_shared/utils/prisma";
 
 import type { InboxError } from "./errors";
@@ -18,7 +18,7 @@ type UndoInboxHandler = (
 ) => Promise<InboxError | void>;
 
 const undoFollow: UndoInboxHandler = async (activity, actorUser) => {
-  const followee = await userService.findOrFetchUserByActor(
+  const followee = await userFindService.findOrFetchUserByActor(
     activity.object.object,
   );
   if (followee instanceof Error) {

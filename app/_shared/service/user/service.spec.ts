@@ -1,10 +1,10 @@
 import type { User } from "@prisma/client";
 
+import { userFindService } from ".";
 import {
   findOrFetchUserById,
   findOrFetchUserByWebFinger,
 } from "./findOrFetchUser";
-import { findOrFetchUserByKey } from "./user";
 
 jest.mock("./findOrFetchUser");
 
@@ -18,7 +18,7 @@ describe("userService", () => {
       // arrange
       mockedById.mockResolvedValueOnce(dummyUser);
       // act
-      const user = await findOrFetchUserByKey("foo");
+      const user = await userFindService.findOrFetchUserByKey("foo");
       // assert
       expect(user).toBe(dummyUser);
       expect(mockedById).toHaveBeenCalledWith("foo");
@@ -27,7 +27,9 @@ describe("userService", () => {
       // arrange
       mockedByWebFinger.mockResolvedValueOnce(dummyUser);
       // act
-      const user = await findOrFetchUserByKey("@foo@remote.example.com");
+      const user = await userFindService.findOrFetchUserByKey(
+        "@foo@remote.example.com",
+      );
       // assert
       expect(user).toBe(dummyUser);
       expect(mockedByWebFinger).toHaveBeenCalledWith({

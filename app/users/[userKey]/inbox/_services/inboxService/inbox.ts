@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 import { verifyRequest } from "@/_shared/utils/httpSignature/verify";
 import { createLogger } from "@/_shared/utils/logger";
 
@@ -59,7 +59,7 @@ export const perform = async (request: NextRequest) => {
   }
 
   // 3. actorで指定されたユーザーを取得する
-  const actorUser = await userService.findOrFetchUserByActor(
+  const actorUser = await userFindService.findOrFetchUserByActor(
     parsedActivity.data.actor,
   );
   // TODO actorUserのエラーを使ってログを出す

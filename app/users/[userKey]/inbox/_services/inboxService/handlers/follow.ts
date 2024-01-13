@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
@@ -21,7 +21,7 @@ export const handle: InboxHandler = async (activity, actorUser) => {
   if (!parsedFollow.success) {
     return new ActivitySchemaValidationError(parsedFollow.error, activity);
   }
-  const followee = await userService.findOrFetchUserByActor(
+  const followee = await userFindService.findOrFetchUserByActor(
     parsedFollow.data.object,
   );
   if (followee instanceof Error) {

@@ -1,4 +1,4 @@
-import { parseUserKey } from "./parseUserKey";
+import { parseUserKey } from "./utils";
 
 describe("parseKey", () => {
   test.each`

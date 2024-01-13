@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 
 import { followFindService } from "./findFollowService";
 import { UserItem } from "./UserItem";
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const findUsers = async ({ userKey, listBy }: Props) => {
-  const user = await userService.findOrFetchUserByKey(userKey);
+  const user = await userFindService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();
   }

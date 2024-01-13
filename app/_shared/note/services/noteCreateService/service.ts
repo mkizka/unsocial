@@ -2,7 +2,7 @@ import type { Note } from "@prisma/client";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { noteFindService } from "@/_shared/note/services/noteFindService";
-import { userService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/service/user";
 import { prisma } from "@/_shared/utils/prisma";
 
 export const create = async (
@@ -14,7 +14,7 @@ export const create = async (
   if (replyTo instanceof Error) {
     return replyTo;
   }
-  const noteUser = await userService.findOrFetchUserByActor(
+  const noteUser = await userFindService.findOrFetchUserByActor(
     activity.attributedTo,
   );
   if (noteUser instanceof Error) {
