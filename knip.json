@@ -1,7 +1,0 @@
-{
-  "$schema": "https://unpkg.com/knip@3/schema.json",
-  "rules": {
-    "files": "off",
-    "dependencies": "off"
-  }
-}
