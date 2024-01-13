@@ -8,9 +8,9 @@ import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { systemUserService } from "@/_shared/service/systemUser";
 import { userService } from "@/_shared/service/user";
 
-import { userFindService } from ".";
+import { noteCreateService } from ".";
 
-jest.mock("../user");
+jest.mock("@/_shared/service/user");
 const mockedUserService = jest.mocked(userService);
 
 const generateRsaPrivateKey = () => {
@@ -49,7 +49,7 @@ describe("createNoteFromActivityService", () => {
     mockedUserService.findOrFetchUserByActor.mockResolvedValue({
       id: "dummyLocalUserId",
     } as User);
-    const note = await userFindService.create(noteActivity);
+    const note = await noteCreateService.create(noteActivity);
     expect(note).not.toBeInstanceOf(Error);
     expect(mockedPrisma.note.create).toHaveBeenCalledWith({
       data: {
@@ -90,7 +90,7 @@ describe("createNoteFromActivityService", () => {
     mockedUserService.findOrFetchUserByActor.mockResolvedValue({
       id: "dummyLocalUserId",
     } as User);
-    const note = await userFindService.create(noteActivity);
+    const note = await noteCreateService.create(noteActivity);
     expect(note).not.toBeInstanceOf(Error);
     expect(mockedPrisma.note.create).toHaveBeenNthCalledWith(1, {
       data: {

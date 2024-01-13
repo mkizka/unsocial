@@ -1,5 +1,5 @@
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { createNoteActivityService } from "@/_shared/note/services/creacteNoteFromActivityService";
+import { noteFindService } from "@/_shared/note/services/noteFindService";
 import { prisma } from "@/_shared/utils/prisma";
 
 import {
@@ -13,7 +13,7 @@ export const handle: InboxHandler = async (activity, actor) => {
   if (!parsedAnnounce.success) {
     return new ActivitySchemaValidationError(parsedAnnounce.error, activity);
   }
-  const announcedNote = await createNoteActivityService.findOrFetchNoteByUrl(
+  const announcedNote = await noteFindService.findOrFetchNoteByUrl(
     parsedAnnounce.data.object,
   );
   if (announcedNote instanceof Error) {

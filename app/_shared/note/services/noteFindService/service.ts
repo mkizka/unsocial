@@ -2,6 +2,7 @@ import { cache } from "react";
 
 import { apFetchService } from "@/_shared/activitypub/apFetchService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
+import { noteActivityService } from "@/_shared/note/services/noteActivityService";
 import { userService } from "@/_shared/service/user";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
@@ -36,34 +37,6 @@ const findByNoteUrl = (noteUrl: string) => {
   });
 };
 
-type CreateFromActivityParams = {
-  activity: apSchemaService.NoteActivity;
-  userId: string;
-  replyToId?: string;
-};
-
-const createFromActivity = ({
-  activity,
-  userId,
-  replyToId,
-}: CreateFromActivityParams) => {
-  return prisma.note.create({
-    data: {
-      userId,
-      url: activity.id,
-      content: activity.content,
-      publishedAt: activity.published,
-      replyToId,
-      attachments: {
-        create: activity.attachment?.map((attachment) => ({
-          url: attachment.url,
-          mediaType: attachment.mediaType,
-        })),
-      },
-    },
-  });
-};
-
 export const findOrFetchNoteByUrl = cache(async (url: string) => {
   const localNote = await findByNoteUrl(url);
   if (localNote) {
@@ -84,30 +57,9 @@ export const findOrFetchNoteByUrl = cache(async (url: string) => {
   if (noteUser instanceof Error) {
     return noteUser;
   }
-  const newNote = await createFromActivity({
+  const newNote = await noteActivityService.create({
     activity: parsedNote.data,
     userId: noteUser.id,
   });
   return newNote;
 });
-
-export const create = async (activity: apSchemaService.NoteActivity) => {
-  const replyTo = activity.inReplyTo
-    ? await findOrFetchNoteByUrl(activity.inReplyTo)
-    : null;
-  if (replyTo instanceof Error) {
-    return replyTo;
-  }
-  const noteUser = await userService.findOrFetchUserByActor(
-    activity.attributedTo,
-  );
-  if (noteUser instanceof Error) {
-    return noteUser;
-  }
-  const note = await createFromActivity({
-    activity,
-    userId: noteUser.id,
-    replyToId: replyTo?.id,
-  });
-  return note;
-};

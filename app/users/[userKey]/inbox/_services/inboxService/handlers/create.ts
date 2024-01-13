@@ -1,5 +1,5 @@
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { createNoteActivityService } from "@/_shared/note/services/creacteNoteFromActivityService";
+import { noteCreateService } from "@/_shared/note/services/noteCreateService";
 import { createLogger } from "@/_shared/utils/logger";
 
 import { ActivitySchemaValidationError } from "./errors";
@@ -12,14 +12,12 @@ export const handle: InboxHandler = async (activity) => {
   if (!parsedNote.success) {
     return new ActivitySchemaValidationError(parsedNote.error, activity);
   }
-  await createNoteActivityService
-    .create(parsedNote.data.object)
-    .catch((error) => {
-      // https://www.prisma.io/docs/reference/api-reference/error-reference#p2002
-      if (error.code === "P2002") {
-        logger.info("すでに存在するノートを受信したのでスキップします");
-        return;
-      }
-      return error;
-    });
+  await noteCreateService.create(parsedNote.data.object).catch((error) => {
+    // https://www.prisma.io/docs/reference/api-reference/error-reference#p2002
+    if (error.code === "P2002") {
+      logger.info("すでに存在するノートを受信したのでスキップします");
+      return;
+    }
+    return error;
+  });
 };
