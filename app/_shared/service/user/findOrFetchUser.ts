@@ -8,14 +8,19 @@ import { getIconHash } from "@/_shared/utils/icon";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 
-import type { UserServiceError } from "./errors";
-import {
-  ActorValidationError,
-  UserNotFoundError,
-  WebfingerValidationError,
-} from "./errors";
-
 const logger = createLogger("findOrFetchUser");
+
+export class UserNotFoundError extends Error {
+  name = "UserNotFoundError";
+}
+
+export class WebfingerValidationError extends Error {
+  name = "WebfingerValidationError";
+}
+
+export class ActorValidationError extends Error {
+  name = "ActorValidationError";
+}
 
 // この関数のみテスト用にexport
 export const shouldRefetch = (user: User) => {
@@ -84,7 +89,7 @@ const createOrUpdateUser = (
 
 export const findOrFetchUserById = async (
   id: string,
-): Promise<User | UserServiceError> => {
+): Promise<User | Error> => {
   const existingUser = await prisma.user.findUnique({ where: { id } });
   if (!existingUser) {
     // id指定で見つからなかった場合はこれ以上できることないのでエラーを返す
@@ -117,7 +122,7 @@ const getLocalUserId = (actorUrl: string) => {
 
 export const findOrFetchUserByActor = async (
   actorUrl: string,
-): Promise<User | UserServiceError> => {
+): Promise<User | Error> => {
   // 自ホストのユーザーはactorUrlがnullになっているため、
   // idをURLから取り出してDBから取得する
   const localUserId = getLocalUserId(actorUrl);
@@ -138,7 +143,7 @@ export const findOrFetchUserByActor = async (
 
 export const findOrFetchUserByWebFinger = async (
   user: apFetchService.FetchWebFingerParams,
-): Promise<User | UserServiceError> => {
+): Promise<User | Error> => {
   const existingUser = await prisma.user.findUnique({
     where: {
       preferredUsername_host: {

@@ -7,14 +7,12 @@ import { NotOKError } from "@/_shared/utils/fetcher";
 
 import {
   ActorValidationError,
-  UserNotFoundError,
-  WebfingerValidationError,
-} from "./errors";
-import {
   findOrFetchUserByActor,
   findOrFetchUserById,
   findOrFetchUserByWebFinger,
   shouldRefetch,
+  UserNotFoundError,
+  WebfingerValidationError,
 } from "./findOrFetchUser";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
