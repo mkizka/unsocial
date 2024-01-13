@@ -13,7 +13,7 @@ export const handle: InboxHandler = async (activity, actor) => {
   if (!parsedAnnounce.success) {
     return new ActivitySchemaValidationError(parsedAnnounce.error, activity);
   }
-  const announcedNote = await createNoteActivityService.findOrCreateByUrl(
+  const announcedNote = await createNoteActivityService.findOrFetchNoteByUrl(
     parsedAnnounce.data.object,
   );
   if (announcedNote instanceof Error) {

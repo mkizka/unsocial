@@ -64,7 +64,7 @@ const createFromActivity = ({
   });
 };
 
-export const findOrCreateByUrl = cache(async (url: string) => {
+export const findOrFetchNoteByUrl = cache(async (url: string) => {
   const localNote = await findByNoteUrl(url);
   if (localNote) {
     return localNote;
@@ -93,7 +93,7 @@ export const findOrCreateByUrl = cache(async (url: string) => {
 
 export const create = async (activity: apSchemaService.NoteActivity) => {
   const replyTo = activity.inReplyTo
-    ? await findOrCreateByUrl(activity.inReplyTo)
+    ? await findOrFetchNoteByUrl(activity.inReplyTo)
     : null;
   if (replyTo instanceof Error) {
     return replyTo;
