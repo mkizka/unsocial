@@ -1,8 +1,8 @@
 "use server";
 import { z } from "zod";
 
-import { noteService } from "@/_shared/service";
 import { activityStreams } from "@/_shared/utils/activitypub";
+import { prisma } from "@/_shared/utils/prisma";
 import {
   relayActivityToFollowers,
   relayActivityToInboxUrl,
@@ -22,12 +22,20 @@ export async function action(formData: FormData) {
   if (!parsedForm.success) {
     return { error: "フォームの内容が不正です" };
   }
-  const note = await noteService.create({
-    userId,
-    content: parsedForm.data.content,
-    replyToId: parsedForm.data.replyToId,
-    publishedAt: new Date(),
-    attachments: [],
+  const note = await prisma.note.create({
+    data: {
+      userId,
+      content: parsedForm.data.content,
+      replyToId: parsedForm.data.replyToId,
+      publishedAt: new Date(),
+    },
+    include: {
+      replyTo: {
+        include: {
+          user: true,
+        },
+      },
+    },
   });
   if (note.replyTo?.user.inboxUrl) {
     await relayActivityToInboxUrl({

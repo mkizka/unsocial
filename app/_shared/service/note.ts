@@ -2,7 +2,6 @@ import type { Note } from "@prisma/client";
 import { cache } from "react";
 
 import { fullUsername } from "@/_shared/utils/fullUsername";
-import { prisma } from "@/_shared/utils/prisma";
 import { getSessionUserId } from "@/_shared/utils/session";
 
 import { noteCardService } from "./noteCard";
@@ -70,33 +69,3 @@ export const findManyNoteCards = cache(
     return notes.map((note) => formatNoteWithReplies(note, userId));
   },
 );
-
-type CreateParams = {
-  userId: string;
-  content: string;
-  publishedAt: Date;
-  replyToId?: string;
-  attachments: {
-    url: string;
-    mediaType: string;
-  }[];
-};
-
-export const create = (params: CreateParams) => {
-  const { attachments, ...data } = params;
-  return prisma.note.create({
-    data: {
-      ...data,
-      attachments: {
-        create: attachments,
-      },
-    },
-    include: {
-      replyTo: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  });
-};
