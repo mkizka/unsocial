@@ -1,5 +1,5 @@
 #!/usr/bin/env -S pnpm tsx
-import { userService } from "@/_shared/service/user";
+import { userAuthService } from "@/_shared/user/services/userAuthService";
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
@@ -17,7 +17,7 @@ const main = async () => {
     logger.info("シード作成をスキップ");
     return;
   }
-  const user = await userService.authorize({
+  const user = await userAuthService.authorize({
     action: "signUp",
     name: "テスト",
     preferredUsername: "test",
