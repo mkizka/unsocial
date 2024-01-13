@@ -1,12 +1,13 @@
 import type { Note } from "@prisma/client";
 import { cache } from "react";
 
-import { noteCardService } from "@/_shared/service/noteCard";
 import { fullUsername } from "@/_shared/utils/fullUsername";
 import { getSessionUserId } from "@/_shared/utils/session";
 
+import { noteCardFindRepository } from "./noteCardFindRepository";
+
 const formatNote = (
-  note: Omit<noteCardService.NoteCard, "replies" | "replyTo">,
+  note: Omit<noteCardFindRepository.NoteCard, "replies" | "replyTo">,
   userId: string | null,
 ) => {
   return {
@@ -36,7 +37,7 @@ type NoteCardWithReplies = NoteCard & {
 };
 
 const formatNoteWithReplies = (
-  note: noteCardService.NoteCard,
+  note: noteCardFindRepository.NoteCard,
   userId: string | null,
 ): NoteCardWithReplies => {
   return {
@@ -50,7 +51,7 @@ const formatNoteWithReplies = (
 };
 
 export const findUniqueNoteCard = cache(async (id: string) => {
-  const note = await noteCardService.findUniqueNoteCard(id);
+  const note = await noteCardFindRepository.findUniqueNoteCard(id);
   if (!note) {
     return null;
   }
@@ -59,8 +60,8 @@ export const findUniqueNoteCard = cache(async (id: string) => {
 });
 
 export const findManyNoteCards = cache(
-  async (params: noteCardService.FindManyParams) => {
-    const notes = await noteCardService.findManyNoteCards(params);
+  async (params: noteCardFindRepository.FindManyParams) => {
+    const notes = await noteCardFindRepository.findManyNoteCards(params);
     if (notes.length === 0) {
       return [];
     }
