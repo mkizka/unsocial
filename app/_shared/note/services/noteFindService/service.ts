@@ -25,6 +25,10 @@ export class NotFoundError extends Error {
   name = "NotFoundError";
 }
 
+export class ActivityValidationError extends Error {
+  name = "ActivityValidationError";
+}
+
 const findNoteById = async (id: string) => {
   const note = await prisma.note.findUnique({ where: { id } });
   if (!note) {
@@ -50,8 +54,7 @@ export const findOrFetchNoteByUrl = cache(async (url: string) => {
   }
   const parsedNote = apSchemaService.noteSchema.safeParse(fetchedNote);
   if (!parsedNote.success) {
-    // TODO: 修正
-    return new Error("ノートの形式が不正です");
+    return new ActivityValidationError();
   }
   const noteUser = await userService.findOrFetchUserByActor(
     parsedNote.data.attributedTo,
