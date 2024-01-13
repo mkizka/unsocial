@@ -1,13 +1,15 @@
 import type { Note } from "@prisma/client";
 
+import { apReplayService } from "@/_shared/activitypub/apRelayService";
 import { mockedPrisma } from "@/_shared/mocks/prisma";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
-import { relayActivityToFollowers } from "@/_shared/utils/relayActivity";
 
 import { action } from "./action";
 
 jest.mock("@/_shared/utils/relayActivity");
-const mockedRelayActivityToFollowers = jest.mocked(relayActivityToFollowers);
+const mockedRelayActivityToFollowers = jest.mocked(
+  apReplayService.relayActivityToFollowers,
+);
 
 const dummySessionUserId = "__id";
 

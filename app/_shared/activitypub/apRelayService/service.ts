@@ -1,8 +1,8 @@
 import { cache } from "react";
 
-import { fetcher } from "./fetcher";
-import type { SignActivityParams } from "./httpSignature/sign";
-import { prisma } from "./prisma";
+import { fetcher } from "@/_shared/utils/fetcher";
+import type { SignActivityParams } from "@/_shared/utils/httpSignature/sign";
+import { prisma } from "@/_shared/utils/prisma";
 
 const isNotNull = <T>(value: T): value is NonNullable<T> => value !== null;
 

@@ -1,12 +1,14 @@
 import type { Follow } from "@prisma/client";
 
+import { apReplayService } from "@/_shared/activitypub/apRelayService";
 import { mockedPrisma } from "@/_shared/mocks/prisma";
-import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
 
 import { handle } from "./follow";
 
 jest.mock("@/_shared/utils/relayActivity");
-const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
+const mockedRelayActivityToInboxUrl = jest.mocked(
+  apReplayService.relayActivityToInboxUrl,
+);
 
 const dummyLocalUser = {
   id: "dummyidlocal",

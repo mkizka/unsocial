@@ -1,14 +1,16 @@
 import type { Follow } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+import { apReplayService } from "@/_shared/activitypub/apRelayService";
 import { mockedPrisma } from "@/_shared/mocks/prisma";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
-import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
 
 import { action } from "./action";
 
 jest.mock("@/_shared/utils/relayActivity");
-const mockedRelayActivityToInboxUrl = jest.mocked(relayActivityToInboxUrl);
+const mockedRelayActivityToInboxUrl = jest.mocked(
+  apReplayService.relayActivityToInboxUrl,
+);
 
 jest.mock("next/cache");
 const mockedRevalidatePath = jest.mocked(revalidatePath);
