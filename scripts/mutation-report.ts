@@ -50,7 +50,25 @@ const getScorePerFile = (result: Result) => {
   return score;
 };
 
-const table = async () => {
+const evaluate = (score: number | undefined) => {
+  if (score === undefined || isNaN(score)) {
+    return 0;
+  }
+  return score;
+};
+
+const isSuccess = (
+  prScore: number | undefined,
+  mainScore: number | undefined,
+) => {
+  return (
+    evaluate(prScore) >= evaluate(mainScore) ||
+    // PRのスコアがNaNの場合は合格扱い
+    Number.isNaN(prScore)
+  );
+};
+
+const table = async (branchBaseUrl: string) => {
   const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
   const mainScores = getScorePerFile(
     await fetchJson(
@@ -65,16 +83,26 @@ const table = async () => {
     "| --- | --- | --- |",
   ];
   for (const filename of filenames) {
-    const prText = `${prScores[filename] ?? "なし"}`;
-    const mainText = `${mainScores[filename] ?? "なし"}`;
-    if (prText === mainText || prText === "なし") {
+    const rawPrScore = prScores[filename]; // number | NaN | undefined
+    const rawMainScore = mainScores[filename]; // number | NaN | undefined
+    if (
+      // NaNとNaNは等しくないので文字列化して比較
+      String(rawPrScore) === String(rawMainScore) ||
+      // PRのスコアにファイルが無い場合は削除または移動なので無視
+      rawPrScore === undefined
+    ) {
       continue;
     }
-    const diffText =
-      (prScores[filename] || 0) > (mainScores[filename] || 0)
-        ? ":white_check_mark:"
-        : ":x:";
-    comment.push(`| ${filename} | ${mainText} → ${prText} | ${diffText}`);
+    const diffText = isSuccess(rawPrScore, rawMainScore)
+      ? ":white_check_mark:"
+      : ":x:";
+    const filenameText = `[${filename}](${branchBaseUrl}#${filename.replace(
+      "app/",
+      "mutant/",
+    )})`;
+    comment.push(
+      `| ${filenameText} | ${rawMainScore} → ${rawPrScore} | ${diffText} |`,
+    );
   }
   return comment.length > 2
     ? comment.join("\n")
@@ -82,12 +110,13 @@ const table = async () => {
 };
 
 const main = async () => {
-  const baseUrl = process.env.MUTATION_TEST_S3_BASEURL ?? "";
-  const branchName = process.env.BRANCH_NAME ?? "";
+  const baseUrl = process.env.MUTATION_TEST_S3_BASEURL;
+  const branchName = process.env.BRANCH_NAME;
+  const mutationUrl = `${baseUrl}/${branchName}/mutation.html`;
 
-  const text = `${await table()}
+  const text = `${await table(mutationUrl)}
   
-  :gun: [mutation.html (${branchName})](${baseUrl}/${branchName}/mutation.html)
+  :gun: [mutation.html (${branchName})](${mutationUrl})
   :gun: [mutation.html (main)](${baseUrl}/main/mutation.html)
   :page_facing_up: [stryker.log](${baseUrl}/${branchName}/stryker.log)`;
 
