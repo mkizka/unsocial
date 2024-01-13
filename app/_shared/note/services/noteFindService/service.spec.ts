@@ -5,8 +5,8 @@ import { mockedKeys } from "@/_mocks/keys";
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
 import { noteActivityService } from "@/_shared/note/services/noteActivityService";
-import { systemUserService } from "@/_shared/service/systemUser";
 import { userService } from "@/_shared/service/user";
+import { systemUserService } from "@/_shared/user/services/systemUser";
 import { NotOKError } from "@/_shared/utils/fetcher";
 
 import { noteFindService } from ".";

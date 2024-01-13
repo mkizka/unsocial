@@ -5,8 +5,8 @@ import { http, HttpResponse } from "msw";
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { systemUserService } from "@/_shared/service/systemUser";
 import { userService } from "@/_shared/service/user";
+import { systemUserService } from "@/_shared/user/services/systemUser";
 
 import { noteCreateService } from ".";
 

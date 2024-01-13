@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { systemUserService } from "@/_shared/service/systemUser";
+import { systemUserService } from "@/_shared/user/services/systemUser";
 import { prisma } from "@/_shared/utils/prisma";
 import { getSessionUser } from "@/_shared/utils/session";
 
