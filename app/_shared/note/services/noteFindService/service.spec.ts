@@ -4,8 +4,8 @@ import { http, HttpResponse } from "msw";
 import { mockedKeys } from "@/_mocks/keys";
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
-import { userFindService } from "@/_shared/service/user";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
+import { userFindService } from "@/_shared/user/services/userFindService";
 import { NotOKError } from "@/_shared/utils/fetcher";
 
 import { noteFindService } from ".";
@@ -81,7 +81,7 @@ jest.mocked(systemUserService).findOrCreateSystemUser.mockResolvedValue({
   privateKey: mockedKeys.privateKey,
 });
 
-jest.mock("@/_shared/service/user");
+jest.mock("@/_shared/user/services/userFindService");
 jest.mocked(userFindService).findOrFetchUserByActor.mockResolvedValue({
   id: "dummyUserId",
 } as User);

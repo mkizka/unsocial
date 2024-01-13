@@ -2,7 +2,7 @@ import type { Note } from "@prisma/client";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { noteFindService } from "@/_shared/note/services/noteFindService";
-import { userFindService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/user/services/userFindService";
 import { prisma } from "@/_shared/utils/prisma";
 
 export const create = async (

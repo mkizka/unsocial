@@ -5,12 +5,12 @@ import { http, HttpResponse } from "msw";
 import { mockedPrisma } from "@/_mocks/prisma";
 import { server } from "@/_mocks/server";
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { userFindService } from "@/_shared/service/user";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
+import { userFindService } from "@/_shared/user/services/userFindService";
 
 import { noteCreateService } from ".";
 
-jest.mock("@/_shared/service/user");
+jest.mock("@/_shared/user/services/userFindService");
 const mockedUserService = jest.mocked(userFindService);
 
 const generateRsaPrivateKey = () => {

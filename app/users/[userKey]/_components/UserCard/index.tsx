@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { userFindService } from "@/_shared/service/user";
 import { UserIcon } from "@/_shared/user/components/UserIcon";
+import { userFindService } from "@/_shared/user/services/userFindService";
 import { env } from "@/_shared/utils/env";
 import { fullUsername } from "@/_shared/utils/fullUsername";
 import { getSessionUserId } from "@/_shared/utils/session";

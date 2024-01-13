@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
-import { userFindService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/user/services/userFindService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 
 export async function GET(

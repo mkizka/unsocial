@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
-import { userFindService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/user/services/userFindService";
 
 import { TimelineLoader } from "./TimelineLoader";
 

@@ -1,5 +1,5 @@
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { userFindService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/user/services/userFindService";
 import { prisma } from "@/_shared/utils/prisma";
 
 import {

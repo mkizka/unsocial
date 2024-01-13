@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { userFindService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/user/services/userFindService";
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";

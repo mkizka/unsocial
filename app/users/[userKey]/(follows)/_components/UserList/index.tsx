@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { userFindService } from "@/_shared/service/user";
+import { userFindService } from "@/_shared/user/services/userFindService";
 
 import { followFindService } from "./findFollowService";
 import { UserItem } from "./UserItem";
