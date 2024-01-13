@@ -1,5 +1,5 @@
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { createNoteActivityService } from "@/_shared/service/creacteNoteFromActivityService";
+import { createNoteActivityService } from "@/_shared/note/services/creacteNoteFromActivityService";
 import { prisma } from "@/_shared/utils/prisma";
 
 import {
