@@ -35,6 +35,7 @@ export type DeleteActivity = z.infer<typeof deleteSchema>;
 
 export const followSchema = z.object({
   type: z.literal("Follow"),
+  id: z.string().url().optional(),
   actor: z.string().url(),
   object: z
     .string()

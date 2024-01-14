@@ -97,31 +97,27 @@ const convertCreate = (note: NoteWithReply) => {
   } satisfies apSchemaService.CreateActivity;
 };
 
-const convertDelete = (note: Pick<Note, "id" | "userId">): AP.Delete => {
+const convertDelete = (note: Pick<Note, "id" | "userId">) => {
   return {
     ...contexts,
     type: "Delete",
-    actor: new URL(
-      `https://${env.UNSOCIAL_HOST}/users/${note.userId}/activity`,
-    ),
+    actor: `https://${env.UNSOCIAL_HOST}/users/${note.userId}/activity`,
     object: {
       type: "Tombstone",
-      id: new URL(`https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`),
+      id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`,
     },
-  };
+  } satisfies apSchemaService.DeleteActivity;
 };
 
-const convertFollow = (follow: Follow, followeeUrl: string): AP.Follow => {
+const convertFollow = (follow: Follow, followeeUrl: string) => {
   return {
     ...contexts,
     // TODO: エンドポイントつくる
-    id: new URL(`https://${env.UNSOCIAL_HOST}/follows/${follow.id}`),
+    id: `https://${env.UNSOCIAL_HOST}/follows/${follow.id}`,
     type: "Follow",
-    actor: new URL(
-      `https://${env.UNSOCIAL_HOST}/users/${follow.followerId}/activity`,
-    ),
-    object: new URL(followeeUrl),
-  };
+    actor: `https://${env.UNSOCIAL_HOST}/users/${follow.followerId}/activity`,
+    object: followeeUrl,
+  } satisfies apSchemaService.FollowActivity;
 };
 
 const convertLike = (like: Like, noteUrl: string): AP.Like => {
