@@ -68,7 +68,7 @@ const isSuccess = (
   );
 };
 
-const table = async (branchBaseUrl: string) => {
+const table = async (url: string) => {
   const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
   const mainScores = getScorePerFile(
     await fetchJson(
@@ -96,10 +96,8 @@ const table = async (branchBaseUrl: string) => {
     const diffText = isSuccess(rawPrScore, rawMainScore)
       ? ":white_check_mark:"
       : ":x:";
-    const filenameText = `[${filename}](${branchBaseUrl}#${filename.replace(
-      "app/",
-      "mutant/",
-    )})`;
+    const hash = filename.replace("app/", "mutant/");
+    const filenameText = `[${filename}](${url}#${hash})`;
     comment.push(
       `| ${filenameText} | ${rawMainScore} → ${rawPrScore} | ${diffText} |`,
     );
@@ -112,11 +110,11 @@ const table = async (branchBaseUrl: string) => {
 const main = async () => {
   const baseUrl = process.env.MUTATION_TEST_S3_BASEURL;
   const branchName = process.env.BRANCH_NAME;
-  const mutationUrl = `${baseUrl}/${branchName}/mutation.html`;
+  const url = `${baseUrl}/${branchName}/mutation.html`;
 
-  const text = `${await table(mutationUrl)}
+  const text = `${await table(url)}
   
-  :gun: [mutation.html (${branchName})](${mutationUrl})
+  :gun: [mutation.html (${branchName})](${url})
   :gun: [mutation.html (main)](${baseUrl}/main/mutation.html)
   :page_facing_up: [stryker.txt](${baseUrl}/${branchName}/stryker.txt)`;
 
