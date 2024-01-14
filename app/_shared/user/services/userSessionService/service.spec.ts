@@ -30,7 +30,7 @@ describe("userSessionService", () => {
     });
     test("ログイン中でなく、redirect:trueなら/authにリダイレクトする", async () => {
       mockedGetServerSession.mockResolvedValueOnce(null);
-      expect(() =>
+      await expect(() =>
         userSessionService.getUserId({ redirect: true }),
       ).rejects.toThrow("NEXT_REDIRECT");
     });
@@ -63,7 +63,7 @@ describe("userSessionService", () => {
     });
     test("ログイン中でなく、redirect:trueなら/authにリダイレクトする", async () => {
       mockedGetServerSession.mockResolvedValueOnce(null);
-      expect(() =>
+      await expect(() =>
         userSessionService.getUser({ redirect: true }),
       ).rejects.toThrow("NEXT_REDIRECT");
     });
@@ -74,7 +74,7 @@ describe("userSessionService", () => {
         },
       });
       mockedPrisma.user.findUnique.mockResolvedValueOnce(null);
-      expect(() =>
+      await expect(() =>
         userSessionService.getUser({ redirect: true }),
       ).rejects.toThrow("NEXT_REDIRECT");
     });
