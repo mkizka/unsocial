@@ -53,15 +53,13 @@ export const handle: InboxHandler = async (activity, actorUser) => {
         "https://w3id.org/security/v1",
       ],
       // TODO: いいの？
-      id: new URL(`https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`),
+      id: `https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`,
       type: "Accept",
-      actor: new URL(
-        `https://${env.UNSOCIAL_HOST}/users/${followee.id}/activity`,
-      ),
+      actor: `https://${env.UNSOCIAL_HOST}/users/${followee.id}/activity`,
       object: {
         ...parsedFollow.data,
-        actor: new URL(parsedFollow.data.actor),
-        object: new URL(parsedFollow.data.object),
+        actor: parsedFollow.data.actor,
+        object: parsedFollow.data.object,
       },
     },
   });

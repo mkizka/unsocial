@@ -19,6 +19,7 @@ describe("inboxLikeService", () => {
     // arrange
     const activity = {
       type: "Like",
+      id: "https://remote.example.com/like/foobar",
       actor: "https://remote.example.com/u/dummy_remote",
       object: "https://myhost.example.com/notes/note_local",
       content: "👍",
@@ -27,7 +28,7 @@ describe("inboxLikeService", () => {
     // act
     const error = await handle(activity, dummyRemoteUser as never);
     // assert
-
+    expect(error).toBeUndefined();
     expect(mockedPrisma.like.create).toHaveBeenCalledWith({
       data: {
         noteId: "note_local",
@@ -35,12 +36,12 @@ describe("inboxLikeService", () => {
         content: activity.content,
       },
     });
-    expect(error).toBeUndefined();
   });
   test("contentがなければ👍をデフォルトにする", async () => {
     // arrange
     const activity = {
       type: "Like",
+      id: "https://remote.example.com/like/foobar",
       actor: "https://remote.example.com/u/dummy_remote",
       object: "https://myhost.example.com/notes/note_local",
     };
@@ -48,6 +49,7 @@ describe("inboxLikeService", () => {
     // act
     const error = await handle(activity, dummyRemoteUser as never);
     // assert
+    expect(error).toBeUndefined();
     expect(mockedPrisma.like.create).toHaveBeenCalledWith({
       data: {
         noteId: "note_local",
@@ -55,12 +57,12 @@ describe("inboxLikeService", () => {
         content: "👍",
       },
     });
-    expect(error).toBeUndefined();
   });
   test("不正なactivityならエラーを返す", async () => {
     // arrange
     const activity = {
       type: "Like",
+      id: "https://remote.example.com/like/foobar",
       actor: "https://remote.example.com/u/dummy_remote",
       // objectがない
     };
@@ -74,6 +76,7 @@ describe("inboxLikeService", () => {
     // arrange
     const activity = {
       type: "Like",
+      id: "https://remote.example.com/like/foobar",
       actor: "https://remote.example.com/u/dummy_remote",
       object: "https://myhost.example.com/foo/note_local",
       content: "👍",
