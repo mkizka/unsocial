@@ -1,5 +1,4 @@
 import type { Credential } from "@prisma/client";
-import type { AP } from "activitypub-core-types";
 import { captor } from "jest-mock-extended";
 import { http, HttpResponse } from "msw";
 
@@ -42,7 +41,7 @@ describe("apRelayService", () => {
         activity: {
           type: "Dummy",
           actor: "https://myhost.example.com/users/dummy_other_userId/activity",
-        } as unknown as AP.Activity,
+        },
       });
       // assert
       expect(headerFn).toHaveBeenCalledWith(headerCaptor);
