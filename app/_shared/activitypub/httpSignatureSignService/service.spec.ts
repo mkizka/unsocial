@@ -1,6 +1,6 @@
 import { mockedKeys } from "@/_shared/mocks/keys";
 
-import { signHeaders } from "./sign";
+import { httpSignatureSignService } from ".";
 
 afterAll(() => {
   jest.useRealTimers();
@@ -20,7 +20,7 @@ describe("signActivity", () => {
       // arrange
       jest.useFakeTimers().setSystemTime(new Date(date));
       // act
-      const headers = signHeaders({
+      const headers = httpSignatureSignService.signHeaders({
         signer: {
           id: "userId",
           privateKey: mockedKeys.privateKey,
