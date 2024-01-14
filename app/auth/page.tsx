@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
 import { systemUserService } from "@/_shared/user/services/systemUserService";
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { prisma } from "@/_shared/utils/prisma";
-import { getSessionUser } from "@/_shared/utils/session";
 
 import { AuthForm } from "./_components/AuthForm";
 
@@ -17,7 +17,7 @@ const getFormType = async () => {
 export default async function SigninPage() {
   // 開発環境などでCookieが無効になることがあるため、
   // セッションからユーザーIDが取れることだけでなくDBにユーザーが存在することも確認する
-  const user = await getSessionUser();
+  const user = await userSessionService.getSessionUser();
   if (user) {
     return redirect("/");
   }

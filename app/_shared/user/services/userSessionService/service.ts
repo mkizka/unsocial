@@ -6,10 +6,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { cache } from "react";
 
 import { userAuthService } from "@/_shared/user/services/userAuthService";
-
-import { env } from "./env";
-import { createLogger } from "./logger";
-import { prisma } from "./prisma";
+import { env } from "@/_shared/utils/env";
+import { createLogger } from "@/_shared/utils/logger";
+import { prisma } from "@/_shared/utils/prisma";
 
 const logger = createLogger("next-auth");
 

@@ -1,5 +1,7 @@
-import { getSessionUserId } from "@/_shared/utils/session";
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 
-jest.mock("@/_shared/utils/session");
-export const mockedGetSessionUserId = jest.mocked(getSessionUserId);
+jest.mock("@/_shared/user/services/userSessionService");
+export const mockedGetSessionUserId = jest.mocked(
+  userSessionService.getSessionUserId,
+);
 // export const mockedGetSessionUser = jest.mocked(getSessionUser);

@@ -1,9 +1,9 @@
 import { NoteForm } from "./_shared/note/components/NoteForm";
 import { Timeline } from "./_shared/note/components/Timeline";
-import { getSessionUserId } from "./_shared/utils/session";
+import { userSessionService } from "./_shared/user/services/userSessionService";
 
 export default async function Page() {
-  const userId = await getSessionUserId();
+  const userId = await userSessionService.getSessionUserId();
   if (userId) {
     return (
       <>

@@ -1,10 +1,10 @@
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { prisma } from "@/_shared/utils/prisma";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 import { FollowButton as Client } from "./client";
 
 export async function FollowButton({ followeeId }: { followeeId: string }) {
-  const userId = await getSessionUserId();
+  const userId = await userSessionService.getSessionUserId();
   if (!userId) {
     return null;
   }

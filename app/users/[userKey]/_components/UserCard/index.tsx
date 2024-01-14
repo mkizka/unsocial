@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 
 import { UserIcon } from "@/_shared/user/components/UserIcon";
 import { userFindService } from "@/_shared/user/services/userFindService";
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { env } from "@/_shared/utils/env";
 import { fullUsername } from "@/_shared/utils/fullUsername";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 import { FollowButton } from "./FollowButton";
 import { followCountService } from "./followCountService";
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export async function UserCard({ userKey }: Props) {
-  const sessionUserId = await getSessionUserId();
+  const sessionUserId = await userSessionService.getSessionUserId();
   const user = await userFindService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();

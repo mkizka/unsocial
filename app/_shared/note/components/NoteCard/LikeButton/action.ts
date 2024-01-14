@@ -2,11 +2,11 @@
 import type { Like, Note, User } from "@prisma/client";
 
 import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 const include = {
   note: {
@@ -74,7 +74,7 @@ const unlike = async (userId: string, like: LikeWithNote) => {
 };
 
 export async function action(data: { noteId: string; content: string }) {
-  const userId = await getSessionUserId({ redirect: true });
+  const userId = await userSessionService.getSessionUserId({ redirect: true });
   const existingLike = await prisma.like.findFirst({
     where: {
       userId,

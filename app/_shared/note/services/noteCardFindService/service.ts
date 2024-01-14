@@ -1,8 +1,8 @@
 import type { Note } from "@prisma/client";
 import { cache } from "react";
 
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { fullUsername } from "@/_shared/utils/fullUsername";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 import { noteCardFindRepository } from "./noteCardFindRepository";
 
@@ -55,7 +55,7 @@ export const findUniqueNoteCard = cache(async (id: string) => {
   if (!note) {
     return null;
   }
-  const userId = await getSessionUserId();
+  const userId = await userSessionService.getSessionUserId();
   return formatNoteWithReplies(note, userId);
 });
 
@@ -65,7 +65,7 @@ export const findManyNoteCards = cache(
     if (notes.length === 0) {
       return [];
     }
-    const userId = await getSessionUserId();
+    const userId = await userSessionService.getSessionUserId();
     return notes.map((note) => formatNoteWithReplies(note, userId));
   },
 );
