@@ -74,7 +74,7 @@ const unlike = async (userId: string, like: LikeWithNote) => {
 };
 
 export async function action(data: { noteId: string; content: string }) {
-  const userId = await userSessionService.getSessionUserId({ redirect: true });
+  const userId = await userSessionService.getUserId({ redirect: true });
   const existingLike = await prisma.like.findFirst({
     where: {
       userId,

@@ -16,7 +16,7 @@ type Props = {
 };
 
 export async function UserCard({ userKey }: Props) {
-  const sessionUserId = await userSessionService.getSessionUserId();
+  const sessionUserId = await userSessionService.getUserId();
   const user = await userFindService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();

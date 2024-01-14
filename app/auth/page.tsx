@@ -17,7 +17,7 @@ const getFormType = async () => {
 export default async function SigninPage() {
   // 開発環境などでCookieが無効になることがあるため、
   // セッションからユーザーIDが取れることだけでなくDBにユーザーが存在することも確認する
-  const user = await userSessionService.getSessionUser();
+  const user = await userSessionService.getUser();
   if (user) {
     return redirect("/");
   }

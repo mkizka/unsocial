@@ -20,18 +20,18 @@ describe("userSessionService", () => {
           id: "userId",
         },
       });
-      const sessionUserId = await userSessionService.getSessionUserId();
+      const sessionUserId = await userSessionService.getUserId();
       expect(sessionUserId).toBe("userId");
     });
     test("ログイン中でなければnullを返す", async () => {
       mockedGetServerSession.mockResolvedValueOnce(null);
-      const sessionUserId = await userSessionService.getSessionUserId();
+      const sessionUserId = await userSessionService.getUserId();
       expect(sessionUserId).toBe(null);
     });
     test("ログイン中でなく、redirect:trueなら/authにリダイレクトする", async () => {
       mockedGetServerSession.mockResolvedValueOnce(null);
       expect(() =>
-        userSessionService.getSessionUserId({ redirect: true }),
+        userSessionService.getUserId({ redirect: true }),
       ).rejects.toThrow("NEXT_REDIRECT");
     });
   });
@@ -43,12 +43,12 @@ describe("userSessionService", () => {
         },
       });
       mockedPrisma.user.findUnique.mockResolvedValueOnce(dummyUser);
-      const sessionUser = await userSessionService.getSessionUser();
+      const sessionUser = await userSessionService.getUser();
       expect(sessionUser).toEqual(dummyUser);
     });
     test("ログイン中でなければnullを返す", async () => {
       mockedGetServerSession.mockResolvedValueOnce(null);
-      const sessionUser = await userSessionService.getSessionUser();
+      const sessionUser = await userSessionService.getUser();
       expect(sessionUser).toBe(null);
     });
     test("ログイン中でもユーザーが存在しなければnullを返す", async () => {
@@ -58,13 +58,13 @@ describe("userSessionService", () => {
         },
       });
       mockedPrisma.user.findUnique.mockResolvedValueOnce(null);
-      const sessionUser = await userSessionService.getSessionUser();
+      const sessionUser = await userSessionService.getUser();
       expect(sessionUser).toBe(null);
     });
     test("ログイン中でなく、redirect:trueなら/authにリダイレクトする", async () => {
       mockedGetServerSession.mockResolvedValueOnce(null);
       expect(() =>
-        userSessionService.getSessionUser({ redirect: true }),
+        userSessionService.getUser({ redirect: true }),
       ).rejects.toThrow("NEXT_REDIRECT");
     });
     test("ログイン中でユーザーが存在せず、redirect:trueなら/authにリダイレクトする", async () => {
@@ -75,7 +75,7 @@ describe("userSessionService", () => {
       });
       mockedPrisma.user.findUnique.mockResolvedValueOnce(null);
       expect(() =>
-        userSessionService.getSessionUser({ redirect: true }),
+        userSessionService.getUser({ redirect: true }),
       ).rejects.toThrow("NEXT_REDIRECT");
     });
   });

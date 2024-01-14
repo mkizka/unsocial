@@ -6,7 +6,7 @@ import { getIconPath } from "@/_shared/utils/icon";
 import { Dropdown } from "./Dropdown";
 
 export async function UserMenu() {
-  const user = await userSessionService.getSessionUser();
+  const user = await userSessionService.getUser();
   if (user) {
     return (
       <Dropdown

@@ -12,7 +12,7 @@ const formSchame = z.object({
 });
 
 export async function action(formData: FormData) {
-  const userId = await userSessionService.getSessionUserId({ redirect: true });
+  const userId = await userSessionService.getUserId({ redirect: true });
   const parsedForm = formSchame.safeParse(
     Object.fromEntries(formData.entries()),
   );

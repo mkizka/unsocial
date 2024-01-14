@@ -75,7 +75,7 @@ const unfollow = async (userId: string, followeeId: string) => {
 };
 
 export async function action({ followeeId }: { followeeId: string }) {
-  const userId = await userSessionService.getSessionUserId({ redirect: true });
+  const userId = await userSessionService.getUserId({ redirect: true });
   const existingFollow = await prisma.follow.findFirst({
     where: {
       followeeId: followeeId,

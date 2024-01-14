@@ -55,7 +55,7 @@ export const findUniqueNoteCard = cache(async (id: string) => {
   if (!note) {
     return null;
   }
-  const userId = await userSessionService.getSessionUserId();
+  const userId = await userSessionService.getUserId();
   return formatNoteWithReplies(note, userId);
 });
 
@@ -65,7 +65,7 @@ export const findManyNoteCards = cache(
     if (notes.length === 0) {
       return [];
     }
-    const userId = await userSessionService.getSessionUserId();
+    const userId = await userSessionService.getUserId();
     return notes.map((note) => formatNoteWithReplies(note, userId));
   },
 );

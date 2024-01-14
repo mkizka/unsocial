@@ -4,7 +4,7 @@ import { prisma } from "@/_shared/utils/prisma";
 import { FollowButton as Client } from "./client";
 
 export async function FollowButton({ followeeId }: { followeeId: string }) {
-  const userId = await userSessionService.getSessionUserId();
+  const userId = await userSessionService.getUserId();
   if (!userId) {
     return null;
   }

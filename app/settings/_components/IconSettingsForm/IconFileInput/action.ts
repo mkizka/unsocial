@@ -18,7 +18,7 @@ export const action = async (_: State, formData: FormData): Promise<State> => {
       message: "アイコンが選択されていません",
     };
   }
-  const userId = await userSessionService.getSessionUserId({ redirect: true });
+  const userId = await userSessionService.getUserId({ redirect: true });
   await updateUserIconService.update(userId, icon);
   revalidatePath("/settings");
   return {

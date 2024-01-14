@@ -16,7 +16,7 @@ export const action: ServerAction = async (_, formData) => {
   }
   await prisma.user.update({
     where: {
-      id: await userSessionService.getSessionUserId({ redirect: true }),
+      id: await userSessionService.getUserId({ redirect: true }),
     },
     data: {
       name,

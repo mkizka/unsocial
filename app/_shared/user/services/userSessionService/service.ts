@@ -68,7 +68,7 @@ const getSessionUserOrNull = cache(async () => {
   return sessionUser ?? null;
 });
 
-export const getSessionUserId = async <T extends boolean>(params?: {
+export const getUserId = async <T extends boolean>(params?: {
   redirect: T;
 }) => {
   const userId = await getSessionUserIdOrNull();
@@ -78,9 +78,7 @@ export const getSessionUserId = async <T extends boolean>(params?: {
   return userId as T extends true ? string : string | null;
 };
 
-export const getSessionUser = async <T extends boolean>(params?: {
-  redirect: T;
-}) => {
+export const getUser = async <T extends boolean>(params?: { redirect: T }) => {
   const user = await getSessionUserOrNull();
   if (!user && params?.redirect) {
     redirect("/auth");
