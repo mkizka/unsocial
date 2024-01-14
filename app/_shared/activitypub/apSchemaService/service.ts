@@ -85,20 +85,29 @@ export const personSchema = z.object({
   type: z.union([z.literal("Person"), z.literal("Service")]),
   id: z.string().url(),
   name: z.string().nullable(),
+  summary: z.string().nullable(),
+  url: z.string().url(),
   preferredUsername: z.string().min(1),
   endpoints: z
     .object({
       sharedInbox: z.string().url().optional(),
     })
     .optional(),
+  following: z.string().url(),
+  followers: z.string().url(),
+  featured: z.string().url().optional(),
   inbox: z.string().url(),
+  outbox: z.string().url().optional(),
   icon: z
     .object({
+      type: z.literal("Image"),
       url: z.string(),
     })
     .nullable()
     .optional(),
   publicKey: z.object({
+    id: z.string().url(),
+    owner: z.string().url(),
     publicKeyPem: z.string(),
   }),
 });

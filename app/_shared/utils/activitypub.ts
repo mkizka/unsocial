@@ -1,6 +1,8 @@
 import type { Follow, Like, Note, User } from "@prisma/client";
 import type { AP } from "activitypub-core-types";
 
+import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
+
 import { env } from "./env";
 import { getIconPath } from "./icon";
 
@@ -16,26 +18,22 @@ const contexts = {
   ],
 };
 
-const convertUser = (
-  user: User,
-): AP.Person & {
-  featured?: AP.OrderedCollectionReference;
-} => {
+const convertUser = (user: User) => {
   const userAddress = `https://${env.UNSOCIAL_HOST}/users/${user.id}`;
   const activityAddress = `${userAddress}/activity`;
   return {
     ...contexts,
-    id: new URL(activityAddress),
+    id: activityAddress,
     type: "Person",
-    inbox: new URL(`${userAddress}/inbox`),
-    outbox: new URL(`${userAddress}/outbox`),
-    following: new URL(`${userAddress}/followees`),
-    followers: new URL(`${userAddress}/followers`),
-    featured: new URL(`${userAddress}/collections/featured`),
+    inbox: `${userAddress}/inbox`,
+    outbox: `${userAddress}/outbox`,
+    following: `${userAddress}/followees`,
+    followers: `${userAddress}/followers`,
+    featured: `${userAddress}/collections/featured`,
     preferredUsername: user.preferredUsername,
     name: user.name || "",
     summary: user.summary || "",
-    url: new URL(userAddress),
+    url: userAddress,
     publicKey: {
       id: `${activityAddress}#main-key`,
       owner: activityAddress,
@@ -43,12 +41,9 @@ const convertUser = (
     },
     icon: {
       type: "Image",
-      url: new URL(
-        getIconPath(user.iconHash, 128),
-        `https://${env.UNSOCIAL_HOST}`,
-      ),
-    } as AP.Image, // なぜか型エラーになる,
-  };
+      url: `https://${env.UNSOCIAL_HOST}` + getIconPath(user.iconHash, 128),
+    },
+  } satisfies apSchemaService.PersonActivity;
 };
 
 type Reply = Pick<Note, "id" | "url"> & {
