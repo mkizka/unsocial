@@ -9,10 +9,10 @@ export function SignOutForm() {
       <button
         className="text-accent"
         data-testid="login-button"
-        onClick={() => {
+        onClick={async () => {
           const ok = confirm("ログアウトしますか？");
           if (!ok) return;
-          signOut({ redirect: false }).then(() => {
+          await signOut({ redirect: false }).then(() => {
             location.href = "/";
           });
         }}

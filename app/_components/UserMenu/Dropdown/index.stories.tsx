@@ -34,8 +34,12 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByTestId("user-menu__button"));
-    expect(canvas.queryByTestId("user-menu__dropdown")).toBeInTheDocument();
+    await expect(
+      canvas.queryByTestId("user-menu__dropdown"),
+    ).toBeInTheDocument();
     await userEvent.click(canvas.getByTestId("user-menu__backdrop"));
-    expect(canvas.queryByTestId("user-menu__dropdown")).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByTestId("user-menu__dropdown"),
+    ).not.toBeInTheDocument();
   },
 };

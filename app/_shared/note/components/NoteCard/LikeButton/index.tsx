@@ -15,9 +15,9 @@ export function LikeButton({ isLiked: initialState, onClick }: Props) {
     <button
       data-testid="like-button"
       type="button"
-      onClick={() => {
+      onClick={async () => {
         setIsLiked((prev) => !prev);
-        onClick();
+        await onClick();
       }}
       className="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark"
     >
