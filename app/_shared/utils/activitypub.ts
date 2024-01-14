@@ -50,59 +50,51 @@ type Reply = Pick<Note, "id" | "url"> & {
   user: Pick<User, "actorUrl">;
 };
 
-type NoteWithReply = Pick<Note, "id" | "userId" | "content" | "createdAt"> & {
+type NoteWithReply = Pick<Note, "id" | "userId" | "content" | "publishedAt"> & {
   // TODO: users/[userKey]/collections/featured を修正する時にオプショナルを外す
   replyTo?: Reply | null;
 };
 
-const convertNote = (note: NoteWithReply): AP.Note => {
+const convertNote = (note: NoteWithReply) => {
   const userAddress = `https://${env.UNSOCIAL_HOST}/users/${note.userId}`;
   const inReplyTo = (() => {
     if (note.replyTo) {
-      if (note.replyTo.url) return new URL(note.replyTo.url);
-      return new URL(
-        `https://${env.UNSOCIAL_HOST}/notes/${note.replyTo.id}/activity`,
-      );
+      if (note.replyTo.url) return note.replyTo.url;
+      return `https://${env.UNSOCIAL_HOST}/notes/${note.replyTo.id}/activity`;
     }
     return undefined;
   })();
   const cc = (() => {
     if (note.replyTo?.user.actorUrl) {
-      return [
-        new URL(`${userAddress}/followers`),
-        new URL(note.replyTo.user.actorUrl),
-      ];
+      return [`${userAddress}/followers`, note.replyTo.user.actorUrl];
     }
-    return [new URL(`${userAddress}/followers`)];
+    return [`${userAddress}/followers`];
   })();
   return {
     ...contexts,
-    id: new URL(`https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`),
+    id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`,
     type: "Note",
     inReplyTo,
     content: note.content,
-    attributedTo: new URL(`${userAddress}/activity`),
-    published: note.createdAt,
-    to: [new URL("https://www.w3.org/ns/activitystreams#Public")],
+    attributedTo: `${userAddress}/activity`,
+    published: note.publishedAt.toISOString(),
+    to: ["https://www.w3.org/ns/activitystreams#Public"],
     cc,
-  };
+  } satisfies apSchemaService.NoteActivity;
 };
 
-const convertCreate = (note: NoteWithReply): AP.Create => {
+const convertCreate = (note: NoteWithReply) => {
   const object = convertNote(note);
   return {
     ...contexts,
-    // TODO: エンドポイントつくる
-    id: new URL(`https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`),
+    id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`,
     type: "Create",
-    actor: new URL(
-      `https://${env.UNSOCIAL_HOST}/users/${note.userId}/activity`,
-    ),
+    actor: `https://${env.UNSOCIAL_HOST}/users/${note.userId}/activity`,
     published: object.published,
     to: object.to,
     cc: object.cc,
     object,
-  };
+  } satisfies apSchemaService.CreateActivity;
 };
 
 const convertDelete = (note: Pick<Note, "id" | "userId">): AP.Delete => {

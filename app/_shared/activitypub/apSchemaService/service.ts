@@ -75,6 +75,8 @@ export const noteSchema = z.object({
       }),
     )
     .optional(),
+  to: z.array(z.string().url()).optional(),
+  cc: z.array(z.string().url()).optional(),
   published: z.string().datetime(),
 });
 
@@ -145,7 +147,11 @@ export type WebFinger = z.infer<typeof webFingerSchema>;
 
 export const createSchema = z.object({
   type: z.literal("Create"),
+  id: z.string().url().optional(),
   actor: z.string().url(),
+  published: z.string().datetime().optional(),
+  to: z.array(z.string().url()).optional(),
+  cc: z.array(z.string().url()).optional(),
   object: noteSchema,
 });
 
