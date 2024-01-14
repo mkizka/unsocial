@@ -77,7 +77,7 @@ const table = async (baseUrl: string, branchName: string) => {
     ...new Set([...Object.keys(prScores), ...Object.keys(mainScores)]),
   ].sort();
   const comment = [
-    "| ファイル名 | 変化 | :white_check_mark: |",
+    "| ファイル名 | スコア | :white_check_mark: |",
     "| --- | --- | --- |",
   ];
   for (const filename of filenames) {
