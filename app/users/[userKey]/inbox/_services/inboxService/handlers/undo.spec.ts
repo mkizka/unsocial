@@ -16,9 +16,11 @@ describe("inboxUndoService", () => {
     // arrange
     const activity = {
       type: "Undo",
+      id: "https://remote.example.com/undo/foobar",
       actor: "https://remote.example.com/u/dummy_remote",
       object: {
         type: "Follow",
+        id: "https://remote.example.com/follows/foobar",
         actor: "https://remote.example.com/u/dummy_remote",
         object: "https://myhost.example.com/users/dummyidlocal",
       },
@@ -27,6 +29,7 @@ describe("inboxUndoService", () => {
     // act
     const error = await handle(activity, dummyRemoteUser as never);
     // assert
+    expect(error).toBeUndefined();
     expect(mockedPrisma.user.findUnique).toHaveBeenCalledWith({
       where: {
         actorUrl: "https://myhost.example.com/users/dummyidlocal",
@@ -40,6 +43,5 @@ describe("inboxUndoService", () => {
         },
       },
     });
-    expect(error).toBeUndefined();
   });
 });

@@ -1,5 +1,4 @@
 import type { Follow, Like, Note, User } from "@prisma/client";
-import type { AP } from "activitypub-core-types";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 
@@ -13,8 +12,8 @@ const required = <T>(value: T | null | undefined) => {
 
 const contexts = {
   "@context": [
-    new URL("https://www.w3.org/ns/activitystreams"),
-    new URL("https://w3id.org/security/v1"),
+    "https://www.w3.org/ns/activitystreams",
+    "https://w3id.org/security/v1",
   ],
 };
 
@@ -120,29 +119,29 @@ const convertFollow = (follow: Follow, followeeUrl: string) => {
   } satisfies apSchemaService.FollowActivity;
 };
 
-const convertLike = (like: Like, noteUrl: string): AP.Like => {
+const convertLike = (like: Like, noteUrl: string) => {
   return {
     ...contexts,
     type: "Like",
     // TODO: エンドポイントつくる
-    id: new URL(`https://${env.UNSOCIAL_HOST}/likes/${like.id}`),
-    actor: new URL(
-      `https://${env.UNSOCIAL_HOST}/users/${like.userId}/activity`,
-    ),
-    object: new URL(noteUrl),
+    id: `https://${env.UNSOCIAL_HOST}/likes/${like.id}`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${like.userId}/activity`,
+    object: noteUrl,
     content: "👍",
-  };
+  } satisfies apSchemaService.LikeActivity;
 };
 
-const convertUndo = (like: AP.Like | AP.Follow): AP.Undo => {
+const convertUndo = (
+  like: apSchemaService.LikeActivity | apSchemaService.FollowActivity,
+) => {
   const { "@context": _, ...object } = like;
   return {
     ...contexts,
     type: "Undo",
-    id: new URL("?undo=true", like.id!),
+    id: `${like.id}?undo=true`,
     actor: like.actor,
     object,
-  };
+  } satisfies apSchemaService.UndoActivity;
 };
 
 export const activityStreams = {

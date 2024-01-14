@@ -2,7 +2,11 @@ import { z } from "zod";
 
 import { env } from "@/_shared/utils/env";
 
-export const acceptSchema = z.object({
+const activitySchema = z.object({
+  "@context": z.union([z.string(), z.array(z.string())]).optional(),
+});
+
+export const acceptSchema = activitySchema.extend({
   type: z.literal("Accept"),
   object: z.object({
     type: z.literal("Follow"),
@@ -13,7 +17,7 @@ export const acceptSchema = z.object({
 
 export type AcceptActivity = z.infer<typeof acceptSchema>;
 
-export const announceSchema = z.object({
+export const announceSchema = activitySchema.extend({
   type: z.literal("Announce"),
   id: z.string().url(),
   object: z.string(),
@@ -22,7 +26,7 @@ export const announceSchema = z.object({
 
 export type AnnounceActivity = z.infer<typeof announceSchema>;
 
-export const deleteSchema = z.object({
+export const deleteSchema = activitySchema.extend({
   type: z.literal("Delete"),
   actor: z.string().url(),
   object: z.object({
@@ -33,9 +37,9 @@ export const deleteSchema = z.object({
 
 export type DeleteActivity = z.infer<typeof deleteSchema>;
 
-export const followSchema = z.object({
+export const followSchema = activitySchema.extend({
   type: z.literal("Follow"),
-  id: z.string().url().optional(),
+  id: z.string().url(),
   actor: z.string().url(),
   object: z
     .string()
@@ -47,8 +51,9 @@ export const followSchema = z.object({
 
 export type FollowActivity = z.infer<typeof followSchema>;
 
-export const likeSchema = z.object({
+export const likeSchema = activitySchema.extend({
   type: z.literal("Like"),
+  id: z.string().url(),
   actor: z.string().url(),
   object: z
     .string()
@@ -61,7 +66,7 @@ export const likeSchema = z.object({
 
 export type LikeActivity = z.infer<typeof likeSchema>;
 
-export const noteSchema = z.object({
+export const noteSchema = activitySchema.extend({
   type: z.literal("Note"),
   id: z.string().url(),
   content: z.string(),
@@ -83,7 +88,7 @@ export const noteSchema = z.object({
 
 export type NoteActivity = z.infer<typeof noteSchema>;
 
-export const personSchema = z.object({
+export const personSchema = activitySchema.extend({
   // MisskeyではServiceが使われることもある
   type: z.union([z.literal("Person"), z.literal("Service")]),
   id: z.string().url(),
@@ -117,8 +122,9 @@ export const personSchema = z.object({
 
 export type PersonActivity = z.infer<typeof personSchema>;
 
-export const undoSchema = z.object({
+export const undoSchema = activitySchema.extend({
   type: z.literal("Undo"),
+  id: z.string().url(),
   actor: z.string().url(),
   object: z.union([followSchema, likeSchema]),
 });
@@ -146,7 +152,7 @@ export const webFingerSchema = z.object({
 
 export type WebFinger = z.infer<typeof webFingerSchema>;
 
-export const createSchema = z.object({
+export const createSchema = activitySchema.extend({
   type: z.literal("Create"),
   id: z.string().url().optional(),
   actor: z.string().url(),
