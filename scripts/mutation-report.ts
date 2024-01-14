@@ -1,6 +1,6 @@
 #!/usr/bin/env -S pnpm tsx
+import child_process from "child_process";
 import fs from "fs";
-
 type Result = {
   files: {
     [key: string]: {
@@ -68,10 +68,10 @@ const isSuccess = (
   );
 };
 
-const table = async (baseUrl: string) => {
+const table = async (baseUrl: string, branchName: string) => {
   const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
   const mainScores = getScorePerFile(
-    await fetchJson(`${baseUrl}/mutation.json`),
+    await fetchJson(`${baseUrl}/main/mutation.json`),
   );
   const filenames = [
     ...new Set([...Object.keys(prScores), ...Object.keys(mainScores)]),
@@ -95,7 +95,7 @@ const table = async (baseUrl: string) => {
       ? ":white_check_mark:"
       : ":x:";
     const hash = filename.replace("app/", "mutant/");
-    const filenameText = `[${filename}](${baseUrl}/mutation.html#${hash})`;
+    const filenameText = `[${filename}](${baseUrl}/${branchName}/mutation.html#${hash})`;
     comment.push(
       `| ${filenameText} | ${rawMainScore} → ${rawPrScore} | ${diffText} |`,
     );
@@ -106,15 +106,18 @@ const table = async (baseUrl: string) => {
 };
 
 const main = async () => {
-  const s3BaseUrl = process.env.MUTATION_TEST_S3_BASEURL;
-  const branchName = process.env.BRANCH_NAME;
-  const baseUrl = `${s3BaseUrl}/${branchName}`;
+  const baseUrl =
+    process.env.MUTATION_TEST_S3_BASEURL ??
+    "https://minio-s3.paas.mkizka.dev/unsocial-gha/mutation-test";
+  const branchName =
+    process.env.BRANCH_NAME ??
+    child_process.execSync("git branch --show-current").toString().trim();
 
-  const text = `${await table(baseUrl)}
+  const text = `${await table(baseUrl, branchName)}
   
-  :gun: [mutation.html (${branchName})](${baseUrl}/mutation.html)
-  :gun: [mutation.html (main)](${s3BaseUrl}/main/mutation.html)
-  :page_facing_up: [stryker.txt](${s3BaseUrl}/${branchName}/stryker.txt)`;
+  :gun: [mutation.html (${branchName})](${baseUrl}/${branchName}/mutation.html)
+  :gun: [mutation.html (main)](${baseUrl}/main/mutation.html)
+  :page_facing_up: [stryker.txt](${baseUrl}/${branchName}/stryker.txt)`;
 
   console.log(text);
 };
