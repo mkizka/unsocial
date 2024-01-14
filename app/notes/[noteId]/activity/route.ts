@@ -13,7 +13,7 @@ export async function GET(
       id: true,
       userId: true,
       content: true,
-      createdAt: true,
+      publishedAt: true,
     },
     where: { id: noteId },
   });

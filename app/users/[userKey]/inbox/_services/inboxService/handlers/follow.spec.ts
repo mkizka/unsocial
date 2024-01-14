@@ -28,6 +28,7 @@ describe("inboxFollowService", () => {
     // arrange
     const activity = {
       type: "Follow",
+      id: "https://remote.example.com/follows/foobar",
       actor: "https://remote.example.com/u/dummy_remote",
       object: "https://myhost.example.com/users/dummyidlocal/activity",
     };
@@ -36,6 +37,7 @@ describe("inboxFollowService", () => {
     // act
     const error = await handle(activity, dummyRemoteUser as never);
     // assert
+    expect(error).toBeUndefined();
     expect(mockedPrisma.user.findUnique).toHaveBeenCalledWith({
       where: {
         id: "dummyidlocal",
@@ -56,16 +58,11 @@ describe("inboxFollowService", () => {
           "https://www.w3.org/ns/activitystreams",
           "https://w3id.org/security/v1",
         ],
-        id: expect.any(URL),
+        id: expect.any(String),
         type: "Accept",
-        actor: new URL(activity.object),
-        object: {
-          type: "Follow",
-          actor: new URL(activity.actor),
-          object: new URL(activity.object),
-        },
+        actor: activity.object,
+        object: activity,
       },
     });
-    expect(error).toBeUndefined();
   });
 });

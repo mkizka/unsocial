@@ -1,6 +1,7 @@
 import type { User } from "@prisma/client";
 import { http, HttpResponse } from "msw";
 
+import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { mockedPrisma } from "@/_shared/mocks/prisma";
 import { server } from "@/_shared/mocks/server";
 import { NotOKError } from "@/_shared/utils/fetcher";
@@ -91,13 +92,19 @@ const restSuccessActor = http.get(dummyUser.actorUrl, () =>
   HttpResponse.json({
     type: "Person",
     id: dummyUser.actorUrl,
+    url: dummyUser.actorUrl,
     name: dummyCreatedUser.name,
+    summary: "",
     preferredUsername: dummyUser.preferredUsername,
     inbox: `${dummyUser.actorUrl}/inbox`,
+    following: `${dummyUser.actorUrl}/followees`,
+    followers: `${dummyUser.actorUrl}/followers`,
     publicKey: {
+      id: `${dummyUser.actorUrl}#main-key`,
+      owner: dummyUser.actorUrl,
       publicKeyPem: dummyUser.publicKey,
     },
-  }),
+  } satisfies apSchemaService.PersonActivity),
 );
 
 const restInvalidActor = http.get(dummyUser.actorUrl, () =>

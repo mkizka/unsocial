@@ -31,6 +31,7 @@ describe("NoteForm/action", () => {
       },
       attachments: [],
       likes: [],
+      publishedAt: new Date("2023-01-01T00:00:00.000Z"),
     } as unknown as Note);
     // act
     const form = new FormData();
