@@ -1,4 +1,4 @@
-import { TextInput } from "@/_shared/ui/components/TextInput";
+import { TextInput } from "@/_shared/ui/TextInput";
 
 type Props = {
   action: "signUp" | "signIn";

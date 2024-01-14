@@ -8,7 +8,7 @@ import type { User } from "@prisma/client";
 import Link from "next/link";
 import { useState } from "react";
 
-import { Card } from "@/_shared/ui/components/Card";
+import { Card } from "@/_shared/ui/Card";
 
 type Props = {
   user: Pick<User, "name" | "preferredUsername">;

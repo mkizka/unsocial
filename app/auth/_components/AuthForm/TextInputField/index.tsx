@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 
-import { TextInput } from "@/_shared/ui/components/TextInput";
+import { TextInput } from "@/_shared/ui/TextInput";
 
 type Props = {
   name: string;

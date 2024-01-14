@@ -1,8 +1,8 @@
 import type { User } from "@prisma/client";
 import type { NextRequest } from "next/server";
 
+import { httpSignatureVerifyService } from "@/_shared/activitypub/httpSignatureVerifyService";
 import { userFindService } from "@/_shared/user/services/userFindService";
-import { verifyRequest } from "@/_shared/utils/httpSignature/verify";
 
 import { handle as accept } from "./handlers/accept";
 import { handle as create } from "./handlers/create";
@@ -33,8 +33,10 @@ jest.mock("@/_shared/user/services/userFindService");
 const mockedUserService = jest.mocked(userFindService);
 mockedUserService.findOrFetchUserByActor.mockResolvedValue(dummyUser);
 
-jest.mock("@/_shared/utils/httpSignature/verify");
-const mockedVerifyActivity = jest.mocked(verifyRequest);
+jest.mock("@/_shared/activitypub/httpSignatureVerifyService");
+const mockedVerifyActivity = jest.mocked(
+  httpSignatureVerifyService.verifyRequest,
+);
 mockedVerifyActivity.mockResolvedValue({ isValid: true });
 
 describe("ユーザーinbox", () => {

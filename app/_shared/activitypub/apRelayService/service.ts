@@ -1,8 +1,8 @@
 import { cache } from "react";
 
-import { fetcher } from "./fetcher";
-import type { SignActivityParams } from "./httpSignature/sign";
-import { prisma } from "./prisma";
+import type { httpSignatureSignService } from "@/_shared/activitypub/httpSignatureSignService";
+import { fetcher } from "@/_shared/utils/fetcher";
+import { prisma } from "@/_shared/utils/prisma";
 
 const isNotNull = <T>(value: T): value is NonNullable<T> => value !== null;
 
@@ -18,7 +18,9 @@ const getUniqueInboxUrls = async (userId: string) => {
   return [...new Set(followerInboxes)].map((inboxUrl) => new URL(inboxUrl));
 };
 
-const relayActivity = async (params: Omit<SignActivityParams, "method">) => {
+const relayActivity = async (
+  params: Omit<httpSignatureSignService.SignActivityParams, "method">,
+) => {
   await fetcher(params.inboxUrl, {
     method: "POST",
     body: params.body,

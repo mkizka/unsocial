@@ -1,6 +1,6 @@
 {
   "name": "unsocial",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "private": true,
   "packageManager": "pnpm@8.14.1",
   "engines": {

@@ -1,12 +1,12 @@
 import Link from "next/link";
 
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { getIconPath } from "@/_shared/utils/icon";
-import { getSessionUser } from "@/_shared/utils/session";
 
 import { Dropdown } from "./Dropdown";
 
 export async function UserMenu() {
-  const user = await getSessionUser();
+  const user = await userSessionService.getUser();
   if (user) {
     return (
       <Dropdown

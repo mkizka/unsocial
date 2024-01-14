@@ -1,9 +1,9 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { prisma } from "@/_shared/utils/prisma";
 import type { ServerAction } from "@/_shared/utils/serverAction";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 export const action: ServerAction = async (_, formData) => {
   const name = formData.get("name");
@@ -16,7 +16,7 @@ export const action: ServerAction = async (_, formData) => {
   }
   await prisma.user.update({
     where: {
-      id: await getSessionUserId({ redirect: true }),
+      id: await userSessionService.getUserId({ redirect: true }),
     },
     data: {
       name,

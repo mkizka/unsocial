@@ -1,8 +1,7 @@
 import crypto from "crypto";
 
+import { createDigest, textOf } from "@/_shared/activitypub/httpSignatureUtils";
 import { env } from "@/_shared/utils/env";
-
-import { createDigest, textOf } from "./utils";
 
 const getSignature = (textToSign: string, privateKey: string) => {
   const sig = crypto.createSign("sha256").update(textToSign).end();
