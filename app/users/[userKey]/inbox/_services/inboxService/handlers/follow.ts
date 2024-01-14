@@ -1,11 +1,11 @@
 import crypto from "crypto";
 
+import { apReplayService } from "@/_shared/activitypub/apRelayService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
-import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
 
 import {
   ActivitySchemaValidationError,
@@ -44,7 +44,7 @@ export const handle: InboxHandler = async (activity, actorUser) => {
       status: "ACCEPTED",
     },
   });
-  await relayActivityToInboxUrl({
+  await apReplayService.relayActivityToInboxUrl({
     userId: followee.id,
     inboxUrl: new URL(actorUser.inboxUrl),
     activity: {

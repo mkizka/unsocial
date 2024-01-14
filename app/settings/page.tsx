@@ -1,4 +1,4 @@
-import { Card } from "@/_shared/ui/components/Card";
+import { Card } from "@/_shared/ui/Card";
 
 import { IconSettingsForm } from "./_components/IconSettingsForm";
 import { ProfileFormContainer } from "./_components/ProfileFormContainer";

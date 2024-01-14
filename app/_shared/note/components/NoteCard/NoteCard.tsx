@@ -2,7 +2,7 @@ import Link from "next/link";
 import sanitizeHtml from "sanitize-html";
 
 import type { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
-import { Card } from "@/_shared/ui/components/Card";
+import { Card } from "@/_shared/ui/Card";
 import { UserIcon } from "@/_shared/user/components/UserIcon";
 import { cn } from "@/_shared/utils/cn";
 

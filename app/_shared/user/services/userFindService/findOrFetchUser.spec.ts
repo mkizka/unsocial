@@ -1,8 +1,8 @@
 import type { User } from "@prisma/client";
 import { http, HttpResponse } from "msw";
 
-import { mockedPrisma } from "@/_mocks/prisma";
-import { server } from "@/_mocks/server";
+import { mockedPrisma } from "@/_shared/mocks/prisma";
+import { server } from "@/_shared/mocks/server";
 import { NotOKError } from "@/_shared/utils/fetcher";
 
 import {

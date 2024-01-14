@@ -1,13 +1,10 @@
 "use server";
 import { z } from "zod";
 
+import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { prisma } from "@/_shared/utils/prisma";
-import {
-  relayActivityToFollowers,
-  relayActivityToInboxUrl,
-} from "@/_shared/utils/relayActivity";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 const formSchame = z.object({
   content: z.string().min(1).max(280),
@@ -15,7 +12,7 @@ const formSchame = z.object({
 });
 
 export async function action(formData: FormData) {
-  const userId = await getSessionUserId({ redirect: true });
+  const userId = await userSessionService.getUserId({ redirect: true });
   const parsedForm = formSchame.safeParse(
     Object.fromEntries(formData.entries()),
   );
@@ -38,13 +35,13 @@ export async function action(formData: FormData) {
     },
   });
   if (note.replyTo?.user.inboxUrl) {
-    await relayActivityToInboxUrl({
+    await apReplayService.relayActivityToInboxUrl({
       userId,
       activity: activityStreams.create(note),
       inboxUrl: new URL(note.replyTo.user.inboxUrl),
     });
   }
-  await relayActivityToFollowers({
+  await apReplayService.relayActivityToFollowers({
     userId,
     activity: activityStreams.create(note),
   });

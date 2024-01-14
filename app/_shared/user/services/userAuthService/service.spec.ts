@@ -1,7 +1,7 @@
 import type { User } from "@prisma/client";
 import bcryptjs from "bcryptjs";
 
-import { mockedPrisma } from "@/_mocks/prisma";
+import { mockedPrisma } from "@/_shared/mocks/prisma";
 
 import { userAuthService } from ".";
 

@@ -1,7 +1,7 @@
 import type { Note } from "@prisma/client";
 
-import { mockedPrisma } from "@/_mocks/prisma";
-import { mockedGetSessionUserId } from "@/_mocks/session";
+import { mockedPrisma } from "@/_shared/mocks/prisma";
+import { mockedGetSessionUserId } from "@/_shared/mocks/session";
 
 import { noteCardFindService } from ".";
 

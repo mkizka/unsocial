@@ -2,9 +2,9 @@
 import type { User } from "@prisma/client";
 import { useFormState } from "react-dom";
 
-import { Card } from "@/_shared/ui/components/Card";
-import { SubmitButton } from "@/_shared/ui/components/SubmitButton";
-import { TextInput } from "@/_shared/ui/components/TextInput";
+import { Card } from "@/_shared/ui/Card";
+import { SubmitButton } from "@/_shared/ui/SubmitButton";
+import { TextInput } from "@/_shared/ui/TextInput";
 import { cn } from "@/_shared/utils/cn";
 import type { ServerAction } from "@/_shared/utils/serverAction";
 

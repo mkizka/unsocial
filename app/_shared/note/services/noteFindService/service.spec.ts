@@ -1,9 +1,9 @@
 import type { Note, User } from "@prisma/client";
 import { http, HttpResponse } from "msw";
 
-import { mockedKeys } from "@/_mocks/keys";
-import { mockedPrisma } from "@/_mocks/prisma";
-import { server } from "@/_mocks/server";
+import { mockedKeys } from "@/_shared/mocks/keys";
+import { mockedPrisma } from "@/_shared/mocks/prisma";
+import { server } from "@/_shared/mocks/server";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { NotOKError } from "@/_shared/utils/fetcher";

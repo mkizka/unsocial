@@ -3,14 +3,11 @@ import type { AP } from "activitypub-core-types";
 import { captor } from "jest-mock-extended";
 import { http, HttpResponse } from "msw";
 
-import { mockedKeys } from "@/_mocks/keys";
-import { mockedPrisma } from "@/_mocks/prisma";
-import { server } from "@/_mocks/server";
+import { mockedKeys } from "@/_shared/mocks/keys";
+import { mockedPrisma } from "@/_shared/mocks/prisma";
+import { server } from "@/_shared/mocks/server";
 
-import {
-  relayActivityToFollowers,
-  relayActivityToInboxUrl,
-} from "./relayActivity";
+import { apReplayService } from ".";
 
 jest.useFakeTimers();
 jest.setSystemTime(new Date("2020-01-01T00:00:00Z"));
@@ -19,7 +16,7 @@ jest.mock("@/../package.json", () => ({
   version: "1.2.3",
 }));
 
-describe("relayActivity", () => {
+describe("apRelayService", () => {
   describe("relayActivityToInboxUrl", () => {
     test("正常系", async () => {
       // arrange
@@ -39,7 +36,7 @@ describe("relayActivity", () => {
         }),
       );
       // act
-      await relayActivityToInboxUrl({
+      await apReplayService.relayActivityToInboxUrl({
         userId: dummyUserId,
         inboxUrl: new URL("https://remote.example.com/inbox"),
         activity: {
@@ -99,7 +96,7 @@ describe("relayActivity", () => {
       );
       server.use(inbox1, inbox2);
       // act
-      await relayActivityToFollowers({
+      await apReplayService.relayActivityToFollowers({
         userId: dummyUserId,
         // @ts-ignore
         activity: { type: "Dummy" },

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`relayActivity relayActivityToFollowers 正常系 1`] = `
+exports[`apRelayService relayActivityToFollowers 正常系 1`] = `
 {
   "accept": "application/activity+json",
   "content-type": "application/activity+json",
@@ -12,7 +12,7 @@ exports[`relayActivity relayActivityToFollowers 正常系 1`] = `
 }
 `;
 
-exports[`relayActivity relayActivityToFollowers 正常系 2`] = `
+exports[`apRelayService relayActivityToFollowers 正常系 2`] = `
 {
   "accept": "application/activity+json",
   "content-type": "application/activity+json",
@@ -24,7 +24,7 @@ exports[`relayActivity relayActivityToFollowers 正常系 2`] = `
 }
 `;
 
-exports[`relayActivity relayActivityToInboxUrl 正常系 1`] = `
+exports[`apRelayService relayActivityToInboxUrl 正常系 1`] = `
 {
   "accept": "application/activity+json",
   "content-type": "application/activity+json",

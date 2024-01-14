@@ -2,9 +2,8 @@ import crypto from "crypto";
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 
+import { createDigest, textOf } from "@/_shared/activitypub/httpSignatureUtils";
 import { userFindService } from "@/_shared/user/services/userFindService";
-
-import { createDigest, textOf } from "./utils";
 
 const signatureSchema = z.object({
   keyId: z.string().url(),

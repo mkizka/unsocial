@@ -26,7 +26,7 @@ jobs:
       - run: pnpm _test:mutation:run --fileLogLevel trace
       - name: upload-reports
         run: |
-          mv stryker.log reports/mutation/
+          mv stryker.log reports/mutation/stryker.txt
           aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/mutation "s3://${{ env.UPLOAD_DIR }}/${{ env.BRANCH_NAME }}" --recursive
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
