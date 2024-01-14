@@ -3,7 +3,19 @@ import { z } from "zod";
 import { env } from "@/_shared/utils/env";
 
 const activitySchema = z.object({
-  "@context": z.union([z.string(), z.array(z.string())]).optional(),
+  "@context": z
+    .union([
+      // "https://w3id.org/security/v1"など
+      z.string().url(),
+      z.array(
+        z.union([
+          z.string().url(),
+          // "toot": "http://joinmastodon.org/ns#"など
+          z.record(z.string()),
+        ]),
+      ),
+    ])
+    .optional(),
 });
 
 export const acceptSchema = activitySchema.extend({
