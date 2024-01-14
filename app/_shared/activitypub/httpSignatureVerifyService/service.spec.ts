@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 import { mockedKeys } from "@/_shared/mocks/keys";
 import { mockedPrisma } from "@/_shared/mocks/prisma";
 
+import { httpSignatureVerifyService } from ".";
 import {
   expectedHeader,
   invalidDateHeader,
@@ -17,7 +18,6 @@ import {
   unSupportedAlgorithmHeader,
   unSupportedDigestHeader,
 } from "./__fixtures__/headers";
-import { verifyRequest } from "./verify";
 
 const dummyActivity = {
   type: "Dummy",
@@ -68,7 +68,8 @@ describe("verifyActivity", () => {
         clone: () => dummyRequest,
       } as unknown as NextRequest;
       // act
-      const actual = await verifyRequest(dummyRequest);
+      const actual =
+        await httpSignatureVerifyService.verifyRequest(dummyRequest);
       // assert
       expect(actual).toEqual({ isValid, reason });
     },

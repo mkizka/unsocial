@@ -1,8 +1,8 @@
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 
+import { httpSignatureVerifyService } from "@/_shared/activitypub/httpSignatureVerifyService";
 import { userFindService } from "@/_shared/user/services/userFindService";
-import { verifyRequest } from "@/_shared/utils/httpSignature/verify";
 import { createLogger } from "@/_shared/utils/logger";
 
 import * as inboxAcceptService from "./handlers/accept";
@@ -44,7 +44,7 @@ export const perform = async (request: NextRequest) => {
   logger.debug("Activityを受信: " + JSON.stringify(activity));
 
   // 1. ヘッダーの署名を検証する
-  const validation = await verifyRequest(request);
+  const validation = await httpSignatureVerifyService.verifyRequest(request);
   if (!validation.isValid) {
     return new BadActivityRequestError(
       "リクエストヘッダの署名が不正でした: " + validation.reason,
