@@ -68,12 +68,10 @@ const isSuccess = (
   );
 };
 
-const table = async (url: string) => {
+const table = async (baseUrl: string) => {
   const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
   const mainScores = getScorePerFile(
-    await fetchJson(
-      "https://minio-s3.paas.mkizka.dev/unsocial-gha/mutation-test/main/mutation.json",
-    ),
+    await fetchJson(`${baseUrl}/mutation.json`),
   );
   const filenames = [
     ...new Set([...Object.keys(prScores), ...Object.keys(mainScores)]),
@@ -97,7 +95,7 @@ const table = async (url: string) => {
       ? ":white_check_mark:"
       : ":x:";
     const hash = filename.replace("app/", "mutant/");
-    const filenameText = `[${filename}](${url}#${hash})`;
+    const filenameText = `[${filename}](${baseUrl}/mutation.html#${hash})`;
     comment.push(
       `| ${filenameText} | ${rawMainScore} → ${rawPrScore} | ${diffText} |`,
     );
@@ -108,15 +106,15 @@ const table = async (url: string) => {
 };
 
 const main = async () => {
-  const baseUrl = process.env.MUTATION_TEST_S3_BASEURL;
+  const s3BaseUrl = process.env.MUTATION_TEST_S3_BASEURL;
   const branchName = process.env.BRANCH_NAME;
-  const url = `${baseUrl}/${branchName}/mutation.html`;
+  const baseUrl = `${s3BaseUrl}/${branchName}`;
 
-  const text = `${await table(url)}
+  const text = `${await table(baseUrl)}
   
-  :gun: [mutation.html (${branchName})](${url})
-  :gun: [mutation.html (main)](${baseUrl}/main/mutation.html)
-  :page_facing_up: [stryker.txt](${baseUrl}/${branchName}/stryker.txt)`;
+  :gun: [mutation.html (${branchName})](${baseUrl}/mutation.html)
+  :gun: [mutation.html (main)](${s3BaseUrl}/main/mutation.html)
+  :page_facing_up: [stryker.txt](${s3BaseUrl}/${branchName}/stryker.txt)`;
 
   console.log(text);
 };
