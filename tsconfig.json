@@ -17,12 +17,12 @@
     "noUncheckedIndexedAccess": true,
     "plugins": [
       {
-        "name": "next"
-      }
+        "name": "next",
+      },
     ],
     "paths": {
-      "@/*": ["./app/*"]
-    }
+      "@/*": ["./app/*"],
+    },
   },
   "include": [
     "next-env.d.ts",
@@ -33,7 +33,7 @@
     "**/*.js",
     "**/*.mjs",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
