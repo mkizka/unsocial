@@ -1,4 +1,4 @@
-import type { Note } from "@prisma/client";
+import type { Note, Prisma } from "@prisma/client";
 
 import { mockedPrisma } from "@/_shared/mocks/prisma";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
@@ -35,38 +35,31 @@ const expectNote = (note: noteCardFindService.NoteCard | null) => {
   expect(note?.user.url).toBe("/@preferredUsername@remote.example.com");
 };
 
-const include = {
+const includeNoteCard = {
   user: true,
   attachments: true,
-  replyTo: {
-    include: {
-      user: true,
-      attachments: true,
-      likes: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  },
-  replies: {
-    include: {
-      user: true,
-      attachments: true,
-      replies: true,
-      likes: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  },
   likes: {
     include: {
       user: true,
     },
   },
-};
+} satisfies Prisma.NoteInclude;
+
+const includeNoteCardWithReplies = {
+  ...includeNoteCard,
+  quote: {
+    include: includeNoteCard,
+  },
+  replyTo: {
+    include: includeNoteCard,
+  },
+  replies: {
+    include: {
+      ...includeNoteCard,
+      replies: true,
+    },
+  },
+} satisfies Prisma.NoteInclude;
 
 describe("noteService", () => {
   describe("noteCardFindService.findUniqueNoteCard", () => {
@@ -82,7 +75,7 @@ describe("noteService", () => {
       expectNote(note);
       expect(mockedPrisma.note.findUnique).toBeCalledWith({
         where: { id: "noteId" },
-        include,
+        include: includeNoteCardWithReplies,
       });
     });
     test("自分の投稿でない", async () => {
@@ -149,7 +142,7 @@ describe("noteService", () => {
       // assert
       expectNote(note!);
       expect(mockedPrisma.note.findMany).toBeCalledWith({
-        include,
+        include: includeNoteCardWithReplies,
         take: 10,
         where: {
           publishedAt: {

@@ -6,12 +6,23 @@ import { fullUsername } from "@/_shared/utils/fullUsername";
 
 import { noteCardFindRepository } from "./noteCardFindRepository";
 
-const formatNote = (
-  note: Omit<noteCardFindRepository.NoteCard, "replies" | "replyTo">,
-  userId: string | null,
-) => {
+const formatNote = ({
+  note,
+  userId,
+  quotedBy,
+}: {
+  note: Omit<noteCardFindRepository.NoteCard, "replies" | "replyTo" | "quote">;
+  userId: string | null;
+  quotedBy?: noteCardFindRepository.NoteCard["user"];
+}) => {
   return {
     ...note,
+    quotedBy: quotedBy
+      ? {
+          ...quotedBy,
+          url: `/${fullUsername(quotedBy)}`,
+        }
+      : null,
     attachmentUrls: note.attachments.map(
       (attachment) => `/documents/${attachment.id}/image.webp`,
     ),
@@ -40,11 +51,22 @@ const formatNoteWithReplies = (
   note: noteCardFindRepository.NoteCard,
   userId: string | null,
 ): NoteCardWithReplies => {
+  if (note.quote) {
+    return {
+      ...formatNote({
+        note: note.quote,
+        quotedBy: note.user,
+        userId,
+      }),
+      replyTo: null,
+      replies: [],
+    };
+  }
   return {
-    ...formatNote(note, userId),
-    replyTo: note.replyTo && formatNote(note.replyTo, userId),
+    ...formatNote({ note, userId }),
+    replyTo: note.replyTo && formatNote({ note: note.replyTo, userId }),
     replies: note.replies.map((reply) => ({
-      ...formatNote(reply, userId),
+      ...formatNote({ note: reply, userId }),
       replies: reply.replies,
     })),
   };
