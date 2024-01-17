@@ -64,7 +64,7 @@ const formatNoteWithReplies = (
   }
   return {
     ...formatNote({ note, userId }),
-    replyTo: note.replyTo && formatNote({ note: note.replyTo, userId }),
+    replyTo: note.replyTo ? formatNote({ note: note.replyTo, userId }) : null,
     replies: note.replies.map((reply) => ({
       ...formatNote({ note: reply, userId }),
       replies: reply.replies,

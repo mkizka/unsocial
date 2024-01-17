@@ -23,18 +23,6 @@ const dummyNote = {
 const dummySince = new Date("2023-01-01T00:00:00.000Z");
 const dummyUntil = new Date("2023-01-01T00:00:00.000Z");
 
-const expectNote = (note: noteCardFindService.NoteCard | null) => {
-  expect(note).toMatchObject(dummyNote);
-  expect(note?.isMine).toBe(true);
-  expect(note?.isLiked).toBe(true);
-  expect(note?.url).toBe("/notes/noteId");
-  expect(note?.user).toMatchObject(dummyNote.user);
-  expect(note?.user.displayUsername).toBe(
-    "@preferredUsername@remote.example.com",
-  );
-  expect(note?.user.url).toBe("/@preferredUsername@remote.example.com");
-};
-
 const includeNoteCard = {
   user: true,
   attachments: true,
@@ -61,8 +49,8 @@ const includeNoteCardWithReplies = {
   },
 } satisfies Prisma.NoteInclude;
 
-describe("noteService", () => {
-  describe("noteCardFindService.findUniqueNoteCard", () => {
+describe("noteCardFindService", () => {
+  describe("findUniqueNoteCard", () => {
     test("自分の投稿かついいね済み", async () => {
       // arrange
       mockedPrisma.note.findUnique.mockResolvedValueOnce(
@@ -72,7 +60,7 @@ describe("noteService", () => {
       // act
       const note = await noteCardFindService.findUniqueNoteCard("noteId");
       // assert
-      expectNote(note);
+      expect(note).toMatchSnapshot();
       expect(mockedPrisma.note.findUnique).toBeCalledWith({
         where: { id: "noteId" },
         include: includeNoteCardWithReplies,
@@ -140,7 +128,7 @@ describe("noteService", () => {
         count: 10,
       });
       // assert
-      expectNote(note!);
+      expect(note).toMatchSnapshot();
       expect(mockedPrisma.note.findMany).toBeCalledWith({
         include: includeNoteCardWithReplies,
         take: 10,
@@ -153,6 +141,28 @@ describe("noteService", () => {
         orderBy: {
           publishedAt: "desc",
         },
+      });
+    });
+    test("quoteがある場合はquotedByを追加", async () => {
+      // arrange
+      mockedPrisma.note.findMany.mockResolvedValueOnce([
+        {
+          ...dummyNote,
+          quote: dummyNote,
+        },
+      ] as unknown as Note[]);
+      mockedGetSessionUserId.mockResolvedValueOnce("userId");
+      // act
+      const [note] = await noteCardFindService.findManyNoteCards({
+        since: dummySince,
+        until: dummyUntil,
+        count: 10,
+      });
+      // assert
+      expect(note?.quotedBy).toEqual({
+        host: "remote.example.com",
+        preferredUsername: "preferredUsername",
+        url: "/@preferredUsername@remote.example.com",
       });
     });
     test("ノートが無かった場合はgetSessionUserIdOrNullを呼ばない", async () => {
