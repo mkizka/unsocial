@@ -3,32 +3,9 @@ import { cache } from "react";
 
 import { prisma } from "@/_shared/utils/prisma";
 
-const includeForNoteCard = {
+const includeNoteCard = {
   user: true,
   attachments: true,
-  replyTo: {
-    include: {
-      user: true,
-      attachments: true,
-      likes: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  },
-  replies: {
-    include: {
-      user: true,
-      attachments: true,
-      replies: true,
-      likes: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  },
   likes: {
     include: {
       user: true,
@@ -36,10 +13,26 @@ const includeForNoteCard = {
   },
 } satisfies Prisma.NoteInclude;
 
+const includeNoteCardWithReplies = {
+  ...includeNoteCard,
+  quote: {
+    include: includeNoteCard,
+  },
+  replyTo: {
+    include: includeNoteCard,
+  },
+  replies: {
+    include: {
+      ...includeNoteCard,
+      replies: true,
+    },
+  },
+} satisfies Prisma.NoteInclude;
+
 export const findUniqueNoteCard = cache((id: string) => {
   return prisma.note.findUnique({
     where: { id },
-    include: includeForNoteCard,
+    include: includeNoteCardWithReplies,
   });
 });
 
@@ -63,7 +56,7 @@ export const findManyNoteCards = cache((params: FindManyParams) => {
         lt: params.until,
       },
     },
-    include: includeForNoteCard,
+    include: includeNoteCardWithReplies,
     take: params.count,
     orderBy: {
       publishedAt: "desc",
