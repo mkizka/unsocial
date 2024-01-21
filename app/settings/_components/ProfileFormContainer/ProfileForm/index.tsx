@@ -24,7 +24,6 @@ export function ProfileForm({ user, onSubmit }: Props) {
             表示名
           </label>
           <TextInput
-            className="w-9/12"
             id="name"
             name="name"
             required

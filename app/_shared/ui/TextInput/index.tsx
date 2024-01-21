@@ -1,32 +1,26 @@
+import type { InputHTMLAttributes } from "react";
+import { forwardRef } from "react";
+
 import { cn } from "@/_shared/utils/cn";
 
-// https://zenn.dev/andynuma/articles/c7f6d6587c116d
-type TextInputProps<T extends React.ElementType> = {
-  as?: T;
-};
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
 
-type Props<T extends React.ElementType> = TextInputProps<T> &
-  Omit<React.ComponentProps<T>, keyof TextInputProps<T>>;
+export const TextInput = forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, ...props }, ref) => {
+    return (
+      <input
+        className={cn(
+          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+          "file:border-0 file:bg-transparent file:text-sm file:font-medium",
+          "placeholder:text-muted-foreground",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "disabled:cursor-not-allowed disabled:opacity-50",
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+);
 
-export function TextInput<T extends "input" | "textarea" = "input">({
-  className,
-  as,
-  ...props
-}: Props<T>) {
-  const TagName = as || "input";
-  return (
-    // @ts-expect-error
-    <TagName
-      className={cn(
-        {
-          "form-input": TagName === "input",
-          "form-textarea": TagName === "textarea",
-        },
-        "bg-primary-light block w-full rounded",
-        "focus:ring-primary-dark focus:focus:ring focus:ring-opacity-50",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+TextInput.displayName = "TextInput";
