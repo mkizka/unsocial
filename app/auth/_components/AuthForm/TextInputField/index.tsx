@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 
-import { TextInput } from "@/_shared/ui/TextInput";
+import { Input } from "@/_shared/ui/Input";
 
 type Props = {
   name: string;
@@ -13,7 +13,7 @@ export function TextInputField({ name, label, required, autoComplete }: Props) {
   return (
     <div className="space-y-2">
       <label htmlFor={name}>{label}</label>
-      <TextInput
+      <Input
         id={name}
         name={name}
         data-testid={`text-input-${name}`}

@@ -1,4 +1,4 @@
-import { TextInput } from "@/_shared/ui/TextInput";
+import { Input } from "@/_shared/ui/Input";
 
 type Props = {
   action: "signUp" | "signIn";
@@ -15,7 +15,7 @@ export function PasswordInputField({ action }: Props) {
           </a>
         )}
       </div>
-      <TextInput
+      <Input
         id="password"
         name="password"
         type="password"

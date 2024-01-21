@@ -3,9 +3,9 @@ import type { User } from "@prisma/client";
 import { useFormState } from "react-dom";
 
 import { Card } from "@/_shared/ui/Card";
+import { Input } from "@/_shared/ui/Input";
 import { SubmitButton } from "@/_shared/ui/SubmitButton";
 import { Textarea } from "@/_shared/ui/Textarea";
-import { TextInput } from "@/_shared/ui/TextInput";
 import { cn } from "@/_shared/utils/cn";
 import type { ServerAction } from "@/_shared/utils/serverAction";
 
@@ -23,7 +23,7 @@ export function ProfileForm({ user, onSubmit }: Props) {
           <label className="block font-bold" htmlFor="name">
             表示名
           </label>
-          <TextInput
+          <Input
             id="name"
             name="name"
             required

@@ -2,13 +2,14 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/_shared/utils/cn";
 
-type Props = ComponentProps<"textarea">;
+type Props = ComponentProps<"input">;
 
-export function Textarea({ className, ...props }: Props) {
+export function Input({ className, ...props }: Props) {
   return (
-    <textarea
+    <input
       className={cn(
-        "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+        "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
+        "file:border-0 file:bg-transparent file:text-sm file:font-medium",
         "placeholder:text-muted-foreground",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         "disabled:cursor-not-allowed disabled:opacity-50",

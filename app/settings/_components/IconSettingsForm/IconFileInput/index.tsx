@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 
 import { Card } from "@/_shared/ui/Card";
+import { Input } from "@/_shared/ui/Input";
 import { SubmitButton } from "@/_shared/ui/SubmitButton";
 import { cn } from "@/_shared/utils/cn";
 import { getIconPath } from "@/_shared/utils/icon";
@@ -35,7 +36,7 @@ export function IconFileInput({ iconHash }: Props) {
         <label className="block font-bold" htmlFor="icon">
           アイコン
         </label>
-        <input
+        <Input
           id="icon"
           name="icon"
           type="file"
