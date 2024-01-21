@@ -4,5 +4,10 @@
     "healthcheckPath": "/health",
     "healthcheckTimeout": 30,
     "restartPolicyType": "NEVER"
+  },
+  "environments": {
+    "pr": {
+      "sleepApplication": true
+    }
   }
 }
