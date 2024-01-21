@@ -9,7 +9,7 @@ exports[`_components/SearchModal Default play-test 1`] = `
        stroke="currentColor"
        aria-hidden="true"
        data-slot="icon"
-       class="h-7 w-7 text-dark hover:opacity-70"
+       class="h-7 w-7 hover:opacity-70"
   >
     <path stroke-linecap="round"
           stroke-linejoin="round"
@@ -29,7 +29,7 @@ exports[`_components/SearchModal InvalidInput play-test 1`] = `
        stroke="currentColor"
        aria-hidden="true"
        data-slot="icon"
-       class="h-7 w-7 text-dark hover:opacity-70"
+       class="h-7 w-7 hover:opacity-70"
   >
     <path stroke-linecap="round"
           stroke-linejoin="round"
@@ -43,7 +43,7 @@ exports[`_components/SearchModal InvalidInput play-test 1`] = `
     <form action="javascript:throw new Error('A React form was unexpectedly submitted. If you called form.submit() manually, consider using form.requestSubmit() instead. If you\\'re trying to use event.stopPropagation() in a submit event handler, consider also calling event.preventDefault().')"
           class="flex h-full w-full items-center justify-between px-4"
     >
-      <input class="h-full w-full bg-transparent text-dark focus:outline-none"
+      <input class="h-full w-full bg-transparent focus:outline-none"
              placeholder="@name@example.com"
              data-testid="search-modal__input"
              type="text"
@@ -60,7 +60,7 @@ exports[`_components/SearchModal InvalidInput play-test 1`] = `
              stroke="currentColor"
              aria-hidden="true"
              data-slot="icon"
-             class="h-7 w-7 text-dark hover:opacity-70"
+             class="h-7 w-7 hover:opacity-70"
         >
           <path stroke-linecap="round"
                 stroke-linejoin="round"

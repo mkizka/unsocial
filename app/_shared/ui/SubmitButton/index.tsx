@@ -14,7 +14,7 @@ export function SubmitButton({ children, className, ...props }: Props) {
     <button
       className={cn(
         "relative flex items-center justify-center",
-        "rounded bg-secondary px-3 py-1.5 text-light shadow",
+        "rounded bg-secondary px-3 py-1.5 shadow",
         "hover:bg-secondary-dark disabled:bg-secondary-dark",
         className,
       )}

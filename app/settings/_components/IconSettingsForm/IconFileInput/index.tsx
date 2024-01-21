@@ -57,7 +57,7 @@ export function IconFileInput({ iconHash }: Props) {
             ></img>
           </div>
           <div className="pt-16">
-            <ArrowRightIcon className="mx-4 h-6 w-6" />
+            <ArrowRightIcon className="mx-4 size-6" />
           </div>
           <div className="flex flex-col items-center space-y-1">
             <p className="text-sm">新しいアイコン</p>
@@ -70,7 +70,7 @@ export function IconFileInput({ iconHash }: Props) {
                 alt=""
               ></img>
             ) : (
-              <div className="aspect-square w-[100px] bg-gray"></div>
+              <div className="aspect-square w-[100px]"></div>
             )}
           </div>
         </div>

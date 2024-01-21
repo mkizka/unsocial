@@ -10,11 +10,11 @@ export function SearchModal() {
   return (
     <>
       <button onClick={searchModal.open} data-testid="search-modal__button">
-        <MagnifyingGlassIcon className="h-7 w-7 text-dark hover:opacity-70" />
+        <MagnifyingGlassIcon className="size-7 hover:opacity-70" />
       </button>
       {searchModal.isOpen && (
         <div
-          className="fixed left-0 top-0 z-50 flex h-screen w-screen cursor-pointer justify-center bg-black bg-opacity-70 pt-20"
+          className="fixed left-0 top-0 z-50 flex cursor-pointer justify-center bg-black/70 pt-20"
           onClick={(e) => {
             // 背景をクリックしたときだけモーダルを閉じる
             if (e.target !== e.currentTarget) return;
@@ -32,22 +32,22 @@ export function SearchModal() {
                 }
                 alert("@から始まる必要があります");
               }}
-              className="flex h-full w-full items-center justify-between px-4"
+              className="flex size-full items-center justify-between px-4"
             >
               <input
                 type="text"
                 name="input"
-                className="h-full w-full bg-transparent text-dark focus:outline-none"
+                className="size-full bg-transparent focus:outline-none"
                 placeholder="@name@example.com"
                 autoFocus
                 data-testid="search-modal__input"
               />
               <button
                 type="submit"
-                className="h-7 w-7 text-dark"
+                className="size-7"
                 data-testid="search-modal__submit"
               >
-                <MagnifyingGlassIcon className="h-7 w-7 text-dark hover:opacity-70" />
+                <MagnifyingGlassIcon className="size-7 hover:opacity-70" />
               </button>
             </form>
           </div>

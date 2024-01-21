@@ -23,7 +23,7 @@ export function UserTab({ tabs, current }: Props) {
         {Object.entries(tabs).map(([key, tab]) => (
           <div
             key={tab.name}
-            className="flex h-14 w-full rounded bg-primary-light text-sm shadow"
+            className="flex h-14 w-full rounded text-sm shadow"
           >
             <Link
               href={tab.href}

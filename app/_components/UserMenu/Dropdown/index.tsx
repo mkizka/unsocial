@@ -36,7 +36,7 @@ export function Dropdown({ user, iconUrl, iconAlt }: Props) {
     },
   ];
   return (
-    <div className="relative h-9 w-9" data-testid="user-menu">
+    <div className="relative size-9" data-testid="user-menu">
       <button
         className="hover:opacity-70"
         data-testid="user-menu__button"
@@ -53,7 +53,7 @@ export function Dropdown({ user, iconUrl, iconAlt }: Props) {
       {isOpen && (
         <>
           <Card
-            className="absolute right-0 z-10 w-56 animate-fade space-y-4 drop-shadow-xl"
+            className="absolute right-0 z-10 w-56 space-y-4 drop-shadow-xl"
             data-testid="user-menu__dropdown"
           >
             {items.map(({ label, href, Icon }) => (
@@ -63,12 +63,10 @@ export function Dropdown({ user, iconUrl, iconAlt }: Props) {
                 className="flex items-center gap-2 hover:opacity-70"
                 href={href}
               >
-                <div className="flex h-5 w-5 items-center justify-center">
+                <div className="flex size-5 items-center justify-center">
                   <Icon />
                 </div>
-                <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
-                  {label}
-                </div>
+                <div className="flex-1 truncate">{label}</div>
               </Link>
             ))}
           </Card>

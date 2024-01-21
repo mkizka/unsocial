@@ -22,8 +22,8 @@ export function TextInput<T extends "input" | "textarea" = "input">({
           "form-input": TagName === "input",
           "form-textarea": TagName === "textarea",
         },
-        "block w-full rounded border-primary-dark bg-primary-light",
-        "focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50",
+        "bg-primary-light block w-full rounded",
+        "focus:ring-primary-dark focus:focus:ring focus:ring-opacity-50",
         className,
       )}
       {...props}

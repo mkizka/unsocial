@@ -25,7 +25,7 @@ export function NoteForm({ replyToId, autoFocus }: Props) {
         data-testid="note-form__textarea"
         name="content"
         placeholder="ここにテキストを入力"
-        className="h-32 w-full resize-none rounded border-primary-dark p-4 outline-none"
+        className="h-32 w-full resize-none rounded p-4 outline-none"
         autoFocus={autoFocus}
       ></textarea>
       <div className="flex justify-end">

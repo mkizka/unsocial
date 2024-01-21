@@ -53,7 +53,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             fontSans.variable,
           )}
         >
-          <header className="bg-primary-light fixed z-10 flex h-[54px] w-full items-center justify-between rounded-b-md px-4 shadow-md">
+          <header className="fixed z-10 flex h-[54px] w-full items-center justify-between rounded-b-md px-4 shadow-md">
             <SearchModal />
             <UserMenu />
           </header>

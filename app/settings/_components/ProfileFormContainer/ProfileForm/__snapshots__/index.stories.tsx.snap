@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`settings/_components/ProfileFormContainer/ProfileForm Default smoke-test 1`] = `
-<div class="w-full rounded bg-primary-light p-4 shadow">
+<div class="w-full rounded p-4 shadow">
   <form action="javascript:throw new Error('A React form was unexpectedly submitted. If you called form.submit() manually, consider using form.requestSubmit() instead. If you\\'re trying to use event.stopPropagation() in a submit event handler, consider also calling event.preventDefault().')">
     <div class="space-y-2">
       <label class="block font-bold"
@@ -9,7 +9,7 @@ exports[`settings/_components/ProfileFormContainer/ProfileForm Default smoke-tes
       >
         表示名
       </label>
-      <input class="form-input block rounded border-primary-dark bg-primary-light focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50 w-9/12"
+      <input class="form-input block rounded focus:focus:ring focus:ring-primary-dark focus:ring-opacity-50 w-9/12"
              id="name"
              required
              autocomplete="name"
@@ -21,14 +21,14 @@ exports[`settings/_components/ProfileFormContainer/ProfileForm Default smoke-tes
       >
         自己紹介
       </label>
-      <textarea class="form-textarea block rounded border-primary-dark bg-primary-light focus:border-primary-dark focus:ring focus:ring-primary-dark focus:ring-opacity-50 w-9/12"
+      <textarea class="form-textarea block rounded focus:focus:ring focus:ring-primary-dark focus:ring-opacity-50 w-9/12"
                 id="summary"
                 name="summary"
       >
         現在のsummary
       </textarea>
       <div class="flex items-center">
-        <button class="relative flex items-center justify-center rounded bg-secondary px-3 py-1.5 text-light shadow hover:bg-secondary-dark disabled:bg-secondary-dark ml-auto"
+        <button class="relative flex items-center justify-center rounded bg-secondary px-3 py-1.5 shadow hover:bg-secondary-dark disabled:bg-secondary-dark ml-auto"
                 type="submit"
                 data-testid="submit-button"
         >

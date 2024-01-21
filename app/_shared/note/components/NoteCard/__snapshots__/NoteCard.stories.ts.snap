@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
-<article class="w-full rounded bg-primary-light p-4 shadow text-prmary relative space-y-2"
+<article class="w-full rounded p-4 shadow text-prmary relative space-y-2"
          data-testid="note-card"
 >
   <div class="flex pl-[48px]">
@@ -51,7 +51,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
              stroke="currentColor"
              aria-hidden="true"
              data-slot="icon"
-             class="h-5 w-5 text-dark transition-colors hover:text-gray"
+             class="h-5 w-5 transition-colors hover:text-gray"
         >
           <path stroke-linecap="round"
                 stroke-linejoin="round"
@@ -85,7 +85,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
 `;
 
 exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
-<article class="w-full rounded bg-primary-light p-4 shadow text-prmary relative space-y-2"
+<article class="w-full rounded p-4 shadow text-prmary relative space-y-2"
          data-testid="note-card"
 >
   <div class="flex items-center pl-[48px] text-gray">
@@ -158,7 +158,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
              stroke="currentColor"
              aria-hidden="true"
              data-slot="icon"
-             class="h-5 w-5 text-dark transition-colors hover:text-gray"
+             class="h-5 w-5 transition-colors hover:text-gray"
         >
           <path stroke-linecap="round"
                 stroke-linejoin="round"

@@ -19,7 +19,7 @@ export function LikeButton({ isLiked: initialState, onClick }: Props) {
         setIsLiked((prev) => !prev);
         await onClick();
       }}
-      className="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark"
+      className="size-5 text-secondary transition-colors"
     >
       {isLiked ? <LikedIcon /> : <UnLikedIcon />}
     </button>
