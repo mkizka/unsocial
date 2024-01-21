@@ -49,7 +49,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Providers>
         <Body
           className={cn(
-            "flex min-h-screen justify-center bg-background font-sans antialiased",
+            "flex min-h-screen justify-center bg-muted font-sans antialiased",
             fontSans.variable,
           )}
         >
