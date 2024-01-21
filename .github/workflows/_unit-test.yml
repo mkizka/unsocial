@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: catchpoint/workflow-telemetry-action@v1
+        with:
+          proc_trace_chart_show: false
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
