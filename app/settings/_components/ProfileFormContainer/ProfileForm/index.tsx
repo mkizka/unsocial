@@ -42,8 +42,8 @@ export function ProfileForm({ user, onSubmit }: Props) {
             {state && (
               <p
                 className={cn({
-                  "text-accent": state.type === "error",
-                  "text-secondary": state.type === "success",
+                  "text-destructive": state.type === "error",
+                  "text-primary": state.type === "success",
                 })}
               >
                 {state.message}
