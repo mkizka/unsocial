@@ -51,7 +51,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
              stroke="currentColor"
              aria-hidden="true"
              data-slot="icon"
-             class="h-5 w-5 text-dark transition-colors hover:text-gray"
+             class="size-5 text-dark transition-colors hover:text-gray"
         >
           <path stroke-linecap="round"
                 stroke-linejoin="round"
@@ -62,7 +62,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
       </a>
       <button data-testid="like-button"
               type="button"
-              class="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark"
+              class="size-5 text-secondary transition-colors hover:text-secondary-dark"
       >
         <svg xmlns="http://www.w3.org/2000/svg"
              fill="none"
@@ -158,7 +158,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
              stroke="currentColor"
              aria-hidden="true"
              data-slot="icon"
-             class="h-5 w-5 text-dark transition-colors hover:text-gray"
+             class="size-5 text-dark transition-colors hover:text-gray"
         >
           <path stroke-linecap="round"
                 stroke-linejoin="round"
@@ -169,7 +169,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
       </a>
       <button data-testid="like-button"
               type="button"
-              class="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark"
+              class="size-5 text-secondary transition-colors hover:text-secondary-dark"
       >
         <svg xmlns="http://www.w3.org/2000/svg"
              fill="none"
