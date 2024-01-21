@@ -7,7 +7,7 @@ export function SignOutForm() {
   return (
     <Card>
       <button
-        className="text-accent"
+        className="text-destructive"
         data-testid="login-button"
         onClick={async () => {
           const ok = confirm("ログアウトしますか？");
