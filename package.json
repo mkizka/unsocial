@@ -18,6 +18,7 @@
     "all": "run-s -s _lint:fix test-u test:storybook-u",
     "build": "SKIP_ENV_VALIDATION=1 next build",
     "dev": "./scripts/dev.sh",
+    "down": "docker compose down -v --remove-orphans",
     "e2e": "playwright test",
     "lint": "./scripts/lint.sh",
     "postinstall": "prisma generate",
