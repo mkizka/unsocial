@@ -16,7 +16,7 @@ export function TextInputField({ name, label, required, autoComplete }: Props) {
       <Input
         id={name}
         name={name}
-        data-testid={`text-input-${name}`}
+        data-testid={`auth-form__input-${name}`}
         required={required ?? true}
         autoComplete={autoComplete}
       />

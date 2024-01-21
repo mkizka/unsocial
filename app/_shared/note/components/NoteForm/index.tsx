@@ -30,7 +30,7 @@ export function NoteForm({ replyToId, autoFocus }: Props) {
         autoFocus={autoFocus}
       ></Textarea>
       <div className="mt-1 flex justify-end">
-        <Button data-testid="submit-button">送信</Button>
+        <Button data-testid="note-form__button">送信</Button>
       </div>
     </Card>
   );

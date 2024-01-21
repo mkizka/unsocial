@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import type { ReactEventHandler } from "react";
 import { useRef } from "react";
@@ -25,7 +24,6 @@ const texts = {
 };
 
 export function AuthForm({ action }: Props) {
-  const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
 
   const handleSubmit: ReactEventHandler<HTMLFormElement> = async (event) => {
@@ -67,7 +65,7 @@ export function AuthForm({ action }: Props) {
       />
       <PasswordInputField action={action} />
       {/* TODO:ローディングさせる */}
-      <Button>{texts[action].button}</Button>
+      <Button data-testid="auth-form__button">{texts[action].button}</Button>
     </form>
   );
 }

@@ -19,7 +19,7 @@ export function PasswordInputField({ action }: Props) {
         id="password"
         name="password"
         type="password"
-        data-testid="password-input"
+        data-testid="auth-form__input-password"
         autoComplete={action === "signUp" ? "new-password" : "current-password"}
         required
       />
