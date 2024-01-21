@@ -17,7 +17,7 @@ export async function UserItem({ user }: Props) {
           href={`/${fullUsername(user)}`}
           className="ml-2 flex hover:underline"
         >
-          <h1 className="text-md mr-1 font-bold">{user.name}</h1>
+          <h1 className="mr-1 font-bold">{user.name}</h1>
           <div className="text-gray">{fullUsername(user)}</div>
         </a>
       </div>

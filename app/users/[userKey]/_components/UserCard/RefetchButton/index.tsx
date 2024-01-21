@@ -15,7 +15,7 @@ export function RefetchButton({ userId }: Props) {
 
   return (
     <button
-      className="flex h-6 w-6 items-center justify-center"
+      className="flex size-6 items-center justify-center"
       onClick={() => startTransition(() => action(userId))}
     >
       {isPending ? <Spinner /> : <ArrowPathIcon />}
