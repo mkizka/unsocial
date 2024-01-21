@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 
 import { Card } from "@/_shared/ui/Card";
 import { SubmitButton } from "@/_shared/ui/SubmitButton";
+import { Textarea } from "@/_shared/ui/Textarea";
 import { TextInput } from "@/_shared/ui/TextInput";
 import { cn } from "@/_shared/utils/cn";
 import type { ServerAction } from "@/_shared/utils/serverAction";
@@ -33,9 +34,7 @@ export function ProfileForm({ user, onSubmit }: Props) {
           <label className="block font-bold" htmlFor="summary">
             自己紹介
           </label>
-          <TextInput
-            as="textarea"
-            className="w-9/12"
+          <Textarea
             id="summary"
             name="summary"
             defaultValue={user.summary ?? ""}
