@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
-<article class="w-full rounded p-4 shadow text-prmary relative space-y-2"
+<article class="rounded-lg border bg-card p-4 shadow-sm text-prmary relative space-y-2"
          data-testid="note-card"
 >
   <div class="flex pl-[48px]">
@@ -23,7 +23,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
           <span class="mr-1 font-bold">
             ユーザー名
           </span>
-          <span class="text-gray">
+          <span>
             @preferredUsername@example.com
           </span>
         </a>
@@ -51,7 +51,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
              stroke="currentColor"
              aria-hidden="true"
              data-slot="icon"
-             class="h-5 w-5 transition-colors hover:text-gray"
+             class="size-5 transition-colors"
         >
           <path stroke-linecap="round"
                 stroke-linejoin="round"
@@ -62,7 +62,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
       </a>
       <button data-testid="like-button"
               type="button"
-              class="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark"
+              class="size-5 text-secondary transition-colors"
       >
         <svg xmlns="http://www.w3.org/2000/svg"
              fill="none"
@@ -85,10 +85,10 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
 `;
 
 exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
-<article class="w-full rounded p-4 shadow text-prmary relative space-y-2"
+<article class="rounded-lg border bg-card p-4 shadow-sm text-prmary relative space-y-2"
          data-testid="note-card"
 >
-  <div class="flex items-center pl-[48px] text-gray">
+  <div class="flex items-center pl-[48px]">
     <svg xmlns="http://www.w3.org/2000/svg"
          fill="none"
          viewbox="0 0 24 24"
@@ -130,7 +130,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
           <span class="mr-1 font-bold">
             ユーザー名
           </span>
-          <span class="text-gray">
+          <span>
             @preferredUsername@example.com
           </span>
         </a>
@@ -158,7 +158,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
              stroke="currentColor"
              aria-hidden="true"
              data-slot="icon"
-             class="h-5 w-5 transition-colors hover:text-gray"
+             class="size-5 transition-colors"
         >
           <path stroke-linecap="round"
                 stroke-linejoin="round"
@@ -169,7 +169,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
       </a>
       <button data-testid="like-button"
               type="button"
-              class="h-5 w-5 text-secondary transition-colors hover:text-secondary-dark"
+              class="size-5 text-secondary transition-colors"
       >
         <svg xmlns="http://www.w3.org/2000/svg"
              fill="none"

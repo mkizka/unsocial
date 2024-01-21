@@ -38,6 +38,6 @@
     // tailwindcss
     "tailwindcss/classnames-order": "error",
     "tailwindcss/no-custom-classname": "error",
-    "tailwindcss/no-contradicting-classname": "error"
+    "tailwindcss/migration-from-tailwind-2": "error"
   }
 }
