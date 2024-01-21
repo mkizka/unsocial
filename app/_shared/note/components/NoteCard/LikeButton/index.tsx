@@ -3,25 +3,34 @@ import { HeartIcon as UnLikedIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as LikedIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
+import { Button } from "@/_shared/ui/Button";
+
 type Props = {
   isLiked: boolean;
   onClick: () => Promise<void>;
 };
 
+const iconClass = "size-5 text-primary transition-colors";
+
 export function LikeButton({ isLiked: initialState, onClick }: Props) {
   // 表示上は即時反映させる
   const [isLiked, setIsLiked] = useState(initialState);
   return (
-    <button
+    <Button
+      variant="ghost"
+      size="icon"
       data-testid="like-button"
       type="button"
       onClick={async () => {
         setIsLiked((prev) => !prev);
         await onClick();
       }}
-      className="size-5 text-secondary transition-colors"
     >
-      {isLiked ? <LikedIcon /> : <UnLikedIcon />}
-    </button>
+      {isLiked ? (
+        <LikedIcon className={iconClass} />
+      ) : (
+        <UnLikedIcon className={iconClass} />
+      )}
+    </Button>
   );
 }
