@@ -49,11 +49,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Providers>
         <Body
           className={cn(
-            "flex min-h-screen justify-center bg-muted font-sans antialiased",
+            "flex min-h-screen justify-center bg-background font-sans antialiased",
             fontSans.variable,
           )}
         >
-          <header className="fixed z-10 flex h-[54px] w-full items-center justify-between rounded-b-md bg-background px-4 shadow-md">
+          <header className="fixed z-10 flex h-[54px] w-full items-center justify-between rounded-b-md bg-card px-4 shadow-md">
             <SearchModal />
             <UserMenu />
           </header>
