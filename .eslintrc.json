@@ -9,7 +9,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:eqeqeq-fix/recommended",
     "plugin:@dword-design/import-alias/recommended",
-    "plugin:tailwindcss/recommended"
+    "plugin:tailwindcss/recommended",
+    "plugin:storybook/recommended"
   ],
   "rules": {
     // next
