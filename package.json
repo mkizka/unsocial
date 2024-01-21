@@ -34,8 +34,10 @@
     "@heroicons/react": "2.1.1",
     "@prisma/client": "5.8.0",
     "bcryptjs": "2.4.3",
+    "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
     "jotai": "2.6.1",
+    "lucide-react": "0.312.0",
     "next": "14.0.5-canary.52",
     "next-auth": "4.24.5",
     "react": "18.3.0-canary-d803f519e-20231020",
@@ -45,6 +47,7 @@
     "sharp": "0.32.6",
     "swiper": "11.0.5",
     "tailwind-merge": "2.2.0",
+    "tailwindcss-animate": "1.0.7",
     "winston": "3.11.0",
     "zod": "3.22.4"
   },

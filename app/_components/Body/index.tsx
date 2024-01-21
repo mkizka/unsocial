@@ -6,9 +6,12 @@ export function Body({ children }: { children: React.ReactNode }) {
   const { isOpen } = useSearchModal();
   return (
     <body
-      className={cn("flex justify-center bg-primary text-dark", {
-        "overflow-hidden": isOpen,
-      })}
+      className={cn(
+        "text-dark flex min-h-screen justify-center bg-background antialiased",
+        {
+          "overflow-hidden": isOpen,
+        },
+      )}
     >
       {children}
     </body>

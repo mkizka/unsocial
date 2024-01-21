@@ -1,40 +1,72 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const colors = require("tailwindcss/colors");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ["class"],
   content: ["./app/**/*.tsx"],
+  prefix: "",
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
-        primary: colors.gray["300"], // 背景などサイト全体の色
-        "primary-dark": colors.gray["400"],
-        "primary-light": colors.gray["100"],
-        secondary: colors.cyan["500"], // ボタンなどの色
-        "secondary-dark": colors.cyan["600"],
-        "secondary-light": colors.cyan["400"],
-        accent: colors.rose["500"], // その他色を使いたいところ
-        "accent-dark": colors.rose["600"],
-        "accent-light": colors.rose["400"],
-        dark: colors.gray["700"], // 背景が明るい文字
-        gray: colors.gray["400"],
-        light: colors.gray["100"], // 背景が暗い文字
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
-      animation: {
-        fade: "fadeIn .1s ease-in-out",
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
-        fadeIn: {
-          from: { opacity: 0 },
-          to: { opacity: 1 },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("@tailwindcss/forms")({
-      strategy: "class",
-    }),
-  ],
+  plugins: [require("tailwindcss-animate")],
 };
