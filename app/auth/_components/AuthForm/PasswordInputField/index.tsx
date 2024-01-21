@@ -1,4 +1,4 @@
-import { Input } from "@/_shared/ui/Input";
+import { Input } from "@/_shared/shadcn/ui/input";
 
 type Props = {
   action: "signUp" | "signIn";

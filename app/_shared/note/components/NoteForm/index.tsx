@@ -1,7 +1,7 @@
 "use client";
 
+import { Textarea } from "@/_shared/shadcn/ui/textarea";
 import { Card } from "@/_shared/ui/Card";
-import { Textarea } from "@/_shared/ui/Textarea";
 
 import { action } from "./action";
 import { SubmitButton } from "./parts/SubmitButton";

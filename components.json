@@ -11,7 +11,7 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@/_shared",
+    "components": "@/_shared/shadcn",
     "utils": "@/_shared/utils/cn"
   }
 }

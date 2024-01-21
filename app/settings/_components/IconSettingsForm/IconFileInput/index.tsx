@@ -3,8 +3,8 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 
+import { Input } from "@/_shared/shadcn/ui/input";
 import { Card } from "@/_shared/ui/Card";
-import { Input } from "@/_shared/ui/Input";
 import { SubmitButton } from "@/_shared/ui/SubmitButton";
 import { cn } from "@/_shared/utils/cn";
 import { getIconPath } from "@/_shared/utils/icon";

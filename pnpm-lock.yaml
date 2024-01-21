@@ -14,6 +14,9 @@ dependencies:
   '@prisma/client':
     specifier: 5.8.0
     version: 5.8.0(prisma@5.8.0)
+  '@radix-ui/react-slot':
+    specifier: 1.0.2
+    version: 1.0.2(@types/react@18.2.47)(react@18.3.0-canary-d803f519e-20231020)
   bcryptjs:
     specifier: 2.4.3
     version: 2.4.3
@@ -3963,7 +3966,6 @@ packages:
       '@babel/runtime': 7.23.5
       '@types/react': 18.2.47
       react: 18.3.0-canary-d803f519e-20231020
-    dev: true
 
   /@radix-ui/react-context@1.0.1(@types/react@18.2.47)(react@18.3.0-canary-d803f519e-20231020):
     resolution: {integrity: sha512-ebbrdFoYTcuZ0v4wG5tedGnp9tzcV8awzsxYph7gXUyvnNLuTIcCk1q17JEbnVhXAKG9oX3KtchwiMIAYp9NLg==}
@@ -4246,7 +4248,6 @@ packages:
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.47)(react@18.3.0-canary-d803f519e-20231020)
       '@types/react': 18.2.47
       react: 18.3.0-canary-d803f519e-20231020
-    dev: true
 
   /@radix-ui/react-toggle-group@1.0.4(@types/react-dom@18.2.18)(@types/react@18.2.47)(react-dom@18.3.0-canary-d803f519e-20231020)(react@18.3.0-canary-d803f519e-20231020):
     resolution: {integrity: sha512-Uaj/M/cMyiyT9Bx6fOZO0SAG4Cls0GptBWiBmBxofmDbNVnYYoyRWj/2M/6VCi/7qcXFWnHhRUfdfZFvvkuu8A==}

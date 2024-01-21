@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 
-import { Input } from "@/_shared/ui/Input";
+import { Input } from "@/_shared/shadcn/ui/input";
 
 type Props = {
   name: string;
