@@ -1,5 +1,4 @@
 "use server";
-import { redirect } from "next/navigation";
 
 import { apReplayService } from "@/_shared/activitypub/apRelayService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
@@ -17,5 +16,4 @@ export async function action(noteId: string) {
       userId,
     }),
   });
-  redirect("/");
 }

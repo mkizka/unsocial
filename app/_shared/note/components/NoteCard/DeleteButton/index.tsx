@@ -15,8 +15,12 @@ export function DeleteButton({ onClick }: Props) {
     <Button
       variant="ghost"
       size="icon"
+      type="button"
       data-testid="delete-button"
-      onClick={() => startTransition(onClick)}
+      onClick={() => {
+        startTransition(onClick);
+        location.reload();
+      }}
     >
       {isPending ? (
         <Spinner className="size-5 text-destructive transition-colors" />
