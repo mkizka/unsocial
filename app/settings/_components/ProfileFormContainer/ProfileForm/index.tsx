@@ -2,10 +2,10 @@
 import type { User } from "@prisma/client";
 import { useFormState } from "react-dom";
 
-import { Input } from "@/_shared/shadcn/ui/input";
-import { Textarea } from "@/_shared/shadcn/ui/textarea";
 import { Card } from "@/_shared/ui/Card";
+import { Input } from "@/_shared/ui/Input";
 import { SubmitButton } from "@/_shared/ui/SubmitButton";
+import { Textarea } from "@/_shared/ui/Textarea";
 import { cn } from "@/_shared/utils/cn";
 import type { ServerAction } from "@/_shared/utils/serverAction";
 
