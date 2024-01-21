@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.head_ref == 'renovate/stryker-js-monorepo' || !startsWith(github.head_ref, 'renovate/')
     steps:
+      - uses: catchpoint/workflow-telemetry-action@v1
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
