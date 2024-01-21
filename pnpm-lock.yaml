@@ -134,8 +134,8 @@ devDependencies:
     specifier: 10.4.17
     version: 10.4.17(postcss@8.4.33)
   cli-markdown:
-    specifier: 3.2.1
-    version: 3.2.1
+    specifier: 3.2.2
+    version: 3.2.2
   dotenv-cli:
     specifier: 7.3.0
     version: 7.3.0
@@ -8149,8 +8149,8 @@ packages:
       yargs: 16.2.0
     dev: true
 
-  /cli-html@4.0.5:
-    resolution: {integrity: sha512-F9gW2NReBxHlIFQQQFhi5459wmWEz5gb/7kGtNE//nfrOD5dzkQKdjDUK/SyRHysnySj3aH4DIf3fcARripmKw==}
+  /cli-html@4.0.6:
+    resolution: {integrity: sha512-Un3xXtWVJBAljqyoQAbu737zQaH8I0UXVoMVzX0BxT34tzv481PBtuns5zXh5Edg11BBjNecyqrbvPtpmX7nzg==}
     engines: {node: '>=18', npm: '>=8'}
     hasBin: true
     dependencies:
@@ -8180,14 +8180,14 @@ packages:
       yaml: 2.3.4
     dev: true
 
-  /cli-markdown@3.2.1:
-    resolution: {integrity: sha512-I1/wd4ZbY3oEV6a3ziKz7kt0Ypr4U1CT3u+yTo6ruGGK72XWgXJMsYw3F3y47culoBXoVeWVZqaKnLPEALLV+Q==}
+  /cli-markdown@3.2.2:
+    resolution: {integrity: sha512-cP4uhTpgP1R+iXsH0ILC283DFSSGhGfmEa4DoUb08Z3XDZWj5vLMydRaMoekn8Sm9YQmAYTWiAHLiFQmnksavw==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     hasBin: true
     dependencies:
       '@mdit/plugin-alert': 0.8.0(markdown-it@14.0.0)
       '@types/marked': 6.0.0
-      cli-html: 4.0.5
+      cli-html: 4.0.6
       concat-stream: 2.0.0
       markdown-it: 14.0.0
       markdown-it-abbr: 2.0.0
