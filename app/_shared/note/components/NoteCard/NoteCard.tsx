@@ -32,7 +32,7 @@ export function NoteCard({
     <Card
       as="article"
       data-testid="note-card"
-      className={cn("text-prmary relative space-y-2", {
+      className={cn("relative space-y-2", {
         "space-y-4": showDetail,
       })}
     >
