@@ -8,6 +8,7 @@ const config: KnipConfig = {
   ignore: [
     // 未使用の型もExportしているが利便性のためにそのままにする
     "app/_shared/activitypub/apSchemaService/service.ts",
+    "app/_shared/shadcn/**",
   ],
 };
 
