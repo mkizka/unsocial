@@ -2,6 +2,7 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useTransition } from "react";
 
+import { Button } from "@/_shared/ui/Button";
 import { Spinner } from "@/_shared/ui/Spinner";
 
 type Props = {
@@ -11,12 +12,17 @@ type Props = {
 export function DeleteButton({ onClick }: Props) {
   const [isPending, startTransition] = useTransition();
   return (
-    <button
+    <Button
+      variant="ghost"
+      size="icon"
       data-testid="delete-button"
       onClick={() => startTransition(onClick)}
-      className="size-5 text-accent transition-colors"
     >
-      {isPending ? <Spinner /> : <XMarkIcon />}
-    </button>
+      {isPending ? (
+        <Spinner className="size-5 text-destructive transition-colors" />
+      ) : (
+        <XMarkIcon className="size-5 text-destructive transition-colors" />
+      )}
+    </Button>
   );
 }

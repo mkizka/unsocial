@@ -10,8 +10,6 @@ type Props = {
   onClick: () => Promise<void>;
 };
 
-const iconClass = "size-5 text-primary transition-colors";
-
 export function LikeButton({ isLiked: initialState, onClick }: Props) {
   // 表示上は即時反映させる
   const [isLiked, setIsLiked] = useState(initialState);
@@ -27,9 +25,9 @@ export function LikeButton({ isLiked: initialState, onClick }: Props) {
       }}
     >
       {isLiked ? (
-        <LikedIcon className={iconClass} />
+        <LikedIcon className="size-5 text-primary transition-colors" />
       ) : (
-        <UnLikedIcon className={iconClass} />
+        <UnLikedIcon className="size-5 text-primary transition-colors" />
       )}
     </Button>
   );
