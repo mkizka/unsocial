@@ -2,9 +2,9 @@
 import type { User } from "@prisma/client";
 import { useFormState } from "react-dom";
 
+import { Button } from "@/_shared/ui/Button";
 import { Card } from "@/_shared/ui/Card";
 import { Input } from "@/_shared/ui/Input";
-import { SubmitButton } from "@/_shared/ui/SubmitButton";
 import { Textarea } from "@/_shared/ui/Textarea";
 import { cn } from "@/_shared/utils/cn";
 import type { ServerAction } from "@/_shared/utils/serverAction";
@@ -49,7 +49,7 @@ export function ProfileForm({ user, onSubmit }: Props) {
                 {state.message}
               </p>
             )}
-            <SubmitButton className="ml-auto">変更する</SubmitButton>
+            <Button className="ml-auto">変更する</Button>
           </div>
         </div>
       </form>

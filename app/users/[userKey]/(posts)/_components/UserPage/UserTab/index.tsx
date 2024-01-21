@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { Card } from "@/_shared/ui/Card";
+
 type Props = {
   current: string;
   tabs: {
@@ -21,10 +23,7 @@ export function UserTab({ tabs, current }: Props) {
     <>
       <section className="mb-1 flex gap-1 rounded">
         {Object.entries(tabs).map(([key, tab]) => (
-          <div
-            key={tab.name}
-            className="flex h-14 w-full rounded text-sm shadow"
-          >
+          <Card key={tab.name} className="w-full text-sm">
             <Link
               href={tab.href}
               className={
@@ -34,7 +33,7 @@ export function UserTab({ tabs, current }: Props) {
             >
               {tab.name}
             </Link>
-          </div>
+          </Card>
         ))}
       </section>
       {tab.render()}

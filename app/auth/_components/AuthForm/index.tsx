@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import type { ReactEventHandler } from "react";
 import { useRef } from "react";
 
-import { SubmitButton } from "@/_shared/ui/SubmitButton";
+import { Button } from "@/_shared/ui/Button";
 
 import { PasswordInputField } from "./PasswordInputField";
 import { TextInputField } from "./TextInputField";
@@ -67,7 +67,7 @@ export function AuthForm({ action }: Props) {
       />
       <PasswordInputField action={action} />
       {/* TODO:ローディングさせる */}
-      <SubmitButton>{texts[action].button}</SubmitButton>
+      <Button>{texts[action].button}</Button>
     </form>
   );
 }
