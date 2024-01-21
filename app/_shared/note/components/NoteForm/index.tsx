@@ -1,10 +1,10 @@
 "use client";
 
+import { Button } from "@/_shared/ui/Button";
 import { Card } from "@/_shared/ui/Card";
 import { Textarea } from "@/_shared/ui/Textarea";
 
 import { action } from "./action";
-import { SubmitButton } from "./parts/SubmitButton";
 
 type Props = {
   replyToId?: string;
@@ -29,8 +29,8 @@ export function NoteForm({ replyToId, autoFocus }: Props) {
         className="resize-none"
         autoFocus={autoFocus}
       ></Textarea>
-      <div className="flex justify-end">
-        <SubmitButton />
+      <div className="mt-1 flex justify-end">
+        <Button data-testid="submit-button">送信</Button>
       </div>
     </Card>
   );
