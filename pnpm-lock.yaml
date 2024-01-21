@@ -134,8 +134,8 @@ devDependencies:
     specifier: 10.4.17
     version: 10.4.17(postcss@8.4.33)
   cli-markdown:
-    specifier: 3.2.0
-    version: 3.2.0
+    specifier: 3.2.1
+    version: 3.2.1
   dotenv-cli:
     specifier: 7.3.0
     version: 7.3.0
@@ -8039,8 +8039,8 @@ packages:
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: true
 
-  /change-case@5.3.0:
-    resolution: {integrity: sha512-Eykca0fGS/xYlx2fG5NqnGSnsWauhSGiSXYhB1kO6E909GUfo8S54u4UZNS7lMJmgZumZ2SUpWaoLgAcfQRICg==}
+  /change-case@5.4.2:
+    resolution: {integrity: sha512-WB3UiTDpT+vrTilAWaJS4gaIH/jc1He4H9f6erQvraUYas90uWT0JOYFkG1imdNv710XJ6gJvqynrgOHc4ihDA==}
     dev: true
 
   /char-regex@1.0.2:
@@ -8149,8 +8149,8 @@ packages:
       yargs: 16.2.0
     dev: true
 
-  /cli-html@4.0.4:
-    resolution: {integrity: sha512-xUL+y6FN6jQwl9mYaEAEJjN82Slv5LGXfOaJjszwzxTi1dV/A5E1bnNkVqOHxXwxeLJePQ/+h5emvUhGrYWTlw==}
+  /cli-html@4.0.5:
+    resolution: {integrity: sha512-F9gW2NReBxHlIFQQQFhi5459wmWEz5gb/7kGtNE//nfrOD5dzkQKdjDUK/SyRHysnySj3aH4DIf3fcARripmKw==}
     engines: {node: '>=18', npm: '>=8'}
     hasBin: true
     dependencies:
@@ -8159,7 +8159,7 @@ packages:
       boxen: 7.1.1
       chalk: 5.3.0
       chalk-string: 3.0.0
-      change-case: 5.3.0
+      change-case: 5.4.2
       cli-highlight: 2.1.11
       cli-table3: 0.6.3
       color-namer: 1.4.0
@@ -8180,14 +8180,14 @@ packages:
       yaml: 2.3.4
     dev: true
 
-  /cli-markdown@3.2.0:
-    resolution: {integrity: sha512-81u6zgyJ4K112IlyWGDpWvl5O0qDq1eLph7ZE8shxTjmqPsnz2BjoT5asx9yXiE0qrKxRlNH7Qgqr2YzeOf4xw==}
+  /cli-markdown@3.2.1:
+    resolution: {integrity: sha512-I1/wd4ZbY3oEV6a3ziKz7kt0Ypr4U1CT3u+yTo6ruGGK72XWgXJMsYw3F3y47culoBXoVeWVZqaKnLPEALLV+Q==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     hasBin: true
     dependencies:
       '@mdit/plugin-alert': 0.8.0(markdown-it@14.0.0)
       '@types/marked': 6.0.0
-      cli-html: 4.0.4
+      cli-html: 4.0.5
       concat-stream: 2.0.0
       markdown-it: 14.0.0
       markdown-it-abbr: 2.0.0
