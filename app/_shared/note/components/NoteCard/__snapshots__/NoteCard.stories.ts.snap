@@ -41,11 +41,13 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
   </div>
   <footer class="space-y-2 pl-[48px]">
     <div class="flex gap-10">
-      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground size-9">
-        <span class>
-          <a data-testid="note-card__reply"
-             href="/notes/1?reply"
-          >
+      <a data-testid="note-card__reply"
+         href="/notes/1?reply"
+      >
+        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground size-9"
+                type="button"
+        >
+          <span class>
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none"
                  viewbox="0 0 24 24"
@@ -61,9 +63,9 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
               >
               </path>
             </svg>
-          </a>
-        </span>
-      </button>
+          </span>
+        </button>
+      </a>
       <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground size-9"
               data-testid="like-button"
               type="button"
@@ -155,11 +157,13 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
   </div>
   <footer class="space-y-2 pl-[48px]">
     <div class="flex gap-10">
-      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground size-9">
-        <span class>
-          <a data-testid="note-card__reply"
-             href="/notes/1?reply"
-          >
+      <a data-testid="note-card__reply"
+         href="/notes/1?reply"
+      >
+        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground size-9"
+                type="button"
+        >
+          <span class>
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none"
                  viewbox="0 0 24 24"
@@ -175,9 +179,9 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
               >
               </path>
             </svg>
-          </a>
-        </span>
-      </button>
+          </span>
+        </button>
+      </a>
       <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground size-9"
               data-testid="like-button"
               type="button"
