@@ -38,7 +38,7 @@ exports[`_components/SearchModal InvalidInput play-test 1`] = `
     </path>
   </svg>
 </button>
-<div class="fixed left-0 top-0 z-50 flex cursor-pointer justify-center bg-black/70 pt-20">
+<div class="fixed left-0 top-0 z-50 flex size-full cursor-pointer justify-center bg-black/70 pt-20">
   <div class="h-16 w-4/5 max-w-[500px] rounded-md bg-primary shadow-2xl">
     <form action="javascript:throw new Error('A React form was unexpectedly submitted. If you called form.submit() manually, consider using form.requestSubmit() instead. If you\\'re trying to use event.stopPropagation() in a submit event handler, consider also calling event.preventDefault().')"
           class="flex size-full items-center justify-between px-4"
