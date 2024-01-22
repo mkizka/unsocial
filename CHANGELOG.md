@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.16
+
+### Patch Changes
+
+- 730adfb: リポストをタイムラインに表示
+
 ## 0.0.15
 
 ### Patch Changes

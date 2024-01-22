@@ -1,3 +1,4 @@
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import sanitizeHtml from "sanitize-html";
 
@@ -35,6 +36,15 @@ export function NoteCard({
         "space-y-4": showDetail,
       })}
     >
+      {note.quotedBy && (
+        <div className="flex items-center pl-[48px] text-gray">
+          <ArrowPathIcon className="absolute left-8 h-5 text-secondary" />
+          <Link href={note.quotedBy.url} className="hover:underline">
+            {note.quotedBy.name ?? note.quotedBy.preferredUsername}さん
+          </Link>
+          がリポストしました
+        </div>
+      )}
       <div className="flex pl-[48px]">
         <Link className="absolute left-3" href={note.user.url}>
           <UserIcon user={note.user} className="rounded-full" size={36} />
@@ -56,7 +66,7 @@ export function NoteCard({
           <AttachmentImages urls={note.attachmentUrls} />
         </div>
       </div>
-      <footer className="mt-3 space-y-2 pl-[48px]">
+      <footer className="space-y-2 pl-[48px]">
         <div className="flex gap-10">
           <ReplyButton url={note.url} />
           <LikeButton isLiked={note.isLiked} onClick={onLike} />
