@@ -10,15 +10,6 @@ const preview: Preview = {
     actions: {
       argTypesRegex: "^on[A-Z].*",
     },
-    backgrounds: {
-      default: "primary",
-      values: [
-        {
-          name: "primary",
-          value: "#d1d5db",
-        },
-      ],
-    },
   },
 };
 
