@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.17
+
+### Patch Changes
+
+- 9a5188a: shadcn/ui導入
+
 ## 0.0.16
 
 ### Patch Changes
