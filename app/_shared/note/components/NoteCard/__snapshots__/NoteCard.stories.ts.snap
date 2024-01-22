@@ -105,7 +105,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
          stroke="currentColor"
          aria-hidden="true"
          data-slot="icon"
-         class="absolute left-8 h-5 text-accent"
+         class="absolute left-8 h-5 text-primary"
     >
       <path stroke-linecap="round"
             stroke-linejoin="round"
