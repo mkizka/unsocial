@@ -7,7 +7,7 @@
   },
   "environments": {
     "pr": {
-      "sleepApplication": true
+      "sleepApplication": false
     }
   }
 }
