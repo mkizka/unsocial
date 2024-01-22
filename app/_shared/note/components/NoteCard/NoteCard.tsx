@@ -38,7 +38,7 @@ export function NoteCard({
     >
       {note.quotedBy && (
         <div className="flex items-center pl-[48px]">
-          <ArrowPathIcon className="absolute left-8 h-5 text-accent" />
+          <ArrowPathIcon className="absolute left-8 h-5 text-primary" />
           <Link href={note.quotedBy.url} className="hover:underline">
             {note.quotedBy.name ?? note.quotedBy.preferredUsername}さん
           </Link>
