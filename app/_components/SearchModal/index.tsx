@@ -14,14 +14,14 @@ export function SearchModal() {
       </button>
       {searchModal.isOpen && (
         <div
-          className="fixed left-0 top-0 z-50 flex cursor-pointer justify-center bg-black/70 pt-20"
+          className="fixed left-0 top-0 z-50 flex size-full cursor-pointer justify-center bg-black/70 pt-20"
           onClick={(e) => {
             // 背景をクリックしたときだけモーダルを閉じる
             if (e.target !== e.currentTarget) return;
             searchModal.close();
           }}
         >
-          <div className="h-16 w-4/5 max-w-[500px] rounded-md bg-primary shadow-2xl">
+          <div className="h-16 w-4/5 max-w-[500px] rounded-md bg-background shadow-2xl">
             <form
               action={(formData) => {
                 const input = formData.get("input");
