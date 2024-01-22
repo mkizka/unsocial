@@ -14,7 +14,7 @@ export function SearchModal() {
       </button>
       {searchModal.isOpen && (
         <div
-          className="fixed left-0 top-0 z-50 flex cursor-pointer justify-center bg-black/70 pt-20"
+          className="fixed left-0 top-0 z-50 flex size-full cursor-pointer justify-center bg-black/70 pt-20"
           onClick={(e) => {
             // 背景をクリックしたときだけモーダルを閉じる
             if (e.target !== e.currentTarget) return;
