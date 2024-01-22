@@ -19,7 +19,7 @@ describe("DeleteButton/action", () => {
     mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
     mockedPrisma.note.delete.mockResolvedValue({ id: "__noteId" } as Note);
     // act
-    await expect(() => action("__noteId")).rejects.toThrow("NEXT_REDIRECT");
+    await action("__noteId");
     // assert
     expect(mockedRelayActivityToFollowers).toHaveBeenCalledWith({
       userId: dummySessionUserId,

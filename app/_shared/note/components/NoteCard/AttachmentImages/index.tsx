@@ -36,7 +36,7 @@ export function AttachmentImages({ urls }: Props) {
         slides={urls.map((url, i) => (
           <img
             key={url}
-            className="block aspect-square cursor-pointer rounded bg-primary-dark object-cover"
+            className="block aspect-square cursor-pointer rounded object-cover"
             width="200"
             height="200"
             src={url}

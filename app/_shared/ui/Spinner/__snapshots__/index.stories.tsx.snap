@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`_shared/ui/Spinner Default smoke-test 1`] = `
+<div class="flex items-center justify-center w-8 h-8">
+  <div class="aspect-square h-4/5 animate-spin rounded-full border-2 border-t-transparent">
+  </div>
+</div>
+`;

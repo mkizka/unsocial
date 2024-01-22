@@ -32,13 +32,13 @@ export function NoteCard({
     <Card
       as="article"
       data-testid="note-card"
-      className={cn("text-prmary relative space-y-2", {
+      className={cn("relative space-y-2", {
         "space-y-4": showDetail,
       })}
     >
       {note.quotedBy && (
-        <div className="flex items-center pl-[48px] text-gray">
-          <ArrowPathIcon className="absolute left-8 h-5 text-secondary" />
+        <div className="flex items-center pl-[48px]">
+          <ArrowPathIcon className="absolute left-8 h-5 text-primary" />
           <Link href={note.quotedBy.url} className="hover:underline">
             {note.quotedBy.name ?? note.quotedBy.preferredUsername}さん
           </Link>
@@ -55,7 +55,7 @@ export function NoteCard({
               {note.user.name && (
                 <span className="mr-1 font-bold">{note.user.name}</span>
               )}
-              <span className="text-gray">{note.user.displayUsername}</span>
+              <span>{note.user.displayUsername}</span>
             </Link>
             <PublishedAt href={note.url} publishedAt={note.publishedAt} />
           </div>
@@ -73,10 +73,7 @@ export function NoteCard({
           {note.isMine && <DeleteButton onClick={onDelete} />}
         </div>
         {withReplyLink && (
-          <Link
-            className="block text-gray hover:underline"
-            href={`/notes/${note.id}`}
-          >
+          <Link className="block hover:underline" href={`/notes/${note.id}`}>
             返信を表示
           </Link>
         )}

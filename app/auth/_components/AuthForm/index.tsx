@@ -1,10 +1,9 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import type { ReactEventHandler } from "react";
 import { useRef } from "react";
 
-import { SubmitButton } from "@/_shared/ui/SubmitButton";
+import { Button } from "@/_shared/ui/Button";
 
 import { PasswordInputField } from "./PasswordInputField";
 import { TextInputField } from "./TextInputField";
@@ -25,7 +24,6 @@ const texts = {
 };
 
 export function AuthForm({ action }: Props) {
-  const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
 
   const handleSubmit: ReactEventHandler<HTMLFormElement> = async (event) => {
@@ -48,7 +46,7 @@ export function AuthForm({ action }: Props) {
 
   return (
     <form
-      className="mx-auto flex max-w-sm flex-col gap-8 text-dark"
+      className="mx-auto flex max-w-sm flex-col gap-8"
       ref={ref}
       onSubmit={handleSubmit}
     >
@@ -67,7 +65,7 @@ export function AuthForm({ action }: Props) {
       />
       <PasswordInputField action={action} />
       {/* TODO:ローディングさせる */}
-      <SubmitButton>{texts[action].button}</SubmitButton>
+      <Button data-testid="auth-form__button">{texts[action].button}</Button>
     </form>
   );
 }

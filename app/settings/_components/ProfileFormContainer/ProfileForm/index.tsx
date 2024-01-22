@@ -2,9 +2,10 @@
 import type { User } from "@prisma/client";
 import { useFormState } from "react-dom";
 
+import { Button } from "@/_shared/ui/Button";
 import { Card } from "@/_shared/ui/Card";
-import { SubmitButton } from "@/_shared/ui/SubmitButton";
-import { TextInput } from "@/_shared/ui/TextInput";
+import { Input } from "@/_shared/ui/Input";
+import { Textarea } from "@/_shared/ui/Textarea";
 import { cn } from "@/_shared/utils/cn";
 import type { ServerAction } from "@/_shared/utils/serverAction";
 
@@ -22,8 +23,7 @@ export function ProfileForm({ user, onSubmit }: Props) {
           <label className="block font-bold" htmlFor="name">
             表示名
           </label>
-          <TextInput
-            className="w-9/12"
+          <Input
             id="name"
             name="name"
             required
@@ -33,9 +33,7 @@ export function ProfileForm({ user, onSubmit }: Props) {
           <label className="block font-bold" htmlFor="summary">
             自己紹介
           </label>
-          <TextInput
-            as="textarea"
-            className="w-9/12"
+          <Textarea
             id="summary"
             name="summary"
             defaultValue={user.summary ?? ""}
@@ -44,14 +42,14 @@ export function ProfileForm({ user, onSubmit }: Props) {
             {state && (
               <p
                 className={cn({
-                  "text-accent": state.type === "error",
-                  "text-secondary": state.type === "success",
+                  "text-destructive": state.type === "error",
+                  "text-primary": state.type === "success",
                 })}
               >
                 {state.message}
               </p>
             )}
-            <SubmitButton className="ml-auto">変更する</SubmitButton>
+            <Button className="ml-auto">変更する</Button>
           </div>
         </div>
       </form>

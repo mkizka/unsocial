@@ -3,6 +3,8 @@
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
+import { Button } from "@/_shared/ui/Button";
+
 type Props = {
   url: string;
 };
@@ -10,7 +12,9 @@ type Props = {
 export function ReplyButton({ url }: Props) {
   return (
     <Link href={url + "?reply"} data-testid="note-card__reply">
-      <ChatBubbleLeftIcon className="size-5 text-dark transition-colors hover:text-gray" />
+      <Button variant="ghost" size="icon" type="button">
+        <ChatBubbleLeftIcon className="size-5 transition-colors" />
+      </Button>
     </Link>
   );
 }

@@ -10,7 +10,7 @@ export function SearchModal() {
   return (
     <>
       <button onClick={searchModal.open} data-testid="search-modal__button">
-        <MagnifyingGlassIcon className="size-7 text-dark hover:opacity-70" />
+        <MagnifyingGlassIcon className="size-7 hover:opacity-70" />
       </button>
       {searchModal.isOpen && (
         <div
@@ -21,7 +21,7 @@ export function SearchModal() {
             searchModal.close();
           }}
         >
-          <div className="h-16 w-4/5 max-w-[500px] rounded-md bg-primary shadow-2xl">
+          <div className="h-16 w-4/5 max-w-[500px] rounded-md bg-background shadow-2xl">
             <form
               action={(formData) => {
                 const input = formData.get("input");
@@ -37,17 +37,17 @@ export function SearchModal() {
               <input
                 type="text"
                 name="input"
-                className="size-full bg-transparent text-dark focus:outline-none"
+                className="size-full bg-transparent focus:outline-none"
                 placeholder="@name@example.com"
                 autoFocus
                 data-testid="search-modal__input"
               />
               <button
                 type="submit"
-                className="size-7 text-dark"
+                className="size-7"
                 data-testid="search-modal__submit"
               >
-                <MagnifyingGlassIcon className="size-7 text-dark hover:opacity-70" />
+                <MagnifyingGlassIcon className="size-7 hover:opacity-70" />
               </button>
             </form>
           </div>

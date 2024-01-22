@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Card } from "@/_shared/ui/Card";
 import { UserIcon } from "@/_shared/user/components/UserIcon";
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
@@ -26,12 +27,12 @@ export async function UserCard({ userKey }: Props) {
   );
   const canFollow = sessionUserId !== user.id;
   return (
-    <section className="mb-1 space-y-4 rounded bg-primary-light p-4 pb-6 shadow">
+    <Card as="section" className="mb-1 space-y-4 pb-6">
       <div className="flex w-full items-center">
         <UserIcon user={user} size={64} className="rounded-full" />
         <div className="ml-4">
           <h1 className="text-2xl font-bold">{user.name}</h1>
-          <div className="text-gray">{fullUsername(user)}</div>
+          <div>{fullUsername(user)}</div>
         </div>
       </div>
       <div>{user.summary}</div>
@@ -55,6 +56,6 @@ export async function UserCard({ userKey }: Props) {
         {canFollow && <FollowButton followeeId={user.id} />}
         {env.UNSOCIAL_HOST !== user.host && <RefetchButton userId={user.id} />}
       </div>
-    </section>
+    </Card>
   );
 }

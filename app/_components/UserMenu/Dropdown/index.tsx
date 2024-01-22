@@ -53,7 +53,7 @@ export function Dropdown({ user, iconUrl, iconAlt }: Props) {
       {isOpen && (
         <>
           <Card
-            className="absolute right-0 z-10 w-56 animate-fade space-y-4 drop-shadow-xl"
+            className="absolute right-0 z-10 w-56 space-y-4 drop-shadow-xl"
             data-testid="user-menu__dropdown"
           >
             {items.map(({ label, href, Icon }) => (

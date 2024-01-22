@@ -3,8 +3,9 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 
+import { Button } from "@/_shared/ui/Button";
 import { Card } from "@/_shared/ui/Card";
-import { SubmitButton } from "@/_shared/ui/SubmitButton";
+import { Input } from "@/_shared/ui/Input";
 import { cn } from "@/_shared/utils/cn";
 import { getIconPath } from "@/_shared/utils/icon";
 
@@ -35,7 +36,7 @@ export function IconFileInput({ iconHash }: Props) {
         <label className="block font-bold" htmlFor="icon">
           アイコン
         </label>
-        <input
+        <Input
           id="icon"
           name="icon"
           type="file"
@@ -70,7 +71,7 @@ export function IconFileInput({ iconHash }: Props) {
                 alt=""
               ></img>
             ) : (
-              <div className="aspect-square w-[100px] bg-gray"></div>
+              <div className="aspect-square w-[100px]"></div>
             )}
           </div>
         </div>
@@ -85,7 +86,7 @@ export function IconFileInput({ iconHash }: Props) {
               {state.message}
             </p>
           )}
-          <SubmitButton className="ml-auto">変更する</SubmitButton>
+          <Button className="ml-auto">変更する</Button>
         </div>
       </form>
     </Card>

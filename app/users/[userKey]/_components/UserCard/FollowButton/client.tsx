@@ -24,7 +24,7 @@ export function FollowButton({ followeeId, followStatus }: FollowButtonProps) {
 
   return (
     <button
-      className="ml-auto block h-9 w-24 whitespace-nowrap rounded bg-secondary  px-4 py-2 text-sm text-light shadow"
+      className="ml-auto block h-9 w-24 whitespace-nowrap rounded  bg-secondary px-4 py-2 text-sm shadow"
       data-testid="follow-button"
       onClick={() => startTransition(() => action({ followeeId }))}
     >

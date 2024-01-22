@@ -9,7 +9,7 @@ exports[`_components/SearchModal Default play-test 1`] = `
        stroke="currentColor"
        aria-hidden="true"
        data-slot="icon"
-       class="size-7 text-dark hover:opacity-70"
+       class="size-7 hover:opacity-70"
   >
     <path stroke-linecap="round"
           stroke-linejoin="round"
@@ -29,7 +29,7 @@ exports[`_components/SearchModal InvalidInput play-test 1`] = `
        stroke="currentColor"
        aria-hidden="true"
        data-slot="icon"
-       class="size-7 text-dark hover:opacity-70"
+       class="size-7 hover:opacity-70"
   >
     <path stroke-linecap="round"
           stroke-linejoin="round"
@@ -39,18 +39,18 @@ exports[`_components/SearchModal InvalidInput play-test 1`] = `
   </svg>
 </button>
 <div class="fixed left-0 top-0 z-50 flex size-full cursor-pointer justify-center bg-black/70 pt-20">
-  <div class="h-16 w-4/5 max-w-[500px] rounded-md bg-primary shadow-2xl">
+  <div class="h-16 w-4/5 max-w-[500px] rounded-md bg-background shadow-2xl">
     <form action="javascript:throw new Error('A React form was unexpectedly submitted. If you called form.submit() manually, consider using form.requestSubmit() instead. If you\\'re trying to use event.stopPropagation() in a submit event handler, consider also calling event.preventDefault().')"
           class="flex size-full items-center justify-between px-4"
     >
-      <input class="size-full bg-transparent text-dark focus:outline-none"
+      <input class="size-full bg-transparent focus:outline-none"
              placeholder="@name@example.com"
              data-testid="search-modal__input"
              type="text"
              name="input"
       >
       <button type="submit"
-              class="size-7 text-dark"
+              class="size-7"
               data-testid="search-modal__submit"
       >
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ exports[`_components/SearchModal InvalidInput play-test 1`] = `
              stroke="currentColor"
              aria-hidden="true"
              data-slot="icon"
-             class="size-7 text-dark hover:opacity-70"
+             class="size-7 hover:opacity-70"
         >
           <path stroke-linecap="round"
                 stroke-linejoin="round"
