@@ -7,7 +7,9 @@
   },
   "environments": {
     "pr": {
-      "sleepApplication": true
+      "deploy": {
+        "startCommand": "echo 'start command for all pull requests!'"
+      }
     }
   }
 }
