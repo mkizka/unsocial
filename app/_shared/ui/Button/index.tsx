@@ -44,21 +44,34 @@ interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  loading?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, children, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      children,
+      asChild = false,
+      loading = false,
+      ...props
+    },
+    ref,
+  ) => {
     const status = useFormStatus();
+    const isLoading = status.pending || loading;
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       >
-        {status.pending && <Spinner className="absolute h-3/5" />}
+        {isLoading && <Spinner className="absolute h-1/2" />}
         <span
           className={cn({
-            "opacity-0": status.pending,
+            "opacity-0": isLoading,
           })}
         >
           {children}
