@@ -44,7 +44,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
       <a data-testid="note-card__reply"
          href="/notes/1?reply"
       >
-        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary hover:text-secondary-foreground size-9"
+        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
                 type="button"
         >
           <span class>
@@ -66,7 +66,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
           </span>
         </button>
       </a>
-      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary hover:text-secondary-foreground size-9"
+      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
               data-testid="like-button"
               type="button"
       >
@@ -160,7 +160,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
       <a data-testid="note-card__reply"
          href="/notes/1?reply"
       >
-        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary hover:text-secondary-foreground size-9"
+        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
                 type="button"
         >
           <span class>
@@ -182,7 +182,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
           </span>
         </button>
       </a>
-      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary hover:text-secondary-foreground size-9"
+      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
               data-testid="like-button"
               type="button"
       >
