@@ -23,14 +23,14 @@ const buttonVariants = cva(
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-secondary hover:text-secondary-foreground",
+        ghost: "hover:bg-secondary",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
-        icon: "size-9",
+        icon: "size-8",
       },
     },
     defaultVariants: {
@@ -44,21 +44,34 @@ interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  loading?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, children, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      children,
+      asChild = false,
+      loading = false,
+      ...props
+    },
+    ref,
+  ) => {
     const status = useFormStatus();
+    const isLoading = status.pending || loading;
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       >
-        {status.pending && <Spinner className="absolute h-3/5" />}
+        {isLoading && <Spinner className="absolute h-1/2" />}
         <span
           className={cn({
-            "opacity-0": status.pending,
+            "opacity-0": isLoading,
           })}
         >
           {children}
