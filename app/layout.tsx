@@ -1,11 +1,12 @@
 import "./globals.css";
 
-import { M_PLUS_1_Code } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 
 import { Body } from "./_components/Body";
 import { Providers } from "./_components/Providers";
 import { SearchModal } from "./_components/SearchModal";
 import { UserMenu } from "./_components/UserMenu";
+import { cn } from "./_shared/utils/cn";
 import { env } from "./_shared/utils/env";
 
 const siteName = env.UNSOCIAL_SITE_NAME ?? env.UNSOCIAL_HOST;
@@ -37,16 +38,21 @@ export const metadata = {
   },
 };
 
-const font = M_PLUS_1_Code({
-  weight: "400",
+const fontSans = FontSans({
   subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={font.className}>
+    <html lang="ja">
       <Providers>
-        <Body className="flex min-h-screen justify-center bg-background antialiased">
+        <Body
+          className={cn(
+            "flex min-h-screen justify-center bg-background font-sans antialiased",
+            fontSans.variable,
+          )}
+        >
           <header className="fixed z-10 flex h-[54px] w-full items-center justify-between rounded-b-md bg-card px-4 shadow-md">
             <SearchModal />
             <UserMenu />
