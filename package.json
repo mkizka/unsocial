@@ -1,6 +1,6 @@
 {
   "name": "unsocial",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "private": true,
   "packageManager": "pnpm@8.14.3",
   "engines": {
@@ -18,6 +18,7 @@
     "all": "run-s -s _lint:fix test-u test:storybook-u",
     "build": "SKIP_ENV_VALIDATION=1 next build",
     "dev": "./scripts/dev.sh",
+    "down": "docker compose down -v --remove-orphans",
     "e2e": "playwright test",
     "lint": "./scripts/lint.sh",
     "postinstall": "prisma generate",
@@ -34,6 +35,7 @@
     "@heroicons/react": "2.1.1",
     "@prisma/client": "5.8.1",
     "bcryptjs": "2.4.3",
+    "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
     "jotai": "2.6.2",
     "next": "14.1.1-canary.6",
@@ -45,7 +47,6 @@
     "sharp": "0.32.6",
     "swiper": "11.0.5",
     "tailwind-merge": "2.2.1",
-    "winston": "3.11.0",
     "zod": "3.22.4"
   },
   "devDependencies": {
@@ -63,7 +64,6 @@
     "@stryker-mutator/core": "8.0.0",
     "@stryker-mutator/jest-runner": "8.0.0",
     "@swc-jotai/react-refresh": "0.1.0",
-    "@tailwindcss/forms": "0.5.7",
     "@total-typescript/ts-reset": "0.5.1",
     "@types/bcryptjs": "2.4.6",
     "@types/jest": "29.5.11",
@@ -97,6 +97,7 @@
     "prisma": "5.8.1",
     "storybook": "7.6.10",
     "tailwindcss": "3.4.1",
+    "tailwindcss-animate": "1.0.7",
     "ts-node": "10.9.2",
     "tsx": "4.7.0",
     "typescript": "5.3.3",

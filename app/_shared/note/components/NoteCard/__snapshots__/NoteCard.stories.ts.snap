@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
-<article class="w-full rounded bg-primary-light p-4 shadow text-prmary relative space-y-2"
+<article class="rounded-lg border bg-card p-4 text-card-foreground shadow-sm relative space-y-2"
          data-testid="note-card"
 >
   <div class="flex pl-[48px]">
@@ -23,7 +23,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
           <span class="mr-1 font-bold">
             ユーザー名
           </span>
-          <span class="text-gray">
+          <span>
             @preferredUsername@example.com
           </span>
         </a>
@@ -44,40 +44,49 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
       <a data-testid="note-card__reply"
          href="/notes/1?reply"
       >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             fill="none"
-             viewbox="0 0 24 24"
-             stroke-width="1.5"
-             stroke="currentColor"
-             aria-hidden="true"
-             data-slot="icon"
-             class="size-5 text-dark transition-colors hover:text-gray"
+        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary hover:text-secondary-foreground size-9"
+                type="button"
         >
-          <path stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
-          >
-          </path>
-        </svg>
+          <span class>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewbox="0 0 24 24"
+                 stroke-width="1.5"
+                 stroke="currentColor"
+                 aria-hidden="true"
+                 data-slot="icon"
+                 class="size-5 transition-colors"
+            >
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+              >
+              </path>
+            </svg>
+          </span>
+        </button>
       </a>
-      <button data-testid="like-button"
+      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary hover:text-secondary-foreground size-9"
+              data-testid="like-button"
               type="button"
-              class="size-5 text-secondary transition-colors hover:text-secondary-dark"
       >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             fill="none"
-             viewbox="0 0 24 24"
-             stroke-width="1.5"
-             stroke="currentColor"
-             aria-hidden="true"
-             data-slot="icon"
-        >
-          <path stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+        <span class>
+          <svg xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewbox="0 0 24 24"
+               stroke-width="1.5"
+               stroke="currentColor"
+               aria-hidden="true"
+               data-slot="icon"
+               class="size-5 text-primary transition-colors"
           >
-          </path>
-        </svg>
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+            >
+            </path>
+          </svg>
+        </span>
       </button>
     </div>
   </footer>
@@ -85,10 +94,10 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
 `;
 
 exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
-<article class="w-full rounded bg-primary-light p-4 shadow text-prmary relative space-y-2"
+<article class="rounded-lg border bg-card p-4 text-card-foreground shadow-sm relative space-y-2"
          data-testid="note-card"
 >
-  <div class="flex items-center pl-[48px] text-gray">
+  <div class="flex items-center pl-[48px]">
     <svg xmlns="http://www.w3.org/2000/svg"
          fill="none"
          viewbox="0 0 24 24"
@@ -96,7 +105,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
          stroke="currentColor"
          aria-hidden="true"
          data-slot="icon"
-         class="absolute left-8 h-5 text-secondary"
+         class="absolute left-8 h-5 text-primary"
     >
       <path stroke-linecap="round"
             stroke-linejoin="round"
@@ -130,7 +139,7 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
           <span class="mr-1 font-bold">
             ユーザー名
           </span>
-          <span class="text-gray">
+          <span>
             @preferredUsername@example.com
           </span>
         </a>
@@ -151,40 +160,49 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
       <a data-testid="note-card__reply"
          href="/notes/1?reply"
       >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             fill="none"
-             viewbox="0 0 24 24"
-             stroke-width="1.5"
-             stroke="currentColor"
-             aria-hidden="true"
-             data-slot="icon"
-             class="size-5 text-dark transition-colors hover:text-gray"
+        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary hover:text-secondary-foreground size-9"
+                type="button"
         >
-          <path stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
-          >
-          </path>
-        </svg>
+          <span class>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewbox="0 0 24 24"
+                 stroke-width="1.5"
+                 stroke="currentColor"
+                 aria-hidden="true"
+                 data-slot="icon"
+                 class="size-5 transition-colors"
+            >
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+              >
+              </path>
+            </svg>
+          </span>
+        </button>
       </a>
-      <button data-testid="like-button"
+      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary hover:text-secondary-foreground size-9"
+              data-testid="like-button"
               type="button"
-              class="size-5 text-secondary transition-colors hover:text-secondary-dark"
       >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             fill="none"
-             viewbox="0 0 24 24"
-             stroke-width="1.5"
-             stroke="currentColor"
-             aria-hidden="true"
-             data-slot="icon"
-        >
-          <path stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+        <span class>
+          <svg xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewbox="0 0 24 24"
+               stroke-width="1.5"
+               stroke="currentColor"
+               aria-hidden="true"
+               data-slot="icon"
+               class="size-5 text-primary transition-colors"
           >
-          </path>
-        </svg>
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+            >
+            </path>
+          </svg>
+        </span>
       </button>
     </div>
   </footer>

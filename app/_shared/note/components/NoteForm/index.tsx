@@ -1,9 +1,10 @@
 "use client";
 
+import { Button } from "@/_shared/ui/Button";
 import { Card } from "@/_shared/ui/Card";
+import { Textarea } from "@/_shared/ui/Textarea";
 
 import { action } from "./action";
-import { SubmitButton } from "./parts/SubmitButton";
 
 type Props = {
   replyToId?: string;
@@ -21,15 +22,15 @@ export function NoteForm({ replyToId, autoFocus }: Props) {
       className="mb-1 px-8 pb-4 pt-6"
     >
       {replyToId && <input type="hidden" name="replyToId" value={replyToId} />}
-      <textarea
+      <Textarea
         data-testid="note-form__textarea"
         name="content"
         placeholder="ここにテキストを入力"
-        className="h-32 w-full resize-none rounded border-primary-dark p-4 outline-none"
+        className="resize-none"
         autoFocus={autoFocus}
-      ></textarea>
-      <div className="flex justify-end">
-        <SubmitButton />
+      ></Textarea>
+      <div className="mt-1 flex justify-end">
+        <Button data-testid="note-form__button">送信</Button>
       </div>
     </Card>
   );
