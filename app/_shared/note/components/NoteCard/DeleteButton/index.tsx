@@ -23,7 +23,7 @@ export function DeleteButton({ onClick }: Props) {
       }}
     >
       {isPending ? (
-        <Spinner className="size-5 text-destructive transition-colors" />
+        <Spinner className="size-4 text-destructive transition-colors" />
       ) : (
         <XMarkIcon className="size-5 text-destructive transition-colors" />
       )}
