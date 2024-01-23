@@ -24,7 +24,6 @@ export function FollowButton({ followeeId, followStatus }: FollowButtonProps) {
 
   return (
     <Button
-      className="ml-auto"
       variant="default"
       data-testid="follow-button"
       loading={isPending}

@@ -2,7 +2,7 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { useTransition } from "react";
 
-import { Spinner } from "@/_shared/ui/Spinner";
+import { Button } from "@/_shared/ui/Button";
 
 import { action } from "./action";
 
@@ -12,13 +12,14 @@ type Props = {
 
 export function RefetchButton({ userId }: Props) {
   const [isPending, startTransition] = useTransition();
-
   return (
-    <button
-      className="flex size-6 items-center justify-center"
+    <Button
+      variant="ghost"
+      size="icon"
+      loading={isPending}
       onClick={() => startTransition(() => action(userId))}
     >
-      {isPending ? <Spinner /> : <ArrowPathIcon />}
-    </button>
+      <ArrowPathIcon className="size-5" />
+    </Button>
   );
 }
