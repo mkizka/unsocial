@@ -22,5 +22,5 @@ reports
 .DS_Store
 *.log
 
-# Sentry Config File
+# sentry
 .sentryclirc
