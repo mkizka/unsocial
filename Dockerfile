@@ -1,7 +1,8 @@
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 FROM node:20.11.0-slim AS base
 WORKDIR /app
-RUN apt-get update && apt-get install -y openssl jq \
+# https://github.com/getsentry/sentry-cli/issues/1069#issuecomment-969439768
+RUN apt-get update && apt-get install -y openssl jq ca-certificates \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 RUN corepack enable pnpm

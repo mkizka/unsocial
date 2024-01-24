@@ -53,8 +53,11 @@ export function TimelineLoader({ firstLoadedNotes, userId }: Props) {
         </li>
       ))}
       {timeline.at(-1)?.length !== 0 && (
-        <div ref={timelineLoaderRef} className="h-32 w-full pb-20 pt-4">
-          <Spinner />
+        <div
+          ref={timelineLoaderRef}
+          className="flex h-32 w-full justify-center pb-20 pt-4"
+        >
+          <Spinner className="size-8" />
         </div>
       )}
     </ul>

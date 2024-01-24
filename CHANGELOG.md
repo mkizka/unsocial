@@ -1,5 +1,17 @@
 # unsocial
 
+## 0.0.19
+
+### Patch Changes
+
+- 315b34a: 全体的なスタイルの調整
+
+## 0.0.18
+
+### Patch Changes
+
+- 6b35cae: 依存関係の更新
+
 ## 0.0.17
 
 ### Patch Changes
