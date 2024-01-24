@@ -21,3 +21,6 @@ reports
 # others
 .DS_Store
 *.log
+
+# sentry
+.sentryclirc
