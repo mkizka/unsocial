@@ -32,15 +32,7 @@ const config = {
 export default process.env.SENTRY_AUTH_TOKEN
   ? withSentryConfig(
       config,
-      {
-        // For all available options, see:
-        // https://github.com/getsentry/sentry-webpack-plugin#options
-
-        // Suppresses source map uploading logs during build
-        silent: true,
-        org: "mkizka",
-        project: "unsocial",
-      },
+      {},
       {
         // For all available options, see:
         // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
