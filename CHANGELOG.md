@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.20
+
+### Patch Changes
+
+- 0ccbb2a: Sentry導入
+
 ## 0.0.19
 
 ### Patch Changes
