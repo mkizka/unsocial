@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.21
+
+### Patch Changes
+
+- 9437255: 空リリース
+
 ## 0.0.20
 
 ### Patch Changes
