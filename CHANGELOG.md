@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.22
+
+### Patch Changes
+
+- 67c7bf3: 空リリース
+
 ## 0.0.21
 
 ### Patch Changes
