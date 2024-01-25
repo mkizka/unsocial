@@ -8,3 +8,5 @@ export const GET = () => {
   logger.error("error");
   return Response.json({ message: "Hello world" });
 };
+
+export const dynamic = "force-dynamic";
