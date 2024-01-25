@@ -9,6 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: corepack enable pnpm
+      - run: pnpm --version
       - uses: actions/setup-node@v4
         with:
           node-version-file: .tool-versions
