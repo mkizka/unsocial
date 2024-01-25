@@ -38,7 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
           node-version-file: .tool-versions
@@ -47,7 +46,7 @@ jobs:
         with:
           path: ${{ github.workspace }}/.next/cache
           key: nextjs-remote-${{ hashFiles('pnpm-lock.yaml') }}
-      - run: pnpm i
+      - run: corepack enable pnpm && pnpm i
       - run: pnpm build
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}

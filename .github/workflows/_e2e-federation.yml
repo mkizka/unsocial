@@ -33,12 +33,11 @@ jobs:
         run: |
           rm -rf .next/e2e/myhost/cache/fetch-cache
           rm -rf .next/e2e/remote/cache/fetch-cache
-      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
           node-version-file: .tool-versions
           cache: pnpm
-      - run: pnpm i
+      - run: corepack enable pnpm && pnpm i
       # https://github.com/FiloSottile/mkcert#linux
       - name: Install mkcert
         run: |
