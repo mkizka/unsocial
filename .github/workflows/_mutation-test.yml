@@ -17,11 +17,12 @@ jobs:
     if: github.head_ref == 'renovate/stryker-js-monorepo' || !startsWith(github.head_ref, 'renovate/')
     steps:
       - uses: actions/checkout@v4
+      - run: corepack enable pnpm
       - uses: actions/setup-node@v4
         with:
           node-version-file: .tool-versions
           cache: pnpm
-      - run: corepack enable pnpm && pnpm i
+      - run: pnpm i
       - run: pnpm _test:mutation:run --fileLogLevel trace
       - name: upload-reports
         run: |
