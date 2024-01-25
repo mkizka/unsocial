@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/nextjs";
+
 import { env } from "./env";
 import { createLogger } from "./logger";
 
@@ -8,6 +10,11 @@ jest.mock("@/_shared/utils/env", () => ({
     UNSOCIAL_LOG_LEVEL: "debug",
   },
 }));
+
+jest.mock("@sentry/nextjs", () => ({
+  captureMessage: jest.fn(),
+}));
+const mockedCaptureMessage = jest.mocked(Sentry.captureMessage);
 
 const spyConsole = {
   debug: jest.spyOn(console, "debug").mockImplementation(() => {}),
@@ -66,6 +73,18 @@ describe("logger", () => {
         name: "test",
       }),
     );
+  });
+  test("env.NODE_ENVがwarn以上の場合、Sentryにログが送信される", () => {
+    // act
+    logger.debug("debug");
+    logger.info("info");
+    logger.warn("warn");
+    logger.error("error");
+    // assert
+    expect(mockedCaptureMessage).not.toHaveBeenCalledWith("debug", "debug");
+    expect(mockedCaptureMessage).not.toHaveBeenCalledWith("info", "info");
+    expect(mockedCaptureMessage).toHaveBeenCalledWith("warn", "warning");
+    expect(mockedCaptureMessage).toHaveBeenCalledWith("error", "error");
   });
   test("env.NODE_ENVがtestの場合、ログは出力されない", () => {
     // arrange
