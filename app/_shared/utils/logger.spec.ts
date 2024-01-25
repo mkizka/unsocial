@@ -81,6 +81,8 @@ describe("logger", () => {
     logger.warn("warn");
     logger.error("error");
     // assert
+    expect(mockedCaptureMessage).not.toHaveBeenCalledWith("debug", "debug");
+    expect(mockedCaptureMessage).not.toHaveBeenCalledWith("info", "info");
     expect(mockedCaptureMessage).toHaveBeenCalledWith("warn", "warning");
     expect(mockedCaptureMessage).toHaveBeenCalledWith("error", "error");
   });
