@@ -82,6 +82,27 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+  release-sentry:
+    runs-on: ubuntu-latest
+    needs: bump-version
+    if: needs.bump-version.outputs.published == 'true'
+    strategy:
+      matrix:
+        package: ${{ fromJson(needs.bump-version.outputs.publishedPackages) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .tool-versions
+          cache: pnpm
+      - run: pnpm i
+      - run: pnpm build
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_RELEASE: ${{ matrix.package.version }}
   create-renovate-pr:
     runs-on: ubuntu-latest
     permissions:
