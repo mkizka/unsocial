@@ -29,6 +29,10 @@ const config = {
   },
 };
 
+console.log(process.env.SENTRY_AUTH_TOKEN);
+console.log(process.env.SENTRY_AUTH_TOKEN);
+console.log(process.env.SENTRY_AUTH_TOKEN);
+
 export default process.env.SENTRY_AUTH_TOKEN
   ? withSentryConfig(
       config,
