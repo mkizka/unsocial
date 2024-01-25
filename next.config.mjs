@@ -32,7 +32,7 @@ const config = {
 export default withSentryConfig(
   config,
   {
-    silent: true,
+    silent: false,
   },
   {
     // For all available options, see:
