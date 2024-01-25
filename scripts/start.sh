@@ -9,4 +9,4 @@ for _ in {1..5}; do
   sleep 1
 done
 VERSION=$(jq -r '.version' package.json)
-SENTRY_RELEASE=$VERSION node server.js
+SENTRY_RELEASE=v$VERSION node server.js
