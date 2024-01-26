@@ -24,7 +24,7 @@
     "postinstall": "prisma generate",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006 --quiet",
-    "test": "docker compose up db -d && jest",
+    "test": "docker compose up db -d --wait && jest",
     "test-u": "run-s -s 'test --updateSnapshot'",
     "test:mutation": "run-s _test:mutation:run _test:mutation:report",
     "test:storybook": "run-p -sr _test:storybook:*",
