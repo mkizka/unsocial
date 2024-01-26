@@ -13,6 +13,7 @@ const customJestConfig: Config = {
   roots: ["<rootDir>/app"],
   testEnvironment: "@quramy/jest-prisma-node/environment",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  globalSetup: "<rootDir>/jest.global-setup.ts",
   clearMocks: true,
   modulePathIgnorePatterns: ["<rootDir>/.next"],
   moduleNameMapper: {
