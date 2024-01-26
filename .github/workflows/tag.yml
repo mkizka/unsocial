@@ -46,7 +46,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.next/cache
-          key: nextjs-remote-${{ hashFiles('pnpm-lock.yaml') }}
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm i
       - run: pnpm build
         env:
