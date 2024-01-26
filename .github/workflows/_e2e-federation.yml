@@ -21,11 +21,13 @@ jobs:
       - uses: actions/checkout@v4
       # https://nextjs.org/docs/pages/building-your-application/deploying/ci-build-caching#github-actions
       - uses: actions/cache@v4
+        id: cache
         with:
           path: ${{ github.workspace }}/.next/cache
           key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
       # fetchキャッシュが使われるとe2eが失敗するので削除する
       - name: Copy caches
+        if: steps.cache.outputs.cache-hit == 'true'
         run: |
           rm -rf .next/cache/fetch-cache
           mkdir -p .next/e2e/myhost
