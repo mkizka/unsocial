@@ -10,6 +10,11 @@ datasource db {
   url      = env("UNSOCIAL_DATABASE_URL")
 }
 
+generator fabbrica {
+  provider = "prisma-fabbrica"
+  output = "../app/_generated"
+}
+
 model Session {
   id           String   @id @default(nanoid(8))
   sessionToken String   @unique
@@ -72,6 +77,7 @@ model Note {
   replyToId   String?
   replyTo     Note?      @relation("ReplyTo", fields: [replyToId], references: [id])
   likes       Like[]
+  likesCount  Int        @default(0)
   attachments Document[]
   quotes      Note[]     @relation("Quote")
   replies     Note[]     @relation("ReplyTo")
