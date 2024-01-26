@@ -70,6 +70,9 @@ devDependencies:
   '@playwright/test':
     specifier: 1.41.1
     version: 1.41.1
+  '@quramy/jest-prisma-node':
+    specifier: 1.7.3
+    version: 1.7.3(jest-environment-node@29.7.0)(jest@29.7.0)
   '@storybook/addon-essentials':
     specifier: 7.6.10
     version: 7.6.10(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.3.0-canary-feed8f3f9-20240118)(react@18.3.0-canary-feed8f3f9-20240118)
@@ -3768,6 +3771,28 @@ packages:
     resolution: {integrity: sha512-wnA+6HTFcY+tkykMokix9GiAkaauPC5W/gg0O5JB0J8tCTNWrqpnQ7AsaGRfkYUbeOIioh6woDjQrGTTRf1Zag==}
     dependencies:
       '@prisma/debug': 5.8.1
+
+  /@quramy/jest-prisma-core@1.7.3(jest@29.7.0):
+    resolution: {integrity: sha512-x/V/OqnUdmXUrv0mQa18ixJ61jYFTvNGrpzhVxr1FriAUQL2p2srMj15iLe8DmkxHqnlwBJHcM2rSx8HM3wiEA==}
+    engines: {node: '>=14.13'}
+    peerDependencies:
+      jest: ^28.0.0 || ^29.0.0
+    dependencies:
+      chalk: 4.1.2
+      jest: 29.7.0(@types/node@20.11.5)(ts-node@10.9.2)
+    dev: true
+
+  /@quramy/jest-prisma-node@1.7.3(jest-environment-node@29.7.0)(jest@29.7.0):
+    resolution: {integrity: sha512-100EQiA7M+t3rOX7MHCU7Yda+nhYf3lIJsbSqAgcrFLzhycucLcEc2w9gKwsCiKALh6UXU/IgrAvNm2qdqUU+Q==}
+    engines: {node: '>=14.13'}
+    peerDependencies:
+      jest: ^28.0.0 || ^29.0.0
+      jest-environment-node: ^28.0.0 || ^29.0.0
+    dependencies:
+      '@quramy/jest-prisma-core': 1.7.3(jest@29.7.0)
+      jest: 29.7.0(@types/node@20.11.5)(ts-node@10.9.2)
+      jest-environment-node: 29.7.0
+    dev: true
 
   /@radix-ui/number@1.0.1:
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}

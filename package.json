@@ -24,8 +24,8 @@
     "postinstall": "prisma generate",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006 --quiet",
-    "test": "jest",
-    "test-u": "jest --updateSnapshot",
+    "test": "docker compose up db -d && jest",
+    "test-u": "run-s -s 'test --updateSnapshot'",
     "test:mutation": "run-s _test:mutation:run _test:mutation:report",
     "test:storybook": "run-p -sr _test:storybook:*",
     "test:storybook-u": "run-p -sr '_test:storybook:* -- --updateSnapshot'"
@@ -54,6 +54,7 @@
     "@changesets/cli": "2.27.1",
     "@dword-design/eslint-plugin-import-alias": "4.0.9",
     "@playwright/test": "1.41.1",
+    "@quramy/jest-prisma-node": "1.7.3",
     "@storybook/addon-essentials": "7.6.10",
     "@storybook/addon-interactions": "7.6.10",
     "@storybook/jest": "0.2.3",
