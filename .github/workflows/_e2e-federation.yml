@@ -21,19 +21,16 @@ jobs:
       - uses: actions/checkout@v4
       # https://nextjs.org/docs/pages/building-your-application/deploying/ci-build-caching#github-actions
       - uses: actions/cache@v4
-        id: cache
         with:
-          path: ${{ github.workspace }}/.next/cache
-          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
-      # fetchキャッシュが使われるとe2eが失敗するので削除する
-      - name: Copy caches
-        if: steps.cache.outputs.cache-hit == 'true'
+          path: |
+            ${{ github.workspace }}/.next/e2e/myhost/cache
+            ${{ github.workspace }}/.next/e2e/remote/cache
+          key: nextjs-e2e-${{ hashFiles('pnpm-lock.yaml') }}
+      # fetchキャッシュが使われるとなぜかe2eが失敗するので削除する
+      - name: Remove fetch-cache
         run: |
-          rm -rf .next/cache/fetch-cache
-          mkdir -p .next/e2e/myhost
-          mkdir -p .next/e2e/remote
-          cp -r .next/cache .next/e2e/myhost/cache
-          cp -r .next/cache .next/e2e/remote/cache
+          rm -rf .next/e2e/myhost/cache/fetch-cache
+          rm -rf .next/e2e/remote/cache/fetch-cache
       - run: corepack enable pnpm
       - uses: actions/setup-node@v4
         with:
