@@ -23,11 +23,11 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.next/e2e/myhost/cache
-          key: nextjs-myhost-${{ hashFiles('pnpm-lock.yaml') }}
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
       - uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.next/e2e/remote/cache
-          key: nextjs-remote-${{ hashFiles('pnpm-lock.yaml') }}
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
       # fetchキャッシュが使われるとなぜかe2eが失敗するので削除する
       - name: Remove fetch-cache
         run: |
