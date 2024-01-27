@@ -24,3 +24,6 @@ reports
 
 # sentry
 .sentryclirc
+
+# prisma-fabbrica
+app/_generated

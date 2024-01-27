@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  db-test:
+    image: postgres:16-alpine
+    ports:
+      - 54321:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 1s
+      timeout: 2s
