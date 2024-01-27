@@ -190,14 +190,6 @@ services:
       interval: 2s
       timeout: 2s
       retries: 10
-  db-test:
-    image: postgres:16-alpine
-    ports:
-      - 54321:5432
-    environment:
-      - POSTGRES_PASSWORD=password
-    profiles:
-      - test
   redis:
     image: redis:7-alpine
     volumes:
