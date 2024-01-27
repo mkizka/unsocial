@@ -190,6 +190,17 @@ services:
       interval: 2s
       timeout: 2s
       retries: 10
+  db-test:
+    image: postgres:16-alpine
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+    # healthcheck:
+    #   test: ["CMD", "test", "-e", "/tmp/db_initialized"]
+    #   interval: 2s
+    #   timeout: 2s
+    #   retries: 10
   redis:
     image: redis:7-alpine
     volumes:
