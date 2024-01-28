@@ -1,4 +1,9 @@
-import { server } from "./app/_shared/mocks/server";
+import { server } from "@/_shared/mocks/server";
+
+// https://github.com/Quramy/jest-prisma#tips
+jest.mock("@/_shared/utils/prisma", () => ({
+  prisma: jestPrisma.client,
+}));
 
 beforeAll(() =>
   server.listen({

@@ -11,7 +11,12 @@ const createJestConfig = nextJest({
 
 const customJestConfig: Config = {
   roots: ["<rootDir>/app"],
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testEnvironment: "@quramy/jest-prisma-node/environment",
+  setupFilesAfterEnv: [
+    "@quramy/prisma-fabbrica/scripts/jest-prisma",
+    "<rootDir>/jest/setup.ts",
+  ],
+  globalSetup: "<rootDir>/jest/global-setup.ts",
   clearMocks: true,
   modulePathIgnorePatterns: ["<rootDir>/.next"],
   moduleNameMapper: {

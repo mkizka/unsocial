@@ -23,6 +23,7 @@
     "paths": {
       "@/*": ["./app/*"],
     },
+    "types": ["@types/jest", "@quramy/jest-prisma-node"],
   },
   "include": [
     "next-env.d.ts",

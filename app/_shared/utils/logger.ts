@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/nextjs";
+
 import { env } from "./env";
 
 type LogLevel = typeof env.UNSOCIAL_LOG_LEVEL;
@@ -22,14 +24,31 @@ const logLevelsOrder = {
   error: 3,
 } satisfies Record<LogLevel, number>;
 
+const sentryLevel = (level: LogLevel) => {
+  switch (level) {
+    case "warn":
+      return "warning";
+    default:
+      return level;
+  }
+};
+
+const isLower = (a: LogLevel, b: LogLevel) => {
+  return logLevelsOrder[a] < logLevelsOrder[b];
+};
+
+const isSameOrHigher = (a: LogLevel, b: LogLevel) => {
+  return !isLower(a, b);
+};
+
 const railwayLog = (log: StructuredLog) => {
-  if (
-    env.NODE_ENV === "test" ||
-    logLevelsOrder[log.level] < logLevelsOrder[env.UNSOCIAL_LOG_LEVEL]
-  ) {
+  if (env.NODE_ENV === "test" || isLower(log.level, env.UNSOCIAL_LOG_LEVEL)) {
     return;
   }
   console[log.level](JSON.stringify(log));
+  if (isSameOrHigher(log.level, "warn")) {
+    Sentry.captureMessage(log.message, sentryLevel(log.level));
+  }
 };
 
 export const createLogger = (name: string): Logger => {

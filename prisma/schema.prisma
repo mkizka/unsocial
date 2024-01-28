@@ -10,6 +10,11 @@ datasource db {
   url      = env("UNSOCIAL_DATABASE_URL")
 }
 
+generator fabbrica {
+  provider = "prisma-fabbrica"
+  output = "../app/_generated"
+}
+
 model Session {
   id           String   @id @default(nanoid(8))
   sessionToken String   @unique

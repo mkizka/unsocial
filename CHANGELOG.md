@@ -1,5 +1,23 @@
 # unsocial
 
+## 0.0.22
+
+### Patch Changes
+
+- 67c7bf3: 空リリース
+
+## 0.0.21
+
+### Patch Changes
+
+- 9437255: 空リリース
+
+## 0.0.20
+
+### Patch Changes
+
+- 0ccbb2a: Sentry導入
+
 ## 0.0.19
 
 ### Patch Changes
