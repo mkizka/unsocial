@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.23
+
+### Patch Changes
+
+- 949aa8a: inboxのエラーログを調整
+
 ## 0.0.22
 
 ### Patch Changes
