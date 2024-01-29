@@ -48,14 +48,13 @@ export const perform = async (request: NextRequest) => {
   if (!validation.isValid) {
     return new BadActivityRequestError(
       "リクエストヘッダの署名が不正でした: " + validation.reason,
-      { activity, headers: Object.fromEntries(request.headers) },
     );
   }
 
   // 2. Activityのスキーマを検証する
   const parsedActivity = anyActivitySchema.safeParse(activity);
   if (!parsedActivity.success) {
-    return new ActivitySchemaValidationError(parsedActivity.error, activity);
+    return new ActivitySchemaValidationError(parsedActivity.error);
   }
 
   // 3. actorで指定されたユーザーを取得する
@@ -66,7 +65,6 @@ export const perform = async (request: NextRequest) => {
   if (actorUser instanceof Error) {
     return new BadActivityRequestError(
       "actorで指定されたユーザーが見つかりませんでした",
-      activity,
     );
   }
 
