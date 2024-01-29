@@ -19,7 +19,7 @@ const logger = createLogger("inboxFollowService");
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedFollow = apSchemaService.followSchema.safeParse(activity);
   if (!parsedFollow.success) {
-    return new ActivitySchemaValidationError(parsedFollow.error, activity);
+    return new ActivitySchemaValidationError(parsedFollow.error);
   }
   const followee = await userFindService.findOrFetchUserByActor(
     parsedFollow.data.object,
@@ -27,14 +27,12 @@ export const handle: InboxHandler = async (activity, actorUser) => {
   if (followee instanceof Error) {
     return new BadActivityRequestError(
       "フォローリクエストで指定されたフォロイーが存在しませんでした",
-      activity,
     );
   }
   if (!actorUser.inboxUrl) {
     // 他ホストのユーザーならinboxUrlを持っているはずなので、異常な動作
     return new UnexpectedActivityRequestError(
       "フォローリクエストを送信したユーザーがinboxUrlを持っていませんでした",
-      activity,
     );
   }
   await prisma.follow.create({

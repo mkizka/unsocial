@@ -59,6 +59,9 @@ dependencies:
   zod:
     specifier: 3.22.4
     version: 3.22.4
+  zod-validation-error:
+    specifier: 3.0.0
+    version: 3.0.0(zod@3.22.4)
 
 devDependencies:
   '@changesets/cli':
@@ -17184,7 +17187,6 @@ packages:
       zod: ^3.18.0
     dependencies:
       zod: 3.22.4
-    dev: true
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}

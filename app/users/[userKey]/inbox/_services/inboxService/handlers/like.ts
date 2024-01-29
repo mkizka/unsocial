@@ -10,13 +10,12 @@ import { type InboxHandler, resolveNoteId } from "./shared";
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedLike = apSchemaService.likeSchema.safeParse(activity);
   if (!parsedLike.success) {
-    return new ActivitySchemaValidationError(parsedLike.error, activity);
+    return new ActivitySchemaValidationError(parsedLike.error);
   }
   const noteId = resolveNoteId(new URL(parsedLike.data.object));
   if (!noteId) {
     return new BadActivityRequestError(
       "activityからいいね対象のノートIDを取得できませんでした",
-      activity,
     );
   }
   await prisma.like.create({

@@ -10,7 +10,7 @@ const logger = createLogger("inboxCreateService");
 export const handle: InboxHandler = async (activity) => {
   const parsedNote = apSchemaService.createSchema.safeParse(activity);
   if (!parsedNote.success) {
-    return new ActivitySchemaValidationError(parsedNote.error, activity);
+    return new ActivitySchemaValidationError(parsedNote.error);
   }
   await noteCreateService.create(parsedNote.data.object).catch((error) => {
     // https://www.prisma.io/docs/reference/api-reference/error-reference#p2002

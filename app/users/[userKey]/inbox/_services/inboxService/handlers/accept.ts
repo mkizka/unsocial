@@ -11,7 +11,7 @@ import type { InboxHandler } from "./shared";
 export const handle: InboxHandler = async (activity, followee) => {
   const parsedAccept = apSchemaService.acceptSchema.safeParse(activity);
   if (!parsedAccept.success) {
-    return new ActivitySchemaValidationError(parsedAccept.error, activity);
+    return new ActivitySchemaValidationError(parsedAccept.error);
   }
   const follower = await userFindService.findOrFetchUserByActor(
     parsedAccept.data.object.actor,
@@ -19,7 +19,6 @@ export const handle: InboxHandler = async (activity, followee) => {
   if (follower instanceof Error) {
     return new BadActivityRequestError(
       "Acceptされたフォロワーが存在しませんでした",
-      activity,
     );
   }
   await prisma.follow.update({
