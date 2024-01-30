@@ -12,8 +12,8 @@ dependencies:
     specifier: 2.1.1
     version: 2.1.1(react@18.3.0-canary-feed8f3f9-20240118)
   '@prisma/client':
-    specifier: 5.8.1
-    version: 5.8.1(prisma@5.9.0)
+    specifier: 5.9.0
+    version: 5.9.0(prisma@5.9.0)
   '@sentry/nextjs':
     specifier: 7.98.0
     version: 7.98.0(next@14.1.1-canary.21)(react@18.3.0-canary-feed8f3f9-20240118)(webpack@5.89.0)
@@ -81,7 +81,7 @@ devDependencies:
     version: 1.7.3(jest-environment-node@29.7.0)(jest@29.7.0)
   '@quramy/prisma-fabbrica':
     specifier: 2.1.0
-    version: 2.1.0(@prisma/client@5.8.1)(typescript@5.3.3)
+    version: 2.1.0(@prisma/client@5.9.0)(typescript@5.3.3)
   '@storybook/addon-essentials':
     specifier: 7.6.10
     version: 7.6.10(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.3.0-canary-feed8f3f9-20240118)(react@18.3.0-canary-feed8f3f9-20240118)
@@ -3971,8 +3971,8 @@ packages:
       - domexception
     dev: true
 
-  /@prisma/client@5.8.1(prisma@5.9.0):
-    resolution: {integrity: sha512-xQtMPfbIwLlbm0VVIVQY2yqQVOxPwRQhvIp7Z3m2900g1bu/zRHKhYZJQWELqmjl6d8YwBy0K2NvMqh47v1ubw==}
+  /@prisma/client@5.9.0(prisma@5.9.0):
+    resolution: {integrity: sha512-dHvFZgCT0BpRS+gRhk3S+50DstXMmVowxbrPeUJaK7sjNq5OhzfpT/OGE1kq9z5Q8WmOwIXJXyxP8O2CmP+nSg==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
@@ -4087,14 +4087,14 @@ packages:
       jest-environment-node: 29.7.0
     dev: true
 
-  /@quramy/prisma-fabbrica@2.1.0(@prisma/client@5.8.1)(typescript@5.3.3):
+  /@quramy/prisma-fabbrica@2.1.0(@prisma/client@5.9.0)(typescript@5.3.3):
     resolution: {integrity: sha512-9vUmDC+ZkaixWq8w86PTdNducHN5uIBdU/li1KGu1MIH5W3ZYO74QJUTbDsH06I8fZN1orlkbv1W9TWNG3Bzkg==}
     hasBin: true
     peerDependencies:
       '@prisma/client': ^5.0.0
       typescript: ^3.0.0 || ^4.0.0 || ^5.0.0
     dependencies:
-      '@prisma/client': 5.8.1(prisma@5.9.0)
+      '@prisma/client': 5.9.0(prisma@5.9.0)
       '@prisma/generator-helper': 5.8.1
       '@prisma/internals': 5.8.1
       short-uuid: 4.2.2
