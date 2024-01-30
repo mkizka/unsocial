@@ -44,4 +44,12 @@ describe("inboxCreateService", () => {
     // assert
     expect(error).toBeUndefined();
   });
+  test("不正なActivityが来た場合はエラーを返す", async () => {
+    // arrange
+    const activity = { type: "Dummy" };
+    // act
+    const error = await handle(activity, dummyRemoteUser as never);
+    // assert
+    expect(error).toBeInstanceOf(Error);
+  });
 });
