@@ -14,10 +14,6 @@ const config = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    // https://jotai.org/docs/tools/swc
-    swcPlugins: [["@swc-jotai/react-refresh", {}]],
-  },
   async rewrites() {
     return [
       {
