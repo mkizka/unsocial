@@ -1,9 +1,16 @@
-.env
-Dockerfile
-.dockerignore
-node_modules
-*.log
-README.md
-.next
-.git
-.github
+# node
+node_modules/
+
+# next
+.next/
+
+# storybook
+**/*.stories.ts
+**/*.stories.tsx
+
+# test
+jest/
+app/_shared/factories/
+app/_shared/mocks/
+app/_generated/
+**/*.spec.ts
