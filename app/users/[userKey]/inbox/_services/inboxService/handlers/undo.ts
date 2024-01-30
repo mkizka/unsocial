@@ -24,7 +24,6 @@ const undoFollow: UndoInboxHandler = async (activity, actorUser) => {
   if (followee instanceof Error) {
     return new BadActivityRequestError(
       "アンフォローリクエストで指定されたフォロイーが存在しませんでした",
-      activity,
     );
   }
   await prisma.follow.delete({
@@ -42,7 +41,6 @@ const undoLike: UndoInboxHandler = async (activity, actorUser) => {
   if (!noteId) {
     return new BadActivityRequestError(
       "activityからいいね削除対象のノートIDを取得できませんでした",
-      activity,
     );
   }
   await prisma.like.deleteMany({
@@ -61,7 +59,7 @@ const undoHandlers = {
 export const handle: InboxHandler = async (activity, actorUser) => {
   const parsedUndo = apSchemaService.undoSchema.safeParse(activity);
   if (!parsedUndo.success) {
-    return new ActivitySchemaValidationError(parsedUndo.error, activity);
+    return new ActivitySchemaValidationError(parsedUndo.error);
   }
   await undoHandlers[parsedUndo.data.object.type](parsedUndo.data, actorUser);
 };

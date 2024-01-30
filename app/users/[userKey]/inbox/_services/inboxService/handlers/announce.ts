@@ -11,7 +11,7 @@ import type { InboxHandler } from "./shared";
 export const handle: InboxHandler = async (activity, actor) => {
   const parsedAnnounce = apSchemaService.announceSchema.safeParse(activity);
   if (!parsedAnnounce.success) {
-    return new ActivitySchemaValidationError(parsedAnnounce.error, activity);
+    return new ActivitySchemaValidationError(parsedAnnounce.error);
   }
   const announcedNote = await noteFindService.findOrFetchNoteByUrl(
     parsedAnnounce.data.object,
@@ -19,7 +19,6 @@ export const handle: InboxHandler = async (activity, actor) => {
   if (announcedNote instanceof Error) {
     return new UnexpectedActivityRequestError(
       "リポストしたノートの取得に失敗しました",
-      announcedNote,
     );
   }
   await prisma.note.create({

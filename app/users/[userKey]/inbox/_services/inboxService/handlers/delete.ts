@@ -7,7 +7,7 @@ import type { InboxHandler } from "./shared";
 export const handle: InboxHandler = async (activity) => {
   const parsedDelete = apSchemaService.deleteSchema.safeParse(activity);
   if (!parsedDelete.success) {
-    return new ActivitySchemaValidationError(parsedDelete.error, activity);
+    return new ActivitySchemaValidationError(parsedDelete.error);
   }
   await prisma.note.deleteMany({
     where: {
