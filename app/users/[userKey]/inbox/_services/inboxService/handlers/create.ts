@@ -9,5 +9,5 @@ export const handle: InboxHandler = async (activity) => {
   if (!parsedNote.success) {
     return new ActivitySchemaValidationError(parsedNote.error);
   }
-  return noteCreateService.create(parsedNote.data.object);
+  await noteCreateService.create(parsedNote.data.object);
 };
