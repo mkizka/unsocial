@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.24
+
+### Patch Changes
+
+- deb64e5: 同じURLのノートActivityを受け取った場合は新しい方で上書きするように
+
 ## 0.0.23
 
 ### Patch Changes
