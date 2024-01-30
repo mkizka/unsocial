@@ -7,8 +7,8 @@ export const LocalUserFactory = defineUserFactory({
 });
 
 export const RemoteUserFactory = defineUserFactory({
-  defaultData: {
+  defaultData: async ({ seq }) => ({
     host: "remote.example.com",
-    actorUrl: "https://remote.example.com/u/dummy_remote",
-  },
+    actorUrl: `https://remote.example.com/users/${seq}`,
+  }),
 });
