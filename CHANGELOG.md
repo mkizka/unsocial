@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.26
+
+### Patch Changes
+
+- 86a4125: Dockerイメージがリリースできなかったのを修正
+
 ## 0.0.25
 
 ### Patch Changes
