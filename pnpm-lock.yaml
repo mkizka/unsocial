@@ -17,6 +17,9 @@ dependencies:
   '@sentry/nextjs':
     specifier: 7.98.0
     version: 7.98.0(next@14.1.1-canary.21)(react@18.3.0-canary-feed8f3f9-20240118)(webpack@5.89.0)
+  async-mutex:
+    specifier: 0.4.1
+    version: 0.4.1
   bcryptjs:
     specifier: 2.4.3
     version: 2.4.3
@@ -7672,6 +7675,12 @@ packages:
   /async-limiter@1.0.1:
     resolution: {integrity: sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==}
     dev: true
+
+  /async-mutex@0.4.1:
+    resolution: {integrity: sha512-WfoBo4E/TbCX1G95XTjbWTE3X2XLG0m1Xbv2cwOtuPdyH9CZvnaA5nCt1ucjaKEgW2A5IF71hxrRhr83Je5xjA==}
+    dependencies:
+      tslib: 2.6.2
+    dev: false
 
   /async@3.2.5:
     resolution: {integrity: sha512-baNZyqaaLhyLVKm/DlvdW051MSgO6b8eVfIezl9E5PqWxFgzLm/wQntEW4zOytVburDEr0JlALEpdOFwvErLsg==}

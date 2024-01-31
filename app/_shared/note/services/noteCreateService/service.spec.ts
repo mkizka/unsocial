@@ -73,7 +73,7 @@ describe("createNoteFromActivityService", () => {
       createdAt: expect.anyDate(),
     });
   });
-  test("同じidのActivityを2回受け取った場合後の方を優先(upsert)する", async () => {
+  test("同じidのActivityを2回受け取った場合後の最初を優先(upsert)する", async () => {
     // arrange
     const noteUser = await RemoteUserFactory.create();
     mockedUserService.findOrFetchUserByActor.mockResolvedValue(noteUser);
@@ -97,7 +97,35 @@ describe("createNoteFromActivityService", () => {
     // assert
     expect(note).toEqualPrisma({
       id: expect.any(String),
-      content: noteActivity2.content,
+      content: noteActivity.content,
+      publishedAt: new Date(noteActivity.published),
+      replyToId: null,
+      quoteId: null,
+      url: noteActivity.id,
+      userId: noteUser.id,
+      createdAt: expect.anyDate(),
+    });
+  });
+  test("全く同じActivityを同時に受け取った場合もエラーにならない", async () => {
+    // arrange
+    const noteUser = await RemoteUserFactory.create();
+    mockedUserService.findOrFetchUserByActor.mockResolvedValue(noteUser);
+    const noteActivity = {
+      type: "Note",
+      id: "https://remote.example.com/notes/dummyNoteId",
+      content: "content",
+      attributedTo: noteUser.actorUrl!,
+      published: "2023-01-01T00:00:00.000Z",
+    } satisfies apSchemaService.NoteActivity;
+    // act
+    const [note] = await Promise.all([
+      noteCreateService.create(noteActivity),
+      noteCreateService.create(noteActivity),
+    ]);
+    // assert
+    expect(note).toEqualPrisma({
+      id: expect.any(String),
+      content: noteActivity.content,
       publishedAt: new Date(noteActivity.published),
       replyToId: null,
       quoteId: null,
