@@ -8,5 +8,4 @@ for _ in {1..5}; do
   echo "Retrying..."
   sleep 1
 done
-VERSION=$(jq -r '.version' package.json)
-SENTRY_RELEASE=v$VERSION node server.js
+node server.js
