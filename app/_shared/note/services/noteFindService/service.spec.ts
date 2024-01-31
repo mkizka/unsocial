@@ -102,7 +102,7 @@ describe("noteFindService", () => {
         // arrange
         dbCondition();
         serverCondition();
-        mockedPrisma.note.upsert.mockResolvedValue(dummyRemoteNote as Note);
+        mockedPrisma.note.create.mockResolvedValue(dummyRemoteNote as Note);
         // act
         const note = await noteFindService.findOrFetchNoteByUrl(url);
         // assert

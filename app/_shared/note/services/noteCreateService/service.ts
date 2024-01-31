@@ -1,9 +1,12 @@
-import type { Note, Prisma } from "@prisma/client";
+import type { Note } from "@prisma/client";
+import { Mutex } from "async-mutex";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { noteFindService } from "@/_shared/note/services/noteFindService";
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { prisma } from "@/_shared/utils/prisma";
+
+const mutex = new Mutex();
 
 export const create = async (
   activity: apSchemaService.NoteActivity,
@@ -20,23 +23,27 @@ export const create = async (
   if (noteUser instanceof Error) {
     return noteUser;
   }
-  const data = {
-    userId: noteUser.id,
-    url: activity.id,
-    content: activity.content,
-    publishedAt: activity.published,
-    replyToId: replyTo?.id,
-    attachments: {
-      create: activity.attachment?.map((attachment) => ({
-        url: attachment.url,
-        mediaType: attachment.mediaType,
-      })),
-    },
-  } satisfies Prisma.NoteUpsertArgs["create"];
-  const note = await prisma.note.upsert({
-    where: { url: data.url },
-    create: data,
-    update: data,
+  return mutex.runExclusive(async () => {
+    const note = await prisma.note.findUnique({
+      where: { url: activity.id },
+    });
+    if (note) {
+      return note;
+    }
+    return prisma.note.create({
+      data: {
+        userId: noteUser.id,
+        url: activity.id,
+        content: activity.content,
+        publishedAt: activity.published,
+        replyToId: replyTo?.id,
+        attachments: {
+          create: activity.attachment?.map((attachment) => ({
+            url: attachment.url,
+            mediaType: attachment.mediaType,
+          })),
+        },
+      },
+    });
   });
-  return note;
 };
