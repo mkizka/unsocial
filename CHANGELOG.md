@@ -1,5 +1,24 @@
 # unsocial
 
+## 0.0.27
+
+### Patch Changes
+
+- 9dcf62c: ノートActivityが同時に送られてもエラーにしない
+- 9dcf62c: 同じURLのノートActivityを受け取った場合は保存しない
+
+## 0.0.26
+
+### Patch Changes
+
+- 86a4125: Dockerイメージがリリースできなかったのを修正
+
+## 0.0.25
+
+### Patch Changes
+
+- 55f4b9e: 依存関係の更新
+
 ## 0.0.24
 
 ### Patch Changes

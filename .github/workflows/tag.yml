@@ -30,6 +30,7 @@ jobs:
             type=raw,value=latest
       - uses: docker/build-push-action@v5
         with:
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
@@ -53,4 +54,3 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          SENTRY_RELEASE: ${{ github.ref_name }}
