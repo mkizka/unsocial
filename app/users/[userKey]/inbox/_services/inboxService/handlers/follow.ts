@@ -35,13 +35,21 @@ export const handle: InboxHandler = async (activity, actorUser) => {
       "フォローリクエストを送信したユーザーがinboxUrlを持っていませんでした",
     );
   }
-  await prisma.follow.create({
-    data: {
-      followeeId: followee.id,
-      followerId: actorUser.id,
-      status: "ACCEPTED",
-    },
-  });
+  await prisma.follow
+    .create({
+      data: {
+        followeeId: followee.id,
+        followerId: actorUser.id,
+        status: "ACCEPTED",
+      },
+    })
+    .catch((error) => {
+      if (error.code === "P2002") {
+        logger.info(`すでに存在するフォロー関係のためスキップ`);
+        return;
+      }
+      throw error;
+    });
   await apReplayService.relayActivityToInboxUrl({
     userId: followee.id,
     inboxUrl: new URL(actorUser.inboxUrl),
