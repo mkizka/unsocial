@@ -1,7 +1,8 @@
-import type { Follow } from "@prisma/client";
-
 import { apReplayService } from "@/_shared/activitypub/apRelayService";
-import { mockedPrisma } from "@/_shared/mocks/prisma";
+import { LocalUserFactory, RemoteUserFactory } from "@/_shared/factories/user";
+import { mockedLogger } from "@/_shared/mocks/logger";
+import { userFindService } from "@/_shared/user/services/userFindService";
+import { prisma } from "@/_shared/utils/prisma";
 
 import { handle } from "./follow";
 
@@ -10,49 +11,70 @@ const mockedRelayActivityToInboxUrl = jest.mocked(
   apReplayService.relayActivityToInboxUrl,
 );
 
-const dummyLocalUser = {
-  id: "dummyidlocal",
-  host: "myhost.example.com",
-  credentials: {
-    privateKey: "privateKey",
-  },
-};
-
-const dummyRemoteUser = {
-  id: "dummyidremote",
-  inboxUrl: "https://remote.example.com/inbox",
-};
+jest.mock("@/_shared/user/services/userFindService");
+const mockedUserFindService = jest.mocked(userFindService);
 
 describe("inboxFollowService", () => {
   test("正常系", async () => {
     // arrange
+    const remoteUser = await RemoteUserFactory.create();
+    const localUser = await LocalUserFactory.create();
+    mockedUserFindService.findOrFetchUserByActor.mockResolvedValue(localUser);
     const activity = {
       type: "Follow",
       id: "https://remote.example.com/follows/foobar",
-      actor: "https://remote.example.com/u/dummy_remote",
-      object: "https://myhost.example.com/users/dummyidlocal/activity",
+      actor: remoteUser.actorUrl!,
+      object: `https://myhost.example.com/users/${localUser.id}/activity`,
     };
-    mockedPrisma.user.findUnique.mockResolvedValueOnce(dummyLocalUser as never);
-    mockedPrisma.follow.create.mockResolvedValue({} as Follow);
     // act
-    const error = await handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, remoteUser);
     // assert
     expect(error).toBeUndefined();
-    expect(mockedPrisma.user.findUnique).toHaveBeenCalledWith({
-      where: {
-        id: "dummyidlocal",
-      },
-    });
-    expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
-      data: {
-        followeeId: dummyLocalUser.id,
-        followerId: dummyRemoteUser.id,
-        status: "ACCEPTED",
-      },
+    expect(await prisma.follow.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      followeeId: localUser.id,
+      followerId: remoteUser.id,
+      status: "ACCEPTED",
+      createdAt: expect.anyDate(),
     });
     expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      inboxUrl: new URL(dummyRemoteUser.inboxUrl),
-      userId: dummyLocalUser.id,
+      inboxUrl: new URL(remoteUser.inboxUrl!),
+      userId: localUser.id,
+      activity: {
+        "@context": [
+          "https://www.w3.org/ns/activitystreams",
+          "https://w3id.org/security/v1",
+        ],
+        id: expect.any(String),
+        type: "Accept",
+        actor: activity.object,
+        object: activity,
+      },
+    });
+  });
+  test("同じフォロー関係が送られてきてもエラーにしない", async () => {
+    // arrange
+    const remoteUser = await RemoteUserFactory.create();
+    const localUser = await LocalUserFactory.create();
+    mockedUserFindService.findOrFetchUserByActor.mockResolvedValue(localUser);
+    const activity = {
+      type: "Follow",
+      id: "https://remote.example.com/follows/foobar",
+      actor: remoteUser.actorUrl!,
+      object: `https://myhost.example.com/users/${localUser.id}/activity`,
+    };
+    // act
+    const error1 = await handle(activity, remoteUser);
+    const error2 = await handle(activity, remoteUser);
+    // assert
+    expect(error1).toBeUndefined();
+    expect(error2).toBeUndefined();
+    expect(mockedLogger.info).toHaveBeenCalledWith(
+      `すでに存在するフォロー関係のためスキップ`,
+    );
+    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
+      inboxUrl: new URL(remoteUser.inboxUrl!),
+      userId: localUser.id,
       activity: {
         "@context": [
           "https://www.w3.org/ns/activitystreams",
