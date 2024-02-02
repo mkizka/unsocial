@@ -29,10 +29,15 @@ export type AnnounceActivity = z.infer<typeof announceSchema>;
 export const deleteSchema = activitySchema.extend({
   type: z.literal("Delete"),
   actor: z.string().url(),
-  object: z.object({
-    type: z.literal("Tombstone"),
-    id: z.string().url(),
-  }),
+  object: z.union([
+    // Noteの削除
+    z.object({
+      type: z.literal("Tombstone"),
+      id: z.string().url(),
+    }),
+    // アカウントの削除
+    z.string().url(),
+  ]),
 });
 
 export type DeleteActivity = z.infer<typeof deleteSchema>;
