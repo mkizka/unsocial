@@ -3,17 +3,18 @@
 // https://github.com/misskey-dev/misskey/blob/30594dde181e9d151542c41c6f09e673fcbb3124/packages/backend/src/core/activitypub/LdSignatureService.ts
 import crypto from "crypto";
 import jsonld from "jsonld";
+import type { RemoteDocument } from "jsonld/jsonld-spec";
 
 import { CONTEXTS } from "./contexts";
 
 // https://github.com/digitalbazaar/jsonld.js/blob/5367858d28b6200aaf832d93eb666d4b819d5d4f/README.md#custom-document-loader
+// @ts-expect-error
 const nodeDocumentLoader = jsonld.documentLoaders.node();
 
-const customLoader = async (url) => {
+const customLoader = async (url: string): Promise<RemoteDocument> => {
   if (url in CONTEXTS) {
     return {
-      contextUrl: null,
-      document: CONTEXTS[url],
+      document: CONTEXTS[url]!,
       documentUrl: url,
     };
   }
@@ -32,8 +33,8 @@ const sha256 = (data: crypto.BinaryLike) => {
   return h.digest("hex");
 };
 
-const createVerifyData = async (data: unknown, options: unknown) => {
-  const transformedOptions = {
+const createVerifyData = async (data: object, options: object) => {
+  const transformedOptions: Record<string, unknown> = {
     ...options,
     "@context": "https://w3id.org/security/v1",
   };
@@ -42,7 +43,7 @@ const createVerifyData = async (data: unknown, options: unknown) => {
   delete transformedOptions["signatureValue"];
   const canonizedOptions = await canonize(transformedOptions);
   const optionsHash = sha256(canonizedOptions);
-  const transformedData = { ...data };
+  const transformedData: Record<string, unknown> = { ...data };
   delete transformedData["signature"];
   const cannonidedData = await canonize(transformedData);
   const documentHash = sha256(cannonidedData);
@@ -50,13 +51,26 @@ const createVerifyData = async (data: unknown, options: unknown) => {
   return verifyData;
 };
 
-export const sign = async ({
+type Signature = {
+  created: string;
+  creator: string;
+  signatureValue: string;
+  type: string;
+};
+
+export const sign = async <T extends object>({
   data,
   creator,
   domain,
   created,
   privateKey,
-}: unknown) => {
+}: {
+  data: T;
+  creator: string;
+  domain?: string;
+  created?: string;
+  privateKey: string;
+}): Promise<T & { signature: Signature }> => {
   const options = {
     type: "RsaSignature2017",
     creator,
@@ -81,7 +95,13 @@ export const sign = async ({
   };
 };
 
-export const verify = async ({ data, publicKey }: unknown) => {
+export const verify = async ({
+  data,
+  publicKey,
+}: {
+  data: { signature: Signature };
+  publicKey: string;
+}) => {
   const toBeSigned = await createVerifyData(data, data.signature);
   const verifier = crypto.createVerify("sha256");
   verifier.update(toBeSigned);
