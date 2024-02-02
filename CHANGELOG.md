@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.29
+
+### Patch Changes
+
+- 427ad23: Deleteアクティビティでユーザーを削除する
+
 ## 0.0.28
 
 ### Patch Changes
