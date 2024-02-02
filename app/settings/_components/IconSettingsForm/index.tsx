@@ -1,8 +1,8 @@
-import { getSessionUser } from "@/_shared/utils/session";
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 
 import { IconFileInput } from "./IconFileInput";
 
 export async function IconSettingsForm() {
-  const user = await getSessionUser({ redirect: true });
+  const user = await userSessionService.getUser({ redirect: true });
   return <IconFileInput iconHash={user.iconHash} />;
 }

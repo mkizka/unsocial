@@ -1,19 +1,25 @@
-import { mockDeep } from "jest-mock-extended";
-import type { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 
-import { mockedLogger } from "@/_mocks/logger";
-import { inboxService } from "@/_shared/service/inbox";
-import { BadActivityRequestError } from "@/_shared/service/inbox/errors";
+import { mockedLogger } from "@/_shared/mocks/logger";
 
+import { inboxService } from "./_services/inboxService";
+import { BadActivityRequestError } from "./_services/inboxService/handlers/errors";
 import { POST } from "./route";
 
-jest.mock("@/_shared/service/inbox");
+jest.mock("./_services/inboxService");
 const mockedInboxService = jest.mocked(inboxService);
 
 const createMockedRequest = (body: Record<string, string>) => {
-  const mockedRequest = mockDeep<NextRequest>();
-  mockedRequest.nextUrl.pathname = "/users/foo/inbox";
-  mockedRequest.json.mockResolvedValueOnce(body);
+  const mockedRequest = new NextRequest(
+    new URL("https://myhost.example.com/users/foo/inbox"),
+    {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "content-type": "application/json",
+      },
+    },
+  );
   return mockedRequest;
 };
 
@@ -38,14 +44,12 @@ describe("/users/[userId]/inbox", () => {
     };
     const request = createMockedRequest(activity);
     mockedInboxService.perform.mockResolvedValueOnce(
-      new BadActivityRequestError("エラー", activity),
+      new BadActivityRequestError("エラー"),
     );
     // act
     const response = await POST(request);
     // assert
-    expect(mockedLogger.warn).toHaveBeenCalledWith(
-      expect.stringContaining("エラー"),
-    );
+    expect(mockedLogger.warn).toHaveBeenCalledWith("エラー", expect.anything());
     expect(response.status).toBe(400);
   });
 });

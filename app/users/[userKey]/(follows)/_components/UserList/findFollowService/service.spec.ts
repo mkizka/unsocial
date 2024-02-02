@@ -1,6 +1,6 @@
 import type { Follow } from "@prisma/client";
 
-import { mockedPrisma } from "@/_mocks/prisma";
+import { mockedPrisma } from "@/_shared/mocks/prisma";
 
 import * as followFindService from "./service";
 

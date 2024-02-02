@@ -17,12 +17,13 @@
     "noUncheckedIndexedAccess": true,
     "plugins": [
       {
-        "name": "next"
-      }
+        "name": "next",
+      },
     ],
     "paths": {
-      "@/*": ["./app/*"]
-    }
+      "@/*": ["./app/*"],
+    },
+    "types": ["@types/jest", "@quramy/jest-prisma-node"],
   },
   "include": [
     "next-env.d.ts",
@@ -33,7 +34,7 @@
     "**/*.js",
     "**/*.mjs",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

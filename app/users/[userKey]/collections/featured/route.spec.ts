@@ -1,13 +1,13 @@
 import type { Note, User } from "@prisma/client";
 
-import { mockedPrisma } from "@/_mocks/prisma";
-import { userService } from "@/_shared/service/user";
+import { mockedPrisma } from "@/_shared/mocks/prisma";
+import { userFindService } from "@/_shared/user/services/userFindService";
 
 import { GET } from "./route";
 
-jest.mock("@/_shared/service/user");
+jest.mock("@/_shared/user/services/userFindService");
 const mockedFindOrFetchUserByKey = jest.mocked(
-  userService.findOrFetchUserByKey,
+  userFindService.findOrFetchUserByKey,
 );
 
 describe("/users/[userId]/collections/featured", () => {
@@ -21,7 +21,7 @@ describe("/users/[userId]/collections/featured", () => {
         id: "__note__id",
         userId: "__note__userId",
         content: "__note__content",
-        createdAt: new Date("2023-01-01T00:00:00Z"),
+        publishedAt: new Date("2023-01-01T00:00:00Z"),
       } as Note,
     ]);
     // act

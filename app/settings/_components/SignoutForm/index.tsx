@@ -1,18 +1,18 @@
 "use client";
 import { signOut } from "next-auth/react";
 
-import { Card } from "@/_shared/components/ui/Card";
+import { Card } from "@/_shared/ui/Card";
 
 export function SignOutForm() {
   return (
     <Card>
       <button
-        className="text-accent"
+        className="text-destructive"
         data-testid="login-button"
-        onClick={() => {
+        onClick={async () => {
           const ok = confirm("ログアウトしますか？");
           if (!ok) return;
-          signOut({ redirect: false }).then(() => {
+          await signOut({ redirect: false }).then(() => {
             location.href = "/";
           });
         }}

@@ -1,12 +1,12 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
+import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
-import { relayActivityToInboxUrl } from "@/_shared/utils/relayActivity";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 const logger = createLogger("FollowButton");
 
@@ -30,7 +30,7 @@ const follow = async (userId: string, followeeId: string) => {
       logger.error("フォロー先のinboxUrlがありません");
       return;
     }
-    await relayActivityToInboxUrl({
+    await apReplayService.relayActivityToInboxUrl({
       userId,
       inboxUrl: new URL(follow.followee.inboxUrl),
       activity: activityStreams.follow(follow, follow.followee.actorUrl),
@@ -64,7 +64,7 @@ const unfollow = async (userId: string, followeeId: string) => {
       logger.error("フォロー先のinboxUrlがありません");
       return;
     }
-    await relayActivityToInboxUrl({
+    await apReplayService.relayActivityToInboxUrl({
       userId,
       inboxUrl: new URL(follow.followee.inboxUrl),
       activity: activityStreams.undo(
@@ -75,7 +75,7 @@ const unfollow = async (userId: string, followeeId: string) => {
 };
 
 export async function action({ followeeId }: { followeeId: string }) {
-  const userId = await getSessionUserId({ redirect: true });
+  const userId = await userSessionService.getUserId({ redirect: true });
   const existingFollow = await prisma.follow.findFirst({
     where: {
       followeeId: followeeId,

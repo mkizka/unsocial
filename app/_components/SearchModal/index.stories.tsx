@@ -18,7 +18,7 @@ export const Default: Story = {
     await userEvent.click(canvas.getByTestId("search-modal__button"));
     await userEvent.type(canvas.getByTestId("search-modal__input"), "@foo");
     await userEvent.click(canvas.getByTestId("search-modal__submit"));
-    expect(canvas.queryByTestId("search-modal__input")).toBeNull();
+    await expect(canvas.queryByTestId("search-modal__input")).toBeNull();
   },
 };
 
@@ -29,6 +29,6 @@ export const InvalidInput: Story = {
     await userEvent.click(canvas.getByTestId("search-modal__button"));
     await userEvent.type(canvas.getByTestId("search-modal__input"), "foo");
     await userEvent.click(canvas.getByTestId("search-modal__submit"));
-    expect(spyAlert).toHaveBeenCalledWith("@から始まる必要があります");
+    await expect(spyAlert).toHaveBeenCalledWith("@から始まる必要があります");
   },
 };

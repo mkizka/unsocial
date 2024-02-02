@@ -8,7 +8,9 @@
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "plugin:eqeqeq-fix/recommended",
-    "plugin:@dword-design/import-alias/recommended"
+    "plugin:@dword-design/import-alias/recommended",
+    "plugin:tailwindcss/recommended",
+    "plugin:storybook/recommended"
   ],
   "rules": {
     // next
@@ -19,6 +21,7 @@
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/eqeqeq": "off",
+    "@typescript-eslint/no-floating-promises": "error",
     // simple-import-sort
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
@@ -32,6 +35,15 @@
           "@": "./app/"
         }
       }
-    ]
+    ],
+    // tailwindcss
+    "tailwindcss/classnames-order": "error",
+    "tailwindcss/no-custom-classname": [
+      "error",
+      {
+        "callees": ["cn", "cva"]
+      }
+    ],
+    "tailwindcss/migration-from-tailwind-2": "error"
   }
 }

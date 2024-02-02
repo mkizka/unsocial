@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`errors ActivitySchemaValidationError 1`] = `"{"name":"ActivitySchemaValidationError","message":{"foo":["Expected string, received null"]},"data":{"type":"Dummy"}}"`;
-
-exports[`errors BadActivityRequestError 1`] = `"{"name":"BadActivityRequestError","message":"エラーメッセージ","data":{"type":"Dummy"}}"`;
-
-exports[`errors UnexpectedActivityRequestError 1`] = `"{"name":"UnexpectedActivityRequestError","message":"エラーメッセージ","data":{"type":"Dummy"}}"`;

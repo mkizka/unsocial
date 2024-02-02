@@ -8,9 +8,11 @@ export class MyhostUnsocialHandler extends FediverseHandler {
 
   async login() {
     await this.goto("/auth");
-    await this.page.getByTestId("text-input-preferredUsername").fill("test");
-    await this.page.getByTestId("password-input").fill("testtest");
-    await this.page.getByTestId("submit-button").click();
+    await this.page
+      .getByTestId("auth-form__input-preferredUsername")
+      .fill("test");
+    await this.page.getByTestId("auth-form__input-password").fill("testtest");
+    await this.page.getByTestId("auth-form__button").click();
     await expect(this.page.getByTestId("user-menu")).toBeVisible();
   }
 

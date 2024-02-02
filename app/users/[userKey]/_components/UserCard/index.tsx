@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { UserIcon } from "@/_shared/components/user/UserIcon";
-import { userService } from "@/_shared/service/user";
+import { Card } from "@/_shared/ui/Card";
+import { UserIcon } from "@/_shared/user/components/UserIcon";
+import { userFindService } from "@/_shared/user/services/userFindService";
+import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { env } from "@/_shared/utils/env";
 import { fullUsername } from "@/_shared/utils/fullUsername";
-import { getSessionUserId } from "@/_shared/utils/session";
 
 import { FollowButton } from "./FollowButton";
 import { followCountService } from "./followCountService";
@@ -16,8 +17,8 @@ type Props = {
 };
 
 export async function UserCard({ userKey }: Props) {
-  const sessionUserId = await getSessionUserId();
-  const user = await userService.findOrFetchUserByKey(userKey);
+  const sessionUserId = await userSessionService.getUserId();
+  const user = await userFindService.findOrFetchUserByKey(userKey);
   if (user instanceof Error) {
     notFound();
   }
@@ -26,12 +27,12 @@ export async function UserCard({ userKey }: Props) {
   );
   const canFollow = sessionUserId !== user.id;
   return (
-    <section className="mb-1 space-y-4 rounded bg-primary-light p-4 pb-6 shadow">
+    <Card as="section" className="mb-1 space-y-4 pb-6">
       <div className="flex w-full items-center">
         <UserIcon user={user} size={64} className="rounded-full" />
         <div className="ml-4">
           <h1 className="text-2xl font-bold">{user.name}</h1>
-          <div className="text-gray">{fullUsername(user)}</div>
+          <div>{fullUsername(user)}</div>
         </div>
       </div>
       <div>{user.summary}</div>
@@ -52,9 +53,13 @@ export async function UserCard({ userKey }: Props) {
           <span className="font-bold">{followersCount}</span>
           <span className="ml-1">フォロワー</span>
         </Link>
-        {canFollow && <FollowButton followeeId={user.id} />}
-        {env.UNSOCIAL_HOST !== user.host && <RefetchButton userId={user.id} />}
+        <div className="ml-auto">
+          {canFollow && <FollowButton followeeId={user.id} />}
+          {env.UNSOCIAL_HOST !== user.host && (
+            <RefetchButton userId={user.id} />
+          )}
+        </div>
       </div>
-    </section>
+    </Card>
   );
 }

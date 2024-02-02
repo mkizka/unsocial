@@ -1,7 +1,7 @@
 import pkg from "@/../package.json";
+import { httpSignatureSignService } from "@/_shared/activitypub/httpSignatureSignService";
 
 import { env } from "./env";
-import { signHeaders } from "./httpSignature/sign";
 import { createLogger } from "./logger";
 
 const logger = createLogger("fetcher");
@@ -39,7 +39,7 @@ const createHeaders = (url: URL, options?: Options) => {
   if (options?.signer) {
     Object.assign(
       defaultHeaders,
-      signHeaders({
+      httpSignatureSignService.signHeaders({
         signer: options.signer,
         inboxUrl: url,
         body: options.body ?? "",

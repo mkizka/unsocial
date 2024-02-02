@@ -3,6 +3,7 @@
   "deploy": {
     "healthcheckPath": "/health",
     "healthcheckTimeout": 30,
-    "restartPolicyType": "NEVER"
+    "restartPolicyType": "NEVER",
+    "sleepApplication": true
   }
 }

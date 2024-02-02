@@ -1,4 +1,4 @@
-import { Timeline } from "@/_shared/components/note/Timeline";
+import { Timeline } from "@/_shared/note/components/Timeline";
 
 import { UserTab } from "./UserTab";
 

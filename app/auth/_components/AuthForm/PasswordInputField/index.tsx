@@ -1,4 +1,4 @@
-import { TextInput } from "@/_shared/components/ui/TextInput";
+import { Input } from "@/_shared/ui/Input";
 
 type Props = {
   action: "signUp" | "signIn";
@@ -15,11 +15,11 @@ export function PasswordInputField({ action }: Props) {
           </a>
         )}
       </div>
-      <TextInput
+      <Input
         id="password"
         name="password"
         type="password"
-        data-testid="password-input"
+        data-testid="auth-form__input-password"
         autoComplete={action === "signUp" ? "new-password" : "current-password"}
         required
       />

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { userEvent, within } from "@storybook/testing-library";
 import type { ComponentProps } from "react";
 
-import { Card } from "@/_shared/components/ui/Card";
+import { Card } from "@/_shared/ui/Card";
 
 import { Dropdown } from ".";
 
@@ -34,8 +34,12 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByTestId("user-menu__button"));
-    expect(canvas.queryByTestId("user-menu__dropdown")).toBeInTheDocument();
+    await expect(
+      canvas.queryByTestId("user-menu__dropdown"),
+    ).toBeInTheDocument();
     await userEvent.click(canvas.getByTestId("user-menu__backdrop"));
-    expect(canvas.queryByTestId("user-menu__dropdown")).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByTestId("user-menu__dropdown"),
+    ).not.toBeInTheDocument();
   },
 };

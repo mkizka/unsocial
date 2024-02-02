@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import { M_PLUS_1_Code } from "next/font/google";
+import { Noto_Sans_JP } from "next/font/google";
 
 import { Body } from "./_components/Body";
 import { Providers } from "./_components/Providers";
@@ -37,17 +37,16 @@ export const metadata = {
   },
 };
 
-const font = M_PLUS_1_Code({
-  weight: "400",
-  subsets: ["latin"],
+const font = Noto_Sans_JP({
+  preload: false,
 });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" className={font.className}>
       <Providers>
-        <Body>
-          <header className="fixed z-10 flex h-[54px] w-full items-center justify-between rounded-b-md bg-primary-light px-4 shadow-md">
+        <Body className="flex min-h-screen justify-center bg-background antialiased">
+          <header className="fixed z-10 flex h-[54px] w-full items-center justify-between rounded-b-md bg-card px-4 shadow-md">
             <SearchModal />
             <UserMenu />
           </header>

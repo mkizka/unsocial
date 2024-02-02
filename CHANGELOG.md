@@ -1,5 +1,96 @@
 # unsocial
 
+## 0.0.28
+
+### Patch Changes
+
+- 5999c1d: すでにあるFollowが送られてきてもエラーにしない
+
+## 0.0.27
+
+### Patch Changes
+
+- 9dcf62c: ノートActivityが同時に送られてもエラーにしない
+- 9dcf62c: 同じURLのノートActivityを受け取った場合は保存しない
+
+## 0.0.26
+
+### Patch Changes
+
+- 86a4125: Dockerイメージがリリースできなかったのを修正
+
+## 0.0.25
+
+### Patch Changes
+
+- 55f4b9e: 依存関係の更新
+
+## 0.0.24
+
+### Patch Changes
+
+- deb64e5: 同じURLのノートActivityを受け取った場合は新しい方で上書きするように
+
+## 0.0.23
+
+### Patch Changes
+
+- 949aa8a: inboxのエラーログを調整
+
+## 0.0.22
+
+### Patch Changes
+
+- 67c7bf3: 空リリース
+
+## 0.0.21
+
+### Patch Changes
+
+- 9437255: 空リリース
+
+## 0.0.20
+
+### Patch Changes
+
+- 0ccbb2a: Sentry導入
+
+## 0.0.19
+
+### Patch Changes
+
+- 315b34a: 全体的なスタイルの調整
+
+## 0.0.18
+
+### Patch Changes
+
+- 6b35cae: 依存関係の更新
+
+## 0.0.17
+
+### Patch Changes
+
+- 9a5188a: shadcn/ui導入
+
+## 0.0.16
+
+### Patch Changes
+
+- 730adfb: リポストをタイムラインに表示
+
+## 0.0.15
+
+### Patch Changes
+
+- c244960: リファクタリング
+
+## 0.0.14
+
+### Patch Changes
+
+- d591f21: 依存関係の更新
+
 ## 0.0.13
 
 ### Patch Changes
