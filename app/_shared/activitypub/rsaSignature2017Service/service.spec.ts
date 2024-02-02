@@ -1,6 +1,6 @@
 import { mockedKeys } from "@/_shared/mocks/keys";
 
-import { sign, verify } from "./rsaSignature2017";
+import { sign, verify } from "./service";
 
 const linkedData = {
   "@context": [
