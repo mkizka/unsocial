@@ -49,9 +49,10 @@ jobs:
           path: ${{ github.workspace }}/.next/cache
           key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm i
-      - run: pnpm build
+      - run: |
+          VERSION=$(jq -r '.version' package.json)
+          SENTRY_RELEASE=$VERSION pnpm build
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          SENTRY_RELEASE: ${{ github.ref_name }}
