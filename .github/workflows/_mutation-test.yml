@@ -29,7 +29,7 @@ jobs:
       - name: upload-reports
         run: |
           mv stryker.log reports/mutation/stryker.txt
-          aws s3 cp reports/mutation "s3://${{ env.AWS_S3_BUCKET }}${{ env.UPLOAD_DIR }}/${{ env.BRANCH_NAME }}" --recursive
+          aws s3 cp reports/mutation "s3://${{ env.AWS_S3_BUCKET }}/${{ env.UPLOAD_DIR }}/${{ env.BRANCH_NAME }}" --recursive
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
         id: mutation-report
