@@ -21,14 +21,14 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
   }
 
-  async expectedUserNotFound(user: string) {
-    const response = await this.page.goto(`/${user}`);
-    expect(response?.status()).toBe(404);
-  }
-
-  async waitForUserNotFound(user: string) {
-    await this.waitFor(() => this.expectedUserNotFound(user));
-  }
+  // async expectedUserNotFound(user: string) {
+  //   const response = await this.page.goto(`/${user}`);
+  //   expect(response?.status()).toBe(404);
+  // }
+  //
+  // async waitForUserNotFound(user: string) {
+  //   await this.waitFor(() => this.expectedUserNotFound(user));
+  // }
 
   getNote(content: string) {
     return this.page.locator("[data-testid=note-card]", { hasText: content });

@@ -113,10 +113,11 @@ const runTest = async ({ from, to }: RunTestParams) => {
         `${to.domain}: アカウントを削除`, //
         () => to.deleteAccount(),
       ],
-      [
-        `${from.domain}: アカウントが削除されたことを確認`,
-        () => from.waitForUserNotFound(to.user),
-      ],
+      // TODO: RsaSignature2017をサポートする
+      // [
+      //   `${from.domain}: アカウントが削除されたことを確認`,
+      //   () => from.waitForUserNotFound(to.user),
+      // ],
     );
   }
   for (const [label, action] of steps) {
