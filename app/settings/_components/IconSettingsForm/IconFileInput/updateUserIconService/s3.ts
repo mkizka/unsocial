@@ -4,7 +4,7 @@ import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { env } from "@/_shared/utils/env";
 
 const client = new S3Client({
-  region: "ap-northeast-1",
+  region: env.UNSOCIAL_AWS_DEFAULT_REGION,
   endpoint: env.UNSOCIAL_AWS_ENDPOINT,
   credentials: {
     accessKeyId: env.UNSOCIAL_AWS_ACCESS_KEY_ID,
@@ -16,7 +16,7 @@ const client = new S3Client({
 export const putObject = (input: Omit<PutObjectCommandInput, "Bucket">) => {
   return client.send(
     new PutObjectCommand({
-      Bucket: env.UNSOCIAL_AWS_BUCKET,
+      Bucket: env.UNSOCIAL_AWS_S3_BUCKET,
       ...input,
     }),
   );
