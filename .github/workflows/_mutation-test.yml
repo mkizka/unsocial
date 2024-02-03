@@ -4,12 +4,14 @@ on:
   workflow_call:
 
 env:
-  UPLOAD_DIR: unsocial-gha/mutation-test
+  UPLOAD_DIR: mutation-test
   BRANCH_NAME: ${{ github.head_ref || 'main' }}
-  ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
+  AWS_S3_PUBLIC_URL: ${{ secrets.AWS_S3_PUBLIC_URL }}
+  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+  AWS_ENDPOINT_URL: ${{ secrets.AWS_ENDPOINT_URL }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_DEFAULT_REGION: ap-northeast-1
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 
 jobs:
   test:
@@ -27,12 +29,12 @@ jobs:
       - name: upload-reports
         run: |
           mv stryker.log reports/mutation/stryker.txt
-          aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/mutation "s3://${{ env.UPLOAD_DIR }}/${{ env.BRANCH_NAME }}" --recursive
+          aws s3 cp reports/mutation "s3://${{ env.AWS_S3_BUCKET }}${{ env.UPLOAD_DIR }}/${{ env.BRANCH_NAME }}" --recursive
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
         id: mutation-report
         env:
-          MUTATION_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
+          MUTATION_TEST_S3_BASEURL: ${{ env.AWS_S3_PUBLIC_URL }}/${{ env.UPLOAD_DIR }}
         with:
           command: ./scripts/mutation-report.ts
       - uses: thollander/actions-comment-pull-request@v2
