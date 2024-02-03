@@ -108,7 +108,7 @@ const table = async (baseUrl: string, branchName: string) => {
 const main = async () => {
   const baseUrl =
     process.env.MUTATION_TEST_S3_BASEURL ??
-    "https://gha.unsocial.dev/mutation-test/pr";
+    "https://gha.unsocial.dev/mutation-test";
   const branchName =
     process.env.BRANCH_NAME ??
     child_process.execSync("git branch --show-current").toString().trim();
