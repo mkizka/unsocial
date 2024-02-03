@@ -111,7 +111,7 @@ const main = async () => {
   const env = z
     .object({
       AWS_S3_PUBLIC_URL: z.string().url().default("https://gha.unsocial.dev"),
-      UPLOAD_DIR: z.string().default("/mutation-test/pr"),
+      UPLOAD_DIR: z.string().default("mutation-test/pr"),
       BRANCH_NAME: z
         .string()
         .default(
@@ -121,7 +121,7 @@ const main = async () => {
     .parse(process.env);
   const baseUrls = {
     main: `${env.AWS_S3_PUBLIC_URL}/mutation-test/main`,
-    pr: `${env.AWS_S3_PUBLIC_URL}${env.UPLOAD_DIR}/${env.BRANCH_NAME}`,
+    pr: `${env.AWS_S3_PUBLIC_URL}/${env.UPLOAD_DIR}/${env.BRANCH_NAME}`,
   };
   const text = `${await table(baseUrls)}
   
