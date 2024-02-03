@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 env:
-  UPLOAD_DIR: mutation-test
+  UPLOAD_DIR: ${{ github.event_name == 'pull_request' && 'mutation-test/pr' || 'mutation-test' }}
   BRANCH_NAME: ${{ github.head_ref || 'main' }}
   AWS_S3_PUBLIC_URL: ${{ secrets.AWS_S3_PUBLIC_URL }}
   AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}

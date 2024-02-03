@@ -9,11 +9,11 @@ CACHE_PATH=$MUTATION_DIR/stryker-incremental.json
 rm -rf $MUTATION_DIR
 mkdir -p $MUTATION_DIR
 
-echo "$BRANCH_NAME のキャッシュファイルをダウンロード..."
-curl -f --progress-bar -o $CACHE_PATH "https://minio-s3.paas.mkizka.dev/unsocial-gha/mutation-test/$BRANCH_NAME/stryker-incremental.json"
+echo "pr/${BRANCH_NAME}のキャッシュファイルをダウンロード..."
+curl -f --progress-bar -o $CACHE_PATH "https://gha.unsocial.dev/mutation-test/pr/$BRANCH_NAME/stryker-incremental.json"
 if [ ! -f $CACHE_PATH ]; then
-  echo "main のキャッシュファイルをダウンロード..."
-  curl -f --progress-bar -o $CACHE_PATH https://minio-s3.paas.mkizka.dev/unsocial-gha/mutation-test/main/stryker-incremental.json
+  echo "mainのキャッシュファイルをダウンロード..."
+  curl -f --progress-bar -o $CACHE_PATH https://gha.unsocial.dev/mutation-test/main/stryker-incremental.json
 fi
 
 pnpm stryker run "$@"
