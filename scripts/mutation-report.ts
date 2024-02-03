@@ -1,6 +1,8 @@
 #!/usr/bin/env -S pnpm tsx
 import child_process from "child_process";
 import fs from "fs";
+import { z } from "zod";
+
 type Result = {
   files: {
     [key: string]: {
@@ -68,10 +70,10 @@ const isSuccess = (
   );
 };
 
-const table = async (baseUrl: string, branchName: string) => {
+const table = async (baseUrls: { main: string; pr: string }) => {
   const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
   const mainScores = getScorePerFile(
-    await fetchJson(`${baseUrl}/main/mutation.json`),
+    await fetchJson(`${baseUrls.main}/mutation.json`),
   );
   const filenames = [
     ...new Set([...Object.keys(prScores), ...Object.keys(mainScores)]),
@@ -95,7 +97,7 @@ const table = async (baseUrl: string, branchName: string) => {
       ? ":white_check_mark:"
       : ":x:";
     const hash = filename.replace("app/", "mutant/");
-    const filenameText = `[${filename}](${baseUrl}/${branchName}/mutation.html#${hash})`;
+    const filenameText = `[${filename}](${baseUrls.pr}/mutation.html#${hash})`;
     comment.push(
       `| ${filenameText} | ${rawMainScore} → ${rawPrScore} | ${diffText} |`,
     );
@@ -106,18 +108,26 @@ const table = async (baseUrl: string, branchName: string) => {
 };
 
 const main = async () => {
-  const baseUrl =
-    process.env.MUTATION_TEST_S3_BASEURL ??
-    "https://minio-s3.paas.mkizka.dev/unsocial-gha/mutation-test";
-  const branchName =
-    process.env.BRANCH_NAME ??
-    child_process.execSync("git branch --show-current").toString().trim();
-
-  const text = `${await table(baseUrl, branchName)}
+  const env = z
+    .object({
+      AWS_S3_PUBLIC_URL: z.string().url().default("https://gha.unsocial.dev"),
+      UPLOAD_DIR: z.string().default("mutation-test/pr"),
+      BRANCH_NAME: z
+        .string()
+        .default(
+          child_process.execSync("git branch --show-current").toString().trim(),
+        ),
+    })
+    .parse(process.env);
+  const baseUrls = {
+    main: `${env.AWS_S3_PUBLIC_URL}/mutation-test/main`,
+    pr: `${env.AWS_S3_PUBLIC_URL}/${env.UPLOAD_DIR}/${env.BRANCH_NAME}`,
+  };
+  const text = `${await table(baseUrls)}
   
-  :gun: [mutation.html (${branchName})](${baseUrl}/${branchName}/mutation.html)
-  :gun: [mutation.html (main)](${baseUrl}/main/mutation.html)
-  :page_facing_up: [stryker.txt](${baseUrl}/${branchName}/stryker.txt)`;
+  :gun: [mutation.html (${env.BRANCH_NAME})](${baseUrls.pr}/mutation.html)
+  :gun: [mutation.html (main)](${baseUrls.main}/mutation.html)
+  :page_facing_up: [stryker.txt](${baseUrls.pr}/stryker.txt)`;
 
   console.log(text);
 };

@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 env:
-  UPLOAD_DIR: mutation-test
+  UPLOAD_DIR: ${{ github.event_name == 'pull_request' && 'mutation-test/pr' || 'mutation-test' }}
   BRANCH_NAME: ${{ github.head_ref || 'main' }}
   AWS_S3_PUBLIC_URL: ${{ secrets.AWS_S3_PUBLIC_URL }}
   AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
@@ -33,8 +33,6 @@ jobs:
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
         id: mutation-report
-        env:
-          MUTATION_TEST_S3_BASEURL: ${{ env.AWS_S3_PUBLIC_URL }}/${{ env.UPLOAD_DIR }}
         with:
           command: ./scripts/mutation-report.ts
       - uses: thollander/actions-comment-pull-request@v2
