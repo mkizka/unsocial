@@ -33,8 +33,6 @@ jobs:
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
         id: mutation-report
-        env:
-          MUTATION_TEST_S3_BASEURL: ${{ env.AWS_S3_PUBLIC_URL }}/${{ env.UPLOAD_DIR }}
         with:
           command: ./scripts/mutation-report.ts
       - uses: thollander/actions-comment-pull-request@v2
