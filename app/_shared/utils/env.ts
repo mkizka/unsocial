@@ -19,8 +19,18 @@ const serverEnvSchema = z.object({
     (str) => process.env.RAILWAY_PUBLIC_DOMAIN ?? str,
     z.string().min(1),
   ),
+  UNSOCIAL_AWS_S3_PUBLIC_URL: z.preprocess(
+    // UNSOCIAL_AWS_S3_PUBLIC_URLが指定されていない場合は、UNSOCIAL_AWS_ENDPOINTを使う
+    (str) =>
+      str ??
+      process.env.UNSOCIAL_AWS_ENDPOINT +
+        "/" +
+        process.env.UNSOCIAL_AWS_S3_BUCKET,
+    z.string().url(),
+  ),
+  UNSOCIAL_AWS_S3_BUCKET: z.string().min(1),
   UNSOCIAL_AWS_ENDPOINT: z.string().url(),
-  UNSOCIAL_AWS_BUCKET: z.string().min(1),
+  UNSOCIAL_AWS_DEFAULT_REGION: z.string().min(1),
   UNSOCIAL_AWS_ACCESS_KEY_ID: z.string().min(1),
   UNSOCIAL_AWS_SECRET_ACCESS_KEY: z.string().min(1),
 });

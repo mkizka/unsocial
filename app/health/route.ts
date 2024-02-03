@@ -10,9 +10,12 @@ export function GET() {
   return NextResponse.json({
     status: "ok",
     version: pkg.version,
-    env: {
-      NODE_ENV: env.NODE_ENV,
-      UNSOCIAL_HOST: env.UNSOCIAL_HOST,
-    },
+    env:
+      env.NODE_ENV === "production"
+        ? {
+            NODE_ENV: env.NODE_ENV,
+            UNSOCIAL_HOST: env.UNSOCIAL_HOST,
+          }
+        : env,
   });
 }
