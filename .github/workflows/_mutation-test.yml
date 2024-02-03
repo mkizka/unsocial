@@ -4,9 +4,10 @@ on:
   workflow_call:
 
 env:
-  UPLOAD_DIR: unsocial-gha/mutation-test
+  UPLOAD_DIR: mutation-test
   BRANCH_NAME: ${{ github.head_ref || 'main' }}
   AWS_S3_PUBLIC_URL: ${{ secrets.AWS_S3_PUBLIC_URL }}
+  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
   AWS_ENDPOINT_URL: ${{ secrets.AWS_ENDPOINT_URL }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -28,7 +29,7 @@ jobs:
       - name: upload-reports
         run: |
           mv stryker.log reports/mutation/stryker.txt
-          aws s3 cp reports/mutation "s3://${{ env.UPLOAD_DIR }}/${{ env.BRANCH_NAME }}" --recursive
+          aws s3 cp reports/mutation "s3://${{ env.AWS_S3_BUCKET }}${{ env.UPLOAD_DIR }}/${{ env.BRANCH_NAME }}" --recursive
       - uses: gh640/command-result-action@v1
         if: github.event_name == 'pull_request'
         id: mutation-report

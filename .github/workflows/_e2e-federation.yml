@@ -8,8 +8,9 @@ on:
         type: string
 
 env:
-  UPLOAD_DIR: unsocial-gha/e2e-test
+  UPLOAD_DIR: e2e-test
   AWS_S3_PUBLIC_URL: ${{ secrets.AWS_S3_PUBLIC_URL }}
+  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
   AWS_ENDPOINT_URL: ${{ secrets.AWS_ENDPOINT_URL }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -53,7 +54,7 @@ jobs:
       - run: pnpm e2e -g ${{ inputs.target }}
       - run: docker compose logs --no-log-prefix --no-color ${{ inputs.target }} > reports/e2e/docker.txt 2>&1
         if: (success() || failure()) && github.event_name == 'pull_request' && inputs.target != 'unsocial'
-      - run: aws s3 cp reports/e2e "s3://${{ env.UPLOAD_DIR }}/${{ github.event.pull_request.head.sha }}/${{ inputs.target }}" --recursive
+      - run: aws s3 cp reports/e2e "s3://${{ env.UPLOAD_DIR }}/${{ env.AWS_S3_BUCKET }}/${{ github.event.pull_request.head.sha }}/${{ inputs.target }}" --recursive
         if: (success() || failure()) && github.event_name == 'pull_request'
       - uses: gh640/command-result-action@v1
         if: (success() || failure()) && github.event_name == 'pull_request'
