@@ -9,7 +9,7 @@ on:
 
 env:
   UPLOAD_DIR: unsocial-gha/e2e-test
-  ENDPOINT_URL: https://minio-s3.paas.mkizka.dev
+  AWS_ENDPOINT_URL: ${{ secrets.AWS_ENDPOINT_URL }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ap-northeast-1
@@ -52,7 +52,7 @@ jobs:
       - run: pnpm e2e -g ${{ inputs.target }}
       - run: docker compose logs --no-log-prefix --no-color ${{ inputs.target }} > reports/e2e/docker.txt 2>&1
         if: (success() || failure()) && github.event_name == 'pull_request' && inputs.target != 'unsocial'
-      - run: aws --endpoint-url ${{ env.ENDPOINT_URL }} s3 cp reports/e2e "s3://${{ env.UPLOAD_DIR }}/${{ github.event.pull_request.head.sha }}/${{ inputs.target }}" --recursive
+      - run: aws s3 cp reports/e2e "s3://${{ env.UPLOAD_DIR }}/${{ github.event.pull_request.head.sha }}/${{ inputs.target }}" --recursive
         if: (success() || failure()) && github.event_name == 'pull_request'
       - uses: gh640/command-result-action@v1
         if: (success() || failure()) && github.event_name == 'pull_request'
@@ -60,7 +60,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          E2E_TEST_S3_BASEURL: ${{ env.ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
+          E2E_TEST_S3_BASEURL: ${{ env.AWS_ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
         with:
           command: ./scripts/e2e-report.ts
       - uses: thollander/actions-comment-pull-request@v2
