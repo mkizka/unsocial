@@ -115,7 +115,7 @@ const main = async () => {
 
   const text = `${await table(baseUrl, branchName)}
   
-  :gun: [mutation.html (${branchName})](${baseUrl}/${branchName}/mutation.html)
+  :gun: [mutation.html (${branchName})](${baseUrl}/pr/${branchName}/mutation.html)
   :gun: [mutation.html (main)](${baseUrl}/main/mutation.html)
   :page_facing_up: [stryker.txt](${baseUrl}/${branchName}/stryker.txt)`;
 
