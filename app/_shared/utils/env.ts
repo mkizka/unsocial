@@ -27,6 +27,7 @@ const serverEnvSchema = z.object({
     z.string().url(),
   ),
   UNSOCIAL_AWS_ENDPOINT: z.string().url(),
+  UNSOCIAL_AWS_REGION: z.string(),
   UNSOCIAL_AWS_BUCKET: z.string().min(1),
   UNSOCIAL_AWS_ACCESS_KEY_ID: z.string().min(1),
   UNSOCIAL_AWS_SECRET_ACCESS_KEY: z.string().min(1),
