@@ -9,6 +9,7 @@ on:
 
 env:
   UPLOAD_DIR: unsocial-gha/e2e-test
+  AWS_S3_PUBLIC_URL: ${{ secrets.AWS_S3_PUBLIC_URL }}
   AWS_ENDPOINT_URL: ${{ secrets.AWS_ENDPOINT_URL }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -60,7 +61,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          E2E_TEST_S3_BASEURL: ${{ env.AWS_ENDPOINT_URL }}/${{ env.UPLOAD_DIR }}
+          E2E_TEST_S3_BASEURL: ${{ env.AWS_S3_PUBLIC_URL }}/${{ env.UPLOAD_DIR }}
         with:
           command: ./scripts/e2e-report.ts
       - uses: thollander/actions-comment-pull-request@v2
