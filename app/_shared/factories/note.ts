@@ -15,7 +15,7 @@ export const LocalNoteFactory = defineNoteFactory({
   },
 });
 
-export const RepostedNoteFactory = defineNoteFactory({
+export const NoteWithQUoteFactory = defineNoteFactory({
   defaultData: {
     user: LocalUserFactory,
     quote: LocalNoteFactory,

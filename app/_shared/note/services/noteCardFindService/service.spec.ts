@@ -1,8 +1,8 @@
 import { LikeFactory } from "@/_shared/factories/like";
 import {
   LocalNoteFactory,
+  NoteWithQUoteFactory,
   RemoteNoteFactory,
-  RepostedNoteFactory,
 } from "@/_shared/factories/note";
 import { LocalUserFactory } from "@/_shared/factories/user";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
@@ -91,11 +91,11 @@ describe("noteCardFindService", () => {
     });
     test("リポスト済み", async () => {
       // arrange
-      const repostedNote = await RepostedNoteFactory.create();
-      mockedGetSessionUserId.mockResolvedValueOnce(repostedNote.userId);
+      const noteWithQuote = await NoteWithQUoteFactory.create();
+      mockedGetSessionUserId.mockResolvedValueOnce(noteWithQuote.userId);
       // act
       const noteCard = await noteCardFindService.findUniqueNoteCard(
-        repostedNote.id,
+        noteWithQuote.id,
       );
       // assert
       expect(noteCard?.isReposted).toBe(true);

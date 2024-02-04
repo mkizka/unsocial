@@ -14,7 +14,7 @@ describe("RepostButton/action", () => {
     // act
     await action({ noteId: noteToRepost.id });
     // assert
-    const repostedNote = await prisma.note.findFirst({
+    const noteWithQuote = await prisma.note.findFirst({
       where: {
         userId: user.id,
         quote: {
@@ -22,7 +22,7 @@ describe("RepostButton/action", () => {
         },
       },
     });
-    expect(repostedNote).not.toBeNull();
+    expect(noteWithQuote).not.toBeNull();
   });
   test("リポストしたノートを削除できる", async () => {
     // arrange
@@ -33,7 +33,7 @@ describe("RepostButton/action", () => {
     // act
     await action({ noteId: noteToRepost.id });
     // assert
-    const repostedNote = await prisma.note.findFirst({
+    const noteWithQuote = await prisma.note.findFirst({
       where: {
         userId: user.id,
         quote: {
@@ -41,6 +41,6 @@ describe("RepostButton/action", () => {
         },
       },
     });
-    expect(repostedNote).toBeNull();
+    expect(noteWithQuote).toBeNull();
   });
 });
