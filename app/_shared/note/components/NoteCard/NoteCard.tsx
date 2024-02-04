@@ -12,10 +12,12 @@ import { DeleteButton } from "./DeleteButton";
 import { LikeButton } from "./LikeButton";
 import { PublishedAt } from "./PublishedAt";
 import { ReplyButton } from "./ReplyButton";
+import { RepostButton } from "./RepostButton";
 
 export type NoteCardProps = {
   note: noteCardFindService.NoteCard;
   onLike: () => Promise<void>;
+  onRepost: () => Promise<void>;
   onDelete: () => Promise<void>;
   showDetail?: boolean;
   withReplyLink?: boolean;
@@ -24,6 +26,7 @@ export type NoteCardProps = {
 export function NoteCard({
   note,
   onLike,
+  onRepost,
   onDelete,
   showDetail,
   withReplyLink,
@@ -69,6 +72,7 @@ export function NoteCard({
       <footer className="space-y-2 pl-[48px]">
         <div className="flex gap-10">
           <ReplyButton url={note.url} />
+          <RepostButton isReposted={note.isReposted} onClick={onRepost} />
           <LikeButton isLiked={note.isLiked} onClick={onLike} />
           {note.isMine && <DeleteButton onClick={onDelete} />}
         </div>

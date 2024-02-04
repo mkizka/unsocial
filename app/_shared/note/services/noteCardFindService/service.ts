@@ -19,7 +19,9 @@ const formatNote = ({
     ...note,
     quotedBy: quotedBy
       ? {
-          ...quotedBy,
+          host: quotedBy.host,
+          preferredUsername: quotedBy.preferredUsername,
+          name: quotedBy.name,
           url: `/${fullUsername(quotedBy)}`,
         }
       : null,
@@ -28,6 +30,7 @@ const formatNote = ({
     ),
     isMine: userId === note.userId,
     isLiked: note.likes.some((like) => like.userId === userId),
+    isReposted: note.quotes.some((quote) => quote.userId === userId),
     url: `/notes/${note.id}`,
     user: {
       ...note.user,
