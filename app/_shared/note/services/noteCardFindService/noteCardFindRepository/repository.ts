@@ -6,6 +6,11 @@ import { prisma } from "@/_shared/utils/prisma";
 const includeNoteCard = {
   user: true,
   attachments: true,
+  quotes: {
+    select: {
+      userId: true,
+    },
+  },
   likes: {
     include: {
       user: true,
