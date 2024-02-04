@@ -1,10 +1,8 @@
 "use server";
 
 import type { Prisma } from "@prisma/client";
-import assert from "assert";
 
 import { userSessionService } from "@/_shared/user/services/userSessionService";
-import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
 const repost = async (userId: string, noteId: string) => {
@@ -23,10 +21,10 @@ const repost = async (userId: string, noteId: string) => {
       },
     },
   });
-  assert(note.quote, "ノートにquoteが存在しません");
-  if (note.quote.user.host !== env.UNSOCIAL_HOST) {
-    // TODO: Announceアクティビティを配送する
-  }
+  // assert(note.quote, "ノートにquoteが存在しません");
+  // if (note.quote.user.host !== env.UNSOCIAL_HOST) {
+  //   // TODO: Announceアクティビティを配送する;
+  // }
 };
 
 const include = {
@@ -47,10 +45,10 @@ const undoRepost = async (userId: string, noteWithQuote: NoteWithQuote) => {
       id: noteWithQuote.id,
     },
   });
-  assert(noteWithQuote.quote, "ノートにquoteが存在しません");
-  if (noteWithQuote.quote.user.host !== env.UNSOCIAL_HOST) {
-    // TODO: Deleteアクティビティを配送する
-  }
+  // assert(noteWithQuote.quote, "ノートにquoteが存在しません");
+  // if (noteWithQuote.quote.user.host !== env.UNSOCIAL_HOST) {
+  //   // TODO: Deleteアクティビティを配送する
+  // }
 };
 
 export async function action({ noteId }: { noteId: string }) {
