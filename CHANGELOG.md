@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.30
+
+### Patch Changes
+
+- efe2707: リポストボタン追加
+
 ## 0.0.29
 
 ### Patch Changes
