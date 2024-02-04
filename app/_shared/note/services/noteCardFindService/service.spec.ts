@@ -139,6 +139,7 @@ describe("noteCardFindService", () => {
       expect(noteCard?.quotedBy).toEqual({
         host: quotedNote.user.host,
         preferredUsername: quotedNote.user.preferredUsername,
+        name: null,
         url: `/@${quotedNote.user.preferredUsername}`,
       });
     });

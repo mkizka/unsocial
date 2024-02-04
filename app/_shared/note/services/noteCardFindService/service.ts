@@ -21,6 +21,7 @@ const formatNote = ({
       ? {
           host: quotedBy.host,
           preferredUsername: quotedBy.preferredUsername,
+          name: quotedBy.name,
           url: `/${fullUsername(quotedBy)}`,
         }
       : null,
