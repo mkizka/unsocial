@@ -30,6 +30,7 @@ const formatNote = ({
     ),
     isMine: userId === note.userId,
     isLiked: note.likes.some((like) => like.userId === userId),
+    isReposted: note.quotes.some((quote) => quote.userId === userId),
     url: `/notes/${note.id}`,
     user: {
       ...note.user,

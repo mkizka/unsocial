@@ -72,7 +72,6 @@ export function NoteCard({
       <footer className="space-y-2 pl-[48px]">
         <div className="flex gap-10">
           <ReplyButton url={note.url} />
-          {/* @ts-expect-error */}
           <RepostButton isReposted={note.isReposted} onClick={onRepost} />
           <LikeButton isLiked={note.isLiked} onClick={onLike} />
           {note.isMine && <DeleteButton onClick={onDelete} />}
