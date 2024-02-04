@@ -196,6 +196,39 @@ describe("noteCardFindService", () => {
         });
       }
     });
+    test("publishedAtでソートする", async () => {
+      // arrange
+      const notes = await LocalNoteFactory.createList([
+        { publishedAt: new Date("2024-01-01T00:00:00Z") },
+        { publishedAt: new Date("2024-01-03T00:00:00Z") },
+        { publishedAt: new Date("2024-01-02T00:00:00Z") },
+      ]);
+      // act
+      const noteCards = await noteCardFindService.findManyNoteCards({
+        count: 10,
+      });
+      // assert
+      expect(noteCards[0]!.id).toBe(notes[1]!.id);
+      expect(noteCards[1]!.id).toBe(notes[2]!.id);
+      expect(noteCards[2]!.id).toBe(notes[0]!.id);
+    });
+    test("sinceからuntilまでのノートを取得する", async () => {
+      // arrange
+      const notes = await LocalNoteFactory.createList([
+        { publishedAt: new Date("2024-01-01T00:00:00Z") },
+        { publishedAt: new Date("2024-01-02T00:00:00Z") },
+        { publishedAt: new Date("2024-01-03T00:00:00Z") },
+      ]);
+      // act
+      const noteCards = await noteCardFindService.findManyNoteCards({
+        count: 10,
+        since: new Date("2024-01-01T00:00:01Z"), // 一つ目の投稿の1秒後
+        until: new Date("2024-01-02T12:59:59Z"), // 三つ目の投稿の1秒前
+      });
+      // assert
+      expect(noteCards).toHaveLength(1);
+      expect(noteCards[0]!.id).toBe(notes[1]!.id);
+    });
     test("ノートが無かった場合はgetSessionUserIdOrNullを呼ばない", async () => {
       // act
       const noteCards = await noteCardFindService.findManyNoteCards({
