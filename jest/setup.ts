@@ -9,19 +9,25 @@ jest.mock("@/_shared/utils/prisma", () => ({
 
 // prisma
 const isObject = (obj: unknown) => typeof obj === "object" && obj !== null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PrismaObject = Record<string, any>;
 expect.extend({
   toEqualPrisma(received, expected) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const transformDates = (obj: Record<string, any>) => {
-      for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          if (obj[key]?.toISOString) {
-            obj[key] = obj[key].toISOString();
-          } else if (isObject(obj[key])) {
-            transformDates(obj[key]);
+    const transformDates = (target: PrismaObject | PrismaObject[]) => {
+      const transform = (obj: PrismaObject) => {
+        for (const key in target) {
+          if (obj.hasOwnProperty(key)) {
+            if (obj[key]?.toISOString) {
+              obj[key] = obj[key].toISOString();
+            } else if (isObject(obj[key])) {
+              transformDates(obj[key]);
+            }
           }
         }
-      }
+      };
+      return Array.isArray(target)
+        ? (target as PrismaObject).forEach(transform)
+        : transform(target);
     };
     transformDates(received);
     transformDates(expected);
