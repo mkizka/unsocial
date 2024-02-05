@@ -19,6 +19,7 @@ export type AcceptActivity = z.infer<typeof acceptSchema>;
 
 export const announceSchema = activitySchema.extend({
   type: z.literal("Announce"),
+  actor: z.string().url(),
   id: z.string().url(),
   object: z.string(),
   published: z.string().datetime(),

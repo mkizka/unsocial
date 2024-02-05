@@ -1,4 +1,5 @@
 import type { Follow, Like, Note, User } from "@prisma/client";
+import assert from "assert";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 
@@ -144,6 +145,20 @@ const convertUndo = (
   } satisfies apSchemaService.UndoActivity;
 };
 
+const convertAnnounce = (noteWithQuote: Note & { quote: Note | null }) => {
+  assert(noteWithQuote.quote, "ノートにquoteが存在しません");
+  return {
+    ...contexts,
+    type: "Announce",
+    id: `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.id}/activity`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${noteWithQuote.userId}/activity`,
+    object:
+      noteWithQuote.quote.url ??
+      `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.quote.id}/activity`,
+    published: noteWithQuote.publishedAt.toISOString(),
+  } satisfies apSchemaService.AnnounceActivity;
+};
+
 export const activityStreams = {
   user: convertUser,
   note: convertNote,
@@ -152,4 +167,5 @@ export const activityStreams = {
   follow: convertFollow,
   like: convertLike,
   undo: convertUndo,
+  announce: convertAnnounce,
 };
