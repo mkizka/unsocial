@@ -23,6 +23,8 @@ export const announceSchema = activitySchema.extend({
   id: z.string().url(),
   object: z.string(),
   published: z.string().datetime(),
+  to: z.array(z.string().url()),
+  cc: z.array(z.string().url()),
 });
 
 export type AnnounceActivity = z.infer<typeof announceSchema>;

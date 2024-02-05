@@ -145,8 +145,16 @@ const convertUndo = (
   } satisfies apSchemaService.UndoActivity;
 };
 
-const convertAnnounce = (noteWithQuote: Note & { quote: Note | null }) => {
-  assert(noteWithQuote.quote, "ノートにquoteが存在しません");
+const convertAnnounce = (
+  noteWithQuote: Note & { quote: (Note & { user: User }) | null },
+) => {
+  assert(noteWithQuote.quote);
+  const cc = [
+    `https://${env.UNSOCIAL_HOST}/users/${noteWithQuote.userId}/followers`,
+  ];
+  if (noteWithQuote.quote.user.actorUrl) {
+    cc.push(noteWithQuote.quote.user.actorUrl);
+  }
   return {
     ...contexts,
     type: "Announce",
@@ -156,6 +164,8 @@ const convertAnnounce = (noteWithQuote: Note & { quote: Note | null }) => {
       noteWithQuote.quote.url ??
       `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.quote.id}/activity`,
     published: noteWithQuote.publishedAt.toISOString(),
+    to: ["https://www.w3.org/ns/activitystreams#Public"],
+    cc,
   } satisfies apSchemaService.AnnounceActivity;
 };
 

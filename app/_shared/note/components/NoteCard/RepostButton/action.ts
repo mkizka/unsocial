@@ -9,7 +9,6 @@ import {
 } from "@/_shared/activitypub/apRelayService/service";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
-import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
 const repost = async (userId: string, noteId: string) => {
@@ -28,21 +27,17 @@ const repost = async (userId: string, noteId: string) => {
       },
     },
   });
-  assert(note.quote, "ノートにquoteが存在しません");
-  if (note.quote.user.host !== env.UNSOCIAL_HOST) {
-    assert(
-      note.quote.user.inboxUrl,
-      "リポスト先のユーザーにinboxUrlがありません",
-    );
-    const activity = activityStreams.announce(note);
+  const activity = activityStreams.announce(note);
+  await relayActivityToFollowers({
+    userId,
+    activity,
+  });
+  assert(note.quote);
+  if (note.quote.user.inboxUrl) {
     await relayActivityToInboxUrl({
       userId,
       activity,
       inboxUrl: new URL(note.quote.user.inboxUrl),
-    });
-    await relayActivityToFollowers({
-      userId,
-      activity,
     });
   }
 };
