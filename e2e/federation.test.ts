@@ -74,6 +74,10 @@ const runTest = async ({ from, to }: RunTestParams) => {
       () => from.waitForLiked(content, to.user),
     ],
     [
+      `${from.domain}: リポスト`, //
+      () => to.repost(content),
+    ],
+    [
       `${to.domain}: いいね削除`, //
       () => to.unlike(content),
     ],
