@@ -134,7 +134,7 @@ export const undoSchema = activitySchema.extend({
   type: z.literal("Undo"),
   id: z.string().url(),
   actor: z.string().url(),
-  object: z.union([followSchema, likeSchema]),
+  object: z.union([followSchema, likeSchema, announceSchema]),
 });
 
 export type UndoActivity = z.infer<typeof undoSchema>;

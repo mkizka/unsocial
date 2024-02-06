@@ -133,15 +133,18 @@ const convertLike = (like: Like, noteUrl: string) => {
 };
 
 const convertUndo = (
-  like: apSchemaService.LikeActivity | apSchemaService.FollowActivity,
+  activity:
+    | apSchemaService.LikeActivity
+    | apSchemaService.FollowActivity
+    | apSchemaService.AnnounceActivity,
 ) => {
-  const { "@context": _, ...object } = like;
+  const { "@context": _, ...activityToUndo } = activity;
   return {
     ...contexts,
     type: "Undo",
-    id: `${like.id}?undo=true`,
-    actor: like.actor,
-    object,
+    id: `${activityToUndo.id}?undo=true`,
+    actor: activityToUndo.actor,
+    object: activityToUndo,
   } satisfies apSchemaService.UndoActivity;
 };
 

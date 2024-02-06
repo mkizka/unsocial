@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 
-import { RemoteNoteFactory } from "@/_shared/factories/note";
+import { LocalNoteFactory, RemoteNoteFactory } from "@/_shared/factories/note";
 import { RemoteUserFactory } from "@/_shared/factories/user";
 import { server } from "@/_shared/mocks/server";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
@@ -21,23 +21,23 @@ const setup = async () => {
       followerId: follower.id,
     },
   });
-  const repostedNote = await prisma.note.create({
+  const noteToRepost = await prisma.note.create({
     data: await RemoteNoteFactory.build(),
     include: { user: true },
   });
   await prisma.follow.create({
     data: {
       followeeId: user.id,
-      followerId: repostedNote.user.id,
+      followerId: noteToRepost.user.id,
     },
   });
-  return { user, follower, repostedNote };
+  return { user, follower, noteToRepost };
 };
 
 describe("RepostButton/action", () => {
   test("ノートをリポスト出来る", async () => {
     // arrange
-    const { repostedNote, user, follower } = await setup();
+    const { noteToRepost, user, follower } = await setup();
     mockedGetSessionUserId.mockResolvedValue(user.id);
     const followerHandler = jest.fn();
     const repostedUserHandler = jest.fn();
@@ -46,19 +46,19 @@ describe("RepostButton/action", () => {
         followerHandler();
         return HttpResponse.text("OK");
       }),
-      http.post(repostedNote.user.inboxUrl!, () => {
+      http.post(noteToRepost.user.inboxUrl!, () => {
         repostedUserHandler();
         return HttpResponse.text("OK");
       }),
     );
     // act
-    await action({ noteId: repostedNote.id });
+    await action({ noteId: noteToRepost.id });
     // assert
     const noteWithQuote = await prisma.note.findFirst({
       where: {
         userId: user.id,
         quote: {
-          id: repostedNote.id,
+          id: noteToRepost.id,
         },
       },
     });
@@ -67,36 +67,44 @@ describe("RepostButton/action", () => {
     // TODO: 1回だけ呼ばれるようにする
     expect(repostedUserHandler).toHaveBeenCalledTimes(2);
   });
-  test.skip("リポストしたノートを削除できる", async () => {
+  test("リポストしたノートを削除できる", async () => {
     // arrange
-    const { repostedNote, user, follower } = await setup();
+    const { noteToRepost, user, follower } = await setup();
     mockedGetSessionUserId.mockResolvedValue(user.id);
+    await LocalNoteFactory.create({
+      quote: {
+        connect: { id: noteToRepost.id },
+      },
+      user: {
+        connect: { id: user.id },
+      },
+    });
     const followerHandler = jest.fn();
     const repostedUserHandler = jest.fn();
     server.use(
-      http.get(follower.inboxUrl!, () => {
+      http.post(follower.inboxUrl!, () => {
         followerHandler();
         return HttpResponse.text("OK");
       }),
-      http.get(repostedNote.user.inboxUrl!, () => {
+      http.post(noteToRepost.user.inboxUrl!, () => {
         repostedUserHandler();
         return HttpResponse.text("OK");
       }),
     );
-    await action({ noteId: repostedNote.id });
     // act
-    await action({ noteId: repostedNote.id });
+    await action({ noteId: noteToRepost.id });
     // assert
     const noteWithQuote = await prisma.note.findFirst({
       where: {
         userId: user.id,
         quote: {
-          id: repostedNote.id,
+          id: noteToRepost.id,
         },
       },
     });
     expect(noteWithQuote).toBeNull();
+    expect(followerHandler).toHaveBeenCalledTimes(1);
+    // TODO: 2回だけ呼ばれるようにする
     expect(repostedUserHandler).toHaveBeenCalledTimes(2);
-    expect(followerHandler).toHaveBeenCalledTimes(2);
   });
 });
