@@ -99,6 +99,11 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     ).not.toBeVisible();
   }
 
+  async repost(content: string) {
+    await this.goto("/");
+    await this.getNote(content).getByTestId("repost-button").click();
+  }
+
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.getByTestId("follow-button").click();

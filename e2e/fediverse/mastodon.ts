@@ -106,6 +106,13 @@ export class MastodonHandler extends FediverseHandler {
     );
   }
 
+  async repost(content: string) {
+    await this.goto("/");
+    await this.getNote(content)
+      .locator("button", { has: this.page.locator(".fa-retweet") })
+      .click();
+  }
+
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.locator("button", { hasText: "フォロー" }).click();

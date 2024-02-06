@@ -113,6 +113,14 @@ export class MisskeyHandler extends FediverseHandler {
     await expect(this.getNote(content).locator("[alt=👍]")).not.toBeVisible();
   }
 
+  async repost(content: string) {
+    await this.gotoGTL();
+    await this.getNote(content)
+      .locator("button", { has: this.page.locator(".ti-repeat") })
+      .click();
+    await this.page.locator(`[role="menuitem"]`).click();
+  }
+
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.locator("button", { hasText: "フォロー" }).click();
