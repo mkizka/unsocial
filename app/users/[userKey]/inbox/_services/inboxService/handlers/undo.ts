@@ -51,9 +51,14 @@ const undoLike: UndoInboxHandler = async (activity, actorUser) => {
   });
 };
 
+const undoAnnounce: UndoInboxHandler = async (activity) => {
+  await prisma.note.delete({ where: { url: activity.object.id } });
+};
+
 const undoHandlers = {
   Follow: undoFollow,
   Like: undoLike,
+  Announce: undoAnnounce,
 } as const;
 
 export const handle: InboxHandler = async (activity, actorUser) => {
