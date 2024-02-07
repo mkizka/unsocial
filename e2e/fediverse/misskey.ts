@@ -118,7 +118,7 @@ export class MisskeyHandler extends FediverseHandler {
     await this.getNote(content)
       .locator("button", { has: this.page.locator(".ti-repeat") })
       .click();
-    await this.page.locator(`[role="menuitem"]`).click();
+    await this.page.locator("button", { hasText: "リノート" }).click();
   }
 
   async follow(user: string) {
