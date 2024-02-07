@@ -1,6 +1,6 @@
 {
   "name": "unsocial",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "private": true,
   "packageManager": "pnpm@8.15.1",
   "engines": {
@@ -24,7 +24,7 @@
     "e2e": "playwright test",
     "lint": "./scripts/lint.sh",
     "postinstall": "prisma generate",
-    "prepare": "husky install",
+    "prepare": "husky",
     "storybook": "storybook dev -p 6006 --quiet",
     "test": "jest",
     "test-u": "pnpm test -- --updateSnapshot",
