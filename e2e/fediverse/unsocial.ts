@@ -31,7 +31,9 @@ export class MyhostUnsocialHandler extends FediverseHandler {
   // }
 
   getNote(content: string) {
-    return this.page.locator("[data-testid=note-card]", { hasText: content });
+    return this.page
+      .locator("[data-testid=note-card]", { hasText: content })
+      .last(); // リポストした場合は複数あるので、古いもの(リポストされた元のノート)を使用する
   }
 
   async postNote(content: string) {
