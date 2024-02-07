@@ -34,7 +34,7 @@ export function NoteCard({
   return (
     <Card
       as="article"
-      data-testid="note-card"
+      data-testid={note.quotedBy ? "reposted-note-card" : "note-card"}
       className={cn("relative space-y-2", {
         "space-y-4": showDetail,
       })}
