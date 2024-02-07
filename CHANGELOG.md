@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.31
+
+### Patch Changes
+
+- 8fcb029: 依存関係の更新
+
 ## 0.0.30
 
 ### Patch Changes
