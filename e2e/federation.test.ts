@@ -78,6 +78,10 @@ const runTest = async ({ from, to }: RunTestParams) => {
       () => to.repost(content),
     ],
     [
+      `${to.domain}: リポストされたことを確認`,
+      () => to.waitForReposted(content),
+    ],
+    [
       `${to.domain}: いいね削除`, //
       () => to.unlike(content),
     ],
