@@ -113,6 +113,14 @@ export class MastodonHandler extends FediverseHandler {
       .click();
   }
 
+  async expectReposted(content: string) {
+    await this.goto("/");
+    await this.getNote(content).locator(".status__relative-time").click();
+    await expect(this.getNote(content).locator(".status__reblogs")).toHaveText(
+      "1",
+    );
+  }
+
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.locator("button", { hasText: "フォロー" }).click();
