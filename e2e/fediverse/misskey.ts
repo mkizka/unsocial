@@ -29,6 +29,10 @@ export class MisskeyHandler extends FediverseHandler {
 
   async login() {
     await this.goto("/");
+    // 寄付の募集がノートよりも前面に出てクリックできなくなるので非表示にする
+    await this.page.evaluate(() =>
+      localStorage.setItem("neverShowDonationInfo", "true"),
+    );
     await this.page.locator("[data-cy-signin]").click();
     await this.page.locator("[data-cy-signin-username] input").fill("e2e");
     await this.page.locator("[data-cy-signin-password] input").fill("e2e");
