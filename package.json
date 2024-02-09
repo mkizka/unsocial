@@ -7,8 +7,6 @@
     "node": "20.x"
   },
   "scripts": {
-    "_down:jest": "docker compose -f ./jest/compose.yaml down",
-    "_down:root": "docker compose down -v --remove-orphans",
     "_e2e:server": "UNSOCIAL_LOG_LEVEL=debug NODE_EXTRA_CA_CERTS=./docker/mkcert/rootCA.pem run-p -l _e2e:server:*",
     "_e2e:server:myhost": "dotenv -e e2e/.env.myhost -- next start",
     "_e2e:server:remote": "dotenv -e e2e/.env.remote -- next start -p 3001 || exit 0",
@@ -20,7 +18,7 @@
     "all": "run-s -s _lint:fix test-u test:storybook-u",
     "build": "SKIP_ENV_VALIDATION=1 next build",
     "dev": "./scripts/dev.sh",
-    "down": "run-s -s _down:*",
+    "down": "./scripts/down.sh",
     "e2e": "playwright test",
     "lint": "./scripts/lint.sh",
     "postinstall": "prisma generate",
