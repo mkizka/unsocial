@@ -74,6 +74,14 @@ const runTest = async ({ from, to }: RunTestParams) => {
       () => from.waitForLiked(content, to.user),
     ],
     [
+      `${to.domain}: いいね削除`, //
+      () => to.unlike(content),
+    ],
+    [
+      `${from.domain}: いいねが削除されたことを確認`,
+      () => from.waitForNotLiked(content, to.user),
+    ],
+    [
       `${to.domain}: リポスト`, //
       () => to.repost(content),
     ],
@@ -82,12 +90,8 @@ const runTest = async ({ from, to }: RunTestParams) => {
       () => from.waitForReposted(content),
     ],
     [
-      `${to.domain}: いいね削除`, //
-      () => to.unlike(content),
-    ],
-    [
-      `${from.domain}: いいねが削除されたことを確認`,
-      () => from.waitForNotLiked(content, to.user),
+      `${to.domain}: リポスト削除`, //
+      () => to.undoRepost(content),
     ],
     [
       `${from.domain}: 投稿を削除`, //
