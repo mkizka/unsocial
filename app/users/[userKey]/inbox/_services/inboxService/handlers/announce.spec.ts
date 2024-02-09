@@ -14,7 +14,7 @@ const dummyLocalUser = {
 } as User;
 
 describe("inboxAnnounceService", () => {
-  test("ローカルのノートをリポストとして保存できる", async () => {
+  test("ローカルのノートに対するリポストを保存できる", async () => {
     // arrange
     const activity = {
       type: "Announce",
@@ -22,6 +22,8 @@ describe("inboxAnnounceService", () => {
       actor: "https://remote.example.com/u/dummy_remote_id",
       object: "https://myhost.example.com/notes/foo/activity",
       published: "2024-01-01T00:00:00.000Z",
+      to: ["https://www.w3.org/ns/activitystreams#Public"],
+      cc: ["https://remote.example.com/u/dummy_remote_id/followers"],
     };
     mockedPrisma.note.findUnique.mockResolvedValue({
       id: "foo",
@@ -37,6 +39,7 @@ describe("inboxAnnounceService", () => {
         userId: "dummy_remote",
         content: "",
         quoteId: "foo",
+        url: "https://remote.example.com/u/dummy_remote_id/activities/1",
         publishedAt: activity.published,
       },
     });

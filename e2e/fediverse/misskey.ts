@@ -29,6 +29,10 @@ export class MisskeyHandler extends FediverseHandler {
 
   async login() {
     await this.goto("/");
+    // 寄付の募集がノートよりも前面に出てクリックできなくなるので非表示にする
+    await this.page.evaluate(() =>
+      localStorage.setItem("neverShowDonationInfo", "true"),
+    );
     await this.page.locator("[data-cy-signin]").click();
     await this.page.locator("[data-cy-signin-username] input").fill("e2e");
     await this.page.locator("[data-cy-signin-password] input").fill("e2e");
@@ -111,6 +115,51 @@ export class MisskeyHandler extends FediverseHandler {
   async expectNotLiked(content: string) {
     await this.gotoGTL();
     await expect(this.getNote(content).locator("[alt=👍]")).not.toBeVisible();
+  }
+
+  async repost(content: string) {
+    await this.gotoGTL();
+    await this.getNote(content)
+      .locator("button", { has: this.page.locator(".ti-repeat") })
+      .click();
+    await this.page.locator("button", { hasText: "リノート" }).click();
+  }
+
+  async undoRepost(content: string): Promise<void> {
+    await this.gotoGTL();
+    await this.page
+      .locator("[tabindex='-1']", {
+        has: this.page.locator("span", { hasText: "e2eがリノート" }),
+      })
+      .locator("button", { has: this.page.locator(".ti-dots") })
+      .click();
+    await this.page.locator("button", { hasText: "リノート解除" }).click();
+  }
+
+  async expectReposted(content: string) {
+    await this.gotoGTL();
+    await this.getNote(content).locator("time").click();
+    await this.page.locator("button", { hasText: "リノート" }).click();
+    // ローディングUIを待つ
+    await expect(async () => {
+      await expect(
+        this.page.locator("[data-sticky-container-header-height] svg"),
+      ).not.toBeVisible();
+    }).toPass();
+    await expect(this.page.locator(".empty")).not.toBeVisible();
+  }
+
+  async expectNotReposted(content: string) {
+    await this.gotoGTL();
+    await this.getNote(content).locator("time").click();
+    await this.page.locator("button", { hasText: "リノート" }).click();
+    // ローディングUIを待つ
+    await expect(async () => {
+      await expect(
+        this.page.locator("[data-sticky-container-header-height] svg"),
+      ).not.toBeVisible();
+    }).toPass();
+    await expect(this.page.locator(".empty")).toBeVisible();
   }
 
   async follow(user: string) {
