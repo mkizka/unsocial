@@ -19,9 +19,12 @@ export type AcceptActivity = z.infer<typeof acceptSchema>;
 
 export const announceSchema = activitySchema.extend({
   type: z.literal("Announce"),
+  actor: z.string().url(),
   id: z.string().url(),
   object: z.string(),
   published: z.string().datetime(),
+  to: z.array(z.string().url()),
+  cc: z.array(z.string().url()),
 });
 
 export type AnnounceActivity = z.infer<typeof announceSchema>;
@@ -131,7 +134,7 @@ export const undoSchema = activitySchema.extend({
   type: z.literal("Undo"),
   id: z.string().url(),
   actor: z.string().url(),
-  object: z.union([followSchema, likeSchema]),
+  object: z.union([followSchema, likeSchema, announceSchema]),
 });
 
 export type UndoActivity = z.infer<typeof undoSchema>;

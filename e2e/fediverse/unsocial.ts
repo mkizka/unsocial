@@ -99,6 +99,33 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     ).not.toBeVisible();
   }
 
+  async repost(content: string) {
+    await this.goto("/");
+    await this.getNote(content).getByTestId("repost-button").click();
+  }
+
+  async undoRepost(content: string): Promise<void> {
+    await this.repost(content);
+  }
+
+  async expectReposted(content: string) {
+    await this.goto("/");
+    await expect(
+      this.page.locator("[data-testid=reposted-note-card]", {
+        hasText: content,
+      }),
+    ).toBeVisible();
+  }
+
+  async expectNotReposted(content: string) {
+    await this.goto("/");
+    await expect(
+      this.page.locator("[data-testid=reposted-note-card]", {
+        hasText: content,
+      }),
+    ).not.toBeVisible();
+  }
+
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.getByTestId("follow-button").click();

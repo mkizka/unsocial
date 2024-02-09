@@ -117,7 +117,7 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
 
 exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
 <article class="rounded-lg border bg-card p-4 text-card-foreground shadow-sm relative space-y-2"
-         data-testid="note-card"
+         data-testid="reposted-note-card"
 >
   <div class="flex items-center pl-[48px]">
     <svg xmlns="http://www.w3.org/2000/svg"

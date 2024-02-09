@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.32
+
+### Patch Changes
+
+- 98cbd4c: リポスト時にAnnounceを配送
+
 ## 0.0.31
 
 ### Patch Changes

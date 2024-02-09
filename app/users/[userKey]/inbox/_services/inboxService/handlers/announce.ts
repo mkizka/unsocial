@@ -2,10 +2,7 @@ import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { noteFindService } from "@/_shared/note/services/noteFindService";
 import { prisma } from "@/_shared/utils/prisma";
 
-import {
-  ActivitySchemaValidationError,
-  UnexpectedActivityRequestError,
-} from "./errors";
+import { ActivitySchemaValidationError } from "./errors";
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, actor) => {
@@ -17,14 +14,13 @@ export const handle: InboxHandler = async (activity, actor) => {
     parsedAnnounce.data.object,
   );
   if (announcedNote instanceof Error) {
-    return new UnexpectedActivityRequestError(
-      "リポストしたノートの取得に失敗しました",
-    );
+    throw announcedNote;
   }
   await prisma.note.create({
     data: {
       userId: actor.id,
       content: "",
+      url: parsedAnnounce.data.id,
       quoteId: announcedNote.id,
       publishedAt: parsedAnnounce.data.published,
     },

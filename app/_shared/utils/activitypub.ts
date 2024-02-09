@@ -1,4 +1,5 @@
 import type { Follow, Like, Note, User } from "@prisma/client";
+import assert from "assert";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 
@@ -132,16 +133,43 @@ const convertLike = (like: Like, noteUrl: string) => {
 };
 
 const convertUndo = (
-  like: apSchemaService.LikeActivity | apSchemaService.FollowActivity,
+  activity:
+    | apSchemaService.LikeActivity
+    | apSchemaService.FollowActivity
+    | apSchemaService.AnnounceActivity,
 ) => {
-  const { "@context": _, ...object } = like;
+  const { "@context": _, ...activityToUndo } = activity;
   return {
     ...contexts,
     type: "Undo",
-    id: `${like.id}?undo=true`,
-    actor: like.actor,
-    object,
+    id: `${activityToUndo.id}?undo=true`,
+    actor: activityToUndo.actor,
+    object: activityToUndo,
   } satisfies apSchemaService.UndoActivity;
+};
+
+const convertAnnounce = (
+  noteWithQuote: Note & { quote: (Note & { user: User }) | null },
+) => {
+  assert(noteWithQuote.quote);
+  const cc = [
+    `https://${env.UNSOCIAL_HOST}/users/${noteWithQuote.userId}/followers`,
+  ];
+  if (noteWithQuote.quote.user.actorUrl) {
+    cc.push(noteWithQuote.quote.user.actorUrl);
+  }
+  return {
+    ...contexts,
+    type: "Announce",
+    id: `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.id}/activity`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${noteWithQuote.userId}/activity`,
+    object:
+      noteWithQuote.quote.url ??
+      `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.quote.id}/activity`,
+    published: noteWithQuote.publishedAt.toISOString(),
+    to: ["https://www.w3.org/ns/activitystreams#Public"],
+    cc,
+  } satisfies apSchemaService.AnnounceActivity;
 };
 
 export const activityStreams = {
@@ -152,4 +180,5 @@ export const activityStreams = {
   follow: convertFollow,
   like: convertLike,
   undo: convertUndo,
+  announce: convertAnnounce,
 };
