@@ -138,20 +138,16 @@ export class MisskeyHandler extends FediverseHandler {
 
   async expectReposted(content: string) {
     await this.gotoGTL();
-    await expect(
-      this.getNote(content).locator("button", {
-        has: this.page.locator(".ti-repeat"),
-      }),
-    ).toHaveText("1");
+    await this.getNote(content).locator("time").click();
+    await this.page.locator("button", { hasText: "リノート" }).click();
+    await expect(this.page.locator(".empty")).not.toBeVisible();
   }
 
   async expectNotReposted(content: string) {
     await this.gotoGTL();
-    await expect(
-      this.getNote(content).locator("button", {
-        has: this.page.locator(".ti-repeat"),
-      }),
-    ).toHaveText("0");
+    await this.getNote(content).locator("time").click();
+    await this.page.locator("button", { hasText: "リノート" }).click();
+    await expect(this.page.locator(".empty")).toBeVisible();
   }
 
   async follow(user: string) {
