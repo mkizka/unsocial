@@ -46,7 +46,19 @@ export class MisskeyHandler extends FediverseHandler {
   }
 
   getNote(content: string) {
-    return this.page.locator("article", { hasText: content });
+    return this.page
+      .locator("[data-sticky-container-header-height]")
+      .locator(`[tabindex="-1"]`, {
+        has: this.page.locator("article", { hasText: content }),
+      });
+  }
+
+  getRepostedNote(content: string) {
+    return this.page
+      .locator("[data-sticky-container-header-height]")
+      .locator(`[tabindex="-1"]`, {
+        hasNot: this.page.locator("article"),
+      });
   }
 
   async postNote(content: string) {
@@ -123,6 +135,14 @@ export class MisskeyHandler extends FediverseHandler {
       .locator("button", { has: this.page.locator(".ti-repeat") })
       .click();
     await this.page.locator("button", { hasText: "リノート" }).click();
+  }
+
+  async undoRepost(content: string): Promise<void> {
+    await this.gotoGTL();
+    await this.getRepostedNote(content)
+      .locator("button", { has: this.page.locator(".ti-repeat") })
+      .click();
+    await this.page.locator("button", { hasText: "リノート削除" }).click();
   }
 
   async expectReposted(content: string) {

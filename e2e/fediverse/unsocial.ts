@@ -104,6 +104,10 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await this.getNote(content).getByTestId("repost-button").click();
   }
 
+  async undoRepost(content: string): Promise<void> {
+    await this.repost(content);
+  }
+
   async expectReposted(content: string) {
     await this.goto("/");
     await expect(

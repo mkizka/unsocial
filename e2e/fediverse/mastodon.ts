@@ -113,6 +113,10 @@ export class MastodonHandler extends FediverseHandler {
       .click();
   }
 
+  async undoRepost(content: string): Promise<void> {
+    await this.repost(content);
+  }
+
   async expectReposted(content: string) {
     await this.goto("/");
     await this.getNote(content).locator(".status__relative-time").click();
