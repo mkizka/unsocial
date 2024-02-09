@@ -140,6 +140,10 @@ export class MisskeyHandler extends FediverseHandler {
     await this.gotoGTL();
     await this.getNote(content).locator("time").click();
     await this.page.locator("button", { hasText: "リノート" }).click();
+    // ローディングUIを待つ
+    await this.waitFor(async () => {
+      await expect(this.page.locator("svg")).not.toBeVisible();
+    });
     await expect(this.page.locator(".empty")).not.toBeVisible();
   }
 
@@ -147,6 +151,10 @@ export class MisskeyHandler extends FediverseHandler {
     await this.gotoGTL();
     await this.getNote(content).locator("time").click();
     await this.page.locator("button", { hasText: "リノート" }).click();
+    // ローディングUIを待つ
+    await this.waitFor(async () => {
+      await expect(this.page.locator("svg")).not.toBeVisible();
+    });
     await expect(this.page.locator(".empty")).toBeVisible();
   }
 
