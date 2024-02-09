@@ -117,6 +117,15 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     ).toBeVisible();
   }
 
+  async expectNotReposted(content: string) {
+    await this.goto("/");
+    await expect(
+      this.page.locator("[data-testid=reposted-note-card]", {
+        hasText: content,
+      }),
+    ).not.toBeVisible();
+  }
+
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.getByTestId("follow-button").click();

@@ -94,6 +94,10 @@ const runTest = async ({ from, to }: RunTestParams) => {
       () => to.undoRepost(content),
     ],
     [
+      `${from.domain}: リポストが削除されたことを確認`,
+      () => from.waitForNotReposted(content),
+    ],
+    [
       `${from.domain}: 投稿を削除`, //
       () => from.delete(content),
     ],
