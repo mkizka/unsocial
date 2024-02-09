@@ -133,7 +133,7 @@ export class MisskeyHandler extends FediverseHandler {
       })
       .locator("button", { has: this.page.locator(".ti-dots") })
       .click();
-    await this.page.locator("button", { hasText: "リノート削除" }).click();
+    await this.page.locator("button", { hasText: "リノート解除" }).click();
   }
 
   async expectReposted(content: string) {
