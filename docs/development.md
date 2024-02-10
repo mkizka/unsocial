@@ -28,18 +28,10 @@ https://mastodon.localhost
 
 ## その他の主要な開発コマンド
 
-### pnpm all
-
-lint、単体テストなどを一通り実行します。
-
-### pnpm storybook
-
-Storybookを開きます。
-
-### pnpm test:mutation
-
-ミューテーションテストを実行します。
-
-### pnpm test:storybook
-
-Storybook Test Runnerを実行します。pnpm allでも実行できます。
+- pnpm all
+  - lint、テスト、スナップショット更新を一通り実行します。
+- pnpm down
+  - devコマンドと単体テストで使用するdocker composeをまとめてdownします。
+- pnpm test:mutation
+  - ミューテーションテストを実行します。
+  - GitHub Actionsでも実行されますが、スコアは参考程度です。
