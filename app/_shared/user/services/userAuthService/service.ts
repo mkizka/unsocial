@@ -37,7 +37,10 @@ const signIn = async ({ preferredUsername, password }: SignInParams) => {
 };
 
 const signUp = async (params: userSignUpService.SignUpUserParams) => {
-  const newUser = await userSignUpService.signUpUser(params);
+  const newUser = await userSignUpService.signUpUser({
+    ...params,
+    isAdmin: true,
+  });
   return { id: newUser.id };
 };
 
@@ -57,6 +60,10 @@ export const authorize = async (credentials: unknown) => {
   }
   if (parsedCredentials.data.action === "signIn") {
     return signIn(parsedCredentials.data);
+  }
+  if (parsedCredentials.data.preferredUsername === env.UNSOCIAL_HOST) {
+    // 連合時のシステムアカウントで使用するため
+    throw new Error("このユーザーIDは使用できません");
   }
   return signUp(parsedCredentials.data);
 };
