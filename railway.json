@@ -1,8 +1,6 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "deploy": {
-    "healthcheckPath": "/health",
-    "healthcheckTimeout": 30,
     "restartPolicyType": "NEVER",
     "sleepApplication": true
   }
