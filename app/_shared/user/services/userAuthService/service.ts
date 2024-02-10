@@ -58,5 +58,9 @@ export const authorize = async (credentials: unknown) => {
   if (parsedCredentials.data.action === "signIn") {
     return signIn(parsedCredentials.data);
   }
+  if (parsedCredentials.data.preferredUsername === env.UNSOCIAL_HOST) {
+    // 連合時のシステムアカウントで使用するため
+    throw new Error("このユーザーIDは使用できません");
+  }
   return signUp(parsedCredentials.data);
 };
