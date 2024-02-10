@@ -17,12 +17,11 @@ Demo: https://unsocial.dev
 
 ## Features
 
-- Login
-- User display
-- Note display/posting/deletion
-- Like/Unlike notes
-- Follow/Unfollow
-- Reply
+- Simple Deployment
+- Login with a single account on the server
+- Display Fediverse accounts
+- Federate posts (replies), likes, reposts, and follows
+- Fewer features, lightweight, and low cost
 
 ## Supported ActivityPub Servers
 
