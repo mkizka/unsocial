@@ -37,7 +37,10 @@ const signIn = async ({ preferredUsername, password }: SignInParams) => {
 };
 
 const signUp = async (params: userSignUpService.SignUpUserParams) => {
-  const newUser = await userSignUpService.signUpUser(params);
+  const newUser = await userSignUpService.signUpUser({
+    ...params,
+    isAdmin: true,
+  });
   return { id: newUser.id };
 };
 
