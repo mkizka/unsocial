@@ -171,3 +171,14 @@ export const createSchema = activitySchema.extend({
 });
 
 export type CreateActivity = z.infer<typeof createSchema>;
+
+export type Activity =
+  | AcceptActivity
+  | AnnounceActivity
+  | DeleteActivity
+  | FollowActivity
+  | LikeActivity
+  | NoteActivity
+  | PersonActivity
+  | UndoActivity
+  | CreateActivity;

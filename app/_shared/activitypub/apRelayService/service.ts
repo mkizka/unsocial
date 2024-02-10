@@ -1,6 +1,8 @@
 import { cache } from "react";
 
+import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import type { httpSignatureSignService } from "@/_shared/activitypub/httpSignatureSignService";
+import { env } from "@/_shared/utils/env";
 import { fetcher } from "@/_shared/utils/fetcher";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -82,4 +84,58 @@ export const relayActivityToFollowers = async (
     }),
   );
   await Promise.all(promises);
+};
+
+const expandActorUrls = async (url: string) => {
+  const urlObject = new URL(url);
+  // ひとまず https://${env.UNSOCIAL_HOST}/users/${note.userId}/followers のみサポートする
+  if (urlObject.host === env.UNSOCIAL_HOST) {
+    const [path1, userId, path2] = urlObject.pathname.split("/");
+    if (path1 === "users" && path2 === "followers") {
+      const follows = await prisma.follow.findMany({
+        where: { followeeId: userId },
+        include: { follower: true },
+      });
+      return follows.map((follow) => follow.follower.actorUrl).filter(Boolean);
+    }
+  }
+  return [url];
+};
+
+const unique = <T>(array: T[]) => [...new Set(array)];
+
+export const relay = async ({
+  signer,
+  activity,
+  inboxUrl,
+}: {
+  signer: httpSignatureSignService.Signer;
+  activity: apSchemaService.Activity;
+  inboxUrl?: string;
+}) => {
+  const targets = [];
+  if (inboxUrl) {
+    targets.push(inboxUrl);
+  }
+  const toAndCC = [
+    "to" in activity ? activity.to : null,
+    "cc" in activity ? activity.cc : null,
+  ]
+    .filter(Boolean)
+    .flat();
+  for (const target of toAndCC) {
+    if (target === "https://www.w3.org/ns/activitystreams#Public") {
+      continue;
+    }
+    targets.push(...(await expandActorUrls(target)));
+  }
+  return Promise.all(
+    unique(targets).map((target) =>
+      relayActivity({
+        signer,
+        body: JSON.stringify(activity),
+        inboxUrl: new URL(target),
+      }),
+    ),
+  );
 };
