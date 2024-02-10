@@ -11,12 +11,14 @@ export function DebugMenu() {
       : env;
   return (
     <Card>
-      <label className="block font-bold" htmlFor="name">
-        環境変数
-      </label>
-      <pre className="overflow-x-scroll">
-        {JSON.stringify(publicEnv, null, 2)}
-      </pre>
+      <div className="space-y-2">
+        <label className="block font-bold" htmlFor="name">
+          環境変数
+        </label>
+        <pre className="overflow-x-scroll">
+          {JSON.stringify(publicEnv, null, 2)}
+        </pre>
+      </div>
     </Card>
   );
 }
