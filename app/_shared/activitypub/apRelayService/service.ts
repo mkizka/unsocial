@@ -126,14 +126,12 @@ export const relay = async ({
   if (targets.length === 0) {
     targets.push(`https://${env.UNSOCIAL_HOST}/users/${userId}/followers`);
   }
-  console.log("targets", targets);
   for (const target of targets) {
     if (target === "https://www.w3.org/ns/activitystreams#Public") {
       continue;
     }
     expandedTargets.push(...(await expandActorUrls(target)));
   }
-  console.log("expandedTargets", expandedTargets);
   const privateKey = await findPrivateKey(userId);
   assert(privateKey, `配送に必要な秘密鍵がありませんでした: ${userId}`);
   return Promise.all(

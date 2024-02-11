@@ -196,7 +196,6 @@ describe("apRelayService", () => {
       userId,
       activity,
     });
-    console.log(follow.follower.inboxUrl);
     // assert
     expect(followerFn).toHaveBeenCalledTimes(1);
     expect(followerFn).toHaveBeenCalledWith(activity);
