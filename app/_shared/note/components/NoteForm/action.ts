@@ -34,14 +34,7 @@ export async function action(formData: FormData) {
       },
     },
   });
-  if (note.replyTo?.user.inboxUrl) {
-    await apRelayService.relayActivityToInboxUrl({
-      userId,
-      activity: activityStreams.create(note),
-      inboxUrl: new URL(note.replyTo.user.inboxUrl),
-    });
-  }
-  await apRelayService.relayActivityToFollowers({
+  await apRelayService.relay({
     userId,
     activity: activityStreams.create(note),
   });
