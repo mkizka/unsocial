@@ -101,11 +101,16 @@ const getTargets = (activity: apSchemaService.Activity) => {
 export const relay = async ({
   userId,
   activity,
+  inboxUrl,
 }: {
   userId: string;
   activity: apSchemaService.Activity;
+  inboxUrl?: string | null;
 }) => {
   const expandedTargets: string[] = [];
+  if (inboxUrl) {
+    expandedTargets.push(inboxUrl);
+  }
   const targets = getTargets(activity);
   // toまたはccに送信先の指定が無ければフォロワーに配送する
   if (targets.length === 0) {

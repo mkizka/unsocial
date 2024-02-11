@@ -142,7 +142,33 @@ describe("apRelayService", () => {
     expect(follower2Fn).toHaveBeenCalledTimes(1);
     expect(follower2Fn).toHaveBeenCalledWith(activity);
   });
-  test("ccの指定が無ければフォロワーに配送する", async () => {
+  test("inboxUrlの指定があればそこに配送する", async () => {
+    // arrange
+    const { id: userId } = await userSignUpService.signUpUser({
+      preferredUsername: "user",
+      password: "password",
+    });
+    const activity = {
+      type: "Dummy",
+    } as unknown as apSchemaService.Activity;
+    const inboxUrl = "https://remote.example.com/inbox";
+    const inboxFn = jest.fn();
+    server.use(
+      http.post(inboxUrl, async ({ request }) => {
+        inboxFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await apRelayService.relay({
+      userId,
+      activity,
+      inboxUrl,
+    });
+    // assert
+    expect(inboxFn).toHaveBeenCalledTimes(1);
+  });
+  test("指定が全て無ければフォロワーに配送する", async () => {
     // arrange
     const { id: userId } = await userSignUpService.signUpUser({
       preferredUsername: "user",
