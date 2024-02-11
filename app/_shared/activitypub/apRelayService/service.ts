@@ -129,6 +129,7 @@ export const relay = async ({
     }
     targets.push(...(await expandActorUrls(target)));
   }
+  console.log("targets", targets);
   return Promise.all(
     unique(targets).map((target) =>
       relayActivity({
