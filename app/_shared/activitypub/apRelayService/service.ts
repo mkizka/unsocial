@@ -7,20 +7,6 @@ import { env } from "@/_shared/utils/env";
 import { fetcher } from "@/_shared/utils/fetcher";
 import { prisma } from "@/_shared/utils/prisma";
 
-const isNotNull = <T>(value: T): value is NonNullable<T> => value !== null;
-
-const getUniqueInboxUrls = async (userId: string) => {
-  const followerInboxes = await prisma.follow
-    .findMany({
-      where: { followeeId: userId },
-      include: { follower: true },
-    })
-    .then((follows) =>
-      follows.map((follow) => follow.follower.inboxUrl).filter(isNotNull),
-    );
-  return [...new Set(followerInboxes)].map((inboxUrl) => new URL(inboxUrl));
-};
-
 const relayActivity = async (
   params: Omit<httpSignatureSignService.SignActivityParams, "method">,
 ) => {
@@ -64,27 +50,6 @@ export const relayActivityToInboxUrl = async (params: RelayActivityParams) => {
     body: JSON.stringify(params.activity),
     inboxUrl: params.inboxUrl,
   });
-};
-
-export const relayActivityToFollowers = async (
-  params: Omit<RelayActivityParams, "inboxUrl">,
-) => {
-  const privateKey = await findPrivateKey(params.userId);
-  if (!privateKey) {
-    throw new Error(`配送に必要な秘密鍵がありませんでした: ${params.userId}`);
-  }
-  const inboxUrls = await getUniqueInboxUrls(params.userId);
-  const promises = inboxUrls.map((inboxUrl) =>
-    relayActivity({
-      signer: {
-        id: params.userId,
-        privateKey,
-      },
-      body: JSON.stringify(params.activity),
-      inboxUrl,
-    }),
-  );
-  await Promise.all(promises);
 };
 
 const expandActorUrls = async (url: string) => {
