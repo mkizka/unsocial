@@ -60,6 +60,7 @@ const hiddenCommits = [
   ...commits.slice(0, commits.length - showCount).map(row),
 ];
 
+// eslint-disable-next-line no-console
 console.log(`\
 <details>
 <summary>過去の結果</summary>
