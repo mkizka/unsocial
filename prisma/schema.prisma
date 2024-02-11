@@ -38,6 +38,7 @@ model User {
   actorUrl          String?     @unique
   inboxUrl          String?
   lastFetchedAt     DateTime?
+  isAdmin           Boolean     @default(false)
   sessions          Session[]
   notes             Note[]
   followee          Follow[]    @relation("followee")

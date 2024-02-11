@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.33
+
+### Patch Changes
+
+- 676d66d: 非ログインを管理者ページにリダイレクト
+
 ## 0.0.32
 
 ### Patch Changes

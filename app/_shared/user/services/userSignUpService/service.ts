@@ -22,12 +22,14 @@ export type SignUpUserParams = {
   name?: string;
   preferredUsername: string;
   password: string;
+  isAdmin?: boolean;
 };
 
 export const signUpUser = async ({
   name,
   preferredUsername,
   password,
+  isAdmin,
 }: SignUpUserParams) => {
   const keys = createKeys();
   const user = await prisma.user.create({
@@ -36,6 +38,7 @@ export const signUpUser = async ({
       preferredUsername,
       host: env.UNSOCIAL_HOST,
       publicKey: keys.publicKey,
+      isAdmin,
       credential: {
         create: {
           hashedPassword: bcryptjs.hashSync(password),
