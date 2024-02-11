@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { env } from "@/_shared/utils/env";
@@ -30,7 +30,7 @@ const follow = async (userId: string, followeeId: string) => {
       logger.error("フォロー先のinboxUrlがありません");
       return;
     }
-    await apReplayService.relayActivityToInboxUrl({
+    await apRelayService.relayActivityToInboxUrl({
       userId,
       inboxUrl: new URL(follow.followee.inboxUrl),
       activity: activityStreams.follow(follow, follow.followee.actorUrl),
@@ -64,7 +64,7 @@ const unfollow = async (userId: string, followeeId: string) => {
       logger.error("フォロー先のinboxUrlがありません");
       return;
     }
-    await apReplayService.relayActivityToInboxUrl({
+    await apRelayService.relayActivityToInboxUrl({
       userId,
       inboxUrl: new URL(follow.followee.inboxUrl),
       activity: activityStreams.undo(

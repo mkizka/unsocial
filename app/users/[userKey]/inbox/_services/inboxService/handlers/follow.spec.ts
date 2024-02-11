@@ -1,4 +1,4 @@
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { LocalUserFactory, RemoteUserFactory } from "@/_shared/factories/user";
 import { mockedLogger } from "@/_shared/mocks/logger";
 import { userFindService } from "@/_shared/user/services/userFindService";
@@ -8,7 +8,7 @@ import { handle } from "./follow";
 
 jest.mock("@/_shared/activitypub/apRelayService");
 const mockedRelayActivityToInboxUrl = jest.mocked(
-  apReplayService.relayActivityToInboxUrl,
+  apRelayService.relayActivityToInboxUrl,
 );
 
 jest.mock("@/_shared/user/services/userFindService");

@@ -1,6 +1,6 @@
 import type { Note } from "@prisma/client";
 
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { mockedPrisma } from "@/_shared/mocks/prisma";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
 
@@ -11,7 +11,7 @@ jest.setSystemTime(new Date("2023-01-01T00:00:00Z"));
 
 jest.mock("@/_shared/activitypub/apRelayService");
 const mockedRelayActivityToFollowers = jest.mocked(
-  apReplayService.relayActivityToFollowers,
+  apRelayService.relayActivityToFollowers,
 );
 
 const dummySessionUserId = "__session__user__id";

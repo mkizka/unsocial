@@ -2,7 +2,7 @@
 
 import type { Prisma } from "@prisma/client";
 
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { prisma } from "@/_shared/utils/prisma";
@@ -24,7 +24,7 @@ const repost = async (userId: string, noteId: string) => {
     },
   });
   const activity = activityStreams.announce(note);
-  await apReplayService.relay({
+  await apRelayService.relay({
     userId,
     activity,
   });
@@ -56,7 +56,7 @@ const undoRepost = async (userId: string, noteWithQuote: NoteWithQuote) => {
     },
   });
   const activity = activityStreams.undo(activityStreams.announce(note));
-  await apReplayService.relay({
+  await apRelayService.relay({
     userId,
     activity,
   });

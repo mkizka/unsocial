@@ -9,7 +9,7 @@ import { userSignUpService } from "@/_shared/user/services/userSignUpService";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
-import { apReplayService } from ".";
+import { apRelayService } from ".";
 
 jest.useFakeTimers();
 jest.setSystemTime(new Date("2020-01-01T00:00:00Z"));
@@ -39,7 +39,7 @@ describe("apRelayService", () => {
       }),
     );
     // act
-    await apReplayService.relay({
+    await apRelayService.relay({
       userId,
       activity,
     });
@@ -101,7 +101,7 @@ describe("apRelayService", () => {
       }),
     );
     // act
-    await apReplayService.relay({
+    await apRelayService.relay({
       userId,
       activity,
     });
@@ -140,7 +140,7 @@ describe("apRelayService", () => {
       }),
     );
     // act
-    await apReplayService.relay({
+    await apRelayService.relay({
       userId,
       activity,
     });

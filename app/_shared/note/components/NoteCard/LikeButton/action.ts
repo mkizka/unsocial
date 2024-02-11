@@ -1,7 +1,7 @@
 "use server";
 import type { Like, Note, User } from "@prisma/client";
 
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { env } from "@/_shared/utils/env";
@@ -36,7 +36,7 @@ const like = async (userId: string, input: unknown) => {
       logger.error("ノートユーザーのinboxUrlがありません");
       return;
     }
-    await apReplayService.relayActivityToInboxUrl({
+    await apRelayService.relayActivityToInboxUrl({
       userId,
       inboxUrl: new URL(like.note.user.inboxUrl),
       activity: activityStreams.like(like, like.note.url),
@@ -65,7 +65,7 @@ const unlike = async (userId: string, like: LikeWithNote) => {
       logger.error("ノートユーザーのinboxUrlがありません");
       return;
     }
-    await apReplayService.relayActivityToInboxUrl({
+    await apRelayService.relayActivityToInboxUrl({
       userId,
       inboxUrl: new URL(like.note.user.inboxUrl),
       activity: activityStreams.undo(activityStreams.like(like, like.note.url)),

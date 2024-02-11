@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { env } from "@/_shared/utils/env";
@@ -50,7 +50,7 @@ export const handle: InboxHandler = async (activity, actorUser) => {
       }
       throw error;
     });
-  await apReplayService.relayActivityToInboxUrl({
+  await apRelayService.relayActivityToInboxUrl({
     userId: followee.id,
     inboxUrl: new URL(actorUser.inboxUrl),
     activity: {

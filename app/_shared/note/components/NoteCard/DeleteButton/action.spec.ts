@@ -1,4 +1,4 @@
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { LocalNoteFactory } from "@/_shared/factories/note";
 import { LocalUserFactory } from "@/_shared/factories/user";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
@@ -7,7 +7,7 @@ import { prisma } from "@/_shared/utils/prisma";
 import { action } from "./action";
 
 jest.mock("@/_shared/activitypub/apRelayService");
-const mockedRelay = jest.mocked(apReplayService.relay);
+const mockedRelay = jest.mocked(apRelayService.relay);
 
 describe("DeleteButton/action", () => {
   test("指定したノートを削除する", async () => {

@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { prisma } from "@/_shared/utils/prisma";
@@ -35,13 +35,13 @@ export async function action(formData: FormData) {
     },
   });
   if (note.replyTo?.user.inboxUrl) {
-    await apReplayService.relayActivityToInboxUrl({
+    await apRelayService.relayActivityToInboxUrl({
       userId,
       activity: activityStreams.create(note),
       inboxUrl: new URL(note.replyTo.user.inboxUrl),
     });
   }
-  await apReplayService.relayActivityToFollowers({
+  await apRelayService.relayActivityToFollowers({
     userId,
     activity: activityStreams.create(note),
   });

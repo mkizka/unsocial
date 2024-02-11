@@ -1,6 +1,6 @@
 "use server";
 
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { prisma } from "@/_shared/utils/prisma";
@@ -14,7 +14,7 @@ export async function action(noteId: string) {
       userId,
     },
   });
-  await apReplayService.relay({
+  await apRelayService.relay({
     userId,
     activity: activityStreams.delete({
       id: noteId,
