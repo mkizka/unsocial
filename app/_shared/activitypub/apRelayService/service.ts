@@ -79,23 +79,17 @@ const expandActorUrls = async (url: string) => {
 
 const unique = <T>(array: T[]) => [...new Set(array)];
 
-const getTargets = (activity: apSchemaService.Activity) => {
+const getCC = (activity: apSchemaService.Activity) => {
   const targets: string[] = [];
-  if ("to" in activity && Array.isArray(activity.to)) {
-    targets.push(...activity.to);
-  }
   if ("cc" in activity && Array.isArray(activity.cc)) {
     targets.push(...activity.cc);
   }
   if (activity.type === "Undo") {
-    if ("to" in activity.object) {
-      targets.push(...activity.object.to);
-    }
     if ("cc" in activity.object) {
       targets.push(...activity.object.cc);
     }
   }
-  return unique(targets);
+  return targets;
 };
 
 export const relay = async ({
@@ -107,19 +101,13 @@ export const relay = async ({
   activity: apSchemaService.Activity;
   inboxUrl?: string | null;
 }) => {
-  const expandedTargets: string[] = [];
-  if (inboxUrl) {
-    expandedTargets.push(inboxUrl);
-  }
-  const targets = getTargets(activity);
-  // toまたはccに送信先の指定が無ければフォロワーに配送する
-  if (targets.length === 0) {
-    targets.push(`https://${env.UNSOCIAL_HOST}/users/${userId}/followers`);
-  }
+  const expandedTargets: string[] = inboxUrl ? [inboxUrl] : [];
+  const targets = unique([
+    ...getCC(activity),
+    // ccに指定があってもなくてもフォロワーに配送する
+    `https://${env.UNSOCIAL_HOST}/users/${userId}/followers`,
+  ]);
   for (const target of targets) {
-    if (target === "https://www.w3.org/ns/activitystreams#Public") {
-      continue;
-    }
     // N+1ではあるがtargetsの数は基本的に少ないので一旦許容
     const urls = await expandActorUrls(target);
     expandedTargets.push(...urls);
