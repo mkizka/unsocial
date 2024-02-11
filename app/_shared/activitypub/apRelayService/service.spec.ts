@@ -47,6 +47,37 @@ describe("apRelayService", () => {
     expect(ccFn).toHaveBeenCalledTimes(1);
     expect(ccFn).toHaveBeenCalledWith(activity);
   });
+  test("UndoのActivityならのobjectに指定されたccを使って配送する", async () => {
+    // arrange
+    const { id: userId } = await userSignUpService.signUpUser({
+      preferredUsername: "user",
+      password: "password",
+    });
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.inboxUrl);
+    const activity = {
+      type: "Undo",
+      object: {
+        type: "Dummy",
+        cc: [remoteUser.actorUrl],
+      },
+    } as unknown as apSchemaService.Activity;
+    const ccFn = jest.fn();
+    server.use(
+      http.post(remoteUser.inboxUrl, async ({ request }) => {
+        ccFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await apRelayService.relay({
+      userId,
+      activity,
+    });
+    // assert
+    expect(ccFn).toHaveBeenCalledTimes(1);
+    expect(ccFn).toHaveBeenCalledWith(activity);
+  });
   test("ccにフォロワーのURLを指定した場合はフォロワーのinboxに展開し、重複を排除して配送する", async () => {
     // arrange
     const { id: userId } = await userSignUpService.signUpUser({
