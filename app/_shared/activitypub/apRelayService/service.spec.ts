@@ -20,7 +20,7 @@ jest.mock("@/../package.json", () => ({
 describe("apRelayService", () => {
   test("inboxUrlで指定したURLにActivityを配送する", async () => {
     // arrange
-    const signer = await userSignUpService.signUpUser({
+    const { id: userId } = await userSignUpService.signUpUser({
       preferredUsername: "user",
       password: "password",
     });
@@ -35,7 +35,7 @@ describe("apRelayService", () => {
     );
     // act
     await apReplayService.relay({
-      signer,
+      userId,
       activity,
       inboxUrl,
     });
@@ -44,7 +44,7 @@ describe("apRelayService", () => {
   });
   test("activityにccが指定されている場合は指定された宛先にも配送する", async () => {
     // arrange
-    const signer = await userSignUpService.signUpUser({
+    const { id: userId } = await userSignUpService.signUpUser({
       preferredUsername: "user",
       password: "password",
     });
@@ -68,7 +68,7 @@ describe("apRelayService", () => {
     );
     // act
     await apReplayService.relay({
-      signer,
+      userId,
       activity,
       inboxUrl,
     });
@@ -80,7 +80,7 @@ describe("apRelayService", () => {
   });
   test("フォロワーのURLも指定した場合は重複を排除してフォロワーに配送する", async () => {
     // arrange
-    const signer = await userSignUpService.signUpUser({
+    const { id: userId } = await userSignUpService.signUpUser({
       preferredUsername: "user",
       password: "password",
     });
@@ -88,14 +88,14 @@ describe("apRelayService", () => {
       {
         followee: {
           connect: {
-            id: signer.id,
+            id: userId,
           },
         },
       },
       {
         followee: {
           connect: {
-            id: signer.id,
+            id: userId,
           },
         },
       },
@@ -114,7 +114,7 @@ describe("apRelayService", () => {
       type: "Dummy",
       cc: [
         follow1.follower.inboxUrl, // フォロワー1のURLをccに指定しても2回配送しないことを検証
-        `https://${env.UNSOCIAL_HOST}/users/${signer.id}/followers`,
+        `https://${env.UNSOCIAL_HOST}/users/${userId}/followers`,
       ],
     } as unknown as apSchemaService.Activity;
     const follower1Fn = jest.fn();
@@ -131,7 +131,7 @@ describe("apRelayService", () => {
     );
     // act
     await apReplayService.relay({
-      signer,
+      userId,
       activity,
       inboxUrl: follow2.follower.inboxUrl, // フォロワー2のURLをinboxUrlに指定しても2回配送しないことを検証
     });

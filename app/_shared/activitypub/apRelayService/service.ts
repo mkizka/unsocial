@@ -1,3 +1,4 @@
+import assert from "assert";
 import { cache } from "react";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
@@ -105,11 +106,11 @@ const expandActorUrls = async (url: string) => {
 const unique = <T>(array: T[]) => [...new Set(array)];
 
 export const relay = async ({
-  signer,
+  userId,
   activity,
   inboxUrl,
 }: {
-  signer: httpSignatureSignService.Signer;
+  userId: string;
   activity: apSchemaService.Activity;
   inboxUrl?: string;
 }) => {
@@ -129,11 +130,15 @@ export const relay = async ({
     }
     targets.push(...(await expandActorUrls(target)));
   }
-  console.log("targets", targets);
+  const privateKey = await findPrivateKey(userId);
+  assert(privateKey, `配送に必要な秘密鍵がありませんでした: ${userId}`);
   return Promise.all(
     unique(targets).map((target) =>
       relayActivity({
-        signer,
+        signer: {
+          id: userId,
+          privateKey,
+        },
         body: JSON.stringify(activity),
         inboxUrl: new URL(target),
       }),
