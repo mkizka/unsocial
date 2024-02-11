@@ -112,7 +112,7 @@ export const relay = async ({
 }: {
   userId: string;
   activity: apSchemaService.Activity;
-  inboxUrl?: string;
+  inboxUrl?: string | null;
 }) => {
   const expandedTargets: string[] = [];
   const targets = [
