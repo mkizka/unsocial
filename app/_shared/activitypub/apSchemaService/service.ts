@@ -8,6 +8,8 @@ const activitySchema = z.object({
 
 export const acceptSchema = activitySchema.extend({
   type: z.literal("Accept"),
+  id: z.string().url(),
+  actor: z.string().url(),
   object: z.object({
     type: z.literal("Follow"),
     actor: z.string().url(),

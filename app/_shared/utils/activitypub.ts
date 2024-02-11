@@ -120,6 +120,21 @@ const convertFollow = (follow: Follow, followeeUrl: string) => {
   } satisfies apSchemaService.FollowActivity;
 };
 
+const convertAccept = (
+  userId: string,
+  follow: apSchemaService.FollowActivity,
+) => {
+  const { "@context": _, ...followToAccept } = follow;
+  return {
+    ...contexts,
+    type: "Accept",
+    // TODO: いいの？
+    id: `https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${userId}/activity`,
+    object: followToAccept,
+  } satisfies apSchemaService.AcceptActivity;
+};
+
 const convertLike = (like: Like, noteUrl: string) => {
   return {
     ...contexts,
@@ -178,6 +193,7 @@ export const activityStreams = {
   create: convertCreate,
   delete: convertDelete,
   follow: convertFollow,
+  accept: convertAccept,
   like: convertLike,
   undo: convertUndo,
   announce: convertAnnounce,

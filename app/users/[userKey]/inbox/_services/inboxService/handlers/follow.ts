@@ -1,9 +1,7 @@
-import crypto from "crypto";
-
 import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userFindService } from "@/_shared/user/services/userFindService";
-import { env } from "@/_shared/utils/env";
+import { activityStreams } from "@/_shared/utils/activitypub";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -53,20 +51,6 @@ export const handle: InboxHandler = async (activity, actorUser) => {
   await apRelayService.relayActivityToInboxUrl({
     userId: followee.id,
     inboxUrl: new URL(actorUser.inboxUrl),
-    activity: {
-      "@context": [
-        "https://www.w3.org/ns/activitystreams",
-        "https://w3id.org/security/v1",
-      ],
-      // TODO: いいの？
-      id: `https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`,
-      type: "Accept",
-      actor: `https://${env.UNSOCIAL_HOST}/users/${followee.id}/activity`,
-      object: {
-        ...parsedFollow.data,
-        actor: parsedFollow.data.actor,
-        object: parsedFollow.data.object,
-      },
-    },
+    activity: activityStreams.accept(followee.id, parsedFollow.data),
   });
 };
