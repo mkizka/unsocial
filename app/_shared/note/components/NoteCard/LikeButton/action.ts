@@ -1,5 +1,6 @@
 "use server";
 import type { Like, Note, User } from "@prisma/client";
+import assert from "assert";
 
 import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
@@ -27,19 +28,12 @@ const like = async (userId: string, input: unknown) => {
     },
     include,
   });
-  if (like.note.user.host !== env.UNSOCIAL_HOST) {
-    if (!like.note.url) {
-      logger.error("ノートのURLがありません");
-      return;
-    }
-    if (!like.note.user.inboxUrl) {
-      logger.error("ノートユーザーのinboxUrlがありません");
-      return;
-    }
-    await apRelayService.relayActivityToInboxUrl({
+  if (like.note.user.inboxUrl) {
+    assert(like.note.url, "ノートのURLがありません");
+    await apRelayService.relay({
       userId,
-      inboxUrl: new URL(like.note.user.inboxUrl),
       activity: activityStreams.like(like, like.note.url),
+      inboxUrl: like.note.user.inboxUrl,
     });
   }
 };
@@ -65,10 +59,10 @@ const unlike = async (userId: string, like: LikeWithNote) => {
       logger.error("ノートユーザーのinboxUrlがありません");
       return;
     }
-    await apRelayService.relayActivityToInboxUrl({
+    await apRelayService.relay({
       userId,
-      inboxUrl: new URL(like.note.user.inboxUrl),
       activity: activityStreams.undo(activityStreams.like(like, like.note.url)),
+      inboxUrl: like.note.user.inboxUrl,
     });
   }
 };
