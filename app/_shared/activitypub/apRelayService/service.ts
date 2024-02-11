@@ -91,13 +91,13 @@ const expandActorUrls = async (url: string) => {
   const urlObject = new URL(url);
   // ひとまず https://${env.UNSOCIAL_HOST}/users/${note.userId}/followers のみサポートする
   if (urlObject.host === env.UNSOCIAL_HOST) {
-    const [path1, userId, path2] = urlObject.pathname.split("/");
+    const [_, path1, userId, path2] = urlObject.pathname.split("/");
     if (path1 === "users" && path2 === "followers") {
       const follows = await prisma.follow.findMany({
         where: { followeeId: userId },
         include: { follower: true },
       });
-      return follows.map((follow) => follow.follower.actorUrl).filter(Boolean);
+      return follows.map((follow) => follow.follower.inboxUrl).filter(Boolean);
     }
   }
   return [url];
@@ -114,26 +114,30 @@ export const relay = async ({
   activity: apSchemaService.Activity;
   inboxUrl?: string;
 }) => {
-  const targets = [];
-  if (inboxUrl) {
-    targets.push(inboxUrl);
-  }
-  const toAndCC = [
+  const expandedTargets: string[] = [];
+  const targets = [
+    inboxUrl ? [inboxUrl] : null,
     "to" in activity ? activity.to : null,
     "cc" in activity ? activity.cc : null,
   ]
     .filter(Boolean)
     .flat();
-  for (const target of toAndCC) {
+  // 送信先の指定が無ければフォロワーに配送する
+  if (targets.length === 0) {
+    targets.push(`https://${env.UNSOCIAL_HOST}/users/${userId}/followers`);
+  }
+  console.log("targets", targets);
+  for (const target of targets) {
     if (target === "https://www.w3.org/ns/activitystreams#Public") {
       continue;
     }
-    targets.push(...(await expandActorUrls(target)));
+    expandedTargets.push(...(await expandActorUrls(target)));
   }
+  console.log("expandedTargets", expandedTargets);
   const privateKey = await findPrivateKey(userId);
   assert(privateKey, `配送に必要な秘密鍵がありませんでした: ${userId}`);
   return Promise.all(
-    unique(targets).map((target) =>
+    unique(expandedTargets).map((target) =>
       relayActivity({
         signer: {
           id: userId,

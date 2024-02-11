@@ -84,7 +84,8 @@ describe("apRelayService", () => {
       preferredUsername: "user",
       password: "password",
     });
-    const [data1, data2] = await FollowFactory.buildList([
+    const [data1, data2, data3] = await FollowFactory.buildList([
+      // CCでも指定するフォロワー
       {
         followee: {
           connect: {
@@ -92,6 +93,15 @@ describe("apRelayService", () => {
           },
         },
       },
+      // inboxUrlでも指定するフォロワー
+      {
+        followee: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+      // その他のフォロワー
       {
         followee: {
           connect: {
@@ -108,8 +118,13 @@ describe("apRelayService", () => {
       data: data2!,
       include: { follower: true },
     });
+    const follow3 = await prisma.follow.create({
+      data: data3!,
+      include: { follower: true },
+    });
     assert(follow1.follower.inboxUrl);
     assert(follow2.follower.inboxUrl);
+    assert(follow3.follower.inboxUrl);
     const activity = {
       type: "Dummy",
       cc: [
@@ -119,6 +134,7 @@ describe("apRelayService", () => {
     } as unknown as apSchemaService.Activity;
     const follower1Fn = jest.fn();
     const follower2Fn = jest.fn();
+    const follower3Fn = jest.fn();
     server.use(
       http.post(follow1.follower.inboxUrl, async ({ request }) => {
         follower1Fn(await request.json());
@@ -126,6 +142,10 @@ describe("apRelayService", () => {
       }),
       http.post(follow2.follower.inboxUrl, async ({ request }) => {
         follower2Fn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+      http.post(follow3.follower.inboxUrl, async ({ request }) => {
+        follower3Fn(await request.json());
         return HttpResponse.text("Accepted", { status: 202 });
       }),
     );
@@ -136,7 +156,49 @@ describe("apRelayService", () => {
       inboxUrl: follow2.follower.inboxUrl, // フォロワー2のURLをinboxUrlに指定しても2回配送しないことを検証
     });
     // assert
+    expect(follower1Fn).toHaveBeenCalledTimes(1);
     expect(follower1Fn).toHaveBeenCalledWith(activity);
+    expect(follower2Fn).toHaveBeenCalledTimes(1);
     expect(follower2Fn).toHaveBeenCalledWith(activity);
+    expect(follower3Fn).toHaveBeenCalledTimes(1);
+    expect(follower3Fn).toHaveBeenCalledWith(activity);
+  });
+  test("inboxUrlの指定もccの指定も無ければフォロワーに配送する", async () => {
+    // arrange
+    const { id: userId } = await userSignUpService.signUpUser({
+      preferredUsername: "user",
+      password: "password",
+    });
+    const data = await FollowFactory.build({
+      followee: {
+        connect: {
+          id: userId,
+        },
+      },
+    });
+    const follow = await prisma.follow.create({
+      data: data,
+      include: { follower: true },
+    });
+    assert(follow.follower.inboxUrl);
+    const activity = {
+      type: "Dummy",
+    } as unknown as apSchemaService.Activity;
+    const followerFn = jest.fn();
+    server.use(
+      http.post(follow.follower.inboxUrl, async ({ request }) => {
+        followerFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await apReplayService.relay({
+      userId,
+      activity,
+    });
+    console.log(follow.follower.inboxUrl);
+    // assert
+    expect(followerFn).toHaveBeenCalledTimes(1);
+    expect(followerFn).toHaveBeenCalledWith(activity);
   });
 });
