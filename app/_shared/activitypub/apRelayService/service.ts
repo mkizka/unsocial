@@ -114,6 +114,25 @@ const expandActorUrls = async (url: string) => {
 
 const unique = <T>(array: T[]) => [...new Set(array)];
 
+const getTargets = (activity: apSchemaService.Activity) => {
+  const targets: string[] = [];
+  if ("to" in activity && Array.isArray(activity.to)) {
+    targets.push(...activity.to);
+  }
+  if ("cc" in activity && Array.isArray(activity.cc)) {
+    targets.push(...activity.cc);
+  }
+  if (activity.type === "Undo") {
+    if ("to" in activity.object) {
+      targets.push(...activity.object.to);
+    }
+    if ("cc" in activity.object) {
+      targets.push(...activity.object.cc);
+    }
+  }
+  return unique(targets);
+};
+
 export const relay = async ({
   userId,
   activity,
@@ -122,12 +141,7 @@ export const relay = async ({
   activity: apSchemaService.Activity;
 }) => {
   const expandedTargets: string[] = [];
-  const targets = [
-    "to" in activity ? activity.to : null,
-    "cc" in activity ? activity.cc : null,
-  ]
-    .filter(Boolean)
-    .flat();
+  const targets = getTargets(activity);
   // toまたはccに送信先の指定が無ければフォロワーに配送する
   if (targets.length === 0) {
     targets.push(`https://${env.UNSOCIAL_HOST}/users/${userId}/followers`);
