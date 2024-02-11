@@ -155,8 +155,8 @@ const convertAnnounce = (
   const cc = [
     `https://${env.UNSOCIAL_HOST}/users/${noteWithQuote.userId}/followers`,
   ];
-  if (noteWithQuote.quote.user.actorUrl) {
-    cc.push(noteWithQuote.quote.user.actorUrl);
+  if (noteWithQuote.quote.user.inboxUrl) {
+    cc.push(noteWithQuote.quote.user.inboxUrl);
   }
   return {
     ...contexts,
