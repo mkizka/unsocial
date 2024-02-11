@@ -89,7 +89,7 @@ export const relayActivityToFollowers = async (
 
 const expandActorUrls = async (url: string) => {
   const urlObject = new URL(url);
-  // ひとまず https://${env.UNSOCIAL_HOST}/users/${note.userId}/followers のみサポートする
+  // ひとまず https://${env.UNSOCIAL_HOST}/users/${note.userId}/followers のみ処理する
   if (urlObject.host === env.UNSOCIAL_HOST) {
     const [_, path1, userId, path2] = urlObject.pathname.split("/");
     if (path1 === "users" && path2 === "followers") {
@@ -99,8 +99,17 @@ const expandActorUrls = async (url: string) => {
       });
       return follows.map((follow) => follow.follower.inboxUrl).filter(Boolean);
     }
+    throw new Error(
+      `配送先として/folowers以外の自サーバーのURLは指定できません ${url}`,
+    );
   }
-  return [url];
+  const remoteUser = await prisma.user.findUnique({ where: { actorUrl: url } });
+  assert(remoteUser, `指定されたactorのユーザーが見つかりませんでした: ${url}`);
+  assert(
+    remoteUser.inboxUrl,
+    `指定されたactorのinboxUrlが見つかりませんでした: ${url}`,
+  );
+  return [remoteUser.inboxUrl];
 };
 
 const unique = <T>(array: T[]) => [...new Set(array)];
@@ -108,21 +117,18 @@ const unique = <T>(array: T[]) => [...new Set(array)];
 export const relay = async ({
   userId,
   activity,
-  inboxUrl,
 }: {
   userId: string;
   activity: apSchemaService.Activity;
-  inboxUrl?: string | null;
 }) => {
   const expandedTargets: string[] = [];
   const targets = [
-    inboxUrl ? [inboxUrl] : null,
     "to" in activity ? activity.to : null,
     "cc" in activity ? activity.cc : null,
   ]
     .filter(Boolean)
     .flat();
-  // 送信先の指定が無ければフォロワーに配送する
+  // toまたはccに送信先の指定が無ければフォロワーに配送する
   if (targets.length === 0) {
     targets.push(`https://${env.UNSOCIAL_HOST}/users/${userId}/followers`);
   }
@@ -130,7 +136,9 @@ export const relay = async ({
     if (target === "https://www.w3.org/ns/activitystreams#Public") {
       continue;
     }
-    expandedTargets.push(...(await expandActorUrls(target)));
+    // N+1ではあるがtargetsの数は基本的に少ないので一旦許容
+    const urls = await expandActorUrls(target);
+    expandedTargets.push(...urls);
   }
   const privateKey = await findPrivateKey(userId);
   assert(privateKey, `配送に必要な秘密鍵がありませんでした: ${userId}`);
