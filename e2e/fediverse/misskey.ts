@@ -25,6 +25,12 @@ export class MisskeyHandler extends FediverseHandler {
         has: this.page.locator(".ti-whirl"),
       })
       .click();
+    // ローディングUIを待つ
+    await expect(async () => {
+      await expect(
+        this.page.locator("[data-sticky-container-header-height] svg"),
+      ).not.toBeVisible();
+    }).toPass();
   }
 
   async login() {
