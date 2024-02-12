@@ -43,9 +43,9 @@ export const deleteSchema = activitySchema.extend({
     // アカウントの削除
     z.string().url(),
   ]),
-  to: z.array(z.string().url()),
-  // apRelayServiceがccを見て配送するので追加するが、
-  // Mastodonの実装には無いのでoptional
+  // apRelayService.relayがccを見て配送するので追加するが、
+  // Misskey,Mastodonの実装には無いのでoptional
+  to: z.array(z.string().url()).optional(),
   cc: z.array(z.string().url()).optional(),
 });
 
