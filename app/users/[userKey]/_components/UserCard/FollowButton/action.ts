@@ -1,14 +1,11 @@
 "use server";
+import assert from "assert";
 import { revalidatePath } from "next/cache";
 
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
-import { env } from "@/_shared/utils/env";
-import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
-
-const logger = createLogger("FollowButton");
 
 const follow = async (userId: string, followeeId: string) => {
   const follow = await prisma.follow.create({
@@ -21,19 +18,12 @@ const follow = async (userId: string, followeeId: string) => {
       followee: true,
     },
   });
-  if (follow.followee.host !== env.UNSOCIAL_HOST) {
-    if (!follow.followee.actorUrl) {
-      logger.error("フォロー先のURLがありません");
-      return;
-    }
-    if (!follow.followee.inboxUrl) {
-      logger.error("フォロー先のinboxUrlがありません");
-      return;
-    }
-    await apReplayService.relayActivityToInboxUrl({
+  if (follow.followee.inboxUrl) {
+    assert(follow.followee.actorUrl, "フォロー先のURLがありません");
+    await apRelayService.relay({
       userId,
-      inboxUrl: new URL(follow.followee.inboxUrl),
       activity: activityStreams.follow(follow, follow.followee.actorUrl),
+      inboxUrl: follow.followee.inboxUrl,
     });
   } else {
     await prisma.follow.update({
@@ -55,21 +45,14 @@ const unfollow = async (userId: string, followeeId: string) => {
       followee: true,
     },
   });
-  if (follow.followee.host !== env.UNSOCIAL_HOST) {
-    if (!follow.followee.actorUrl) {
-      logger.error("フォロー先のURLがありません");
-      return;
-    }
-    if (!follow.followee.inboxUrl) {
-      logger.error("フォロー先のinboxUrlがありません");
-      return;
-    }
-    await apReplayService.relayActivityToInboxUrl({
+  if (follow.followee.inboxUrl) {
+    assert(follow.followee.actorUrl, "フォロー先のURLがありません");
+    await apRelayService.relay({
       userId,
-      inboxUrl: new URL(follow.followee.inboxUrl),
       activity: activityStreams.undo(
         activityStreams.follow(follow, follow.followee.actorUrl),
       ),
+      inboxUrl: follow.followee.inboxUrl,
     });
   }
 };

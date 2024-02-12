@@ -16,6 +16,7 @@ describe("inboxAcceptService", () => {
     // arrange
     const activity = {
       type: "Accept",
+      id: "https://remote.example.com/12345",
       actor: "https://remote.example.com/u/dummy_remote",
       object: {
         type: "Follow",

@@ -46,6 +46,7 @@ describe("inboxDeleteService", () => {
       type: "Delete",
       actor: user.actorUrl!,
       object: user.actorUrl!,
+      to: ["https://www.w3.org/ns/activitystreams#Public"],
     };
     // act
     const error = await handle(activity, {} as never);

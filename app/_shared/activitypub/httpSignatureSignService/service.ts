@@ -8,11 +8,13 @@ const getSignature = (textToSign: string, privateKey: string) => {
   return sig.sign(privateKey, "base64");
 };
 
+export type Signer = {
+  id: string;
+  privateKey: string;
+};
+
 export type SignActivityParams = {
-  signer: {
-    id: string;
-    privateKey: string;
-  };
+  signer: Signer;
   body: string;
   inboxUrl: URL;
   method: string;

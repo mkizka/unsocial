@@ -64,8 +64,7 @@ describe("RepostButton/action", () => {
     });
     expect(noteWithQuote).not.toBeNull();
     expect(followerHandler).toHaveBeenCalledTimes(1);
-    // TODO: 1回だけ呼ばれるようにする
-    expect(repostedUserHandler).toHaveBeenCalledTimes(2);
+    expect(repostedUserHandler).toHaveBeenCalledTimes(1);
   });
   test("リポストしたノートを削除できる", async () => {
     // arrange
@@ -104,7 +103,6 @@ describe("RepostButton/action", () => {
     });
     expect(noteWithQuote).toBeNull();
     expect(followerHandler).toHaveBeenCalledTimes(1);
-    // TODO: 2回だけ呼ばれるようにする
-    expect(repostedUserHandler).toHaveBeenCalledTimes(2);
+    expect(repostedUserHandler).toHaveBeenCalledTimes(1);
   });
 });

@@ -8,6 +8,8 @@ const activitySchema = z.object({
 
 export const acceptSchema = activitySchema.extend({
   type: z.literal("Accept"),
+  id: z.string().url(),
+  actor: z.string().url(),
   object: z.object({
     type: z.literal("Follow"),
     actor: z.string().url(),
@@ -41,6 +43,10 @@ export const deleteSchema = activitySchema.extend({
     // アカウントの削除
     z.string().url(),
   ]),
+  // apRelayService.relayがccを見て配送するので追加するが、
+  // Misskey,Mastodonの実装には無いのでoptional
+  to: z.array(z.string().url()).optional(),
+  cc: z.array(z.string().url()).optional(),
 });
 
 export type DeleteActivity = z.infer<typeof deleteSchema>;
@@ -171,3 +177,14 @@ export const createSchema = activitySchema.extend({
 });
 
 export type CreateActivity = z.infer<typeof createSchema>;
+
+export type Activity =
+  | AcceptActivity
+  | AnnounceActivity
+  | DeleteActivity
+  | FollowActivity
+  | LikeActivity
+  | NoteActivity
+  | PersonActivity
+  | UndoActivity
+  | CreateActivity;
