@@ -1,187 +1,110 @@
-import type { Follow } from "@prisma/client";
-import { revalidatePath } from "next/cache";
+import { http, HttpResponse } from "msw";
 
-import { apRelayService } from "@/_shared/activitypub/apRelayService";
-import { mockedPrisma } from "@/_shared/mocks/prisma";
+import { LocalUserFactory, RemoteUserFactory } from "@/_shared/factories/user";
+import { server } from "@/_shared/mocks/server";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
+import { userSignUpService } from "@/_shared/user/services/userSignUpService";
+import { prisma } from "@/_shared/utils/prisma";
 
 import { action } from "./action";
 
-jest.mock("@/_shared/activitypub/apRelayService");
-const mockedRelayActivityToInboxUrl = jest.mocked(
-  apRelayService.relayActivityToInboxUrl,
-);
-
 jest.mock("next/cache");
-const mockedRevalidatePath = jest.mocked(revalidatePath);
-
-const dummyRemoteUser = {
-  id: "dummy_remote",
-  name: "Dummy",
-  preferredUsername: "dummy",
-  host: "remote.example.com",
-  actorUrl: "https://remote.example.com/users/dummy_remote",
-  inboxUrl: "https://remote.example.com/inbox",
-};
-
-const dummyLocalUser = {
-  id: "dummy_local",
-  name: "Dummy",
-  preferredUsername: "dummy",
-  host: "myhost.example.com",
-};
-
-const dummySessionUserId = "dummy_session";
 
 describe("FollowButton/action", () => {
-  test("リモートユーザー", async () => {
+  test("ローカルのユーザーをフォローできる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
-    mockedPrisma.follow.create.mockResolvedValue({
-      id: "followId",
-      followeeId: dummyRemoteUser.id,
-      followee: {
-        // @ts-ignore
-        host: dummyRemoteUser.host,
-        actorUrl: dummyRemoteUser.actorUrl,
-        inboxUrl: dummyRemoteUser.inboxUrl,
-      },
-      followerId: dummySessionUserId,
-      status: "SENT",
-      createdAt: new Date(),
-    });
+    const followee = await LocalUserFactory.create();
+    const follower = await LocalUserFactory.create();
+    mockedGetSessionUserId.mockResolvedValue(follower.id);
     // act
-    await action({ followeeId: dummyRemoteUser.id });
+    await action({ followeeId: followee.id });
     // assert
-    expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
-      data: {
-        followeeId: dummyRemoteUser.id,
-        followerId: dummySessionUserId,
-        status: "SENT",
-      },
-      include: {
-        followee: true,
-      },
+    expect(await prisma.follow.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      followeeId: followee.id,
+      followerId: follower.id,
+      status: "ACCEPTED",
+      createdAt: expect.anyDate(),
     });
-    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummySessionUserId,
-      inboxUrl: new URL(dummyRemoteUser.inboxUrl),
-      activity: expect.objectContaining({
+  });
+  test("リモートのユーザーをフォローできる", async () => {
+    // arrange
+    const localUser = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
+    mockedGetSessionUserId.mockResolvedValue(localUser.id);
+    const remoteUser = await RemoteUserFactory.create();
+    const remoteUserFn = jest.fn();
+    server.use(
+      http.post(remoteUser.inboxUrl!, async ({ request }) => {
+        remoteUserFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await action({ followeeId: remoteUser.id });
+    // assert
+    expect(await prisma.follow.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      followeeId: remoteUser.id,
+      followerId: localUser.id,
+      status: "SENT",
+      createdAt: expect.anyDate(),
+    });
+    expect(remoteUserFn).toHaveBeenCalledTimes(1);
+    expect(remoteUserFn).toHaveBeenCalledWith(
+      expect.objectContaining({
         type: "Follow",
       }),
-    });
-    expect(mockedRevalidatePath).toHaveBeenCalledWith("/users/dummy_remote");
+    );
   });
-  test("ローカルユーザー", async () => {
+  test("ローカルのユーザーのフォローを解除できる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
-    mockedPrisma.follow.create.mockResolvedValue({
-      id: "followId",
-      followeeId: dummyLocalUser.id,
-      followee: {
-        // @ts-ignore
-        host: dummyLocalUser.host,
-      },
-      followerId: dummySessionUserId,
-      status: "SENT",
-      createdAt: new Date(),
-    });
-    // act
-    await action({ followeeId: dummyLocalUser.id });
-    // assert
-    expect(mockedPrisma.follow.create).toHaveBeenCalledWith({
+    const followee = await LocalUserFactory.create();
+    const follower = await LocalUserFactory.create();
+    mockedGetSessionUserId.mockResolvedValue(follower.id);
+    await prisma.follow.create({
       data: {
-        followeeId: dummyLocalUser.id,
-        followerId: dummySessionUserId,
-        status: "SENT",
+        followeeId: followee.id,
+        followerId: follower.id,
       },
-      include: {
-        followee: true,
-      },
-    });
-    expect(mockedPrisma.follow.update).toHaveBeenCalledWith({
-      data: { status: "ACCEPTED" },
-      where: { id: "followId" },
-    });
-    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
-    expect(mockedRevalidatePath).toHaveBeenCalledWith("/users/dummy_local");
-  });
-  test("リモートユーザー(解除)", async () => {
-    // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
-    mockedPrisma.follow.findFirst.mockResolvedValue({} as Follow);
-    mockedPrisma.follow.delete.mockResolvedValue({
-      id: "followId",
-      followeeId: dummyRemoteUser.id,
-      followee: {
-        // @ts-ignore
-        host: dummyRemoteUser.host,
-        actorUrl: dummyRemoteUser.actorUrl,
-        inboxUrl: dummyRemoteUser.inboxUrl,
-      },
-      followerId: dummySessionUserId,
-      status: "SENT",
-      createdAt: new Date(),
     });
     // act
-    await action({ followeeId: dummyRemoteUser.id });
+    await action({ followeeId: followee.id });
     // assert
-    expect(mockedPrisma.follow.findFirst).toHaveBeenCalledWith({
-      where: {
-        followeeId: dummyRemoteUser.id,
-        followerId: dummySessionUserId,
+    expect(await prisma.follow.findFirst()).toBeNull();
+  });
+  test("リモートのユーザーのフォローを解除できる", async () => {
+    // arrange
+    const localUser = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
+    mockedGetSessionUserId.mockResolvedValue(localUser.id);
+    const remoteUser = await RemoteUserFactory.create();
+    await prisma.follow.create({
+      data: {
+        followeeId: remoteUser.id,
+        followerId: localUser.id,
       },
     });
-    expect(mockedPrisma.follow.delete).toHaveBeenCalledWith({
-      where: {
-        followeeId_followerId: {
-          followeeId: dummyRemoteUser.id,
-          followerId: dummySessionUserId,
-        },
-      },
-      include: {
-        followee: true,
-      },
-    });
-    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummySessionUserId,
-      inboxUrl: new URL(dummyRemoteUser.inboxUrl),
-      activity: expect.objectContaining({
+    const remoteUserFn = jest.fn();
+    server.use(
+      http.post(remoteUser.inboxUrl!, async ({ request }) => {
+        remoteUserFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await action({ followeeId: remoteUser.id });
+    // assert
+    expect(await prisma.follow.findFirst()).toBeNull();
+    expect(remoteUserFn).toHaveBeenCalledTimes(1);
+    expect(remoteUserFn).toHaveBeenCalledWith(
+      expect.objectContaining({
         type: "Undo",
       }),
-    });
-    expect(mockedRevalidatePath).toHaveBeenCalledWith("/users/dummy_remote");
-  });
-  test("ローカルユーザー(解除)", async () => {
-    // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummySessionUserId);
-    mockedPrisma.follow.findFirst.mockResolvedValue({} as never);
-    mockedPrisma.follow.delete.mockResolvedValue({
-      id: "followId",
-      followeeId: dummyLocalUser.id,
-      followee: {
-        // @ts-ignore
-        host: dummyLocalUser.host,
-      },
-      followerId: dummySessionUserId,
-      status: "SENT",
-      createdAt: new Date(),
-    });
-    // act
-    await action({ followeeId: dummyLocalUser.id });
-    // assert
-    expect(mockedPrisma.follow.delete).toHaveBeenCalledWith({
-      where: {
-        followeeId_followerId: {
-          followeeId: dummyLocalUser.id,
-          followerId: dummySessionUserId,
-        },
-      },
-      include: {
-        followee: true,
-      },
-    });
-    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
-    expect(mockedRevalidatePath).toHaveBeenCalledWith("/users/dummy_local");
+    );
   });
 });
