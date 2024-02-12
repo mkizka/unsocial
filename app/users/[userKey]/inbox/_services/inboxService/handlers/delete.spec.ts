@@ -17,6 +17,7 @@ describe("inboxDeleteService", () => {
         type: "Tombstone",
         id: note.url,
       },
+      to: ["https://www.w3.org/ns/activitystreams#Public"],
     };
     // act
     const error = await handle(activity, {} as never);
@@ -33,6 +34,7 @@ describe("inboxDeleteService", () => {
         type: "Tombstone",
         id: "https://remote.example.com/n/not_exist",
       },
+      to: ["https://www.w3.org/ns/activitystreams#Public"],
     };
     // act
     const error = await handle(activity, {} as never);
@@ -46,6 +48,7 @@ describe("inboxDeleteService", () => {
       type: "Delete",
       actor: user.actorUrl!,
       object: user.actorUrl!,
+      to: ["https://www.w3.org/ns/activitystreams#Public"],
     };
     // act
     const error = await handle(activity, {} as never);
@@ -59,6 +62,7 @@ describe("inboxDeleteService", () => {
       type: "Delete",
       actor: "https://remote.example.com/u/dummy_remote",
       object: "https://remote.example.com/u/dummy_remote",
+      to: ["https://www.w3.org/ns/activitystreams#Public"],
     };
     // act
     const error = await handle(activity, {} as never);
