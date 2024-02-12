@@ -31,27 +31,6 @@ const findPrivateKey = cache(async (userId: string) => {
   return credential?.privateKey ?? null;
 });
 
-type RelayActivityParams = {
-  userId: string;
-  activity: object;
-  inboxUrl: URL;
-};
-
-export const relayActivityToInboxUrl = async (params: RelayActivityParams) => {
-  const privateKey = await findPrivateKey(params.userId);
-  if (!privateKey) {
-    throw new Error(`配送に必要な秘密鍵がありませんでした: ${params.userId}`);
-  }
-  await relayActivity({
-    signer: {
-      id: params.userId,
-      privateKey,
-    },
-    body: JSON.stringify(params.activity),
-    inboxUrl: params.inboxUrl,
-  });
-};
-
 const expandActorUrls = async (url: string) => {
   const urlObject = new URL(url);
   // ひとまず https://${env.UNSOCIAL_HOST}/users/${note.userId}/followers のみ処理する
