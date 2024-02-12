@@ -142,7 +142,7 @@ describe("apRelayService", () => {
     expect(follower2Fn).toHaveBeenCalledTimes(1);
     expect(follower2Fn).toHaveBeenCalledWith(activity);
   });
-  test("inboxUrlの指定があればそこに配送する", async () => {
+  test("inboxUrlの指定があればそこのみに配送する", async () => {
     // arrange
     const { id: userId } = await userSignUpService.signUpUser({
       preferredUsername: "user",
@@ -151,11 +151,27 @@ describe("apRelayService", () => {
     const activity = {
       type: "Dummy",
     } as unknown as apSchemaService.Activity;
+    const follow = await prisma.follow.create({
+      data: await FollowFactory.build({
+        followee: {
+          connect: {
+            id: userId,
+          },
+        },
+      }),
+      include: { follower: true },
+    });
+    assert(follow.follower.inboxUrl);
     const inboxUrl = "https://remote.example.com/inbox";
     const inboxFn = jest.fn();
+    const followerFn = jest.fn();
     server.use(
       http.post(inboxUrl, async ({ request }) => {
         inboxFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+      http.post(follow.follower.inboxUrl, async ({ request }) => {
+        followerFn(await request.json());
         return HttpResponse.text("Accepted", { status: 202 });
       }),
     );
@@ -167,8 +183,10 @@ describe("apRelayService", () => {
     });
     // assert
     expect(inboxFn).toHaveBeenCalledTimes(1);
+    expect(inboxFn).toHaveBeenCalledWith(activity);
+    expect(followerFn).toHaveBeenCalledTimes(0);
   });
-  test("指定が全て無ければフォロワーに配送する", async () => {
+  test("指定が全て無ければどこにも配送しない", async () => {
     // arrange
     const { id: userId } = await userSignUpService.signUpUser({
       preferredUsername: "user",
@@ -202,7 +220,6 @@ describe("apRelayService", () => {
       activity,
     });
     // assert
-    expect(followerFn).toHaveBeenCalledTimes(1);
-    expect(followerFn).toHaveBeenCalledWith(activity);
+    expect(followerFn).toHaveBeenCalledTimes(0);
   });
 });

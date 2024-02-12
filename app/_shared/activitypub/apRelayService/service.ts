@@ -89,7 +89,7 @@ const getCC = (activity: apSchemaService.Activity) => {
       targets.push(...activity.object.cc);
     }
   }
-  return targets;
+  return unique(targets);
 };
 
 export const relay = async ({
@@ -102,11 +102,7 @@ export const relay = async ({
   inboxUrl?: string | null;
 }) => {
   const expandedTargets: string[] = inboxUrl ? [inboxUrl] : [];
-  const targets = unique([
-    ...getCC(activity),
-    // ccに指定があってもなくてもフォロワーに配送する
-    `https://${env.UNSOCIAL_HOST}/users/${userId}/followers`,
-  ]);
+  const targets = getCC(activity);
   for (const target of targets) {
     // N+1ではあるがtargetsの数は基本的に少ないので一旦許容
     const urls = await expandActorUrls(target);
