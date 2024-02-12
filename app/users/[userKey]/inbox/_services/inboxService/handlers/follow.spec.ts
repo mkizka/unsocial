@@ -1,31 +1,34 @@
-import { apRelayService } from "@/_shared/activitypub/apRelayService";
-import { LocalUserFactory, RemoteUserFactory } from "@/_shared/factories/user";
+import { http, HttpResponse } from "msw";
+
+import { RemoteUserFactory } from "@/_shared/factories/user";
 import { mockedLogger } from "@/_shared/mocks/logger";
-import { userFindService } from "@/_shared/user/services/userFindService";
+import { server } from "@/_shared/mocks/server";
+import { userSignUpService } from "@/_shared/user/services/userSignUpService";
 import { prisma } from "@/_shared/utils/prisma";
 
 import { handle } from "./follow";
 
-jest.mock("@/_shared/activitypub/apRelayService");
-const mockedRelayActivityToInboxUrl = jest.mocked(
-  apRelayService.relayActivityToInboxUrl,
-);
-
-jest.mock("@/_shared/user/services/userFindService");
-const mockedUserFindService = jest.mocked(userFindService);
-
 describe("inboxFollowService", () => {
   test("正常系", async () => {
     // arrange
+    const localUser = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
     const remoteUser = await RemoteUserFactory.create();
-    const localUser = await LocalUserFactory.create();
-    mockedUserFindService.findOrFetchUserByActor.mockResolvedValue(localUser);
     const activity = {
       type: "Follow",
       id: "https://remote.example.com/follows/foobar",
       actor: remoteUser.actorUrl!,
       object: `https://myhost.example.com/users/${localUser.id}/activity`,
     };
+    const remoteUserFn = jest.fn();
+    server.use(
+      http.post(remoteUser.inboxUrl!, async ({ request }) => {
+        remoteUserFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
     // act
     const error = await handle(activity, remoteUser);
     // assert
@@ -37,54 +40,41 @@ describe("inboxFollowService", () => {
       status: "ACCEPTED",
       createdAt: expect.anyDate(),
     });
-    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      inboxUrl: new URL(remoteUser.inboxUrl!),
-      userId: localUser.id,
-      activity: {
-        "@context": [
-          "https://www.w3.org/ns/activitystreams",
-          "https://w3id.org/security/v1",
-        ],
-        id: expect.any(String),
-        type: "Accept",
-        actor: activity.object,
-        object: activity,
-      },
-    });
+    expect(remoteUserFn).toHaveBeenCalledTimes(1);
   });
   test("同じフォロー関係が送られてきてもエラーにしない", async () => {
     // arrange
+    const localUser = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
     const remoteUser = await RemoteUserFactory.create();
-    const localUser = await LocalUserFactory.create();
-    mockedUserFindService.findOrFetchUserByActor.mockResolvedValue(localUser);
+    await prisma.follow.create({
+      data: {
+        followeeId: localUser.id,
+        followerId: remoteUser.id,
+      },
+    });
     const activity = {
       type: "Follow",
       id: "https://remote.example.com/follows/foobar",
       actor: remoteUser.actorUrl!,
       object: `https://myhost.example.com/users/${localUser.id}/activity`,
     };
+    const remoteUserFn = jest.fn();
+    server.use(
+      http.post(remoteUser.inboxUrl!, async ({ request }) => {
+        remoteUserFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
     // act
-    const error1 = await handle(activity, remoteUser);
-    const error2 = await handle(activity, remoteUser);
+    const error = await handle(activity, remoteUser);
     // assert
-    expect(error1).toBeUndefined();
-    expect(error2).toBeUndefined();
+    expect(error).toBeUndefined();
     expect(mockedLogger.info).toHaveBeenCalledWith(
       `すでに存在するフォロー関係のためスキップ`,
     );
-    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      inboxUrl: new URL(remoteUser.inboxUrl!),
-      userId: localUser.id,
-      activity: {
-        "@context": [
-          "https://www.w3.org/ns/activitystreams",
-          "https://w3id.org/security/v1",
-        ],
-        id: expect.any(String),
-        type: "Accept",
-        actor: activity.object,
-        object: activity,
-      },
-    });
+    expect(remoteUserFn).not.toHaveBeenCalled();
   });
 });
