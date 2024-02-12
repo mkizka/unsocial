@@ -1,11 +1,10 @@
-import crypto from "crypto";
-
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userFindService } from "@/_shared/user/services/userFindService";
-import { env } from "@/_shared/utils/env";
+import { activityStreams } from "@/_shared/utils/activitypub";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
+import { isInstanceOfPrismaError } from "@/_shared/utils/prismaError";
 
 import {
   ActivitySchemaValidationError,
@@ -35,38 +34,24 @@ export const handle: InboxHandler = async (activity, actorUser) => {
       "フォローリクエストを送信したユーザーがinboxUrlを持っていませんでした",
     );
   }
-  await prisma.follow
-    .create({
+  try {
+    await prisma.follow.create({
       data: {
         followeeId: followee.id,
         followerId: actorUser.id,
         status: "ACCEPTED",
       },
-    })
-    .catch((error) => {
-      if (error.code === "P2002") {
-        logger.info(`すでに存在するフォロー関係のためスキップ`);
-        return;
-      }
-      throw error;
     });
-  await apReplayService.relayActivityToInboxUrl({
-    userId: followee.id,
-    inboxUrl: new URL(actorUser.inboxUrl),
-    activity: {
-      "@context": [
-        "https://www.w3.org/ns/activitystreams",
-        "https://w3id.org/security/v1",
-      ],
-      // TODO: いいの？
-      id: `https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`,
-      type: "Accept",
-      actor: `https://${env.UNSOCIAL_HOST}/users/${followee.id}/activity`,
-      object: {
-        ...parsedFollow.data,
-        actor: parsedFollow.data.actor,
-        object: parsedFollow.data.object,
-      },
-    },
-  });
+    await apRelayService.relay({
+      userId: followee.id,
+      activity: activityStreams.accept(followee.id, parsedFollow.data),
+      inboxUrl: actorUser.inboxUrl,
+    });
+  } catch (error) {
+    if (isInstanceOfPrismaError(error) && error.code === "P2002") {
+      logger.info(`すでに存在するフォロー関係のためスキップ`);
+      return;
+    }
+    throw error;
+  }
 };

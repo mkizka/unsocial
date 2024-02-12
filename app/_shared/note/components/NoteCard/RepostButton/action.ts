@@ -1,12 +1,8 @@
 "use server";
 
 import type { Prisma } from "@prisma/client";
-import assert from "assert";
 
-import {
-  relayActivityToFollowers,
-  relayActivityToInboxUrl,
-} from "@/_shared/activitypub/apRelayService/service";
+import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { activityStreams } from "@/_shared/utils/activitypub";
 import { prisma } from "@/_shared/utils/prisma";
@@ -28,18 +24,10 @@ const repost = async (userId: string, noteId: string) => {
     },
   });
   const activity = activityStreams.announce(note);
-  await relayActivityToFollowers({
+  await apRelayService.relay({
     userId,
     activity,
   });
-  assert(note.quote);
-  if (note.quote.user.inboxUrl) {
-    await relayActivityToInboxUrl({
-      userId,
-      activity,
-      inboxUrl: new URL(note.quote.user.inboxUrl),
-    });
-  }
 };
 
 const include = {
@@ -68,18 +56,10 @@ const undoRepost = async (userId: string, noteWithQuote: NoteWithQuote) => {
     },
   });
   const activity = activityStreams.undo(activityStreams.announce(note));
-  await relayActivityToFollowers({
+  await apRelayService.relay({
     userId,
     activity,
   });
-  assert(note.quote);
-  if (note.quote.user.inboxUrl) {
-    await relayActivityToInboxUrl({
-      userId,
-      activity,
-      inboxUrl: new URL(note.quote.user.inboxUrl),
-    });
-  }
 };
 
 export async function action({ noteId }: { noteId: string }) {

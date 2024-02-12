@@ -1,5 +1,6 @@
 import { Card } from "@/_shared/ui/Card";
 
+import { DebugMenu } from "./_components/DebugMenu";
 import { IconSettingsForm } from "./_components/IconSettingsForm";
 import { ProfileFormContainer } from "./_components/ProfileFormContainer";
 import { SignOutForm } from "./_components/SignoutForm";
@@ -19,6 +20,12 @@ export default function Page() {
           <h1 className="font-bold">アカウント</h1>
         </Card>
         <SignOutForm />
+      </section>
+      <section className="space-y-1">
+        <Card>
+          <h1 className="font-bold">デバッグ</h1>
+        </Card>
+        <DebugMenu />
       </section>
     </div>
   );

@@ -1,159 +1,116 @@
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
-import { mockedPrisma } from "@/_shared/mocks/prisma";
+import assert from "assert";
+import { http, HttpResponse } from "msw";
+
+import { LikeFactory, RemoteLikeFactory } from "@/_shared/factories/like";
+import { LocalNoteFactory, RemoteNoteFactory } from "@/_shared/factories/note";
+import { server } from "@/_shared/mocks/server";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
+import { userSignUpService } from "@/_shared/user/services/userSignUpService";
+import { prisma } from "@/_shared/utils/prisma";
 
 import { action } from "./action";
 
-jest.mock("@/_shared/activitypub/apRelayService");
-const mockedRelayActivityToInboxUrl = jest.mocked(
-  apReplayService.relayActivityToInboxUrl,
-);
-
-const dummyLocalUserId = "dummy_local";
-
 describe("LikeButton/action", () => {
-  test("ローカルユーザーのNote", async () => {
+  test("ローカルのノートにいいねできる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
-    mockedPrisma.like.create.mockResolvedValue({
-      note: {
-        // @ts-ignore
-        user: {
-          host: "myhost.example.com",
-        },
-      },
+    const user = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
     });
+    mockedGetSessionUserId.mockResolvedValue(user.id);
+    const note = await LocalNoteFactory.create();
     // act
-    await action({
-      noteId: "noteId",
-      content: "👍",
-    });
+    await action({ noteId: note.id, content: "👍" });
     // assert
-    expect(mockedPrisma.like.create.mock.lastCall?.[0]).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "content": "👍",
-          "noteId": "noteId",
-          "userId": "dummy_local",
-        },
-        "include": {
-          "note": {
-            "include": {
-              "user": true,
-            },
-          },
-        },
-      }
-    `);
-    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
+    expect(await prisma.like.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      userId: user.id,
+      noteId: note.id,
+      content: "👍",
+      createdAt: expect.anyDate(),
+    });
   });
-
-  test("リモートユーザーのNote", async () => {
+  test("リモートのノートにいいねできる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
-    mockedPrisma.like.create.mockResolvedValue({
-      id: "likeId",
-      note: {
-        // @ts-ignore
-        url: "https://remote.example.com/n/note_remote",
-        user: {
-          inboxUrl: "https://remote.example.com/inbox",
-          host: "remote.example.com",
-        },
+    const user = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
+    mockedGetSessionUserId.mockResolvedValue(user.id);
+    const note = await prisma.note.create({
+      data: await RemoteNoteFactory.build(),
+      include: {
+        user: true,
       },
     });
-    // act
-    await action({
-      noteId: "noteId",
-      content: "👍",
-    });
-    // assert
-    expect(mockedPrisma.like.create.mock.lastCall?.[0]).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "content": "👍",
-          "noteId": "noteId",
-          "userId": "dummy_local",
-        },
-        "include": {
-          "note": {
-            "include": {
-              "user": true,
-            },
-          },
-        },
-      }
-    `);
-    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummyLocalUserId,
-      inboxUrl: new URL("https://remote.example.com/inbox"),
-      activity: expect.objectContaining({
-        type: "Like",
+    assert(note.user.inboxUrl);
+    const inboxFn = jest.fn();
+    server.use(
+      http.post(note.user.inboxUrl, async ({ request }) => {
+        inboxFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
       }),
+    );
+    // act
+    await action({ noteId: note.id, content: "👍" });
+    // assert
+    expect(await prisma.like.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      userId: user.id,
+      noteId: note.id,
+      content: "👍",
+      createdAt: expect.anyDate(),
     });
+    expect(inboxFn).toHaveBeenCalledTimes(1);
   });
-
-  test("ローカルユーザーのNote(いいね済みの場合)", async () => {
+  test("ローカルのノートへのいいねを取り消せる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
-    const dummyLike = {
-      id: "likeId",
-      noteId: "noteId",
-      note: {
-        user: {
-          host: "myhost.example.com",
+    const user = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
+    mockedGetSessionUserId.mockResolvedValue(user.id);
+    const like = await LikeFactory.create({
+      user: {
+        connect: {
+          id: user.id,
         },
       },
-      userId: "dummy_local",
-      content: "👍",
-      createdAt: new Date(),
-    };
-    mockedPrisma.like.findFirst.mockResolvedValue(dummyLike);
+    });
     // act
-    await action({
-      noteId: "noteId",
-      content: "👍",
-    });
+    await action({ noteId: like.noteId, content: "👍" });
     // assert
-    expect(mockedPrisma.like.delete).toHaveBeenCalledWith({
-      where: {
-        id: dummyLike.id,
-      },
-    });
-    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
+    expect(await prisma.like.findFirst()).toBeNull();
   });
-
-  test("リモートユーザーのNote(いいね済みの場合)", async () => {
+  test("リモートのノートへのいいねを取り消せる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
-    const dummyLike = {
-      id: "likeId",
-      noteId: "noteId",
-      note: {
-        url: "https://remote.example.com/n/note_remote",
+    const user = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
+    mockedGetSessionUserId.mockResolvedValue(user.id);
+    const like = await prisma.like.create({
+      data: await RemoteLikeFactory.build({
         user: {
-          inboxUrl: "https://remote.example.com/inbox",
-          host: "remote.example.com",
+          connect: {
+            id: user.id,
+          },
         },
-      },
-      userId: "dummy_local",
-      content: "👍",
-      createdAt: new Date(),
-    };
-    mockedPrisma.like.findFirst.mockResolvedValue(dummyLike);
+      }),
+      include: { note: { include: { user: true } } },
+    });
+    assert(like.note.user.inboxUrl);
+    const inboxFn = jest.fn();
+    server.use(
+      http.post(like.note.user.inboxUrl, async ({ request }) => {
+        inboxFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
     // act
-    await action({
-      noteId: "noteId",
-      content: "👍",
-    });
+    await action({ noteId: like.noteId, content: "👍" });
     // assert
-    expect(mockedPrisma.like.delete).toHaveBeenCalledWith({
-      where: { id: "likeId" },
-    });
-    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummyLocalUserId,
-      inboxUrl: new URL("https://remote.example.com/inbox"),
-      activity: expect.objectContaining({ type: "Undo" }),
-    });
+    expect(await prisma.like.findFirst()).toBeNull();
+    expect(inboxFn).toHaveBeenCalledTimes(1);
   });
 });

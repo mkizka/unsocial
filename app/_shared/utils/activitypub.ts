@@ -18,6 +18,8 @@ const contexts = {
   ],
 };
 
+const to = ["https://www.w3.org/ns/activitystreams#Public"];
+
 const convertUser = (user: User) => {
   const userAddress = `https://${env.UNSOCIAL_HOST}/users/${user.id}`;
   const activityAddress = `${userAddress}/activity`;
@@ -78,7 +80,7 @@ const convertNote = (note: NoteWithReply) => {
     content: note.content,
     attributedTo: `${userAddress}/activity`,
     published: note.publishedAt.toISOString(),
-    to: ["https://www.w3.org/ns/activitystreams#Public"],
+    to,
     cc,
   } satisfies apSchemaService.NoteActivity;
 };
@@ -106,6 +108,8 @@ const convertDelete = (note: Pick<Note, "id" | "userId">) => {
       type: "Tombstone",
       id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`,
     },
+    to,
+    cc: [`https://${env.UNSOCIAL_HOST}/users/${note.userId}/followers`],
   } satisfies apSchemaService.DeleteActivity;
 };
 
@@ -118,6 +122,21 @@ const convertFollow = (follow: Follow, followeeUrl: string) => {
     actor: `https://${env.UNSOCIAL_HOST}/users/${follow.followerId}/activity`,
     object: followeeUrl,
   } satisfies apSchemaService.FollowActivity;
+};
+
+const convertAccept = (
+  userId: string,
+  follow: apSchemaService.FollowActivity,
+) => {
+  const { "@context": _, ...followToAccept } = follow;
+  return {
+    ...contexts,
+    type: "Accept",
+    // TODO: いいの？
+    id: `https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${userId}/activity`,
+    object: followToAccept,
+  } satisfies apSchemaService.AcceptActivity;
 };
 
 const convertLike = (like: Like, noteUrl: string) => {
@@ -167,7 +186,7 @@ const convertAnnounce = (
       noteWithQuote.quote.url ??
       `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.quote.id}/activity`,
     published: noteWithQuote.publishedAt.toISOString(),
-    to: ["https://www.w3.org/ns/activitystreams#Public"],
+    to,
     cc,
   } satisfies apSchemaService.AnnounceActivity;
 };
@@ -178,6 +197,7 @@ export const activityStreams = {
   create: convertCreate,
   delete: convertDelete,
   follow: convertFollow,
+  accept: convertAccept,
   like: convertLike,
   undo: convertUndo,
   announce: convertAnnounce,
