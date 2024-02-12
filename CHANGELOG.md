@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.34
+
+### Patch Changes
+
+- 73a665e: Activityが重複して配送されないように修正
+
 ## 0.0.33
 
 ### Patch Changes
