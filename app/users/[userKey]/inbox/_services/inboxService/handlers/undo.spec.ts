@@ -1,47 +1,45 @@
-import { mockedPrisma } from "@/_shared/mocks/prisma";
+import assert from "assert";
+
+import { LocalNoteFactory } from "@/_shared/factories/note";
+import { RemoteUserFactory } from "@/_shared/factories/user";
+import { prisma } from "@/_shared/utils/prisma";
 
 import { handle } from "./undo";
 
-const dummyLocalUser = {
-  id: "dummyidlocal",
-  host: "myhost.example.com",
-};
-
-const dummyRemoteUser = {
-  id: "dummyidremote",
-};
-
 describe("inboxUndoService", () => {
-  test("正常系", async () => {
+  test("受け取ったアクティビティに応じていいねを削除し、いいね数を更新する", async () => {
     // arrange
+    const note = await LocalNoteFactory.create({
+      likesCount: 1,
+    });
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.actorUrl);
+    await prisma.like.create({
+      data: {
+        userId: remoteUser.id,
+        noteId: note.id,
+        content: "👍",
+      },
+    });
     const activity = {
       type: "Undo",
       id: "https://remote.example.com/undo/foobar",
-      actor: "https://remote.example.com/u/dummy_remote",
+      actor: remoteUser.actorUrl,
       object: {
-        type: "Follow",
-        id: "https://remote.example.com/follows/foobar",
-        actor: "https://remote.example.com/u/dummy_remote",
-        object: "https://myhost.example.com/users/dummyidlocal",
+        type: "Like",
+        id: "https://remote.example.com/like/foobar",
+        actor: remoteUser.actorUrl,
+        object: `https://myhost.example.com/notes/${note.id}/activity`,
+        content: "👍",
       },
     };
-    mockedPrisma.user.findUnique.mockResolvedValueOnce(dummyLocalUser as never);
     // act
-    const error = await handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, remoteUser);
     // assert
     expect(error).toBeUndefined();
-    expect(mockedPrisma.user.findUnique).toHaveBeenCalledWith({
-      where: {
-        actorUrl: "https://myhost.example.com/users/dummyidlocal",
-      },
-    });
-    expect(mockedPrisma.follow.delete).toHaveBeenCalledWith({
-      where: {
-        followeeId_followerId: {
-          followeeId: dummyLocalUser.id,
-          followerId: dummyRemoteUser.id,
-        },
-      },
+    expect(await prisma.like.findFirst()).toBeNull();
+    expect(await prisma.note.findFirst()).toMatchObject({
+      likesCount: 0,
     });
   });
 });

@@ -49,6 +49,14 @@ const undoLike: UndoInboxHandler = async (activity, actorUser) => {
       userId: actorUser.id,
     },
   });
+  await prisma.note.update({
+    where: { id: noteId },
+    data: {
+      likesCount: {
+        decrement: 1,
+      },
+    },
+  });
 };
 
 const undoAnnounce: UndoInboxHandler = async (activity) => {
