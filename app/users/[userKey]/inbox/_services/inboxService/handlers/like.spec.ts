@@ -11,7 +11,7 @@ import {
 import { handle } from "./like";
 
 describe("inboxLikeService", () => {
-  test("受け取ったアクティビティに応じていいねを作成する", async () => {
+  test("受け取ったアクティビティに応じていいねを作成し、いいね数を更新する", async () => {
     // arrange
     const note = await LocalNoteFactory.create();
     const remoteUser = await RemoteUserFactory.create();
@@ -33,6 +33,9 @@ describe("inboxLikeService", () => {
       noteId: note.id,
       content: "👍",
       createdAt: expect.anyDate(),
+    });
+    expect(await prisma.note.findFirst()).toMatchObject({
+      likesCount: 1,
     });
   });
   test("contentがなければ👍をデフォルトにする", async () => {
@@ -56,6 +59,9 @@ describe("inboxLikeService", () => {
       noteId: note.id,
       content: "👍",
       createdAt: expect.anyDate(),
+    });
+    expect(await prisma.note.findFirst()).toMatchObject({
+      likesCount: 1,
     });
   });
   test("不正なActivityならエラーを返す", async () => {

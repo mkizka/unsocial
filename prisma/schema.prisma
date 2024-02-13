@@ -78,6 +78,7 @@ model Note {
   replyToId   String?
   replyTo     Note?      @relation("ReplyTo", fields: [replyToId], references: [id])
   likes       Like[]
+  likesCount  Int        @default(0)
   attachments Document[]
   quotes      Note[]     @relation("Quote")
   replies     Note[]     @relation("ReplyTo")

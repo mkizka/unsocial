@@ -25,4 +25,12 @@ export const handle: InboxHandler = async (activity, actorUser) => {
       content: parsedLike.data.content ?? "👍",
     },
   });
+  await prisma.note.update({
+    where: { id: noteId },
+    data: {
+      likesCount: {
+        increment: 1,
+      },
+    },
+  });
 };
