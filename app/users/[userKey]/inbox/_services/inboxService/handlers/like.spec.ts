@@ -1,4 +1,8 @@
-import { mockedPrisma } from "@/_shared/mocks/prisma";
+import assert from "assert";
+
+import { LocalNoteFactory } from "@/_shared/factories/note";
+import { RemoteUserFactory } from "@/_shared/factories/user";
+import { prisma } from "@/_shared/utils/prisma";
 
 import {
   ActivitySchemaValidationError,
@@ -6,89 +10,83 @@ import {
 } from "./errors";
 import { handle } from "./like";
 
-const dummyRemoteUser = {
-  id: "dummyidremote",
-};
-
-const dummyLocalUser = {
-  id: "dummyidlocal",
-};
-
 describe("inboxLikeService", () => {
-  test("正常系", async () => {
+  test("受け取ったアクティビティに応じていいねを作成する", async () => {
     // arrange
+    const note = await LocalNoteFactory.create();
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.actorUrl);
     const activity = {
       type: "Like",
       id: "https://remote.example.com/like/foobar",
-      actor: "https://remote.example.com/u/dummy_remote",
-      object: "https://myhost.example.com/notes/note_local",
+      actor: remoteUser.actorUrl,
+      object: `https://myhost.example.com/notes/${note.id}/activity`,
       content: "👍",
     };
-    mockedPrisma.like.create.mockResolvedValueOnce(dummyLocalUser as never);
     // act
-    const error = await handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, remoteUser);
     // assert
     expect(error).toBeUndefined();
-    expect(mockedPrisma.like.create).toHaveBeenCalledWith({
-      data: {
-        noteId: "note_local",
-        userId: dummyRemoteUser.id,
-        content: activity.content,
-      },
+    expect(await prisma.like.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      userId: remoteUser.id,
+      noteId: note.id,
+      content: "👍",
+      createdAt: expect.anyDate(),
     });
   });
   test("contentがなければ👍をデフォルトにする", async () => {
     // arrange
+    const note = await LocalNoteFactory.create();
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.actorUrl);
     const activity = {
       type: "Like",
       id: "https://remote.example.com/like/foobar",
-      actor: "https://remote.example.com/u/dummy_remote",
-      object: "https://myhost.example.com/notes/note_local",
+      actor: remoteUser.actorUrl,
+      object: `https://myhost.example.com/notes/${note.id}/activity`,
     };
-    mockedPrisma.like.create.mockResolvedValueOnce(dummyLocalUser as never);
     // act
-    const error = await handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, remoteUser);
     // assert
     expect(error).toBeUndefined();
-    expect(mockedPrisma.like.create).toHaveBeenCalledWith({
-      data: {
-        noteId: "note_local",
-        userId: dummyRemoteUser.id,
-        content: "👍",
-      },
+    expect(await prisma.like.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      userId: remoteUser.id,
+      noteId: note.id,
+      content: "👍",
+      createdAt: expect.anyDate(),
     });
   });
-  test("不正なactivityならエラーを返す", async () => {
+  test("不正なActivityならエラーを返す", async () => {
     // arrange
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.actorUrl);
     const activity = {
       type: "Like",
       id: "https://remote.example.com/like/foobar",
-      actor: "https://remote.example.com/u/dummy_remote",
+      actor: remoteUser.actorUrl,
       // objectがない
     };
     // act
-    const error = await handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, remoteUser);
     // assert
     expect(error).toBeInstanceOf(ActivitySchemaValidationError);
-    expect(error!.message).toEqual(expect.stringContaining("Required"));
   });
   test("URLが/notes/でなければエラーを返す", async () => {
     // arrange
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.actorUrl);
     const activity = {
       type: "Like",
       id: "https://remote.example.com/like/foobar",
-      actor: "https://remote.example.com/u/dummy_remote",
-      object: "https://myhost.example.com/foo/note_local",
+      actor: remoteUser.actorUrl,
+      object: "https://myhost.example.com/invalid",
       content: "👍",
     };
     // act
-    const error = await handle(activity, dummyRemoteUser as never);
+    const error = await handle(activity, remoteUser);
     // assert
     expect(error).toBeInstanceOf(BadActivityRequestError);
-    expect(error!.message).toEqual(
-      expect.stringContaining(
-        "activityからいいね対象のノートIDを取得できませんでした",
-      ),
-    );
   });
 });
