@@ -38,6 +38,7 @@ describe("noteCardFindService", () => {
         replyTo: null,
         replyToId: null,
         url: `/notes/${note.id}`,
+        likesCount: 0,
         user: {
           actorUrl: null,
           displayUsername: `@${note.user.preferredUsername}`,
@@ -175,6 +176,7 @@ describe("noteCardFindService", () => {
           replyTo: null,
           replyToId: null,
           url: expect.any(String),
+          likesCount: 0,
           user: {
             actorUrl: null,
             displayUsername: expect.any(String),

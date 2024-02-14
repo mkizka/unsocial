@@ -18,11 +18,21 @@ export const handle: InboxHandler = async (activity, actorUser) => {
       "activityからいいね対象のノートIDを取得できませんでした",
     );
   }
-  await prisma.like.create({
-    data: {
-      noteId,
-      userId: actorUser.id,
-      content: parsedLike.data.content ?? "👍",
-    },
-  });
+  await prisma.$transaction([
+    prisma.like.create({
+      data: {
+        noteId,
+        userId: actorUser.id,
+        content: parsedLike.data.content ?? "👍",
+      },
+    }),
+    prisma.note.update({
+      where: { id: noteId },
+      data: {
+        likesCount: {
+          increment: 1,
+        },
+      },
+    }),
+  ]);
 };
