@@ -43,20 +43,23 @@ const undoLike: UndoInboxHandler = async (activity, actorUser) => {
       "activityからいいね削除対象のノートIDを取得できませんでした",
     );
   }
-  await prisma.like.deleteMany({
-    where: {
-      noteId,
-      userId: actorUser.id,
-    },
-  });
-  await prisma.note.update({
-    where: { id: noteId },
-    data: {
-      likesCount: {
-        decrement: 1,
+  await prisma.$transaction([
+    // リアクションに対応したいならdeleteManyじゃだめかも
+    prisma.like.deleteMany({
+      where: {
+        noteId,
+        userId: actorUser.id,
       },
-    },
-  });
+    }),
+    prisma.note.update({
+      where: { id: noteId },
+      data: {
+        likesCount: {
+          decrement: 1,
+        },
+      },
+    }),
+  ]);
 };
 
 const undoAnnounce: UndoInboxHandler = async (activity) => {

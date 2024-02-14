@@ -15,25 +15,27 @@ const include = {
   },
 };
 
-const like = async (userId: string, input: unknown) => {
-  const like = await prisma.like.create({
-    data: {
-      userId,
-      // @ts-expect-error
-      ...input,
-    },
-    include,
-  });
-  await prisma.note.update({
-    where: {
-      id: like.noteId,
-    },
-    data: {
-      likesCount: {
-        increment: 1,
+const like = async (userId: string, noteId: string, content: string) => {
+  const [like] = await prisma.$transaction([
+    prisma.like.create({
+      data: {
+        userId,
+        noteId,
+        content,
       },
-    },
-  });
+      include,
+    }),
+    prisma.note.update({
+      where: {
+        id: noteId,
+      },
+      data: {
+        likesCount: {
+          increment: 1,
+        },
+      },
+    }),
+  ]);
   if (like.note.user.inboxUrl) {
     assert(like.note.url, "ノートのURLがありません");
     await apRelayService.relay({
@@ -51,21 +53,23 @@ type LikeWithNote = Like & {
 };
 
 const unlike = async (userId: string, like: LikeWithNote) => {
-  await prisma.like.delete({
-    where: {
-      id: like.id,
-    },
-  });
-  await prisma.note.update({
-    where: {
-      id: like.noteId,
-    },
-    data: {
-      likesCount: {
-        decrement: 1,
+  await prisma.$transaction([
+    prisma.like.delete({
+      where: {
+        id: like.id,
       },
-    },
-  });
+    }),
+    prisma.note.update({
+      where: {
+        id: like.noteId,
+      },
+      data: {
+        likesCount: {
+          decrement: 1,
+        },
+      },
+    }),
+  ]);
   if (like.note.user.inboxUrl) {
     assert(like.note.url, "ノートのURLがありません");
     await apRelayService.relay({
@@ -76,18 +80,25 @@ const unlike = async (userId: string, like: LikeWithNote) => {
   }
 };
 
-export async function action(data: { noteId: string; content: string }) {
+export async function action({
+  noteId,
+  content,
+}: {
+  noteId: string;
+  content: string;
+}) {
   const userId = await userSessionService.getUserId({ redirect: true });
   const existingLike = await prisma.like.findFirst({
     where: {
       userId,
-      ...data,
+      noteId,
+      content,
     },
     include,
   });
   if (existingLike) {
     await unlike(userId, existingLike);
   } else {
-    await like(userId, data);
+    await like(userId, noteId, content);
   }
 }
