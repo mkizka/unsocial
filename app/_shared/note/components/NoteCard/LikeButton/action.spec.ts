@@ -11,7 +11,7 @@ import { prisma } from "@/_shared/utils/prisma";
 import { action } from "./action";
 
 describe("LikeButton/action", () => {
-  test("ローカルのノートにいいねできる", async () => {
+  test("ローカルのノートにいいねして、いいね数を更新できる", async () => {
     // arrange
     const user = await userSignUpService.signUpUser({
       preferredUsername: "test",
@@ -29,8 +29,13 @@ describe("LikeButton/action", () => {
       content: "👍",
       createdAt: expect.anyDate(),
     });
+    expect(
+      await prisma.note.findUnique({ where: { id: note.id } }),
+    ).toMatchObject({
+      likesCount: 1,
+    });
   });
-  test("リモートのノートにいいねできる", async () => {
+  test("リモートのノートにいいねして、いいね数を更新できる", async () => {
     // arrange
     const user = await userSignUpService.signUpUser({
       preferredUsername: "test",
@@ -62,8 +67,13 @@ describe("LikeButton/action", () => {
       createdAt: expect.anyDate(),
     });
     expect(inboxFn).toHaveBeenCalledTimes(1);
+    expect(
+      await prisma.note.findUnique({ where: { id: note.id } }),
+    ).toMatchObject({
+      likesCount: 1,
+    });
   });
-  test("ローカルのノートへのいいねを取り消せる", async () => {
+  test("ローカルのノートへのいいねを取り消して、いいね数を更新できる", async () => {
     // arrange
     const user = await userSignUpService.signUpUser({
       preferredUsername: "test",
@@ -77,12 +87,23 @@ describe("LikeButton/action", () => {
         },
       },
     });
+    await prisma.note.update({
+      where: { id: like.noteId },
+      data: {
+        likesCount: 1,
+      },
+    });
     // act
     await action({ noteId: like.noteId, content: "👍" });
     // assert
     expect(await prisma.like.findFirst()).toBeNull();
+    expect(
+      await prisma.note.findUnique({ where: { id: like.noteId } }),
+    ).toMatchObject({
+      likesCount: 0,
+    });
   });
-  test("リモートのノートへのいいねを取り消せる", async () => {
+  test("リモートのノートへのいいねを取り消して、いいね数を更新できる", async () => {
     // arrange
     const user = await userSignUpService.signUpUser({
       preferredUsername: "test",
@@ -100,6 +121,12 @@ describe("LikeButton/action", () => {
       include: { note: { include: { user: true } } },
     });
     assert(like.note.user.inboxUrl);
+    await prisma.note.update({
+      where: { id: like.noteId },
+      data: {
+        likesCount: 1,
+      },
+    });
     const inboxFn = jest.fn();
     server.use(
       http.post(like.note.user.inboxUrl, async ({ request }) => {
@@ -112,5 +139,10 @@ describe("LikeButton/action", () => {
     // assert
     expect(await prisma.like.findFirst()).toBeNull();
     expect(inboxFn).toHaveBeenCalledTimes(1);
+    expect(
+      await prisma.note.findUnique({ where: { id: like.noteId } }),
+    ).toMatchObject({
+      likesCount: 0,
+    });
   });
 });
