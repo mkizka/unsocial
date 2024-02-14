@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.35
+
+### Patch Changes
+
+- d1017bd: いいねの作成/削除に応じてDBのlikesCountを増減させる
+
 ## 0.0.34
 
 ### Patch Changes
