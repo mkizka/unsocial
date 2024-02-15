@@ -60,7 +60,7 @@
     "@quramy/jest-prisma-node": "1.7.3",
     "@quramy/prisma-fabbrica": "2.1.0",
     "@storybook/addon-essentials": "7.6.15",
-    "@storybook/addon-interactions": "7.6.15",
+    "@storybook/addon-interactions": "7.6.16",
     "@storybook/jest": "0.2.3",
     "@storybook/nextjs": "7.6.15",
     "@storybook/react": "7.6.15",
