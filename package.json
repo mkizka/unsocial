@@ -23,7 +23,7 @@
     "lint": "./scripts/lint.sh",
     "postinstall": "prisma generate",
     "prepare": "husky",
-    "start": "prisma migrate deploy && next start --port ${PORT-3000}",
+    "start": "prisma migrate deploy && next start",
     "storybook": "storybook dev -p 6006 --quiet",
     "test": "jest",
     "test-u": "pnpm test -- --updateSnapshot",
