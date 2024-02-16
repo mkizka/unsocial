@@ -164,8 +164,8 @@ devDependencies:
     specifier: 12.0.0
     version: 12.0.0(eslint@8.56.0)
   eslint-plugin-storybook:
-    specifier: 0.7.0
-    version: 0.7.0(eslint@8.56.0)(typescript@5.3.3)
+    specifier: 0.8.0
+    version: 0.8.0(eslint@8.56.0)(typescript@5.3.3)
   eslint-plugin-tailwindcss:
     specifier: 3.14.2
     version: 3.14.2(tailwindcss@3.4.1)
@@ -10269,9 +10269,9 @@ packages:
       eslint: 8.56.0
     dev: true
 
-  /eslint-plugin-storybook@0.7.0(eslint@8.56.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-lmvnszv3Xyd0TcxFLoDfLOaVN5v0vKwZh7ZDDY9xCeT/+knHn1ZnktHVO4tun/xVj8aBMYynXpBk0DIiWWRnww==}
-    engines: {node: 12.x || 14.x || >= 16}
+  /eslint-plugin-storybook@0.8.0(eslint@8.56.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-CZeVO5EzmPY7qghO2t64oaFM+8FTaD4uzOEjHKp516exyTKo+skKAL9GI3QALS2BXhyALJjNtwbmr1XinGE8bA==}
+    engines: {node: '>= 18'}
     peerDependencies:
       eslint: '>=6'
     dependencies:
