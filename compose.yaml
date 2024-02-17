@@ -222,19 +222,25 @@ services:
     image: mailhog/mailhog:v1.0.1
     ports:
       - 8025:8025
-  # relay-worker:
-  #   image: yukimochi/activity-relay:v2.0.5
-  #   command: relay worker
-  #   working_dir: /var/lib/relay
-  #   volumes:
-  #     - ./docker/relay:/var/lib/relay
-  #   depends_on:
-  #     - redis
-  # relay-server:
-  #   image: yukimochi/activity-relay:v2.0.5
-  #   working_dir: /var/lib/relay
-  #   command: relay server
-  #   volumes:
-  #     - ./docker/relay:/var/lib/relay
-  #   depends_on:
-  #     - redis
+  relay-worker:
+    image: yukimochi/activity-relay:v2.0.5
+    command: relay worker
+    working_dir: /var/lib/relay
+    environment:
+      - SSL_CERT_FILE=/mkcert/rootCA.pem
+    volumes:
+      - ./docker/relay:/var/lib/relay
+      - ./docker/mkcert:/mkcert
+    depends_on:
+      - redis
+  relay-server:
+    image: yukimochi/activity-relay:v2.0.5
+    working_dir: /var/lib/relay
+    command: relay server
+    environment:
+      - SSL_CERT_FILE=/mkcert/rootCA.pem
+    volumes:
+      - ./docker/relay:/var/lib/relay
+      - ./docker/mkcert:/mkcert
+    depends_on:
+      - redis

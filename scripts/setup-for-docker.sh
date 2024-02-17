@@ -29,6 +29,10 @@ create_cert remote
 create_cert relay
 echo "Done"
 
+echo "Generate a cert file for relay"
+openssl genrsa -traditional > docker/relay/actor.pem
+echo "Done"
+
 if has wslpath; then
   echo "WSL Detected"
   function pwsh() {
