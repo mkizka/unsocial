@@ -1,6 +1,7 @@
 import { DebugMenu } from "./_components/DebugMenu";
 import { IconSettingsForm } from "./_components/IconSettingsForm";
 import { ProfileFormContainer } from "./_components/ProfileFormContainer";
+import { RelayServer } from "./_components/RelayServer";
 import { SettingHeader } from "./_components/SettingHeader";
 import { SignOutForm } from "./_components/SignoutForm";
 
@@ -14,6 +15,7 @@ export default function Page() {
       </section>
       <section className="space-y-1">
         <SettingHeader>サーバー情報</SettingHeader>
+        <RelayServer />
         <DebugMenu />
       </section>
       <section className="space-y-1">
