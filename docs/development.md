@@ -32,6 +32,7 @@ https://mastodon.localhost
   - lint、テスト、スナップショット更新を一通り実行します。
 - pnpm down
   - devコマンドと単体テストで使用するdocker composeをまとめてdownします。
+  - pnpm down -v でボリュームも削除します。
 - pnpm test:mutation
   - ミューテーションテストを実行します。
   - GitHub Actionsでも実行されますが、スコアは参考程度です。
