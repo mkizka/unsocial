@@ -12,7 +12,7 @@ datasource db {
 
 generator fabbrica {
   provider = "prisma-fabbrica"
-  output = "../app/_generated"
+  output   = "../app/_generated"
 }
 
 model Session {
@@ -24,27 +24,28 @@ model Session {
 }
 
 model User {
-  id                String      @id @default(nanoid(8))
+  id                String       @id @default(nanoid(8))
   preferredUsername String
   host              String
   name              String?
   summary           String?
-  email             String?     @unique
+  email             String?      @unique
   emailVerified     DateTime?
   icon              String?
   iconHash          String?
   image             String?
   publicKey         String?
-  actorUrl          String?     @unique
+  actorUrl          String?      @unique
   inboxUrl          String?
   lastFetchedAt     DateTime?
-  isAdmin           Boolean     @default(false)
+  isAdmin           Boolean      @default(false)
   sessions          Session[]
   notes             Note[]
-  followee          Follow[]    @relation("followee")
-  follower          Follow[]    @relation("follower")
+  followee          Follow[]     @relation("followee")
+  follower          Follow[]     @relation("follower")
   likes             Like[]
   credential        Credential?
+  relayServer       RelayServer?
 
   @@unique([preferredUsername, host])
 }
@@ -120,4 +121,11 @@ model Like {
   createdAt DateTime @default(now())
 
   @@unique([userId, noteId])
+}
+
+model RelayServer {
+  id        String   @id @default(nanoid(8))
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 }
