@@ -26,6 +26,7 @@ create_cert misskey
 create_cert mastodon
 create_cert unsocial
 create_cert remote
+create_cert relay
 echo "Done"
 
 if has wslpath; then

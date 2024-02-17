@@ -1,0 +1,11 @@
+ACTOR_PEM: /var/lib/relay/actor.pem
+REDIS_URL: redis://redis:6379
+
+RELAY_BIND: 0.0.0.0:8080
+RELAY_DOMAIN: relay.localhost
+RELAY_SERVICENAME: YUKIMOCHI Toot Relay Service
+JOB_CONCURRENCY: 50
+# RELAY_SUMMARY: |
+
+# RELAY_ICON: https://
+# RELAY_IMAGE: https://

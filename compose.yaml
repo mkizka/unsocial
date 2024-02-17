@@ -26,6 +26,7 @@ services:
           - unsocial.localhost
           - mastodon.localhost
           - misskey.localhost
+          - relay.localhost
     depends_on:
       mastodon-streaming:
         condition: service_healthy
@@ -33,6 +34,8 @@ services:
         condition: service_healthy
       misskey:
         condition: service_healthy
+      relay-server:
+        condition: service_started
     profiles:
       - all
   ############
@@ -219,3 +222,19 @@ services:
     image: mailhog/mailhog:v1.0.1
     ports:
       - 8025:8025
+  # relay-worker:
+  #   image: yukimochi/activity-relay:v2.0.5
+  #   command: relay worker
+  #   working_dir: /var/lib/relay
+  #   volumes:
+  #     - ./docker/relay:/var/lib/relay
+  #   depends_on:
+  #     - redis
+  # relay-server:
+  #   image: yukimochi/activity-relay:v2.0.5
+  #   working_dir: /var/lib/relay
+  #   command: relay server
+  #   volumes:
+  #     - ./docker/relay:/var/lib/relay
+  #   depends_on:
+  #     - redis
