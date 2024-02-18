@@ -2,6 +2,7 @@ import { http, HttpResponse } from "msw";
 
 import { server } from "@/_shared/mocks/server";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
+import { prisma } from "@/_shared/utils/prisma";
 
 import { action } from "./action";
 
@@ -23,6 +24,12 @@ describe("RelayServer/action", () => {
     // act
     const result = await action(null, formData);
     // assert
+    expect(await prisma.relayServer.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      inboxUrl: "https://relay.example.com/inbox",
+      status: "SENT",
+      createdAt: expect.anyDate(),
+    });
     expect(inboxFn).toHaveBeenCalledTimes(1);
     expect(result).toMatchObject({
       type: "success",
