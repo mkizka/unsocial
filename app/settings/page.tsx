@@ -1,4 +1,4 @@
-import { DebugMenu } from "./_components/DebugMenu";
+import { EnvironmentInfo } from "./_components/EnvironmentInfo";
 import { IconSettingsForm } from "./_components/IconSettingsForm";
 import { ProfileFormContainer } from "./_components/ProfileFormContainer";
 import { RelayServer } from "./_components/RelayServer";
@@ -16,7 +16,7 @@ export default function Page() {
       <section className="space-y-1">
         <SettingHeader>サーバー情報</SettingHeader>
         <RelayServer />
-        <DebugMenu />
+        <EnvironmentInfo />
       </section>
       <section className="space-y-1">
         <SettingHeader>アカウント</SettingHeader>
