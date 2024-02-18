@@ -1,25 +1,43 @@
 "use client";
-import type { Prisma } from "@prisma/client";
+import type { Prisma, RelayServerStatus } from "@prisma/client";
 import { useFormState } from "react-dom";
 
 import { Button } from "@/_shared/ui/Button";
 import { Card } from "@/_shared/ui/Card";
 import { Input } from "@/_shared/ui/Input";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/_shared/ui/Table";
 import { cn } from "@/_shared/utils/cn";
 import type { ServerAction } from "@/_shared/utils/serverAction";
+
+const STATUS_TEXT = {
+  SENT: "送信済み",
+  ACCEPTED: "承認済み",
+  FAILED: "失敗", // TODO: 実装する
+} as const satisfies {
+  [key in RelayServerStatus]: string;
+};
 
 type RelayServer = Prisma.RelayServerGetPayload<{
   select: {
     inboxUrl: true;
+    status: true;
   };
 }>;
 
 type Props = {
-  relayServer: RelayServer | null;
+  relayServers: RelayServer[];
   onSubmit: ServerAction;
 };
 
-export function RelayServerForm({ relayServer, onSubmit }: Props) {
+export function RelayServerForm({ relayServers, onSubmit }: Props) {
   const [state, dispatch] = useFormState(onSubmit, null);
   return (
     <Card>
@@ -32,8 +50,7 @@ export function RelayServerForm({ relayServer, onSubmit }: Props) {
             id="inbox-url"
             name="inbox-url"
             required
-            placeholder={relayServer?.inboxUrl ?? "未設定"}
-            defaultValue={relayServer?.inboxUrl ?? undefined}
+            placeholder={"https://relay.example.com/inbox"}
           />
           <div className="flex items-center">
             {state && (
@@ -46,10 +63,32 @@ export function RelayServerForm({ relayServer, onSubmit }: Props) {
                 {state.message}
               </p>
             )}
-            <Button className="ml-auto">変更する</Button>
+            <Button className="ml-auto">登録</Button>
           </div>
         </div>
       </form>
+      <Table>
+        {relayServers.length === 0 && <TableCaption>登録なし</TableCaption>}
+        <TableHeader>
+          <TableRow>
+            <TableHead>リレーサーバーのinbox</TableHead>
+            <TableHead>承認状態</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {relayServers.map((relayServer) => (
+            <TableRow key={relayServer.inboxUrl}>
+              <TableCell>{relayServer.inboxUrl}</TableCell>
+              <TableCell>{STATUS_TEXT[relayServer.status]}</TableCell>
+              <TableCell>
+                <Button variant="ghost" className="text-destructive">
+                  削除
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </Card>
   );
 }

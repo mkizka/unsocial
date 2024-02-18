@@ -4,10 +4,11 @@ import { action } from "./action";
 import { RelayServerForm } from "./RelayServerForm";
 
 export async function RelayServer() {
-  const relayServer = await prisma.relayServer.findFirst({
+  const relayServers = await prisma.relayServer.findMany({
     select: {
       inboxUrl: true,
+      status: true,
     },
   });
-  return <RelayServerForm onSubmit={action} relayServer={relayServer} />;
+  return <RelayServerForm onSubmit={action} relayServers={relayServers} />;
 }
