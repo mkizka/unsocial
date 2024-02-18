@@ -1,5 +1,12 @@
 # unsocial
 
+## 0.0.36
+
+### Patch Changes
+
+- be85fd7: sharedInbox追加
+- be85fd7: 環境変数をテーブル形式で表示
+
 ## 0.0.35
 
 ### Patch Changes
