@@ -1,5 +1,6 @@
 import { LocalToRemoteFollowFactory } from "@/_shared/factories/follow";
 import { LocalUserFactory, RemoteUserFactory } from "@/_shared/factories/user";
+import { systemUserService } from "@/_shared/user/services/systemUserService";
 import { prisma } from "@/_shared/utils/prisma";
 
 import { handle } from "./accept";
@@ -73,18 +74,21 @@ describe("inboxAcceptService", () => {
       code: "P2025",
     });
   });
-  test("システムユーザーからのフォロー(リレー登録)によるAcceptの場合はfollowデータを作成する", async () => {
+  test("システムユーザーからのフォロー(リレー登録)によるAcceptの場合はリレーサーバーのステータスを更新する", async () => {
     // arrange
-    const systemUser = await prisma.user.create({
+    const systemUser = await systemUserService.findOrCreateSystemUser();
+    await prisma.relayServer.create({
       data: {
-        preferredUsername: "myhost.example.com",
-        host: "myhost.example.com",
+        inboxUrl: "https://relay.example.com/inbox",
       },
     });
-    const remoteUser = await RemoteUserFactory.create();
+    const remoteUser = await RemoteUserFactory.create({
+      actorUrl: "https://relay.example.com/actor",
+      inboxUrl: "https://relay.example.com/inbox",
+    });
     const activity = {
       type: "Accept",
-      id: "https://remote.example.com/12345",
+      id: "https://relay.example.com/12345",
       actor: remoteUser.actorUrl,
       object: {
         type: "Follow",
@@ -96,12 +100,8 @@ describe("inboxAcceptService", () => {
     const error = await handle(activity, remoteUser);
     // assert
     expect(error).toBeUndefined();
-    expect(await prisma.follow.findFirst()).toEqualPrisma({
-      id: expect.any(String),
-      followeeId: remoteUser.id,
-      followerId: systemUser.id,
+    expect(await prisma.relayServer.findFirst()).toMatchObject({
       status: "ACCEPTED",
-      createdAt: expect.anyDate(),
     });
   });
 });
