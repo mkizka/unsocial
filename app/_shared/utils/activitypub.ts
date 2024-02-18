@@ -34,6 +34,9 @@ const convertUser = (user: User) => {
     following: `${userAddress}/followees`,
     followers: `${userAddress}/followers`,
     featured: `${userAddress}/collections/featured`,
+    endpoints: {
+      sharedInbox: `https://${env.UNSOCIAL_HOST}/inbox`,
+    },
     preferredUsername: user.preferredUsername,
     name: user.name || "",
     summary: user.summary || "",
