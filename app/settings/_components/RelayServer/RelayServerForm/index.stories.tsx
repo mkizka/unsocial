@@ -12,9 +12,20 @@ const meta: Meta<typeof RelayServerForm> = {
         message: "成功メッセージ",
       };
     },
-    relayServer: {
-      inboxUrl: "https://example.com/inbox",
-    },
+    relayServers: [
+      {
+        inboxUrl: "https://relay.example.com/inbox",
+        status: "ACCEPTED",
+      },
+      {
+        inboxUrl: "https://relay2.example.com/inbox",
+        status: "SENT",
+      },
+      {
+        inboxUrl: "https://relay3.example.com/inbox",
+        status: "FAILED",
+      },
+    ],
   },
 };
 
@@ -26,7 +37,7 @@ export const Default: Story = {};
 
 export const Empty: Story = {
   args: {
-    relayServer: null,
+    relayServers: [],
   },
 };
 

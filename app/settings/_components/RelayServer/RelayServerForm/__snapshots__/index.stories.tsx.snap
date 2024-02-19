@@ -12,19 +12,79 @@ exports[`settings/_components/RelayServer/RelayServerForm Default smoke-test 1`]
       <input class="flex h-10 w-full rounded-md border border-input bg-input-inner px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
              id="inbox-url"
              required
-             placeholder="https://example.com/inbox"
-             value="https://example.com/inbox"
+             placeholder="https://relay.example.com/inbox"
              name="inbox-url"
       >
       <div class="flex items-center">
         <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 ml-auto">
           <span class>
-            変更する
+            登録
           </span>
         </button>
       </div>
     </div>
   </form>
+  <div class="relative w-full overflow-auto">
+    <table class="w-full caption-bottom text-sm">
+      <thead class="[&amp;_tr]:border-b">
+        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+            リレーサーバーのinbox
+          </th>
+          <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+            承認状態
+          </th>
+        </tr>
+      </thead>
+      <tbody class="[&amp;_tr:last-child]:border-0">
+        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            https://relay.example.com/inbox
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            承認済み
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
+              <span class>
+                削除
+              </span>
+            </button>
+          </td>
+        </tr>
+        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            https://relay2.example.com/inbox
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            送信済み
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
+              <span class>
+                削除
+              </span>
+            </button>
+          </td>
+        </tr>
+        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            https://relay3.example.com/inbox
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            失敗
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
+              <span class>
+                削除
+              </span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 `;
 
@@ -40,18 +100,37 @@ exports[`settings/_components/RelayServer/RelayServerForm Empty smoke-test 1`] =
       <input class="flex h-10 w-full rounded-md border border-input bg-input-inner px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
              id="inbox-url"
              required
-             placeholder="未設定"
+             placeholder="https://relay.example.com/inbox"
              name="inbox-url"
       >
       <div class="flex items-center">
         <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 ml-auto">
           <span class>
-            変更する
+            登録
           </span>
         </button>
       </div>
     </div>
   </form>
+  <div class="relative w-full overflow-auto">
+    <table class="w-full caption-bottom text-sm">
+      <caption class="py-4 text-sm text-muted-foreground">
+        登録なし
+      </caption>
+      <thead class="[&amp;_tr]:border-b">
+        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+            リレーサーバーのinbox
+          </th>
+          <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+            承認状態
+          </th>
+        </tr>
+      </thead>
+      <tbody class="[&amp;_tr:last-child]:border-0">
+      </tbody>
+    </table>
+  </div>
 </div>
 `;
 
@@ -67,18 +146,78 @@ exports[`settings/_components/RelayServer/RelayServerForm Error smoke-test 1`] =
       <input class="flex h-10 w-full rounded-md border border-input bg-input-inner px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
              id="inbox-url"
              required
-             placeholder="https://example.com/inbox"
-             value="https://example.com/inbox"
+             placeholder="https://relay.example.com/inbox"
              name="inbox-url"
       >
       <div class="flex items-center">
         <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 ml-auto">
           <span class>
-            変更する
+            登録
           </span>
         </button>
       </div>
     </div>
   </form>
+  <div class="relative w-full overflow-auto">
+    <table class="w-full caption-bottom text-sm">
+      <thead class="[&amp;_tr]:border-b">
+        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+            リレーサーバーのinbox
+          </th>
+          <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+            承認状態
+          </th>
+        </tr>
+      </thead>
+      <tbody class="[&amp;_tr:last-child]:border-0">
+        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            https://relay.example.com/inbox
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            承認済み
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
+              <span class>
+                削除
+              </span>
+            </button>
+          </td>
+        </tr>
+        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            https://relay2.example.com/inbox
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            送信済み
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
+              <span class>
+                削除
+              </span>
+            </button>
+          </td>
+        </tr>
+        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            https://relay3.example.com/inbox
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            失敗
+          </td>
+          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+            <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
+              <span class>
+                削除
+              </span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 `;
