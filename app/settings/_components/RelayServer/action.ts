@@ -15,6 +15,17 @@ export const action: ServerAction = async (_, formData) => {
       message: "入力内容が不正です",
     };
   }
+  const existingRelayServer = await prisma.relayServer.findFirst({
+    where: {
+      inboxUrl,
+    },
+  });
+  if (existingRelayServer) {
+    return {
+      type: "error",
+      message: "既に登録されています",
+    };
+  }
   await prisma.relayServer.create({
     data: {
       inboxUrl,

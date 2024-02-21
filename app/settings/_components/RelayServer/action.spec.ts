@@ -9,7 +9,7 @@ import { action } from "./action";
 jest.mock("next/cache");
 
 describe("RelayServer/action", () => {
-  test("リレーサーバを登録しFollowアクティビティを配送できる", async () => {
+  test("リレーサーバーを登録しFollowアクティビティを配送できる", async () => {
     // arrange
     await systemUserService.findOrCreateSystemUser();
     const formData = new FormData();
@@ -34,6 +34,23 @@ describe("RelayServer/action", () => {
     expect(result).toMatchObject({
       type: "success",
       message: "リレーサーバーにFollowアクティビティを送信しました",
+    });
+  });
+  test("登録済みのリレーサーバーであればエラーを返す", async () => {
+    // arrange
+    await prisma.relayServer.create({
+      data: {
+        inboxUrl: "https://relay.example.com/inbox",
+      },
+    });
+    const formData = new FormData();
+    formData.append("inbox-url", "https://relay.example.com/inbox");
+    // act
+    const result = await action(null, formData);
+    // assert
+    expect(result).toMatchObject({
+      type: "error",
+      message: "既に登録されています",
     });
   });
   test("リレーサーバのURLが不正な場合はエラー", async () => {
