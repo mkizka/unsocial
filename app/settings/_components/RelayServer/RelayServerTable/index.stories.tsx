@@ -1,3 +1,4 @@
+import type { RelayServer } from "@prisma/client";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Card } from "@/_shared/ui/Card";
@@ -27,7 +28,7 @@ const meta: Meta<typeof RelayServerTable> = {
         inboxUrl: "https://relay3.example.com/inbox",
         status: "FAILED",
       },
-    ],
+    ] as RelayServer[],
   },
 };
 

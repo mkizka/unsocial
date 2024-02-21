@@ -8,7 +8,7 @@ import { action } from "./action";
 
 jest.mock("next/cache");
 
-describe("RelayServer/action", () => {
+describe("RelayServerForm/action", () => {
   test("リレーサーバーを登録しFollowアクティビティを配送できる", async () => {
     // arrange
     await systemUserService.findOrCreateSystemUser();

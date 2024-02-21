@@ -1,4 +1,5 @@
-import type { Prisma, RelayServerStatus } from "@prisma/client";
+"use client";
+import type { RelayServer, RelayServerStatus } from "@prisma/client";
 
 import { Button } from "@/_shared/ui/Button";
 import {
@@ -19,16 +20,9 @@ const STATUS_TEXT = {
   [key in RelayServerStatus]: string;
 };
 
-type RelayServer = Prisma.RelayServerGetPayload<{
-  select: {
-    inboxUrl: true;
-    status: true;
-  };
-}>;
-
 type Props = {
   relayServers: RelayServer[];
-  deleteAction: () => Promise<void>;
+  deleteAction: (relayServerId: string) => Promise<void>;
 };
 
 export function RelayServerTable({ relayServers, deleteAction }: Props) {
@@ -47,7 +41,11 @@ export function RelayServerTable({ relayServers, deleteAction }: Props) {
             <TableCell>{relayServer.inboxUrl}</TableCell>
             <TableCell>{STATUS_TEXT[relayServer.status]}</TableCell>
             <TableCell>
-              <Button variant="ghost" className="text-destructive">
+              <Button
+                variant="ghost"
+                className="text-destructive"
+                onClick={async () => await deleteAction(relayServer.id)}
+              >
                 削除
               </Button>
             </TableCell>

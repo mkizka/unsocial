@@ -7,12 +7,7 @@ import { RelayServerTable } from "./RelayServerTable";
 import { action as deleteAction } from "./RelayServerTable/action";
 
 export async function RelayServer() {
-  const relayServers = await prisma.relayServer.findMany({
-    select: {
-      inboxUrl: true,
-      status: true,
-    },
-  });
+  const relayServers = await prisma.relayServer.findMany();
   return (
     <Card>
       <RelayServerForm formAction={formAction} />
