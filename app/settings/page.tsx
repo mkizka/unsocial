@@ -25,3 +25,6 @@ export default function Page() {
     </div>
   );
 }
+
+// なぜか静的にビルドされてしまうので指定する
+export const dynamic = "force-dynamic";
