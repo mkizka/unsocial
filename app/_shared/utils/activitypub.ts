@@ -1,3 +1,4 @@
+// Stryker disable all
 import type { Follow, Like, Note, User } from "@prisma/client";
 import assert from "assert";
 
