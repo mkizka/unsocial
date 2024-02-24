@@ -15,62 +15,19 @@ Demo: https://unsocial.dev
 5. Wait for the deployment to finish
 6. Access `https://${automatically_generated_subdomain}.up.railway.app`
 
-## Development Steps
-
-Requires nodejs, mkcert, docker
-
-Setup:
-
-```sh
-./scripts/setup-for-docker.sh
-cp -f .env.example .env
-corepack enable pnpm
-pnpm i
-```
-
-Start development:
-
-```
-pnpm dev
-# or `pnpm dev misskey`
-# or `pnpm dev mastodon`
-# or `pnpm dev all`
-```
-
-Open:
-
-https://unsocial.localhost  
-https://misskey.localhost  
-https://mastodon.localhost
-
-## Development Commands
-
-```sh
-pnpm all            # lint & test
-pnpm build          # Build
-pnpm dev            # Start development server
-pnpm e2e            # Run E2E tests (setup required beforehand)
-pnpm lint           # Type checking and linting
-pnpm storybook      # Start Storybook
-pnpm test           # Run Jest
-pnpm test:mutation  # Run Stryker
-pnpm test:storybook # Run test-storybook
-```
-
 ## Features
 
-- ✅ Login
-- ✅ User display
-- ✅ Note display/posting/deletion
-- ✅ Like/Unlike notes
-- ✅ Follow/Unfollow
-- ✅ Reply
-- Attach images
-- Repost
-- Block/Mute
-- Various other features expected in social networking sites
+- Simple Deployment
+- Login with a single account on the server
+- Display Fediverse accounts
+- Federate posts (replies), likes, reposts, and follows
+- Fewer features, lightweight, and low cost
 
 ## Supported ActivityPub Servers
 
-- ✅ Misskey
-- ✅ Mastodon
+- Misskey
+- Mastodon
+
+## Contributing
+
+- [Documents](./docs)

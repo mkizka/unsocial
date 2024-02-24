@@ -1,4 +1,5 @@
 #!/usr/bin/env -S pnpm tsx
+/* eslint-disable no-console */
 import child_process from "child_process";
 import fs from "fs";
 import { z } from "zod";

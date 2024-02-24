@@ -1,5 +1,60 @@
 # unsocial
 
+## 0.0.38
+
+### Patch Changes
+
+- 87f93cd: リレーサーバー登録機能追加
+
+## 0.0.37
+
+### Patch Changes
+
+- 448a85f: 依存関係の更新
+
+## 0.0.36
+
+### Patch Changes
+
+- be85fd7: sharedInbox追加
+- be85fd7: 環境変数をテーブル形式で表示
+
+## 0.0.35
+
+### Patch Changes
+
+- d1017bd: いいねの作成/削除に応じてDBのlikesCountを増減させる
+
+## 0.0.34
+
+### Patch Changes
+
+- 73a665e: Activityが重複して配送されないように修正
+
+## 0.0.33
+
+### Patch Changes
+
+- 676d66d: 非ログインを管理者ページにリダイレクト
+
+## 0.0.32
+
+### Patch Changes
+
+- 98cbd4c: リポスト時にAnnounceを配送
+
+## 0.0.31
+
+### Patch Changes
+
+- 8fcb029: 依存関係の更新
+
+## 0.0.30
+
+### Patch Changes
+
+- efe2707: リポストボタン追加
+
 ## 0.0.29
 
 ### Patch Changes

@@ -21,15 +21,6 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await expect(this.page.locator(`text=${user}`).first()).toBeVisible();
   }
 
-  // async expectedUserNotFound(user: string) {
-  //   const response = await this.page.goto(`/${user}`);
-  //   expect(response?.status()).toBe(404);
-  // }
-  //
-  // async waitForUserNotFound(user: string) {
-  //   await this.waitFor(() => this.expectedUserNotFound(user));
-  // }
-
   getNote(content: string) {
     return this.page.locator("[data-testid=note-card]", { hasText: content });
   }
@@ -96,6 +87,33 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await this.page.waitForURL((url) => url.pathname.startsWith("/notes/"));
     await expect(
       this.page.locator("[data-testid=like-user]", { hasText: user }),
+    ).not.toBeVisible();
+  }
+
+  async repost(content: string) {
+    await this.goto("/");
+    await this.getNote(content).getByTestId("repost-button").click();
+  }
+
+  async undoRepost(content: string): Promise<void> {
+    await this.repost(content);
+  }
+
+  async expectReposted(content: string) {
+    await this.goto("/");
+    await expect(
+      this.page.locator("[data-testid=reposted-note-card]", {
+        hasText: content,
+      }),
+    ).toBeVisible();
+  }
+
+  async expectNotReposted(content: string) {
+    await this.goto("/");
+    await expect(
+      this.page.locator("[data-testid=reposted-note-card]", {
+        hasText: content,
+      }),
     ).not.toBeVisible();
   }
 

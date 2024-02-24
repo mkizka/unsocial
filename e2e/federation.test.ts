@@ -82,6 +82,22 @@ const runTest = async ({ from, to }: RunTestParams) => {
       () => from.waitForNotLiked(content, to.user),
     ],
     [
+      `${to.domain}: リポスト`, //
+      () => to.repost(content),
+    ],
+    [
+      `${from.domain}: リポストされたことを確認`,
+      () => from.waitForReposted(content),
+    ],
+    [
+      `${to.domain}: リポスト削除`, //
+      () => to.undoRepost(content),
+    ],
+    [
+      `${from.domain}: リポストが削除されたことを確認`,
+      () => from.waitForNotReposted(content),
+    ],
+    [
       `${from.domain}: 投稿を削除`, //
       () => from.delete(content),
     ],
@@ -102,24 +118,6 @@ const runTest = async ({ from, to }: RunTestParams) => {
       () => to.waitForNotFollowing(from.user),
     ],
   ];
-  // RsaSignature2017の動作を確認する
-  if (from instanceof MyhostUnsocialHandler && to instanceof MastodonHandler) {
-    steps.push(
-      [
-        `${to.domain}: ログアウト`, //
-        () => to.logout(),
-      ],
-      [
-        `${to.domain}: アカウントを削除`, //
-        () => to.deleteAccount(),
-      ],
-      // TODO: RsaSignature2017をサポートする
-      // [
-      //   `${from.domain}: アカウントが削除されたことを確認`,
-      //   () => from.waitForUserNotFound(to.user),
-      // ],
-    );
-  }
   for (const [label, action] of steps) {
     await test.step(label, action);
   }

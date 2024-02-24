@@ -1,12 +1,15 @@
-import type { Credential } from "@prisma/client";
-import { captor } from "jest-mock-extended";
+import assert from "assert";
 import { http, HttpResponse } from "msw";
 
-import { mockedKeys } from "@/_shared/mocks/keys";
-import { mockedPrisma } from "@/_shared/mocks/prisma";
+import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
+import { FollowFactory } from "@/_shared/factories/follow";
+import { RemoteUserFactory } from "@/_shared/factories/user";
 import { server } from "@/_shared/mocks/server";
+import { userSignUpService } from "@/_shared/user/services/userSignUpService";
+import { env } from "@/_shared/utils/env";
+import { prisma } from "@/_shared/utils/prisma";
 
-import { apReplayService } from ".";
+import { apRelayService } from ".";
 
 jest.useFakeTimers();
 jest.setSystemTime(new Date("2020-01-01T00:00:00Z"));
@@ -16,99 +19,207 @@ jest.mock("@/../package.json", () => ({
 }));
 
 describe("apRelayService", () => {
-  describe("relayActivityToInboxUrl", () => {
-    test("正常系", async () => {
-      // arrange
-      const dummyUserId = "dummy_userId";
-      mockedPrisma.credential.findUnique.mockResolvedValueOnce({
-        privateKey: mockedKeys.privateKey,
-      } as Credential);
-      const headerFn = jest.fn();
-      const headerCaptor = captor();
-      const bodyFn = jest.fn();
-      const bodyCaptor = captor();
-      server.use(
-        http.post("https://remote.example.com/inbox", async ({ request }) => {
-          headerFn(Object.fromEntries(request.headers));
-          bodyFn(await request.json());
-          return new HttpResponse(null, { status: 202 });
-        }),
-      );
-      // act
-      await apReplayService.relayActivityToInboxUrl({
-        userId: dummyUserId,
-        inboxUrl: new URL("https://remote.example.com/inbox"),
-        activity: {
-          type: "Dummy",
-          actor: "https://myhost.example.com/users/dummy_other_userId/activity",
-        },
-      });
-      // assert
-      expect(headerFn).toHaveBeenCalledWith(headerCaptor);
-      expect(headerCaptor.value).toMatchSnapshot();
-      expect(bodyFn).toHaveBeenCalledWith(bodyCaptor);
-      expect(bodyCaptor.value).toEqual({
-        type: "Dummy",
-        actor: "https://myhost.example.com/users/dummy_other_userId/activity",
-      });
+  test("activityのccに指定された各actorのinboxをDBから引いて配送する", async () => {
+    // arrange
+    const { id: userId } = await userSignUpService.signUpUser({
+      preferredUsername: "user",
+      password: "password",
     });
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.inboxUrl);
+    const activity = {
+      type: "Announce",
+      cc: [remoteUser.actorUrl],
+    } as unknown as apSchemaService.Activity;
+    const ccFn = jest.fn();
+    server.use(
+      http.post(remoteUser.inboxUrl, async ({ request }) => {
+        ccFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await apRelayService.relay({
+      userId,
+      activity,
+    });
+    // assert
+    expect(ccFn).toHaveBeenCalledTimes(1);
+    expect(ccFn).toHaveBeenCalledWith(activity);
   });
-
-  describe("relayActivityToFollowers", () => {
-    test("正常系", async () => {
-      // arrange
-      const dummyUserId = "dummy_userId";
-      mockedPrisma.follow.findMany.mockResolvedValue([
-        {
-          // @ts-ignore
-          follower: { inboxUrl: "https://remote1.example.com/users/foo/inbox" },
-        },
-        // @ts-ignore
-        { follower: { inboxUrl: "https://remote2.example.com/inbox" } },
-        // @ts-ignore
-        { follower: { inboxUrl: "https://remote2.example.com/inbox" } },
-        // @ts-ignore
-        { follower: { inboxUrl: null } },
-      ]);
-      mockedPrisma.credential.findUnique.mockResolvedValueOnce({
-        privateKey: mockedKeys.privateKey,
-      } as Credential);
-      const headerFn = jest.fn();
-      const headerCaptors = [captor(), captor()];
-      const bodyFn = jest.fn();
-      const bodyCaptors = [captor(), captor()];
-      const inbox1 = http.post(
-        "https://remote1.example.com/users/foo/inbox",
-        async ({ request }) => {
-          headerFn(Object.fromEntries(request.headers));
-          bodyFn(await request.json());
-          return new HttpResponse(null, { status: 202 });
-        },
-      );
-      const inbox2 = http.post(
-        "https://remote2.example.com/inbox",
-        async ({ request }) => {
-          headerFn(Object.fromEntries(request.headers));
-          bodyFn(await request.json());
-          return new HttpResponse(null, { status: 202 });
-        },
-      );
-      server.use(inbox1, inbox2);
-      // act
-      await apReplayService.relayActivityToFollowers({
-        userId: dummyUserId,
-        // @ts-ignore
-        activity: { type: "Dummy" },
-      });
-      // assert
-      expect(headerFn).toHaveBeenNthCalledWith(1, headerCaptors[0]);
-      expect(headerCaptors[0]!.value).toMatchSnapshot();
-      expect(headerFn).toHaveBeenNthCalledWith(2, headerCaptors[1]);
-      expect(headerCaptors[1]!.value).toMatchSnapshot();
-      expect(bodyFn).toHaveBeenCalledWith(bodyCaptors[0]);
-      expect(bodyCaptors[0]!.value).toEqual({ type: "Dummy" });
-      expect(bodyFn).toHaveBeenCalledWith(bodyCaptors[1]);
-      expect(bodyCaptors[1]!.value).toEqual({ type: "Dummy" });
+  test("UndoのActivityならのobjectに指定されたccを使って配送する", async () => {
+    // arrange
+    const { id: userId } = await userSignUpService.signUpUser({
+      preferredUsername: "user",
+      password: "password",
     });
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.inboxUrl);
+    const activity = {
+      type: "Undo",
+      object: {
+        type: "Dummy",
+        cc: [remoteUser.actorUrl],
+      },
+    } as unknown as apSchemaService.Activity;
+    const ccFn = jest.fn();
+    server.use(
+      http.post(remoteUser.inboxUrl, async ({ request }) => {
+        ccFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await apRelayService.relay({
+      userId,
+      activity,
+    });
+    // assert
+    expect(ccFn).toHaveBeenCalledTimes(1);
+    expect(ccFn).toHaveBeenCalledWith(activity);
+  });
+  test("ccにフォロワーのURLを指定した場合はフォロワーのinboxに展開し、重複を排除して配送する", async () => {
+    // arrange
+    const { id: userId } = await userSignUpService.signUpUser({
+      preferredUsername: "user",
+      password: "password",
+    });
+    const [data1, data2] = await FollowFactory.buildList([
+      // CCでも指定するフォロワー
+      {
+        followee: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+      // その他のフォロワー
+      {
+        followee: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    ]);
+    const follow1 = await prisma.follow.create({
+      data: data1!,
+      include: { follower: true },
+    });
+    const follow2 = await prisma.follow.create({
+      data: data2!,
+      include: { follower: true },
+    });
+    assert(follow1.follower.inboxUrl);
+    assert(follow2.follower.inboxUrl);
+    const activity = {
+      type: "Dummy",
+      cc: [
+        follow1.follower.actorUrl, // フォロワー1のURLをccに指定しても2回配送しないことを検証
+        `https://${env.UNSOCIAL_HOST}/users/${userId}/followers`,
+      ],
+    } as unknown as apSchemaService.Activity;
+    const follower1Fn = jest.fn();
+    const follower2Fn = jest.fn();
+    server.use(
+      http.post(follow1.follower.inboxUrl, async ({ request }) => {
+        follower1Fn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+      http.post(follow2.follower.inboxUrl, async ({ request }) => {
+        follower2Fn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await apRelayService.relay({
+      userId,
+      activity,
+    });
+    // assert
+    expect(follower1Fn).toHaveBeenCalledTimes(1);
+    expect(follower1Fn).toHaveBeenCalledWith(activity);
+    expect(follower2Fn).toHaveBeenCalledTimes(1);
+    expect(follower2Fn).toHaveBeenCalledWith(activity);
+  });
+  test("inboxUrlの指定があればそこのみに配送する", async () => {
+    // arrange
+    const { id: userId } = await userSignUpService.signUpUser({
+      preferredUsername: "user",
+      password: "password",
+    });
+    const activity = {
+      type: "Dummy",
+    } as unknown as apSchemaService.Activity;
+    const follow = await prisma.follow.create({
+      data: await FollowFactory.build({
+        followee: {
+          connect: {
+            id: userId,
+          },
+        },
+      }),
+      include: { follower: true },
+    });
+    assert(follow.follower.inboxUrl);
+    const inboxUrl = "https://remote.example.com/inbox";
+    const inboxFn = jest.fn();
+    const followerFn = jest.fn();
+    server.use(
+      http.post(inboxUrl, async ({ request }) => {
+        inboxFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+      http.post(follow.follower.inboxUrl, async ({ request }) => {
+        followerFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await apRelayService.relay({
+      userId,
+      activity,
+      inboxUrl,
+    });
+    // assert
+    expect(inboxFn).toHaveBeenCalledTimes(1);
+    expect(inboxFn).toHaveBeenCalledWith(activity);
+    expect(followerFn).toHaveBeenCalledTimes(0);
+  });
+  test("指定が全て無ければどこにも配送しない", async () => {
+    // arrange
+    const { id: userId } = await userSignUpService.signUpUser({
+      preferredUsername: "user",
+      password: "password",
+    });
+    const data = await FollowFactory.build({
+      followee: {
+        connect: {
+          id: userId,
+        },
+      },
+    });
+    const follow = await prisma.follow.create({
+      data: data,
+      include: { follower: true },
+    });
+    assert(follow.follower.inboxUrl);
+    const activity = {
+      type: "Dummy",
+    } as unknown as apSchemaService.Activity;
+    const followerFn = jest.fn();
+    server.use(
+      http.post(follow.follower.inboxUrl, async ({ request }) => {
+        followerFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
+    // act
+    await apRelayService.relay({
+      userId,
+      activity,
+    });
+    // assert
+    expect(followerFn).toHaveBeenCalledTimes(0);
   });
 });

@@ -1,159 +1,148 @@
-import { apReplayService } from "@/_shared/activitypub/apRelayService";
-import { mockedPrisma } from "@/_shared/mocks/prisma";
+import assert from "assert";
+import { http, HttpResponse } from "msw";
+
+import { LikeFactory, RemoteLikeFactory } from "@/_shared/factories/like";
+import { LocalNoteFactory, RemoteNoteFactory } from "@/_shared/factories/note";
+import { server } from "@/_shared/mocks/server";
 import { mockedGetSessionUserId } from "@/_shared/mocks/session";
+import { userSignUpService } from "@/_shared/user/services/userSignUpService";
+import { prisma } from "@/_shared/utils/prisma";
 
 import { action } from "./action";
 
-jest.mock("@/_shared/activitypub/apRelayService");
-const mockedRelayActivityToInboxUrl = jest.mocked(
-  apReplayService.relayActivityToInboxUrl,
-);
-
-const dummyLocalUserId = "dummy_local";
-
 describe("LikeButton/action", () => {
-  test("ローカルユーザーのNote", async () => {
+  test("ローカルのノートにいいねして、いいね数を更新できる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
-    mockedPrisma.like.create.mockResolvedValue({
-      note: {
-        // @ts-ignore
-        user: {
-          host: "myhost.example.com",
-        },
-      },
+    const user = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
     });
+    mockedGetSessionUserId.mockResolvedValue(user.id);
+    const note = await LocalNoteFactory.create();
     // act
-    await action({
-      noteId: "noteId",
-      content: "👍",
-    });
+    await action({ noteId: note.id, content: "👍" });
     // assert
-    expect(mockedPrisma.like.create.mock.lastCall?.[0]).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "content": "👍",
-          "noteId": "noteId",
-          "userId": "dummy_local",
-        },
-        "include": {
-          "note": {
-            "include": {
-              "user": true,
-            },
-          },
-        },
-      }
-    `);
-    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
+    expect(await prisma.like.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      userId: user.id,
+      noteId: note.id,
+      content: "👍",
+      createdAt: expect.anyDate(),
+    });
+    expect(
+      await prisma.note.findUnique({ where: { id: note.id } }),
+    ).toMatchObject({
+      likesCount: 1,
+    });
   });
-
-  test("リモートユーザーのNote", async () => {
+  test("リモートのノートにいいねして、いいね数を更新できる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
-    mockedPrisma.like.create.mockResolvedValue({
-      id: "likeId",
-      note: {
-        // @ts-ignore
-        url: "https://remote.example.com/n/note_remote",
-        user: {
-          inboxUrl: "https://remote.example.com/inbox",
-          host: "remote.example.com",
-        },
+    const user = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
+    mockedGetSessionUserId.mockResolvedValue(user.id);
+    const note = await prisma.note.create({
+      data: await RemoteNoteFactory.build(),
+      include: {
+        user: true,
       },
     });
-    // act
-    await action({
-      noteId: "noteId",
-      content: "👍",
-    });
-    // assert
-    expect(mockedPrisma.like.create.mock.lastCall?.[0]).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "content": "👍",
-          "noteId": "noteId",
-          "userId": "dummy_local",
-        },
-        "include": {
-          "note": {
-            "include": {
-              "user": true,
-            },
-          },
-        },
-      }
-    `);
-    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummyLocalUserId,
-      inboxUrl: new URL("https://remote.example.com/inbox"),
-      activity: expect.objectContaining({
-        type: "Like",
+    assert(note.user.inboxUrl);
+    const inboxFn = jest.fn();
+    server.use(
+      http.post(note.user.inboxUrl, async ({ request }) => {
+        inboxFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
       }),
+    );
+    // act
+    await action({ noteId: note.id, content: "👍" });
+    // assert
+    expect(await prisma.like.findFirst()).toEqualPrisma({
+      id: expect.any(String),
+      userId: user.id,
+      noteId: note.id,
+      content: "👍",
+      createdAt: expect.anyDate(),
+    });
+    expect(inboxFn).toHaveBeenCalledTimes(1);
+    expect(
+      await prisma.note.findUnique({ where: { id: note.id } }),
+    ).toMatchObject({
+      likesCount: 1,
     });
   });
-
-  test("ローカルユーザーのNote(いいね済みの場合)", async () => {
+  test("ローカルのノートへのいいねを取り消して、いいね数を更新できる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
-    const dummyLike = {
-      id: "likeId",
-      noteId: "noteId",
-      note: {
-        user: {
-          host: "myhost.example.com",
+    const user = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
+    mockedGetSessionUserId.mockResolvedValue(user.id);
+    const like = await LikeFactory.create({
+      user: {
+        connect: {
+          id: user.id,
         },
       },
-      userId: "dummy_local",
-      content: "👍",
-      createdAt: new Date(),
-    };
-    mockedPrisma.like.findFirst.mockResolvedValue(dummyLike);
-    // act
-    await action({
-      noteId: "noteId",
-      content: "👍",
     });
-    // assert
-    expect(mockedPrisma.like.delete).toHaveBeenCalledWith({
-      where: {
-        id: dummyLike.id,
+    await prisma.note.update({
+      where: { id: like.noteId },
+      data: {
+        likesCount: 1,
       },
     });
-    expect(mockedRelayActivityToInboxUrl).not.toHaveBeenCalled();
+    // act
+    await action({ noteId: like.noteId, content: "👍" });
+    // assert
+    expect(await prisma.like.findFirst()).toBeNull();
+    expect(
+      await prisma.note.findUnique({ where: { id: like.noteId } }),
+    ).toMatchObject({
+      likesCount: 0,
+    });
   });
-
-  test("リモートユーザーのNote(いいね済みの場合)", async () => {
+  test("リモートのノートへのいいねを取り消して、いいね数を更新できる", async () => {
     // arrange
-    mockedGetSessionUserId.mockResolvedValue(dummyLocalUserId);
-    const dummyLike = {
-      id: "likeId",
-      noteId: "noteId",
-      note: {
-        url: "https://remote.example.com/n/note_remote",
+    const user = await userSignUpService.signUpUser({
+      preferredUsername: "test",
+      password: "password",
+    });
+    mockedGetSessionUserId.mockResolvedValue(user.id);
+    const like = await prisma.like.create({
+      data: await RemoteLikeFactory.build({
         user: {
-          inboxUrl: "https://remote.example.com/inbox",
-          host: "remote.example.com",
+          connect: {
+            id: user.id,
+          },
         },
+      }),
+      include: { note: { include: { user: true } } },
+    });
+    assert(like.note.user.inboxUrl);
+    await prisma.note.update({
+      where: { id: like.noteId },
+      data: {
+        likesCount: 1,
       },
-      userId: "dummy_local",
-      content: "👍",
-      createdAt: new Date(),
-    };
-    mockedPrisma.like.findFirst.mockResolvedValue(dummyLike);
+    });
+    const inboxFn = jest.fn();
+    server.use(
+      http.post(like.note.user.inboxUrl, async ({ request }) => {
+        inboxFn(await request.json());
+        return HttpResponse.text("Accepted", { status: 202 });
+      }),
+    );
     // act
-    await action({
-      noteId: "noteId",
-      content: "👍",
-    });
+    await action({ noteId: like.noteId, content: "👍" });
     // assert
-    expect(mockedPrisma.like.delete).toHaveBeenCalledWith({
-      where: { id: "likeId" },
-    });
-    expect(mockedRelayActivityToInboxUrl).toHaveBeenCalledWith({
-      userId: dummyLocalUserId,
-      inboxUrl: new URL("https://remote.example.com/inbox"),
-      activity: expect.objectContaining({ type: "Undo" }),
+    expect(await prisma.like.findFirst()).toBeNull();
+    expect(inboxFn).toHaveBeenCalledTimes(1);
+    expect(
+      await prisma.note.findUnique({ where: { id: like.noteId } }),
+    ).toMatchObject({
+      likesCount: 0,
     });
   });
 });

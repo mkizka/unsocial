@@ -1,1 +1,1 @@
-export * as apReplayService from "./service";
+export * as apRelayService from "./service";

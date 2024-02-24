@@ -77,6 +77,22 @@ export abstract class FediverseHandler {
     await this.waitFor(() => this.expectNotLiked(content, user));
   }
 
+  abstract repost(content: string): Promise<void>;
+
+  abstract undoRepost(content: string): Promise<void>;
+
+  protected abstract expectReposted(content: string): Promise<void>;
+
+  async waitForReposted(content: string) {
+    await this.waitFor(() => this.expectReposted(content));
+  }
+
+  protected abstract expectNotReposted(content: string): Promise<void>;
+
+  async waitForNotReposted(content: string) {
+    await this.waitFor(() => this.expectNotReposted(content));
+  }
+
   abstract follow(user: string): Promise<void>;
 
   abstract unfollow(user: string): Promise<void>;

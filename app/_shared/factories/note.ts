@@ -14,3 +14,10 @@ export const LocalNoteFactory = defineNoteFactory({
     user: LocalUserFactory,
   },
 });
+
+export const NoteWithQUoteFactory = defineNoteFactory({
+  defaultData: {
+    user: LocalUserFactory,
+    quote: LocalNoteFactory,
+  },
+});

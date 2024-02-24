@@ -106,6 +106,33 @@ export class MastodonHandler extends FediverseHandler {
     );
   }
 
+  async repost(content: string) {
+    await this.goto("/");
+    await this.getNote(content)
+      .locator("button", { has: this.page.locator(".fa-retweet") })
+      .click();
+  }
+
+  async undoRepost(content: string): Promise<void> {
+    await this.repost(content);
+  }
+
+  async expectReposted(content: string) {
+    await this.goto("/");
+    await this.getNote(content).locator(".status__relative-time").click();
+    await expect(this.page.locator(".detailed-status__reblogs")).toHaveText(
+      "1",
+    );
+  }
+
+  async expectNotReposted(content: string) {
+    await this.goto("/");
+    await this.getNote(content).locator(".status__relative-time").click();
+    await expect(this.page.locator(".detailed-status__reblogs")).toHaveText(
+      "0",
+    );
+  }
+
   async follow(user: string) {
     await this.goto(`/${user}`);
     await this.page.locator("button", { hasText: "フォロー" }).click();
@@ -147,22 +174,5 @@ export class MastodonHandler extends FediverseHandler {
     await expect(
       this.page.locator(".display-name__account", { hasText: user }),
     ).not.toBeVisible();
-  }
-
-  async logout() {
-    await this.goto("/settings/profile");
-    await this.page.locator("#logout").locator("a").click();
-  }
-
-  async deleteAccount() {
-    await this.loginAs("delete@localhost", "password");
-    await this.goto("/settings/delete");
-    await this.page
-      .locator("#form_delete_confirmation_password")
-      .fill("password");
-    await this.page
-      .locator("#new_form_delete_confirmation")
-      .locator("button")
-      .click();
   }
 }

@@ -5,6 +5,7 @@ import { userSignUpService } from "@/_shared/user/services/userSignUpService";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
+// TODO: exportやめる
 export const findSystemUser = async (options?: { withCredential: boolean }) => {
   return prisma.user.findUnique({
     where: {

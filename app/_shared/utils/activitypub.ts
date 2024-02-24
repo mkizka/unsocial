@@ -1,4 +1,6 @@
+// Stryker disable all
 import type { Follow, Like, Note, User } from "@prisma/client";
+import assert from "assert";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 
@@ -17,6 +19,10 @@ const contexts = {
   ],
 };
 
+const publicUrl = "https://www.w3.org/ns/activitystreams#Public";
+
+const to = [publicUrl];
+
 const convertUser = (user: User) => {
   const userAddress = `https://${env.UNSOCIAL_HOST}/users/${user.id}`;
   const activityAddress = `${userAddress}/activity`;
@@ -29,6 +35,9 @@ const convertUser = (user: User) => {
     following: `${userAddress}/followees`,
     followers: `${userAddress}/followers`,
     featured: `${userAddress}/collections/featured`,
+    endpoints: {
+      sharedInbox: `https://${env.UNSOCIAL_HOST}/inbox`,
+    },
     preferredUsername: user.preferredUsername,
     name: user.name || "",
     summary: user.summary || "",
@@ -77,7 +86,7 @@ const convertNote = (note: NoteWithReply) => {
     content: note.content,
     attributedTo: `${userAddress}/activity`,
     published: note.publishedAt.toISOString(),
-    to: ["https://www.w3.org/ns/activitystreams#Public"],
+    to,
     cc,
   } satisfies apSchemaService.NoteActivity;
 };
@@ -105,6 +114,8 @@ const convertDelete = (note: Pick<Note, "id" | "userId">) => {
       type: "Tombstone",
       id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`,
     },
+    to,
+    cc: [`https://${env.UNSOCIAL_HOST}/users/${note.userId}/followers`],
   } satisfies apSchemaService.DeleteActivity;
 };
 
@@ -117,6 +128,31 @@ const convertFollow = (follow: Follow, followeeUrl: string) => {
     actor: `https://${env.UNSOCIAL_HOST}/users/${follow.followerId}/activity`,
     object: followeeUrl,
   } satisfies apSchemaService.FollowActivity;
+};
+
+const convertFollowPublic = (userId: string) => {
+  return {
+    ...contexts,
+    id: `https://${env.UNSOCIAL_HOST}/follows/${crypto.randomUUID()}`,
+    type: "Follow",
+    actor: `https://${env.UNSOCIAL_HOST}/users/${userId}/activity`,
+    object: publicUrl,
+  } satisfies apSchemaService.FollowActivity;
+};
+
+const convertAccept = (
+  userId: string,
+  follow: apSchemaService.FollowActivity,
+) => {
+  const { "@context": _, ...followToAccept } = follow;
+  return {
+    ...contexts,
+    type: "Accept",
+    // TODO: いいの？
+    id: `https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${userId}/activity`,
+    object: followToAccept,
+  } satisfies apSchemaService.AcceptActivity;
 };
 
 const convertLike = (like: Like, noteUrl: string) => {
@@ -132,16 +168,43 @@ const convertLike = (like: Like, noteUrl: string) => {
 };
 
 const convertUndo = (
-  like: apSchemaService.LikeActivity | apSchemaService.FollowActivity,
+  activity:
+    | apSchemaService.LikeActivity
+    | apSchemaService.FollowActivity
+    | apSchemaService.AnnounceActivity,
 ) => {
-  const { "@context": _, ...object } = like;
+  const { "@context": _, ...activityToUndo } = activity;
   return {
     ...contexts,
     type: "Undo",
-    id: `${like.id}?undo=true`,
-    actor: like.actor,
-    object,
+    id: `${activityToUndo.id}?undo=true`,
+    actor: activityToUndo.actor,
+    object: activityToUndo,
   } satisfies apSchemaService.UndoActivity;
+};
+
+const convertAnnounce = (
+  noteWithQuote: Note & { quote: (Note & { user: User }) | null },
+) => {
+  assert(noteWithQuote.quote);
+  const cc = [
+    `https://${env.UNSOCIAL_HOST}/users/${noteWithQuote.userId}/followers`,
+  ];
+  if (noteWithQuote.quote.user.actorUrl) {
+    cc.push(noteWithQuote.quote.user.actorUrl);
+  }
+  return {
+    ...contexts,
+    type: "Announce",
+    id: `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.id}/activity`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${noteWithQuote.userId}/activity`,
+    object:
+      noteWithQuote.quote.url ??
+      `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.quote.id}/activity`,
+    published: noteWithQuote.publishedAt.toISOString(),
+    to,
+    cc,
+  } satisfies apSchemaService.AnnounceActivity;
 };
 
 export const activityStreams = {
@@ -150,6 +213,9 @@ export const activityStreams = {
   create: convertCreate,
   delete: convertDelete,
   follow: convertFollow,
+  followPublic: convertFollowPublic,
+  accept: convertAccept,
   like: convertLike,
   undo: convertUndo,
+  announce: convertAnnounce,
 };

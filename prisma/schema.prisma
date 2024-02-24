@@ -12,7 +12,7 @@ datasource db {
 
 generator fabbrica {
   provider = "prisma-fabbrica"
-  output = "../app/_generated"
+  output   = "../app/_generated"
 }
 
 model Session {
@@ -38,6 +38,7 @@ model User {
   actorUrl          String?     @unique
   inboxUrl          String?
   lastFetchedAt     DateTime?
+  isAdmin           Boolean     @default(false)
   sessions          Session[]
   notes             Note[]
   followee          Follow[]    @relation("followee")
@@ -77,6 +78,7 @@ model Note {
   replyToId   String?
   replyTo     Note?      @relation("ReplyTo", fields: [replyToId], references: [id])
   likes       Like[]
+  likesCount  Int        @default(0)
   attachments Document[]
   quotes      Note[]     @relation("Quote")
   replies     Note[]     @relation("ReplyTo")
@@ -118,4 +120,17 @@ model Like {
   createdAt DateTime @default(now())
 
   @@unique([userId, noteId])
+}
+
+enum RelayServerStatus {
+  SENT
+  FAILED
+  ACCEPTED
+}
+
+model RelayServer {
+  id        String            @id @default(nanoid(8))
+  inboxUrl  String            @unique
+  status    RelayServerStatus @default(SENT)
+  createdAt DateTime          @default(now())
 }

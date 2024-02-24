@@ -10,8 +10,6 @@ const { commits } = JSON.parse(stdout.toString()) as {
   }[];
 };
 
-const table = ["| commit | 結果 | ログ |", "| --- | --- | --- |"];
-
 const emojis = {
   unsocial: ":performing_arts:",
   mastodon: ":elephant:",
@@ -36,18 +34,39 @@ const column = (
     .join("<br>");
 };
 
-for (const commit of commits) {
-  table.push(
-    [
-      "",
-      `${commit.messageHeadline} (${commit.oid})`,
-      column(["unsocial", "mastodon", "misskey"], commit.oid, "index.html"),
-      column(["mastodon", "misskey"], commit.oid, "docker.txt"),
-      "",
-    ]
-      .join(" | ")
-      .trim(),
-  );
-}
+const row = (commit: (typeof commits)[0]) => {
+  return [
+    "",
+    `${commit.messageHeadline} (${commit.oid})`,
+    column(["unsocial", "mastodon", "misskey"], commit.oid, "index.html"),
+    column(["mastodon", "misskey"], commit.oid, "docker.txt"),
+    "",
+  ]
+    .join(" | ")
+    .trim();
+};
 
-console.log(table.join("\n"));
+const showCount = 5;
+
+const header = ["| commit | 結果 | ログ |", "| --- | --- | --- |"];
+
+const showCommits = [
+  ...header,
+  ...commits.slice(commits.length - showCount).map(row),
+];
+
+const hiddenCommits = [
+  ...header,
+  ...commits.slice(0, commits.length - showCount).map(row),
+];
+
+// eslint-disable-next-line no-console
+console.log(`\
+<details>
+<summary>過去の結果</summary>
+
+${hiddenCommits.join("\n")}
+</details>
+
+${showCommits.join("\n")}
+`);

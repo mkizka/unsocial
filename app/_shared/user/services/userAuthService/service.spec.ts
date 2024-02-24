@@ -51,6 +51,7 @@ describe("userAuthService", () => {
           name: "テスト",
           preferredUsername: "test",
           host: "myhost.example.com",
+          isAdmin: true,
           publicKey: expect.any(String),
           credential: {
             create: {
