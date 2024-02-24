@@ -8,3 +8,10 @@ export const FollowFactory = defineFollowFactory({
     followee: LocalUserFactory,
   },
 });
+
+export const LocalToRemoteFollowFactory = defineFollowFactory({
+  defaultData: {
+    follower: LocalUserFactory,
+    followee: RemoteUserFactory,
+  },
+});
