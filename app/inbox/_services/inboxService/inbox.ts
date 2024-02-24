@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { z } from "zod";
 
 import { httpSignatureVerifyService } from "@/_shared/activitypub/httpSignatureVerifyService";
+import { rsaSignature2017Service } from "@/_shared/activitypub/rsaSignature2017Service";
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { createLogger } from "@/_shared/utils/logger";
 
@@ -34,6 +35,14 @@ const anyActivitySchema = z
   .object({
     type: z.enum(keysOf(inboxServices)),
     actor: z.string().url(),
+    signature: z
+      .object({
+        type: z.literal("RsaSignature2017"),
+        created: z.string(),
+        creator: z.string().url(),
+        signatureValue: z.string(),
+      })
+      .optional(),
   })
   .passthrough();
 
@@ -43,18 +52,22 @@ export const perform = async (request: NextRequest) => {
   const activity = await request.clone().json();
   logger.debug("Activityを受信: " + JSON.stringify(activity));
 
-  // 1. ヘッダーの署名を検証する
-  const validation = await httpSignatureVerifyService.verifyRequest(request);
-  if (!validation.isValid) {
-    return new BadActivityRequestError(
-      "リクエストヘッダの署名が不正でした: " + validation.reason,
-    );
-  }
-
-  // 2. Activityのスキーマを検証する
+  // 1. Activityのスキーマを検証する
   const parsedActivity = anyActivitySchema.safeParse(activity);
   if (!parsedActivity.success) {
     return new ActivitySchemaValidationError(parsedActivity.error);
+  }
+
+  // 2. HTTP Signaturesを検証する
+  const validation = await httpSignatureVerifyService.verifyRequest(request);
+  if (!validation.isValid) {
+    // ヘッダの署名に検証失敗した場合はLinked Data Signaturesを検証する
+    const isValid = rsaSignature2017Service.verify(parsedActivity.data);
+    if (!isValid) {
+      return new BadActivityRequestError(
+        "リクエストヘッダの署名が不正でした: " + validation.reason,
+      );
+    }
   }
 
   // 3. actorで指定されたユーザーを取得する

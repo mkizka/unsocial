@@ -5,6 +5,8 @@ import crypto from "crypto";
 import jsonld from "jsonld";
 import type { RemoteDocument } from "jsonld/jsonld-spec";
 
+import { userFindService } from "@/_shared/user/services/userFindService";
+
 import { CONTEXTS } from "./contexts";
 
 // https://github.com/digitalbazaar/jsonld.js/blob/5367858d28b6200aaf832d93eb666d4b819d5d4f/README.md#custom-document-loader
@@ -95,15 +97,32 @@ export const sign = async <T extends object>({
   };
 };
 
-export const verify = async ({
-  data,
-  publicKey,
-}: {
-  data: { signature: Signature };
-  publicKey: string;
-}) => {
+const findOrFetchUserByKeyId = async (keyId: string) => {
+  const actorUrl = new URL(keyId);
+  actorUrl.hash = "";
+  const user = await userFindService.findOrFetchUserByActor(
+    actorUrl.toString(),
+  );
+  if (user instanceof Error) {
+    return null;
+  }
+  return user;
+};
+
+export const verify = async (data: { signature?: Signature }) => {
+  if (!data.signature) {
+    return false;
+  }
   const toBeSigned = await createVerifyData(data, data.signature);
   const verifier = crypto.createVerify("sha256");
   verifier.update(toBeSigned);
-  return verifier.verify(publicKey, data.signature.signatureValue, "base64");
+  const creatorUser = await findOrFetchUserByKeyId(data.signature.creator);
+  if (!creatorUser?.publicKey) {
+    return false;
+  }
+  return verifier.verify(
+    creatorUser.publicKey,
+    data.signature.signatureValue,
+    "base64",
+  );
 };
