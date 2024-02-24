@@ -215,7 +215,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
     healthcheck:
-      test: ["CMD", "test", "-e", "/tmp/db_initialized"]
+      test: ["CMD", "test", "-e", "/var/lib/postgresql/data/db_initialized"]
       interval: 2s
       timeout: 2s
       retries: 10
