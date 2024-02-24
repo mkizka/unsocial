@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.38
+
+### Patch Changes
+
+- 87f93cd: リレーサーバー登録機能追加
+
 ## 0.0.37
 
 ### Patch Changes
