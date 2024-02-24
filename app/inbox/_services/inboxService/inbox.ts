@@ -43,13 +43,21 @@ export const perform = async (request: NextRequest) => {
   const activity = await request.clone().json();
   logger.debug("Activityを受信: " + JSON.stringify(activity));
 
-  // 1. bodyが何らかのActivityであることを検証する
+  // 1. ヘッダーの署名を検証する
+  const validation = await httpSignatureVerifyService.verifyRequest(request);
+  if (!validation.isValid) {
+    return new BadActivityRequestError(
+      "リクエストヘッダの署名が不正でした: " + validation.reason,
+    );
+  }
+
+  // 2. Activityのスキーマを検証する
   const parsedActivity = anyActivitySchema.safeParse(activity);
   if (!parsedActivity.success) {
     return new ActivitySchemaValidationError(parsedActivity.error);
   }
 
-  // 2. actorで指定されたユーザーを取得する
+  // 3. actorで指定されたユーザーを取得する
   const actorUser = await userFindService.findOrFetchUserByActor(
     parsedActivity.data.actor,
   );
@@ -57,14 +65,6 @@ export const perform = async (request: NextRequest) => {
   if (actorUser instanceof Error) {
     return new BadActivityRequestError(
       "actorで指定されたユーザーが見つかりませんでした",
-    );
-  }
-
-  // 3. ヘッダーの署名を検証する
-  const validation = await httpSignatureVerifyService.verifyRequest(request);
-  if (!validation.isValid) {
-    return new BadActivityRequestError(
-      "リクエストヘッダの署名が不正でした: " + validation.reason,
     );
   }
 
