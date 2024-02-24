@@ -1,4 +1,7 @@
+import type { User } from "@prisma/client";
+
 import { mockedKeys } from "@/_shared/mocks/keys";
+import { userFindService } from "@/_shared/user/services/userFindService";
 
 import { sign, verify } from "./service";
 
@@ -10,6 +13,14 @@ const linkedData = {
   type: "Dummy",
 };
 
+jest.mock("@/_shared/user/services/userFindService");
+const mockedFindOrFetchUserByActor = jest.mocked(
+  userFindService.findOrFetchUserByActor,
+);
+mockedFindOrFetchUserByActor.mockResolvedValue({
+  publicKey: mockedKeys.publickKey,
+} as User);
+
 describe("RsaSignature2017", () => {
   it("supports sign and verify", async () => {
     const signedLinkedData = await sign({
@@ -17,10 +28,7 @@ describe("RsaSignature2017", () => {
       creator: "http://localhost:1337/user/did:example:123#main-key",
       privateKey: mockedKeys.privateKey,
     });
-    const verified = await verify({
-      data: signedLinkedData,
-      publicKey: mockedKeys.publickKey,
-    });
+    const verified = await verify(signedLinkedData);
     expect(verified).toBe(true);
   });
 
@@ -31,10 +39,7 @@ describe("RsaSignature2017", () => {
       creator: "http://example.com/user/did:example:123#main-key",
       privateKey: mockedKeys.privateKey,
     });
-    const verified = await verify({
-      data: signedLinkedData,
-      publicKey: mockedKeys.publickKey,
-    });
+    const verified = await verify(signedLinkedData);
     expect(verified).toBe(true);
   });
 });
