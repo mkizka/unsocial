@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { z } from "zod";
 
 import { httpSignatureVerifyService } from "@/_shared/activitypub/httpSignatureVerifyService";
-import { rsaSignature2017Service } from "@/_shared/activitypub/rsaSignature2017Service";
+import { linkedDataSignatureService } from "@/_shared/activitypub/linkedDataSignatureService";
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { createLogger } from "@/_shared/utils/logger";
 
@@ -62,7 +62,7 @@ export const perform = async (request: NextRequest) => {
   const httpSignature = await httpSignatureVerifyService.verifyRequest(request);
   if (!httpSignature.isValid) {
     // ヘッダの署名に検証失敗した場合はLinked Data Signaturesを検証する
-    const rsaSignature2017 = await rsaSignature2017Service.verify(
+    const rsaSignature2017 = await linkedDataSignatureService.verify(
       parsedActivity.data,
     );
     if (!rsaSignature2017.isValid) {

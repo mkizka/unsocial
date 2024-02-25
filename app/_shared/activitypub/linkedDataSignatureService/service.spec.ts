@@ -3,7 +3,7 @@ import type { User } from "@prisma/client";
 import { mockedKeys } from "@/_shared/mocks/keys";
 import { userFindService } from "@/_shared/user/services/userFindService";
 
-import { sign, verify } from "./service";
+import { linkedDataSignatureService } from ".";
 
 const linkedData = {
   "@context": [
@@ -18,19 +18,20 @@ const mockedFindOrFetchUserByActor = jest.mocked(
   userFindService.findOrFetchUserByActor,
 );
 
-describe("RsaSignature2017", () => {
+describe("linkedDataSignatureService", () => {
   test("supports sign and verify", async () => {
     // arrange
     mockedFindOrFetchUserByActor.mockResolvedValue({
       publicKey: mockedKeys.publickKey,
     } as User);
     // act
-    const signedLinkedData = await sign({
+    const signedLinkedData = await linkedDataSignatureService.sign({
       data: linkedData,
       creator: "http://localhost:1337/user/did:example:123#main-key",
       privateKey: mockedKeys.privateKey,
     });
-    const rsaSignature2017 = await verify(signedLinkedData);
+    const rsaSignature2017 =
+      await linkedDataSignatureService.verify(signedLinkedData);
     // assert
     expect(rsaSignature2017).toEqual({
       isValid: true,
@@ -42,13 +43,14 @@ describe("RsaSignature2017", () => {
       publicKey: mockedKeys.publickKey,
     } as User);
     // act
-    const signedLinkedData = await sign({
+    const signedLinkedData = await linkedDataSignatureService.sign({
       data: linkedData,
       domain: "example.com",
       creator: "http://example.com/user/did:example:123#main-key",
       privateKey: mockedKeys.privateKey,
     });
-    const rsaSignature2017 = await verify(signedLinkedData);
+    const rsaSignature2017 =
+      await linkedDataSignatureService.verify(signedLinkedData);
     // assert
     expect(rsaSignature2017).toEqual({
       isValid: true,
@@ -60,13 +62,14 @@ describe("RsaSignature2017", () => {
       publicKey: null,
     } as User);
     // act
-    const signedLinkedData = await sign({
+    const signedLinkedData = await linkedDataSignatureService.sign({
       data: linkedData,
       domain: "example.com",
       creator: "http://example.com/user/did:example:123#main-key",
       privateKey: mockedKeys.privateKey,
     });
-    const rsaSignature2017 = await verify(signedLinkedData);
+    const rsaSignature2017 =
+      await linkedDataSignatureService.verify(signedLinkedData);
     // assert
     expect(rsaSignature2017).toEqual({
       isValid: false,
@@ -75,7 +78,7 @@ describe("RsaSignature2017", () => {
   });
   test("署名がなければエラーを返す", async () => {
     // act
-    const rsaSignature2017 = await verify({});
+    const rsaSignature2017 = await linkedDataSignatureService.verify({});
     // assert
     expect(rsaSignature2017).toEqual({
       isValid: false,
