@@ -42,6 +42,7 @@ const anyActivitySchema = z
         creator: z.string().url(),
         signatureValue: z.string(),
       })
+      .passthrough()
       .optional(),
   })
   .passthrough();
@@ -62,14 +63,14 @@ export const perform = async (request: NextRequest) => {
   const httpSignature = await httpSignatureVerifyService.verifyRequest(request);
   if (!httpSignature.isValid) {
     // ヘッダの署名に検証失敗した場合はLinked Data Signaturesを検証する
-    const rsaSignature2017 = await linkedDataSignatureService.verify(
+    const linkedDataSignature = await linkedDataSignatureService.verify(
       parsedActivity.data,
     );
-    if (!rsaSignature2017.isValid) {
+    if (!linkedDataSignature.isValid) {
       return new BadActivityRequestError(
         `署名が不正でした
 - HTTP Signature: ${httpSignature.reason}
-- Linked Data Signature: ${rsaSignature2017.reason}`,
+- Linked Data Signature: ${linkedDataSignature.reason}`,
       );
     }
   }
