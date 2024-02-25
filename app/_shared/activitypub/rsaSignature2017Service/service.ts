@@ -111,18 +111,31 @@ const findOrFetchUserByKeyId = async (keyId: string) => {
 
 export const verify = async (data: { signature?: Signature }) => {
   if (!data.signature) {
-    return false;
+    return {
+      isValid: false,
+      reason: "署名がありません",
+    };
   }
   const toBeSigned = await createVerifyData(data, data.signature);
   const verifier = crypto.createVerify("sha256");
   verifier.update(toBeSigned);
   const creatorUser = await findOrFetchUserByKeyId(data.signature.creator);
   if (!creatorUser?.publicKey) {
-    return false;
+    return {
+      isValid: false,
+      reason: "公開鍵が見つかりませんでした",
+    };
   }
-  return verifier.verify(
+  const isValid = verifier.verify(
     creatorUser.publicKey,
     data.signature.signatureValue,
     "base64",
   );
+  if (!isValid) {
+    return {
+      isValid: false,
+      reason: "検証の結果不正と判断されました",
+    };
+  }
+  return { isValid };
 };

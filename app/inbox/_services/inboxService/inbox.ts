@@ -59,13 +59,17 @@ export const perform = async (request: NextRequest) => {
   }
 
   // 2. HTTP Signaturesを検証する
-  const validation = await httpSignatureVerifyService.verifyRequest(request);
-  if (!validation.isValid) {
+  const httpSignature = await httpSignatureVerifyService.verifyRequest(request);
+  if (!httpSignature.isValid) {
     // ヘッダの署名に検証失敗した場合はLinked Data Signaturesを検証する
-    const isValid = rsaSignature2017Service.verify(parsedActivity.data);
-    if (!isValid) {
+    const rsaSignature2017 = await rsaSignature2017Service.verify(
+      parsedActivity.data,
+    );
+    if (!rsaSignature2017.isValid) {
       return new BadActivityRequestError(
-        "リクエストヘッダの署名が不正でした: " + validation.reason,
+        `署名が不正でした
+- HTTP Signature: ${httpSignature.reason}
+- Linked Data Signature: ${rsaSignature2017.reason}`,
       );
     }
   }

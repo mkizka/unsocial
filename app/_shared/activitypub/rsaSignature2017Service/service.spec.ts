@@ -17,29 +17,69 @@ jest.mock("@/_shared/user/services/userFindService");
 const mockedFindOrFetchUserByActor = jest.mocked(
   userFindService.findOrFetchUserByActor,
 );
-mockedFindOrFetchUserByActor.mockResolvedValue({
-  publicKey: mockedKeys.publickKey,
-} as User);
 
 describe("RsaSignature2017", () => {
-  it("supports sign and verify", async () => {
+  test("supports sign and verify", async () => {
+    // arrange
+    mockedFindOrFetchUserByActor.mockResolvedValue({
+      publicKey: mockedKeys.publickKey,
+    } as User);
+    // act
     const signedLinkedData = await sign({
       data: linkedData,
       creator: "http://localhost:1337/user/did:example:123#main-key",
       privateKey: mockedKeys.privateKey,
     });
-    const verified = await verify(signedLinkedData);
-    expect(verified).toBe(true);
+    const rsaSignature2017 = await verify(signedLinkedData);
+    // assert
+    expect(rsaSignature2017).toEqual({
+      isValid: true,
+    });
   });
-
-  it("supports optional domain", async () => {
+  test("supports optional domain", async () => {
+    // arrange
+    mockedFindOrFetchUserByActor.mockResolvedValue({
+      publicKey: mockedKeys.publickKey,
+    } as User);
+    // act
     const signedLinkedData = await sign({
       data: linkedData,
       domain: "example.com",
       creator: "http://example.com/user/did:example:123#main-key",
       privateKey: mockedKeys.privateKey,
     });
-    const verified = await verify(signedLinkedData);
-    expect(verified).toBe(true);
+    const rsaSignature2017 = await verify(signedLinkedData);
+    // assert
+    expect(rsaSignature2017).toEqual({
+      isValid: true,
+    });
+  });
+  test("公開鍵が取れなければエラーを返す", async () => {
+    // arrange
+    mockedFindOrFetchUserByActor.mockResolvedValue({
+      publicKey: null,
+    } as User);
+    // act
+    const signedLinkedData = await sign({
+      data: linkedData,
+      domain: "example.com",
+      creator: "http://example.com/user/did:example:123#main-key",
+      privateKey: mockedKeys.privateKey,
+    });
+    const rsaSignature2017 = await verify(signedLinkedData);
+    // assert
+    expect(rsaSignature2017).toEqual({
+      isValid: false,
+      reason: "公開鍵が見つかりませんでした",
+    });
+  });
+  test("署名がなければエラーを返す", async () => {
+    // act
+    const rsaSignature2017 = await verify({});
+    // assert
+    expect(rsaSignature2017).toEqual({
+      isValid: false,
+      reason: "署名がありません",
+    });
   });
 });
