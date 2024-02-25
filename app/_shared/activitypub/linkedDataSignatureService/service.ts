@@ -39,7 +39,21 @@ const sha256 = (data: crypto.BinaryLike) => {
   return h.digest("hex");
 };
 
-const createVerifyData = async (data: object, options: object) => {
+type Signature = {
+  type: string; // "RsaSignature2017";
+  creator: string;
+  created: string;
+  nonce?: string;
+  domain?: string;
+  signatureValue: string;
+};
+
+type SignOptions = Omit<Signature, "signatureValue">;
+
+const createVerifyData = async (
+  data: object,
+  options: Signature | SignOptions,
+) => {
   const transformedOptions: Record<string, unknown> = {
     ...options,
     "@context": "https://w3id.org/security/v1",
@@ -57,13 +71,6 @@ const createVerifyData = async (data: object, options: object) => {
   return verifyData;
 };
 
-type Signature = {
-  created: string;
-  creator: string;
-  signatureValue: string;
-  type: string;
-};
-
 export const sign = async <T extends object>({
   data,
   creator,
@@ -77,13 +84,7 @@ export const sign = async <T extends object>({
   created?: string;
   privateKey: string;
 }): Promise<T & { signature: Signature }> => {
-  const options: {
-    type: string;
-    creator: string;
-    domain?: string;
-    nonce: string;
-    created: string;
-  } = {
+  const options: SignOptions = {
     type: "RsaSignature2017",
     creator,
     domain,
