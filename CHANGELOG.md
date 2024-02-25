@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.39
+
+### Patch Changes
+
+- e717278: HTTPSignature検証失敗時にRSASignature2017を検証する
+
 ## 0.0.38
 
 ### Patch Changes
