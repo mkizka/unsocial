@@ -11,6 +11,7 @@ const linkedData = {
     "https://w3id.org/security/v1",
   ],
   type: "Dummy",
+  content: "content",
 };
 
 jest.mock("@/_shared/user/services/userFindService");
@@ -54,6 +55,29 @@ describe("linkedDataSignatureService", () => {
     // assert
     expect(rsaSignature2017).toEqual({
       isValid: true,
+    });
+  });
+  test("内容が改ざんされていればエラーを返す", async () => {
+    // arrange
+    mockedFindOrFetchUserByActor.mockResolvedValue({
+      publicKey: mockedKeys.publickKey,
+    } as User);
+    // act
+    const signedLinkedData = await linkedDataSignatureService.sign({
+      data: linkedData,
+      domain: "example.com",
+      creator: "http://example.com/user/did:example:123#main-key",
+      privateKey: mockedKeys.privateKey,
+    });
+    const rsaSignature2017 = await linkedDataSignatureService.verify({
+      ...signedLinkedData,
+      // @ts-expect-error
+      content: "changed",
+    });
+    // assert
+    expect(rsaSignature2017).toEqual({
+      isValid: false,
+      reason: "検証の結果不正と判断されました",
     });
   });
   test("公開鍵が取れなければエラーを返す", async () => {
