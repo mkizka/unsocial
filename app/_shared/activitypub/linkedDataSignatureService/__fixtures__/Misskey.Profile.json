@@ -1,0 +1,56 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "https://w3id.org/security/v1",
+    {
+      "Key": "sec:Key",
+      "manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+      "sensitive": "as:sensitive",
+      "Hashtag": "as:Hashtag",
+      "quoteUrl": "as:quoteUrl",
+      "toot": "http://joinmastodon.org/ns#",
+      "Emoji": "toot:Emoji",
+      "featured": "toot:featured",
+      "discoverable": "toot:discoverable",
+      "schema": "http://schema.org#",
+      "PropertyValue": "schema:PropertyValue",
+      "value": "schema:value",
+      "misskey": "https://misskey-hub.net/ns#",
+      "_misskey_content": "misskey:_misskey_content",
+      "_misskey_quote": "misskey:_misskey_quote",
+      "_misskey_reaction": "misskey:_misskey_reaction",
+      "_misskey_votes": "misskey:_misskey_votes",
+      "_misskey_summary": "misskey:_misskey_summary",
+      "isCat": "misskey:isCat",
+      "vcard": "http://www.w3.org/2006/vcard/ns#"
+    }
+  ],
+  "type": "Person",
+  "id": "https://misskey.localhost/users/9cszb31hal",
+  "inbox": "https://misskey.localhost/users/9cszb31hal/inbox",
+  "outbox": "https://misskey.localhost/users/9cszb31hal/outbox",
+  "followers": "https://misskey.localhost/users/9cszb31hal/followers",
+  "following": "https://misskey.localhost/users/9cszb31hal/following",
+  "featured": "https://misskey.localhost/users/9cszb31hal/collections/featured",
+  "sharedInbox": "https://misskey.localhost/inbox",
+  "endpoints": {
+    "sharedInbox": "https://misskey.localhost/inbox"
+  },
+  "url": "https://misskey.localhost/@admin",
+  "preferredUsername": "admin",
+  "name": null,
+  "summary": null,
+  "_misskey_summary": null,
+  "icon": null,
+  "image": null,
+  "tag": [],
+  "manuallyApprovesFollowers": false,
+  "discoverable": true,
+  "publicKey": {
+    "id": "https://misskey.localhost/users/9cszb31hal#main-key",
+    "type": "Key",
+    "owner": "https://misskey.localhost/users/9cszb31hal",
+    "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwgNppyPmNQ9GQNW7khsR\nrAqAe1xlp8r76R/TQmUS9OUiDPFF+XzRDrcoc0A7B432ptQvdmg5r6GKbIDqJVKh\nFXE4zqrh+6z4al1/wF1Mv/vAweXZ/33lzgPDPHcdIfuB6ETCNggv1hqv8FFWtpgS\nm7XMZGEVyB+mJItNCzdkhd5MLVCV1kZgtnX9Rwh0MAdysq81reYEKdxlWZb0dRsh\n8Bwt9ajjFPusczSOyMLs26Q8r3Z/EtjbZfsVpXg3hqqia9J7qtQabyn2DxaGUNuv\niUkgV7beXC8w7bP8ZZTOsbFR/xbJEe25iVBPlpeN/Z+hYB/fyYDA8c274dI0nEKJ\n27sMr3p2dIYtm1iL20qCkNfNK65d0ZOGtovPFeXHaNuZtsQVYXYYp2q+kDGhFzsz\nCeKVdTXEJUIbZd+eIUTodbBug2PBQVc66rE4qOEp+3VPrd+hovfhcCMkTVZ974hA\n05ioL/U/vo0HxaByt+2IGcBpCZ5ZSXD6XWbs+SWOqfWX374ykUkI4G3IFLA2wwsw\n/AyAJVpg32Ymt3WIiaFKZ0VE+EMRla7asrLFd0Eu/kke3rO6AqXPW1bmq/EkDwf4\nJKPy/WLst/Ku2l9m1eFFxg7+BE7F2tM5Oer0ioj3CdnVWY8ihPy0TSIJ/tmgOkLU\nSEJkZ29SG/VxDxT8drJQmCcCAwEAAQ==\n-----END PUBLIC KEY-----\n"
+  },
+  "isCat": false
+}

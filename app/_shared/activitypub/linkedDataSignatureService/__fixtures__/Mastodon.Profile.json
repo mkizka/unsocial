@@ -1,0 +1,54 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "https://w3id.org/security/v1",
+    {
+      "manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+      "sensitive": "as:sensitive",
+      "movedTo": {
+        "@id": "as:movedTo",
+        "@type": "@id"
+      },
+      "Hashtag": "as:Hashtag",
+      "ostatus": "http://ostatus.org#",
+      "atomUri": "ostatus:atomUri",
+      "inReplyToAtomUri": "ostatus:inReplyToAtomUri",
+      "conversation": "ostatus:conversation",
+      "toot": "http://joinmastodon.org/ns#",
+      "Emoji": "toot:Emoji",
+      "focalPoint": {
+        "@container": "@list",
+        "@id": "toot:focalPoint"
+      },
+      "featured": {
+        "@id": "toot:featured",
+        "@type": "@id"
+      },
+      "schema": "http://schema.org#",
+      "PropertyValue": "schema:PropertyValue",
+      "value": "schema:value"
+    }
+  ],
+  "id": "https://mastodon.cloud/users/transmute",
+  "type": "Person",
+  "following": "https://mastodon.cloud/users/transmute/following",
+  "followers": "https://mastodon.cloud/users/transmute/followers",
+  "inbox": "https://mastodon.cloud/users/transmute/inbox",
+  "outbox": "https://mastodon.cloud/users/transmute/outbox",
+  "featured": "https://mastodon.cloud/users/transmute/collections/featured",
+  "preferredUsername": "transmute",
+  "name": "",
+  "summary": "<p></p>",
+  "url": "https://mastodon.cloud/@transmute",
+  "manuallyApprovesFollowers": false,
+  "publicKey": {
+    "id": "https://mastodon.cloud/users/transmute#main-key",
+    "owner": "https://mastodon.cloud/users/transmute",
+    "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0AC6WSd/sVBc95NOwHA5\nuIgllOKIpHw2LT5zKKSGR2ykOKh3I6oMIqaPyqUSiiLpGGfYMmN6s/XcoreHyb3N\nx4He6QW9lb+BKQUPOewiHVA9qKwqHJTlTkXN2j3/Xy3rUducmWUGkk1sH01AxvJ5\niTl7c6kInNSQIba/ov5IYg9shHI62eC4E6InsYSMqSQk7dz33pkb9Fr2Xz6Mw74W\nlUHa/e8ad7GR6oLJ0d8acdc1lK4fsN8wx5AmjVUZhyK3JB/sgJ1apk3Uy3EtYm2M\nG4ui/E2Yj3M/SV7bHEI0RE0euTa3ihvt28sT8jmjIYOd56X3hl8Y3bxw+o1hVv3T\nXwIDAQAB\n-----END PUBLIC KEY-----\n"
+  },
+  "tag": [],
+  "attachment": [],
+  "endpoints": {
+    "sharedInbox": "https://mastodon.cloud/inbox"
+  }
+}

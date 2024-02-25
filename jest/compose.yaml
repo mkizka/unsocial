@@ -11,3 +11,4 @@ services:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 1s
       timeout: 2s
+      retries: 10
