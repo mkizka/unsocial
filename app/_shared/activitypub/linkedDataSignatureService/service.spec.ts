@@ -8,6 +8,7 @@ import mastodonFollowJson from "./__fixtures__/Mastodon.Follow.json";
 import mastodonProfileJson from "./__fixtures__/Mastodon.Profile.json";
 import misskeyCreateJson from "./__fixtures__/Misskey.Create.json";
 import misskeyProfileJson from "./__fixtures__/Misskey.Profile.json";
+
 const linkedData = {
   "@context": [
     "https://www.w3.org/ns/activitystreams",
