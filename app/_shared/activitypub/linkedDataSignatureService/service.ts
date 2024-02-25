@@ -6,12 +6,15 @@ import jsonld from "jsonld";
 import type { RemoteDocument } from "jsonld/jsonld-spec";
 
 import { userFindService } from "@/_shared/user/services/userFindService";
+import { createLogger } from "@/_shared/utils/logger";
 
 import { CONTEXTS } from "./contexts";
 
 // https://github.com/digitalbazaar/jsonld.js/blob/5367858d28b6200aaf832d93eb666d4b819d5d4f/README.md#custom-document-loader
 // @ts-expect-error
 const nodeDocumentLoader = jsonld.documentLoaders.node();
+
+const logger = createLogger("linkedDataSignatureService");
 
 const customLoader = async (url: string): Promise<RemoteDocument> => {
   if (url in CONTEXTS) {
@@ -20,6 +23,7 @@ const customLoader = async (url: string): Promise<RemoteDocument> => {
       documentUrl: url,
     };
   }
+  logger.warn(`@contextに想定していないURLが指定されました: ${url}`);
   return nodeDocumentLoader(url);
 };
 
@@ -73,15 +77,21 @@ export const sign = async <T extends object>({
   created?: string;
   privateKey: string;
 }): Promise<T & { signature: Signature }> => {
-  const options = {
+  const options: {
+    type: string;
+    creator: string;
+    domain?: string;
+    nonce: string;
+    created: string;
+  } = {
     type: "RsaSignature2017",
     creator,
     domain,
     nonce: crypto.randomBytes(16).toString("hex"),
     created: created || new Date().toISOString(),
   };
-  if (!domain) {
-    delete options.domain;
+  if (domain) {
+    options.domain = domain;
   }
   const toBeSigned = await createVerifyData(data, options);
   const signer = crypto.createSign("sha256");

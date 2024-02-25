@@ -4,7 +4,10 @@ import { mockedKeys } from "@/_shared/mocks/keys";
 import { userFindService } from "@/_shared/user/services/userFindService";
 
 import { linkedDataSignatureService } from ".";
-
+import mastodonFollowJson from "./__fixtures__/Mastodon.Follow.json";
+import mastodonProfileJson from "./__fixtures__/Mastodon.Profile.json";
+import misskeyCreateJson from "./__fixtures__/Misskey.Create.json";
+import misskeyProfileJson from "./__fixtures__/Misskey.Profile.json";
 const linkedData = {
   "@context": [
     "https://www.w3.org/ns/activitystreams",
@@ -52,6 +55,32 @@ describe("linkedDataSignatureService", () => {
     });
     const rsaSignature2017 =
       await linkedDataSignatureService.verify(signedLinkedData);
+    // assert
+    expect(rsaSignature2017).toEqual({
+      isValid: true,
+    });
+  });
+  test("Mastodonの署名を検証できる", async () => {
+    // arrange
+    mockedFindOrFetchUserByActor.mockResolvedValue({
+      publicKey: mastodonProfileJson.publicKey.publicKeyPem,
+    } as User);
+    // act
+    const rsaSignature2017 =
+      await linkedDataSignatureService.verify(mastodonFollowJson);
+    // assert
+    expect(rsaSignature2017).toEqual({
+      isValid: true,
+    });
+  });
+  test("Misskeyの署名を検証できる", async () => {
+    // arrange
+    mockedFindOrFetchUserByActor.mockResolvedValue({
+      publicKey: misskeyProfileJson.publicKey.publicKeyPem,
+    } as User);
+    // act
+    const rsaSignature2017 =
+      await linkedDataSignatureService.verify(misskeyCreateJson);
     // assert
     expect(rsaSignature2017).toEqual({
       isValid: true,

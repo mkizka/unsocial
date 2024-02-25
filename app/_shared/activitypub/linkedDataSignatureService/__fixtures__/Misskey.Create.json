@@ -1,0 +1,54 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "https://w3id.org/security/v1",
+    {
+      "Key": "sec:Key",
+      "manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+      "sensitive": "as:sensitive",
+      "Hashtag": "as:Hashtag",
+      "quoteUrl": "as:quoteUrl",
+      "toot": "http://joinmastodon.org/ns#",
+      "Emoji": "toot:Emoji",
+      "featured": "toot:featured",
+      "discoverable": "toot:discoverable",
+      "schema": "http://schema.org#",
+      "PropertyValue": "schema:PropertyValue",
+      "value": "schema:value",
+      "misskey": "https://misskey-hub.net/ns#",
+      "_misskey_content": "misskey:_misskey_content",
+      "_misskey_quote": "misskey:_misskey_quote",
+      "_misskey_reaction": "misskey:_misskey_reaction",
+      "_misskey_votes": "misskey:_misskey_votes",
+      "_misskey_summary": "misskey:_misskey_summary",
+      "isCat": "misskey:isCat",
+      "vcard": "http://www.w3.org/2006/vcard/ns#"
+    }
+  ],
+  "id": "https://misskey.localhost/notes/9q56xg87lx/activity",
+  "actor": "https://misskey.localhost/users/9cszb31hal",
+  "type": "Create",
+  "published": "2024-02-25T14:49:46.855Z",
+  "object": {
+    "id": "https://misskey.localhost/notes/9q56xg87lx",
+    "type": "Note",
+    "attributedTo": "https://misskey.localhost/users/9cszb31hal",
+    "content": "<p>test</p>",
+    "published": "2024-02-25T14:49:46.855Z",
+    "to": ["https://www.w3.org/ns/activitystreams#Public"],
+    "cc": ["https://misskey.localhost/users/9cszb31hal/followers"],
+    "inReplyTo": null,
+    "attachment": [],
+    "sensitive": false,
+    "tag": []
+  },
+  "to": ["https://www.w3.org/ns/activitystreams#Public"],
+  "cc": ["https://misskey.localhost/users/9cszb31hal/followers"],
+  "signature": {
+    "type": "RsaSignature2017",
+    "creator": "https://misskey.localhost/users/9cszb31hal#main-key",
+    "nonce": "10684b9e4f68d0ff70ef121ed352e08f",
+    "created": "2024-02-25T14:49:46.905Z",
+    "signatureValue": "HhL2cwt8iUaGHQNqqsx2AsjAfLc/kEzd35OokGVsWX/hKSvXYu0jwrw/CIq8/t4voohLSZdg5q8hMIxZlx128CiIde7+AtWvPgG2OhW+df/TR2+RVwlXdNntDhuaFmnUozGcPudQdbb+tGQSGM9vUwUi/rs2xCbY+hp84/39PcuI3WtpXY9RmGxgTMjg3db1nMN9Lq7HTuc4oaR6T4lRukl3dp1TGagOO18y0NsDhsVre7f2WRDtap9mNbcflaVcJwCdjQXHWfnYzgx/sbcE1IzEiueYRYfkewbzYTxZA94ioY4nDMl9lUnmkOXgU4Ej1o8gakEGRJ2IZ5QEaR60lD/tqP7cvBF5UJ3/VlNi3BEd/DDLv3SwrwPgvEPyo0aJl6Prr7gWCix4JX+Qfk5RkH9L9kfxakW3JedltrItlHcU90XlYXUa87f2rQjs9PU1pGDE0O0/d6CzraHTse+Hhs2BOMEHnpAXVvxC9aEchLCbnoo0Zr1kdmsVILN0WCs6WgAUwhr5i78b5EwAcrQqkWGYSn7vm/BoNjaJfmODOEMg6DE5gzc6NVqxJnHNRd07viiNBhY3e4P8NDYV0YxvE9q2Q2ay2iso1qAHCzJUllp0eEpq4XpA4lEIjclGcP94B8ix+85TNQa69ULQjwMlSiHFtNaJocyK5jWOAcLWFgQ="
+  }
+}
