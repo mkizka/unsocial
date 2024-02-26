@@ -1,3 +1,4 @@
+// Stryker disable all
 import type { Follow, Like, Note, User } from "@prisma/client";
 import assert from "assert";
 
@@ -18,7 +19,9 @@ const contexts = {
   ],
 };
 
-const to = ["https://www.w3.org/ns/activitystreams#Public"];
+const publicUrl = "https://www.w3.org/ns/activitystreams#Public";
+
+const to = [publicUrl];
 
 const convertUser = (user: User) => {
   const userAddress = `https://${env.UNSOCIAL_HOST}/users/${user.id}`;
@@ -127,6 +130,16 @@ const convertFollow = (follow: Follow, followeeUrl: string) => {
   } satisfies apSchemaService.FollowActivity;
 };
 
+const convertFollowPublic = (userId: string) => {
+  return {
+    ...contexts,
+    id: `https://${env.UNSOCIAL_HOST}/follows/${crypto.randomUUID()}`,
+    type: "Follow",
+    actor: `https://${env.UNSOCIAL_HOST}/users/${userId}/activity`,
+    object: publicUrl,
+  } satisfies apSchemaService.FollowActivity;
+};
+
 const convertAccept = (
   userId: string,
   follow: apSchemaService.FollowActivity,
@@ -200,6 +213,7 @@ export const activityStreams = {
   create: convertCreate,
   delete: convertDelete,
   follow: convertFollow,
+  followPublic: convertFollowPublic,
   accept: convertAccept,
   like: convertLike,
   undo: convertUndo,

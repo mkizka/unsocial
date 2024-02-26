@@ -107,16 +107,16 @@ export const personSchema = activitySchema.extend({
   type: z.union([z.literal("Person"), z.literal("Service")]),
   id: z.string().url(),
   name: z.string().nullable(),
-  summary: z.string().nullable(),
-  url: z.string().url(),
+  summary: z.string().nullable().optional(),
+  url: z.string().url().optional(),
   preferredUsername: z.string().min(1),
   endpoints: z
     .object({
       sharedInbox: z.string().url().optional(),
     })
     .optional(),
-  following: z.string().url(),
-  followers: z.string().url(),
+  following: z.string().url().optional(),
+  followers: z.string().url().optional(),
   featured: z.string().url().optional(),
   inbox: z.string().url(),
   outbox: z.string().url().optional(),

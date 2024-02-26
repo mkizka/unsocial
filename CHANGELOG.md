@@ -1,5 +1,23 @@
 # unsocial
 
+## 0.0.39
+
+### Patch Changes
+
+- e717278: HTTPSignature検証失敗時にRSASignature2017を検証する
+
+## 0.0.38
+
+### Patch Changes
+
+- 87f93cd: リレーサーバー登録機能追加
+
+## 0.0.37
+
+### Patch Changes
+
+- 448a85f: 依存関係の更新
+
 ## 0.0.36
 
 ### Patch Changes

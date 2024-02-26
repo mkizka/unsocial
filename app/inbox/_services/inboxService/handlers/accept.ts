@@ -1,5 +1,8 @@
+import assert from "assert";
+
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userFindService } from "@/_shared/user/services/userFindService";
+import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
 import {
@@ -21,15 +24,33 @@ export const handle: InboxHandler = async (activity, followee) => {
       "Acceptされたフォロワーが存在しませんでした",
     );
   }
-  await prisma.follow.update({
-    where: {
-      followeeId_followerId: {
-        followeeId: followee.id,
-        followerId: follower.id,
+  if (
+    // システムユーザーからPublicに対してのフォローであればリレーサーバー登録への応答であるとする
+    follower.preferredUsername === env.UNSOCIAL_HOST &&
+    follower.host === env.UNSOCIAL_HOST &&
+    parsedAccept.data.object.object ===
+      "https://www.w3.org/ns/activitystreams#Public"
+  ) {
+    assert(followee.inboxUrl);
+    await prisma.relayServer.update({
+      where: {
+        inboxUrl: followee.inboxUrl,
       },
-    },
-    data: {
-      status: "ACCEPTED",
-    },
-  });
+      data: {
+        status: "ACCEPTED",
+      },
+    });
+  } else {
+    await prisma.follow.update({
+      where: {
+        followeeId_followerId: {
+          followeeId: followee.id,
+          followerId: follower.id,
+        },
+      },
+      data: {
+        status: "ACCEPTED",
+      },
+    });
+  }
 };

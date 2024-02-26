@@ -12,7 +12,7 @@ datasource db {
 
 generator fabbrica {
   provider = "prisma-fabbrica"
-  output = "../app/_generated"
+  output   = "../app/_generated"
 }
 
 model Session {
@@ -120,4 +120,17 @@ model Like {
   createdAt DateTime @default(now())
 
   @@unique([userId, noteId])
+}
+
+enum RelayServerStatus {
+  SENT
+  FAILED
+  ACCEPTED
+}
+
+model RelayServer {
+  id        String            @id @default(nanoid(8))
+  inboxUrl  String            @unique
+  status    RelayServerStatus @default(SENT)
+  createdAt DateTime          @default(now())
 }

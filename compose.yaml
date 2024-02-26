@@ -26,6 +26,7 @@ services:
           - unsocial.localhost
           - mastodon.localhost
           - misskey.localhost
+          - relay.localhost
     depends_on:
       mastodon-streaming:
         condition: service_healthy
@@ -33,6 +34,34 @@ services:
         condition: service_healthy
       misskey:
         condition: service_healthy
+      relay-server:
+        condition: service_started
+    profiles:
+      - all
+  relay-worker:
+    image: yukimochi/activity-relay:v2.0.5
+    command: relay worker
+    working_dir: /var/lib/relay
+    environment:
+      - SSL_CERT_FILE=/mkcert/rootCA.pem
+    volumes:
+      - ./docker/relay:/var/lib/relay
+      - ./docker/mkcert:/mkcert
+    depends_on:
+      - redis
+    profiles:
+      - all
+  relay-server:
+    image: yukimochi/activity-relay:v2.0.5
+    working_dir: /var/lib/relay
+    command: relay server
+    environment:
+      - SSL_CERT_FILE=/mkcert/rootCA.pem
+    volumes:
+      - ./docker/relay:/var/lib/relay
+      - ./docker/mkcert:/mkcert
+    depends_on:
+      - redis
     profiles:
       - all
   ############
@@ -186,7 +215,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
     healthcheck:
-      test: ["CMD", "test", "-e", "/tmp/db_initialized"]
+      test: ["CMD", "test", "-e", "/var/lib/postgresql/data/db_initialized"]
       interval: 2s
       timeout: 2s
       retries: 10
