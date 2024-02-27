@@ -58,7 +58,7 @@
     "@dword-design/eslint-plugin-import-alias": "4.0.9",
     "@playwright/test": "1.41.2",
     "@quramy/jest-prisma-core": "1.8.0",
-    "@quramy/jest-prisma-node": "1.7.3",
+    "@quramy/jest-prisma-node": "1.8.0",
     "@quramy/prisma-fabbrica": "2.1.0",
     "@storybook/addon-essentials": "7.6.17",
     "@storybook/addon-interactions": "7.6.17",
