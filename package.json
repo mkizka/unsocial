@@ -39,7 +39,7 @@
     "bcryptjs": "2.4.3",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
-    "jotai": "2.6.5",
+    "jotai": "2.7.0",
     "jsonld": "8.3.2",
     "next": "14.1.1-canary.77",
     "next-auth": "4.24.6",
