@@ -74,7 +74,7 @@
     "@types/bcryptjs": "2.4.6",
     "@types/jest": "29.5.12",
     "@types/jsonld": "1.5.13",
-    "@types/node": "20.11.20",
+    "@types/node": "20.11.21",
     "@types/react": "18.2.60",
     "@types/react-dom": "18.2.19",
     "@types/sanitize-html": "2.11.0",
