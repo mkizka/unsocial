@@ -162,8 +162,8 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await this.goto("/settings");
     await this.page.getByTestId("relay-server-form__input").fill(relay);
     await this.page.getByTestId("relay-server-form__submit").click();
-    await this.page.reload();
     await this.waitFor(async () => {
+      await this.page.reload();
       await expect(this.page.locator("text=承認済み")).toBeVisible();
     });
   }
