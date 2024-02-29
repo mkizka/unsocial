@@ -19,3 +19,8 @@ jobs:
     secrets: inherit
     with:
       target: misskey
+  relay:
+    uses: ./.github/workflows/_e2e-federation.yml
+    secrets: inherit
+    with:
+      target: relay

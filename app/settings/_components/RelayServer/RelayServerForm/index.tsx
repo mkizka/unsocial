@@ -23,6 +23,7 @@ export function RelayServerForm({ formAction }: Props) {
           name="inbox-url"
           required
           placeholder={"https://relay.example.com/inbox"}
+          data-testid="relay-server-form__input"
         />
         <div className="flex items-center">
           {state && (
@@ -35,7 +36,9 @@ export function RelayServerForm({ formAction }: Props) {
               {state.message}
             </p>
           )}
-          <Button className="ml-auto">登録</Button>
+          <Button className="ml-auto" data-testid="relay-server-form__submit">
+            登録
+          </Button>
         </div>
       </div>
     </form>

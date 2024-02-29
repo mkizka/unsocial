@@ -157,6 +157,14 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     );
     await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
+
+  async registerRelayServer(relay: string) {
+    await this.goto("/settings");
+    await this.page.getByTestId("relay-server-form__input").fill(relay);
+    await this.page.getByTestId("relay-server-form__submit").click();
+    await this.page.reload();
+    await expect(this.page.locator("text=承認済み")).toBeVisible();
+  }
 }
 
 export class RemoteUnsocialHandler extends MyhostUnsocialHandler {

@@ -197,4 +197,13 @@ export class MisskeyHandler extends FediverseHandler {
     await this.goto(`/@e2e/followers`);
     await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
+
+  async registerRelayServer(relay: string) {
+    await this.goto("/admin/relays");
+    await this.page.locator("button", { hasText: "リレーの追加" }).click();
+    await this.page.locator('[placeholder="inboxのURL"]').fill(relay);
+    await this.page.locator("button", { hasText: "OK" }).click();
+    await this.page.reload();
+    await expect(this.page.locator("text=承認済み")).toBeVisible();
+  }
 }

@@ -120,4 +120,6 @@ export abstract class FediverseHandler {
   async waitForNotFollowed(user: string) {
     await this.waitFor(() => this.expectNotFollowed(user));
   }
+
+  abstract registerRelayServer(relay: string): Promise<void>;
 }

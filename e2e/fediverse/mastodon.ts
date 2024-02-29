@@ -175,4 +175,8 @@ export class MastodonHandler extends FediverseHandler {
       this.page.locator(".display-name__account", { hasText: user }),
     ).not.toBeVisible();
   }
+
+  async registerRelayServer(relay: string): Promise<void> {
+    throw new Error("Not implemented");
+  }
 }
