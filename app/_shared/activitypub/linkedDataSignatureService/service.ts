@@ -1,4 +1,4 @@
-// このファイルの一部のコードは https://github.com/transmute-industries/RsaSignature2017 からコピーしました
+// このファイルは https://github.com/transmute-industries/RsaSignature2017 を元に作成しました
 // Copyright (c) 2018 Transmute Industries Inc.
 
 import crypto from "crypto";
