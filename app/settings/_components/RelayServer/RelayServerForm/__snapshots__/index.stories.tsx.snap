@@ -13,10 +13,13 @@ exports[`settings/_components/RelayServer/RelayServerForm Default smoke-test 1`]
              id="inbox-url"
              required
              placeholder="https://relay.example.com/inbox"
+             data-testid="relay-server-form__input"
              name="inbox-url"
       >
       <div class="flex items-center">
-        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 ml-auto">
+        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 ml-auto"
+                data-testid="relay-server-form__submit"
+        >
           <span class>
             登録
           </span>
@@ -40,10 +43,13 @@ exports[`settings/_components/RelayServer/RelayServerForm Error smoke-test 1`] =
              id="inbox-url"
              required
              placeholder="https://relay.example.com/inbox"
+             data-testid="relay-server-form__input"
              name="inbox-url"
       >
       <div class="flex items-center">
-        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 ml-auto">
+        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 ml-auto"
+                data-testid="relay-server-form__submit"
+        >
           <span class>
             登録
           </span>

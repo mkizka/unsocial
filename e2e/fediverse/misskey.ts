@@ -204,6 +204,8 @@ export class MisskeyHandler extends FediverseHandler {
     await this.page.locator('[placeholder="inboxのURL"]').fill(relay);
     await this.page.locator("button", { hasText: "OK" }).click();
     await this.page.reload();
-    await expect(this.page.locator("text=承認済み")).toBeVisible();
+    await this.waitFor(async () => {
+      await expect(this.page.locator("text=承認済み")).toBeVisible();
+    });
   }
 }
