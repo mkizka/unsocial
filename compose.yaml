@@ -181,7 +181,7 @@ services:
     profiles:
       - misskey
   misskey:
-    image: misskey/misskey:2024.2.0
+    image: misskey/misskey:2024.3.0
     volumes:
       - ./docker/misskey/files:/misskey/files
       - ./docker/misskey/.config:/misskey/.config:ro
