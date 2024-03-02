@@ -43,7 +43,7 @@ export class MisskeyHandler extends FediverseHandler {
     await this.page.locator("[data-cy-signin-username] input").fill("test");
     await this.page.locator("[data-cy-signin-password] input").fill("password");
     await this.page.locator("button[type=submit]").click();
-    await expect(this.page.locator("text=@e2e")).toBeVisible();
+    await expect(this.page.locator("text=@test")).toBeVisible();
   }
 
   async expectedUser(user: string) {
@@ -135,7 +135,7 @@ export class MisskeyHandler extends FediverseHandler {
     await this.gotoGTL();
     await this.page
       .locator("[tabindex='-1']", {
-        has: this.page.locator("span", { hasText: "e2eがリノート" }),
+        has: this.page.locator("span", { hasText: "testがリノート" }),
       })
       .locator("button", { has: this.page.locator(".ti-dots") })
       .click();
