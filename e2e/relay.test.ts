@@ -57,8 +57,8 @@ const runTest = async ({ from, to }: RunTestParams) => {
 test.describe("All", () => {
   test("Relay_1", async ({ page }) => {
     await runTest({
-      from: new MyhostUnsocialHandler(page),
-      to: new MisskeyHandler(page),
+      from: new MisskeyHandler(page),
+      to: new MyhostUnsocialHandler(page),
     });
   });
 });
