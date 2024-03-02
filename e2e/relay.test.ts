@@ -1,7 +1,11 @@
 import { test } from "@playwright/test";
 import crypto from "crypto";
 
-import { MisskeyHandler, MyhostUnsocialHandler } from "./fediverse";
+import {
+  MastodonHandler,
+  MisskeyHandler,
+  MyhostUnsocialHandler,
+} from "./fediverse";
 import type { FediverseHandler } from "./fediverse/base";
 
 type RunTestParams = {
@@ -24,14 +28,6 @@ const runTest = async ({ from, to }: RunTestParams) => {
       `${to.domain}: ログイン`, //
       () => to.login(),
     ],
-    // [
-    //   `${from.domain}: ユーザーを確認`, //
-    //   () => from.waitForUser(to.user),
-    // ],
-    // [
-    //   `${to.domain}: ユーザーを確認`, //
-    //   () => to.waitForUser(from.user),
-    // ],
     [
       `${from.domain}: リレーサーバーを登録`,
       () => from.registerRelayServer(relayServer),
@@ -55,9 +51,16 @@ const runTest = async ({ from, to }: RunTestParams) => {
 };
 
 test.describe("All", () => {
-  test("Relay_1", async ({ page }) => {
+  test("Misskey → Unsocial", async ({ page }) => {
     await runTest({
       from: new MisskeyHandler(page),
+      to: new MyhostUnsocialHandler(page),
+    });
+  });
+
+  test("Mastodon → Unsocial", async ({ page }) => {
+    await runTest({
+      from: new MastodonHandler(page),
       to: new MyhostUnsocialHandler(page),
     });
   });
