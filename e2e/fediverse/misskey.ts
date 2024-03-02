@@ -4,7 +4,7 @@ import { FediverseHandler } from "./base";
 
 export class MisskeyHandler extends FediverseHandler {
   domain = "misskey.localhost";
-  user = "@e2e@misskey.localhost";
+  user = "@test@misskey.localhost";
 
   async goto(to: string) {
     await super.goto(to);
@@ -179,22 +179,22 @@ export class MisskeyHandler extends FediverseHandler {
   }
 
   async expectFollowing(user: string) {
-    await this.goto(`/@e2e/following`);
+    await this.goto(`/@test/following`);
     await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async expectNotFollowing(user: string) {
-    await this.goto(`/@e2e/following`);
+    await this.goto(`/@test/following`);
     await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 
   async expectFollowed(user: string) {
-    await this.goto(`/@e2e/followers`);
+    await this.goto(`/@test/followers`);
     await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async expectNotFollowed(user: string) {
-    await this.goto(`/@e2e/followers`);
+    await this.goto(`/@test/followers`);
     await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 }
