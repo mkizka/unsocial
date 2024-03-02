@@ -40,8 +40,8 @@ export class MisskeyHandler extends FediverseHandler {
       localStorage.setItem("neverShowDonationInfo", "true"),
     );
     await this.page.locator("[data-cy-signin]").click();
-    await this.page.locator("[data-cy-signin-username] input").fill("e2e");
-    await this.page.locator("[data-cy-signin-password] input").fill("e2e");
+    await this.page.locator("[data-cy-signin-username] input").fill("test");
+    await this.page.locator("[data-cy-signin-password] input").fill("password");
     await this.page.locator("button[type=submit]").click();
     await expect(this.page.locator("text=@e2e")).toBeVisible();
   }

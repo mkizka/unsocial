@@ -21,7 +21,7 @@ const main = async () => {
     action: "signUp",
     name: "テスト",
     preferredUsername: "test",
-    password: "testtest",
+    password: "password",
   });
   await Promise.all(
     Array.from({ length: 100 }).map(async (_, i) => {

@@ -6,22 +6,18 @@ export class MastodonHandler extends FediverseHandler {
   domain = "mastodon.localhost";
   user = "@e2e@mastodon.localhost";
 
-  async loginAs(email: string, password: string) {
+  async login() {
     await this.goto("/");
     await this.page
       .locator(".sign-in-banner")
       .locator("a", { hasText: "ログイン" })
       .click();
-    await this.page.locator("#user_email").fill(email);
-    await this.page.locator("#user_password").fill(password);
+    await this.page.locator("#user_email").fill("test@localhost");
+    await this.page.locator("#user_password").fill("password");
     await this.page.locator("button").click();
     await expect(
       this.page.locator(".navigation-bar__profile-account"),
     ).toBeVisible();
-  }
-
-  async login() {
-    await this.loginAs("e2e@localhost", "password");
   }
 
   async expectedUser(user: string) {
