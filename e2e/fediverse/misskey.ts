@@ -4,7 +4,7 @@ import { FediverseHandler } from "./base";
 
 export class MisskeyHandler extends FediverseHandler {
   domain = "misskey.localhost";
-  user = "@e2e@misskey.localhost";
+  user = "@test@misskey.localhost";
 
   async goto(to: string) {
     await super.goto(to);
@@ -40,10 +40,10 @@ export class MisskeyHandler extends FediverseHandler {
       localStorage.setItem("neverShowDonationInfo", "true"),
     );
     await this.page.locator("[data-cy-signin]").click();
-    await this.page.locator("[data-cy-signin-username] input").fill("e2e");
-    await this.page.locator("[data-cy-signin-password] input").fill("e2e");
+    await this.page.locator("[data-cy-signin-username] input").fill("test");
+    await this.page.locator("[data-cy-signin-password] input").fill("password");
     await this.page.locator("button[type=submit]").click();
-    await expect(this.page.locator("text=@e2e")).toBeVisible();
+    await expect(this.page.locator("text=@test")).toBeVisible();
   }
 
   async expectedUser(user: string) {
@@ -135,7 +135,7 @@ export class MisskeyHandler extends FediverseHandler {
     await this.gotoGTL();
     await this.page
       .locator("[tabindex='-1']", {
-        has: this.page.locator("span", { hasText: "e2eがリノート" }),
+        has: this.page.locator("span", { hasText: "testがリノート" }),
       })
       .locator("button", { has: this.page.locator(".ti-dots") })
       .click();
@@ -179,22 +179,22 @@ export class MisskeyHandler extends FediverseHandler {
   }
 
   async expectFollowing(user: string) {
-    await this.goto(`/@e2e/following`);
+    await this.goto(`/@test/following`);
     await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async expectNotFollowing(user: string) {
-    await this.goto(`/@e2e/following`);
+    await this.goto(`/@test/following`);
     await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 
   async expectFollowed(user: string) {
-    await this.goto(`/@e2e/followers`);
+    await this.goto(`/@test/followers`);
     await expect(this.page.locator(`text=${user}`)).toBeVisible();
   }
 
   async expectNotFollowed(user: string) {
-    await this.goto(`/@e2e/followers`);
+    await this.goto(`/@test/followers`);
     await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
   }
 }

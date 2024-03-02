@@ -1,8 +1,8 @@
 ## 開発手順
 
-Node.js, mkcert, Dockerが必要です
+Node.js, mkcert, Dockerが必要です。
 
-セットアップ
+### セットアップ
 
 ```sh
 ./scripts/setup-for-docker.sh
@@ -11,7 +11,7 @@ corepack enable pnpm
 pnpm i
 ```
 
-開発コマンド
+### 開発コマンド
 
 ```
 pnpm dev
@@ -20,11 +20,13 @@ pnpm dev
 # または `pnpm dev all`
 ```
 
-以下を開いて動作確認できます
+以下を開いて動作確認できます。
 
 https://unsocial.localhost  
 https://misskey.localhost  
 https://mastodon.localhost
+
+それぞれユーザー名は「test」、パスワードは「password」です。
 
 ## その他の主要な開発コマンド
 
