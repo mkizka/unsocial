@@ -47,7 +47,7 @@ jobs:
           chmod +x mkcert-v*-linux-amd64
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
       # Secure ModeのMastodonではリレー機能がうまく動作しないため無効化する
-      - run: sed 's/AUTHORIZED_FETCH=true//' ./docker/mastodon/.env.production | tee ./docker/mastodon/.env.production
+      - run: sed -i 's/AUTHORIZED_FETCH=true/AUTHORIZED_FETCH=false/' ./docker/mastodon/.env.production
         if: inputs.target == 'all'
       - name: Setup e2e
         run: |
