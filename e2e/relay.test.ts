@@ -51,14 +51,14 @@ const runTest = async ({ from, to }: RunTestParams) => {
 };
 
 test.describe("All", () => {
-  test("Misskey → Unsocial", async ({ page }) => {
+  test("Relay_1", async ({ page }) => {
     await runTest({
       from: new MisskeyHandler(page),
       to: new MyhostUnsocialHandler(page),
     });
   });
 
-  test("Mastodon → Unsocial", async ({ page }) => {
+  test("Relay_2", async ({ page }) => {
     await runTest({
       from: new MastodonHandler(page),
       to: new MyhostUnsocialHandler(page),
