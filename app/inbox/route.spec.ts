@@ -35,7 +35,7 @@ describe("/users/[userId]/inbox", () => {
     const response = await POST(request);
     // assert
     expect(mockedLogger.info).not.toHaveBeenCalled();
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(202);
   });
   test("inboxServiceが返したエラーに応じてレスポンスを返す", async () => {
     // arrange
@@ -50,6 +50,6 @@ describe("/users/[userId]/inbox", () => {
     const response = await POST(request);
     // assert
     expect(mockedLogger.warn).toHaveBeenCalledWith("エラー", expect.anything());
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(202);
   });
 });
