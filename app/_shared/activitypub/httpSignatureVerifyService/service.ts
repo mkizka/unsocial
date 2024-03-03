@@ -1,10 +1,10 @@
 import crypto from "crypto";
 import type { NextRequest } from "next/server";
 import { z } from "zod";
+import { fromZodError } from "zod-validation-error";
 
 import { createDigest, textOf } from "@/_shared/activitypub/httpSignatureUtils";
 import { userFindService } from "@/_shared/user/services/userFindService";
-
 const signatureSchema = z.object({
   keyId: z.string().url(),
   algorithm: z.union([z.literal("rsa-sha256"), z.literal("hs2019")]),
@@ -103,9 +103,7 @@ export const verifyRequest = async (
   if (!parsedHeaders.success) {
     return {
       isValid: false,
-      reason:
-        parsedHeaders.error.issues[0]?.message ||
-        "リクエストヘッダーが不正でした",
+      reason: fromZodError(parsedHeaders.error).toString(),
     };
   }
   const requestBody = await request.clone().text();
