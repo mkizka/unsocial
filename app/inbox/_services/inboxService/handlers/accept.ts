@@ -3,13 +3,17 @@ import assert from "assert";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { env } from "@/_shared/utils/env";
+import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
+import { isInstanceOfPrismaError } from "@/_shared/utils/prismaError";
 
 import {
   ActivitySchemaValidationError,
   BadActivityRequestError,
 } from "./errors";
 import type { InboxHandler } from "./shared";
+
+const logger = createLogger("inboxAcceptService");
 
 export const handle: InboxHandler = async (activity, followee) => {
   const parsedAccept = apSchemaService.acceptSchema.safeParse(activity);
@@ -30,25 +34,41 @@ export const handle: InboxHandler = async (activity, followee) => {
     follower.host === env.UNSOCIAL_HOST
   ) {
     assert(followee.inboxUrl);
-    await prisma.relayServer.update({
-      where: {
-        inboxUrl: followee.inboxUrl,
-      },
-      data: {
-        status: "ACCEPTED",
-      },
-    });
-  } else {
-    await prisma.follow.update({
-      where: {
-        followeeId_followerId: {
-          followeeId: followee.id,
-          followerId: follower.id,
+    try {
+      await prisma.relayServer.update({
+        where: {
+          inboxUrl: followee.inboxUrl,
         },
-      },
-      data: {
-        status: "ACCEPTED",
-      },
-    });
+        data: {
+          status: "ACCEPTED",
+        },
+      });
+    } catch (e) {
+      if (isInstanceOfPrismaError(e) && e.code === "P2025") {
+        logger.info("承認されたリレーサーバーが存在しなかったのでスキップ");
+        return;
+      }
+      throw e;
+    }
+  } else {
+    try {
+      await prisma.follow.update({
+        where: {
+          followeeId_followerId: {
+            followeeId: followee.id,
+            followerId: follower.id,
+          },
+        },
+        data: {
+          status: "ACCEPTED",
+        },
+      });
+    } catch (e) {
+      if (isInstanceOfPrismaError(e) && e.code === "P2025") {
+        logger.info("承認されたフォローが存在しなかったのでスキップ");
+        return;
+      }
+      throw e;
+    }
   }
 };
