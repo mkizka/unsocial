@@ -1,5 +1,6 @@
 import { LocalToRemoteFollowFactory } from "@/_shared/factories/follow";
 import { LocalUserFactory, RemoteUserFactory } from "@/_shared/factories/user";
+import { mockedLogger } from "@/_shared/mocks/logger";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -53,7 +54,7 @@ describe("inboxAcceptService", () => {
       message: "Acceptされたフォロワーが存在しませんでした",
     });
   });
-  test("フォローが無い場合はエラーを投げる", async () => {
+  test("フォローが無い場合はスキップ", async () => {
     // arrange
     const remoteUser = await RemoteUserFactory.create();
     const localUser = await LocalUserFactory.create();
@@ -68,11 +69,11 @@ describe("inboxAcceptService", () => {
       },
     };
     // act
-    const promise = handle(activity, remoteUser);
+    await handle(activity, remoteUser);
     // assert
-    await expect(promise).rejects.toMatchObject({
-      code: "P2025",
-    });
+    expect(mockedLogger.info).toHaveBeenCalledWith(
+      "承認されたフォローが存在しなかったのでスキップ",
+    );
   });
   test("システムユーザーからのフォロー(リレー登録)によるAcceptの場合はリレーサーバーのステータスを更新する", async () => {
     // arrange
