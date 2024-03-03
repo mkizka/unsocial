@@ -63,10 +63,12 @@ const getCC = (activity: apSchemaService.Activity) => {
   if ("cc" in activity && Array.isArray(activity.cc)) {
     targets.push(...activity.cc);
   }
-  if (activity.type === "Undo") {
-    if ("cc" in activity.object) {
-      targets.push(...activity.object.cc);
-    }
+  if (
+    activity.type === "Undo" &&
+    "cc" in activity.object &&
+    Array.isArray(activity.object.cc)
+  ) {
+    targets.push(...activity.object.cc);
   }
   return unique(targets);
 };
