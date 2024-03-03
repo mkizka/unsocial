@@ -24,7 +24,7 @@ export const announceSchema = activitySchema.extend({
   actor: z.string().url(),
   id: z.string().url(),
   object: z.string(),
-  published: z.string().datetime(),
+  published: z.string().datetime().optional(),
   to: z.array(z.string().url()).optional(),
   cc: z.array(z.string().url()).optional(),
 });
