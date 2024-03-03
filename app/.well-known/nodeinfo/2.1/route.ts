@@ -2,13 +2,19 @@ import { NextResponse } from "next/server";
 
 import pkg from "@/../package.json";
 import { prisma } from "@/_shared/utils/prisma";
+import { HttpNodeinfoDiasporaSoftwareNsSchema21 } from "./type";
+import { serverInfo } from "@/_shared/utils/serverInfo";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const userCount = await prisma.user.count();
-  // TODO: ローカルだけを対象に集計する
-  const noteCount = await prisma.note.count();
+  const localPosts = await prisma.note.count({
+    where: {
+      user: {
+        isAdmin: true,
+      },
+    },
+  });
   return NextResponse.json(
     {
       // https://nodeinfo.diaspora.software/protocol.html
@@ -21,20 +27,19 @@ export async function GET() {
       },
       protocols: ["activitypub"],
       services: { inbound: [], outbound: [] },
-      openRegistrations: true,
+      openRegistrations: false, // 管理者しか登録できない方針のため
       usage: {
         users: {
-          total: userCount,
-          // misskey.io が null になってたので
-          activeHalfyear: null,
-          activeMonth: null,
+          total: 1,
         },
-        localPosts: noteCount,
-        // 同上
-        localComments: 0,
+        localPosts,
       },
-      metadata: {},
-    },
+      metadata: {
+        nodeName: serverInfo.name,
+        nodeDescription: serverInfo.description,
+        themeColor: serverInfo.themeColor,
+      },
+    } satisfies HttpNodeinfoDiasporaSoftwareNsSchema21,
     {
       headers: {
         "Content-Type": "application/jrd+json",

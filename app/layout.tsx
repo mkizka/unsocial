@@ -7,29 +7,24 @@ import { Providers } from "./_components/Providers";
 import { SearchModal } from "./_components/SearchModal";
 import { UserMenu } from "./_components/UserMenu";
 import { env } from "./_shared/utils/env";
-
-const siteName = env.UNSOCIAL_SITE_NAME ?? env.UNSOCIAL_HOST;
-const siteTitle = `${siteName} on Unsocial`;
-const siteDescription =
-  env.UNSOCIAL_SITE_DESCRIPTION ??
-  `${siteName}はUnsocialによって構築されたActivityPubサーバーです。`;
+import { serverInfo } from "./_shared/utils/serverInfo";
 
 export const metadata = {
   metadataBase: new URL(`https://${env.UNSOCIAL_HOST}`),
   title: {
-    default: siteTitle,
-    template: `%s - ${siteTitle}`,
+    default: serverInfo.title,
+    template: `%s - ${serverInfo.title}`,
   },
-  description: siteDescription,
+  description: serverInfo.description,
   openGraph: {
-    title: siteTitle,
-    description: siteDescription,
+    title: serverInfo.title,
+    description: serverInfo.description,
     url: "/",
   },
   twitter: {
     card: "summary",
-    title: siteTitle,
-    description: siteDescription,
+    title: serverInfo.title,
+    description: serverInfo.description,
   },
   robots: {
     index: false,

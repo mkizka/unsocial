@@ -3,6 +3,7 @@ import { defineUserFactory } from "@/_generated";
 export const LocalUserFactory = defineUserFactory({
   defaultData: {
     host: "myhost.example.com",
+    isAdmin: true,
   },
 });
 
