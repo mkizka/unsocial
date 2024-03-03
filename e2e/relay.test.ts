@@ -24,7 +24,6 @@ const setupRelayServer = async (
       `${fediverse.domain}: ログイン`, //
       () => fediverse.login(),
     ],
-
     [
       `${fediverse.domain}: リレーサーバーを登録`,
       () => fediverse.registerRelayServer(relayServer),
@@ -52,7 +51,7 @@ const runTest = async ({ from, to }: RunTestParams) => {
       () => from.postNote(content),
     ],
     [
-      `${to.domain}: 投稿がリレーされたことを確認`, //
+      `${to.domain}: 投稿がリレーされたことを確認`,
       () => to.waitForPosted(content),
     ],
   ];
