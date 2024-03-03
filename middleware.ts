@@ -6,7 +6,16 @@ import { createLogger } from "./app/_shared/utils/logger";
 
 const logger = createLogger("middleware");
 
-export function middleware(request: NextRequest) {
+const getBody = async (request: NextRequest) => {
+  const body = await request.text();
+  try {
+    return JSON.parse(body);
+  } catch (e) {
+    return body;
+  }
+};
+
+export async function middleware(request: NextRequest) {
   if (!process.env.CI && env.NODE_ENV === "production") {
     logger.info(
       `${request.method} ${request.nextUrl.pathname + request.nextUrl.search}`,
@@ -15,6 +24,7 @@ export function middleware(request: NextRequest) {
         searchParams: Object.fromEntries(request.nextUrl.searchParams),
         method: request.method,
         headers: Object.fromEntries(request.headers),
+        body: await getBody(request),
         date: new Date().toISOString(),
       },
     );
