@@ -8,7 +8,7 @@ import { action } from "./action";
 jest.mock("next/cache");
 
 describe("RelayServerTable/action", () => {
-  test("指定したリレーサーバーを削除してUndoアクティビティを", async () => {
+  test("指定したリレーサーバーを削除してUndoアクティビティを配送", async () => {
     // arrange
     const inboxUrl = "https://relay.example.com/inbox";
     const relayServer = await prisma.relayServer.create({
