@@ -41,7 +41,7 @@ const undoFollow: UndoInboxHandler = async (activity, actorUser) => {
     });
   } catch (e) {
     if (isInstanceOfPrismaError(e) && e.code === "P2025") {
-      logger.info("存在しないフォローに対してのUndoアクティビティでした");
+      logger.info("削除対象のフォローが無かったのでスキップ");
       return;
     }
     throw e;
@@ -75,7 +75,15 @@ const undoLike: UndoInboxHandler = async (activity, actorUser) => {
 };
 
 const undoAnnounce: UndoInboxHandler = async (activity) => {
-  await prisma.note.delete({ where: { url: activity.object.id } });
+  try {
+    await prisma.note.delete({ where: { url: activity.object.id } });
+  } catch (e) {
+    if (isInstanceOfPrismaError(e) && e.code === "P2025") {
+      logger.info("削除対象のノート(リポスト)が無かったのでスキップ");
+      return;
+    }
+    throw e;
+  }
 };
 
 const undoHandlers = {
