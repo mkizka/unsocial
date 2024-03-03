@@ -171,4 +171,14 @@ export class MastodonHandler extends FediverseHandler {
       this.page.locator(".display-name__account", { hasText: user }),
     ).not.toBeVisible();
   }
+
+  async registerRelayServer(relay: string): Promise<void> {
+    await this.goto("/admin/relays/new");
+    await this.page.locator("#relay_inbox_url").fill(relay);
+    await this.page.locator('[type="submit"]').click();
+    await this.waitFor(async () => {
+      await this.page.reload();
+      await expect(this.page.locator("text=有効")).toBeVisible();
+    });
+  }
 }

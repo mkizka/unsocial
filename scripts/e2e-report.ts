@@ -14,6 +14,7 @@ const emojis = {
   unsocial: ":performing_arts:",
   mastodon: ":elephant:",
   misskey: ":m:",
+  all: ":globe_with_meridians:",
 } as const;
 
 const link = (
@@ -38,7 +39,11 @@ const row = (commit: (typeof commits)[0]) => {
   return [
     "",
     `${commit.messageHeadline} (${commit.oid})`,
-    column(["unsocial", "mastodon", "misskey"], commit.oid, "index.html"),
+    column(
+      ["unsocial", "mastodon", "misskey", "all"],
+      commit.oid,
+      "index.html",
+    ),
     column(["mastodon", "misskey"], commit.oid, "docker.txt"),
     "",
   ]
