@@ -55,7 +55,7 @@ describe("noteCardFindService", () => {
           preferredUsername: note.user.preferredUsername,
           publicKey: null,
           summary: null,
-          isAdmin: false,
+          isAdmin: true,
           url: `/@${note.user.preferredUsername}`,
         },
         userId: note.userId,
@@ -194,7 +194,7 @@ describe("noteCardFindService", () => {
             publicKey: null,
             summary: null,
             url: expect.any(String),
-            isAdmin: false,
+            isAdmin: true,
           },
           userId: expect.any(String),
         });

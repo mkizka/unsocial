@@ -7,6 +7,7 @@ const serverEnvSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
   UNSOCIAL_SITE_NAME: z.string().optional(),
   UNSOCIAL_SITE_DESCRIPTION: z.string().optional(),
+  UNSOCIAL_THEME_COLOR: z.string().optional(),
   UNSOCIAL_DATABASE_URL: z.string().url(),
   UNSOCIAL_LOG_LEVEL: z
     .enum(["debug", "info", "warn", "error"])
