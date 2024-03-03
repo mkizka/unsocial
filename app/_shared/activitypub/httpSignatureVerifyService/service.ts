@@ -7,7 +7,7 @@ import { userFindService } from "@/_shared/user/services/userFindService";
 
 const signatureSchema = z.object({
   keyId: z.string().url(),
-  algorithm: z.literal<string>("rsa-sha256"),
+  algorithm: z.union([z.literal("rsa-sha256"), z.literal("hs2019")]),
   headers: z.string(),
   signature: z.string(),
 });
