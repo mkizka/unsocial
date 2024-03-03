@@ -55,8 +55,6 @@ jobs:
           ./scripts/setup-for-e2e.sh ${{ inputs.target }}
       - run: pnpm playwright install --with-deps chromium
       - run: pnpm e2e -g ${{ inputs.target }}
-      - run: docker compose logs --no-log-prefix --no-color mastodon > reports/e2e/docker.txt 2>&1
-        if: (success() || failure()) && github.event_name == 'pull_request' && inputs.target == 'all'
       - run: docker compose logs --no-log-prefix --no-color ${{ inputs.target }} > reports/e2e/docker.txt 2>&1
         if: (success() || failure()) && github.event_name == 'pull_request' && (inputs.target == 'misskey' || inputs.target == 'mastodon')
       - run: aws s3 cp reports/e2e "s3://${{ env.AWS_S3_BUCKET }}/${{ env.UPLOAD_DIR }}/${{ github.event.pull_request.head.sha }}/${{ inputs.target }}" --recursive
