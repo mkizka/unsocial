@@ -103,7 +103,6 @@ export const noteSchema = activitySchema.extend({
 export type NoteActivity = z.infer<typeof noteSchema>;
 
 export const personSchema = activitySchema.extend({
-  // MisskeyではServiceが使われることもある
   type: z.union([
     z.literal("Person"),
     z.literal("Service"),
