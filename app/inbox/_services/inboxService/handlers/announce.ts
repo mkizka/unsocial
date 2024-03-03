@@ -16,13 +16,17 @@ export const handle: InboxHandler = async (activity, actor) => {
   if (announcedNote instanceof Error) {
     throw announcedNote;
   }
-  await prisma.note.create({
-    data: {
-      userId: actor.id,
-      content: "",
-      url: parsedAnnounce.data.id,
-      quoteId: announcedNote.id,
-      publishedAt: parsedAnnounce.data.published,
-    },
-  });
+  // リレーからのAnnounceにはpublishedが含まれないので、
+  // publishedが存在する場合のみノートを作成する
+  if (parsedAnnounce.data.published) {
+    await prisma.note.create({
+      data: {
+        userId: actor.id,
+        content: "",
+        url: parsedAnnounce.data.id,
+        quoteId: announcedNote.id,
+        publishedAt: parsedAnnounce.data.published,
+      },
+    });
+  }
 };

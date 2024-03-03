@@ -1,9 +1,9 @@
 import type { User } from "@prisma/client";
+import { fromZodError } from "zod-validation-error";
 
 import { apFetchService } from "@/_shared/activitypub/apFetchService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { env } from "@/_shared/utils/env";
-import { formatZodError } from "@/_shared/utils/formatZodError";
 import { getIconHash } from "@/_shared/utils/icon";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
@@ -44,7 +44,9 @@ const fetchActorUrlByWebFinger = async (
   }
   const parsed = apSchemaService.webFingerSchema.safeParse(response);
   if (!parsed.success) {
-    logger.info("検証失敗: " + formatZodError(parsed.error));
+    logger.info(
+      "WebFingerの検証に失敗しました: " + fromZodError(parsed.error).toString(),
+    );
     return new WebfingerValidationError();
   }
   // webFingerSchemaで要素が一つ以上あることが保証されているので型エラーを無視する
@@ -61,7 +63,9 @@ const fetchPersonByActorUrl = async (
   }
   const parsed = apSchemaService.personSchema.safeParse(response);
   if (!parsed.success) {
-    logger.info("検証失敗: " + formatZodError(parsed.error));
+    logger.info(
+      "Actorの検証に失敗しました: " + fromZodError(parsed.error).toString(),
+    );
     return new ActorValidationError();
   }
   return parsed.data;

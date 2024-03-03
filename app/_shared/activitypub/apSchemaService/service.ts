@@ -24,9 +24,9 @@ export const announceSchema = activitySchema.extend({
   actor: z.string().url(),
   id: z.string().url(),
   object: z.string(),
-  published: z.string().datetime(),
-  to: z.array(z.string().url()),
-  cc: z.array(z.string().url()),
+  published: z.string().datetime().optional(),
+  to: z.array(z.string().url()).optional(),
+  cc: z.array(z.string().url()).optional(),
 });
 
 export type AnnounceActivity = z.infer<typeof announceSchema>;
@@ -103,8 +103,11 @@ export const noteSchema = activitySchema.extend({
 export type NoteActivity = z.infer<typeof noteSchema>;
 
 export const personSchema = activitySchema.extend({
-  // MisskeyではServiceが使われることもある
-  type: z.union([z.literal("Person"), z.literal("Service")]),
+  type: z.union([
+    z.literal("Person"),
+    z.literal("Service"),
+    z.literal("Application"),
+  ]),
   id: z.string().url(),
   name: z.string().nullable(),
   summary: z.string().nullable().optional(),

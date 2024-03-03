@@ -7,22 +7,14 @@ import { inboxService } from "./_services/inboxService";
 
 const logger = createLogger("/inbox");
 
-const getLevel = (statusCode: number) => {
-  if (statusCode >= 500) {
-    return "error";
-  }
-  return "warn";
-};
-
 export async function POST(request: NextRequest) {
   const error = await inboxService.perform(request);
   if (error) {
-    const level = getLevel(error.statusCode);
-    logger[level](error.message, {
+    logger[error.level](error.message, {
       headers: Object.fromEntries(request.headers),
       body: await request.json(),
     });
-    return NextResponse.json({}, { status: error.statusCode });
   }
-  return NextResponse.json({});
+  // 処理に失敗したとしても202は返しておく
+  return NextResponse.json("Accepted", { status: 202 });
 }

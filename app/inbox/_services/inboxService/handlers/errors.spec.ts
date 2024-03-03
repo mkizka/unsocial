@@ -12,16 +12,16 @@ describe("errors", () => {
     if (parsed.success) throw new Error();
     const error = new ActivitySchemaValidationError(parsed.error);
     expect(error.message).toMatchSnapshot();
-    expect(error.statusCode).toBe(400);
+    expect(error.level).toBe("warn");
   });
   test(BadActivityRequestError.name, () => {
     const error = new BadActivityRequestError("エラーメッセージ");
     expect(error.message).toBe("エラーメッセージ");
-    expect(error.statusCode).toBe(400);
+    expect(error.level).toBe("warn");
   });
   test(UnexpectedActivityRequestError.name, () => {
     const error = new UnexpectedActivityRequestError("エラーメッセージ");
     expect(error.message).toBe("エラーメッセージ");
-    expect(error.statusCode).toBe(500);
+    expect(error.level).toBe("error");
   });
 });
