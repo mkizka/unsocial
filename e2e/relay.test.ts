@@ -15,10 +15,29 @@ type RunTestParams = {
 
 type Step = [string, () => Promise<void>];
 
+const setupRelayServer = async (
+  fediverse: FediverseHandler,
+  relayServer: string,
+) => {
+  const steps: Step[] = [
+    [
+      `${fediverse.domain}: ログイン`, //
+      () => fediverse.login(),
+    ],
+
+    [
+      `${fediverse.domain}: リレーサーバーを登録`,
+      () => fediverse.registerRelayServer(relayServer),
+    ],
+  ];
+  for (const [label, action] of steps) {
+    await test.step(label, action);
+  }
+};
+
 // fromの投稿がtoにリレーされるテスト
 const runTest = async ({ from, to }: RunTestParams) => {
   const content = crypto.randomUUID();
-  const relayServer = "https://relay.localhost/inbox";
   const steps: Step[] = [
     [
       `${from.domain}: ログイン`, //
@@ -27,14 +46,6 @@ const runTest = async ({ from, to }: RunTestParams) => {
     [
       `${to.domain}: ログイン`, //
       () => to.login(),
-    ],
-    [
-      `${from.domain}: リレーサーバーを登録`,
-      () => from.registerRelayServer(relayServer),
-    ],
-    [
-      `${to.domain}: リレーサーバーを登録`,
-      () => to.registerRelayServer(relayServer),
     ],
     [
       `${from.domain}: 投稿`, //
@@ -51,6 +62,13 @@ const runTest = async ({ from, to }: RunTestParams) => {
 };
 
 test.describe("All", () => {
+  test("Setup", async ({ page }) => {
+    const relayServer = "https://relay.localhost/inbox";
+    await setupRelayServer(new MisskeyHandler(page), relayServer);
+    await setupRelayServer(new MastodonHandler(page), relayServer);
+    await setupRelayServer(new MyhostUnsocialHandler(page), relayServer);
+  });
+
   test("Relay_1", async ({ page }) => {
     await runTest({
       from: new MisskeyHandler(page),
