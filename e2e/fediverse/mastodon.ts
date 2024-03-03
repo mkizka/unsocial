@@ -173,6 +173,12 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async registerRelayServer(relay: string): Promise<void> {
-    throw new Error("Not implemented");
+    await this.goto("/admin/relays/new");
+    await this.page.locator("#relay_inbox_url").fill(relay);
+    await this.page.locator('[type="submit"]').click();
+    await this.waitFor(async () => {
+      await this.page.reload();
+      await expect(this.page.locator("text=有効")).toBeVisible();
+    });
   }
 }
