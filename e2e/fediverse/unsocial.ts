@@ -11,7 +11,7 @@ export class MyhostUnsocialHandler extends FediverseHandler {
     await this.page
       .getByTestId("auth-form__input-preferredUsername")
       .fill("test");
-    await this.page.getByTestId("auth-form__input-password").fill("testtest");
+    await this.page.getByTestId("auth-form__input-password").fill("password");
     await this.page.getByTestId("auth-form__button").click();
     await expect(this.page.getByTestId("user-menu")).toBeVisible();
   }
@@ -156,6 +156,16 @@ export class MyhostUnsocialHandler extends FediverseHandler {
       "0フォロワー",
     );
     await expect(this.page.locator(`text=${user}`)).not.toBeVisible();
+  }
+
+  async registerRelayServer(relay: string) {
+    await this.goto("/settings");
+    await this.page.getByTestId("relay-server-form__input").fill(relay);
+    await this.page.getByTestId("relay-server-form__submit").click();
+    await this.waitFor(async () => {
+      await this.page.reload();
+      await expect(this.page.locator("text=承認済み")).toBeVisible();
+    });
   }
 }
 

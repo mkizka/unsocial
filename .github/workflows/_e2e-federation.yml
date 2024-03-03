@@ -46,6 +46,9 @@ jobs:
           curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
           chmod +x mkcert-v*-linux-amd64
           sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+      # Secure ModeのMastodonではリレー機能がうまく動作しないため無効化する
+      - run: sed -i 's/AUTHORIZED_FETCH=true/AUTHORIZED_FETCH=false/' ./docker/mastodon/.env.production
+        if: inputs.target == 'all'
       - name: Setup e2e
         run: |
           ./scripts/setup-for-docker.sh
@@ -53,7 +56,7 @@ jobs:
       - run: pnpm playwright install --with-deps chromium
       - run: pnpm e2e -g ${{ inputs.target }}
       - run: docker compose logs --no-log-prefix --no-color ${{ inputs.target }} > reports/e2e/docker.txt 2>&1
-        if: (success() || failure()) && github.event_name == 'pull_request' && inputs.target != 'unsocial'
+        if: (success() || failure()) && github.event_name == 'pull_request' && (inputs.target == 'misskey' || inputs.target == 'mastodon')
       - run: aws s3 cp reports/e2e "s3://${{ env.AWS_S3_BUCKET }}/${{ env.UPLOAD_DIR }}/${{ github.event.pull_request.head.sha }}/${{ inputs.target }}" --recursive
         if: (success() || failure()) && github.event_name == 'pull_request'
       - uses: gh640/command-result-action@v1

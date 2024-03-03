@@ -4,24 +4,20 @@ import { FediverseHandler } from "./base";
 
 export class MastodonHandler extends FediverseHandler {
   domain = "mastodon.localhost";
-  user = "@e2e@mastodon.localhost";
+  user = "@test@mastodon.localhost";
 
-  async loginAs(email: string, password: string) {
+  async login() {
     await this.goto("/");
     await this.page
       .locator(".sign-in-banner")
       .locator("a", { hasText: "ログイン" })
       .click();
-    await this.page.locator("#user_email").fill(email);
-    await this.page.locator("#user_password").fill(password);
+    await this.page.locator("#user_email").fill("test@localhost");
+    await this.page.locator("#user_password").fill("password");
     await this.page.locator("button").click();
     await expect(
       this.page.locator(".navigation-bar__profile-account"),
     ).toBeVisible();
-  }
-
-  async login() {
-    await this.loginAs("e2e@localhost", "password");
   }
 
   async expectedUser(user: string) {
@@ -149,30 +145,40 @@ export class MastodonHandler extends FediverseHandler {
   }
 
   async expectFollowing(user: string) {
-    await this.goto(`/@e2e/following`);
+    await this.goto(`/@test/following`);
     await expect(
       this.page.locator(".display-name__account", { hasText: user }),
     ).toBeVisible();
   }
 
   async expectNotFollowing(user: string) {
-    await this.goto(`/@e2e/following`);
+    await this.goto(`/@test/following`);
     await expect(
       this.page.locator(".display-name__account", { hasText: user }),
     ).not.toBeVisible();
   }
 
   async expectFollowed(user: string) {
-    await this.goto(`/@e2e/followers`);
+    await this.goto(`/@test/followers`);
     await expect(
       this.page.locator(".display-name__account", { hasText: user }),
     ).toBeVisible();
   }
 
   async expectNotFollowed(user: string) {
-    await this.goto(`/@e2e/followers`);
+    await this.goto(`/@test/followers`);
     await expect(
       this.page.locator(".display-name__account", { hasText: user }),
     ).not.toBeVisible();
+  }
+
+  async registerRelayServer(relay: string): Promise<void> {
+    await this.goto("/admin/relays/new");
+    await this.page.locator("#relay_inbox_url").fill(relay);
+    await this.page.locator('[type="submit"]').click();
+    await this.waitFor(async () => {
+      await this.page.reload();
+      await expect(this.page.locator("text=有効")).toBeVisible();
+    });
   }
 }
