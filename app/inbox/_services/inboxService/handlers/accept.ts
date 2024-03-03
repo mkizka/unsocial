@@ -25,11 +25,9 @@ export const handle: InboxHandler = async (activity, followee) => {
     );
   }
   if (
-    // システムユーザーからPublicに対してのフォローであればリレーサーバー登録への応答であるとする
+    // システムユーザーに対してのAcceptであればリレーサーバー登録への応答であるとする
     follower.preferredUsername === env.UNSOCIAL_HOST &&
-    follower.host === env.UNSOCIAL_HOST &&
-    parsedAccept.data.object.object ===
-      "https://www.w3.org/ns/activitystreams#Public"
+    follower.host === env.UNSOCIAL_HOST
   ) {
     assert(followee.inboxUrl);
     await prisma.relayServer.update({
