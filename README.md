@@ -21,6 +21,7 @@ Demo: https://unsocial.dev
 - Login with a single account on the server
 - Display Fediverse accounts
 - Federate posts (replies), likes, reposts, and follows
+- Registering relay servers
 - Fewer features, lightweight, and low cost
 
 ## Supported ActivityPub Servers
