@@ -74,8 +74,8 @@ devDependencies:
     specifier: 2.27.1
     version: 2.27.1
   '@dword-design/eslint-plugin-import-alias':
-    specifier: 4.0.9
-    version: 4.0.9
+    specifier: 5.0.0
+    version: 5.0.0
   '@playwright/test':
     specifier: 1.42.1
     version: 1.42.1
@@ -2562,12 +2562,12 @@ packages:
       objectorarray: 1.0.5
     dev: true
 
-  /@dword-design/eslint-plugin-import-alias@4.0.9:
-    resolution: {integrity: sha512-GbDZ0HJOnLgc8X2iGM+SW/2Y2Zi8qJ96+zsJWO4nhfEmHSKPcC3MUldVFLrrHy1z5R+MEba6tp7455U2UYB0bQ==}
-    engines: {node: '>=16'}
+  /@dword-design/eslint-plugin-import-alias@5.0.0:
+    resolution: {integrity: sha512-QbY2hA+YvhKiPJnAd9fOwT7gNV8OvaGLHdUsC6uVtyoUVjzx55WbUlzlEZzurlwDamXDlIB81IxbHgHT32Lx0w==}
+    engines: {node: '>=18'}
     dependencies:
-      '@babel/core': 7.23.7
-      '@dword-design/functions': 5.0.27
+      '@babel/core': 7.23.9
+      '@dword-design/functions': 6.0.0
       babel-plugin-module-resolver: 5.0.0
       deepmerge: 4.3.1
       jiti: 1.21.0
@@ -2575,12 +2575,12 @@ packages:
       - supports-color
     dev: true
 
-  /@dword-design/functions@5.0.27:
-    resolution: {integrity: sha512-16A97RKtn21xLWI7Y7VhFz4WCWui+TLit/J5/l77BDpWmPi2LzgjQzDbafDDw7OUeY6GEAi/M4jdbuQhsIbSEg==}
-    engines: {node: '>=14'}
+  /@dword-design/functions@6.0.0:
+    resolution: {integrity: sha512-22X9eviXAbaz8xdYrp5Tj6KjDPiT+m3fppAP+wEqA3gecAlCyExABesA1bEZ57aXrXrbhNk88M8PvdAO/PLg3A==}
+    engines: {node: '>=18'}
     dependencies:
       '@dword-design/endent': 1.4.1
-      delay: 5.0.0
+      delay: 6.0.0
       lodash: 4.17.21
       tinycolor2: 1.6.0
     dev: true
@@ -9469,9 +9469,9 @@ packages:
       slash: 3.0.0
     dev: true
 
-  /delay@5.0.0:
-    resolution: {integrity: sha512-ReEBKkIfe4ya47wlPYf/gu5ib6yUG0/Aez0JQZQz94kiWtRQvZIQbTiehsnwHvLSWJnQdhVeqYue7Id1dKr0qw==}
-    engines: {node: '>=10'}
+  /delay@6.0.0:
+    resolution: {integrity: sha512-2NJozoOHQ4NuZuVIr5CWd0iiLVIRSDepakaovIN+9eIDHEhdCAEvSy2cuf1DCrPPQLvHmbqTHODlhHg8UCy4zw==}
+    engines: {node: '>=16'}
     dev: true
 
   /delayed-stream@1.0.0:
