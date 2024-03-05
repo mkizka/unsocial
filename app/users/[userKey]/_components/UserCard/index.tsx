@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import sanitizeHtml from "sanitize-html";
 
 import { Card } from "@/_shared/ui/Card";
 import { UserIcon } from "@/_shared/user/components/UserIcon";
@@ -35,7 +36,9 @@ export async function UserCard({ userKey }: Props) {
           <div>{fullUsername(user)}</div>
         </div>
       </div>
-      <div>{user.summary}</div>
+      <div
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(user.summary ?? "") }}
+      ></div>
       <div className="flex items-center gap-2">
         <Link
           href={`/${fullUsername(user)}/followees`}
