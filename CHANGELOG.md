@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.40
+
+### Patch Changes
+
+- 736e8f9: 他サーバーのユーザーのsummaryを保存
+
 ## 0.0.39
 
 ### Patch Changes
