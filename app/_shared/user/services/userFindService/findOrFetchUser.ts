@@ -78,6 +78,7 @@ const createOrUpdateUser = (
   const data = {
     name: person.name,
     preferredUsername: person.preferredUsername,
+    summary: person.summary,
     host: new URL(person.id).host,
     icon: person.icon?.url ?? null,
     iconHash: person.icon?.url ? getIconHash(person.icon.url) : null,
