@@ -6,15 +6,15 @@ import { mockedPrisma } from "@/_shared/mocks/prisma";
 import { server } from "@/_shared/mocks/server";
 import { NotOKError } from "@/_shared/utils/fetcher";
 
+import { findOrFetchUserByActor } from "./service";
+import { findOrFetchUserById } from "./userFindRepository/byId";
+import { findOrFetchUserByWebFinger } from "./userFindRepository/byWebfinger";
 import {
   ActorValidationError,
-  findOrFetchUserByActor,
-  findOrFetchUserById,
-  findOrFetchUserByWebFinger,
-  shouldRefetch,
   UserNotFoundError,
   WebfingerValidationError,
-} from "./findOrFetchUser";
+} from "./userFindRepository/errors";
+import { shouldRefetch } from "./userFindRepository/shared";
 
 const mockedNow = new Date("2023-01-01T12:00:00Z");
 

@@ -1,10 +1,8 @@
 import { cache } from "react";
 
-import {
-  findOrFetchUserById,
-  findOrFetchUserByWebFinger,
-} from "./findOrFetchUser";
-import { findOrFetchUserByActor as _findOrFetchUserByActor } from "./findOrFetchUser";
+import { findOrFetchUserByActor as _findOrFetchUserByActor } from "./userFindRepository/byActor";
+import { findOrFetchUserById } from "./userFindRepository/byId";
+import { findOrFetchUserByWebFinger } from "./userFindRepository/byWebfinger";
 import { parseUserKey } from "./utils";
 
 export const findOrFetchUserByActor = cache(_findOrFetchUserByActor);
