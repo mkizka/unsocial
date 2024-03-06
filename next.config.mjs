@@ -6,6 +6,9 @@ const config = {
   reactStrictMode: true,
   output: "standalone",
   distDir: process.env.E2E_DIST_DIR,
+  experimental: {
+    serverComponentsExternalPackages: ["@sentry/nextjs", "@sentry/node"],
+  },
   logging: {
     fetches: {
       fullUrl: true,
