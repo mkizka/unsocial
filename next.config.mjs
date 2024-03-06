@@ -7,7 +7,11 @@ const config = {
   output: "standalone",
   distDir: process.env.E2E_DIST_DIR,
   experimental: {
-    serverComponentsExternalPackages: ["@sentry/nextjs", "@sentry/node"],
+    serverComponentsExternalPackages: [
+      // https://github.com/getsentry/sentry-javascript/issues/10366#issuecomment-1980291903
+      "@sentry/nextjs",
+      "@sentry/node",
+    ],
   },
   logging: {
     fetches: {
