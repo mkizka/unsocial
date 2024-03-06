@@ -7,12 +7,8 @@ import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
 import { UserNotFoundError, WebfingerValidationError } from "./errors";
-import {
-  createOrUpdateUser,
-  fetchPersonByActorUrl,
-  logger,
-  shouldRefetch,
-} from "./shared";
+import { userFindRepository } from "./userFindRepository";
+import { logger, shouldRefetch } from "./utils";
 
 const fetchActorUrlByWebFinger = async (
   user: apFetchService.FetchWebFingerParams,
@@ -55,12 +51,12 @@ export const findOrFetchUserByWebFinger = async (
     if (actorUrl instanceof Error) {
       return existingUser || actorUrl;
     }
-    const person = await fetchPersonByActorUrl(actorUrl);
+    const person = await userFindRepository.fetchPersonByActorUrl(actorUrl);
     if (person instanceof Error) {
       return existingUser || person;
     }
     // DBにあったら更新、なかったら作成
-    return createOrUpdateUser(person, existingUser?.id);
+    return userFindRepository.createOrUpdateUser(person, existingUser?.id);
   }
   return existingUser;
 };

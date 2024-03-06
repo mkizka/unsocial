@@ -3,12 +3,9 @@ import type { User } from "@prisma/client";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
-import { findOrFetchUserById } from "./byId";
-import {
-  createOrUpdateUser,
-  fetchPersonByActorUrl,
-  shouldRefetch,
-} from "./shared";
+import { userFindRepository } from "./userFindRepository";
+import { findOrFetchUserById } from "./userId";
+import { shouldRefetch } from "./utils";
 
 const getLocalUserId = (actorUrl: string) => {
   const url = new URL(actorUrl);
@@ -35,12 +32,12 @@ export const findOrFetchUserByActor = async (
   }
   const existingUser = await prisma.user.findUnique({ where: { actorUrl } });
   if (!existingUser || shouldRefetch(existingUser)) {
-    const person = await fetchPersonByActorUrl(actorUrl);
+    const person = await userFindRepository.fetchPersonByActorUrl(actorUrl);
     if (person instanceof Error) {
       return existingUser || person;
     }
     // DBにあったら更新、なかったら作成
-    return createOrUpdateUser(person, existingUser?.id);
+    return userFindRepository.createOrUpdateUser(person, existingUser?.id);
   }
   return existingUser;
 };

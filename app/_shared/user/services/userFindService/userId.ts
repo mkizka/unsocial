@@ -3,11 +3,8 @@ import type { User } from "@prisma/client";
 import { prisma } from "@/_shared/utils/prisma";
 
 import { UserNotFoundError } from "./errors";
-import {
-  createOrUpdateUser,
-  fetchPersonByActorUrl,
-  shouldRefetch,
-} from "./shared";
+import { userFindRepository } from "./userFindRepository";
+import { shouldRefetch } from "./utils";
 
 export const findOrFetchUserById = async (
   id: string,
@@ -19,11 +16,13 @@ export const findOrFetchUserById = async (
   }
   if (shouldRefetch(existingUser)) {
     // リモートユーザーならactorUrlを持っているはずなので型エラーを無視
-    const person = await fetchPersonByActorUrl(existingUser.actorUrl!);
+    const person = await userFindRepository.fetchPersonByActorUrl(
+      existingUser.actorUrl!,
+    );
     if (person instanceof Error) {
       return existingUser;
     }
-    return createOrUpdateUser(person, existingUser.id);
+    return userFindRepository.createOrUpdateUser(person, existingUser.id);
   }
   return existingUser;
 };

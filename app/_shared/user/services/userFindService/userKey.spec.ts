@@ -1,11 +1,11 @@
 import type { User } from "@prisma/client";
 
 import { userFindService } from ".";
-import { findOrFetchUserById } from "./userFindRepository/byId";
-import { findOrFetchUserByWebFinger } from "./userFindRepository/byWebfinger";
+import { findOrFetchUserById } from "./userId";
+import { findOrFetchUserByWebFinger } from "./webfinger";
 
-jest.mock("./userFindRepository/byId");
-jest.mock("./userFindRepository/byWebfinger");
+jest.mock("./userId");
+jest.mock("./webfinger");
 
 describe("userService", () => {
   const mockedById = jest.mocked(findOrFetchUserById);

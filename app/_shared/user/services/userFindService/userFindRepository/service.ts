@@ -1,16 +1,13 @@
-import type { User } from "@prisma/client";
 import { fromZodError } from "zod-validation-error";
 
 import { apFetchService } from "@/_shared/activitypub/apFetchService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { env } from "@/_shared/utils/env";
+import { ActorValidationError } from "@/_shared/user/services/userFindService/errors";
 import { getIconHash } from "@/_shared/utils/icon";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 
-import { ActorValidationError } from "./errors";
-
-export const logger = createLogger("userFindService");
+export const logger = createLogger("userFindRepository");
 
 export const createOrUpdateUser = (
   person: apSchemaService.PersonActivity,
@@ -49,15 +46,4 @@ export const fetchPersonByActorUrl = async (
     return new ActorValidationError();
   }
   return parsed.data;
-};
-
-export const shouldRefetch = (user: User) => {
-  if (user.host === env.UNSOCIAL_HOST) {
-    return false;
-  }
-  if (!user.lastFetchedAt) {
-    return true;
-  }
-  const diff = Date.now() - user.lastFetchedAt.getTime();
-  return diff >= 1000 * 60 * 60 * 3;
 };
