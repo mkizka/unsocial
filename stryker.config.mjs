@@ -8,7 +8,6 @@ const config = {
   incremental: true,
   incrementalFile: "reports/mutation/stryker-incremental.json",
   timeoutMS: 30000,
-  maxTestRunnerReuse: 20,
   ignoreStatic: true,
   cleanTempDir: "always",
   mutate: [
@@ -24,4 +23,5 @@ const config = {
   ignorePatterns: ["docker"],
   plugins: ["@stryker-mutator/jest-runner"],
 };
+
 export default config;
