@@ -20,6 +20,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: catchpoint/workflow-telemetry-action@v2
+        if: inputs.target == 'all'
       - uses: actions/checkout@v4
       # https://nextjs.org/docs/pages/building-your-application/deploying/ci-build-caching#github-actions
       - uses: actions/cache@v4
