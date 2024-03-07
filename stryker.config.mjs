@@ -8,7 +8,7 @@ const config = {
   incremental: true,
   incrementalFile: "reports/mutation/stryker-incremental.json",
   timeoutMS: 30000,
-  maxTestRunnerReuse: 10,
+  maxTestRunnerReuse: 15,
   ignoreStatic: true,
   cleanTempDir: "always",
   mutate: [
