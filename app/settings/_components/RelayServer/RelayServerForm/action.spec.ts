@@ -1,5 +1,6 @@
 import { http, HttpResponse } from "msw";
 
+import { RelayServerFactory } from "@/_shared/factories/relayServer";
 import { server } from "@/_shared/mocks/server";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
 import { prisma } from "@/_shared/utils/prisma";
@@ -38,13 +39,9 @@ describe("RelayServerForm/action", () => {
   });
   test("登録済みのリレーサーバーであればエラーを返す", async () => {
     // arrange
-    await prisma.relayServer.create({
-      data: {
-        inboxUrl: "https://relay.example.com/inbox",
-      },
-    });
+    const relayServer = await RelayServerFactory.create();
     const formData = new FormData();
-    formData.append("inbox-url", "https://relay.example.com/inbox");
+    formData.append("inbox-url", relayServer.inboxUrl);
     // act
     const result = await action(null, formData);
     // assert
