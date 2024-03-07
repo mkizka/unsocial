@@ -17,4 +17,4 @@
 # fi
 
 ./scripts/setup-for-test.sh
-STRYKER=1 pnpm stryker run "$@"
+pnpm stryker run "$@"
