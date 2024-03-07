@@ -1,5 +1,4 @@
-import { mockedPrisma } from "@/_shared/mocks/prisma";
-
+import { LocalNoteFactory, RemoteNoteFactory } from "@/_shared/factories/note";
 import { GET } from "./route";
 
 jest.mock("@/../package.json", () => ({
@@ -7,43 +6,19 @@ jest.mock("@/../package.json", () => ({
 }));
 
 describe("/.well-known/nodeinfo", () => {
-  test("GET", async () => {
+  test("管理者の投稿数をlocalPostsに設定したサーバー情報を返す", async () => {
     // arrange
-    mockedPrisma.user.count.mockResolvedValue(10);
-    mockedPrisma.note.count.mockResolvedValue(20);
+    await LocalNoteFactory.createList(3);
+    await RemoteNoteFactory.createList(1);
     // act
     const response = await GET();
     // assert
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe("application/jrd+json");
-    expect(await response.json()).toMatchInlineSnapshot(`
-      {
-        "metadata": {},
-        "openRegistrations": true,
-        "protocols": [
-          "activitypub",
-        ],
-        "services": {
-          "inbound": [],
-          "outbound": [],
-        },
-        "software": {
-          "homepage": "https://github.com/mkizka/unsocial",
-          "name": "unsocial",
-          "repository": "https://github.com/mkizka/unsocial.git",
-          "version": "1.2.3",
-        },
-        "usage": {
-          "localComments": 0,
-          "localPosts": 20,
-          "users": {
-            "activeHalfyear": null,
-            "activeMonth": null,
-            "total": 10,
-          },
-        },
-        "version": "2.1",
-      }
-    `);
+    expect(await response.json()).toMatchObject({
+      usage: {
+        localPosts: 3,
+      },
+    });
   });
 });

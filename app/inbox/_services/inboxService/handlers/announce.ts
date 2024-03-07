@@ -2,7 +2,10 @@ import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { noteFindService } from "@/_shared/note/services/noteFindService";
 import { prisma } from "@/_shared/utils/prisma";
 
-import { ActivitySchemaValidationError } from "./errors";
+import {
+  ActivitySchemaValidationError,
+  BadActivityRequestError,
+} from "./errors";
 import type { InboxHandler } from "./shared";
 
 export const handle: InboxHandler = async (activity, actor) => {
@@ -14,15 +17,21 @@ export const handle: InboxHandler = async (activity, actor) => {
     parsedAnnounce.data.object,
   );
   if (announcedNote instanceof Error) {
-    throw announcedNote;
+    return new BadActivityRequestError(
+      "Announceされたノートを取得できませんでした",
+    );
   }
-  await prisma.note.create({
-    data: {
-      userId: actor.id,
-      content: "",
-      url: parsedAnnounce.data.id,
-      quoteId: announcedNote.id,
-      publishedAt: parsedAnnounce.data.published,
-    },
-  });
+  // リレーからのAnnounceにはpublishedが含まれないので、
+  // publishedが存在する場合のみノートを作成する
+  if (parsedAnnounce.data.published) {
+    await prisma.note.create({
+      data: {
+        userId: actor.id,
+        content: "",
+        url: parsedAnnounce.data.id,
+        quoteId: announcedNote.id,
+        publishedAt: parsedAnnounce.data.published,
+      },
+    });
+  }
 };

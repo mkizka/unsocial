@@ -1,10 +1,14 @@
 import { cache } from "react";
+import { fromZodError } from "zod-validation-error";
 
 import { apFetchService } from "@/_shared/activitypub/apFetchService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { noteCreateService } from "@/_shared/note/services/noteCreateService";
 import { env } from "@/_shared/utils/env";
+import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
+
+const logger = createLogger("noteFindService");
 
 const getLocalNoteId = (noteUrl: string) => {
   const url = new URL(noteUrl);
@@ -53,6 +57,9 @@ export const findOrFetchNoteByUrl = cache(async (url: string) => {
   }
   const parsedNote = apSchemaService.noteSchema.safeParse(fetchedNote);
   if (!parsedNote.success) {
+    logger.info(
+      `ノートの検証に失敗しました: ${fromZodError(parsedNote.error)}`,
+    );
     return new ActivityValidationError();
   }
   return noteCreateService.create(parsedNote.data);
