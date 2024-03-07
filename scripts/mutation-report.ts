@@ -74,7 +74,7 @@ const isSuccess = (
 const table = async (baseUrls: { main: string; pr: string }) => {
   const prScores = getScorePerFile(readJson("reports/mutation/mutation.json"));
   const mainScores = getScorePerFile(
-    await fetchJson(`${baseUrls.main}/mutation.json`),
+    readJson("reports/mutation/mutation.json"),
   );
   const filenames = [
     ...new Set([...Object.keys(prScores), ...Object.keys(mainScores)]),
