@@ -16,4 +16,5 @@
 #   curl -f --progress-bar -o $CACHE_PATH https://gha.unsocial.dev/mutation-test/main/stryker-incremental.json
 # fi
 
-pnpm stryker run "$@"
+./scripts/setup-for-test.sh
+STRYKER=1 pnpm stryker run "$@"
