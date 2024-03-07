@@ -16,4 +16,5 @@ if [ ! -f $CACHE_PATH ]; then
   curl -f --progress-bar -o $CACHE_PATH https://gha.unsocial.dev/mutation-test/main/stryker-incremental.json
 fi
 
+./scripts/setup-for-test.sh
 pnpm stryker run "$@"
