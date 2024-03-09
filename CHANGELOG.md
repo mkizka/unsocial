@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.42
+
+### Patch Changes
+
+- 426804e: ユーザーとノートのActivityにurl追加
+
 ## 0.0.41
 
 ### Patch Changes
