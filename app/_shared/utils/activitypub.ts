@@ -24,27 +24,27 @@ const publicUrl = "https://www.w3.org/ns/activitystreams#Public";
 const to = [publicUrl];
 
 const convertUser = (user: User) => {
-  const userAddress = `https://${env.UNSOCIAL_HOST}/users/${user.id}`;
-  const activityAddress = `${userAddress}/activity`;
+  const baseUrl = `https://${env.UNSOCIAL_HOST}/users/${user.id}`;
+  const activityUrl = `${baseUrl}/activity`;
   return {
     ...contexts,
-    id: activityAddress,
+    id: activityUrl,
+    url: `https://${env.UNSOCIAL_HOST}/@${user.preferredUsername}`,
     type: "Person",
-    inbox: `${userAddress}/inbox`,
-    outbox: `${userAddress}/outbox`,
-    following: `${userAddress}/followees`,
-    followers: `${userAddress}/followers`,
-    featured: `${userAddress}/collections/featured`,
+    inbox: `${baseUrl}/inbox`,
+    outbox: `${baseUrl}/outbox`,
+    following: `${baseUrl}/followees`,
+    followers: `${baseUrl}/followers`,
+    featured: `${baseUrl}/collections/featured`,
     endpoints: {
       sharedInbox: `https://${env.UNSOCIAL_HOST}/inbox`,
     },
     preferredUsername: user.preferredUsername,
-    name: user.name || "",
-    summary: user.summary || "",
-    url: userAddress,
+    name: user.name,
+    summary: user.summary,
     publicKey: {
-      id: `${activityAddress}#main-key`,
-      owner: activityAddress,
+      id: `${activityUrl}#main-key`,
+      owner: activityUrl,
       publicKeyPem: required(user.publicKey),
     },
     icon: {
@@ -64,7 +64,7 @@ type NoteWithReply = Pick<Note, "id" | "userId" | "content" | "publishedAt"> & {
 };
 
 const convertNote = (note: NoteWithReply) => {
-  const userAddress = `https://${env.UNSOCIAL_HOST}/users/${note.userId}`;
+  const userBaseUrl = `https://${env.UNSOCIAL_HOST}/users/${note.userId}`;
   const inReplyTo = (() => {
     if (note.replyTo) {
       if (note.replyTo.url) return note.replyTo.url;
@@ -74,17 +74,19 @@ const convertNote = (note: NoteWithReply) => {
   })();
   const cc = (() => {
     if (note.replyTo?.user.actorUrl) {
-      return [`${userAddress}/followers`, note.replyTo.user.actorUrl];
+      return [`${userBaseUrl}/followers`, note.replyTo.user.actorUrl];
     }
-    return [`${userAddress}/followers`];
+    return [`${userBaseUrl}/followers`];
   })();
+  const baseUrl = `https://${env.UNSOCIAL_HOST}/notes/${note.id}`;
   return {
     ...contexts,
-    id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`,
+    id: `${baseUrl}/activity`,
+    url: baseUrl,
     type: "Note",
     inReplyTo,
     content: note.content,
-    attributedTo: `${userAddress}/activity`,
+    attributedTo: `${userBaseUrl}/activity`,
     published: note.publishedAt.toISOString(),
     to,
     cc,
