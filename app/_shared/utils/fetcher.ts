@@ -7,17 +7,11 @@ import { createLogger } from "./logger";
 const logger = createLogger("fetcher");
 
 export class FetcherError extends Error {
-  constructor() {
-    super();
-    this.name = "FetchError";
-  }
+  name = "FetcherError";
 }
 
 export class NotOKError extends Error {
-  constructor() {
-    super();
-    this.name = "NotOKError";
-  }
+  name = "NotOKError";
 }
 
 type Options = Omit<RequestInit, "body"> & {
@@ -88,15 +82,8 @@ export const fetcher = (input: URL | string, options?: Options) => {
       }
       return response;
     })
-    .then((response) => {
-      if (response instanceof Error) {
-        logger.warn(`fetchエラー(${init.method} ${input}): ${response.name}`);
-      }
-      return response;
-    })
     .catch((error) => {
-      logger.warn(`fetchエラー(${init.method} ${input}): ${error.message}`);
-      return new FetcherError();
+      return new FetcherError(error.message);
     })
     .finally(() => {
       clearTimeout(timeoutId);

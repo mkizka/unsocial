@@ -102,10 +102,10 @@ describe("fetcher", () => {
     // act
     const response = await fetcher(dummyUrl);
     // assert
-    expect(mockedLogger.warn).toBeCalledWith(
-      `fetchエラー(GET ${dummyUrl}): Failed to fetch`,
-    );
     expect(response).toBeInstanceOf(Error);
+    expect(response).toMatchObject({
+      message: "Failed to fetch",
+    });
     mockedConsoleError.mockRestore();
   });
   test("タイムアウト", async () => {
@@ -121,10 +121,10 @@ describe("fetcher", () => {
     // act
     const response = await fetcher("http://localhost:3001", { timeout: 1 });
     // assert
-    expect(mockedLogger.warn).toBeCalledWith(
-      `fetchエラー(GET http://localhost:3001): This operation was aborted`,
-    );
     expect(response).toBeInstanceOf(FetcherError);
+    expect(response).toMatchObject({
+      message: "This operation was aborted",
+    });
     await new Promise<void>((resolve) => {
       server.close(() => resolve());
     });

@@ -53,17 +53,19 @@ const getScorePerFile = (result: Result) => {
   return score;
 };
 
-const evaluate = (score: number | undefined) => {
-  if (score === undefined || isNaN(score)) {
-    return 0;
-  }
-  return score;
+const canEvaluate = (score: number | undefined): score is number => {
+  return !(score === undefined || isNaN(score));
 };
 
-const isSuccess = (
-  prScore: number | undefined,
-  mainScore: number | undefined,
-) => {
+const evaluate = (score: number | undefined) => {
+  return canEvaluate(score) ? score : 0;
+};
+
+const isSuccess = (prScore: number, mainScore: number | undefined) => {
+  // mainブランチに点数が無いかつ、PRでミュータントが発生したにも関わらずテストが無い場合は不合格とする
+  if (!canEvaluate(mainScore) && prScore === 0) {
+    return false;
+  }
   return (
     evaluate(prScore) >= evaluate(mainScore) ||
     // PRのスコアがNaNの場合は合格扱い

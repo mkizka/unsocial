@@ -1,4 +1,5 @@
 import { LocalToRemoteFollowFactory } from "@/_shared/factories/follow";
+import { RelayServerFactory } from "@/_shared/factories/relayServer";
 import { LocalUserFactory, RemoteUserFactory } from "@/_shared/factories/user";
 import { mockedLogger } from "@/_shared/mocks/logger";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
@@ -77,15 +78,11 @@ describe("inboxAcceptService", () => {
   });
   test("システムユーザーからのフォロー(リレー登録)によるAcceptの場合はリレーサーバーのステータスを更新する", async () => {
     // arrange
+    const relayServer = await RelayServerFactory.create();
     const systemUser = await systemUserService.findOrCreateSystemUser();
-    await prisma.relayServer.create({
-      data: {
-        inboxUrl: "https://relay.example.com/inbox",
-      },
-    });
     const remoteUser = await RemoteUserFactory.create({
       actorUrl: "https://relay.example.com/actor",
-      inboxUrl: "https://relay.example.com/inbox",
+      inboxUrl: relayServer.inboxUrl,
     });
     const activity = {
       type: "Accept",

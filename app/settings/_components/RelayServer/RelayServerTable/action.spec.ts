@@ -1,5 +1,6 @@
 import { http, HttpResponse } from "msw";
 
+import { RelayServerFactory } from "@/_shared/factories/relayServer";
 import { server } from "@/_shared/mocks/server";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -10,15 +11,10 @@ jest.mock("next/cache");
 describe("RelayServerTable/action", () => {
   test("指定したリレーサーバーを削除してUndoアクティビティを配送", async () => {
     // arrange
-    const inboxUrl = "https://relay.example.com/inbox";
-    const relayServer = await prisma.relayServer.create({
-      data: {
-        inboxUrl,
-      },
-    });
+    const relayServer = await RelayServerFactory.create();
     const inboxFn = jest.fn();
     server.use(
-      http.post(inboxUrl, async ({ request }) => {
+      http.post(relayServer.inboxUrl, async ({ request }) => {
         inboxFn(await request.json());
         return HttpResponse.text("Accepted", { status: 202 });
       }),

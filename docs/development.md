@@ -1,8 +1,8 @@
-## 開発手順
+# 開発手順
 
 Node.js, mkcert, Dockerが必要です。
 
-### セットアップ
+## セットアップ
 
 ```sh
 ./scripts/setup-for-docker.sh
@@ -11,7 +11,7 @@ corepack enable pnpm
 pnpm i
 ```
 
-### 開発コマンド
+## 開発コマンド
 
 ```
 pnpm dev
