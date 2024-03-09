@@ -4,6 +4,7 @@ import { http, HttpResponse } from "msw";
 import { LocalUserFactory, RemoteUserFactory } from "@/_shared/factories/user";
 import { mockedLogger } from "@/_shared/mocks/logger";
 import { server } from "@/_shared/mocks/server";
+import { FetcherError } from "@/_shared/utils/fetcher";
 
 import { UserNotFoundError } from "./errors";
 import { findOrFetchUserById } from "./userId";
@@ -16,6 +17,11 @@ describe("findOrFetchUserById", () => {
     // arrange
     const user = await findOrFetchUserById("not-found-user-id");
     // act
+    expect(mockedLogger.warn).toHaveBeenCalledTimes(1);
+    expect(mockedLogger.warn).toHaveBeenCalledWith(
+      "指定したIDのユーザーが見つかりませんでした",
+      { id: "not-found-user-id" },
+    );
     expect(user).toBeInstanceOf(UserNotFoundError);
   });
   test("指定したIDのローカルユーザーがDBに存在する場合はそのまま返す", async () => {
@@ -66,5 +72,24 @@ describe("findOrFetchUserById", () => {
       ...remoteUser,
       lastFetchedAt: new Date("2024-01-01T03:00:00Z"),
     });
+  });
+  test("指定したIDのリモートユーザーがDBに存在し、fetchに失敗した場合はそのまま返す", async () => {
+    // arrange
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.actorUrl);
+    server.use(
+      http.get(remoteUser.actorUrl, () => {
+        return HttpResponse.error();
+      }),
+    );
+    // act
+    const user = await findOrFetchUserById(remoteUser.id);
+    // assert
+    expect(mockedLogger.warn).toHaveBeenCalledTimes(1);
+    expect(mockedLogger.warn).toHaveBeenCalledWith(
+      "リモートユーザーの更新に失敗しました",
+      { error: new FetcherError("Failed to fetch") },
+    );
+    expect(user).toEqual(remoteUser);
   });
 });

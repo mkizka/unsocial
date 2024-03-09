@@ -15,7 +15,7 @@ export const findOrFetchUserById = async (
 ): Promise<User | Error> => {
   const existingUser = await prisma.user.findUnique({ where: { id } });
   if (!existingUser) {
-    // id指定で見つからなかった場合はこれ以上できることないのでエラーを返す
+    logger.warn("指定したIDのユーザーが見つかりませんでした", { id });
     return new UserNotFoundError();
   }
   if (shouldRefetch(existingUser)) {
@@ -24,7 +24,9 @@ export const findOrFetchUserById = async (
       existingUser.actorUrl,
     );
     if (person instanceof Error) {
-      logger.info("リモートユーザーの更新に失敗しました: " + person.name);
+      logger.warn("リモートユーザーの更新に失敗しました", {
+        error: person,
+      });
       return existingUser;
     }
     return userFindRepository.createOrUpdateUser(person, existingUser.id);
