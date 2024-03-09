@@ -4,11 +4,14 @@ import { fromZodError } from "zod-validation-error";
 import { apFetchService } from "@/_shared/activitypub/apFetchService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { env } from "@/_shared/utils/env";
+import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 
 import { UserNotFoundError, WebfingerValidationError } from "./errors";
 import { userFindRepository } from "./userFindRepository";
-import { logger, shouldRefetch } from "./utils";
+import { shouldRefetch } from "./utils";
+
+const logger = createLogger("userFindService.findOrFetchUserByWebFinger");
 
 const fetchActorUrlByWebFinger = async (
   user: apFetchService.FetchWebFingerParams,
@@ -49,10 +52,18 @@ export const findOrFetchUserByWebFinger = async (
     // actorUrlが分からないのでWebFingerで取得
     const actorUrl = await fetchActorUrlByWebFinger(user);
     if (actorUrl instanceof Error) {
+      logger.warn("WebfingerからActorURLの取得に失敗しました", {
+        user,
+        error: actorUrl,
+      });
       return existingUser || actorUrl;
     }
     const person = await userFindRepository.fetchPersonByActorUrl(actorUrl);
     if (person instanceof Error) {
+      logger.warn("Actorの取得に失敗しました", {
+        actorUrl,
+        error: person,
+      });
       return existingUser || person;
     }
     // DBにあったら更新、なかったら作成

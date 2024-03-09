@@ -41,7 +41,7 @@ export const findOrFetchUserByActor = async (
   if (!existingUser || shouldRefetch(existingUser)) {
     const person = await userFindRepository.fetchPersonByActorUrl(actorUrl);
     if (person instanceof Error) {
-      logger.warn("リモートユーザーの更新に失敗しました", {
+      logger.warn("Actorの取得に失敗しました", {
         actorUrl,
         error: person,
       });

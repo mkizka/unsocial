@@ -95,7 +95,7 @@ describe("findOrFetchUserByActor", () => {
     // assert
     expect(mockedLogger.warn).toHaveBeenCalledTimes(1);
     expect(mockedLogger.warn).toHaveBeenCalledWith(
-      "リモートユーザーの更新に失敗しました",
+      "Actorの取得に失敗しました",
       {
         actorUrl: remoteUser.actorUrl,
         error: new FetcherError("Failed to fetch"),
@@ -109,7 +109,7 @@ describe("findOrFetchUserByActor", () => {
     const activity = {
       type: "Person",
       id: actorUrl,
-      preferredUsername: "remote-username",
+      preferredUsername: "remote",
       inbox: "https://remote.example.com/inbox",
       publicKey: {
         publicKeyPem: "remote-public-key",
@@ -153,7 +153,7 @@ describe("findOrFetchUserByActor", () => {
     // assert
     expect(mockedLogger.warn).toHaveBeenCalledTimes(1);
     expect(mockedLogger.warn).toHaveBeenCalledWith(
-      "リモートユーザーの更新に失敗しました",
+      "Actorの取得に失敗しました",
       {
         actorUrl,
         error: new FetcherError("Failed to fetch"),
