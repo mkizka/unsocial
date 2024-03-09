@@ -43,6 +43,7 @@ export async function GET() {
     {
       headers: {
         "Content-Type": "application/jrd+json",
+        "Cache-Control": "s-maxage=3600",
       },
     },
   );
