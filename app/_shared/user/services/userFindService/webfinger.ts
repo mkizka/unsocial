@@ -7,7 +7,7 @@ import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 
-import { UserNotFoundError, WebfingerValidationError } from "./errors";
+import { UserNotFoundError } from "./errors";
 import { userFindRepository } from "./userFindRepository";
 import { shouldRefetch } from "./utils";
 
@@ -18,15 +18,11 @@ const fetchActorUrlByWebFinger = async (
 ): Promise<string | Error> => {
   const response = await apFetchService.fetchWebFinger(user);
   if (response instanceof Error) {
-    logger.info("Webfingerの取得に失敗しました");
     return response;
   }
   const parsed = apSchemaService.webFingerSchema.safeParse(response);
   if (!parsed.success) {
-    logger.info(
-      "WebFingerの検証に失敗しました: " + fromZodError(parsed.error).toString(),
-    );
-    return new WebfingerValidationError();
+    return fromZodError(parsed.error);
   }
   // webFingerSchemaで要素が一つ以上あることが保証されているので型エラーを無視する
   return parsed.data.links[0]!.href;
