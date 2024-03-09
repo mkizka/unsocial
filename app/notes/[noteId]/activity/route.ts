@@ -31,6 +31,7 @@ export async function GET(
     // application/ld+json; profile="https://www.w3.org/ns/activitystreams"
     headers: {
       "Content-Type": "application/activity+json",
+      "Cache-Control": "s-maxage=60",
     },
   });
 }

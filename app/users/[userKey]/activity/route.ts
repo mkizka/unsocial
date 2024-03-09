@@ -21,6 +21,7 @@ export async function GET(
   return NextResponse.json(activityStreams.user(user), {
     headers: {
       "Content-Type": "application/activity+json",
+      "Cache-Control": "s-maxage=60",
     },
   });
 }
