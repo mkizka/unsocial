@@ -25,6 +25,7 @@ export const findOrFetchUserById = async (
     );
     if (person instanceof Error) {
       logger.warn("リモートユーザーの更新に失敗しました", {
+        actorUrl: existingUser.actorUrl,
         error: person,
       });
       return existingUser;

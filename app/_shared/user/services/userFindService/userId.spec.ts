@@ -89,7 +89,10 @@ describe("findOrFetchUserById", () => {
     expect(mockedLogger.warn).toHaveBeenCalledTimes(1);
     expect(mockedLogger.warn).toHaveBeenCalledWith(
       "リモートユーザーの更新に失敗しました",
-      { error: new FetcherError("Failed to fetch") },
+      {
+        actorUrl: remoteUser.actorUrl,
+        error: new FetcherError("Failed to fetch"),
+      },
     );
     expect(user).toEqual(remoteUser);
   });
