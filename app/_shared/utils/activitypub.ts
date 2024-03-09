@@ -1,6 +1,9 @@
 // Stryker disable all
 import type { Follow, Like, Note, User } from "@prisma/client";
+import accepts from "accepts";
 import assert from "assert";
+import type { IncomingMessage } from "http";
+import { headers } from "next/headers";
 
 import type { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 
@@ -217,4 +220,18 @@ export const activityStreams = {
   like: convertLike,
   undo: convertUndo,
   announce: convertAnnounce,
+};
+
+// https://www.w3.org/TR/activitypub/#retrieving-objects
+const ACCEPT_LD_JSON = `application/ld+json; profile="https://www.w3.org/ns/activitystreams"`;
+const ACCEPT_ACTIVITY_JSON = `application/activity+json`;
+
+export const shouldReturnActivityStreams = () => {
+  const accept = headers().get("accept");
+  const accepted = accepts({
+    headers: {
+      accept,
+    },
+  } as IncomingMessage);
+  return Boolean(accepted.type([ACCEPT_LD_JSON, ACCEPT_ACTIVITY_JSON]));
 };

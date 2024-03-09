@@ -1,10 +1,10 @@
-import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { Fragment } from "react";
 
 import { NoteCardContainer } from "@/_shared/note/components/NoteCard";
 import { NoteForm } from "@/_shared/note/components/NoteForm";
 import { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
+import { shouldReturnActivityStreams } from "@/_shared/utils/activitypub";
 import { env } from "@/_shared/utils/env";
 
 import { LikeUserList } from "./_components/LikeUserList";
@@ -20,7 +20,7 @@ export default async function Page({
   if (!note) {
     notFound();
   }
-  if (headers().get("accept") === "application/activity+json") {
+  if (shouldReturnActivityStreams()) {
     redirect(`https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`);
   }
   return (
