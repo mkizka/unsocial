@@ -13,9 +13,9 @@ const logger = createLogger("userFindService.findOrFetchUserByActor");
 const getLocalUserId = (actorUrl: string) => {
   const url = new URL(actorUrl);
   // https://myhost.example.com/users/[userId]/activity
-  const [_, prefixPath, userId, lastPath] = url.pathname.split("/");
+  const [_, prefixPath, userId] = url.pathname.split("/");
   if (url.host === env.UNSOCIAL_HOST) {
-    if (prefixPath === "users" && lastPath === "activity") {
+    if (prefixPath === "users") {
       return userId;
     } else {
       return new Error();

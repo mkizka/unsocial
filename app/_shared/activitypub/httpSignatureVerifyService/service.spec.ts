@@ -21,17 +21,17 @@ import {
 
 const dummyActivity = {
   type: "Dummy",
-  actor: "https://myhost.example.com/users/dummy_userId/activity",
+  actor: "https://myhost.example.com/users/dummy_userId",
 };
 
 const invalidActivity = {
   type: "Invlaid",
-  actor: "https://myhost.example.com/users/dummy_userId/activity",
+  actor: "https://myhost.example.com/users/dummy_userId",
 };
 
 const otherUserActivity = {
   type: "Dummy",
-  actor: "https://myhost.example.com/users/dummy_other_userId/activity",
+  actor: "https://myhost.example.com/users/dummy_other_userId",
 };
 
 describe("verifyActivity", () => {
@@ -56,7 +56,7 @@ describe("verifyActivity", () => {
       // arrange
       mockedPrisma.user.findUnique.mockResolvedValue({
         host: "myhost.example.com", // webfingerに通信しないようにテストでは全てローカルユーザーとして扱う
-        actorUrl: "https://myhost.example.com/users/dummy_userId/activity",
+        actorUrl: "https://myhost.example.com/users/dummy_userId",
         publicKey,
       } as User);
       const dummyRequest = {

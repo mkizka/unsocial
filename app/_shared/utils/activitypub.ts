@@ -24,27 +24,26 @@ const publicUrl = "https://www.w3.org/ns/activitystreams#Public";
 const to = [publicUrl];
 
 const convertUser = (user: User) => {
-  const userAddress = `https://${env.UNSOCIAL_HOST}/users/${user.id}`;
-  const activityAddress = `${userAddress}/activity`;
+  const userId = `https://${env.UNSOCIAL_HOST}/users/${user.id}`;
   return {
     ...contexts,
-    id: activityAddress,
+    id: userId,
     type: "Person",
-    inbox: `${userAddress}/inbox`,
-    outbox: `${userAddress}/outbox`,
-    following: `${userAddress}/followees`,
-    followers: `${userAddress}/followers`,
-    featured: `${userAddress}/collections/featured`,
+    inbox: `${userId}/inbox`,
+    outbox: `${userId}/outbox`,
+    following: `${userId}/followees`,
+    followers: `${userId}/followers`,
+    featured: `${userId}/collections/featured`,
     endpoints: {
       sharedInbox: `https://${env.UNSOCIAL_HOST}/inbox`,
     },
     preferredUsername: user.preferredUsername,
     name: user.name || "",
     summary: user.summary || "",
-    url: userAddress,
+    url: userId,
     publicKey: {
-      id: `${activityAddress}#main-key`,
-      owner: activityAddress,
+      id: `${userId}#main-key`,
+      owner: userId,
       publicKeyPem: required(user.publicKey),
     },
     icon: {
@@ -64,27 +63,27 @@ type NoteWithReply = Pick<Note, "id" | "userId" | "content" | "publishedAt"> & {
 };
 
 const convertNote = (note: NoteWithReply) => {
-  const userAddress = `https://${env.UNSOCIAL_HOST}/users/${note.userId}`;
+  const userId = `https://${env.UNSOCIAL_HOST}/users/${note.userId}`;
   const inReplyTo = (() => {
     if (note.replyTo) {
       if (note.replyTo.url) return note.replyTo.url;
-      return `https://${env.UNSOCIAL_HOST}/notes/${note.replyTo.id}/activity`;
+      return `https://${env.UNSOCIAL_HOST}/notes/${note.replyTo.id}`;
     }
     return undefined;
   })();
   const cc = (() => {
     if (note.replyTo?.user.actorUrl) {
-      return [`${userAddress}/followers`, note.replyTo.user.actorUrl];
+      return [`${userId}/followers`, note.replyTo.user.actorUrl];
     }
-    return [`${userAddress}/followers`];
+    return [`${userId}/followers`];
   })();
   return {
     ...contexts,
-    id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`,
+    id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}`,
     type: "Note",
     inReplyTo,
     content: note.content,
-    attributedTo: `${userAddress}/activity`,
+    attributedTo: userId,
     published: note.publishedAt.toISOString(),
     to,
     cc,
@@ -95,9 +94,9 @@ const convertCreate = (note: NoteWithReply) => {
   const object = convertNote(note);
   return {
     ...contexts,
-    id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`,
+    id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}`,
     type: "Create",
-    actor: `https://${env.UNSOCIAL_HOST}/users/${note.userId}/activity`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${note.userId}`,
     published: object.published,
     to: object.to,
     cc: object.cc,
@@ -109,10 +108,10 @@ const convertDelete = (note: Pick<Note, "id" | "userId">) => {
   return {
     ...contexts,
     type: "Delete",
-    actor: `https://${env.UNSOCIAL_HOST}/users/${note.userId}/activity`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${note.userId}`,
     object: {
       type: "Tombstone",
-      id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}/activity`,
+      id: `https://${env.UNSOCIAL_HOST}/notes/${note.id}`,
     },
     to,
     cc: [`https://${env.UNSOCIAL_HOST}/users/${note.userId}/followers`],
@@ -125,7 +124,7 @@ const convertFollow = (follow: Follow, followeeUrl: string) => {
     // TODO: エンドポイントつくる
     id: `https://${env.UNSOCIAL_HOST}/follows/${follow.id}`,
     type: "Follow",
-    actor: `https://${env.UNSOCIAL_HOST}/users/${follow.followerId}/activity`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${follow.followerId}`,
     object: followeeUrl,
   } satisfies apSchemaService.FollowActivity;
 };
@@ -135,7 +134,7 @@ const convertFollowPublic = (userId: string) => {
     ...contexts,
     id: `https://${env.UNSOCIAL_HOST}/follows/${crypto.randomUUID()}`,
     type: "Follow",
-    actor: `https://${env.UNSOCIAL_HOST}/users/${userId}/activity`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${userId}`,
     object: publicUrl,
   } satisfies apSchemaService.FollowActivity;
 };
@@ -150,7 +149,7 @@ const convertAccept = (
     type: "Accept",
     // TODO: いいの？
     id: `https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`,
-    actor: `https://${env.UNSOCIAL_HOST}/users/${userId}/activity`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${userId}`,
     object: followToAccept,
   } satisfies apSchemaService.AcceptActivity;
 };
@@ -161,7 +160,7 @@ const convertLike = (like: Like, noteUrl: string) => {
     type: "Like",
     // TODO: エンドポイントつくる
     id: `https://${env.UNSOCIAL_HOST}/likes/${like.id}`,
-    actor: `https://${env.UNSOCIAL_HOST}/users/${like.userId}/activity`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${like.userId}`,
     object: noteUrl,
     content: "👍",
   } satisfies apSchemaService.LikeActivity;
@@ -196,11 +195,11 @@ const convertAnnounce = (
   return {
     ...contexts,
     type: "Announce",
-    id: `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.id}/activity`,
-    actor: `https://${env.UNSOCIAL_HOST}/users/${noteWithQuote.userId}/activity`,
+    id: `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.id}`,
+    actor: `https://${env.UNSOCIAL_HOST}/users/${noteWithQuote.userId}`,
     object:
       noteWithQuote.quote.url ??
-      `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.quote.id}/activity`,
+      `https://${env.UNSOCIAL_HOST}/notes/${noteWithQuote.quote.id}`,
     published: noteWithQuote.publishedAt.toISOString(),
     to,
     cc,

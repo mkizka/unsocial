@@ -49,7 +49,7 @@ export const signHeaders = ({
   return {
     ...headers,
     signature:
-      `keyId="https://${env.UNSOCIAL_HOST}/users/${signer.id}/activity#main-key",` +
+      `keyId="https://${env.UNSOCIAL_HOST}/users/${signer.id}#main-key",` +
       `algorithm="rsa-sha256",` +
       `headers="${order.join(" ")}",` +
       `signature="${signature}"`,

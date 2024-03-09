@@ -27,7 +27,7 @@ describe("createNoteFromActivityService", () => {
       type: "Note",
       id: "https://remote.example.com/notes/dummyNoteId",
       content: "content",
-      inReplyTo: `https://myhost.example.com/notes/${replyTo.id}/activity`,
+      inReplyTo: `https://myhost.example.com/notes/${replyTo.id}`,
       attributedTo: noteUser.actorUrl!,
       published: "2023-01-01T00:00:00.000Z",
     } satisfies apSchemaService.NoteActivity;

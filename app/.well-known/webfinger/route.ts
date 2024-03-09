@@ -39,7 +39,7 @@ export async function GET({ nextUrl }: NextRequest) {
         {
           rel: "self",
           type: "application/activity+json",
-          href: `https://${env.UNSOCIAL_HOST}/users/${user.id}/activity`,
+          href: `https://${env.UNSOCIAL_HOST}/users/${user.id}`,
         },
       ],
     },

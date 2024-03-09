@@ -15,7 +15,7 @@ jest.useFakeTimers();
 const mockedNow = new Date("2024-01-01T03:00:00Z");
 jest.setSystemTime(mockedNow);
 
-const actorUrl = "https://remote.example.com/users/remote-user-id/activity";
+const actorUrl = "https://remote.example.com/users/remote-user-id";
 
 const webfingerUrl = "https://remote.example.com/.well-known/webfinger";
 

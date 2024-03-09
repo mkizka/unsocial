@@ -18,7 +18,7 @@ describe("findOrFetchUserByActor", () => {
   test("指定したactorUrlのローカルユーザーがDBに存在しない場合はエラーを返す", async () => {
     // arrange
     const user = await findOrFetchUserByActor(
-      "https://myhost.example.com/users/not-found-user-id/activity",
+      "https://myhost.example.com/users/not-found-user-id",
     );
     // act
     expect(mockedLogger.warn).toHaveBeenCalledTimes(1);
@@ -105,7 +105,7 @@ describe("findOrFetchUserByActor", () => {
   });
   test("指定したactorUrlのリモートユーザーがDBに存在せず、fetchに成功した場合はDBに追加して返す", async () => {
     // arrange
-    const actorUrl = "https://remote.example.com/users/remote-user-id/activity";
+    const actorUrl = "https://remote.example.com/users/remote-user-id";
     const activity = {
       type: "Person",
       id: actorUrl,
@@ -141,8 +141,7 @@ describe("findOrFetchUserByActor", () => {
   });
   test("指定したactorUrlのリモートユーザーがDBに存在せず、fetchに失敗した場合はエラーを返す", async () => {
     // arrange
-    const actorUrl =
-      "https://remote.example.com/users/not-found-user-id/activity";
+    const actorUrl = "https://remote.example.com/users/not-found-user-id";
     server.use(
       http.get(actorUrl, () => {
         return HttpResponse.error();
@@ -164,18 +163,6 @@ describe("findOrFetchUserByActor", () => {
   test("actorUrlの指定がローカルかつ/usersで始まらない場合はエラーを返す", async () => {
     // arrange
     const actorUrl = "https://myhost.example.com/invalid-actor-url";
-    // act
-    const user = await findOrFetchUserByActor(actorUrl);
-    // assert
-    expect(mockedLogger.warn).toHaveBeenCalledTimes(1);
-    expect(mockedLogger.warn).toHaveBeenCalledWith("actorUrlの形式が不正です", {
-      actorUrl,
-    });
-    expect(user).toBeInstanceOf(Error);
-  });
-  test("actorUrlの指定がローカルかつ/activityで終わらない場合はエラーを返す", async () => {
-    // arrange
-    const actorUrl = "https://myhost.example.com/users/invalid-actor-url";
     // act
     const user = await findOrFetchUserByActor(actorUrl);
     // assert

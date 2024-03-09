@@ -12,7 +12,7 @@ import { noteFindService } from ".";
 
 const dummyLocalNote = {
   id: "dummyNoteId",
-  url: "https://myhost.example.com/notes/dummyNoteId/activity",
+  url: "https://myhost.example.com/notes/dummyNoteId",
   content: "content",
   userId: "dummyUserId",
   publishedAt: new Date("2023-01-01T00:00:00.000Z"),

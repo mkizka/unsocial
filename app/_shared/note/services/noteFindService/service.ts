@@ -12,13 +12,9 @@ const logger = createLogger("noteFindService");
 
 const getLocalNoteId = (noteUrl: string) => {
   const url = new URL(noteUrl);
-  // https://myhost.example.com/notes/[noteId]/activity
-  const [_, prefixPath, noteId, lastPath] = url.pathname.split("/");
-  if (
-    url.host === env.UNSOCIAL_HOST &&
-    prefixPath === "notes" &&
-    lastPath === "activity"
-  ) {
+  // https://myhost.example.com/notes/[noteId]
+  const [_, prefixPath, noteId] = url.pathname.split("/");
+  if (url.host === env.UNSOCIAL_HOST && prefixPath === "notes") {
     return noteId;
   }
   return null;
