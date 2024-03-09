@@ -1,9 +1,6 @@
 import type { User } from "@prisma/client";
 
 import { env } from "@/_shared/utils/env";
-import { createLogger } from "@/_shared/utils/logger";
-
-export const logger = createLogger("userFindService");
 
 export const shouldRefetch = (user: User) => {
   if (user.host === env.UNSOCIAL_HOST) {
