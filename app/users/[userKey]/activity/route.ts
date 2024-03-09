@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { activityStreams } from "@/_shared/utils/activitypub";
+import { env } from "@/_shared/utils/env";
 
 export async function GET(
   request: Request,
@@ -14,12 +15,13 @@ export async function GET(
   }
   if (request.headers.get("accept")?.includes("text/html")) {
     return NextResponse.redirect(
-      new URL(`/@${user.preferredUsername}`, request.url),
+      `https://${env.UNSOCIAL_HOST}/@${user.preferredUsername}`,
     );
   }
   return NextResponse.json(activityStreams.user(user), {
     headers: {
       "Content-Type": "application/activity+json",
+      "Cache-Control": "s-maxage=60",
     },
   });
 }
