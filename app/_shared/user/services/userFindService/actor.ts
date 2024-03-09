@@ -47,7 +47,6 @@ export const findOrFetchUserByActor = async (
       });
       return existingUser || person;
     }
-    // DBにあったら更新、なかったら作成
     return userFindRepository.createOrUpdateUser(person, existingUser?.id);
   }
   return existingUser;
