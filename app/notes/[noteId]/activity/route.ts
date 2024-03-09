@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { NextResponse } from "next/server";
 
 import { activityStreams } from "@/_shared/utils/activitypub";
+import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
 
 export async function GET(
@@ -21,7 +22,9 @@ export async function GET(
     notFound();
   }
   if (request.headers.get("accept")?.includes("text/html")) {
-    return NextResponse.redirect(new URL(`/notes/${noteId}`, request.url));
+    return NextResponse.redirect(
+      `https://${env.UNSOCIAL_HOST}/notes/${noteId}`,
+    );
   }
   return NextResponse.json(activityStreams.note(note), {
     // TODO: ActivityPubの仕様に準拠する
