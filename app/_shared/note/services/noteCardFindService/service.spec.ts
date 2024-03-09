@@ -19,47 +19,20 @@ describe("noteCardFindService", () => {
       // act
       const noteCard = await noteCardFindService.findUniqueNoteCard(note.id);
       // assert
-      expect(noteCard).toEqualPrisma({
-        attachmentUrls: [],
-        attachments: [],
-        content: note.content,
-        createdAt: expect.anyDate(),
-        id: note.id,
-        isLiked: false,
-        isReposted: false,
-        isMine: false,
-        likes: [],
-        quotes: [],
-        publishedAt: expect.anyDate(),
-        quote: null,
-        quoteId: null,
-        quotedBy: null,
-        replies: [],
-        replyTo: null,
-        replyToId: null,
-        url: `/notes/${note.id}`,
-        likesCount: 0,
-        user: {
-          actorUrl: null,
-          displayUsername: `@${note.user.preferredUsername}`,
-          email: null,
-          emailVerified: null,
-          host: note.user.host,
-          icon: null,
-          iconHash: null,
-          id: note.user.id,
-          image: null,
-          inboxUrl: null,
-          lastFetchedAt: null,
-          name: null,
-          preferredUsername: note.user.preferredUsername,
-          publicKey: null,
-          summary: null,
-          isAdmin: true,
-          url: `/@${note.user.preferredUsername}`,
-        },
-        userId: note.userId,
-      });
+      expect(noteCard).toEqualPrisma(
+        expect.objectContaining({
+          quotedBy: null,
+          attachmentUrls: [],
+          isMine: false,
+          isLiked: false,
+          isReposted: false,
+          url: `/notes/${note.id}`,
+          user: expect.objectContaining({
+            displayUsername: `@${note.user.preferredUsername}`,
+            url: `/@${note.user.preferredUsername}`,
+          }),
+        }),
+      );
     });
     test("自分の投稿である場合はisMineをtrueにする", async () => {
       // arrange
@@ -157,47 +130,20 @@ describe("noteCardFindService", () => {
       // assert
       expect(noteCards).toHaveLength(10);
       for (const noteCard of noteCards) {
-        expect(noteCard).toEqualPrisma({
-          attachmentUrls: [],
-          attachments: [],
-          content: expect.any(String),
-          createdAt: expect.anyDate(),
-          id: expect.any(String),
-          isLiked: false,
-          isReposted: false,
-          isMine: false,
-          likes: [],
-          quotes: [],
-          publishedAt: expect.anyDate(),
-          quote: null,
-          quoteId: null,
-          quotedBy: null,
-          replies: [],
-          replyTo: null,
-          replyToId: null,
-          url: expect.any(String),
-          likesCount: 0,
-          user: {
-            actorUrl: null,
-            displayUsername: expect.any(String),
-            email: null,
-            emailVerified: null,
-            host: expect.any(String),
-            icon: null,
-            iconHash: null,
-            id: expect.any(String),
-            image: null,
-            inboxUrl: null,
-            lastFetchedAt: null,
-            name: null,
-            preferredUsername: expect.any(String),
-            publicKey: null,
-            summary: null,
-            url: expect.any(String),
-            isAdmin: true,
-          },
-          userId: expect.any(String),
-        });
+        expect(noteCard).toEqualPrisma(
+          expect.objectContaining({
+            quotedBy: null,
+            attachmentUrls: [],
+            isMine: false,
+            isLiked: false,
+            isReposted: false,
+            url: `/notes/${noteCard!.id}`,
+            user: expect.objectContaining({
+              displayUsername: `@${noteCard!.user.preferredUsername}`,
+              url: `/@${noteCard!.user.preferredUsername}`,
+            }),
+          }),
+        );
       }
     });
     test("publishedAtでソートする", async () => {

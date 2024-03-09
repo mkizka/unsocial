@@ -1,22 +1,8 @@
 import bcryptjs from "bcryptjs";
-import crypto from "crypto";
 
+import { createKeys } from "@/_shared/utils/createKeys";
 import { env } from "@/_shared/utils/env";
 import { prisma } from "@/_shared/utils/prisma";
-
-const createKeys = () => {
-  return crypto.generateKeyPairSync("rsa", {
-    modulusLength: 2048,
-    publicKeyEncoding: {
-      type: "spki",
-      format: "pem",
-    },
-    privateKeyEncoding: {
-      type: "pkcs8",
-      format: "pem",
-    },
-  });
-};
 
 export type SignUpUserParams = {
   name?: string;
