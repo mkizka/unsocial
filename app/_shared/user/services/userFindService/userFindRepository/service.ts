@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import { fromZodError } from "zod-validation-error";
 
 import { apFetchService } from "@/_shared/activitypub/apFetchService";
@@ -7,7 +8,7 @@ import { getIconHash } from "@/_shared/utils/icon";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 
-export const logger = createLogger("userFindRepository");
+const logger = createLogger("userFindRepository");
 
 export const createOrUpdateUser = (
   person: apSchemaService.PersonActivity,
@@ -24,7 +25,7 @@ export const createOrUpdateUser = (
     inboxUrl: person.endpoints?.sharedInbox ?? person.inbox,
     publicKey: person.publicKey.publicKeyPem,
     lastFetchedAt: new Date(),
-  };
+  } satisfies Prisma.UserCreateInput;
   return userIdForUpdate
     ? prisma.user.update({ where: { id: userIdForUpdate }, data })
     : prisma.user.create({ data });
@@ -35,7 +36,6 @@ export const fetchPersonByActorUrl = async (
 ): Promise<apSchemaService.PersonActivity | Error> => {
   const response = await apFetchService.fetchActivity(actorUrl);
   if (response instanceof Error) {
-    logger.info("Actorの取得に失敗しました");
     return response;
   }
   const parsed = apSchemaService.personSchema.safeParse(response);
