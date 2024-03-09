@@ -1,25 +1,14 @@
+import type { User } from "@prisma/client";
+
 import { env } from "@/_shared/utils/env";
 
-type ParsedKey =
-  | {
-      id: string;
-    }
-  | {
-      preferredUsername: string;
-      host: string;
-    };
-
-export const parseUserKey = (key: string): ParsedKey => {
-  const decodedKey = decodeURIComponent(key);
-  if (!decodedKey.startsWith("@")) {
-    return {
-      id: decodedKey,
-    };
+export const shouldRefetch = (user: User) => {
+  if (user.host === env.UNSOCIAL_HOST) {
+    return false;
   }
-  const [preferredUsername, host] = decodedKey.split("@").slice(1);
-  return {
-    // startsWith("@")でチェックしているのでundefinedにはならない
-    preferredUsername: preferredUsername as string,
-    host: host ?? env.UNSOCIAL_HOST,
-  };
+  if (!user.lastFetchedAt) {
+    return true;
+  }
+  const diff = Date.now() - user.lastFetchedAt.getTime();
+  return diff >= 1000 * 60 * 60 * 3;
 };

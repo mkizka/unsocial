@@ -109,7 +109,7 @@ export const personSchema = activitySchema.extend({
     z.literal("Application"),
   ]),
   id: z.string().url(),
-  name: z.string().nullable(),
+  name: z.string().nullable().optional(),
   summary: z.string().nullable().optional(),
   url: z.string().url().optional(),
   preferredUsername: z.string().min(1),
@@ -131,8 +131,8 @@ export const personSchema = activitySchema.extend({
     .nullable()
     .optional(),
   publicKey: z.object({
-    id: z.string().url(),
-    owner: z.string().url(),
+    id: z.string().url().optional(),
+    owner: z.string().url().optional(),
     publicKeyPem: z.string(),
   }),
 });
