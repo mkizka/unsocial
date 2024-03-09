@@ -14,12 +14,12 @@ const getLocalUserId = (actorUrl: string) => {
   const url = new URL(actorUrl);
   // https://myhost.example.com/users/[userId]/activity
   const [_, prefixPath, userId, lastPath] = url.pathname.split("/");
-  if (
-    url.host === env.UNSOCIAL_HOST &&
-    prefixPath === "users" &&
-    lastPath === "activity"
-  ) {
-    return userId;
+  if (url.host === env.UNSOCIAL_HOST) {
+    if (prefixPath === "users" && lastPath === "activity") {
+      return userId;
+    } else {
+      return new Error();
+    }
   }
   return null;
 };
@@ -30,6 +30,10 @@ export const findOrFetchUserByActor = async (
   // 自ホストのユーザーはactorUrlがnullになっているため、
   // idをURLから取り出してDBから取得する
   const localUserId = getLocalUserId(actorUrl);
+  if (localUserId instanceof Error) {
+    logger.warn("actorUrlの形式が不正です", { actorUrl });
+    return localUserId;
+  }
   if (localUserId) {
     return findOrFetchUserById(localUserId);
   }

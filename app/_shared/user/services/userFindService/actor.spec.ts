@@ -161,4 +161,16 @@ describe("findOrFetchUserByActor", () => {
     );
     expect(user).toBeInstanceOf(FetcherError);
   });
+  test("actorUrlの指定がローカルかつ不正な場合はエラーを返す", async () => {
+    // arrange
+    const actorUrl = "https://myhost.example.com/users/invalid-actor-url";
+    // act
+    const user = await findOrFetchUserByActor(actorUrl);
+    // assert
+    expect(mockedLogger.warn).toHaveBeenCalledTimes(1);
+    expect(mockedLogger.warn).toHaveBeenCalledWith("actorUrlの形式が不正です", {
+      actorUrl,
+    });
+    expect(user).toBeInstanceOf(Error);
+  });
 });
