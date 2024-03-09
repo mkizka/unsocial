@@ -1,14 +1,16 @@
+import type { User } from "@prisma/client";
+
 import { Timeline } from "@/_shared/note/components/Timeline";
 
 import { UserTab } from "./UserTab";
 
 type Props = {
-  userKey: string;
+  user: User;
   currentTab: string;
 };
 
-export async function UserPage({ userKey, currentTab }: Props) {
-  const rootPath = `/${decodeURIComponent(userKey)}`;
+export async function UserPage({ user, currentTab }: Props) {
+  const rootPath = `/@${user.preferredUsername}`;
   return (
     <UserTab
       current={currentTab}
@@ -16,7 +18,7 @@ export async function UserPage({ userKey, currentTab }: Props) {
         root: {
           name: "投稿",
           href: rootPath,
-          render: () => <Timeline userKey={userKey} />,
+          render: () => <Timeline user={user} />,
         },
         likes: {
           name: "いいね",

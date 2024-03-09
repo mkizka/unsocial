@@ -1,27 +1,15 @@
-import { notFound } from "next/navigation";
+import type { User } from "@prisma/client";
 
 import { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
-import { userFindService } from "@/_shared/user/services/userFindService";
 
 import { TimelineLoader } from "./TimelineLoader";
 
 type Props = {
-  userKey?: string;
+  user?: User;
 };
 
-const getUserIdOrUndefined = async (userKey?: string) => {
-  if (!userKey) {
-    return undefined;
-  }
-  const user = await userFindService.findOrFetchUserByKey(userKey);
-  if (user instanceof Error) {
-    notFound();
-  }
-  return user.id;
-};
-
-export async function Timeline({ userKey }: Props) {
-  const userId = await getUserIdOrUndefined(userKey);
+export async function Timeline({ user }: Props) {
+  const userId = user?.id;
   const firstLoadedNotes = await noteCardFindService.findManyNoteCards({
     userId,
     count: 30,
