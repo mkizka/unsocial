@@ -3,12 +3,8 @@ import { fromZodError } from "zod-validation-error";
 
 import { apFetchService } from "@/_shared/activitypub/apFetchService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
-import { ActorValidationError } from "@/_shared/user/services/userFindService/errors";
 import { getIconHash } from "@/_shared/utils/icon";
-import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
-
-const logger = createLogger("userFindRepository");
 
 export const createOrUpdateUser = (
   person: apSchemaService.PersonActivity,
@@ -40,10 +36,7 @@ export const fetchPersonByActorUrl = async (
   }
   const parsed = apSchemaService.personSchema.safeParse(response);
   if (!parsed.success) {
-    logger.info(
-      "Actorの検証に失敗しました: " + fromZodError(parsed.error).toString(),
-    );
-    return new ActorValidationError();
+    return fromZodError(parsed.error);
   }
   return parsed.data;
 };
