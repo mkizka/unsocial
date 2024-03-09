@@ -1,11 +1,14 @@
 import type { User } from "@prisma/client";
 
 import { env } from "@/_shared/utils/env";
+import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 
 import { userFindRepository } from "./userFindRepository";
 import { findOrFetchUserById } from "./userId";
 import { shouldRefetch } from "./utils";
+
+const logger = createLogger("userFindService.findOrFetchUserByActor");
 
 const getLocalUserId = (actorUrl: string) => {
   const url = new URL(actorUrl);
@@ -34,6 +37,10 @@ export const findOrFetchUserByActor = async (
   if (!existingUser || shouldRefetch(existingUser)) {
     const person = await userFindRepository.fetchPersonByActorUrl(actorUrl);
     if (person instanceof Error) {
+      logger.warn("リモートユーザーの更新に失敗しました", {
+        actorUrl,
+        error: person,
+      });
       return existingUser || person;
     }
     // DBにあったら更新、なかったら作成

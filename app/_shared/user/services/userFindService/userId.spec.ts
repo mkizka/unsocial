@@ -10,7 +10,8 @@ import { UserNotFoundError } from "./errors";
 import { findOrFetchUserById } from "./userId";
 
 jest.useFakeTimers();
-jest.setSystemTime(new Date("2024-01-01T03:00:00Z"));
+const mockedNow = new Date("2024-01-01T03:00:00Z");
+jest.setSystemTime(mockedNow);
 
 describe("findOrFetchUserById", () => {
   test("指定したIDのユーザーがDBに存在しない場合はエラーを返す", async () => {
@@ -70,7 +71,7 @@ describe("findOrFetchUserById", () => {
     expect(mockedLogger.warn).not.toHaveBeenCalled();
     expect(user).toEqualPrisma({
       ...remoteUser,
-      lastFetchedAt: new Date("2024-01-01T03:00:00Z"),
+      lastFetchedAt: mockedNow,
     });
   });
   test("指定したIDのリモートユーザーがDBに存在し、fetchに失敗した場合はそのまま返す", async () => {
