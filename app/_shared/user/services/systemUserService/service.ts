@@ -1,5 +1,7 @@
 import assert from "assert";
+import { Mutex } from "async-mutex";
 import crypto from "crypto";
+import { cache } from "react";
 
 import { userSignUpService } from "@/_shared/user/services/userSignUpService";
 import { env } from "@/_shared/utils/env";
@@ -18,7 +20,7 @@ export const findSystemUser = async (options?: { withCredential: boolean }) => {
   });
 };
 
-export const findOrCreateSystemUser = async () => {
+const _findOrCreateSystemUser = async () => {
   const systemUser = await findSystemUser({ withCredential: true });
   if (systemUser) {
     assert(
@@ -35,3 +37,9 @@ export const findOrCreateSystemUser = async () => {
     password: crypto.randomUUID(),
   });
 };
+
+const mutex = new Mutex();
+
+export const findOrCreateSystemUser = cache(async () => {
+  return mutex.runExclusive(_findOrCreateSystemUser);
+});
