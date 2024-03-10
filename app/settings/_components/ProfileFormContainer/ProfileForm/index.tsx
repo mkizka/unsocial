@@ -7,11 +7,11 @@ import { Card } from "@/_shared/ui/Card";
 import { Input } from "@/_shared/ui/Input";
 import { Textarea } from "@/_shared/ui/Textarea";
 import { cn } from "@/_shared/utils/cn";
-import type { ServerAction } from "@/_shared/utils/serverAction";
+import type { FormAction } from "@/_shared/utils/formAction";
 
 type Props = {
   user: Pick<User, "name" | "summary">;
-  onSubmit: ServerAction;
+  onSubmit: FormAction;
 };
 
 export function ProfileForm({ user, onSubmit }: Props) {
