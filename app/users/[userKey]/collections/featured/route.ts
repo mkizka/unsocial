@@ -12,7 +12,6 @@ export async function GET(
   if (user instanceof Error) {
     notFound();
   }
-  // TODO: activityStreams.orderedCollection実装
   return NextResponse.json(
     {
       "@context": ["https://www.w3.org/ns/activitystreams"],

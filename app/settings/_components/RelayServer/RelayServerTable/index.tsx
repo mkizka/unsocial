@@ -15,7 +15,7 @@ import {
 const STATUS_TEXT = {
   SENT: "送信済み",
   ACCEPTED: "承認済み",
-  FAILED: "失敗", // TODO: 実装する
+  FAILED: "失敗",
 } as const satisfies {
   [key in RelayServerStatus]: string;
 };

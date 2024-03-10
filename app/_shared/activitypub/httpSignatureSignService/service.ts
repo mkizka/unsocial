@@ -20,7 +20,7 @@ export type SignActivityParams = {
   method: string;
 };
 
-// TODO: Requestオブジェクトを受け取るようにする
+// Requestオブジェクトを受け取るようにしたい
 export const signHeaders = ({
   signer,
   body,

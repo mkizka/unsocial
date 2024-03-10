@@ -12,13 +12,11 @@ const note: noteCardFindService.NoteCard = {
   url: "/notes/1",
   isLiked: false,
   isMine: false,
-  // TODO: 必要な値だけを型が受け入れるようにする
   // @ts-expect-error
   user: {
     url: "/user",
     name: "ユーザー名",
     displayUsername: "@preferredUsername@example.com",
-    // TODO: msw-storybook-addon導入
     iconHash: "default",
   },
 };
