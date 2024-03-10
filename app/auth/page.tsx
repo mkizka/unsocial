@@ -18,5 +18,5 @@ export default async function SigninPage() {
   if (user) {
     return redirect("/");
   }
-  return <AuthForm action={await getFormType()} />;
+  return <AuthForm type={await getFormType()} />;
 }
