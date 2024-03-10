@@ -1,23 +1,30 @@
+import { notFound } from "next/navigation";
+
+import { userFindService } from "@/_shared/user/services/userFindService";
+import { getUserId } from "@/_shared/utils/getUserId";
+
 import { UserCard } from "./_components/UserCard";
 
-// TODO: https://github.com/vercel/next.js/issues/52126 が解決されたら追加
+type Params = {
+  userKey: string;
+};
 
-// export async function generateMetadata({ params: { userId } }: Props) {
-//   const user = await userService.findOrFetchUserByParams({ userId });
-//   if (!user) {
-//     notFound();
-//   }
-//   return {
-//     title: `${user.name} (@${user.preferredUsername}) - ${env.UNSOCIAL_HOST}`,
-//   };
-// }
+export async function generateMetadata({ params }: { params: Params }) {
+  const user = await userFindService.findOrFetchUserByKey(params.userKey);
+  if (user instanceof Error) {
+    notFound();
+  }
+  return {
+    title: `${user.name}(${getUserId(user)})さん`,
+  };
+}
 
 export default function Layout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { userKey: string };
+  params: Params;
 }) {
   return (
     <>
