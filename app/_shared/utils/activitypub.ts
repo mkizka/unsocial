@@ -59,8 +59,7 @@ type Reply = Pick<Note, "id" | "url"> & {
 };
 
 type NoteWithReply = Pick<Note, "id" | "userId" | "content" | "publishedAt"> & {
-  // TODO: users/[userKey]/collections/featured を修正する時にオプショナルを外す
-  replyTo?: Reply | null;
+  replyTo: Reply | null;
 };
 
 const convertNote = (note: NoteWithReply) => {
@@ -124,7 +123,6 @@ const convertDelete = (note: Pick<Note, "id" | "userId">) => {
 const convertFollow = (follow: Follow, followeeUrl: string) => {
   return {
     ...contexts,
-    // TODO: エンドポイントつくる
     id: `https://${env.UNSOCIAL_HOST}/follows/${follow.id}`,
     type: "Follow",
     actor: `https://${env.UNSOCIAL_HOST}/users/${follow.followerId}/activity`,
@@ -150,7 +148,6 @@ const convertAccept = (
   return {
     ...contexts,
     type: "Accept",
-    // TODO: いいの？
     id: `https://${env.UNSOCIAL_HOST}/${crypto.randomUUID()}`,
     actor: `https://${env.UNSOCIAL_HOST}/users/${userId}/activity`,
     object: followToAccept,
@@ -161,7 +158,6 @@ const convertLike = (like: Like, noteUrl: string) => {
   return {
     ...contexts,
     type: "Like",
-    // TODO: エンドポイントつくる
     id: `https://${env.UNSOCIAL_HOST}/likes/${like.id}`,
     actor: `https://${env.UNSOCIAL_HOST}/users/${like.userId}/activity`,
     object: noteUrl,

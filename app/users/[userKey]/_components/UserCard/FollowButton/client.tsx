@@ -14,7 +14,7 @@ type FollowButtonProps = {
 const FOLLOW_TEXT = {
   SENT: "承認待ち",
   ACCEPTED: "フォロー中",
-  FAILED: "再フォロー", // TODO: 実装する
+  FAILED: "再フォロー",
 } as const satisfies {
   [key in FollowStatus]: string;
 };
