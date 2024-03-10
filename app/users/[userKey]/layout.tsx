@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { userFindService } from "@/_shared/user/services/userFindService";
+import { getUserId } from "@/_shared/utils/getUserId";
 
 import { UserCard } from "./_components/UserCard";
 
@@ -14,7 +15,7 @@ export async function generateMetadata({ params }: { params: Params }) {
     notFound();
   }
   return {
-    title: `${user.name}(@${user.preferredUsername})`,
+    title: `${user.name}(${getUserId(user)})さん`,
   };
 }
 

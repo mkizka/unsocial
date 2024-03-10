@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { NoteCardContainer } from "@/_shared/note/components/NoteCard";
 import { NoteForm } from "@/_shared/note/components/NoteForm";
 import { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
+import { getUserId } from "@/_shared/utils/getUserId";
 
 import { LikeUserList } from "./_components/LikeUserList";
 
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: { params: Params }) {
     notFound();
   }
   return {
-    title: `${note.user.name}(@${note.user.preferredUsername})さんの投稿: ${note.content}`,
+    title: `${note.user.name}(${getUserId(note.user)})さんの投稿: ${note.content}`,
   };
 }
 
