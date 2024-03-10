@@ -1,16 +1,13 @@
 import { redirect } from "next/navigation";
 
-import { systemUserService } from "@/_shared/user/services/systemUserService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { prisma } from "@/_shared/utils/prisma";
 
 import { AuthForm } from "./_components/AuthForm";
 
-// 個人ユーザーの利用を想定しているため、システムユーザーでないアカウントが存在する場合は常にログイン画面を表示する
+// 個人ユーザーの利用を想定しているため、管理者アカウントが1つ以上存在する場合は常にログイン画面を表示する
 const getFormType = async () => {
-  const systemUser = await systemUserService.findSystemUser();
-  const where = systemUser ? { NOT: { id: systemUser.id } } : {};
-  const count = await prisma.credential.count({ where });
+  const count = await prisma.user.count({ where: { isAdmin: true } });
   return count > 0 ? "signIn" : "signUp";
 };
 
