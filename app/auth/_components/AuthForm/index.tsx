@@ -3,6 +3,7 @@ import { signIn } from "next-auth/react";
 import { useFormState } from "react-dom";
 
 import { Button } from "@/_shared/ui/Button";
+import { Card } from "@/_shared/ui/Card";
 import { cn } from "@/_shared/utils/cn";
 import type { FormAction } from "@/_shared/utils/formAction";
 
@@ -46,36 +47,38 @@ export function AuthForm({ type }: Props) {
   const [state, dispatch] = useFormState(action, null);
 
   return (
-    <form className="mx-auto flex max-w-sm flex-col gap-8" action={dispatch}>
-      {type === "signUp" && (
-        <TextInputField
-          name="name"
-          label="ユーザー名"
-          autoComplete="name"
-          required={false}
-        />
-      )}
-      <TextInputField
-        name="preferredUsername"
-        label="ユーザーID"
-        autoComplete="username"
-      />
-      <PasswordInputField type={type} />
-      <div className="flex items-center">
-        {state && (
-          <p
-            className={cn({
-              "text-destructive": state.type === "error",
-              "text-primary": state.type === "success",
-            })}
-          >
-            {state.message}
-          </p>
+    <Card>
+      <form className="mx-auto flex flex-col gap-4 px-8 pb-4" action={dispatch}>
+        {type === "signUp" && (
+          <TextInputField
+            name="name"
+            label="ユーザー名"
+            autoComplete="name"
+            required={false}
+          />
         )}
-        <Button className="ml-auto" data-testid="auth-form__button">
-          {texts[type].button}
-        </Button>
-      </div>
-    </form>
+        <TextInputField
+          name="preferredUsername"
+          label="ユーザーID"
+          autoComplete="username"
+        />
+        <PasswordInputField type={type} />
+        <div className="flex items-center">
+          {state && (
+            <p
+              className={cn({
+                "text-destructive": state.type === "error",
+                "text-primary": state.type === "success",
+              })}
+            >
+              {state.message}
+            </p>
+          )}
+          <Button className="ml-auto" data-testid="auth-form__button">
+            {texts[type].button}
+          </Button>
+        </div>
+      </form>
+    </Card>
   );
 }
