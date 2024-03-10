@@ -7,11 +7,25 @@ import { noteCardFindService } from "@/_shared/note/services/noteCardFindService
 
 import { LikeUserList } from "./_components/LikeUserList";
 
+type Params = {
+  noteId: string;
+};
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const note = await noteCardFindService.findUniqueNoteCard(params.noteId);
+  if (!note) {
+    notFound();
+  }
+  return {
+    title: `${note.user.name}(@${note.user.preferredUsername})さんの投稿: ${note.content}`,
+  };
+}
+
 export default async function Page({
   params,
   searchParams,
 }: {
-  params: { noteId: string };
+  params: Params;
   searchParams: { reply?: string };
 }) {
   const note = await noteCardFindService.findUniqueNoteCard(params.noteId);
