@@ -6,10 +6,7 @@ import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { getIconHash } from "@/_shared/utils/icon";
 import { prisma } from "@/_shared/utils/prisma";
 
-export const createOrUpdateUser = (
-  person: apSchemaService.PersonActivity,
-  userIdForUpdate?: string,
-) => {
+export const upsertUser = (person: apSchemaService.PersonActivity) => {
   const data = {
     name: person.name,
     preferredUsername: person.preferredUsername,
@@ -22,9 +19,11 @@ export const createOrUpdateUser = (
     publicKey: person.publicKey.publicKeyPem,
     lastFetchedAt: new Date(),
   } satisfies Prisma.UserCreateInput;
-  return userIdForUpdate
-    ? prisma.user.update({ where: { id: userIdForUpdate }, data })
-    : prisma.user.create({ data });
+  return prisma.user.upsert({
+    where: { actorUrl: person.id },
+    create: data,
+    update: data,
+  });
 };
 
 export const fetchPersonByActorUrl = async (
