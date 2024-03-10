@@ -24,7 +24,7 @@ export async function GET(
     {
       headers: {
         "Content-Type": "application/activity+json",
-        "Cache-Control": "s-maxage=60",
+        "Cache-Control": "max-age=0, s-maxage=60",
       },
     },
   );
