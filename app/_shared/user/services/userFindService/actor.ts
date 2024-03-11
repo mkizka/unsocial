@@ -1,4 +1,5 @@
 import type { User } from "@prisma/client";
+import { cache } from "react";
 
 import { env } from "@/_shared/utils/env";
 import { createLogger } from "@/_shared/utils/logger";
@@ -24,30 +25,30 @@ const getLocalUserId = (actorUrl: string) => {
   return null;
 };
 
-export const findOrFetchUserByActor = async (
-  actorUrl: string,
-): Promise<User | Error> => {
-  // 自ホストのユーザーはactorUrlがnullになっているため、
-  // idをURLから取り出してDBから取得する
-  const localUserId = getLocalUserId(actorUrl);
-  if (localUserId instanceof Error) {
-    logger.warn("actorUrlの形式が不正です", { actorUrl });
-    return localUserId;
-  }
-  if (localUserId) {
-    return findOrFetchUserById(localUserId);
-  }
-  const existingUser = await prisma.user.findUnique({ where: { actorUrl } });
-  if (!existingUser || shouldRefetch(existingUser)) {
-    const person = await userFindRepository.fetchPersonByActorUrl(actorUrl);
-    if (person instanceof Error) {
-      logger.warn("Actorの取得に失敗しました", {
-        actorUrl,
-        error: person,
-      });
-      return existingUser || person;
+export const findOrFetchUserByActor = cache(
+  async (actorUrl: string): Promise<User | Error> => {
+    // 自ホストのユーザーはactorUrlがnullになっているため、
+    // idをURLから取り出してDBから取得する
+    const localUserId = getLocalUserId(actorUrl);
+    if (localUserId instanceof Error) {
+      logger.warn("actorUrlの形式が不正です", { actorUrl });
+      return localUserId;
     }
-    return userFindRepository.createOrUpdateUser(person, existingUser?.id);
-  }
-  return existingUser;
-};
+    if (localUserId) {
+      return findOrFetchUserById(localUserId);
+    }
+    const existingUser = await prisma.user.findUnique({ where: { actorUrl } });
+    if (!existingUser || shouldRefetch(existingUser)) {
+      const person = await userFindRepository.fetchPersonByActorUrl(actorUrl);
+      if (person instanceof Error) {
+        logger.warn("Actorの取得に失敗しました", {
+          actorUrl,
+          error: person,
+        });
+        return existingUser || person;
+      }
+      return userFindRepository.upsertUser(person);
+    }
+    return existingUser;
+  },
+);

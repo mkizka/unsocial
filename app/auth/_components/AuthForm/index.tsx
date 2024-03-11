@@ -1,15 +1,17 @@
 "use client";
 import { signIn } from "next-auth/react";
-import type { ReactEventHandler } from "react";
-import { useRef } from "react";
+import { useFormState } from "react-dom";
 
 import { Button } from "@/_shared/ui/Button";
+import { Card } from "@/_shared/ui/Card";
+import { cn } from "@/_shared/utils/cn";
+import type { FormAction } from "@/_shared/utils/formAction";
 
 import { PasswordInputField } from "./PasswordInputField";
 import { TextInputField } from "./TextInputField";
 
 type Props = {
-  action: "signUp" | "signIn";
+  type: "signUp" | "signIn";
 };
 
 const texts = {
@@ -23,49 +25,60 @@ const texts = {
   },
 };
 
-export function AuthForm({ action }: Props) {
-  const ref = useRef<HTMLFormElement>(null);
+const action: FormAction = async (_, form) => {
+  const type = form.has("name") ? "signUp" : "signIn";
+  const response = await signIn("credentials", {
+    redirect: false,
+    // 名前は登録時のみ送信する
+    action: type,
+    name: form.get("name"),
+    preferredUsername: form.get("preferredUsername"),
+    password: form.get("password"),
+  });
+  if (response?.error) {
+    return { type: "error", message: response.error ?? texts[type].error };
+  } else {
+    location.href = "/";
+    return { type: "success", message: "ログインに成功しました" };
+  }
+};
 
-  const handleSubmit: ReactEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-    if (!ref.current) return;
-    const form = new FormData(ref.current);
-    const response = await signIn("credentials", {
-      redirect: false,
-      action,
-      name: form.get("name"),
-      preferredUsername: form.get("preferredUsername"),
-      password: form.get("password"),
-    });
-    if (response?.error) {
-      alert(response.error ?? texts[action].error);
-    } else {
-      location.href = "/";
-    }
-  };
+export function AuthForm({ type }: Props) {
+  const [state, dispatch] = useFormState(action, null);
 
   return (
-    <form
-      className="mx-auto flex max-w-sm flex-col gap-8"
-      ref={ref}
-      onSubmit={handleSubmit}
-    >
-      {action === "signUp" && (
+    <Card>
+      <form className="mx-auto flex flex-col gap-4 px-8 pb-4" action={dispatch}>
+        {type === "signUp" && (
+          <TextInputField
+            name="name"
+            label="ユーザー名"
+            autoComplete="name"
+            required={false}
+          />
+        )}
         <TextInputField
-          name="name"
-          label="ユーザー名"
-          autoComplete="name"
-          required={false}
+          name="preferredUsername"
+          label="ユーザーID"
+          autoComplete="username"
         />
-      )}
-      <TextInputField
-        name="preferredUsername"
-        label="ユーザーID"
-        autoComplete="username"
-      />
-      <PasswordInputField action={action} />
-      {/* TODO:ローディングさせる */}
-      <Button data-testid="auth-form__button">{texts[action].button}</Button>
-    </form>
+        <PasswordInputField type={type} />
+        <div className="flex items-center">
+          {state && (
+            <p
+              className={cn({
+                "text-destructive": state.type === "error",
+                "text-primary": state.type === "success",
+              })}
+            >
+              {state.message}
+            </p>
+          )}
+          <Button className="ml-auto" data-testid="auth-form__button">
+            {texts[type].button}
+          </Button>
+        </div>
+      </form>
+    </Card>
   );
 }

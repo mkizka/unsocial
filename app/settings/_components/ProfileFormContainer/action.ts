@@ -2,10 +2,10 @@
 import { revalidatePath } from "next/cache";
 
 import { userSessionService } from "@/_shared/user/services/userSessionService";
+import type { FormAction } from "@/_shared/utils/formAction";
 import { prisma } from "@/_shared/utils/prisma";
-import type { ServerAction } from "@/_shared/utils/serverAction";
 
-export const action: ServerAction = async (_, formData) => {
+export const action: FormAction = async (_, formData) => {
   const name = formData.get("name");
   const summary = formData.get("summary");
   if (typeof name !== "string" || typeof summary !== "string") {

@@ -4,10 +4,10 @@ import { useFormState } from "react-dom";
 import { Button } from "@/_shared/ui/Button";
 import { Input } from "@/_shared/ui/Input";
 import { cn } from "@/_shared/utils/cn";
-import type { ServerAction } from "@/_shared/utils/serverAction";
+import type { FormAction } from "@/_shared/utils/formAction";
 
 type Props = {
-  formAction: ServerAction;
+  formAction: FormAction;
 };
 
 export function RelayServerForm({ formAction }: Props) {

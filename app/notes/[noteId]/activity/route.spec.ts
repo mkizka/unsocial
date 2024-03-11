@@ -27,6 +27,17 @@ describe("/notes/[noteId]/activity", () => {
         publishedAt: true,
         id: true,
         userId: true,
+        replyTo: {
+          select: {
+            id: true,
+            url: true,
+            user: {
+              select: {
+                actorUrl: true,
+              },
+            },
+          },
+        },
       },
       where: {
         id: "noteId",
