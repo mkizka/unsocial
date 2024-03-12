@@ -1,5 +1,6 @@
 import type { User } from "@prisma/client";
 
+import { Card } from "@/_shared/ui/Card";
 import type { UserIconProps } from "@/_shared/user/components/UserIcon";
 import { UserIcon } from "@/_shared/user/components/UserIcon";
 import { getUserId } from "@/_shared/utils/getUserId";
@@ -10,7 +11,7 @@ type Props = {
 
 export async function UserItem({ user }: Props) {
   return (
-    <article className="mb-4 rounded p-2 shadow">
+    <Card className="p-2">
       <div className="flex w-full items-center">
         <UserIcon user={user} size={36} className="rounded-full" />
         <a href={`/${getUserId(user)}`} className="ml-2 flex hover:underline">
@@ -18,6 +19,6 @@ export async function UserItem({ user }: Props) {
           <div>{getUserId(user)}</div>
         </a>
       </div>
-    </article>
+    </Card>
   );
 }
