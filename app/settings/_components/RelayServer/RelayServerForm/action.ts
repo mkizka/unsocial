@@ -4,10 +4,10 @@ import { revalidatePath } from "next/cache";
 import { apRelayService } from "@/_shared/activitypub/apRelayService";
 import { systemUserService } from "@/_shared/user/services/systemUserService";
 import { activityStreams } from "@/_shared/utils/activitypub";
+import type { FormAction } from "@/_shared/utils/formAction";
 import { prisma } from "@/_shared/utils/prisma";
-import type { ServerAction } from "@/_shared/utils/serverAction";
 
-export const action: ServerAction = async (_, formData) => {
+export const action: FormAction = async (_, formData) => {
   const inboxUrl = formData.get("inbox-url");
   if (typeof inboxUrl !== "string") {
     return {

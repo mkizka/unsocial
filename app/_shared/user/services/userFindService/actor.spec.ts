@@ -139,6 +139,46 @@ describe("findOrFetchUserByActor", () => {
       }),
     ).toEqualPrisma(expected);
   });
+  test("同時に呼び出してもユーザー作成が重複してエラーにならない", async () => {
+    // arrange
+    const actorUrl = "https://remote.example.com/users/remote-user-id/activity";
+    const activity = {
+      type: "Person",
+      id: actorUrl,
+      preferredUsername: "remote",
+      inbox: "https://remote.example.com/inbox",
+      publicKey: {
+        publicKeyPem: "remote-public-key",
+      },
+    };
+    server.use(
+      http.get(actorUrl, () => {
+        return HttpResponse.json(activity);
+      }),
+    );
+    // act
+    const [user1, user2] = await Promise.all([
+      findOrFetchUserByActor(actorUrl),
+      findOrFetchUserByActor(actorUrl),
+    ]);
+    // assert
+    expect(mockedLogger.warn).not.toHaveBeenCalled();
+    const expected = expect.objectContaining({
+      preferredUsername: activity.preferredUsername,
+      host: "remote.example.com",
+      actorUrl,
+      inboxUrl: activity.inbox,
+      publicKey: activity.publicKey.publicKeyPem,
+      lastFetchedAt: mockedNow,
+    });
+    expect(user1).toEqualPrisma(expected);
+    expect(user2).toEqualPrisma(expected);
+    expect(
+      await prisma.user.findUnique({
+        where: { actorUrl },
+      }),
+    ).toEqualPrisma(expected);
+  });
   test("指定したactorUrlのリモートユーザーがDBに存在せず、fetchに失敗した場合はエラーを返す", async () => {
     // arrange
     const actorUrl =

@@ -1,5 +1,17 @@
 # unsocial
 
+## 0.0.43
+
+### Patch Changes
+
+- 6ec0745: ページにtitle要素追加
+
+## 0.0.42
+
+### Patch Changes
+
+- 426804e: ユーザーとノートのActivityにurl追加
+
 ## 0.0.41
 
 ### Patch Changes

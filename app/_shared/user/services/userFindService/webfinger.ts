@@ -28,6 +28,8 @@ const fetchActorUrlByWebFinger = async (
   return parsed.data.links[0]!.href;
 };
 
+// 引数がプリミティブでないのでReact.cacheは使わない(findOrFetchUserByKey側でcacheする)
+// https://ja.react.dev/reference/react/cache#memoized-function-still-runs
 export const findOrFetchUserByWebFinger = async (
   user: apFetchService.FetchWebFingerParams,
 ): Promise<User | Error> => {
@@ -62,8 +64,7 @@ export const findOrFetchUserByWebFinger = async (
       });
       return existingUser || person;
     }
-    // DBにあったら更新、なかったら作成
-    return userFindRepository.createOrUpdateUser(person, existingUser?.id);
+    return userFindRepository.upsertUser(person);
   }
   return existingUser;
 };

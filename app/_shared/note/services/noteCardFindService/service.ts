@@ -2,7 +2,7 @@ import type { Note } from "@prisma/client";
 import { cache } from "react";
 
 import { userSessionService } from "@/_shared/user/services/userSessionService";
-import { fullUsername } from "@/_shared/utils/fullUsername";
+import { getUserId } from "@/_shared/utils/getUserId";
 
 import { noteCardFindRepository } from "./noteCardFindRepository";
 
@@ -22,7 +22,7 @@ const formatNote = ({
           host: quotedBy.host,
           preferredUsername: quotedBy.preferredUsername,
           name: quotedBy.name,
-          url: `/${fullUsername(quotedBy)}`,
+          url: `/${getUserId(quotedBy)}`,
         }
       : null,
     attachmentUrls: note.attachments.map(
@@ -34,8 +34,8 @@ const formatNote = ({
     url: `/notes/${note.id}`,
     user: {
       ...note.user,
-      displayUsername: fullUsername(note.user),
-      url: `/${fullUsername(note.user)}`,
+      displayUsername: getUserId(note.user),
+      url: `/${getUserId(note.user)}`,
     },
   };
 };

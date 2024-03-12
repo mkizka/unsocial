@@ -1,3 +1,4 @@
+import type { User } from "@prisma/client";
 import assert from "assert";
 import { http, HttpResponse } from "msw";
 
@@ -12,6 +13,18 @@ import { findOrFetchUserById } from "./userId";
 jest.useFakeTimers();
 const mockedNow = new Date("2024-01-01T03:00:00Z");
 jest.setSystemTime(mockedNow);
+
+const activiey = (remoteUser: User) => {
+  return {
+    type: "Person",
+    id: remoteUser.actorUrl,
+    preferredUsername: remoteUser.preferredUsername,
+    inbox: remoteUser.inboxUrl,
+    publicKey: {
+      publicKeyPem: remoteUser.publicKey,
+    },
+  };
+};
 
 describe("findOrFetchUserById", () => {
   test("指定したIDのユーザーがDBに存在しない場合はエラーを返す", async () => {
@@ -54,15 +67,7 @@ describe("findOrFetchUserById", () => {
     assert(remoteUser.actorUrl);
     server.use(
       http.get(remoteUser.actorUrl, () => {
-        return HttpResponse.json({
-          type: "Person",
-          id: remoteUser.actorUrl,
-          preferredUsername: remoteUser.preferredUsername,
-          inbox: remoteUser.inboxUrl,
-          publicKey: {
-            publicKeyPem: remoteUser.publicKey,
-          },
-        });
+        return HttpResponse.json(activiey(remoteUser));
       }),
     );
     // act
@@ -70,6 +75,34 @@ describe("findOrFetchUserById", () => {
     // assert
     expect(mockedLogger.warn).not.toHaveBeenCalled();
     expect(user).toEqualPrisma({
+      ...remoteUser,
+      lastFetchedAt: mockedNow,
+    });
+  });
+  test("同時に呼び出してもユーザー作成が重複してエラーにならない", async () => {
+    // arrange
+    const remoteUser = await RemoteUserFactory.create({
+      // 3時間前
+      lastFetchedAt: new Date("2024-01-01T00:00:00Z"),
+    });
+    assert(remoteUser.actorUrl);
+    server.use(
+      http.get(remoteUser.actorUrl, () => {
+        return HttpResponse.json(activiey(remoteUser));
+      }),
+    );
+    // act
+    const [user1, user2] = await Promise.all([
+      findOrFetchUserById(remoteUser.id),
+      findOrFetchUserById(remoteUser.id),
+    ]);
+    // assert
+    expect(mockedLogger.warn).not.toHaveBeenCalled();
+    expect(user1).toEqualPrisma({
+      ...remoteUser,
+      lastFetchedAt: mockedNow,
+    });
+    expect(user2).toEqualPrisma({
       ...remoteUser,
       lastFetchedAt: mockedNow,
     });

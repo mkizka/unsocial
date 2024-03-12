@@ -27,6 +27,17 @@ describe("/notes/[noteId]/activity", () => {
         publishedAt: true,
         id: true,
         userId: true,
+        replyTo: {
+          select: {
+            id: true,
+            url: true,
+            user: {
+              select: {
+                actorUrl: true,
+              },
+            },
+          },
+        },
       },
       where: {
         id: "noteId",
@@ -45,6 +56,7 @@ describe("/notes/[noteId]/activity", () => {
       cc: ["https://myhost.example.com/users/userId/followers"],
       content: "content",
       id: "https://myhost.example.com/notes/noteId/activity",
+      url: "https://myhost.example.com/notes/noteId",
       published: "2021-01-01T00:00:00.000Z",
       to: ["https://www.w3.org/ns/activitystreams#Public"],
       type: "Note",

@@ -1,4 +1,6 @@
 "use client";
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
+
 import { useSearchModal } from "@/_components/SearchModal/hooks";
 import { cn } from "@/_shared/utils/cn";
 
@@ -17,6 +19,12 @@ export function Body({
       })}
     >
       {children}
+      <ProgressBar
+        // --foregroundの色
+        color="hsl(210 20% 20%)"
+        options={{ showSpinner: false }}
+        shallowRouting
+      />
     </body>
   );
 }

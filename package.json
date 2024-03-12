@@ -1,6 +1,6 @@
 {
   "name": "unsocial",
-  "version": "0.0.41",
+  "version": "0.0.43",
   "private": true,
   "packageManager": "pnpm@8.15.4",
   "engines": {
@@ -43,6 +43,7 @@
     "jsonld": "8.3.2",
     "next": "14.2.0-canary.16",
     "next-auth": "4.24.7",
+    "next-nprogress-bar": "2.3.5",
     "react": "18.3.0-canary-feed8f3f9-20240118",
     "react-dom": "18.3.0-canary-feed8f3f9-20240118",
     "react-simple-image-viewer": "1.2.2",

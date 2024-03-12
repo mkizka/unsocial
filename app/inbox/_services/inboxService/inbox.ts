@@ -79,7 +79,6 @@ export const perform = async (request: NextRequest) => {
   const actorUser = await userFindService.findOrFetchUserByActor(
     parsedActivity.data.actor,
   );
-  // TODO actorUserのエラーを使ってログを出す
   if (actorUser instanceof Error) {
     return new BadActivityRequestError(
       "actorで指定されたユーザーが見つかりませんでした",

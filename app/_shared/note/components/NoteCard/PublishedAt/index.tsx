@@ -9,7 +9,6 @@ type Props = {
   publishedAt: Date;
 };
 
-// TODO: レイアウトシフトしないようにしたい
 export function PublishedAt({ href, publishedAt }: Props) {
   const [text, setText] = useState("");
 

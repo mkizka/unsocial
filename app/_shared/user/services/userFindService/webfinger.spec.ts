@@ -94,6 +94,36 @@ describe("fetchActorUrlByWebFinger", () => {
       }),
     ).toEqualPrisma(expected);
   });
+  test("同時に呼び出してもユーザー作成が重複してエラーにならない", async () => {
+    // arrange
+    server.use(mockWebfinger, mockActor);
+    const params = {
+      preferredUsername: "remote",
+      host: "remote.example.com",
+    };
+    // act
+    const [user1, user2] = await Promise.all([
+      findOrFetchUserByWebFinger(params),
+      findOrFetchUserByWebFinger(params),
+    ]);
+    // assert
+    expect(mockedLogger.warn).not.toHaveBeenCalled();
+    const expected = expect.objectContaining({
+      preferredUsername: activity.preferredUsername,
+      host: "remote.example.com",
+      actorUrl,
+      inboxUrl: activity.inbox,
+      publicKey: activity.publicKey.publicKeyPem,
+      lastFetchedAt: mockedNow,
+    });
+    expect(user1).toEqualPrisma(expected);
+    expect(user2).toEqualPrisma(expected);
+    expect(
+      await prisma.user.findUnique({
+        where: { actorUrl },
+      }),
+    ).toEqualPrisma(expected);
+  });
   test("指定したpreferredUsernameとhostのリモートユーザーがDBに存在せず、Webfingerとの通信に失敗した場合はエラーを返す", async () => {
     // arrange
     server.use(mockWebfingerError);

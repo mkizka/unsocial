@@ -83,6 +83,7 @@ export type LikeActivity = z.infer<typeof likeSchema>;
 export const noteSchema = activitySchema.extend({
   type: z.literal("Note"),
   id: z.string().url(),
+  url: z.string().url().optional(),
   content: z.string(),
   inReplyTo: z.string().url().nullable().optional(),
   attributedTo: z.string().url(),

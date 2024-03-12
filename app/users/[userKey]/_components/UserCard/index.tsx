@@ -7,7 +7,7 @@ import { UserIcon } from "@/_shared/user/components/UserIcon";
 import { userFindService } from "@/_shared/user/services/userFindService";
 import { userSessionService } from "@/_shared/user/services/userSessionService";
 import { env } from "@/_shared/utils/env";
-import { fullUsername } from "@/_shared/utils/fullUsername";
+import { getUserId } from "@/_shared/utils/getUserId";
 
 import { FollowButton } from "./FollowButton";
 import { followCountService } from "./followCountService";
@@ -33,7 +33,7 @@ export async function UserCard({ userKey }: Props) {
         <UserIcon user={user} size={64} className="rounded-full" />
         <div className="ml-4">
           <h1 className="text-2xl font-bold">{user.name}</h1>
-          <div>{fullUsername(user)}</div>
+          <div>{getUserId(user)}</div>
         </div>
       </div>
       <div
@@ -41,7 +41,7 @@ export async function UserCard({ userKey }: Props) {
       ></div>
       <div className="flex items-center gap-2">
         <Link
-          href={`/${fullUsername(user)}/followees`}
+          href={`/${getUserId(user)}/followees`}
           className="hover:underline"
           data-testid="user-followees"
         >
@@ -49,7 +49,7 @@ export async function UserCard({ userKey }: Props) {
           <span className="ml-1">フォロー</span>
         </Link>
         <Link
-          href={`/${fullUsername(user)}/followers`}
+          href={`/${getUserId(user)}/followers`}
           className="hover:underline"
           data-testid="user-followers"
         >

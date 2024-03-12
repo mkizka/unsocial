@@ -12,14 +12,10 @@ export async function GET(
   if (user instanceof Error) {
     notFound();
   }
-  if (request.headers.get("accept")?.includes("text/html")) {
-    return NextResponse.redirect(
-      new URL(`/@${user.preferredUsername}`, request.url),
-    );
-  }
   return NextResponse.json(activityStreams.user(user), {
     headers: {
       "Content-Type": "application/activity+json",
+      "Cache-Control": "max-age=0, s-maxage=60",
     },
   });
 }
