@@ -10,6 +10,7 @@ import { cn } from "@/_shared/utils/cn";
 import { AttachmentImages } from "./AttachmentImages";
 import { DeleteButton } from "./DeleteButton";
 import { LikeButton } from "./LikeButton";
+import { NoteMenu } from "./NoteMenu";
 import { PublishedAt } from "./PublishedAt";
 import { ReplyButton } from "./ReplyButton";
 import { RepostButton } from "./RepostButton";
@@ -79,6 +80,7 @@ export function NoteCard({
             onClick={onLike}
           />
           {note.isMine && <DeleteButton onClick={onDelete} />}
+          <NoteMenu />
         </div>
         {withReplyLink && (
           <Link className="block hover:underline" href={`/notes/${note.id}`}>
