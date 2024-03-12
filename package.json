@@ -65,7 +65,7 @@
     "@storybook/jest": "0.2.3",
     "@storybook/nextjs": "8.0.0",
     "@storybook/react": "8.0.0",
-    "@storybook/test-runner": "0.16.0",
+    "@storybook/test-runner": "0.17.0",
     "@storybook/testing-library": "0.2.2",
     "@stryker-mutator/api": "8.2.6",
     "@stryker-mutator/core": "8.2.6",
