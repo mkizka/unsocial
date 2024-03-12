@@ -73,7 +73,11 @@ export function NoteCard({
         <div className="flex gap-10">
           <ReplyButton url={note.url} />
           <RepostButton isReposted={note.isReposted} onClick={onRepost} />
-          <LikeButton isLiked={note.isLiked} onClick={onLike} />
+          <LikeButton
+            isLiked={note.isLiked}
+            likesCount={note.likesCount}
+            onClick={onLike}
+          />
           {note.isMine && <DeleteButton onClick={onDelete} />}
         </div>
         {withReplyLink && (
