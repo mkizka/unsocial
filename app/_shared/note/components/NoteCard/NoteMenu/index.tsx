@@ -69,7 +69,7 @@ export function NoteMenu({ noteId }: Props) {
         <>
           <Card
             className="absolute right-0 z-10 w-56 space-y-4 drop-shadow-xl"
-            data-testid="user-menu__dropdown"
+            data-testid="note-menu__dropdown"
           >
             {items.map((item) => (
               <NoteMenuItem key={item.label} {...item} />
@@ -78,7 +78,7 @@ export function NoteMenu({ noteId }: Props) {
           <div
             className="fixed inset-0 z-0"
             onClick={() => setIsOpen(false)}
-            data-testid="user-menu__backdrop"
+            data-testid="note-menu__backdrop"
           />
         </>
       )}

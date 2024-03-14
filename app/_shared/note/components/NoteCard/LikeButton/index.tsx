@@ -36,7 +36,8 @@ export function LikeButton({
       ) : (
         <UnLikedIcon className="size-5 text-primary transition-colors" />
       )}
-      <div className="absolute left-8">{likesCound}</div>
+      {/* なぜか上下中央ぞろえにならない */}
+      <div className="absolute left-8 pb-[2px]">{likesCound}</div>
     </Button>
   );
 }
