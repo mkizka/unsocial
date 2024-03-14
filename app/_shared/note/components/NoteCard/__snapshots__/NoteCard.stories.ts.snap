@@ -44,10 +44,10 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
       <a data-testid="note-card__reply"
          href="/notes/1?reply"
       >
-        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
+        <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
                 type="button"
         >
-          <span class>
+          <span class="flex justify-center items-center w-full h-full gap-1">
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none"
                  viewbox="0 0 24 24"
@@ -66,11 +66,11 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
           </span>
         </button>
       </a>
-      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
+      <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
               data-testid="repost-button"
               type="button"
       >
-        <span class>
+        <span class="flex justify-center items-center w-full h-full gap-1">
           <svg xmlns="http://www.w3.org/2000/svg"
                fill="none"
                viewbox="0 0 24 24"
@@ -88,11 +88,11 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
           </svg>
         </span>
       </button>
-      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
+      <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
               data-testid="like-button"
               type="button"
       >
-        <span class>
+        <span class="flex justify-center items-center w-full h-full gap-1">
           <svg xmlns="http://www.w3.org/2000/svg"
                fill="none"
                viewbox="0 0 24 24"
@@ -108,8 +108,34 @@ exports[`_shared/note/components/NoteCard Default smoke-test 1`] = `
             >
             </path>
           </svg>
+          <div class="absolute left-8 pb-[2px]">
+          </div>
         </span>
       </button>
+      <div class="relative size-9">
+        <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
+                data-testid="like-button"
+                type="button"
+        >
+          <span class="flex justify-center items-center w-full h-full gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewbox="0 0 24 24"
+                 stroke-width="1.5"
+                 stroke="currentColor"
+                 aria-hidden="true"
+                 data-slot="icon"
+                 class="size-5 transition-colors"
+            >
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              >
+              </path>
+            </svg>
+          </span>
+        </button>
+      </div>
     </div>
   </footer>
 </article>
@@ -182,10 +208,10 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
       <a data-testid="note-card__reply"
          href="/notes/1?reply"
       >
-        <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
+        <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
                 type="button"
         >
-          <span class>
+          <span class="flex justify-center items-center w-full h-full gap-1">
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none"
                  viewbox="0 0 24 24"
@@ -204,11 +230,11 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
           </span>
         </button>
       </a>
-      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
+      <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
               data-testid="repost-button"
               type="button"
       >
-        <span class>
+        <span class="flex justify-center items-center w-full h-full gap-1">
           <svg xmlns="http://www.w3.org/2000/svg"
                fill="none"
                viewbox="0 0 24 24"
@@ -226,11 +252,11 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
           </svg>
         </span>
       </button>
-      <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
+      <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
               data-testid="like-button"
               type="button"
       >
-        <span class>
+        <span class="flex justify-center items-center w-full h-full gap-1">
           <svg xmlns="http://www.w3.org/2000/svg"
                fill="none"
                viewbox="0 0 24 24"
@@ -246,8 +272,34 @@ exports[`_shared/note/components/NoteCard Repost smoke-test 1`] = `
             >
             </path>
           </svg>
+          <div class="absolute left-8 pb-[2px]">
+          </div>
         </span>
       </button>
+      <div class="relative size-9">
+        <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary size-8"
+                data-testid="like-button"
+                type="button"
+        >
+          <span class="flex justify-center items-center w-full h-full gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewbox="0 0 24 24"
+                 stroke-width="1.5"
+                 stroke="currentColor"
+                 aria-hidden="true"
+                 data-slot="icon"
+                 class="size-5 transition-colors"
+            >
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              >
+              </path>
+            </svg>
+          </span>
+        </button>
+      </div>
     </div>
   </footer>
 </article>

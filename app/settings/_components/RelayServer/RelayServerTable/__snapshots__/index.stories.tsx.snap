@@ -23,8 +23,8 @@ exports[`settings/_components/RelayServer/RelayServerTable Default smoke-test 1`
             承認済み
           </td>
           <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-            <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
-              <span class>
+            <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
+              <span class="flex justify-center items-center w-full h-full gap-1">
                 削除
               </span>
             </button>
@@ -38,8 +38,8 @@ exports[`settings/_components/RelayServer/RelayServerTable Default smoke-test 1`
             送信済み
           </td>
           <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-            <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
-              <span class>
+            <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
+              <span class="flex justify-center items-center w-full h-full gap-1">
                 削除
               </span>
             </button>
@@ -53,8 +53,8 @@ exports[`settings/_components/RelayServer/RelayServerTable Default smoke-test 1`
             失敗
           </td>
           <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-            <button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
-              <span class>
+            <button class="relative flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 hover:bg-secondary h-9 px-4 py-2 text-destructive">
+              <span class="flex justify-center items-center w-full h-full gap-1">
                 削除
               </span>
             </button>
