@@ -15,7 +15,7 @@
     "_test:mutation:run": "dotenv -e .env.test -- ./scripts/mutation-test.sh",
     "_test:storybook:run": "wait-on tcp:9009 && test-storybook --url http://127.0.0.1:9009",
     "_test:storybook:server": "storybook dev -p 9009 --no-open > /dev/null 2>&1",
-    "all": "run-s -s _lint:fix test-u test:storybook-u",
+    "all": "run-s -s _lint:fix test-u test:storybook",
     "build": "SKIP_ENV_VALIDATION=1 next build",
     "dev": "./scripts/dev.sh",
     "down": "./scripts/down.sh",
@@ -27,8 +27,7 @@
     "test": "jest",
     "test-u": "pnpm test -- --updateSnapshot",
     "test:mutation": "run-s -s _test:mutation:run _test:mutation:report",
-    "test:storybook": "run-p -sr _test:storybook:*",
-    "test:storybook-u": "run-p -sr '_test:storybook:* -- --updateSnapshot'"
+    "test:storybook": "run-p -sr _test:storybook:*"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.525.0",
