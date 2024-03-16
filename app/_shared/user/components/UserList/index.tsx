@@ -5,11 +5,9 @@ import type { UserIconProps } from "@/_shared/user/components/UserIcon";
 import { UserIcon } from "@/_shared/user/components/UserIcon";
 import { getUserId } from "@/_shared/utils/getUserId";
 
-type Props = {
-  user: UserIconProps["user"] & Pick<User, "name" | "host">;
-};
+type UserItem = UserIconProps["user"] & Pick<User, "id" | "name" | "host">;
 
-export async function UserItem({ user }: Props) {
+function UserItem({ user }: { user: UserItem }) {
   return (
     <Card className="p-2">
       <div className="flex w-full items-center">
@@ -21,4 +19,8 @@ export async function UserItem({ user }: Props) {
       </div>
     </Card>
   );
+}
+
+export async function UserList({ users }: { users: UserItem[] }) {
+  return users.map((user) => <UserItem key={user.id} user={user} />);
 }
