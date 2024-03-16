@@ -4,54 +4,62 @@ import { useState } from "react";
 
 import { Button } from "@/_shared/ui/Button";
 import { Card } from "@/_shared/ui/Card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/_shared/ui/Dialog";
 
 type Props = {
   noteId: string;
 };
 
-type MenuItem = {
-  label: string;
-  Icon: React.FC<React.SVGProps<SVGSVGElement>>;
-} & (
-  | {
-      href: string;
-    }
-  | {
-      onClick: () => void;
-    }
-);
+// function NoteMenuItem(item: MenuItem) {
+//   if ("href" in item) {
+//     return (
+//       <a href={item.href} className="flex items-center gap-2 hover:opacity-70">
+//         <item.Icon className="size-5" />
+//         <div>{item.label}</div>
+//       </a>
+//     );
+//   }
+//   return (
+//     <button
+//       className="flex items-center gap-2 hover:opacity-70"
+//       onClick={item.onClick}
+//     >
+//       <item.Icon className="size-5" />
+//       <div>{item.label}</div>
+//     </button>
+//   );
+// }
 
-function NoteMenuItem(item: MenuItem) {
-  if ("href" in item) {
-    return (
-      <a href={item.href} className="flex items-center gap-2 hover:opacity-70">
-        <item.Icon className="size-5" />
-        <div>{item.label}</div>
-      </a>
-    );
-  }
+function LikesDialog() {
   return (
-    <button
-      className="flex items-center gap-2 hover:opacity-70"
-      onClick={item.onClick}
-    >
-      <item.Icon className="size-5" />
-      <div>{item.label}</div>
-    </button>
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="flex items-center gap-2 hover:opacity-70">
+          <HeartIcon className="size-5" />
+          <div>いいねしたユーザー</div>
+        </button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>いいねしたユーザー</DialogTitle>
+          <DialogDescription></DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }
 
 export function NoteMenu({ noteId }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const items: MenuItem[] = [
-    {
-      label: "いいねしたアカウント",
-      href: `/notes/${noteId}/likes`,
-      Icon: HeartIcon,
-    },
-  ];
   return (
-    <div className="relative size-9">
+    <div className="relative ml-auto size-9">
       <Button
         variant="ghost"
         size="icon"
@@ -71,9 +79,7 @@ export function NoteMenu({ noteId }: Props) {
             className="absolute right-0 z-10 w-56 space-y-4 drop-shadow-xl"
             data-testid="note-menu__dropdown"
           >
-            {items.map((item) => (
-              <NoteMenuItem key={item.label} {...item} />
-            ))}
+            <LikesDialog />
           </Card>
           <div
             className="fixed inset-0 z-0"

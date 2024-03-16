@@ -33,6 +33,7 @@
     "@aws-sdk/client-s3": "3.525.0",
     "@heroicons/react": "2.1.1",
     "@prisma/client": "5.10.2",
+    "@radix-ui/react-dialog": "1.0.5",
     "@sentry/nextjs": "7.105.0",
     "async-mutex": "0.4.1",
     "bcryptjs": "2.4.3",
