@@ -49,7 +49,7 @@
     "sanitize-html": "2.12.1",
     "sharp": "0.33.2",
     "swiper": "11.0.7",
-    "tailwind-merge": "2.2.1",
+    "tailwind-merge": "2.2.2",
     "zod": "3.22.4",
     "zod-validation-error": "3.0.3"
   },
