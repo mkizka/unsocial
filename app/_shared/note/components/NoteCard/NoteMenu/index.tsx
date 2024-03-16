@@ -17,26 +17,6 @@ type Props = {
   noteId: string;
 };
 
-// function NoteMenuItem(item: MenuItem) {
-//   if ("href" in item) {
-//     return (
-//       <a href={item.href} className="flex items-center gap-2 hover:opacity-70">
-//         <item.Icon className="size-5" />
-//         <div>{item.label}</div>
-//       </a>
-//     );
-//   }
-//   return (
-//     <button
-//       className="flex items-center gap-2 hover:opacity-70"
-//       onClick={item.onClick}
-//     >
-//       <item.Icon className="size-5" />
-//       <div>{item.label}</div>
-//     </button>
-//   );
-// }
-
 function LikesDialog() {
   return (
     <Dialog>
