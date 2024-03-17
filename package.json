@@ -98,7 +98,7 @@
     "lint-staged": "15.2.2",
     "msw": "2.2.6",
     "npm-run-all2": "6.1.2",
-    "postcss": "8.4.35",
+    "postcss": "8.4.36",
     "prettier": "3.2.5",
     "prettier-plugin-pkg": "0.18.1",
     "prettier-plugin-sh": "0.14.0",
