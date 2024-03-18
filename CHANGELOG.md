@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.44
+
+### Patch Changes
+
+- 5b3bdb7: 410エラーの場合はログを出さない
+
 ## 0.0.43
 
 ### Patch Changes
