@@ -4,6 +4,7 @@ import { fromZodError } from "zod-validation-error";
 import { apFetchService } from "@/_shared/activitypub/apFetchService";
 import { apSchemaService } from "@/_shared/activitypub/apSchemaService";
 import { env } from "@/_shared/utils/env";
+import { HTTP410Error } from "@/_shared/utils/fetcher";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -58,10 +59,13 @@ export const findOrFetchUserByWebFinger = async (
     }
     const person = await userFindRepository.fetchPersonByActorUrl(actorUrl);
     if (person instanceof Error) {
-      logger.warn("Actorの取得に失敗しました", {
-        actorUrl,
-        error: person,
-      });
+      // HTTP 410が返された場合は失敗しても問題ないためログに残さない
+      if (!(person instanceof HTTP410Error)) {
+        logger.warn("Actorの取得に失敗しました", {
+          actorUrl,
+          error: person,
+        });
+      }
       return existingUser || person;
     }
     return userFindRepository.upsertUser(person);

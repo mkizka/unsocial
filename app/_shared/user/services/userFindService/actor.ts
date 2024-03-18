@@ -2,6 +2,7 @@ import type { User } from "@prisma/client";
 import { cache } from "react";
 
 import { env } from "@/_shared/utils/env";
+import { HTTP410Error } from "@/_shared/utils/fetcher";
 import { createLogger } from "@/_shared/utils/logger";
 import { prisma } from "@/_shared/utils/prisma";
 
@@ -41,10 +42,13 @@ export const findOrFetchUserByActor = cache(
     if (!existingUser || shouldRefetch(existingUser)) {
       const person = await userFindRepository.fetchPersonByActorUrl(actorUrl);
       if (person instanceof Error) {
-        logger.warn("Actorの取得に失敗しました", {
-          actorUrl,
-          error: person,
-        });
+        // HTTP 410が返された場合は失敗しても問題ないためログに残さない
+        if (!(person instanceof HTTP410Error)) {
+          logger.warn("Actorの取得に失敗しました", {
+            actorUrl,
+            error: person,
+          });
+        }
         return existingUser || person;
       }
       return userFindRepository.upsertUser(person);
