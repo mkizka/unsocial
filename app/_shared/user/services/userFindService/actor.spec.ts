@@ -103,6 +103,21 @@ describe("findOrFetchUserByActor", () => {
     );
     expect(user).toEqual(remoteUser);
   });
+  test("指定したactorUrlのリモートユーザーがDBに存在し、fetchが410エラーの場合はログを出さずそのまま返す", async () => {
+    // arrange
+    const remoteUser = await RemoteUserFactory.create();
+    assert(remoteUser.actorUrl);
+    server.use(
+      http.get(remoteUser.actorUrl, () => {
+        return HttpResponse.text("Gone", { status: 410 });
+      }),
+    );
+    // act
+    const user = await findOrFetchUserByActor(remoteUser.actorUrl);
+    // assert
+    expect(mockedLogger.warn).toHaveBeenCalledTimes(0);
+    expect(user).toEqual(remoteUser);
+  });
   test("指定したactorUrlのリモートユーザーがDBに存在せず、fetchに成功した場合はDBに追加して返す", async () => {
     // arrange
     const actorUrl = "https://remote.example.com/users/remote-user-id/activity";

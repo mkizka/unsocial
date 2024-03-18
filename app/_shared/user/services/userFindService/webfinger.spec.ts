@@ -47,6 +47,10 @@ const mockActor = http.get(actorUrl, () => HttpResponse.json(activity));
 
 const mockActorError = http.get(actorUrl, () => HttpResponse.error());
 
+const mockActor410 = http.get(actorUrl, () =>
+  HttpResponse.text("Gone", { status: 410 }),
+);
+
 describe("fetchActorUrlByWebFinger", () => {
   test("指定したpreferredUsernameとhostのローカルユーザーが存在しない場合はエラーを返す", async () => {
     // act
@@ -186,6 +190,19 @@ describe("fetchActorUrlByWebFinger", () => {
         error: new FetcherError("Failed to fetch"),
       },
     );
+    expect(user).toBeInstanceOf(Error);
+  });
+  test("指定したpreferredUsernameとhostのリモートユーザーがDBに存在せず、fetchが410エラーの場合はログを出さずエラーを返す", async () => {
+    // arrange
+    server.use(mockWebfinger, mockActor410);
+    const params = {
+      preferredUsername: "remote",
+      host: "remote.example.com",
+    };
+    // act
+    const user = await findOrFetchUserByWebFinger(params);
+    // assert
+    expect(mockedLogger.warn).toHaveBeenCalledTimes(0);
     expect(user).toBeInstanceOf(Error);
   });
   test("指定したpreferredUsernameとhostのリモートユーザーがDBに存在し、最近fetchした場合はそのまま返す", async () => {

@@ -14,6 +14,10 @@ export class NotOKError extends Error {
   name = "NotOKError";
 }
 
+export class HTTP410Error extends Error {
+  name = "HTTP410Error";
+}
+
 type Options = Omit<RequestInit, "body"> & {
   body?: string;
   timeout?: number;
@@ -78,7 +82,7 @@ export const fetcher = (input: URL | string, options?: Options) => {
         `fetch(${init.method} ${input}): ${response.status} ${response.statusText} (${elapsedTime}ms)`,
       );
       if (!response.ok) {
-        return new NotOKError();
+        return response.status === 410 ? new HTTP410Error() : new NotOKError();
       }
       return response;
     })
