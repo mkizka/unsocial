@@ -5,6 +5,10 @@ import { safeUrl } from "@/_shared/utils/safeUrl";
 
 const logger = createLogger("apFetchService");
 
+class NotJSONError extends Error {
+  name = "NotJSONError";
+}
+
 export const fetchActivity = async (actorUrl: string) => {
   const response = await fetcher(actorUrl, {
     next: {
@@ -15,7 +19,14 @@ export const fetchActivity = async (actorUrl: string) => {
     },
     signer: await systemUserService.findOrCreateSystemUser(),
   });
-  return response instanceof Error ? response : response.json();
+  if (response instanceof Error) {
+    return response;
+  }
+  try {
+    return await response.json();
+  } catch (e) {
+    return new NotJSONError();
+  }
 };
 
 export type FetchWebFingerParams = {
