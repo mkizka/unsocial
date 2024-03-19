@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.45
+
+### Patch Changes
+
+- 9d2195e: fetchしたActivityがJSONでなかった場合に対応
+
 ## 0.0.44
 
 ### Patch Changes
