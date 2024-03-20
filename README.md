@@ -2,8 +2,6 @@
 
 <img src="screenshot1.png" width="45%" />　<img src="screenshot2.png" width="45%" />
 
-Demo: https://unsocial.dev
-
 ## Deployment Steps
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/Du5yi-?referralCode=mveF9L)

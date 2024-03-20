@@ -53,6 +53,7 @@ export const findOrFetchNoteByUrl = cache(async (url: string) => {
   }
   const fetchedNote = await apFetchService.fetchActivity(url);
   if (fetchedNote instanceof Error) {
+    logger.info(`ノートの取得に失敗しました: ${fetchedNote.name}`);
     return fetchedNote;
   }
   const parsedNote = apSchemaService.noteSchema.safeParse(fetchedNote);

@@ -1,16 +1,22 @@
 import type { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 
-type ErrorLevel = "warn" | "error";
+type ErrorLevel = "info" | "warn" | "error";
 
 export class InboxError extends Error {
   public level: ErrorLevel = "warn";
+  constructor(message: string, level?: ErrorLevel) {
+    super(message);
+    if (level) {
+      this.level = level;
+    }
+  }
 }
 
 // 送られてきたActivityの構造をzodで検証した際のエラー
 export class ActivitySchemaValidationError<T> extends InboxError {
-  constructor(errors: z.ZodError<T>) {
-    super(fromZodError(errors).toString());
+  constructor(errors: z.ZodError<T>, level?: ErrorLevel) {
+    super(fromZodError(errors).toString(), level);
   }
 }
 

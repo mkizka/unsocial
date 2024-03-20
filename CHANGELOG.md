@@ -1,5 +1,17 @@
 # unsocial
 
+## 0.0.45
+
+### Patch Changes
+
+- 9d2195e: fetchしたActivityがJSONでなかった場合に対応
+
+## 0.0.44
+
+### Patch Changes
+
+- 5b3bdb7: 410エラーの場合はログを出さない
+
 ## 0.0.43
 
 ### Patch Changes

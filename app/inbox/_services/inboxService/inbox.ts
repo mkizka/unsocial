@@ -56,7 +56,7 @@ export const perform = async (request: NextRequest) => {
   // 1. Activityのスキーマを検証する
   const parsedActivity = anyActivitySchema.safeParse(activity);
   if (!parsedActivity.success) {
-    return new ActivitySchemaValidationError(parsedActivity.error);
+    return new ActivitySchemaValidationError(parsedActivity.error, "info");
   }
 
   // 2. HTTP Signaturesを検証する
@@ -71,6 +71,7 @@ export const perform = async (request: NextRequest) => {
         `署名が不正でした
 - HTTP Signature: ${httpSignature.reason}
 - Linked Data Signature: ${linkedDataSignature.reason}`,
+        "info",
       );
     }
   }
