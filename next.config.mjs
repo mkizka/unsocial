@@ -7,12 +7,7 @@ const config = {
   output: "standalone",
   distDir: process.env.E2E_DIST_DIR,
   experimental: {
-    serverComponentsExternalPackages: [
-      "jsonld",
-      // https://github.com/getsentry/sentry-javascript/issues/10366#issuecomment-1980291903
-      "@sentry/nextjs",
-      "@sentry/node",
-    ],
+    serverComponentsExternalPackages: ["jsonld"],
   },
   logging: {
     fetches: {
