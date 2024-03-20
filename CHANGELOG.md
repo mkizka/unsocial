@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.46
+
+### Patch Changes
+
+- f4f19e6: 依存関係の更新
+
 ## 0.0.45
 
 ### Patch Changes
