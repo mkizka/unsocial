@@ -12,6 +12,9 @@ const serverEnvSchema = z.object({
   UNSOCIAL_LOG_LEVEL: z
     .enum(["debug", "info", "warn", "error"])
     .default(process.env.NODE_ENV === "production" ? "info" : "debug"),
+  UNSOCIAL_SENTRY_LOG_LEVEL: z
+    .enum(["debug", "info", "warn", "error"])
+    .default("error"),
   UNSOCIAL_SECRET: z.preprocess(
     (str) => (process.env.NODE_ENV === "production" ? str : "secret"),
     z.string().min(1),
