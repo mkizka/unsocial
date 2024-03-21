@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.47
+
+### Patch Changes
+
+- 8172fb0: warnログをSentryに送信しない
+
 ## 0.0.46
 
 ### Patch Changes
