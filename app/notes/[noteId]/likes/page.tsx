@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: Params }) {
       <NoteCardContainer note={note} />
       <div className="flex">
         <Card className="flex-1">
-          <h1 className="font-bold">いいねしたユーザー</h1>
+          <h2 className="font-bold">いいねしたユーザー</h2>
         </Card>
       </div>
       {note.likes.length === 0 && (
