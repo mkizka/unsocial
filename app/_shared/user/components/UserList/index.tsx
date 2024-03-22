@@ -21,6 +21,6 @@ function UserItem({ user }: { user: UserItem }) {
   );
 }
 
-export async function UserList({ users }: { users: UserItem[] }) {
+export function UserList({ users }: { users: UserItem[] }) {
   return users.map((user) => <UserItem key={user.id} user={user} />);
 }
