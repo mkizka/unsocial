@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.48
+
+### Patch Changes
+
+- 625dcef: いいね/フォロワー一覧のスタイルを修正
+
 ## 0.0.47
 
 ### Patch Changes
