@@ -6,8 +6,6 @@ import { NoteForm } from "@/_shared/note/components/NoteForm";
 import { noteCardFindService } from "@/_shared/note/services/noteCardFindService";
 import { getUserId } from "@/_shared/utils/getUserId";
 
-import { LikeUserList } from "./_components/LikeUserList";
-
 type Params = {
   noteId: string;
 };
@@ -37,7 +35,6 @@ export default async function Page({
     <div className="space-y-1">
       {note.replyTo && <NoteCardContainer note={note.replyTo} />}
       <NoteCardContainer note={note} showDetail />
-      <LikeUserList users={note.likes.map((like) => like.user)} />
       {"reply" in searchParams && <NoteForm replyToId={note.id} autoFocus />}
       {note.replies.map((reply) => (
         <Fragment key={reply.id}>

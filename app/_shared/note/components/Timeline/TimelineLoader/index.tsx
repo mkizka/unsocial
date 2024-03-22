@@ -42,7 +42,7 @@ export function TimelineLoader({ firstLoadedNotes, userId }: Props) {
   };
 
   if (timeline.flat().length === 0) {
-    return <div className="mt-4">ノートがありません</div>;
+    return <p className="p-4">ノートがありません</p>;
   }
 
   return (

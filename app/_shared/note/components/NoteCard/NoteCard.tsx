@@ -10,6 +10,7 @@ import { cn } from "@/_shared/utils/cn";
 import { AttachmentImages } from "./AttachmentImages";
 import { DeleteButton } from "./DeleteButton";
 import { LikeButton } from "./LikeButton";
+import { NoteMenu } from "./NoteMenu";
 import { PublishedAt } from "./PublishedAt";
 import { ReplyButton } from "./ReplyButton";
 import { RepostButton } from "./RepostButton";
@@ -73,8 +74,13 @@ export function NoteCard({
         <div className="flex gap-10">
           <ReplyButton url={note.url} />
           <RepostButton isReposted={note.isReposted} onClick={onRepost} />
-          <LikeButton isLiked={note.isLiked} onClick={onLike} />
+          <LikeButton
+            isLiked={note.isLiked}
+            likesCount={note.likesCount}
+            onClick={onLike}
+          />
           {note.isMine && <DeleteButton onClick={onDelete} />}
+          <NoteMenu noteId={note.id} />
         </div>
         {withReplyLink && (
           <Link className="block hover:underline" href={`/notes/${note.id}`}>
