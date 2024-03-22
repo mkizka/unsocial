@@ -43,7 +43,6 @@ export function NoteMenu({ noteId }: Props) {
       <Button
         variant="ghost"
         size="icon"
-        data-testid="like-button"
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
       >
