@@ -8,6 +8,7 @@ jest.mock("@/_shared/utils/env", () => ({
     ...process.env,
     NODE_ENV: "development",
     UNSOCIAL_LOG_LEVEL: "debug",
+    UNSOCIAL_SENTRY_LOG_LEVEL: "error",
   },
 }));
 
@@ -74,7 +75,9 @@ describe("logger", () => {
       }),
     );
   });
-  test("env.NODE_ENVがwarn以上の場合、Sentryにログが送信される", () => {
+  test("env.NODE_ENVがUNSOCIAL_SENTRY_LOG_LEVEL以上の場合、Sentryにログが送信される", () => {
+    // arrange
+    env.UNSOCIAL_SENTRY_LOG_LEVEL = "warn";
     // act
     logger.debug("debug");
     logger.info("info");
