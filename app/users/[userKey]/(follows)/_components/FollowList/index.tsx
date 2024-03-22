@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 
+import { Card } from "@/_shared/ui/Card";
+import { UserList } from "@/_shared/user/components/UserList";
 import { userFindService } from "@/_shared/user/services/userFindService";
 
 import { followFindService } from "./findFollowService";
-import { UserItem } from "./UserItem";
 
 type Props = {
   userKey: string;
@@ -25,10 +26,18 @@ const findUsers = async ({ userKey, listBy }: Props) => {
   }
 };
 
-export async function UserList(props: Props) {
+export async function FollowList(props: Props) {
   const users = await findUsers(props);
-  if (users.length === 0) {
-    return <div>ユーザーが見つかりませんでした</div>;
-  }
-  return users.map((user) => <UserItem key={user.id} user={user} />);
+
+  return (
+    <div className="space-y-1">
+      <Card className="font-bold">
+        <h2> {props.listBy === "followees" ? "フォロー" : "フォロワー"}</h2>
+      </Card>
+      {users.length === 0 && (
+        <p className="p-4 text-center">ユーザーが見つかりませんでした</p>
+      )}
+      <UserList users={users} />
+    </div>
+  );
 }

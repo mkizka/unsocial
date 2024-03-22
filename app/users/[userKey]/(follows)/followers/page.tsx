@@ -1,9 +1,9 @@
-import { UserList } from "@/users/[userKey]/(follows)/_components/UserList";
+import { FollowList } from "@/users/[userKey]/(follows)/_components/FollowList";
 
 export default async function Page({
   params,
 }: {
   params: { userKey: string };
 }) {
-  return <UserList userKey={params.userKey} listBy="followers" />;
+  return <FollowList userKey={params.userKey} listBy="followers" />;
 }

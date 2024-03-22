@@ -7,12 +7,18 @@ import { Button } from "@/_shared/ui/Button";
 
 type Props = {
   isLiked: boolean;
+  likesCount: number;
   onClick: () => Promise<void>;
 };
 
-export function LikeButton({ isLiked: initialState, onClick }: Props) {
+export function LikeButton({
+  isLiked: initialIsLiked,
+  likesCount: initialLikesCount,
+  onClick,
+}: Props) {
   // 表示上は即時反映させる
-  const [isLiked, setIsLiked] = useState(initialState);
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
+  const [likesCound, setLikesCount] = useState(initialLikesCount);
   return (
     <Button
       variant="ghost"
@@ -21,6 +27,7 @@ export function LikeButton({ isLiked: initialState, onClick }: Props) {
       type="button"
       onClick={async () => {
         setIsLiked((prev) => !prev);
+        setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
         await onClick();
       }}
     >
@@ -29,6 +36,8 @@ export function LikeButton({ isLiked: initialState, onClick }: Props) {
       ) : (
         <UnLikedIcon className="size-5 text-primary transition-colors" />
       )}
+      {/* なぜか上下中央ぞろえにならない */}
+      <div className="absolute left-8 pb-[2px]">{likesCound}</div>
     </Button>
   );
 }

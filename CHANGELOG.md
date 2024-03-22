@@ -1,5 +1,23 @@
 # unsocial
 
+## 0.0.48
+
+### Patch Changes
+
+- 625dcef: いいね/フォロワー一覧のスタイルを修正
+
+## 0.0.47
+
+### Patch Changes
+
+- 8172fb0: warnログをSentryに送信しない
+
+## 0.0.46
+
+### Patch Changes
+
+- f4f19e6: 依存関係の更新
+
 ## 0.0.45
 
 ### Patch Changes
