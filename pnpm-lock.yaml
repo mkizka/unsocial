@@ -9,8 +9,8 @@ dependencies:
     specifier: 3.537.0
     version: 3.537.0
   '@heroicons/react':
-    specifier: 2.1.1
-    version: 2.1.1(react@18.3.0-canary-feed8f3f9-20240118)
+    specifier: 2.1.2
+    version: 2.1.2(react@18.3.0-canary-feed8f3f9-20240118)
   '@prisma/client':
     specifier: 5.11.0
     version: 5.11.0(prisma@5.11.0)
@@ -2830,8 +2830,8 @@ packages:
       '@hapi/hoek': 9.3.0
     dev: true
 
-  /@heroicons/react@2.1.1(react@18.3.0-canary-feed8f3f9-20240118):
-    resolution: {integrity: sha512-JyyN9Lo66kirbCMuMMRPtJxtKJoIsXKS569ebHGGRKbl8s4CtUfLnyKJxteA+vIKySocO4s1SkTkGS4xtG/yEA==}
+  /@heroicons/react@2.1.2(react@18.3.0-canary-feed8f3f9-20240118):
+    resolution: {integrity: sha512-tjNtOBRYEd7zCQLi6fFfcCm1L+62a+qu0hMlcRAyF0zV1os8ftenH7TVmUsR/x4yavGB8sOK/b/ojbMqI5DTFA==}
     peerDependencies:
       react: '>= 16'
     dependencies:
