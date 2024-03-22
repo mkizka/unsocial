@@ -17,6 +17,7 @@ export function NoteMenu({ noteId }: Props) {
       label: "いいねしたユーザー",
       href: `/notes/${noteId}/likes`,
       Icon: HeartIcon,
+      testId: "note-menu__likes",
     },
   ];
   return (
@@ -25,6 +26,7 @@ export function NoteMenu({ noteId }: Props) {
         variant="ghost"
         size="icon"
         type="button"
+        data-testid="note-menu__button"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         {isOpen ? (
@@ -35,16 +37,14 @@ export function NoteMenu({ noteId }: Props) {
       </Button>
       {isOpen && (
         <>
-          <Card
-            className="absolute right-0 z-10 w-56 space-y-4 drop-shadow-xl"
-            data-testid="note-menu__dropdown"
-          >
-            {items.map(({ label, href, Icon }) => (
+          <Card className="absolute right-0 z-10 w-56 space-y-4 drop-shadow-xl">
+            {items.map(({ label, href, Icon, testId }) => (
               <Link
                 key={label}
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-2 hover:opacity-70"
                 href={href}
+                data-testid={testId}
               >
                 <div className="flex size-5 items-center justify-center">
                   <Icon />

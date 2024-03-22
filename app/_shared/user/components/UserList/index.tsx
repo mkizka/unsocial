@@ -9,7 +9,7 @@ type UserItem = UserIconProps["user"] & Pick<User, "id" | "name" | "host">;
 
 function UserItem({ user }: { user: UserItem }) {
   return (
-    <Card className="p-2">
+    <Card className="p-2" data-testid="user-list__item">
       <div className="flex w-full items-center">
         <UserIcon user={user} size={36} className="rounded-full" />
         <a href={`/${getUserId(user)}`} className="ml-2 flex hover:underline">

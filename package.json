@@ -48,6 +48,7 @@
     "react-dom": "18.3.0-canary-feed8f3f9-20240118",
     "react-simple-image-viewer": "1.2.2",
     "sanitize-html": "2.12.1",
+    "server-only": "0.0.1",
     "sharp": "0.33.2",
     "swiper": "11.0.7",
     "tailwind-merge": "2.2.2",
