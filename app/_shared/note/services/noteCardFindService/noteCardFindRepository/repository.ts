@@ -4,7 +4,15 @@ import { cache } from "react";
 import { prisma } from "@/_shared/utils/prisma";
 
 const includeNoteCard = {
-  user: true,
+  user: {
+    select: {
+      name: true,
+      preferredUsername: true,
+      host: true,
+      icon: true,
+      iconHash: true,
+    },
+  },
   attachments: true,
   quotes: {
     select: {
