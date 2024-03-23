@@ -3,15 +3,18 @@ import { cache } from "react";
 
 import { prisma } from "@/_shared/utils/prisma";
 
+const selectUser = {
+  id: true,
+  name: true,
+  preferredUsername: true,
+  host: true,
+  icon: true,
+  iconHash: true,
+} satisfies Prisma.UserSelect;
+
 const includeNoteCard = {
   user: {
-    select: {
-      name: true,
-      preferredUsername: true,
-      host: true,
-      icon: true,
-      iconHash: true,
-    },
+    select: selectUser,
   },
   attachments: true,
   quotes: {
@@ -21,7 +24,9 @@ const includeNoteCard = {
   },
   likes: {
     include: {
-      user: true,
+      user: {
+        select: selectUser,
+      },
     },
   },
 } satisfies Prisma.NoteInclude;
