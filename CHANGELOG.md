@@ -1,5 +1,11 @@
 # unsocial
 
+## 0.0.49
+
+### Patch Changes
+
+- b739888: 不要なデータがクライアントに出ないように
+
 ## 0.0.48
 
 ### Patch Changes
