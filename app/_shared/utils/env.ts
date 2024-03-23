@@ -1,6 +1,4 @@
 // Stryker disable all
-import "server-only";
-
 import { z } from "zod";
 
 import { formatZodError } from "./formatZodError";
