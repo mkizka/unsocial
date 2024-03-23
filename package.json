@@ -42,7 +42,7 @@
     "jsonld": "8.3.2",
     "next": "14.2.0-canary.39",
     "next-auth": "4.24.7",
-    "next-nprogress-bar": "2.3.5",
+    "next-nprogress-bar": "2.3.8",
     "react": "18.3.0-canary-feed8f3f9-20240118",
     "react-dom": "18.3.0-canary-feed8f3f9-20240118",
     "react-simple-image-viewer": "1.2.2",
