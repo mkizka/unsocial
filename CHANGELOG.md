@@ -1,5 +1,11 @@
 # unsocial
 
+## 1.0.0
+
+### Major Changes
+
+- ca06054: v1リリース
+
 ## 0.0.49
 
 ### Patch Changes
