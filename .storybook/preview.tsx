@@ -1,6 +1,4 @@
-/* eslint-disable @dword-design/import-alias/prefer-alias */
-// knip@5.2.3~ がパスエイリアスを解決できないため無視する
-import "../app/globals.css";
+import "@/globals.css";
 
 import type { Preview } from "@storybook/react";
 
