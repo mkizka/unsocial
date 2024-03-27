@@ -97,7 +97,7 @@
     "jest-mock-extended": "3.0.5",
     "knip": "5.6.0",
     "lint-staged": "15.2.2",
-    "msw": "2.2.11",
+    "msw": "2.2.12",
     "npm-run-all2": "6.1.2",
     "postcss": "8.4.38",
     "prettier": "3.2.5",
