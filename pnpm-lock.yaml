@@ -92,8 +92,8 @@ devDependencies:
     specifier: 1.8.0
     version: 1.8.0(jest-environment-node@29.7.0)(jest@29.7.0)
   '@quramy/prisma-fabbrica':
-    specifier: 2.1.1
-    version: 2.1.1(@prisma/client@5.11.0)(typescript@5.4.3)
+    specifier: 2.1.2
+    version: 2.1.2(@prisma/client@5.11.0)(typescript@5.4.3)
   '@storybook/addon-essentials':
     specifier: 8.0.5
     version: 8.0.5(@types/react@18.2.73)(react-dom@18.3.0-canary-feed8f3f9-20240118)(react@18.3.0-canary-feed8f3f9-20240118)
@@ -3947,8 +3947,8 @@ packages:
       jest-environment-node: 29.7.0
     dev: true
 
-  /@quramy/prisma-fabbrica@2.1.1(@prisma/client@5.11.0)(typescript@5.4.3):
-    resolution: {integrity: sha512-7RtDqONbN6oT9x90ina3uCBOcbDpZh86jB3LDuF9vDYjrfV1m7pbeFAQdFvARdbOZZV/WoVVtbZ9o0tBVQcIEA==}
+  /@quramy/prisma-fabbrica@2.1.2(@prisma/client@5.11.0)(typescript@5.4.3):
+    resolution: {integrity: sha512-FKzqANAT7sPrQdBRB3pvJSsTM95OeeamZnWlvNia7JR7wx/SkTO5C263xV3sGqUwfLd44qbNKUmF1ZjaN9ES/w==}
     hasBin: true
     peerDependencies:
       '@prisma/client': ^5.0.0

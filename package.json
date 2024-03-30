@@ -60,7 +60,7 @@
     "@playwright/test": "1.42.1",
     "@quramy/jest-prisma-core": "1.8.0",
     "@quramy/jest-prisma-node": "1.8.0",
-    "@quramy/prisma-fabbrica": "2.1.1",
+    "@quramy/prisma-fabbrica": "2.1.2",
     "@storybook/addon-essentials": "8.0.5",
     "@storybook/addon-interactions": "8.0.5",
     "@storybook/jest": "0.2.3",
