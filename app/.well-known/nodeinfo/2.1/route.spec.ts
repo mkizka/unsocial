@@ -1,4 +1,5 @@
 import { LocalNoteFactory, RemoteNoteFactory } from "@/_shared/factories/note";
+
 import { GET } from "./route";
 
 jest.mock("@/../package.json", () => ({
