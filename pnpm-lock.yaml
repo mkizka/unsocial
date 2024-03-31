@@ -80,8 +80,8 @@ devDependencies:
     specifier: 2.27.1
     version: 2.27.1
   '@mkizka/eslint-config':
-    specifier: 2.1.0
-    version: 2.1.0(@dword-design/eslint-plugin-import-alias@5.0.0)(eslint-plugin-eqeqeq-fix@1.0.3)(eslint-plugin-unused-imports@3.1.0)(eslint@8.57.0)(typescript@5.4.2)
+    specifier: 3.1.0
+    version: 3.1.0(@dword-design/eslint-plugin-import-alias@5.0.0)(eslint-plugin-eqeqeq-fix@1.0.3)(eslint-plugin-unused-imports@3.1.0)(eslint@8.57.0)(typescript@5.4.2)
   '@playwright/test':
     specifier: 1.42.1
     version: 1.42.1
@@ -3436,8 +3436,8 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@mkizka/eslint-config@2.1.0(@dword-design/eslint-plugin-import-alias@5.0.0)(eslint-plugin-eqeqeq-fix@1.0.3)(eslint-plugin-unused-imports@3.1.0)(eslint@8.57.0)(typescript@5.4.2):
-    resolution: {integrity: sha512-raaToOqIg/z8FJqrU0+hBsD0Ksd11YBdZPK3KvdXS6MyodzgO+FGJLKMZS820g/GAWCwqXKJZXieYTT1qFMx2Q==}
+  /@mkizka/eslint-config@3.1.0(@dword-design/eslint-plugin-import-alias@5.0.0)(eslint-plugin-eqeqeq-fix@1.0.3)(eslint-plugin-unused-imports@3.1.0)(eslint@8.57.0)(typescript@5.4.2):
+    resolution: {integrity: sha512-woEDjPZMenQ0/LOQD3KD3FJWWXYmpPiZ5dXNBkrQf00sHECJ2X6PdF1OIq6mCxz+7EehAkfs2X6B9NUqPBxwnQ==}
     peerDependencies:
       '@dword-design/eslint-plugin-import-alias': '>= 5'
       eslint: '>= 8'
@@ -3450,6 +3450,7 @@ packages:
       eslint-plugin-eqeqeq-fix: 1.0.3
       eslint-plugin-simple-import-sort: 12.0.0(eslint@8.57.0)
       eslint-plugin-unused-imports: 3.1.0(eslint@8.57.0)
+      globals: 15.0.0
       typescript-eslint: 7.4.0(eslint@8.57.0)(typescript@5.4.2)
     transitivePeerDependencies:
       - supports-color
@@ -10682,6 +10683,11 @@ packages:
 
   /globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
+    engines: {node: '>=18'}
+    dev: true
+
+  /globals@15.0.0:
+    resolution: {integrity: sha512-m/C/yR4mjO6pXDTm9/R/SpYTAIyaUB4EOzcaaMEl7mds7Mshct9GfejiJNQGjHHbdMPey13Kpu4TMbYi9ex1pw==}
     engines: {node: '>=18'}
     dev: true
 

@@ -1,4 +1,4 @@
-import config from "@mkizka/eslint-config";
+import { mkizka } from "@mkizka/eslint-config";
 
 export default [
   {
@@ -12,7 +12,7 @@ export default [
       "app/_generated",
     ],
   },
-  ...config({
+  ...mkizka({
     alias: {
       "@": "./app",
     },
