@@ -42,8 +42,8 @@ dependencies:
     specifier: 4.24.7
     version: 4.24.7(next@14.2.0-canary.51)(react-dom@19.0.0-canary-a73c3450e-20240329)(react@19.0.0-canary-a73c3450e-20240329)
   next-nprogress-bar:
-    specifier: 2.3.9
-    version: 2.3.9
+    specifier: 2.3.10
+    version: 2.3.10
   react:
     specifier: 19.0.0-canary-a73c3450e-20240329
     version: 19.0.0-canary-a73c3450e-20240329
@@ -13138,8 +13138,8 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next-nprogress-bar@2.3.9:
-    resolution: {integrity: sha512-X4nJqpyXcqpXwcSyCzed8hKWnOCqzLaINVHdwokKpuJ76Qj8EGB9mPqwCcFhgXsvIdlzPLAKxq6ajPI9tSYmig==}
+  /next-nprogress-bar@2.3.10:
+    resolution: {integrity: sha512-1ij8BHY4OFurrxI8Z6uDhTzthAdWsYP3Oo2ov5uhValZOE5780McOXrPfXd9Tl82zH3vBSaFt5r27Pp+GZLZ2Q==}
     dependencies:
       nprogress: 0.2.0
     dev: false
