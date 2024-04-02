@@ -40,7 +40,7 @@
     "clsx": "2.1.0",
     "jotai": "2.7.2",
     "jsonld": "8.3.2",
-    "next": "14.2.0-canary.52",
+    "next": "14.2.0-canary.53",
     "next-auth": "4.24.7",
     "next-nprogress-bar": "2.3.11",
     "react": "19.0.0-canary-a73c3450e-20240329",
