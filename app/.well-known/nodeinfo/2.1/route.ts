@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 
 import pkg from "@/../package.json";
 import { prisma } from "@/_shared/utils/prisma";
-import { HttpNodeinfoDiasporaSoftwareNsSchema21 } from "./type";
 import { serverInfo } from "@/_shared/utils/serverInfo";
+
+import type { HttpNodeinfoDiasporaSoftwareNsSchema21 } from "./type";
 
 export const dynamic = "force-dynamic";
 

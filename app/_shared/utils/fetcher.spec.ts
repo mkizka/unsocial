@@ -16,7 +16,7 @@ jest.mock("@/../package.json", () => ({
 
 const mockedPerformance = mockDeep<typeof performance>();
 mockedPerformance.now.mockReturnValue(0);
-performance = mockedPerformance;
+global.performance = mockedPerformance;
 
 describe("fetcher", () => {
   test("正常系", async () => {

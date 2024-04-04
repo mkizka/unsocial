@@ -13,10 +13,10 @@ shellcheck scripts/*.sh
 echo 4. Code linting...
 if [ "${1:-}" = "--fix" ]; then
   pnpm knip --fix --fix-type types,exports --no-exit-code
-  pnpm next lint --fix
+  pnpm eslint --fix .
   pnpm prettier . --check --write
 else
   pnpm knip
-  pnpm next lint
+  pnpm eslint .
   pnpm prettier . --check
 fi
