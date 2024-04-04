@@ -82,6 +82,9 @@ devDependencies:
   '@eslint-community/eslint-plugin-eslint-comments':
     specifier: 4.1.0
     version: 4.1.0(eslint@8.57.0)
+  '@eslint/eslintrc':
+    specifier: 3.0.2
+    version: 3.0.2
   '@mkizka/eslint-config':
     specifier: 3.3.1
     version: 3.3.1(@dword-design/eslint-plugin-import-alias@5.0.0)(@eslint-community/eslint-plugin-eslint-comments@4.1.0)(eslint-plugin-eqeqeq-fix@1.0.3)(eslint-plugin-unused-imports@3.1.0)(eslint@8.57.0)(typescript@5.4.2)
@@ -133,6 +136,9 @@ devDependencies:
   '@types/bcryptjs':
     specifier: 2.4.6
     version: 2.4.6
+  '@types/eslint__eslintrc':
+    specifier: 2.1.1
+    version: 2.1.1
   '@types/jest':
     specifier: 29.5.12
     version: 29.5.12
@@ -6349,6 +6355,12 @@ packages:
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
+
+  /@types/eslint__eslintrc@2.1.1:
+    resolution: {integrity: sha512-LI51vVv3N7WI4+fM7Xkh1+ciLA1gtuQPgXdKdece+vD8f/G2hrFqtwb4YIQyIM6VXpRM4vSy1PW5y3yuHK+Y2w==}
+    dependencies:
+      '@types/eslint': 8.56.2
+    dev: true
 
   /@types/estree@0.0.51:
     resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==}
