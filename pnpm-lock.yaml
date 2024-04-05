@@ -83,8 +83,8 @@ devDependencies:
     specifier: 3.0.2
     version: 3.0.2
   '@mkizka/eslint-config':
-    specifier: 3.3.1
-    version: 3.3.1(@dword-design/eslint-plugin-import-alias@5.0.0)(@eslint-community/eslint-plugin-eslint-comments@4.1.0)(eslint-plugin-eqeqeq-fix@1.0.3)(eslint-plugin-unused-imports@3.1.0)(eslint@8.57.0)(typescript@5.4.4)
+    specifier: 3.4.0
+    version: 3.4.0(@dword-design/eslint-plugin-import-alias@5.0.0)(@eslint-community/eslint-plugin-eslint-comments@4.1.0)(eslint-plugin-eqeqeq-fix@1.0.3)(eslint-plugin-unused-imports@3.1.0)(eslint@8.57.0)(typescript@5.4.4)
   '@playwright/test':
     specifier: 1.43.0
     version: 1.43.0
@@ -3459,8 +3459,8 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@mkizka/eslint-config@3.3.1(@dword-design/eslint-plugin-import-alias@5.0.0)(@eslint-community/eslint-plugin-eslint-comments@4.1.0)(eslint-plugin-eqeqeq-fix@1.0.3)(eslint-plugin-unused-imports@3.1.0)(eslint@8.57.0)(typescript@5.4.4):
-    resolution: {integrity: sha512-Kzp9pVZJkRKYSUH6rLuhCW32DbFOiaRMY5JQUwCpPwRH4vxx3RxV5zweTgngrJehixXrsAJOySQ/TsLGt7FpOg==}
+  /@mkizka/eslint-config@3.4.0(@dword-design/eslint-plugin-import-alias@5.0.0)(@eslint-community/eslint-plugin-eslint-comments@4.1.0)(eslint-plugin-eqeqeq-fix@1.0.3)(eslint-plugin-unused-imports@3.1.0)(eslint@8.57.0)(typescript@5.4.4):
+    resolution: {integrity: sha512-loNi7l1NILftL+sIB3ERLFhUArTvzqzIV0dbIuGB297jAuhs5YkKluH5fpZ64TDv13sTPt7IIcTOeuqpABQXBQ==}
     peerDependencies:
       '@dword-design/eslint-plugin-import-alias': '>= 5'
       '@eslint-community/eslint-plugin-eslint-comments': '>= 4'
