@@ -36,11 +36,7 @@ const config = [
       "tailwindcss/migration-from-tailwind-2": "error",
     },
   },
-  ...mkizka({
-    alias: {
-      "@": "./app",
-    },
-  }),
+  ...mkizka(),
 ];
 
 export default config;
