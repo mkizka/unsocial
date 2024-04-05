@@ -16,12 +16,10 @@ expect.extend({
     const transformDates = (target: PrismaObject | PrismaObject[]) => {
       const transform = (obj: PrismaObject) => {
         for (const key in target) {
-          if (obj.hasOwnProperty(key)) {
-            if (obj[key]?.toISOString) {
-              obj[key] = obj[key].toISOString();
-            } else if (isObject(obj[key])) {
-              transformDates(obj[key]);
-            }
+          if (obj[key]?.toISOString) {
+            obj[key] = obj[key].toISOString();
+          } else if (isObject(obj[key])) {
+            transformDates(obj[key]);
           }
         }
       };

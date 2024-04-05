@@ -1,7 +1,7 @@
+import type { User } from "@prisma/client";
+import type { NextRequest } from "next/server";
+
 import { mockedPrisma } from "@/_shared/mocks/prisma";
-import { User } from "@prisma/client";
-import { mockDeep } from "jest-mock-extended";
-import { NextRequest } from "next/server";
 
 import { GET } from "./route";
 

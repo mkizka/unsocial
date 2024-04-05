@@ -1,5 +1,17 @@
 # unsocial
 
+## 1.0.0
+
+### Major Changes
+
+- ca06054: v1リリース
+
+## 0.0.49
+
+### Patch Changes
+
+- b739888: 不要なデータがクライアントに出ないように
+
 ## 0.0.48
 
 ### Patch Changes
