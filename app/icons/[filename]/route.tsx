@@ -74,8 +74,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { filename: string } },
 ) {
-  const size =
-    Number(request.nextUrl.searchParams.get("size")) ?? allowedSizes[0];
+  const size = Number(
+    request.nextUrl.searchParams.get("size") ?? allowedSizes[0],
+  );
   if (!allowedSizes.includes(size)) {
     notFound();
   }
