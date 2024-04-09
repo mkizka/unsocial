@@ -164,8 +164,8 @@ devDependencies:
     specifier: 10.4.19
     version: 10.4.19(postcss@8.4.38)
   cli-markdown:
-    specifier: 3.2.2
-    version: 3.2.2
+    specifier: 3.2.3
+    version: 3.2.3
   dotenv-cli:
     specifier: 7.4.1
     version: 7.4.1
@@ -3441,7 +3441,7 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@mdit/plugin-alert@0.8.0(markdown-it@14.0.0):
+  /@mdit/plugin-alert@0.8.0(markdown-it@14.1.0):
     resolution: {integrity: sha512-mxA/lhOyDDR6/qSAegGG/XZRjUbr1wjwdULudbpkA/CCQi6piW9D0Z8crDQGYz4KPQM9Bgx4Ac81QFSzHOV66Q==}
     peerDependencies:
       markdown-it: ^14.0.0
@@ -3450,7 +3450,7 @@ packages:
         optional: true
     dependencies:
       '@types/markdown-it': 13.0.7
-      markdown-it: 14.0.0
+      markdown-it: 14.1.0
     dev: true
 
   /@mdx-js/react@3.0.1(@types/react@18.2.75)(react@18.2.0):
@@ -8329,8 +8329,8 @@ packages:
       yargs: 16.2.0
     dev: true
 
-  /cli-html@4.0.6:
-    resolution: {integrity: sha512-Un3xXtWVJBAljqyoQAbu737zQaH8I0UXVoMVzX0BxT34tzv481PBtuns5zXh5Edg11BBjNecyqrbvPtpmX7nzg==}
+  /cli-html@4.0.7:
+    resolution: {integrity: sha512-AwL/HqQaudpyl6wUxr4JGe+ICKRIMWVVK7oEo2rLlQ4LU9BOnWcgekLRVU0YbJ+MRfvjxjQXHZmilMiy1rmN+A==}
     engines: {node: '>=18', npm: '>=8'}
     hasBin: true
     dependencies:
@@ -8360,16 +8360,16 @@ packages:
       yaml: 2.3.4
     dev: true
 
-  /cli-markdown@3.2.2:
-    resolution: {integrity: sha512-cP4uhTpgP1R+iXsH0ILC283DFSSGhGfmEa4DoUb08Z3XDZWj5vLMydRaMoekn8Sm9YQmAYTWiAHLiFQmnksavw==}
+  /cli-markdown@3.2.3:
+    resolution: {integrity: sha512-PrIQbGkzF5Lh1wJZE3imFGOOlIWH1Eijbwr+ZegylHs0FoEtbxh+Dvv7OgaSm9PwEDOxQWjQZkf0dUlqU3dMrw==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     hasBin: true
     dependencies:
-      '@mdit/plugin-alert': 0.8.0(markdown-it@14.0.0)
+      '@mdit/plugin-alert': 0.8.0(markdown-it@14.1.0)
       '@types/marked': 6.0.0
-      cli-html: 4.0.6
+      cli-html: 4.0.7
       concat-stream: 2.0.0
-      markdown-it: 14.0.0
+      markdown-it: 14.1.0
       markdown-it-abbr: 2.0.0
       markdown-it-container: 4.0.0
       markdown-it-deflist: 3.0.0
@@ -12629,7 +12629,7 @@ packages:
   /linkify-it@5.0.0:
     resolution: {integrity: sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==}
     dependencies:
-      uc.micro: 2.0.0
+      uc.micro: 2.1.0
     dev: true
 
   /lint-staged@15.2.2:
@@ -12964,8 +12964,8 @@ packages:
     resolution: {integrity: sha512-TxFAc76Jnhb2OUu+n3yz9RMu4CwGfaT788br6HhEDlvWfdeJcLUsxk1Hgw2yJio0OXsxv7pyIPmvECY7bMbluA==}
     dev: true
 
-  /markdown-it@14.0.0:
-    resolution: {integrity: sha512-seFjF0FIcPt4P9U39Bq1JYblX0KZCjDLFFQPHpL5AzHpqPEKtosxmdq/LTVZnjfH7tjt9BxStm+wXcDBNuYmzw==}
+  /markdown-it@14.1.0:
+    resolution: {integrity: sha512-a54IwgWPaeBCAAsv13YgmALOF1elABB08FxO9i+r4VFk5Vl4pKokRPeX8u5TCgSsPi6ec1otfLjdOpVcgbpshg==}
     hasBin: true
     dependencies:
       argparse: 2.0.1
@@ -12973,7 +12973,7 @@ packages:
       linkify-it: 5.0.0
       mdurl: 2.0.0
       punycode.js: 2.3.1
-      uc.micro: 2.0.0
+      uc.micro: 2.1.0
     dev: true
 
   /markdown-to-jsx@7.3.2(react@18.2.0):
@@ -16755,8 +16755,8 @@ packages:
     hasBin: true
     dev: true
 
-  /uc.micro@2.0.0:
-    resolution: {integrity: sha512-DffL94LsNOccVn4hyfRe5rdKa273swqeA5DJpMOeFmEn1wCDc7nAbbB0gXlgBCL7TNzeTv6G7XVWzan7iJtfig==}
+  /uc.micro@2.1.0:
+    resolution: {integrity: sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==}
     dev: true
 
   /ufo@1.3.2:

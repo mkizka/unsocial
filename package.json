@@ -84,7 +84,7 @@
     "@typescript-eslint/eslint-plugin": "7.6.0",
     "@typescript-eslint/parser": "7.6.0",
     "autoprefixer": "10.4.19",
-    "cli-markdown": "3.2.2",
+    "cli-markdown": "3.2.3",
     "dotenv-cli": "7.4.1",
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.4",
