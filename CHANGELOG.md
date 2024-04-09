@@ -1,5 +1,11 @@
 # unsocial
 
+## 1.0.1
+
+### Patch Changes
+
+- cd28c8d: 依存関係の更新
+
 ## 1.0.0
 
 ### Major Changes
