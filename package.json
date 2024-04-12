@@ -58,7 +58,7 @@
     "@changesets/cli": "2.27.1",
     "@eslint/eslintrc": "3.0.2",
     "@mkizka/eslint-config": "4.1.0",
-    "@playwright/test": "1.43.0",
+    "@playwright/test": "1.43.1",
     "@quramy/jest-prisma-core": "1.8.0",
     "@quramy/jest-prisma-node": "1.8.0",
     "@quramy/prisma-fabbrica": "2.1.2",
