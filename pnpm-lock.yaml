@@ -83,8 +83,8 @@ devDependencies:
     specifier: 3.0.2
     version: 3.0.2
   '@mkizka/eslint-config':
-    specifier: 4.1.0
-    version: 4.1.0(@typescript-eslint/eslint-plugin@7.6.0)(eslint@8.57.0)(typescript@5.4.5)
+    specifier: 4.1.1
+    version: 4.1.1(@typescript-eslint/eslint-plugin@7.6.0)(eslint@8.57.0)(typescript@5.4.5)
   '@playwright/test':
     specifier: 1.43.1
     version: 1.43.1
@@ -3453,8 +3453,8 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@mkizka/eslint-config@4.1.0(@typescript-eslint/eslint-plugin@7.6.0)(eslint@8.57.0)(typescript@5.4.5):
-    resolution: {integrity: sha512-kxTqzb3VQIPadOYXtFnOJHcoYYAw/FJYDvjx4Dv4zYMZTQU0qB5fyI1u/WfmPQ8vhCoL3wAnB90IlcYmi5MFWQ==}
+  /@mkizka/eslint-config@4.1.1(@typescript-eslint/eslint-plugin@7.6.0)(eslint@8.57.0)(typescript@5.4.5):
+    resolution: {integrity: sha512-Homio5VhJ5KEf9hoMsHhMemcOnFE/eOYbGa+cpxfLieR1NE7TQyH+d6q/kkj7GCjvT9rHPP/jgmeiE6orSfD3A==}
     peerDependencies:
       eslint: '>= 9'
     dependencies:
