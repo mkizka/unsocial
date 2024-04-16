@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '9.0'
 
 settings:
   autoInstallPeers: true
@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@aws-sdk/client-s3':
-        specifier: 3.554.0
-        version: 3.554.0
+        specifier: 3.556.0
+        version: 3.556.0
       '@heroicons/react':
         specifier: 2.1.3
         version: 2.1.3(react@19.0.0-canary-e3ebcd54b-20240405)
@@ -19,7 +19,7 @@ importers:
         version: 5.12.1(prisma@5.12.1)
       '@sentry/nextjs':
         specifier: 7.110.1
-        version: 7.110.1(next@14.3.0-canary.5)(react@19.0.0-canary-e3ebcd54b-20240405)(webpack@5.89.0)
+        version: 7.110.1(next@14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       async-mutex:
         specifier: 0.5.0
         version: 0.5.0
@@ -37,13 +37,13 @@ importers:
         version: 2.8.0(@types/react@18.2.79)(react@19.0.0-canary-e3ebcd54b-20240405)
       jsonld:
         specifier: 8.3.2
-        version: 8.3.2
+        version: 8.3.2(web-streams-polyfill@3.3.3)
       next:
         specifier: 14.3.0-canary.5
-        version: 14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+        version: 14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       next-auth:
         specifier: 4.24.7
-        version: 4.24.7(next@14.3.0-canary.5)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+        version: 4.24.7(next@14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405))(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       next-nprogress-bar:
         specifier: 2.3.11
         version: 2.3.11
@@ -55,7 +55,7 @@ importers:
         version: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
       react-simple-image-viewer:
         specifier: 1.2.2
-        version: 1.2.2(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+        version: 1.2.2(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       sanitize-html:
         specifier: 2.13.0
         version: 2.13.0
@@ -86,37 +86,37 @@ importers:
         version: 3.0.2
       '@mkizka/eslint-config':
         specifier: 4.1.1
-        version: 4.1.1(@typescript-eslint/eslint-plugin@7.7.0)(eslint@8.57.0)(typescript@5.4.5)
+        version: 4.1.1(@typescript-eslint/eslint-plugin@7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
       '@playwright/test':
         specifier: 1.43.1
         version: 1.43.1
       '@quramy/jest-prisma-core':
         specifier: 1.8.0
-        version: 1.8.0(jest@29.7.0)
+        version: 1.8.0(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       '@quramy/jest-prisma-node':
         specifier: 1.8.0
-        version: 1.8.0(jest-environment-node@29.7.0)(jest@29.7.0)
+        version: 1.8.0(jest-environment-node@29.7.0)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       '@quramy/prisma-fabbrica':
         specifier: 2.1.2
-        version: 2.1.2(@prisma/client@5.12.1)(typescript@5.4.5)
+        version: 2.1.2(@prisma/client@5.12.1(prisma@5.12.1))(typescript@5.4.5)
       '@storybook/addon-essentials':
         specifier: 8.0.8
-        version: 8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+        version: 8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/addon-interactions':
         specifier: 8.0.8
-        version: 8.0.8(@types/jest@29.5.12)(jest@29.7.0)
+        version: 8.0.8(@jest/globals@29.7.0)(@types/jest@29.5.12)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       '@storybook/jest':
         specifier: 0.2.3
-        version: 0.2.3(jest@29.7.0)
+        version: 0.2.3(@jest/globals@29.7.0)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       '@storybook/nextjs':
         specifier: 8.0.8
-        version: 8.0.8(@swc/core@1.3.105)(esbuild@0.19.11)(next@14.3.0-canary.5)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)(webpack@5.89.0)
+        version: 8.0.8(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)(next@14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405))(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(type-fest@4.9.0)(typescript@5.4.5)(webpack-hot-middleware@2.26.0)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       '@storybook/react':
         specifier: 8.0.8
-        version: 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)
+        version: 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)
       '@storybook/test-runner':
         specifier: 0.17.0
-        version: 0.17.0(@types/node@20.12.7)(ts-node@10.9.2)
+        version: 0.17.0(@swc/helpers@0.5.5)(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       '@storybook/testing-library':
         specifier: 0.2.2
         version: 0.2.2
@@ -158,7 +158,7 @@ importers:
         version: 2.11.0
       '@typescript-eslint/eslint-plugin':
         specifier: 7.7.0
-        version: 7.7.0(@typescript-eslint/parser@7.7.0)(eslint@8.57.0)(typescript@5.4.5)
+        version: 7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser':
         specifier: 7.7.0
         version: 7.7.0(eslint@8.57.0)(typescript@5.4.5)
@@ -182,19 +182,19 @@ importers:
         version: 0.8.0(eslint@8.57.0)(typescript@5.4.5)
       eslint-plugin-tailwindcss:
         specifier: 3.15.1
-        version: 3.15.1(tailwindcss@3.4.3)
+        version: 3.15.1(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       husky:
         specifier: 9.0.11
         version: 9.0.11
       jest:
         specifier: 29.7.0
-        version: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+        version: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       jest-diff:
         specifier: 29.7.0
         version: 29.7.0
       jest-mock-extended:
         specifier: 3.0.6
-        version: 3.0.6(jest@29.7.0)(typescript@5.4.5)
+        version: 3.0.6(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))(typescript@5.4.5)
       knip:
         specifier: 5.9.4
         version: 5.9.4(@types/node@20.12.7)(typescript@5.4.5)
@@ -224,16 +224,16 @@ importers:
         version: 5.12.1
       storybook:
         specifier: 8.0.8
-        version: 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+        version: 8.0.8(@babel/preset-env@7.23.8(@babel/core@7.23.9))(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       tailwindcss:
         specifier: 3.4.3
-        version: 3.4.3(ts-node@10.9.2)
+        version: 3.4.3(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.4.3)
+        version: 1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@swc/core@1.3.105)(@types/node@20.12.7)(typescript@5.4.5)
+        version: 10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)
       tsx:
         specifier: 4.7.2
         version: 4.7.2
@@ -289,28 +289,28 @@ packages:
   '@aws-crypto/util@3.0.0':
     resolution: {integrity: sha512-2OJlpeJpCR48CC8r+uKVChzs9Iungj9wkZrl8Z041DWEWvyIHILYKCPNzJghKsivj+S3mLo6BVc7mBNzdxA46w==}
 
-  '@aws-sdk/client-s3@3.554.0':
-    resolution: {integrity: sha512-d5TKKtGWhN0vl9QovUFrf3UsM7jgFQkowDPx1O+E/yeQUj1FBDOoRfDCcQOKW/9ghloI6k7f0bBpNxdd+x0oKA==}
+  '@aws-sdk/client-s3@3.556.0':
+    resolution: {integrity: sha512-6WF9Kuzz1/8zqX8hKBpqj9+FYwQ5uTsVcOKpTW94AMX2qtIeVRlwlnNnYyywWo61yqD3g59CMNHcqSsaqAwglg==}
     engines: {node: '>=14.0.0'}
 
-  '@aws-sdk/client-sso-oidc@3.554.0':
-    resolution: {integrity: sha512-M86rkiRqbZBF5VyfTQ/vttry9VSoQkZ1oCqYF+SAGlXmD0Of8587yRSj2M4rYe0Uj7nRQIfSnhDYp1UzsZeRfQ==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      '@aws-sdk/credential-provider-node': ^3.554.0
-
-  '@aws-sdk/client-sso@3.554.0':
-    resolution: {integrity: sha512-yj6CgIxCT3UwMumEO481KH4QvwArkAPzD7Xvwe1QKgJATc9bKNEo/FxV8LfnWIJ7nOtMDxbNxYLMXH/Fs1qGaQ==}
-    engines: {node: '>=14.0.0'}
-
-  '@aws-sdk/client-sts@3.554.0':
-    resolution: {integrity: sha512-EhaA6T0M0DNg5M8TCF1a7XJI5D/ZxAF3dgVIchyF98iNzjYgl/7U8K6hJay2A11aFvVu70g46xYMpz3Meky4wQ==}
+  '@aws-sdk/client-sso-oidc@3.556.0':
+    resolution: {integrity: sha512-AXKd2TB6nNrksu+OfmHl8uI07PdgzOo4o8AxoRO8SHlwoMAGvcT9optDGVSYoVfgOKTymCoE7h8/UoUfPc11wQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
-      '@aws-sdk/credential-provider-node': ^3.554.0
+      '@aws-sdk/credential-provider-node': ^3.556.0
 
-  '@aws-sdk/core@3.554.0':
-    resolution: {integrity: sha512-JrG7ToTLeNf+/S3IiCUPVw9jEDB0DXl5ho8n/HwOa946mv+QyCepCuV2U/8f/1KAX0mD8Ufm/E4/cbCbFHgbSg==}
+  '@aws-sdk/client-sso@3.556.0':
+    resolution: {integrity: sha512-unXdWS7uvHqCcOyC1de+Fr8m3F2vMg2m24GPea0bg7rVGTYmiyn9mhUX11VCt+ozydrw+F50FQwL6OqoqPocmw==}
+    engines: {node: '>=14.0.0'}
+
+  '@aws-sdk/client-sts@3.556.0':
+    resolution: {integrity: sha512-TsK3js7Suh9xEmC886aY+bv0KdLLYtzrcmVt6sJ/W6EnDXYQhBuKYFhp03NrN2+vSvMGpqJwR62DyfKe1G0QzQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@aws-sdk/credential-provider-node': ^3.556.0
+
+  '@aws-sdk/core@3.556.0':
+    resolution: {integrity: sha512-vJaSaHw2kPQlo11j/Rzuz0gk1tEaKdz+2ser0f0qZ5vwFlANjt08m/frU17ctnVKC1s58bxpctO/1P894fHLrA==}
     engines: {node: '>=14.0.0'}
 
   '@aws-sdk/credential-provider-env@3.535.0':
@@ -321,24 +321,24 @@ packages:
     resolution: {integrity: sha512-vsmu7Cz1i45pFEqzVb4JcFmAmVnWFNLsGheZc8SCptlqCO5voETrZZILHYIl4cjKkSDk3pblBOf0PhyjqWW6WQ==}
     engines: {node: '>=14.0.0'}
 
-  '@aws-sdk/credential-provider-ini@3.554.0':
-    resolution: {integrity: sha512-BQenhg43S6TMJHxrdjDVdVF+HH5tA1op9ZYLyJrvV5nn7CCO4kyAkkOuSAv1NkL+RZsIkW0/vHTXwQOQw3cUsg==}
+  '@aws-sdk/credential-provider-ini@3.556.0':
+    resolution: {integrity: sha512-0Nz4ErOlXhe3muxWYMbPwRMgfKmVbBp36BAE2uv/z5wTbfdBkcgUwaflEvlKCLUTdHzuZsQk+BFS/gVyaUeOuA==}
     engines: {node: '>=14.0.0'}
 
-  '@aws-sdk/credential-provider-node@3.554.0':
-    resolution: {integrity: sha512-poX/+2OE3oxqp4f5MiaJh251p8l+bzcFwgcDBwz0e2rcpvMSYl9jw4AvGnCiG2bmf9yhNJdftBiS1A+KjxV0qA==}
+  '@aws-sdk/credential-provider-node@3.556.0':
+    resolution: {integrity: sha512-s1xVtKjyGc60O8qcNIzS1X3H+pWEwEfZ7TgNznVDNyuXvLrlNWiAcigPWGl2aAkc8tGcsSG0Qpyw2KYC939LFg==}
     engines: {node: '>=14.0.0'}
 
   '@aws-sdk/credential-provider-process@3.535.0':
     resolution: {integrity: sha512-9O1OaprGCnlb/kYl8RwmH7Mlg8JREZctB8r9sa1KhSsWFq/SWO0AuJTyowxD7zL5PkeS4eTvzFFHWCa3OO5epA==}
     engines: {node: '>=14.0.0'}
 
-  '@aws-sdk/credential-provider-sso@3.554.0':
-    resolution: {integrity: sha512-8QPpwBA31i/fZ7lDZJC4FA9EdxLg5SJ8sPB2qLSjp5UTGTYL2HRl0Eznkb7DXyp/wImsR/HFR1NxuFCCVotLCg==}
+  '@aws-sdk/credential-provider-sso@3.556.0':
+    resolution: {integrity: sha512-ETuBgcnpfxqadEAqhQFWpKoV1C/NAgvs5CbBc5EJbelJ8f4prTdErIHjrRtVT8c02MXj92QwczsiNYd5IoOqyw==}
     engines: {node: '>=14.0.0'}
 
-  '@aws-sdk/credential-provider-web-identity@3.554.0':
-    resolution: {integrity: sha512-HN54DzLjepw5ZWSF9ycGevhFTyg6pjLuLKy5Y8t/f1jFDComzYdGEDe0cdV9YO653W3+PQwZZGz09YVygGYBLg==}
+  '@aws-sdk/credential-provider-web-identity@3.556.0':
+    resolution: {integrity: sha512-R/YAL8Uh8i+dzVjzMnbcWLIGeeRi2mioHVGnVF+minmaIkCiQMZg2HPrdlKm49El+RljT28Nl5YHRuiqzEIwMA==}
     engines: {node: '>=14.0.0'}
 
   '@aws-sdk/middleware-bucket-endpoint@3.535.0':
@@ -369,12 +369,12 @@ packages:
     resolution: {integrity: sha512-am2qgGs+gwqmR4wHLWpzlZ8PWhm4ktj5bYSgDrsOfjhdBlWNxvPoID9/pDAz5RWL48+oH7I6SQzMqxXsFDikrw==}
     engines: {node: '>=14.0.0'}
 
-  '@aws-sdk/middleware-sdk-s3@3.552.0':
-    resolution: {integrity: sha512-9KzOqsbwJJuQcpmrpkkIftjPahB1bsrcWalYzcVqKCgHCylhkSHW2tX+uGHRnvAl9iobQD5D7LUrS+cv0NeQ/Q==}
+  '@aws-sdk/middleware-sdk-s3@3.556.0':
+    resolution: {integrity: sha512-4W/dnxqj1B6/uS/5Z+3UHaqDDGjNPgEVlqf5d3ToOFZ31ZfpANwhcCmyX39JklC4aolCEi9renQ5wHnTCC8K8g==}
     engines: {node: '>=14.0.0'}
 
-  '@aws-sdk/middleware-signing@3.552.0':
-    resolution: {integrity: sha512-ZjOrlEmwjhbmkINa4Zx9LJh+xb/kgEiUrcfud2kq/r8ath1Nv1/4zalI9jHnou1J+R+yS+FQlXLXHSZ7vqyFbA==}
+  '@aws-sdk/middleware-signing@3.556.0':
+    resolution: {integrity: sha512-kWrPmU8qd3gI5qzpuW9LtWFaH80cOz1ZJDavXx6PRpYZJ5JaKdUHghwfDlVTzzFYAeJmVsWIkPcLT5d5mY5ZTQ==}
     engines: {node: '>=14.0.0'}
 
   '@aws-sdk/middleware-ssec@3.537.0':
@@ -389,12 +389,12 @@ packages:
     resolution: {integrity: sha512-IXOznDiaItBjsQy4Fil0kzX/J3HxIOknEphqHbOfUf+LpA5ugcsxuQQONrbEQusCBnfJyymrldBvBhFmtlU9Wg==}
     engines: {node: '>=14.0.0'}
 
-  '@aws-sdk/signature-v4-multi-region@3.552.0':
-    resolution: {integrity: sha512-cC11/5ahp+LaBCq7cR+51AM2ftf6m9diRd2oWkbEpjSiEKQzZRAltUPZAJM6NXGypmDODQDJphLGt45tvS+8kg==}
+  '@aws-sdk/signature-v4-multi-region@3.556.0':
+    resolution: {integrity: sha512-bWDSK0ggK7QzAOmPZGv29UAIZocL1MNY7XyOvm3P3P1U3tFMoIBilQQBLabXyHoZ9J3Ik0Vv4n95htUhRQ35ow==}
     engines: {node: '>=14.0.0'}
 
-  '@aws-sdk/token-providers@3.554.0':
-    resolution: {integrity: sha512-KMMQ5Cw0FUPL9H8g69Lp08xtzRo7r/MK+lBV6LznWBbCP/NwtZ8awVHaPy2P31z00cWtu9MYkUTviWPqJTaBvg==}
+  '@aws-sdk/token-providers@3.556.0':
+    resolution: {integrity: sha512-tvIiugNF0/+2wfuImMrpKjXMx4nCnFWQjQvouObny+wrif/PGqqQYrybwxPJDvzbd965bu1I+QuSv85/ug7xsg==}
     engines: {node: '>=14.0.0'}
 
   '@aws-sdk/types@3.535.0':
@@ -2211,8 +2211,8 @@ packages:
     resolution: {integrity: sha512-WyujUJL8e1B6Z4PBfAqC/aGY1+C7T0w20Gih3yrvJSk97gpiVfB+y7c46T4Nunk+ZngLq0rOIdeVeIklk0R3OA==}
     engines: {node: '>=14.0.0'}
 
-  '@smithy/signature-v4@2.2.1':
-    resolution: {integrity: sha512-j5fHgL1iqKTsKJ1mTcw88p0RUcidDu95AWSeZTgiYJb+QcfwWU/UpBnaqiB59FNH5MiAZuSbOBnZlwzeeY2tIw==}
+  '@smithy/signature-v4@2.3.0':
+    resolution: {integrity: sha512-ui/NlpILU+6HAQBfJX8BBsDXuKSNrjTSuOYArRblcrErwKFutjrCNb/OExfVRyj9+26F9J+ZmfWT+fKWuDrH3Q==}
     engines: {node: '>=14.0.0'}
 
   '@smithy/smithy-client@2.5.1':
@@ -8678,14 +8678,14 @@ snapshots:
       '@aws-sdk/util-utf8-browser': 3.259.0
       tslib: 1.14.1
 
-  '@aws-sdk/client-s3@3.554.0':
+  '@aws-sdk/client-s3@3.556.0':
     dependencies:
       '@aws-crypto/sha1-browser': 3.0.0
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
-      '@aws-sdk/client-sts': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
-      '@aws-sdk/core': 3.554.0
-      '@aws-sdk/credential-provider-node': 3.554.0
+      '@aws-sdk/client-sts': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
+      '@aws-sdk/core': 3.556.0
+      '@aws-sdk/credential-provider-node': 3.556.0
       '@aws-sdk/middleware-bucket-endpoint': 3.535.0
       '@aws-sdk/middleware-expect-continue': 3.535.0
       '@aws-sdk/middleware-flexible-checksums': 3.535.0
@@ -8693,12 +8693,12 @@ snapshots:
       '@aws-sdk/middleware-location-constraint': 3.535.0
       '@aws-sdk/middleware-logger': 3.535.0
       '@aws-sdk/middleware-recursion-detection': 3.535.0
-      '@aws-sdk/middleware-sdk-s3': 3.552.0
-      '@aws-sdk/middleware-signing': 3.552.0
+      '@aws-sdk/middleware-sdk-s3': 3.556.0
+      '@aws-sdk/middleware-signing': 3.556.0
       '@aws-sdk/middleware-ssec': 3.537.0
       '@aws-sdk/middleware-user-agent': 3.540.0
       '@aws-sdk/region-config-resolver': 3.535.0
-      '@aws-sdk/signature-v4-multi-region': 3.552.0
+      '@aws-sdk/signature-v4-multi-region': 3.556.0
       '@aws-sdk/types': 3.535.0
       '@aws-sdk/util-endpoints': 3.540.0
       '@aws-sdk/util-user-agent-browser': 3.535.0
@@ -8740,13 +8740,13 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/client-sso-oidc@3.554.0(@aws-sdk/credential-provider-node@3.554.0)':
+  '@aws-sdk/client-sso-oidc@3.556.0(@aws-sdk/credential-provider-node@3.556.0)':
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
-      '@aws-sdk/client-sts': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
-      '@aws-sdk/core': 3.554.0
-      '@aws-sdk/credential-provider-node': 3.554.0
+      '@aws-sdk/client-sts': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
+      '@aws-sdk/core': 3.556.0
+      '@aws-sdk/credential-provider-node': 3.556.0
       '@aws-sdk/middleware-host-header': 3.535.0
       '@aws-sdk/middleware-logger': 3.535.0
       '@aws-sdk/middleware-recursion-detection': 3.535.0
@@ -8785,11 +8785,11 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/client-sso@3.554.0':
+  '@aws-sdk/client-sso@3.556.0':
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
-      '@aws-sdk/core': 3.554.0
+      '@aws-sdk/core': 3.556.0
       '@aws-sdk/middleware-host-header': 3.535.0
       '@aws-sdk/middleware-logger': 3.535.0
       '@aws-sdk/middleware-recursion-detection': 3.535.0
@@ -8828,12 +8828,12 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/client-sts@3.554.0(@aws-sdk/credential-provider-node@3.554.0)':
+  '@aws-sdk/client-sts@3.556.0(@aws-sdk/credential-provider-node@3.556.0)':
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
-      '@aws-sdk/core': 3.554.0
-      '@aws-sdk/credential-provider-node': 3.554.0
+      '@aws-sdk/core': 3.556.0
+      '@aws-sdk/credential-provider-node': 3.556.0
       '@aws-sdk/middleware-host-header': 3.535.0
       '@aws-sdk/middleware-logger': 3.535.0
       '@aws-sdk/middleware-recursion-detection': 3.535.0
@@ -8872,11 +8872,11 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/core@3.554.0':
+  '@aws-sdk/core@3.556.0':
     dependencies:
       '@smithy/core': 1.4.2
       '@smithy/protocol-http': 3.3.0
-      '@smithy/signature-v4': 2.2.1
+      '@smithy/signature-v4': 2.3.0
       '@smithy/smithy-client': 2.5.1
       '@smithy/types': 2.12.0
       fast-xml-parser: 4.2.5
@@ -8901,13 +8901,13 @@ snapshots:
       '@smithy/util-stream': 2.2.0
       tslib: 2.6.2
 
-  '@aws-sdk/credential-provider-ini@3.554.0(@aws-sdk/credential-provider-node@3.554.0)':
+  '@aws-sdk/credential-provider-ini@3.556.0(@aws-sdk/credential-provider-node@3.556.0)':
     dependencies:
-      '@aws-sdk/client-sts': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
+      '@aws-sdk/client-sts': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
       '@aws-sdk/credential-provider-env': 3.535.0
       '@aws-sdk/credential-provider-process': 3.535.0
-      '@aws-sdk/credential-provider-sso': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
-      '@aws-sdk/credential-provider-web-identity': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
+      '@aws-sdk/credential-provider-sso': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
+      '@aws-sdk/credential-provider-web-identity': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
       '@aws-sdk/types': 3.535.0
       '@smithy/credential-provider-imds': 2.3.0
       '@smithy/property-provider': 2.2.0
@@ -8918,14 +8918,14 @@ snapshots:
       - '@aws-sdk/credential-provider-node'
       - aws-crt
 
-  '@aws-sdk/credential-provider-node@3.554.0':
+  '@aws-sdk/credential-provider-node@3.556.0':
     dependencies:
       '@aws-sdk/credential-provider-env': 3.535.0
       '@aws-sdk/credential-provider-http': 3.552.0
-      '@aws-sdk/credential-provider-ini': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
+      '@aws-sdk/credential-provider-ini': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
       '@aws-sdk/credential-provider-process': 3.535.0
-      '@aws-sdk/credential-provider-sso': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
-      '@aws-sdk/credential-provider-web-identity': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
+      '@aws-sdk/credential-provider-sso': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
+      '@aws-sdk/credential-provider-web-identity': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
       '@aws-sdk/types': 3.535.0
       '@smithy/credential-provider-imds': 2.3.0
       '@smithy/property-provider': 2.2.0
@@ -8943,10 +8943,10 @@ snapshots:
       '@smithy/types': 2.12.0
       tslib: 2.6.2
 
-  '@aws-sdk/credential-provider-sso@3.554.0(@aws-sdk/credential-provider-node@3.554.0)':
+  '@aws-sdk/credential-provider-sso@3.556.0(@aws-sdk/credential-provider-node@3.556.0)':
     dependencies:
-      '@aws-sdk/client-sso': 3.554.0
-      '@aws-sdk/token-providers': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
+      '@aws-sdk/client-sso': 3.556.0
+      '@aws-sdk/token-providers': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
       '@aws-sdk/types': 3.535.0
       '@smithy/property-provider': 2.2.0
       '@smithy/shared-ini-file-loader': 2.4.0
@@ -8956,9 +8956,9 @@ snapshots:
       - '@aws-sdk/credential-provider-node'
       - aws-crt
 
-  '@aws-sdk/credential-provider-web-identity@3.554.0(@aws-sdk/credential-provider-node@3.554.0)':
+  '@aws-sdk/credential-provider-web-identity@3.556.0(@aws-sdk/credential-provider-node@3.556.0)':
     dependencies:
-      '@aws-sdk/client-sts': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
+      '@aws-sdk/client-sts': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
       '@aws-sdk/types': 3.535.0
       '@smithy/property-provider': 2.2.0
       '@smithy/types': 2.12.0
@@ -9021,24 +9021,24 @@ snapshots:
       '@smithy/types': 2.12.0
       tslib: 2.6.2
 
-  '@aws-sdk/middleware-sdk-s3@3.552.0':
+  '@aws-sdk/middleware-sdk-s3@3.556.0':
     dependencies:
       '@aws-sdk/types': 3.535.0
       '@aws-sdk/util-arn-parser': 3.535.0
       '@smithy/node-config-provider': 2.3.0
       '@smithy/protocol-http': 3.3.0
-      '@smithy/signature-v4': 2.2.1
+      '@smithy/signature-v4': 2.3.0
       '@smithy/smithy-client': 2.5.1
       '@smithy/types': 2.12.0
       '@smithy/util-config-provider': 2.3.0
       tslib: 2.6.2
 
-  '@aws-sdk/middleware-signing@3.552.0':
+  '@aws-sdk/middleware-signing@3.556.0':
     dependencies:
       '@aws-sdk/types': 3.535.0
       '@smithy/property-provider': 2.2.0
       '@smithy/protocol-http': 3.3.0
-      '@smithy/signature-v4': 2.2.1
+      '@smithy/signature-v4': 2.3.0
       '@smithy/types': 2.12.0
       '@smithy/util-middleware': 2.2.0
       tslib: 2.6.2
@@ -9066,18 +9066,18 @@ snapshots:
       '@smithy/util-middleware': 2.2.0
       tslib: 2.6.2
 
-  '@aws-sdk/signature-v4-multi-region@3.552.0':
+  '@aws-sdk/signature-v4-multi-region@3.556.0':
     dependencies:
-      '@aws-sdk/middleware-sdk-s3': 3.552.0
+      '@aws-sdk/middleware-sdk-s3': 3.556.0
       '@aws-sdk/types': 3.535.0
       '@smithy/protocol-http': 3.3.0
-      '@smithy/signature-v4': 2.2.1
+      '@smithy/signature-v4': 2.3.0
       '@smithy/types': 2.12.0
       tslib: 2.6.2
 
-  '@aws-sdk/token-providers@3.554.0(@aws-sdk/credential-provider-node@3.554.0)':
+  '@aws-sdk/token-providers@3.556.0(@aws-sdk/credential-provider-node@3.556.0)':
     dependencies:
-      '@aws-sdk/client-sso-oidc': 3.554.0(@aws-sdk/credential-provider-node@3.554.0)
+      '@aws-sdk/client-sso-oidc': 3.556.0(@aws-sdk/credential-provider-node@3.556.0)
       '@aws-sdk/types': 3.535.0
       '@smithy/property-provider': 2.2.0
       '@smithy/shared-ini-file-loader': 2.4.0
@@ -10132,10 +10132,10 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@digitalbazaar/http-client@3.4.1':
+  '@digitalbazaar/http-client@3.4.1(web-streams-polyfill@3.3.3)':
     dependencies:
       ky: 0.33.3
-      ky-universal: 0.11.0(ky@0.33.3)
+      ky-universal: 0.11.0(ky@0.33.3)(web-streams-polyfill@3.3.3)
       undici: 5.28.3
     transitivePeerDependencies:
       - web-streams-polyfill
@@ -10465,7 +10465,7 @@ snapshots:
       jest-util: 29.7.0
       slash: 3.0.0
 
-  '@jest/core@29.7.0(ts-node@10.9.2)':
+  '@jest/core@29.7.0(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))':
     dependencies:
       '@jest/console': 29.7.0
       '@jest/reporters': 29.7.0
@@ -10479,7 +10479,7 @@ snapshots:
       exit: 0.1.2
       graceful-fs: 4.2.11
       jest-changed-files: 29.7.0
-      jest-config: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      jest-config: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       jest-haste-map: 29.7.0
       jest-message-util: 29.7.0
       jest-regex-util: 29.6.3
@@ -10684,6 +10684,7 @@ snapshots:
   '@mdit/plugin-alert@0.8.0(markdown-it@14.1.0)':
     dependencies:
       '@types/markdown-it': 13.0.7
+    optionalDependencies:
       markdown-it: 14.1.0
 
   '@mdx-js/react@3.0.1(@types/react@18.2.79)(react@18.2.0)':
@@ -10692,14 +10693,14 @@ snapshots:
       '@types/react': 18.2.79
       react: 18.2.0
 
-  '@mkizka/eslint-config@4.1.1(@typescript-eslint/eslint-plugin@7.7.0)(eslint@8.57.0)(typescript@5.4.5)':
+  '@mkizka/eslint-config@4.1.1(@typescript-eslint/eslint-plugin@7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
       '@dword-design/eslint-plugin-import-alias': 5.0.0
       '@eslint/js': 9.0.0
       eslint: 8.57.0
       eslint-plugin-eqeqeq-fix: 1.0.3
       eslint-plugin-simple-import-sort: 12.0.0(eslint@8.57.0)
-      eslint-plugin-unused-imports: 3.1.0(@typescript-eslint/eslint-plugin@7.7.0)(eslint@8.57.0)
+      eslint-plugin-unused-imports: 3.1.0(@typescript-eslint/eslint-plugin@7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
       globals: 15.0.0
       typescript-eslint: 7.6.0(eslint@8.57.0)(typescript@5.4.5)
     transitivePeerDependencies:
@@ -10837,7 +10838,7 @@ snapshots:
     dependencies:
       playwright: 1.43.1
 
-  '@pmmmwh/react-refresh-webpack-plugin@0.5.11(react-refresh@0.14.0)(webpack@5.89.0)':
+  '@pmmmwh/react-refresh-webpack-plugin@0.5.11(react-refresh@0.14.0)(type-fest@4.9.0)(webpack-hot-middleware@2.26.0)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))':
     dependencies:
       ansi-html-community: 0.0.8
       common-path-prefix: 3.0.0
@@ -10849,7 +10850,10 @@ snapshots:
       react-refresh: 0.14.0
       schema-utils: 3.3.0
       source-map: 0.7.4
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
+    optionalDependencies:
+      type-fest: 4.9.0
+      webpack-hot-middleware: 2.26.0
 
   '@pnpm/constants@7.1.1': {}
 
@@ -10934,7 +10938,7 @@ snapshots:
       - domexception
 
   '@prisma/client@5.12.1(prisma@5.12.1)':
-    dependencies:
+    optionalDependencies:
       prisma: 5.12.1
 
   '@prisma/debug@5.12.1': {}
@@ -10996,18 +11000,18 @@ snapshots:
 
   '@prisma/prisma-schema-wasm@5.8.1-1.78caf6feeaed953168c64e15a249c3e9a033ebe2': {}
 
-  '@quramy/jest-prisma-core@1.8.0(jest@29.7.0)':
+  '@quramy/jest-prisma-core@1.8.0(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))':
     dependencies:
       chalk: 4.1.2
-      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
 
-  '@quramy/jest-prisma-node@1.8.0(jest-environment-node@29.7.0)(jest@29.7.0)':
+  '@quramy/jest-prisma-node@1.8.0(jest-environment-node@29.7.0)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))':
     dependencies:
-      '@quramy/jest-prisma-core': 1.8.0(jest@29.7.0)
-      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      '@quramy/jest-prisma-core': 1.8.0(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
+      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       jest-environment-node: 29.7.0
 
-  '@quramy/prisma-fabbrica@2.1.2(@prisma/client@5.12.1)(typescript@5.4.5)':
+  '@quramy/prisma-fabbrica@2.1.2(@prisma/client@5.12.1(prisma@5.12.1))(typescript@5.4.5)':
     dependencies:
       '@prisma/client': 5.12.1(prisma@5.12.1)
       '@prisma/generator-helper': 5.8.1
@@ -11019,28 +11023,32 @@ snapshots:
   '@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.79)(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.24.0
-      '@types/react': 18.2.79
       react: 18.2.0
+    optionalDependencies:
+      '@types/react': 18.2.79
 
   '@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.79)(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       '@babel/runtime': 7.24.0
-      '@types/react': 18.2.79
       react: 19.0.0-canary-e3ebcd54b-20240405
+    optionalDependencies:
+      '@types/react': 18.2.79
 
   '@radix-ui/react-slot@1.0.2(@types/react@18.2.79)(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.24.0
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.79)(react@18.2.0)
-      '@types/react': 18.2.79
       react: 18.2.0
+    optionalDependencies:
+      '@types/react': 18.2.79
 
   '@radix-ui/react-slot@1.0.2(@types/react@18.2.79)(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       '@babel/runtime': 7.24.0
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.79)(react@19.0.0-canary-e3ebcd54b-20240405)
-      '@types/react': 18.2.79
       react: 19.0.0-canary-e3ebcd54b-20240405
+    optionalDependencies:
+      '@types/react': 18.2.79
 
   '@rollup/plugin-commonjs@24.0.0(rollup@2.78.0)':
     dependencies:
@@ -11050,6 +11058,7 @@ snapshots:
       glob: 8.1.0
       is-reference: 1.2.1
       magic-string: 0.27.0
+    optionalDependencies:
       rollup: 2.78.0
 
   '@rollup/pluginutils@5.1.0(rollup@2.78.0)':
@@ -11057,6 +11066,7 @@ snapshots:
       '@types/estree': 1.0.5
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    optionalDependencies:
       rollup: 2.78.0
 
   '@rushstack/eslint-patch@1.7.0': {}
@@ -11114,7 +11124,7 @@ snapshots:
       '@sentry/utils': 7.110.1
       localforage: 1.10.0
 
-  '@sentry/nextjs@7.110.1(next@14.3.0-canary.5)(react@19.0.0-canary-e3ebcd54b-20240405)(webpack@5.89.0)':
+  '@sentry/nextjs@7.110.1(next@14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))':
     dependencies:
       '@rollup/plugin-commonjs': 24.0.0(rollup@2.78.0)
       '@sentry/core': 7.110.1
@@ -11126,12 +11136,13 @@ snapshots:
       '@sentry/vercel-edge': 7.110.1
       '@sentry/webpack-plugin': 1.21.0
       chalk: 3.0.0
-      next: 14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      next: 14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       react: 19.0.0-canary-e3ebcd54b-20240405
       resolve: 1.22.8
       rollup: 2.78.0
       stacktrace-parser: 0.1.10
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+    optionalDependencies:
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -11397,7 +11408,7 @@ snapshots:
       '@smithy/types': 2.12.0
       tslib: 2.6.2
 
-  '@smithy/signature-v4@2.2.1':
+  '@smithy/signature-v4@2.3.0':
     dependencies:
       '@smithy/is-array-buffer': 2.2.0
       '@smithy/types': 2.12.0
@@ -11535,9 +11546,9 @@ snapshots:
       memoizerific: 1.11.3
       ts-dedent: 2.2.0
 
-  '@storybook/addon-controls@8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/addon-controls@8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
-      '@storybook/blocks': 8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/blocks': 8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       lodash: 4.17.21
       ts-dedent: 2.2.0
     transitivePeerDependencies:
@@ -11551,16 +11562,16 @@ snapshots:
     dependencies:
       '@babel/core': 7.23.9
       '@mdx-js/react': 3.0.1(@types/react@18.2.79)(react@18.2.0)
-      '@storybook/blocks': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/blocks': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/client-logger': 8.0.8
-      '@storybook/components': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/components': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/csf-plugin': 8.0.8
       '@storybook/csf-tools': 8.0.8
       '@storybook/global': 5.0.0
       '@storybook/node-logger': 8.0.8
       '@storybook/preview-api': 8.0.8
-      '@storybook/react-dom-shim': 8.0.8(react-dom@18.2.0)(react@18.2.0)
-      '@storybook/theming': 8.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/react-dom-shim': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/types': 8.0.8
       '@types/react': 18.2.79
       fs-extra: 11.2.0
@@ -11573,11 +11584,11 @@ snapshots:
       - encoding
       - supports-color
 
-  '@storybook/addon-essentials@8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/addon-essentials@8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       '@storybook/addon-actions': 8.0.8
       '@storybook/addon-backgrounds': 8.0.8
-      '@storybook/addon-controls': 8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/addon-controls': 8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/addon-docs': 8.0.8
       '@storybook/addon-highlight': 8.0.8
       '@storybook/addon-measure': 8.0.8
@@ -11585,7 +11596,7 @@ snapshots:
       '@storybook/addon-toolbars': 8.0.8
       '@storybook/addon-viewport': 8.0.8
       '@storybook/core-common': 8.0.8
-      '@storybook/manager-api': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/manager-api': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/node-logger': 8.0.8
       '@storybook/preview-api': 8.0.8
       ts-dedent: 2.2.0
@@ -11600,11 +11611,11 @@ snapshots:
     dependencies:
       '@storybook/global': 5.0.0
 
-  '@storybook/addon-interactions@8.0.8(@types/jest@29.5.12)(jest@29.7.0)':
+  '@storybook/addon-interactions@8.0.8(@jest/globals@29.7.0)(@types/jest@29.5.12)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))':
     dependencies:
       '@storybook/global': 5.0.0
       '@storybook/instrumenter': 8.0.8
-      '@storybook/test': 8.0.8(@types/jest@29.5.12)(jest@29.7.0)
+      '@storybook/test': 8.0.8(@jest/globals@29.7.0)(@types/jest@29.5.12)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       '@storybook/types': 8.0.8
       polished: 4.2.2
       ts-dedent: 2.2.0
@@ -11631,19 +11642,19 @@ snapshots:
     dependencies:
       memoizerific: 1.11.3
 
-  '@storybook/blocks@8.0.8(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0)':
+  '@storybook/blocks@8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@storybook/channels': 8.0.8
       '@storybook/client-logger': 8.0.8
-      '@storybook/components': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/components': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/core-events': 8.0.8
       '@storybook/csf': 0.1.2
       '@storybook/docs-tools': 8.0.8
       '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@18.2.0)(react@18.2.0)
-      '@storybook/manager-api': 8.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/icons': 1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@storybook/manager-api': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/preview-api': 8.0.8
-      '@storybook/theming': 8.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/types': 8.0.8
       '@types/lodash': 4.14.202
       color-convert: 2.0.1
@@ -11652,31 +11663,32 @@ snapshots:
       markdown-to-jsx: 7.3.2(react@18.2.0)
       memoizerific: 1.11.3
       polished: 4.2.2
-      react: 18.2.0
-      react-colorful: 5.6.1(react-dom@18.2.0)(react@18.2.0)
-      react-dom: 18.2.0(react@18.2.0)
+      react-colorful: 5.6.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       telejson: 7.2.0
       tocbot: 4.25.0
       ts-dedent: 2.2.0
       util-deprecate: 1.0.2
+    optionalDependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
       - encoding
       - supports-color
 
-  '@storybook/blocks@8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/blocks@8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       '@storybook/channels': 8.0.8
       '@storybook/client-logger': 8.0.8
-      '@storybook/components': 8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/components': 8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/core-events': 8.0.8
       '@storybook/csf': 0.1.2
       '@storybook/docs-tools': 8.0.8
       '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
-      '@storybook/manager-api': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/icons': 1.2.9(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/manager-api': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/preview-api': 8.0.8
-      '@storybook/theming': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/theming': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/types': 8.0.8
       '@types/lodash': 4.14.202
       color-convert: 2.0.1
@@ -11685,13 +11697,14 @@ snapshots:
       markdown-to-jsx: 7.3.2(react@19.0.0-canary-e3ebcd54b-20240405)
       memoizerific: 1.11.3
       polished: 4.2.2
-      react: 19.0.0-canary-e3ebcd54b-20240405
-      react-colorful: 5.6.1(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
-      react-dom: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
+      react-colorful: 5.6.1(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       telejson: 7.2.0
       tocbot: 4.25.0
       ts-dedent: 2.2.0
       util-deprecate: 1.0.2
+    optionalDependencies:
+      react: 19.0.0-canary-e3ebcd54b-20240405
+      react-dom: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
     transitivePeerDependencies:
       - '@types/react'
       - encoding
@@ -11717,7 +11730,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@storybook/builder-webpack5@8.0.8(@swc/core@1.3.105)(esbuild@0.19.11)(typescript@5.4.5)':
+  '@storybook/builder-webpack5@8.0.8(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)(typescript@5.4.5)':
     dependencies:
       '@storybook/channels': 8.0.8
       '@storybook/client-logger': 8.0.8
@@ -11733,27 +11746,28 @@ snapshots:
       case-sensitive-paths-webpack-plugin: 2.4.0
       cjs-module-lexer: 1.2.3
       constants-browserify: 1.0.0
-      css-loader: 6.9.1(webpack@5.89.0)
+      css-loader: 6.9.1(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       es-module-lexer: 1.4.1
       express: 4.18.2
-      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.4.5)(webpack@5.89.0)
+      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.4.5)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       fs-extra: 11.2.0
-      html-webpack-plugin: 5.6.0(webpack@5.89.0)
+      html-webpack-plugin: 5.6.0(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       magic-string: 0.30.5
       path-browserify: 1.0.1
       process: 0.11.10
       semver: 7.6.0
-      style-loader: 3.3.4(webpack@5.89.0)
-      terser-webpack-plugin: 5.3.10(@swc/core@1.3.105)(esbuild@0.19.11)(webpack@5.89.0)
+      style-loader: 3.3.4(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
+      terser-webpack-plugin: 5.3.10(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       ts-dedent: 2.2.0
-      typescript: 5.4.5
       url: 0.11.3
       util: 0.12.5
       util-deprecate: 1.0.2
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
-      webpack-dev-middleware: 6.1.3(webpack@5.89.0)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
+      webpack-dev-middleware: 6.1.3(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       webpack-hot-middleware: 2.26.0
       webpack-virtual-modules: 0.5.0
+    optionalDependencies:
+      typescript: 5.4.5
     transitivePeerDependencies:
       - '@rspack/core'
       - '@swc/core'
@@ -11779,7 +11793,7 @@ snapshots:
       telejson: 7.2.0
       tiny-invariant: 1.3.3
 
-  '@storybook/cli@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/cli@8.0.8(@babel/preset-env@7.23.8(@babel/core@7.23.9))(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       '@babel/core': 7.23.9
       '@babel/types': 7.23.9
@@ -11787,7 +11801,7 @@ snapshots:
       '@storybook/codemod': 8.0.8
       '@storybook/core-common': 8.0.8
       '@storybook/core-events': 8.0.8
-      '@storybook/core-server': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/core-server': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/csf-tools': 8.0.8
       '@storybook/node-logger': 8.0.8
       '@storybook/telemetry': 8.0.8
@@ -11806,7 +11820,7 @@ snapshots:
       get-npm-tarball-url: 2.1.0
       giget: 1.2.1
       globby: 11.1.0
-      jscodeshift: 0.15.1(@babel/preset-env@7.23.8)
+      jscodeshift: 0.15.1(@babel/preset-env@7.23.8(@babel/core@7.23.9))
       leven: 3.1.0
       ora: 5.4.1
       prettier: 3.2.5
@@ -11846,7 +11860,7 @@ snapshots:
       '@types/cross-spawn': 6.0.6
       cross-spawn: 7.0.3
       globby: 11.1.0
-      jscodeshift: 0.15.1(@babel/preset-env@7.23.8)
+      jscodeshift: 0.15.1(@babel/preset-env@7.23.8(@babel/core@7.23.9))
       lodash: 4.17.21
       prettier: 3.2.5
       recast: 0.23.6
@@ -11854,14 +11868,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/components@8.0.8(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0)':
+  '@storybook/components@8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@radix-ui/react-slot': 1.0.2(@types/react@18.2.79)(react@18.2.0)
       '@storybook/client-logger': 8.0.8
       '@storybook/csf': 0.1.2
       '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@18.2.0)(react@18.2.0)
-      '@storybook/theming': 8.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/icons': 1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/types': 8.0.8
       memoizerific: 1.11.3
       react: 18.2.0
@@ -11870,14 +11884,14 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@storybook/components@8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/components@8.0.8(@types/react@18.2.79)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       '@radix-ui/react-slot': 1.0.2(@types/react@18.2.79)(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/client-logger': 8.0.8
       '@storybook/csf': 0.1.2
       '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
-      '@storybook/theming': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/icons': 1.2.9(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/theming': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/types': 8.0.8
       memoizerific: 1.11.3
       react: 19.0.0-canary-e3ebcd54b-20240405
@@ -11962,7 +11976,7 @@ snapshots:
     dependencies:
       ts-dedent: 2.2.0
 
-  '@storybook/core-server@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/core-server@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       '@aw-web-design/x-default-browser': 1.4.126
       '@babel/core': 7.23.9
@@ -11976,7 +11990,7 @@ snapshots:
       '@storybook/docs-mdx': 3.0.0
       '@storybook/global': 5.0.0
       '@storybook/manager': 8.0.8
-      '@storybook/manager-api': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/manager-api': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/node-logger': 8.0.8
       '@storybook/preview-api': 8.0.8
       '@storybook/telemetry': 8.0.8
@@ -12090,12 +12104,12 @@ snapshots:
 
   '@storybook/global@5.0.0': {}
 
-  '@storybook/icons@1.2.9(react-dom@18.2.0)(react@18.2.0)':
+  '@storybook/icons@1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@storybook/icons@1.2.9(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/icons@1.2.9(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       react: 19.0.0-canary-e3ebcd54b-20240405
       react-dom: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
@@ -12110,10 +12124,10 @@ snapshots:
       '@vitest/utils': 1.4.0
       util: 0.12.5
 
-  '@storybook/jest@0.2.3(jest@29.7.0)':
+  '@storybook/jest@0.2.3(@jest/globals@29.7.0)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))':
     dependencies:
       '@storybook/expect': 28.1.3-5
-      '@testing-library/jest-dom': 6.2.0(@types/jest@28.1.3)(jest@29.7.0)
+      '@testing-library/jest-dom': 6.2.0(@jest/globals@29.7.0)(@types/jest@28.1.3)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       '@types/jest': 28.1.3
       jest-mock: 27.5.1
     transitivePeerDependencies:
@@ -12121,16 +12135,16 @@ snapshots:
       - jest
       - vitest
 
-  '@storybook/manager-api@8.0.8(react-dom@18.2.0)(react@18.2.0)':
+  '@storybook/manager-api@8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@storybook/channels': 8.0.8
       '@storybook/client-logger': 8.0.8
       '@storybook/core-events': 8.0.8
       '@storybook/csf': 0.1.2
       '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/icons': 1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/router': 8.0.8
-      '@storybook/theming': 8.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/types': 8.0.8
       dequal: 2.0.3
       lodash: 4.17.21
@@ -12142,16 +12156,16 @@ snapshots:
       - react
       - react-dom
 
-  '@storybook/manager-api@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/manager-api@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       '@storybook/channels': 8.0.8
       '@storybook/client-logger': 8.0.8
       '@storybook/core-events': 8.0.8
       '@storybook/csf': 0.1.2
       '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/icons': 1.2.9(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/router': 8.0.8
-      '@storybook/theming': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/theming': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/types': 8.0.8
       dequal: 2.0.3
       lodash: 4.17.21
@@ -12165,7 +12179,7 @@ snapshots:
 
   '@storybook/manager@8.0.8': {}
 
-  '@storybook/nextjs@8.0.8(@swc/core@1.3.105)(esbuild@0.19.11)(next@14.3.0-canary.5)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)(webpack@5.89.0)':
+  '@storybook/nextjs@8.0.8(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)(next@14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405))(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(type-fest@4.9.0)(typescript@5.4.5)(webpack-hot-middleware@2.26.0)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))':
     dependencies:
       '@babel/core': 7.23.9
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.23.9)
@@ -12180,43 +12194,44 @@ snapshots:
       '@babel/preset-react': 7.23.3(@babel/core@7.23.9)
       '@babel/preset-typescript': 7.23.3(@babel/core@7.23.9)
       '@babel/runtime': 7.24.0
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.11(react-refresh@0.14.0)(webpack@5.89.0)
+      '@pmmmwh/react-refresh-webpack-plugin': 0.5.11(react-refresh@0.14.0)(type-fest@4.9.0)(webpack-hot-middleware@2.26.0)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       '@storybook/addon-actions': 8.0.8
-      '@storybook/builder-webpack5': 8.0.8(@swc/core@1.3.105)(esbuild@0.19.11)(typescript@5.4.5)
+      '@storybook/builder-webpack5': 8.0.8(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)(typescript@5.4.5)
       '@storybook/core-common': 8.0.8
       '@storybook/core-events': 8.0.8
       '@storybook/node-logger': 8.0.8
-      '@storybook/preset-react-webpack': 8.0.8(@swc/core@1.3.105)(esbuild@0.19.11)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)
+      '@storybook/preset-react-webpack': 8.0.8(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)
       '@storybook/preview-api': 8.0.8
-      '@storybook/react': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)
+      '@storybook/react': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)
       '@storybook/types': 8.0.8
       '@types/node': 18.19.8
       '@types/semver': 7.5.8
-      babel-loader: 9.1.3(@babel/core@7.23.9)(webpack@5.89.0)
-      css-loader: 6.9.1(webpack@5.89.0)
+      babel-loader: 9.1.3(@babel/core@7.23.9)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
+      css-loader: 6.9.1(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       find-up: 5.0.0
       fs-extra: 11.2.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: 14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
-      node-polyfill-webpack-plugin: 2.0.1(webpack@5.89.0)
+      next: 14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
+      node-polyfill-webpack-plugin: 2.0.1(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       pnp-webpack-plugin: 1.7.0(typescript@5.4.5)
       postcss: 8.4.38
-      postcss-loader: 7.3.4(postcss@8.4.38)(typescript@5.4.5)(webpack@5.89.0)
+      postcss-loader: 7.3.4(postcss@8.4.38)(typescript@5.4.5)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       react: 19.0.0-canary-e3ebcd54b-20240405
       react-dom: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
       react-refresh: 0.14.0
       resolve-url-loader: 5.0.0
-      sass-loader: 12.6.0(webpack@5.89.0)
+      sass-loader: 12.6.0(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       semver: 7.6.0
       sharp: 0.32.6
-      style-loader: 3.3.4(webpack@5.89.0)
+      style-loader: 3.3.4(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       styled-jsx: 5.1.1(@babel/core@7.23.9)(react@19.0.0-canary-e3ebcd54b-20240405)
       ts-dedent: 2.2.0
       tsconfig-paths: 4.2.0
       tsconfig-paths-webpack-plugin: 4.1.0
+    optionalDependencies:
       typescript: 5.4.5
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
     transitivePeerDependencies:
       - '@rspack/core'
       - '@swc/core'
@@ -12241,13 +12256,13 @@ snapshots:
 
   '@storybook/node-logger@8.0.8': {}
 
-  '@storybook/preset-react-webpack@8.0.8(@swc/core@1.3.105)(esbuild@0.19.11)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)':
+  '@storybook/preset-react-webpack@8.0.8(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)':
     dependencies:
       '@storybook/core-webpack': 8.0.8
       '@storybook/docs-tools': 8.0.8
       '@storybook/node-logger': 8.0.8
-      '@storybook/react': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)
-      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(typescript@5.4.5)(webpack@5.89.0)
+      '@storybook/react': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)
+      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(typescript@5.4.5)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       '@types/node': 18.19.8
       '@types/semver': 7.5.8
       find-up: 5.0.0
@@ -12259,8 +12274,9 @@ snapshots:
       resolve: 1.22.8
       semver: 7.6.0
       tsconfig-paths: 4.2.0
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
+    optionalDependencies:
       typescript: 5.4.5
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
     transitivePeerDependencies:
       - '@swc/core'
       - encoding
@@ -12305,7 +12321,7 @@ snapshots:
 
   '@storybook/preview@8.0.8': {}
 
-  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(typescript@5.4.5)(webpack@5.89.0)':
+  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(typescript@5.4.5)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))':
     dependencies:
       debug: 4.3.4
       endent: 2.1.0
@@ -12315,27 +12331,27 @@ snapshots:
       react-docgen-typescript: 2.2.2(typescript@5.4.5)
       tslib: 2.6.2
       typescript: 5.4.5
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/react-dom-shim@8.0.8(react-dom@18.2.0)(react@18.2.0)':
+  '@storybook/react-dom-shim@8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@storybook/react-dom-shim@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/react-dom-shim@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       react: 19.0.0-canary-e3ebcd54b-20240405
       react-dom: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
 
-  '@storybook/react@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)':
+  '@storybook/react@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)(typescript@5.4.5)':
     dependencies:
       '@storybook/client-logger': 8.0.8
       '@storybook/docs-tools': 8.0.8
       '@storybook/global': 5.0.0
       '@storybook/preview-api': 8.0.8
-      '@storybook/react-dom-shim': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/react-dom-shim': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/types': 8.0.8
       '@types/escodegen': 0.0.6
       '@types/estree': 0.0.51
@@ -12349,12 +12365,13 @@ snapshots:
       prop-types: 15.8.1
       react: 19.0.0-canary-e3ebcd54b-20240405
       react-dom: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
-      react-element-to-jsx-string: 15.0.0(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      react-element-to-jsx-string: 15.0.0(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       semver: 7.6.0
       ts-dedent: 2.2.0
       type-fest: 2.19.0
-      typescript: 5.4.5
       util-deprecate: 1.0.2
+    optionalDependencies:
+      typescript: 5.4.5
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -12379,7 +12396,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@storybook/test-runner@0.17.0(@types/node@20.12.7)(ts-node@10.9.2)':
+  '@storybook/test-runner@0.17.0(@swc/helpers@0.5.5)(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))':
     dependencies:
       '@babel/core': 7.23.9
       '@babel/generator': 7.23.6
@@ -12390,17 +12407,17 @@ snapshots:
       '@storybook/csf': 0.1.2
       '@storybook/csf-tools': 8.0.0
       '@storybook/preview-api': 8.0.0
-      '@swc/core': 1.3.105
-      '@swc/jest': 0.2.31(@swc/core@1.3.105)
+      '@swc/core': 1.3.105(@swc/helpers@0.5.5)
+      '@swc/jest': 0.2.31(@swc/core@1.3.105(@swc/helpers@0.5.5))
       expect-playwright: 0.8.0
-      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       jest-circus: 29.7.0
       jest-environment-node: 29.7.0
       jest-junit: 16.0.0
-      jest-playwright-preset: 4.0.0(jest-circus@29.7.0)(jest-environment-node@29.7.0)(jest-runner@29.7.0)(jest@29.7.0)
+      jest-playwright-preset: 4.0.0(jest-circus@29.7.0)(jest-environment-node@29.7.0)(jest-runner@29.7.0)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       jest-runner: 29.7.0
       jest-serializer-html: 7.1.0
-      jest-watch-typeahead: 2.2.2(jest@29.7.0)
+      jest-watch-typeahead: 2.2.2(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       playwright: 1.42.1
     transitivePeerDependencies:
       - '@swc/helpers'
@@ -12412,14 +12429,14 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@storybook/test@8.0.8(@types/jest@29.5.12)(jest@29.7.0)':
+  '@storybook/test@8.0.8(@jest/globals@29.7.0)(@types/jest@29.5.12)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))':
     dependencies:
       '@storybook/client-logger': 8.0.8
       '@storybook/core-events': 8.0.8
       '@storybook/instrumenter': 8.0.8
       '@storybook/preview-api': 8.0.8
       '@testing-library/dom': 9.3.4
-      '@testing-library/jest-dom': 6.4.2(@types/jest@29.5.12)(jest@29.7.0)
+      '@testing-library/jest-dom': 6.4.2(@jest/globals@29.7.0)(@types/jest@29.5.12)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))
       '@testing-library/user-event': 14.5.2(@testing-library/dom@9.3.4)
       '@vitest/expect': 1.3.1
       '@vitest/spy': 1.4.0
@@ -12438,21 +12455,23 @@ snapshots:
       '@testing-library/user-event': 14.5.2(@testing-library/dom@9.3.4)
       ts-dedent: 2.2.0
 
-  '@storybook/theming@8.0.8(react-dom@18.2.0)(react@18.2.0)':
+  '@storybook/theming@8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
       '@storybook/client-logger': 8.0.8
       '@storybook/global': 5.0.0
       memoizerific: 1.11.3
+    optionalDependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@storybook/theming@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)':
+  '@storybook/theming@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)':
     dependencies:
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@19.0.0-canary-e3ebcd54b-20240405)
       '@storybook/client-logger': 8.0.8
       '@storybook/global': 5.0.0
       memoizerific: 1.11.3
+    optionalDependencies:
       react: 19.0.0-canary-e3ebcd54b-20240405
       react-dom: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
 
@@ -12563,7 +12582,7 @@ snapshots:
   '@swc/core-win32-x64-msvc@1.3.105':
     optional: true
 
-  '@swc/core@1.3.105':
+  '@swc/core@1.3.105(@swc/helpers@0.5.5)':
     dependencies:
       '@swc/counter': 0.1.3
       '@swc/types': 0.1.5
@@ -12578,6 +12597,7 @@ snapshots:
       '@swc/core-win32-arm64-msvc': 1.3.105
       '@swc/core-win32-ia32-msvc': 1.3.105
       '@swc/core-win32-x64-msvc': 1.3.105
+      '@swc/helpers': 0.5.5
 
   '@swc/counter@0.1.3': {}
 
@@ -12586,10 +12606,10 @@ snapshots:
       '@swc/counter': 0.1.3
       tslib: 2.6.2
 
-  '@swc/jest@0.2.31(@swc/core@1.3.105)':
+  '@swc/jest@0.2.31(@swc/core@1.3.105(@swc/helpers@0.5.5))':
     dependencies:
       '@jest/create-cache-key-function': 29.7.0
-      '@swc/core': 1.3.105
+      '@swc/core': 1.3.105(@swc/helpers@0.5.5)
       jsonc-parser: 3.2.0
 
   '@swc/types@0.1.5': {}
@@ -12605,31 +12625,35 @@ snapshots:
       lz-string: 1.5.0
       pretty-format: 27.5.1
 
-  '@testing-library/jest-dom@6.2.0(@types/jest@28.1.3)(jest@29.7.0)':
+  '@testing-library/jest-dom@6.2.0(@jest/globals@29.7.0)(@types/jest@28.1.3)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))':
     dependencies:
       '@adobe/css-tools': 4.3.2
       '@babel/runtime': 7.24.0
+      aria-query: 5.3.0
+      chalk: 3.0.0
+      css.escape: 1.5.1
+      dom-accessibility-api: 0.6.3
+      lodash: 4.17.21
+      redent: 3.0.0
+    optionalDependencies:
+      '@jest/globals': 29.7.0
       '@types/jest': 28.1.3
-      aria-query: 5.3.0
-      chalk: 3.0.0
-      css.escape: 1.5.1
-      dom-accessibility-api: 0.6.3
-      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
-      lodash: 4.17.21
-      redent: 3.0.0
+      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
 
-  '@testing-library/jest-dom@6.4.2(@types/jest@29.5.12)(jest@29.7.0)':
+  '@testing-library/jest-dom@6.4.2(@jest/globals@29.7.0)(@types/jest@29.5.12)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))':
     dependencies:
       '@adobe/css-tools': 4.3.2
       '@babel/runtime': 7.24.0
-      '@types/jest': 29.5.12
       aria-query: 5.3.0
       chalk: 3.0.0
       css.escape: 1.5.1
       dom-accessibility-api: 0.6.3
-      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
       lodash: 4.17.21
       redent: 3.0.0
+    optionalDependencies:
+      '@jest/globals': 29.7.0
+      '@types/jest': 29.5.12
+      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
 
   '@testing-library/user-event@14.5.2(@testing-library/dom@9.3.4)':
     dependencies:
@@ -12872,7 +12896,7 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@typescript-eslint/eslint-plugin@7.6.0(@typescript-eslint/parser@7.6.0)(eslint@8.57.0)(typescript@5.4.5)':
+  '@typescript-eslint/eslint-plugin@7.6.0(@typescript-eslint/parser@7.6.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
       '@eslint-community/regexpp': 4.10.0
       '@typescript-eslint/parser': 7.6.0(eslint@8.57.0)(typescript@5.4.5)
@@ -12887,11 +12911,12 @@ snapshots:
       natural-compare: 1.4.0
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/eslint-plugin@7.7.0(@typescript-eslint/parser@7.7.0)(eslint@8.57.0)(typescript@5.4.5)':
+  '@typescript-eslint/eslint-plugin@7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
       '@eslint-community/regexpp': 4.10.0
       '@typescript-eslint/parser': 7.7.0(eslint@8.57.0)(typescript@5.4.5)
@@ -12906,6 +12931,7 @@ snapshots:
       natural-compare: 1.4.0
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -12918,6 +12944,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 6.21.0
       debug: 4.3.4
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -12930,6 +12957,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 7.6.0
       debug: 4.3.4
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -12942,6 +12970,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 7.7.0
       debug: 4.3.4
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -12973,6 +13002,7 @@ snapshots:
       debug: 4.3.4
       eslint: 8.57.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -12984,6 +13014,7 @@ snapshots:
       debug: 4.3.4
       eslint: 8.57.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -13005,6 +13036,7 @@ snapshots:
       is-glob: 4.0.3
       semver: 7.6.0
       tsutils: 3.21.0(typescript@5.4.5)
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -13019,6 +13051,7 @@ snapshots:
       minimatch: 9.0.3
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -13033,6 +13066,7 @@ snapshots:
       minimatch: 9.0.4
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -13047,6 +13081,7 @@ snapshots:
       minimatch: 9.0.4
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.5)
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -13293,7 +13328,7 @@ snapshots:
       indent-string: 4.0.0
 
   ajv-formats@2.1.1(ajv@8.12.0):
-    dependencies:
+    optionalDependencies:
       ajv: 8.12.0
 
   ajv-keywords@3.5.2(ajv@6.12.6):
@@ -13537,12 +13572,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-loader@9.1.3(@babel/core@7.23.9)(webpack@5.89.0):
+  babel-loader@9.1.3(@babel/core@7.23.9)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
       '@babel/core': 7.23.9
       find-cache-dir: 4.0.0
       schema-utils: 4.2.0
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
 
   babel-plugin-add-module-exports@1.0.4: {}
 
@@ -14168,6 +14203,7 @@ snapshots:
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
+    optionalDependencies:
       typescript: 5.4.5
 
   create-ecdh@4.0.4:
@@ -14192,13 +14228,13 @@ snapshots:
       safe-buffer: 5.2.1
       sha.js: 2.4.11
 
-  create-jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2):
+  create-jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)):
     dependencies:
       '@jest/types': 29.6.3
       chalk: 4.1.2
       exit: 0.1.2
       graceful-fs: 4.2.11
-      jest-config: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      jest-config: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       jest-util: 29.7.0
       prompts: 2.4.2
     transitivePeerDependencies:
@@ -14237,7 +14273,7 @@ snapshots:
 
   crypto-random-string@2.0.0: {}
 
-  css-loader@6.9.1(webpack@5.89.0):
+  css-loader@6.9.1(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.38)
       postcss: 8.4.38
@@ -14247,7 +14283,7 @@ snapshots:
       postcss-modules-values: 4.0.0(postcss@8.4.38)
       postcss-value-parser: 4.2.0
       semver: 7.6.0
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
 
   css-select@4.3.0:
     dependencies:
@@ -14802,11 +14838,12 @@ snapshots:
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.7.0)(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-react: 7.33.2(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.0)
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - eslint-import-resolver-webpack
@@ -14820,13 +14857,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0):
+  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0):
     dependencies:
       debug: 4.3.4
       enhanced-resolve: 5.15.0
       eslint: 8.57.0
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.7.0)(eslint@8.57.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.2
       is-core-module: 2.13.1
@@ -14837,20 +14874,22 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.0(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
+  eslint-module-utils@2.8.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
-      '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.4.5)
       debug: 3.2.7
+    optionalDependencies:
+      '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.8.0(@typescript-eslint/parser@7.7.0)(eslint-import-resolver-node@0.3.9)(eslint@8.57.0):
+  eslint-module-utils@2.8.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0):
     dependencies:
-      '@typescript-eslint/parser': 7.7.0(eslint@8.57.0)(typescript@5.4.5)
       debug: 3.2.7
+    optionalDependencies:
+      '@typescript-eslint/parser': 7.7.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
     transitivePeerDependencies:
@@ -14858,9 +14897,8 @@ snapshots:
 
   eslint-plugin-eqeqeq-fix@1.0.3: {}
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.7.0)(eslint@8.57.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0):
     dependencies:
-      '@typescript-eslint/parser': 7.7.0(eslint@8.57.0)(typescript@5.4.5)
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3
       array.prototype.flat: 1.3.2
@@ -14869,7 +14907,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@7.7.0)(eslint-import-resolver-node@0.3.9)(eslint@8.57.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0)
       hasown: 2.0.0
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -14879,6 +14917,8 @@ snapshots:
       object.values: 1.1.7
       semver: 6.3.1
       tsconfig-paths: 3.15.0
+    optionalDependencies:
+      '@typescript-eslint/parser': 7.7.0(eslint@8.57.0)(typescript@5.4.5)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -14943,17 +14983,18 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-tailwindcss@3.15.1(tailwindcss@3.4.3):
+  eslint-plugin-tailwindcss@3.15.1(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))):
     dependencies:
       fast-glob: 3.3.2
       postcss: 8.4.38
-      tailwindcss: 3.4.3(ts-node@10.9.2)
+      tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
 
-  eslint-plugin-unused-imports@3.1.0(@typescript-eslint/eslint-plugin@7.7.0)(eslint@8.57.0):
+  eslint-plugin-unused-imports@3.1.0(@typescript-eslint/eslint-plugin@7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 7.7.0(@typescript-eslint/parser@7.7.0)(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
       eslint-rule-composer: 0.3.0
+    optionalDependencies:
+      '@typescript-eslint/eslint-plugin': 7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
 
   eslint-rule-composer@0.3.0: {}
 
@@ -15322,7 +15363,7 @@ snapshots:
       cross-spawn: 7.0.3
       signal-exit: 4.1.0
 
-  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.4.5)(webpack@5.89.0):
+  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.4.5)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
       '@babel/code-frame': 7.23.5
       chalk: 4.1.2
@@ -15337,7 +15378,7 @@ snapshots:
       semver: 7.6.0
       tapable: 2.2.1
       typescript: 5.4.5
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
 
   form-data@4.0.0:
     dependencies:
@@ -15665,14 +15706,15 @@ snapshots:
 
   html-tags@3.3.1: {}
 
-  html-webpack-plugin@5.6.0(webpack@5.89.0):
+  html-webpack-plugin@5.6.0(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
       lodash: 4.17.21
       pretty-error: 4.0.0
       tapable: 2.2.1
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+    optionalDependencies:
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
 
   htmlparser2@3.10.1:
     dependencies:
@@ -16096,16 +16138,16 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-cli@29.7.0(@types/node@20.12.7)(ts-node@10.9.2):
+  jest-cli@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)):
     dependencies:
-      '@jest/core': 29.7.0(ts-node@10.9.2)
+      '@jest/core': 29.7.0(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
       chalk: 4.1.2
-      create-jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      create-jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       exit: 0.1.2
       import-local: 3.1.0
-      jest-config: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      jest-config: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       jest-util: 29.7.0
       jest-validate: 29.7.0
       yargs: 17.7.2
@@ -16115,12 +16157,11 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest-config@29.7.0(@types/node@20.12.7)(ts-node@10.9.2):
+  jest-config@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)):
     dependencies:
       '@babel/core': 7.23.9
       '@jest/test-sequencer': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.12.7
       babel-jest: 29.7.0(@babel/core@7.23.9)
       chalk: 4.1.2
       ci-info: 3.9.0
@@ -16140,7 +16181,9 @@ snapshots:
       pretty-format: 29.7.0
       slash: 3.0.0
       strip-json-comments: 3.1.1
-      ts-node: 10.9.2(@swc/core@1.3.105)(@types/node@20.12.7)(typescript@5.4.5)
+    optionalDependencies:
+      '@types/node': 20.12.7
+      ts-node: 10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -16238,9 +16281,9 @@ snapshots:
       slash: 3.0.0
       stack-utils: 2.0.6
 
-  jest-mock-extended@3.0.6(jest@29.7.0)(typescript@5.4.5):
+  jest-mock-extended@3.0.6(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)))(typescript@5.4.5):
     dependencies:
-      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       ts-essentials: 9.4.2(typescript@5.4.5)
       typescript: 5.4.5
 
@@ -16255,10 +16298,10 @@ snapshots:
       '@types/node': 20.12.7
       jest-util: 29.7.0
 
-  jest-playwright-preset@4.0.0(jest-circus@29.7.0)(jest-environment-node@29.7.0)(jest-runner@29.7.0)(jest@29.7.0):
+  jest-playwright-preset@4.0.0(jest-circus@29.7.0)(jest-environment-node@29.7.0)(jest-runner@29.7.0)(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))):
     dependencies:
       expect-playwright: 0.8.0
-      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       jest-circus: 29.7.0
       jest-environment-node: 29.7.0
       jest-process-manager: 0.4.0
@@ -16272,7 +16315,7 @@ snapshots:
       - supports-color
 
   jest-pnp-resolver@1.2.3(jest-resolve@29.7.0):
-    dependencies:
+    optionalDependencies:
       jest-resolve: 29.7.0
 
   jest-process-manager@0.4.0:
@@ -16412,11 +16455,11 @@ snapshots:
       leven: 3.1.0
       pretty-format: 29.7.0
 
-  jest-watch-typeahead@2.2.2(jest@29.7.0):
+  jest-watch-typeahead@2.2.2(jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))):
     dependencies:
       ansi-escapes: 6.2.0
       chalk: 5.3.0
-      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      jest: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       jest-regex-util: 29.6.3
       jest-watcher: 29.7.0
       slash: 5.1.0
@@ -16447,12 +16490,12 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2):
+  jest@29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)):
     dependencies:
-      '@jest/core': 29.7.0(ts-node@10.9.2)
+      '@jest/core': 29.7.0(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       '@jest/types': 29.6.3
       import-local: 3.1.0
-      jest-cli: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2)
+      jest-cli: 29.7.0(@types/node@20.12.7)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -16472,7 +16515,7 @@ snapshots:
   jose@4.15.5: {}
 
   jotai@2.8.0(@types/react@18.2.79)(react@19.0.0-canary-e3ebcd54b-20240405):
-    dependencies:
+    optionalDependencies:
       '@types/react': 18.2.79
       react: 19.0.0-canary-e3ebcd54b-20240405
 
@@ -16487,7 +16530,7 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jscodeshift@0.15.1(@babel/preset-env@7.23.8):
+  jscodeshift@0.15.1(@babel/preset-env@7.23.8(@babel/core@7.23.9)):
     dependencies:
       '@babel/core': 7.23.9
       '@babel/parser': 7.23.9
@@ -16496,7 +16539,6 @@ snapshots:
       '@babel/plugin-transform-nullish-coalescing-operator': 7.23.4(@babel/core@7.23.9)
       '@babel/plugin-transform-optional-chaining': 7.23.4(@babel/core@7.23.9)
       '@babel/plugin-transform-private-methods': 7.23.3(@babel/core@7.23.9)
-      '@babel/preset-env': 7.23.8(@babel/core@7.23.9)
       '@babel/preset-flow': 7.23.3(@babel/core@7.23.9)
       '@babel/preset-typescript': 7.23.3(@babel/core@7.23.9)
       '@babel/register': 7.23.7(@babel/core@7.23.9)
@@ -16510,6 +16552,8 @@ snapshots:
       recast: 0.23.6
       temp: 0.8.4
       write-file-atomic: 2.4.3
+    optionalDependencies:
+      '@babel/preset-env': 7.23.8(@babel/core@7.23.9)
     transitivePeerDependencies:
       - supports-color
 
@@ -16549,9 +16593,9 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  jsonld@8.3.2:
+  jsonld@8.3.2(web-streams-polyfill@3.3.3):
     dependencies:
-      '@digitalbazaar/http-client': 3.4.1
+      '@digitalbazaar/http-client': 3.4.1(web-streams-polyfill@3.3.3)
       canonicalize: 1.0.8
       lru-cache: 6.0.0
       rdf-canonize: 3.4.0
@@ -16608,11 +16652,13 @@ snapshots:
       - bluebird
       - domexception
 
-  ky-universal@0.11.0(ky@0.33.3):
+  ky-universal@0.11.0(ky@0.33.3)(web-streams-polyfill@3.3.3):
     dependencies:
       abort-controller: 3.0.0
       ky: 0.33.3
       node-fetch: 3.3.2
+    optionalDependencies:
+      web-streams-polyfill: 3.3.3
 
   ky@0.33.3: {}
 
@@ -17025,8 +17071,9 @@ snapshots:
       path-to-regexp: 6.2.1
       strict-event-emitter: 0.5.1
       type-fest: 4.9.0
-      typescript: 5.4.5
       yargs: 17.7.2
+    optionalDependencies:
+      typescript: 5.4.5
 
   mutation-testing-elements@3.0.2: {}
 
@@ -17064,13 +17111,13 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-auth@4.24.7(next@14.3.0-canary.5)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405):
+  next-auth@4.24.7(next@14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405))(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405):
     dependencies:
       '@babel/runtime': 7.23.8
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.15.5
-      next: 14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      next: 14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
       oauth: 0.9.15
       openid-client: 5.6.4
       preact: 10.19.3
@@ -17085,10 +17132,9 @@ snapshots:
 
   next-tick@1.1.0: {}
 
-  next@14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405):
+  next@14.3.0-canary.5(@babel/core@7.23.9)(@playwright/test@1.43.1)(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405):
     dependencies:
       '@next/env': 14.3.0-canary.5
-      '@playwright/test': 1.43.1
       '@swc/helpers': 0.5.5
       busboy: 1.6.0
       caniuse-lite: 1.0.30001606
@@ -17107,6 +17153,7 @@ snapshots:
       '@next/swc-win32-arm64-msvc': 14.3.0-canary.5
       '@next/swc-win32-ia32-msvc': 14.3.0-canary.5
       '@next/swc-win32-x64-msvc': 14.3.0-canary.5
+      '@playwright/test': 1.43.1
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
@@ -17151,7 +17198,7 @@ snapshots:
 
   node-int64@0.4.0: {}
 
-  node-polyfill-webpack-plugin@2.0.1(webpack@5.89.0):
+  node-polyfill-webpack-plugin@2.0.1(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
       assert: 2.1.0
       browserify-zlib: 0.2.0
@@ -17178,7 +17225,7 @@ snapshots:
       url: 0.11.3
       util: 0.12.5
       vm-browserify: 1.1.2
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
 
   node-preload@0.2.1:
     dependencies:
@@ -17655,20 +17702,21 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.38
 
-  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2):
+  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)):
     dependencies:
       lilconfig: 3.0.0
-      postcss: 8.4.38
-      ts-node: 10.9.2(@swc/core@1.3.105)(@types/node@20.12.7)(typescript@5.4.5)
       yaml: 2.3.4
+    optionalDependencies:
+      postcss: 8.4.38
+      ts-node: 10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)
 
-  postcss-loader@7.3.4(postcss@8.4.38)(typescript@5.4.5)(webpack@5.89.0):
+  postcss-loader@7.3.4(postcss@8.4.38)(typescript@5.4.5)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
       cosmiconfig: 8.3.6(typescript@5.4.5)
       jiti: 1.21.0
       postcss: 8.4.38
       semver: 7.6.0
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
     transitivePeerDependencies:
       - typescript
 
@@ -17921,12 +17969,12 @@ snapshots:
     dependencies:
       setimmediate: 1.0.5
 
-  react-colorful@5.6.1(react-dom@18.2.0)(react@18.2.0):
+  react-colorful@5.6.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  react-colorful@5.6.1(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405):
+  react-colorful@5.6.1(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405):
     dependencies:
       react: 19.0.0-canary-e3ebcd54b-20240405
       react-dom: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
@@ -17961,7 +18009,7 @@ snapshots:
       react: 19.0.0-canary-e3ebcd54b-20240405
       scheduler: 0.25.0-canary-e3ebcd54b-20240405
 
-  react-element-to-jsx-string@15.0.0(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405):
+  react-element-to-jsx-string@15.0.0(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405):
     dependencies:
       '@base2/pretty-print-object': 1.0.1
       is-plain-object: 5.0.0
@@ -17979,7 +18027,7 @@ snapshots:
 
   react-refresh@0.14.0: {}
 
-  react-simple-image-viewer@1.2.2(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405):
+  react-simple-image-viewer@1.2.2(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405):
     dependencies:
       react: 19.0.0-canary-e3ebcd54b-20240405
       react-dom: 19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405)
@@ -18264,11 +18312,11 @@ snapshots:
       parse-srcset: 1.0.2
       postcss: 8.4.38
 
-  sass-loader@12.6.0(webpack@5.89.0):
+  sass-loader@12.6.0(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
       klona: 2.0.6
       neo-async: 2.6.2
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
 
   scheduler@0.23.0:
     dependencies:
@@ -18557,9 +18605,9 @@ snapshots:
 
   store2@2.14.2: {}
 
-  storybook@8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405):
+  storybook@8.0.8(@babel/preset-env@7.23.8(@babel/core@7.23.9))(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405):
     dependencies:
-      '@storybook/cli': 8.0.8(react-dom@19.0.0-canary-e3ebcd54b-20240405)(react@19.0.0-canary-e3ebcd54b-20240405)
+      '@storybook/cli': 8.0.8(@babel/preset-env@7.23.8(@babel/core@7.23.9))(react-dom@19.0.0-canary-e3ebcd54b-20240405(react@19.0.0-canary-e3ebcd54b-20240405))(react@19.0.0-canary-e3ebcd54b-20240405)
     transitivePeerDependencies:
       - '@babel/preset-env'
       - bufferutil
@@ -18710,15 +18758,16 @@ snapshots:
 
   strnum@1.0.5: {}
 
-  style-loader@3.3.4(webpack@5.89.0):
+  style-loader@3.3.4(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
 
   styled-jsx@5.1.1(@babel/core@7.23.9)(react@19.0.0-canary-e3ebcd54b-20240405):
     dependencies:
-      '@babel/core': 7.23.9
       client-only: 0.0.1
       react: 19.0.0-canary-e3ebcd54b-20240405
+    optionalDependencies:
+      '@babel/core': 7.23.9
 
   sucrase@3.35.0:
     dependencies:
@@ -18757,11 +18806,11 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.0
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.3):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))):
     dependencies:
-      tailwindcss: 3.4.3(ts-node@10.9.2)
+      tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
 
-  tailwindcss@3.4.3(ts-node@10.9.2):
+  tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -18780,7 +18829,7 @@ snapshots:
       postcss: 8.4.38
       postcss-import: 15.1.0(postcss@8.4.38)
       postcss-js: 4.0.1(postcss@8.4.38)
-      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2)
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5))
       postcss-nested: 6.0.1(postcss@8.4.38)
       postcss-selector-parser: 6.0.15
       resolve: 1.22.8
@@ -18852,16 +18901,17 @@ snapshots:
 
   term-size@4.0.0: {}
 
-  terser-webpack-plugin@5.3.10(@swc/core@1.3.105)(esbuild@0.19.11)(webpack@5.89.0):
+  terser-webpack-plugin@5.3.10(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.22
-      '@swc/core': 1.3.105
-      esbuild: 0.19.11
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.27.0
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
+    optionalDependencies:
+      '@swc/core': 1.3.105(@swc/helpers@0.5.5)
+      esbuild: 0.19.11
 
   terser@5.27.0:
     dependencies:
@@ -18944,15 +18994,14 @@ snapshots:
   ts-dedent@2.2.0: {}
 
   ts-essentials@9.4.2(typescript@5.4.5):
-    dependencies:
+    optionalDependencies:
       typescript: 5.4.5
 
   ts-interface-checker@0.1.13: {}
 
-  ts-node@10.9.2(@swc/core@1.3.105)(@types/node@20.12.7)(typescript@5.4.5):
+  ts-node@10.9.2(@swc/core@1.3.105(@swc/helpers@0.5.5))(@types/node@20.12.7)(typescript@5.4.5):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
-      '@swc/core': 1.3.105
       '@tsconfig/node10': 1.0.9
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
@@ -18967,9 +19016,11 @@ snapshots:
       typescript: 5.4.5
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
+    optionalDependencies:
+      '@swc/core': 1.3.105(@swc/helpers@0.5.5)
 
   ts-pnp@1.2.0(typescript@5.4.5):
-    dependencies:
+    optionalDependencies:
       typescript: 5.4.5
 
   tsconfig-paths-webpack-plugin@4.1.0:
@@ -19103,10 +19154,11 @@ snapshots:
 
   typescript-eslint@7.6.0(eslint@8.57.0)(typescript@5.4.5):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 7.6.0(@typescript-eslint/parser@7.6.0)(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/eslint-plugin': 7.6.0(@typescript-eslint/parser@7.6.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.6.0(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/utils': 7.6.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
@@ -19285,14 +19337,15 @@ snapshots:
 
   webidl-conversions@3.0.1: {}
 
-  webpack-dev-middleware@6.1.3(webpack@5.89.0):
+  webpack-dev-middleware@6.1.3(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)):
     dependencies:
       colorette: 2.0.20
       memfs: 3.5.3
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.2.0
-      webpack: 5.89.0(@swc/core@1.3.105)(esbuild@0.19.11)
+    optionalDependencies:
+      webpack: 5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)
 
   webpack-hot-middleware@2.26.0:
     dependencies:
@@ -19306,7 +19359,7 @@ snapshots:
 
   webpack-virtual-modules@0.6.1: {}
 
-  webpack@5.89.0(@swc/core@1.3.105)(esbuild@0.19.11):
+  webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11):
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.5
@@ -19329,7 +19382,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(@swc/core@1.3.105)(esbuild@0.19.11)(webpack@5.89.0)
+      terser-webpack-plugin: 5.3.10(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11)(webpack@5.89.0(@swc/core@1.3.105(@swc/helpers@0.5.5))(esbuild@0.19.11))
       watchpack: 2.4.0
       webpack-sources: 3.2.3
     transitivePeerDependencies:
