@@ -51,7 +51,7 @@
     "sharp": "0.33.3",
     "swiper": "11.1.1",
     "tailwind-merge": "2.3.0",
-    "zod": "3.23.0",
+    "zod": "3.23.3",
     "zod-validation-error": "3.1.0"
   },
   "devDependencies": {
