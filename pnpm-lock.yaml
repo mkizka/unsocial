@@ -75,8 +75,8 @@ importers:
         specifier: 3.23.3
         version: 3.23.3
       zod-validation-error:
-        specifier: 3.1.0
-        version: 3.1.0(zod@3.23.3)
+        specifier: 3.2.0
+        version: 3.2.0(zod@3.23.3)
     devDependencies:
       '@changesets/cli':
         specifier: 2.27.1
@@ -8296,8 +8296,8 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
 
-  zod-validation-error@3.1.0:
-    resolution: {integrity: sha512-zujS6HqJjMZCsvjfbnRs7WI3PXN39ovTcY1n8a+KTm4kOH0ZXYsNiJkH1odZf4xZKMkBDL7M2rmQ913FCS1p9w==}
+  zod-validation-error@3.2.0:
+    resolution: {integrity: sha512-cYlPR6zuyrgmu2wRTdumEAJGuwI7eHVHGT+VyneAQxmRAKtGRL1/7pjz4wfLhz4J05f5qoSZc3rGacswgyTjjw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       zod: ^3.18.0
@@ -16181,7 +16181,7 @@ snapshots:
       summary: 2.1.0
       typescript: 5.4.5
       zod: 3.23.3
-      zod-validation-error: 3.1.0(zod@3.23.3)
+      zod-validation-error: 3.2.0(zod@3.23.3)
 
   ky-universal@0.11.0(ky@0.33.3)(web-streams-polyfill@3.3.3):
     dependencies:
@@ -18904,7 +18904,7 @@ snapshots:
 
   yocto-queue@1.0.0: {}
 
-  zod-validation-error@3.1.0(zod@3.23.3):
+  zod-validation-error@3.2.0(zod@3.23.3):
     dependencies:
       zod: 3.23.3
 
