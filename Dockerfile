@@ -1,5 +1,5 @@
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
-FROM node:20.12.1-slim AS base
+FROM node:20.12.2-slim AS base
 WORKDIR /app
 # https://github.com/getsentry/sentry-cli/issues/1069#issuecomment-969439768
 RUN apt-get update && apt-get install -y openssl jq ca-certificates \

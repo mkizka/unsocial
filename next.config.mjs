@@ -5,7 +5,6 @@ import { withSentryConfig } from "@sentry/nextjs";
 const config = {
   reactStrictMode: true,
   output: "standalone",
-  // eslint-disable-next-line no-undef
   distDir: process.env.E2E_DIST_DIR,
   experimental: {
     serverComponentsExternalPackages: ["jsonld"],

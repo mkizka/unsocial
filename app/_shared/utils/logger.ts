@@ -45,7 +45,6 @@ const railwayLog = (log: StructuredLog) => {
   if (env.NODE_ENV === "test" || isLower(log.level, env.UNSOCIAL_LOG_LEVEL)) {
     return;
   }
-  // eslint-disable-next-line no-console
   console[log.level](JSON.stringify(log));
   if (isSameOrHigher(log.level, env.UNSOCIAL_SENTRY_LOG_LEVEL)) {
     Sentry.captureMessage(log.message, sentryLevel(log.level));

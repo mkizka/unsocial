@@ -62,5 +62,4 @@ const main = async () => {
   logger.info("シード作成完了");
 };
 
-// eslint-disable-next-line no-console
 main().catch(console.error);
