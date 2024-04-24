@@ -85,8 +85,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       '@mkizka/eslint-config':
-        specifier: 4.1.1
-        version: 4.1.1(@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.1(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
+        specifier: 4.2.0
+        version: 4.2.0(@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.1(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
       '@playwright/test':
         specifier: 1.43.1
         version: 1.43.1
@@ -1678,8 +1678,8 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
-  '@mkizka/eslint-config@4.1.1':
-    resolution: {integrity: sha512-Homio5VhJ5KEf9hoMsHhMemcOnFE/eOYbGa+cpxfLieR1NE7TQyH+d6q/kkj7GCjvT9rHPP/jgmeiE6orSfD3A==}
+  '@mkizka/eslint-config@4.2.0':
+    resolution: {integrity: sha512-MqRWtr1nOwdaWZXcp8HDKh7KzkwqZV2JkM2GgCxCsCSA6VToixwAp/E0Ue3tGw1EajpFTOtb6kUzOJsGrQTljA==}
     peerDependencies:
       eslint: '>= 9'
 
@@ -10394,7 +10394,7 @@ snapshots:
       '@types/react': 18.2.79
       react: 18.2.0
 
-  '@mkizka/eslint-config@4.1.1(@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.1(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
+  '@mkizka/eslint-config@4.2.0(@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.1(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
       '@dword-design/eslint-plugin-import-alias': 5.0.0
       '@eslint/js': 9.0.0
